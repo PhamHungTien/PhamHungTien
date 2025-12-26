@@ -3571,6 +3571,21 @@ textarea:focus-visible {
   margin-bottom: 12px;
 }
 
+.install-hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 12px;
+}
+
+.install-hint code {
+  background: var(--bg-elevated);
+  padding: 2px 8px;
+  border-radius: var(--radius-md);
+  font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+  font-size: 0.75rem;
+  color: var(--text-sub);
+}
+
 .install-command {
   display: inline-flex;
   align-items: center;
