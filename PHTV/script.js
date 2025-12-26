@@ -83,6 +83,15 @@ const translations = {
     'donate.title': 'Cảm ơn bạn đã ủng hộ!',
     'donate.desc': 'Sự đóng góp của bạn giúp duy trì và phát triển dự án.',
     'donate.close': 'Đóng',
+    'hero.or_install': 'Hoặc cài đặt qua Homebrew:',
+    'stat.version': 'Phiên bản',
+    'stat.downloads': 'Lượt tải',
+    'feedback.bug_title': 'Báo Lỗi',
+    'feedback.bug_desc': 'Phát hiện lỗi? Hãy tạo issue trên GitHub để chúng tôi có thể khắc phục nhanh nhất.',
+    'feedback.report_bug': 'Báo Lỗi',
+    'feedback.feature_title': 'Đề Xuất Tính Năng',
+    'feedback.feature_desc': 'Có ý tưởng mới? Hãy chia sẻ để PHTV ngày càng hoàn thiện hơn.',
+    'feedback.suggest_feature': 'Đề Xuất',
   },
   en: {
     'nav.features': 'Features',
@@ -158,6 +167,15 @@ const translations = {
     'donate.title': 'Thank you for your support!',
     'donate.desc': 'Your contribution helps maintain and develop the project.',
     'donate.close': 'Close',
+    'hero.or_install': 'Or install via Homebrew:',
+    'stat.version': 'Version',
+    'stat.downloads': 'Downloads',
+    'feedback.bug_title': 'Report Bug',
+    'feedback.bug_desc': 'Found a bug? Create an issue on GitHub so we can fix it as soon as possible.',
+    'feedback.report_bug': 'Report Bug',
+    'feedback.feature_title': 'Suggest Feature',
+    'feedback.feature_desc': 'Have a new idea? Share it to help improve PHTV.',
+    'feedback.suggest_feature': 'Suggest',
   },
 };
 
@@ -556,39 +574,89 @@ async function fetchGitHubData() {
   }
 }
 
+// Format number with K/M suffix
+function formatNumber(num) {
+  if (num >= 1000000) {
+    return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+  }
+  if (num >= 1000) {
+    return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
+  }
+  return num.toString();
+}
+
 // Update UI with GitHub data
 function updateGitHubUI(repoData, releaseData) {
   // Update stars count
   const starsCount = repoData.stargazers_count;
-  
+
   // Update version
   const latestVersion = releaseData.tag_name || releaseData.name;
-  
-  // Calculate total downloads
+
+  // Calculate total downloads from ALL releases
   let totalDownloads = 0;
-  if (releaseData.assets) {
-    releaseData.assets.forEach(asset => {
-      totalDownloads += asset.download_count;
-    });
-  }
-  
+
   // Update download URL
+  const owner = 'PhamHungTien';
+  const repo = 'PHTV';
   const downloadUrl = releaseData.html_url || `https://github.com/${owner}/${repo}/releases/latest`;
-  
+
+  // Fetch all releases to get total downloads
+  fetch(`https://api.github.com/repos/${owner}/${repo}/releases`)
+    .then(res => res.json())
+    .then(releases => {
+      releases.forEach(release => {
+        if (release.assets) {
+          release.assets.forEach(asset => {
+            totalDownloads += asset.download_count;
+          });
+        }
+      });
+
+      // Update downloads stat
+      const downloadsEl = document.querySelector('#stat-downloads .stat-value');
+      if (downloadsEl) {
+        downloadsEl.innerHTML = `<span class="material-icons-round stat-icon">download</span>${formatNumber(totalDownloads)}`;
+        downloadsEl.classList.add('loaded');
+      }
+    })
+    .catch(err => {
+      console.error('[GitHub API] Error fetching releases:', err);
+      // Fallback to current release downloads
+      if (releaseData.assets) {
+        releaseData.assets.forEach(asset => {
+          totalDownloads += asset.download_count;
+        });
+      }
+      const downloadsEl = document.querySelector('#stat-downloads .stat-value');
+      if (downloadsEl) {
+        downloadsEl.innerHTML = `<span class="material-icons-round stat-icon">download</span>${formatNumber(totalDownloads)}`;
+        downloadsEl.classList.add('loaded');
+      }
+    });
+
+  // Update version stat
+  const versionEl = document.querySelector('#stat-version .stat-value');
+  if (versionEl && latestVersion) {
+    versionEl.innerHTML = `<span class="material-icons-round stat-icon">new_releases</span>${latestVersion}`;
+    versionEl.classList.add('loaded');
+  }
+
+  // Update stars stat
+  const starsEl = document.querySelector('#stat-stars .stat-value');
+  if (starsEl) {
+    starsEl.innerHTML = `<span class="material-icons-round stat-icon">star</span>${formatNumber(starsCount)}`;
+    starsEl.classList.add('loaded');
+  }
+
   // Update download buttons
   const downloadButtons = document.querySelectorAll('#downloadBtn, #downloadHeroBtn');
   downloadButtons.forEach(btn => {
     if (btn) {
       btn.href = downloadUrl;
-      // Update button text with version if needed
-      const btnText = btn.querySelector('span:last-child');
-      if (btnText && latestVersion) {
-        // Keep original text but could add version
-        console.log(`[GitHub API] Latest version: ${latestVersion}`);
-      }
     }
   });
-  
+
   // Log data for debugging
   console.log('[GitHub API] Data updated:', {
     stars: starsCount,
@@ -596,7 +664,7 @@ function updateGitHubUI(repoData, releaseData) {
     downloads: totalDownloads,
     downloadUrl: downloadUrl
   });
-  
+
   // Dispatch custom event for other scripts to use
   window.dispatchEvent(new CustomEvent('githubDataLoaded', {
     detail: {
@@ -617,6 +685,49 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(fetchGitHubData, 5 * 60 * 1000);
 });
 
+// Copy Homebrew command to clipboard
+function copyHomebrewCommand() {
+  const command = document.getElementById('homebrew-command').textContent;
+  const copyIcon = document.getElementById('copy-icon');
+
+  navigator.clipboard.writeText(command).then(() => {
+    // Show success feedback
+    copyIcon.textContent = 'check';
+    copyIcon.style.color = 'var(--success)';
+
+    // Reset after 2 seconds
+    setTimeout(() => {
+      copyIcon.textContent = 'content_copy';
+      copyIcon.style.color = '';
+    }, 2000);
+
+    console.log('[Copy] Homebrew command copied to clipboard');
+  }).catch(err => {
+    console.error('[Copy] Failed to copy:', err);
+
+    // Fallback for older browsers
+    const textArea = document.createElement('textarea');
+    textArea.value = command;
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-9999px';
+    document.body.appendChild(textArea);
+    textArea.select();
+    try {
+      document.execCommand('copy');
+      copyIcon.textContent = 'check';
+      copyIcon.style.color = 'var(--success)';
+      setTimeout(() => {
+        copyIcon.textContent = 'content_copy';
+        copyIcon.style.color = '';
+      }, 2000);
+    } catch (e) {
+      console.error('[Copy] Fallback failed:', e);
+    }
+    document.body.removeChild(textArea);
+  });
+}
+
 // Export for external use
 window.PHTV = window.PHTV || {};
 window.PHTV.fetchGitHubData = fetchGitHubData;
+window.PHTV.copyHomebrewCommand = copyHomebrewCommand;
