@@ -45,23 +45,6 @@ I'm a macOS developer passionate about building native applications that enhance
 
 ---
 
-## GitHub Statistics
-
-<table>
-  <tr>
-    <td>
-      <img src="https://github-readme-stats.vercel.app/api?username=PhamHungTien&show_icons=true&theme=default&hide_border=true&count_private=true" alt="GitHub Stats" />
-    </td>
-    <td>
-      <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=PhamHungTien&layout=compact&theme=default&hide_border=true&langs_count=6" alt="Top Languages" />
-    </td>
-  </tr>
-</table>
-
-<img src="https://github-readme-streak-stats.herokuapp.com/?user=PhamHungTien&theme=default&hide_border=true" alt="GitHub Streak" />
-
----
-
 ## Featured Project
 
 ### PHTV - Vietnamese Input Method for macOS
