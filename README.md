@@ -76,7 +76,7 @@ I'm a macOS developer passionate about building native applications that enhance
 **Installation:**
 ```bash
 # Via Homebrew
-brew install --cask phtv
+brew install --cask phamhungtien/tap/phtv
 
 # Or download from GitHub Releases
 ```
