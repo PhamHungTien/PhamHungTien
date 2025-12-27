@@ -1109,13 +1109,13 @@ body::before {
   width: 100%;
 }
 
-/* Premium Stats Bar - Redesigned */
+/* Premium Stats Bar - Redesigned & Responsive */
 .hero-stats {
   display: inline-flex;
-  gap: 12px;
-  margin-bottom: 48px;
-  padding: 8px;
-  border-radius: 20px;
+  gap: clamp(8px, 2vw, 12px);
+  margin-bottom: clamp(32px, 8vw, 48px);
+  padding: clamp(6px, 1.5vw, 8px);
+  border-radius: clamp(16px, 4vw, 20px);
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(30px) saturate(180%);
@@ -1124,6 +1124,7 @@ body::before {
     0 8px 32px rgba(0, 0, 0, 0.2),
     0 1px 0 0 rgba(255, 255, 255, 0.1) inset,
     0 0 0 1px rgba(0, 0, 0, 0.05) inset;
+  max-width: min(100%, 600px);
 }
 
 [data-theme='light'] .hero-stats {
@@ -1147,9 +1148,9 @@ body::before {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 20px 28px;
-  border-radius: 14px;
+  gap: clamp(4px, 1.5vw, 6px);
+  padding: clamp(16px, 4vw, 20px) clamp(20px, 5vw, 28px);
+  border-radius: clamp(12px, 3vw, 14px);
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.06) 0%,
@@ -1157,7 +1158,7 @@ body::before {
   );
   border: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  min-width: 110px;
+  min-width: clamp(90px, 20vw, 110px);
   position: relative;
   overflow: hidden;
   text-align: center;
@@ -1218,7 +1219,7 @@ body::before {
 .stat-item strong {
   color: #ffffff;
   font-weight: 800;
-  font-size: 1.5rem;
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
   display: block;
   line-height: 1;
   letter-spacing: -0.03em;
@@ -1246,10 +1247,10 @@ body::before {
 
 .stat-label {
   color: rgba(255, 255, 255, 0.6);
-  font-size: 0.7rem;
+  font-size: clamp(0.625rem, 1.5vw, 0.7rem);
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
+  letter-spacing: clamp(0.5px, 0.15vw, 0.8px);
   white-space: nowrap;
   transition: color 0.3s ease;
 }
@@ -2288,6 +2289,26 @@ footer::before {
   }
 }
 
+/* --- TABLET OPTIMIZATIONS (600px-768px) --- */
+@media (max-width: 768px) and (min-width: 601px) {
+  .hero-stats {
+    padding: 8px;
+    gap: 10px;
+  }
+
+  .stat-item {
+    padding: 18px 20px;
+  }
+
+  .stat-item strong {
+    font-size: 1.35rem;
+  }
+
+  .stat-label {
+    font-size: 0.65rem;
+  }
+}
+
 /* --- MOBILE OPTIMIZATIONS --- */
 @media (max-width: 768px) {
   /* Navbar floating adjustments for mobile */
@@ -2392,11 +2413,11 @@ footer::before {
   }
 
   .word-line {
-    font-size: 1.75rem;
+    font-size: clamp(1.5rem, 5vw, 1.75rem);
   }
 
   .first-letter {
-    font-size: 2.5rem;
+    font-size: clamp(2rem, 7vw, 2.5rem);
   }
 
   /* Reduce animation on mobile */
@@ -2414,17 +2435,20 @@ footer::before {
   }
 
   .hero-subtitle {
-    font-size: 1.35rem;
+    font-size: clamp(1.15rem, 3.5vw, 1.35rem);
     line-height: 1.3;
-    padding: 0 12px;
+    padding: 0 clamp(12px, 3vw, 20px);
     margin-bottom: 16px;
   }
 
   .hero-desc {
-    font-size: 0.95rem;
-    padding: 0 16px;
+    font-size: clamp(0.875rem, 2.5vw, 0.95rem);
+    padding: 0 clamp(16px, 4vw, 24px);
     line-height: 1.65;
     margin-bottom: 28px;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .hero-badge {
@@ -2437,45 +2461,47 @@ footer::before {
     display: none;
   }
 
-  /* Hero Stats - Dạng grid 3 cột */
+  /* Hero Stats - Responsive grid optimized */
   .hero-stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    padding: 0;
-    background: var(--bg-glass);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-xl);
+    gap: 8px;
+    padding: 6px;
+    width: 100%;
+    max-width: 100%;
     margin-bottom: 32px;
-    overflow: hidden;
+    border-radius: 16px;
   }
 
   .stat-item {
     flex-direction: column;
-    gap: 2px;
-    padding: 14px 8px;
-    font-size: 0.65rem;
-    text-align: center;
-    border-right: 1px solid var(--border);
-    min-width: unset;
+    gap: 4px;
+    padding: clamp(12px, 3vw, 16px) clamp(8px, 2vw, 12px);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    min-width: 0;
   }
 
-  .stat-item:last-child {
-    border-right: none;
+  [data-theme='light'] .stat-item {
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .stat-item::before {
+    display: none;
   }
 
   .stat-item strong {
-    font-size: 1rem;
-    display: block;
+    font-size: clamp(1rem, 4vw, 1.25rem);
+    line-height: 1.2;
   }
 
   .stat-label {
-    font-size: 0.6rem;
-    letter-spacing: 0.3px;
+    font-size: clamp(0.6rem, 2vw, 0.7rem);
+    letter-spacing: 0.4px;
   }
 
   .stat-item:hover {
-    background: transparent;
+    transform: translateY(-2px);
   }
 
   /* Hero Buttons - Full width stacked */
