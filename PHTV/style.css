@@ -4902,11 +4902,7 @@ a:not(.btn):not(.logo):not(.nav-link):hover::after {
 }
 
 /* Stat counter animation */
-.stat-icon {
-  display: inline-block;
-  margin-right: 6px;
-  animation: stat-pulse 2s infinite;
-}
+/* Removed - no stat icons anymore */
 
 @keyframes stat-pulse {
   0%, 100% {
@@ -6989,10 +6985,9 @@ h1, h2, h3, h4, h5, h6 {
 .gallery-image,
 .hero-app-icon,
 .logo img,
-.stat-icon,
 .btn .material-icons-round,
 .btn svg {
-  transition: 
+  transition:
     box-shadow 0.3s var(--spring-easing),
     filter 0.3s var(--spring-easing),
     transform 0.3s var(--spring-easing);
@@ -7043,13 +7038,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Stat icons - pink */
-.stat-icon {
-  color: #FF2D55 !important;
-}
-
-.stat-item:hover .stat-icon {
-  color: #FF375F !important;
-}
+/* Removed - no stat icons anymore */
 
 /* FAQ icons - pink */
 .faq-icon,
@@ -7216,9 +7205,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 24px !important;
 }
 
-.stat-icon {
-  font-size: 20px !important;
-}
+/* Removed - no stat icons anymore */
 
 .bento-icon .material-icons-round {
   font-size: 28px !important;
