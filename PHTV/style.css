@@ -1263,23 +1263,25 @@ body::before {
   color: #FF2D55;
 }
 
-.stat-icon {
+.stat-item .stat-icon {
+  display: block !important;
   font-size: 28px !important;
   color: #FF2D55 !important;
-  margin-bottom: 8px;
-  filter: drop-shadow(0 3px 8px rgba(255, 45, 85, 0.35));
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  opacity: 0.9;
+  margin-bottom: 8px !important;
+  filter: drop-shadow(0 3px 8px rgba(255, 45, 85, 0.35)) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  line-height: 1 !important;
 }
 
-[data-theme='light'] .stat-icon {
-  filter: drop-shadow(0 2px 6px rgba(255, 45, 85, 0.25));
+[data-theme='light'] .stat-item .stat-icon {
+  filter: drop-shadow(0 2px 6px rgba(255, 45, 85, 0.25)) !important;
 }
 
 .stat-item:hover .stat-icon {
-  transform: scale(1.15) translateY(-2px);
-  filter: drop-shadow(0 6px 16px rgba(255, 45, 85, 0.5));
-  opacity: 1;
+  transform: scale(1.15) translateY(-2px) !important;
+  filter: drop-shadow(0 6px 16px rgba(255, 45, 85, 0.5)) !important;
 }
 
 .stat-divider {
@@ -3737,10 +3739,7 @@ textarea:focus-visible {
 }
 
 /* --- GITHUB STATS ENHANCEMENT --- */
-.stat-value .stat-icon {
-  font-size: 1rem;
-  opacity: 0.8;
-}
+/* Removed - stat-icon now sibling of stat-value, styled at line 1266 */
 
 .stat-value.loaded {
   animation: statPop 0.4s var(--ease-spring);
@@ -6706,19 +6705,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Stats icons pink tint */
-.stat-icon {
-  color: #FF2D55 !important;
-}
-
-.stat-value.loaded .stat-icon {
-  animation: icon-pop 0.5s var(--bounce-easing);
-}
-
-@keyframes icon-pop {
-  0% { transform: scale(0.8); opacity: 0; }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); opacity: 1; }
-}
+/* Removed - stat-icon styled at line 1266 with complete styling */
 
 /* Bento icons pink gradient */
 .bento-icon {
@@ -6921,14 +6908,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Stats icons - pink shadow */
-.stat-icon {
-  filter: drop-shadow(0 3px 6px rgba(255, 45, 85, 0.3));
-  transition: filter 0.3s var(--spring-easing);
-}
-
-.stat-item:hover .stat-icon {
-  filter: drop-shadow(0 4px 10px rgba(255, 45, 85, 0.45));
-}
+/* Removed - stat-icon styled at line 1266 with complete styling */
 
 /* Logo icon image */
 .logo img {
