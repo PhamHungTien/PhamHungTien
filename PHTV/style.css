@@ -6988,3 +6988,280 @@ h1, h2, h3, h4, h5, h6 {
     filter 0.3s var(--spring-easing),
     transform 0.3s var(--spring-easing);
 }
+
+/* ================================================
+   UNIFIED PINK COLOR FOR ALL ICONS
+   Consistent pink theme across all icon elements
+   ================================================ */
+
+/* --- MATERIAL ICONS PINK COLOR --- */
+/* All Material Icons Round use pink */
+.material-icons-round,
+.material-icons {
+  color: #FF2D55 !important;
+  transition: color 0.2s var(--spring-easing);
+}
+
+/* Navbar icons */
+.navbar .material-icons-round,
+.navbar .material-icons {
+  color: #FF2D55 !important;
+}
+
+/* Button icons - white on primary buttons, pink on others */
+.btn-primary .material-icons-round,
+.btn-primary .material-icons {
+  color: white !important;
+}
+
+.btn-secondary .material-icons-round,
+.btn-secondary .material-icons,
+.btn-icon .material-icons-round,
+.btn-icon .material-icons {
+  color: #FF2D55 !important;
+}
+
+/* Hover states - brighter pink */
+.btn:hover .material-icons-round,
+.btn:hover .material-icons,
+.nav-link:hover .material-icons-round {
+  color: #FF375F !important;
+}
+
+.btn-primary:hover .material-icons-round,
+.btn-primary:hover .material-icons {
+  color: white !important; /* Stay white */
+}
+
+/* Stat icons - pink */
+.stat-icon {
+  color: #FF2D55 !important;
+}
+
+.stat-item:hover .stat-icon {
+  color: #FF375F !important;
+}
+
+/* FAQ icons - pink */
+.faq-icon,
+.faq-item .material-icons-round {
+  color: #FF2D55 !important;
+}
+
+.faq-item:hover .material-icons-round,
+.faq-item.active .material-icons-round {
+  color: #FF375F !important;
+}
+
+/* Timeline icons - pink */
+.timeline-icon,
+.timeline-badge .material-icons-round {
+  color: #FF2D55 !important;
+}
+
+/* Gallery tab icons - pink, white when active */
+.gallery-tab .material-icons-round {
+  color: #FF2D55 !important;
+}
+
+.gallery-tab.active .material-icons-round {
+  color: white !important;
+}
+
+.gallery-tab:hover .material-icons-round {
+  color: #FF375F !important;
+}
+
+/* Scroll to top icon - white (on pink button) */
+.scroll-top .material-icons-round {
+  color: white !important;
+}
+
+/* Mobile menu toggle - pink */
+.mobile-toggle .material-icons-round {
+  color: #FF2D55 !important;
+}
+
+.mobile-toggle:hover .material-icons-round {
+  color: #FF375F !important;
+}
+
+/* Theme toggle - pink */
+#theme-btn .material-icons-round {
+  color: #FF2D55 !important;
+}
+
+#theme-btn:hover .material-icons-round {
+  color: #FF375F !important;
+}
+
+/* Comparison table icons - pink for checkmarks, gray for X */
+.comparison-table .material-icons-round.check {
+  color: #FF2D55 !important;
+}
+
+.comparison-table .material-icons-round.close {
+  color: #666 !important;
+}
+
+/* Footer social icons - pink */
+.social-links .material-icons-round {
+  color: #FF2D55 !important;
+}
+
+.social-links a:hover .material-icons-round {
+  color: #FF375F !important;
+}
+
+/* --- SVG ICONS PINK COLOR --- */
+/* GitHub icon and other SVGs */
+.navbar svg,
+.btn svg,
+.social-links svg {
+  fill: #FF2D55 !important;
+  transition: fill 0.2s var(--spring-easing);
+}
+
+/* Primary buttons - white SVG */
+.btn-primary svg {
+  fill: white !important;
+}
+
+/* Hover states for SVGs */
+.btn:hover svg,
+.nav-link:hover svg {
+  fill: #FF375F !important;
+}
+
+.btn-primary:hover svg {
+  fill: white !important; /* Stay white */
+}
+
+.social-links a:hover svg {
+  fill: #FF375F !important;
+}
+
+/* --- LIGHT MODE ADJUSTMENTS --- */
+[data-theme='light'] .material-icons-round,
+[data-theme='light'] .material-icons {
+  color: #FF2D55 !important;
+}
+
+[data-theme='light'] .btn-primary .material-icons-round,
+[data-theme='light'] .btn-primary .material-icons {
+  color: white !important;
+}
+
+[data-theme='light'] .navbar svg,
+[data-theme='light'] .btn svg,
+[data-theme='light'] .social-links svg {
+  fill: #FF2D55 !important;
+}
+
+[data-theme='light'] .btn-primary svg {
+  fill: white !important;
+}
+
+/* --- BENTO CARD ICON COLORS --- */
+.bento-icon .material-icons-round,
+.bento-icon .material-icons {
+  color: white !important; /* White on pink gradient background */
+}
+
+/* --- SPECIAL ICON STATES --- */
+/* Download button icons - animated */
+#downloadBtn .material-icons-round,
+#downloadHeroBtn .material-icons-round,
+.btn-primary[href*="download"] .material-icons-round,
+.btn-primary[href*="releases"] .material-icons-round {
+  color: white !important;
+}
+
+/* Active nav links - pink icon */
+.nav-link.active .material-icons-round {
+  color: #FF2D55 !important;
+}
+
+.nav-link.active:hover .material-icons-round {
+  color: #FF375F !important;
+}
+
+/* Mobile menu active links */
+.mobile-menu a.active .material-icons-round,
+.mobile-menu a:hover .material-icons-round {
+  color: #FF2D55 !important;
+}
+
+/* --- ICON SIZE CONSISTENCY --- */
+/* Ensure all icons have consistent sizing */
+.navbar .material-icons-round {
+  font-size: 24px !important;
+}
+
+.btn .material-icons-round {
+  font-size: 20px !important;
+}
+
+.btn-lg .material-icons-round,
+.hero-buttons .btn .material-icons-round {
+  font-size: 24px !important;
+}
+
+.stat-icon {
+  font-size: 20px !important;
+}
+
+.bento-icon .material-icons-round {
+  font-size: 28px !important;
+}
+
+.faq-icon,
+.faq-item .material-icons-round {
+  font-size: 24px !important;
+}
+
+.scroll-top .material-icons-round {
+  font-size: 24px !important;
+}
+
+.mobile-toggle .material-icons-round {
+  font-size: 28px !important;
+}
+
+/* --- ENSURE VISIBILITY --- */
+/* Make sure icons are always visible */
+.material-icons-round,
+.material-icons,
+svg {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* --- ICON ALIGNMENT --- */
+.btn .material-icons-round,
+.btn .material-icons {
+  vertical-align: middle;
+  line-height: 1;
+}
+
+/* --- PREVENT COLOR OVERRIDES --- */
+/* Force pink color, override any conflicting styles */
+.navbar .btn-icon svg,
+.navbar a[href*="github"] svg {
+  fill: #FF2D55 !important;
+}
+
+.navbar .btn-icon:hover svg,
+.navbar a[href*="github"]:hover svg {
+  fill: #FF375F !important;
+}
+
+/* Footer links SVG icons */
+.footer-links svg,
+.footer svg {
+  fill: currentColor !important;
+}
+
+.footer-links a:hover svg {
+  fill: #FF2D55 !important;
+}
