@@ -434,20 +434,20 @@ body::before {
   background: rgba(255, 255, 255, 0.8);
 }
 
-/* --- PREMIUM FLOATING NAVIGATION --- */
+/* --- PREMIUM FLOATING NAVIGATION (Responsive Optimized) --- */
 .navbar {
   position: fixed;
-  top: 16px;
+  top: clamp(12px, 3vw, 16px);
   left: 50%;
   transform: translateX(-50%);
-  width: calc(100% - 48px);
+  width: calc(100% - clamp(24px, 6vw, 48px));
   max-width: var(--container-w);
-  height: 60px;
+  height: clamp(56px, 12vw, 60px);
   background: var(--bg-glass);
   backdrop-filter: blur(24px) saturate(200%);
   -webkit-backdrop-filter: blur(24px) saturate(200%);
   border: 1px solid var(--border);
-  border-radius: var(--radius-2xl);
+  border-radius: clamp(18px, 4.5vw, 26px);
   z-index: 1000;
   transition: all 0.4s var(--ease-out);
   box-shadow:
@@ -496,16 +496,16 @@ body::before {
   justify-content: space-between;
   align-items: center;
   height: 100%;
-  padding: 0 20px;
+  padding: 0 clamp(12px, 3vw, 20px);
   max-width: 100%;
-  gap: 16px;
+  gap: clamp(8px, 2vw, 16px);
 }
 
-/* Logo */
+/* Logo (Responsive) */
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: clamp(6px, 1.5vw, 10px);
   text-decoration: none;
   transition: all 0.2s var(--ease-out);
   flex-shrink: 0;
@@ -515,9 +515,9 @@ body::before {
   transform: scale(1.02);
 }
 .logo img {
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-md);
+  width: clamp(28px, 7vw, 36px);
+  height: clamp(28px, 7vw, 36px);
+  border-radius: clamp(6px, 1.5vw, 8px);
   transition: transform 0.3s var(--ease-out);
 }
 .logo:hover img {
@@ -525,7 +525,7 @@ body::before {
 }
 .logo-name {
   font-weight: 700;
-  font-size: 1.15rem;
+  font-size: clamp(0.95rem, 2.5vw, 1.15rem);
   /* color removed - using pink gradient below */
 }
 .logo-divider {
@@ -544,14 +544,14 @@ body::before {
   letter-spacing: 0.01em;
 }
 
-/* Nav Menu - Center Pill Design */
+/* Nav Menu - Center Pill Design (Responsive) */
 .nav-menu {
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: clamp(1px, 0.25vw, 2px);
   list-style: none;
   background: rgba(255, 255, 255, 0.03);
-  padding: 4px;
+  padding: clamp(3px, 0.75vw, 4px);
   border-radius: var(--radius-full);
   border: 1px solid rgba(255, 255, 255, 0.05);
   margin: 0 auto;
@@ -567,8 +567,8 @@ body::before {
   text-decoration: none;
   color: var(--text-muted);
   font-weight: 500;
-  font-size: 0.8rem;
-  padding: 8px 14px;
+  font-size: clamp(0.75rem, 1.8vw, 0.8rem);
+  padding: clamp(6px, 1.5vw, 8px) clamp(10px, 2.5vw, 14px);
   border-radius: var(--radius-full);
   transition: all 0.25s var(--ease-out);
   white-space: nowrap;
@@ -603,11 +603,11 @@ body::before {
   display: none;
 }
 
-/* Nav Actions - Right */
+/* Nav Actions - Right (Responsive) */
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: clamp(6px, 1.5vw, 10px);
   flex-shrink: 0;
 }
 
@@ -6345,22 +6345,22 @@ select:focus {
   font-size: 0.9375rem !important;
 }
 
-/* --- NAVBAR BUTTON CONSISTENCY --- */
+/* --- NAVBAR BUTTON CONSISTENCY (Responsive) --- */
 .navbar .btn,
 .navbar .btn-primary,
 .navbar .btn-secondary,
 .navbar #theme-btn,
 .navbar #lang-btn,
 .navbar .mobile-toggle {
-  min-height: 40px !important;
-  height: 40px !important;
-  padding: 0 16px !important;
-  font-size: 0.875rem !important;
-  border-radius: 10px !important;
+  min-height: clamp(36px, 8vw, 40px) !important;
+  height: clamp(36px, 8vw, 40px) !important;
+  padding: 0 clamp(12px, 3vw, 16px) !important;
+  font-size: clamp(0.8125rem, 1.9vw, 0.875rem) !important;
+  border-radius: clamp(8px, 2vw, 10px) !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 6px !important;
+  gap: clamp(4px, 1vw, 6px) !important;
 }
 
 /* Navbar primary button - Pink */
@@ -6382,24 +6382,24 @@ select:focus {
   transform: translateY(-1px) scale(1.02) !important;
 }
 
-/* Theme button - Square icon button */
+/* Theme button - Square icon button (Responsive) */
 .navbar #theme-btn {
-  width: 40px !important;
+  width: clamp(36px, 8vw, 40px) !important;
   padding: 0 !important;
   gap: 0 !important;
 }
 
-/* Language button */
+/* Language button (Responsive) */
 .navbar #lang-btn {
-  min-width: 48px !important;
-  padding: 0 12px !important;
+  min-width: clamp(42px, 10vw, 48px) !important;
+  padding: 0 clamp(10px, 2.5vw, 12px) !important;
   font-weight: 600 !important;
   letter-spacing: 0.02em !important;
 }
 
-/* Mobile toggle */
+/* Mobile toggle (Responsive) */
 .navbar .mobile-toggle {
-  width: 40px !important;
+  width: clamp(36px, 8vw, 40px) !important;
   padding: 0 !important;
   gap: 0 !important;
 }
