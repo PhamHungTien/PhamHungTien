@@ -643,10 +643,25 @@ function updateGitHubUI(repoData, releaseData) {
   // Calculate total downloads from ALL releases
   let totalDownloads = 0;
 
-  // Update download URL
+  // Find direct download URL for .dmg file
   const owner = 'PhamHungTien';
   const repo = 'PHTV';
-  const downloadUrl = releaseData.html_url || `https://github.com/${owner}/${repo}/releases/latest`;
+  let downloadUrl = `https://github.com/${owner}/${repo}/releases/latest`;
+
+  if (releaseData.assets && releaseData.assets.length > 0) {
+    // Find .dmg file (or .zip as fallback)
+    const dmgAsset = releaseData.assets.find(asset =>
+      asset.name.endsWith('.dmg') || asset.name.endsWith('.zip')
+    );
+
+    if (dmgAsset) {
+      downloadUrl = dmgAsset.browser_download_url;
+      console.log('[GitHub API] Direct download URL found:', downloadUrl);
+    } else {
+      console.warn('[GitHub API] No .dmg/.zip file found, using release page');
+      downloadUrl = releaseData.html_url;
+    }
+  }
 
   // Fetch all releases to get total downloads
   fetch(`https://api.github.com/repos/${owner}/${repo}/releases`)
@@ -696,11 +711,34 @@ function updateGitHubUI(repoData, releaseData) {
     starsEl.classList.add('loaded');
   }
 
-  // Update download buttons
+  // Update download buttons with direct download URL
   const downloadButtons = document.querySelectorAll('#downloadBtn, #downloadHeroBtn');
   downloadButtons.forEach(btn => {
     if (btn) {
       btn.href = downloadUrl;
+
+      // Add download attribute for direct download
+      if (downloadUrl.endsWith('.dmg') || downloadUrl.endsWith('.zip')) {
+        const fileName = downloadUrl.split('/').pop();
+        btn.setAttribute('download', fileName);
+        console.log('[GitHub API] Direct download enabled:', fileName);
+      }
+
+      // Update click event - check once to avoid duplicates
+      if (!btn.dataset.clickHandlerAdded) {
+        btn.addEventListener('click', (e) => {
+          if (downloadUrl.endsWith('.dmg') || downloadUrl.endsWith('.zip')) {
+            if (window.Toast) {
+              window.Toast.success('Downloading PHTV...', 'Download Started');
+            }
+          } else {
+            if (window.Toast) {
+              window.Toast.info('Redirecting to releases page...', '');
+            }
+          }
+        });
+        btn.dataset.clickHandlerAdded = 'true';
+      }
     }
   });
 
