@@ -499,6 +499,7 @@ body::before {
   padding: 0 clamp(12px, 3vw, 20px);
   max-width: 100%;
   gap: clamp(8px, 2vw, 16px);
+  overflow: hidden; /* Prevent overflow */
 }
 
 /* Logo (Responsive) */
@@ -2161,6 +2162,52 @@ footer::before {
     0 0 0 1px rgba(255, 255, 255, 0.1) inset;
 }
 
+/* --- PROGRESSIVE NAVBAR OPTIMIZATION --- */
+
+/* Hide GitHub button first (1200px) */
+@media (max-width: 1200px) {
+  .nav-actions a.btn-icon[href*="github"] {
+    display: none !important;
+  }
+
+  .nav-actions {
+    gap: clamp(6px, 1.2vw, 8px) !important;
+  }
+
+  /* Hide nav-actions divider to save space */
+  .nav-actions::before {
+    display: none !important;
+  }
+
+  /* Reduce nav-menu padding */
+  .nav-menu {
+    padding: clamp(2px, 0.5vw, 3px) !important;
+    gap: clamp(0px, 0.2vw, 1px) !important;
+  }
+
+  .nav-link {
+    padding: clamp(6px, 1.2vw, 8px) clamp(10px, 2vw, 12px) !important;
+    font-size: clamp(0.7rem, 1.6vw, 0.75rem) !important;
+  }
+}
+
+/* Hide Language button (1100px) */
+@media (max-width: 1100px) {
+  .nav-actions #lang-btn {
+    display: none !important;
+  }
+
+  /* Reduce logo size slightly */
+  .logo img {
+    width: clamp(24px, 6vw, 32px) !important;
+    height: clamp(24px, 6vw, 32px) !important;
+  }
+
+  .logo-name {
+    font-size: clamp(0.9rem, 2.2vw, 1.05rem) !important;
+  }
+}
+
 /* --- TABLET & RESPONSIVE (1024px) --- */
 @media (max-width: 1024px) {
   .nav-menu {
@@ -2172,6 +2219,11 @@ footer::before {
     font-size: 0.75rem;
   }
 
+  /* Hide theme button to save space */
+  .nav-actions #theme-btn {
+    display: none !important;
+  }
+
   .nav-actions .btn-primary span[data-i18n] {
     display: none;
   }
@@ -2179,16 +2231,22 @@ footer::before {
   .nav-actions .btn-primary {
     padding: 10px 12px;
   }
+
+  /* Reduce nav-actions gap */
+  .nav-actions {
+    gap: clamp(4px, 1vw, 6px) !important;
+  }
 }
 
 /* --- MEDIUM SCREENS (900px) --- */
 @media (max-width: 900px) {
+  /* Hide nav-menu completely, show mobile toggle */
   .nav-menu {
-    display: none;
+    display: none !important;
   }
 
   .mobile-toggle {
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
     width: 44px;
@@ -2212,17 +2270,28 @@ footer::before {
     border-color: var(--border-glow);
   }
 
+  /* Hide all icon buttons (github, theme already hidden) */
   .nav-actions .btn-icon:not(.mobile-toggle),
   .nav-actions .btn-secondary {
-    display: none;
+    display: none !important;
   }
 
+  /* Keep download button but show text on larger mobile screens */
   .nav-actions .btn-primary {
-    display: flex;
+    display: flex !important;
   }
 
   .nav-actions .btn-primary span[data-i18n] {
-    display: inline;
+    display: inline !important;
+  }
+
+  /* Optimize spacing */
+  .navbar .container {
+    gap: clamp(6px, 1.5vw, 12px) !important;
+  }
+
+  .nav-actions {
+    gap: clamp(6px, 1.5vw, 10px) !important;
   }
 }
 
