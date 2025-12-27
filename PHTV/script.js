@@ -723,17 +723,40 @@ function updateGitHubUI(repoData, releaseData) {
     }
   }
 
-  // Fetch all releases to get total downloads
-  fetch(`https://api.github.com/repos/${owner}/${repo}/releases`)
+  // Fetch ALL repos and calculate total downloads from ALL projects
+  fetch(`https://api.github.com/users/${owner}/repos?per_page=100`)
     .then(res => res.json())
-    .then(releases => {
-      releases.forEach(release => {
-        if (release.assets) {
-          release.assets.forEach(asset => {
-            totalDownloads += asset.download_count;
+    .then(repos => {
+      console.log(`[GitHub API] Found ${repos.length} repositories`);
+
+      // Fetch releases for each repo
+      const releasePromises = repos.map(repoItem =>
+        fetch(`https://api.github.com/repos/${owner}/${repoItem.name}/releases`)
+          .then(res => res.json())
+          .catch(err => {
+            console.warn(`[GitHub API] Error fetching releases for ${repoItem.name}:`, err);
+            return [];
+          })
+      );
+
+      return Promise.all(releasePromises);
+    })
+    .then(allRepoReleases => {
+      // Calculate total downloads from ALL repositories
+      totalDownloads = 0;
+      allRepoReleases.forEach((releases, repoIndex) => {
+        if (Array.isArray(releases)) {
+          releases.forEach(release => {
+            if (release.assets) {
+              release.assets.forEach(asset => {
+                totalDownloads += asset.download_count;
+              });
+            }
           });
         }
       });
+
+      console.log(`[GitHub API] Total downloads across all projects: ${totalDownloads}`);
 
       // Update downloads stat
       const downloadsEl = document.querySelector('#stat-downloads .stat-value');
@@ -743,8 +766,8 @@ function updateGitHubUI(repoData, releaseData) {
       }
     })
     .catch(err => {
-      console.error('[GitHub API] Error fetching releases:', err);
-      // Fallback to current release downloads
+      console.error('[GitHub API] Error fetching all repos:', err);
+      // Fallback: just use current PHTV release downloads
       if (releaseData.assets) {
         releaseData.assets.forEach(asset => {
           totalDownloads += asset.download_count;
