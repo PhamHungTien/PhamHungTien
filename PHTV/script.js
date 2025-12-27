@@ -604,21 +604,81 @@ window.addEventListener('appinstalled', () => {
 async function fetchGitHubData() {
   const owner = 'PhamHungTien';
   const repo = 'PHTV';
-  
+  const cacheKey = 'phtv_github_cache';
+  const cacheTimeout = 10 * 60 * 1000; // 10 minutes
+
+  // Check cache first
+  const cached = localStorage.getItem(cacheKey);
+  if (cached) {
+    try {
+      const { data, timestamp } = JSON.parse(cached);
+      if (Date.now() - timestamp < cacheTimeout) {
+        console.log('[GitHub API] Using cached data');
+        updateGitHubUI(data.repo, data.release);
+        return;
+      }
+    } catch (e) {
+      console.log('[GitHub API] Cache invalid, fetching fresh data');
+    }
+  }
+
   try {
     // Fetch repository info (stars)
     const repoResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}`);
     const repoData = await repoResponse.json();
-    
+
+    // Check for rate limit
+    if (repoData.message && repoData.message.includes('rate limit')) {
+      console.warn('[GitHub API] Rate limit exceeded, using fallback');
+      useFallbackStats();
+      return;
+    }
+
     // Fetch latest release
     const releaseResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/releases/latest`);
     const releaseData = await releaseResponse.json();
-    
+
+    // Check for rate limit
+    if (releaseData.message && releaseData.message.includes('rate limit')) {
+      console.warn('[GitHub API] Rate limit exceeded, using fallback');
+      useFallbackStats();
+      return;
+    }
+
+    // Cache the data
+    localStorage.setItem(cacheKey, JSON.stringify({
+      data: { repo: repoData, release: releaseData },
+      timestamp: Date.now()
+    }));
+
     // Update UI with data
     updateGitHubUI(repoData, releaseData);
   } catch (error) {
     console.error('[GitHub API] Error fetching data:', error);
+    useFallbackStats();
   }
+}
+
+// Fallback stats when API fails
+function useFallbackStats() {
+  const fallbackData = {
+    repo: {
+      stargazers_count: 50 // Approximate
+    },
+    release: {
+      tag_name: 'v1.2.8',
+      name: 'v1.2.8',
+      html_url: 'https://github.com/PhamHungTien/PHTV/releases/latest',
+      assets: [{
+        name: 'PHTV-1.2.8.dmg',
+        browser_download_url: 'https://github.com/PhamHungTien/PHTV/releases/latest/download/PHTV-1.2.8.dmg',
+        download_count: 500 // Approximate
+      }]
+    }
+  };
+
+  console.log('[GitHub API] Using fallback stats');
+  updateGitHubUI(fallbackData.repo, fallbackData.release);
 }
 
 // Format number with K/M suffix
