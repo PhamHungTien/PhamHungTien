@@ -4402,3 +4402,538 @@ footer {
 [data-theme='light'] .mobile-menu {
   background: rgba(255, 255, 255, 0.9);
 }
+
+/* =================================================================
+   UX/UI ENHANCEMENTS - Toast Notifications & Loading States
+   ================================================================= */
+
+/* --- TOAST NOTIFICATIONS --- */
+.toast-container {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.toast {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-highlight);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  min-width: 320px;
+  max-width: 420px;
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateX(400px);
+  animation: toast-slide-in 0.3s var(--ease-out) forwards;
+  backdrop-filter: blur(12px);
+}
+
+.toast.hiding {
+  animation: toast-slide-out 0.3s var(--ease-out) forwards;
+}
+
+.toast-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 16px;
+}
+
+.toast.success {
+  border-color: var(--success);
+}
+
+.toast.success .toast-icon {
+  background: var(--success-glow);
+  color: var(--success);
+}
+
+.toast.error {
+  border-color: var(--error);
+}
+
+.toast.error .toast-icon {
+  background: rgba(239, 68, 68, 0.2);
+  color: var(--error);
+}
+
+.toast.info {
+  border-color: var(--primary);
+}
+
+.toast.info .toast-icon {
+  background: var(--primary-glow);
+  color: var(--primary);
+}
+
+.toast-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.toast-title {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--text-main);
+}
+
+.toast-message {
+  font-size: 0.8125rem;
+  color: var(--text-sub);
+  line-height: 1.4;
+}
+
+.toast-close {
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s var(--ease-out);
+  flex-shrink: 0;
+}
+
+.toast-close:hover {
+  background: var(--bg-surface);
+  color: var(--text-main);
+}
+
+@keyframes toast-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(400px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes toast-slide-out {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(400px);
+  }
+}
+
+/* Mobile Toast */
+@media (max-width: 768px) {
+  .toast-container {
+    top: auto;
+    bottom: 24px;
+    left: 16px;
+    right: 16px;
+  }
+
+  .toast {
+    min-width: auto;
+    width: 100%;
+    transform: translateY(400px);
+  }
+
+  @keyframes toast-slide-in {
+    from {
+      opacity: 0;
+      transform: translateY(400px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes toast-slide-out {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(400px);
+    }
+  }
+}
+
+/* --- SKELETON LOADING STATES --- */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-card) 0%,
+    var(--bg-elevated) 50%,
+    var(--bg-card) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+  border-radius: var(--radius-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.03),
+    transparent
+  );
+  animation: skeleton-shimmer 2s infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.stat-value.loading {
+  min-width: 60px;
+  height: 24px;
+}
+
+.stat-value.loaded {
+  animation: fade-in-up 0.4s var(--ease-out) forwards;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- MICRO-INTERACTIONS --- */
+
+/* Enhanced button hover states */
+.btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s var(--ease-out);
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--primary-glow);
+}
+
+.btn-secondary:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* Card lift effect */
+.bento-card,
+.gallery-card,
+.feedback-card {
+  transition: all 0.3s var(--ease-out);
+}
+
+.bento-card:hover,
+.gallery-card:hover,
+.feedback-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Smooth icon rotations */
+.material-icons-round {
+  transition: transform 0.3s var(--ease-out);
+}
+
+.btn:hover .material-icons-round {
+  transform: scale(1.1);
+}
+
+/* Download button special effect */
+#downloadBtn:hover .material-icons-round,
+#downloadHeroBtn:hover .material-icons-round {
+  animation: download-bounce 0.6s var(--ease-bounce);
+}
+
+@keyframes download-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+/* Copy button success state */
+.copy-btn.success {
+  background: var(--success) !important;
+  color: white !important;
+}
+
+.copy-btn.success .material-icons-round {
+  animation: check-pop 0.3s var(--ease-spring);
+}
+
+@keyframes check-pop {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Scroll to top button animation */
+.scroll-top {
+  transition: all 0.3s var(--ease-out);
+}
+
+.scroll-top:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px var(--primary-glow);
+}
+
+.scroll-top .material-icons-round {
+  animation: arrow-bounce 1.5s infinite;
+}
+
+@keyframes arrow-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+/* Link underline effect */
+a:not(.btn):not(.logo):not(.nav-link) {
+  position: relative;
+  text-decoration: none;
+}
+
+a:not(.btn):not(.logo):not(.nav-link)::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--primary);
+  transition: width 0.3s var(--ease-out);
+}
+
+a:not(.btn):not(.logo):not(.nav-link):hover::after {
+  width: 100%;
+}
+
+/* Mobile menu slide animation improvement */
+.mobile-menu {
+  transition: all 0.3s var(--ease-out);
+}
+
+.mobile-menu.active {
+  animation: menu-slide-in 0.3s var(--ease-out);
+}
+
+@keyframes menu-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Theme toggle animation */
+#theme-btn .material-icons-round {
+  transition: transform 0.5s var(--ease-out);
+}
+
+#theme-btn:hover .material-icons-round {
+  transform: rotate(180deg);
+}
+
+/* Language toggle animation */
+#lang-btn {
+  transition: all 0.3s var(--ease-out);
+}
+
+#lang-btn:hover {
+  letter-spacing: 1px;
+}
+
+/* Stat counter animation */
+.stat-icon {
+  display: inline-block;
+  margin-right: 6px;
+  animation: stat-pulse 2s infinite;
+}
+
+@keyframes stat-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Loading spinner for buttons */
+.btn.loading {
+  pointer-events: none;
+  opacity: 0.7;
+  position: relative;
+}
+
+.btn.loading::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 50%;
+  left: 50%;
+  margin-left: -8px;
+  margin-top: -8px;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: btn-spin 0.6s linear infinite;
+}
+
+@keyframes btn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Error shake animation */
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-4px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(4px);
+  }
+}
+
+.error-shake {
+  animation: shake 0.5s;
+}
+
+/* Success pulse */
+@keyframes success-pulse {
+  0% {
+    box-shadow: 0 0 0 0 var(--success-glow);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+.success-pulse {
+  animation: success-pulse 0.6s;
+}
+
+/* Parallax effect for hero section */
+.hero-app-icon {
+  transition: transform 0.3s var(--ease-out);
+  will-change: transform;
+}
+
+/* Image lazy load fade in */
+img[loading="lazy"] {
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-out);
+}
+
+img[loading="lazy"].loaded {
+  opacity: 1;
+}
+
+/* Reduce animations on mobile for performance */
+@media (max-width: 768px) {
+  .btn::before,
+  .bento-card:hover,
+  .gallery-card:hover {
+    display: none;
+    transform: none;
+  }
+
+  .btn-primary:hover,
+  .btn-secondary:hover {
+    transform: none;
+    box-shadow: var(--shadow-md);
+  }
+}

@@ -732,25 +732,42 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(fetchGitHubData, 5 * 60 * 1000);
 });
 
-// Copy Homebrew command to clipboard
+// Copy Homebrew command to clipboard with enhanced UX
 function copyHomebrewCommand() {
   const command = document.getElementById('homebrew-command').textContent;
   const copyIcon = document.getElementById('copy-icon');
+  const copyBtn = copyIcon.closest('.copy-btn');
 
   navigator.clipboard.writeText(command).then(() => {
-    // Show success feedback
+    // Visual feedback
     copyIcon.textContent = 'check';
     copyIcon.style.color = 'var(--success)';
+    copyBtn.classList.add('success', 'success-pulse');
+
+    // Toast notification
+    if (window.Toast) {
+      window.Toast.success('Command copied to clipboard!', '');
+    }
 
     // Reset after 2 seconds
     setTimeout(() => {
       copyIcon.textContent = 'content_copy';
       copyIcon.style.color = '';
+      copyBtn.classList.remove('success', 'success-pulse');
     }, 2000);
 
     console.log('[Copy] Homebrew command copied to clipboard');
   }).catch(err => {
     console.error('[Copy] Failed to copy:', err);
+
+    // Error toast
+    if (window.Toast) {
+      window.Toast.error('Failed to copy command', 'Error');
+    }
+
+    // Shake animation
+    copyBtn.classList.add('error-shake');
+    setTimeout(() => copyBtn.classList.remove('error-shake'), 500);
 
     // Fallback for older browsers
     const textArea = document.createElement('textarea');
@@ -761,6 +778,9 @@ function copyHomebrewCommand() {
     textArea.select();
     try {
       document.execCommand('copy');
+      if (window.Toast) {
+        window.Toast.success('Command copied!', '');
+      }
       copyIcon.textContent = 'check';
       copyIcon.style.color = 'var(--success)';
       setTimeout(() => {
@@ -769,6 +789,9 @@ function copyHomebrewCommand() {
       }, 2000);
     } catch (e) {
       console.error('[Copy] Fallback failed:', e);
+      if (window.Toast) {
+        window.Toast.error('Please copy manually', 'Copy Failed');
+      }
     }
     document.body.removeChild(textArea);
   });
