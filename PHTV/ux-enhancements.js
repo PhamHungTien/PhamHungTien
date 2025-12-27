@@ -121,7 +121,7 @@ function initParallax() {
   }
 }
 
-// Download button click feedback
+// Download button click feedback (visual only, toast handled in script.js)
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initDownloadButtons);
 } else {
@@ -132,12 +132,12 @@ function initDownloadButtons() {
   const downloadButtons = document.querySelectorAll('[id*="download"]');
 
   downloadButtons.forEach(btn => {
-    if (btn.tagName === 'A') {
+    if (btn.tagName === 'A' && !btn.dataset.visualEffectAdded) {
       btn.addEventListener('click', () => {
         btn.classList.add('success-pulse');
         setTimeout(() => btn.classList.remove('success-pulse'), 600);
-        Toast.info('Redirecting to GitHub releases...', 'Download Started');
       });
+      btn.dataset.visualEffectAdded = 'true';
     }
   });
 }
