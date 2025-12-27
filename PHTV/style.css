@@ -6215,3 +6215,358 @@ select:focus {
     background: rgba(251, 251, 253, 0.9) !important;
   }
 }
+
+/* ================================================
+   PINK THEME & BUTTON CONSISTENCY
+   Primary color changed to pink with unified sizing
+   ================================================ */
+
+/* --- PINK PRIMARY COLOR SYSTEM --- */
+:root {
+  /* Override primary colors to pink */
+  --primary: #FF2D55 !important;
+  --primary-hover: #FF375F !important;
+  --primary-active: #E60045 !important;
+  --primary-glow: rgba(255, 45, 85, 0.5) !important;
+  --primary-subtle: rgba(255, 45, 85, 0.1) !important;
+  
+  /* Pink gradients */
+  --gradient-primary: linear-gradient(180deg, #FF375F, #FF2D55) !important;
+  --gradient-primary-hover: linear-gradient(180deg, #FF4D75, #FF2D55) !important;
+  
+  /* Update accent to complementary purple */
+  --accent: #AF52DE !important;
+  --accent-hover: #BF5AF2 !important;
+}
+
+[data-theme='light'] {
+  --primary: #FF2D55 !important;
+  --primary-hover: #E60045 !important;
+  --primary-glow: rgba(255, 45, 85, 0.4) !important;
+  --gradient-primary: linear-gradient(180deg, #FF375F, #FF2D55) !important;
+}
+
+/* --- UNIFIED BUTTON SIZES --- */
+.btn {
+  min-height: 44px !important;
+  padding: 10px 20px !important;
+  font-size: 0.9375rem !important;
+  font-weight: 600 !important;
+  border-radius: 12px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  white-space: nowrap !important;
+  transition: all 0.25s var(--spring-easing) !important;
+}
+
+/* Primary buttons - Pink */
+.btn-primary {
+  background: linear-gradient(180deg, #FF375F, #FF2D55) !important;
+  color: white !important;
+  border: none !important;
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.25) inset,
+    0 4px 16px rgba(255, 45, 85, 0.35),
+    0 0 0 0.5px rgba(0, 0, 0, 0.1) !important;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(180deg, #FF4D75, #FF375F) !important;
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.3) inset,
+    0 6px 20px rgba(255, 45, 85, 0.45),
+    0 0 24px rgba(255, 45, 85, 0.3),
+    0 0 0 0.5px rgba(0, 0, 0, 0.15) !important;
+  transform: translateY(-2px) scale(1.02) !important;
+}
+
+.btn-primary:active {
+  background: linear-gradient(180deg, #FF2D55, #E60045) !important;
+  box-shadow:
+    0 1px 2px 0 rgba(0, 0, 0, 0.3) inset,
+    0 2px 8px rgba(255, 45, 85, 0.25) !important;
+  transform: translateY(0) scale(0.98) !important;
+}
+
+/* Secondary buttons */
+.btn-secondary {
+  min-height: 44px !important;
+  padding: 10px 20px !important;
+  font-size: 0.9375rem !important;
+}
+
+/* --- NAVBAR BUTTON CONSISTENCY --- */
+.navbar .btn,
+.navbar .btn-primary,
+.navbar .btn-secondary,
+.navbar #theme-btn,
+.navbar #lang-btn,
+.navbar .mobile-toggle {
+  min-height: 40px !important;
+  height: 40px !important;
+  padding: 0 16px !important;
+  font-size: 0.875rem !important;
+  border-radius: 10px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+}
+
+/* Navbar primary button - Pink */
+.navbar .btn-primary {
+  background: linear-gradient(180deg, #FF375F, #FF2D55) !important;
+  color: white !important;
+  border: none !important;
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.25) inset,
+    0 4px 12px rgba(255, 45, 85, 0.3) !important;
+}
+
+.navbar .btn-primary:hover {
+  background: linear-gradient(180deg, #FF4D75, #FF375F) !important;
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.3) inset,
+    0 6px 16px rgba(255, 45, 85, 0.4),
+    0 0 20px rgba(255, 45, 85, 0.25) !important;
+  transform: translateY(-1px) scale(1.02) !important;
+}
+
+/* Theme button - Square icon button */
+.navbar #theme-btn {
+  width: 40px !important;
+  padding: 0 !important;
+  gap: 0 !important;
+}
+
+/* Language button */
+.navbar #lang-btn {
+  min-width: 48px !important;
+  padding: 0 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+}
+
+/* Mobile toggle */
+.navbar .mobile-toggle {
+  width: 40px !important;
+  padding: 0 !important;
+  gap: 0 !important;
+}
+
+/* --- HERO BUTTONS --- */
+.hero-buttons .btn {
+  min-height: 52px !important;
+  padding: 14px 28px !important;
+  font-size: 1rem !important;
+  border-radius: 14px !important;
+}
+
+.hero-buttons .btn-primary {
+  background: linear-gradient(180deg, #FF375F, #FF2D55) !important;
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.25) inset,
+    0 8px 24px rgba(255, 45, 85, 0.4),
+    0 0 0 0.5px rgba(0, 0, 0, 0.1) !important;
+}
+
+.hero-buttons .btn-primary:hover {
+  background: linear-gradient(180deg, #FF4D75, #FF375F) !important;
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.3) inset,
+    0 12px 32px rgba(255, 45, 85, 0.5),
+    0 0 40px rgba(255, 45, 85, 0.35),
+    0 0 0 0.5px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* --- PINK GLOW EFFECTS --- */
+.bento-card:hover {
+  border-color: rgba(255, 45, 85, 0.3) !important;
+  box-shadow: 
+    var(--shadow-elevation-4),
+    0 0 60px rgba(255, 45, 85, 0.15) !important;
+}
+
+[data-theme='light'] .bento-card:hover {
+  border-color: rgba(255, 45, 85, 0.25) !important;
+  box-shadow:
+    var(--shadow-elevation-4),
+    0 0 40px rgba(255, 45, 85, 0.1) !important;
+}
+
+/* --- PINK ICON GLOW --- */
+.bento-card:hover .bento-icon {
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.25) inset,
+    var(--shadow-elevation-3),
+    0 0 24px rgba(255, 45, 85, 0.5) !important;
+}
+
+/* --- PINK FOCUS STATES --- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+.btn:focus-visible {
+  outline: none !important;
+  box-shadow:
+    0 0 0 4px rgba(255, 45, 85, 0.4),
+    0 0 0 1px #FF2D55 !important;
+}
+
+/* --- PINK SCROLL TO TOP --- */
+.scroll-top {
+  background: linear-gradient(180deg, #FF375F, #FF2D55) !important;
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.25) inset,
+    0 8px 32px rgba(255, 45, 85, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.15) inset !important;
+}
+
+.scroll-top:hover {
+  background: linear-gradient(180deg, #FF4D75, #FF375F) !important;
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.3) inset,
+    0 12px 40px rgba(255, 45, 85, 0.5),
+    0 0 60px rgba(255, 45, 85, 0.35) !important;
+}
+
+/* --- PINK ACTIVE STATES --- */
+.nav-link.active,
+.gallery-tab.active {
+  color: #FF2D55 !important;
+  background: rgba(255, 45, 85, 0.15) !important;
+}
+
+[data-theme='light'] .nav-link.active,
+[data-theme='light'] .gallery-tab.active {
+  color: #FF2D55 !important;
+  background: rgba(255, 45, 85, 0.1) !important;
+}
+
+.mobile-menu a:hover,
+.mobile-menu a.active {
+  background: rgba(255, 45, 85, 0.15) !important;
+  border-color: rgba(255, 45, 85, 0.3) !important;
+  color: #FF2D55 !important;
+}
+
+/* --- PINK GRADIENT TEXT --- */
+.text-gradient {
+  background: linear-gradient(135deg, #FF2D55 0%, #FF375F 50%, #FF6B9D 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+.bento-card:hover .bento-content h3 {
+  background: linear-gradient(135deg, #FF2D55, #FF6B9D, #AF52DE) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+/* --- PINK GALLERY CARDS --- */
+.gallery-card:hover {
+  border-color: rgba(255, 45, 85, 0.3) !important;
+  box-shadow:
+    var(--shadow-elevation-4),
+    0 0 60px rgba(255, 45, 85, 0.2) !important;
+}
+
+[data-theme='light'] .gallery-card:hover {
+  border-color: rgba(255, 45, 85, 0.25) !important;
+  box-shadow:
+    var(--shadow-elevation-4),
+    0 0 40px rgba(255, 45, 85, 0.12) !important;
+}
+
+/* --- PINK FAQ HOVER --- */
+.faq-item:hover,
+.faq-item.active {
+  border-color: rgba(255, 45, 85, 0.2) !important;
+  box-shadow:
+    var(--shadow-elevation-2),
+    0 0 40px rgba(255, 45, 85, 0.1) !important;
+}
+
+/* --- NAVBAR SCROLLED PINK GLOW --- */
+.navbar.scrolled {
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.4),
+    0 0 80px rgba(255, 45, 85, 0.15),
+    0 0 0 0.5px rgba(255, 255, 255, 0.1) inset,
+    0 1px 0 0 rgba(255, 255, 255, 0.15) inset !important;
+}
+
+[data-theme='light'] .navbar.scrolled {
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.08),
+    0 0 80px rgba(255, 45, 85, 0.08),
+    0 0 0 0.5px rgba(255, 255, 255, 1) inset,
+    0 1px 0 0 rgba(255, 255, 255, 1) inset !important;
+}
+
+/* --- INPUT FOCUS PINK --- */
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #FF2D55 !important;
+  box-shadow: 0 0 0 4px rgba(255, 45, 85, 0.2) !important;
+}
+
+/* --- ENSURE ALL BUTTONS ARE CONSISTENT --- */
+.btn,
+button.btn,
+a.btn,
+input[type="button"].btn,
+input[type="submit"].btn {
+  min-height: 44px !important;
+  padding: 10px 20px !important;
+  line-height: 1.5 !important;
+  vertical-align: middle !important;
+}
+
+/* Icon-only buttons */
+.btn.icon-only,
+#theme-btn,
+.mobile-toggle {
+  width: 40px !important;
+  min-width: 40px !important;
+  padding: 0 !important;
+}
+
+/* Text buttons with icons */
+.btn .material-icons-round {
+  font-size: 1.125rem !important;
+  line-height: 1 !important;
+}
+
+/* Navbar specific overrides */
+.navbar .nav-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  height: 100% !important;
+}
+
+.navbar .nav-actions > * {
+  margin: 0 !important;
+}
+
+/* Mobile menu buttons */
+.mobile-menu .btn {
+  width: 100% !important;
+  min-height: 48px !important;
+}
+
+/* Ensure gradient backgrounds render correctly */
+.btn-primary,
+.navbar .btn-primary,
+.hero-buttons .btn-primary,
+.scroll-top {
+  background-image: linear-gradient(180deg, #FF375F, #FF2D55) !important;
+  background-color: #FF2D55 !important;
+}
