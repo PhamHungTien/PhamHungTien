@@ -6351,6 +6351,7 @@ select:focus {
 .navbar .btn-secondary,
 .navbar #theme-btn,
 .navbar #lang-btn,
+.navbar #downloadBtn,
 .navbar .mobile-toggle {
   min-height: clamp(36px, 8vw, 40px) !important;
   height: clamp(36px, 8vw, 40px) !important;
@@ -6361,6 +6362,27 @@ select:focus {
   align-items: center !important;
   justify-content: center !important;
   gap: clamp(4px, 1vw, 6px) !important;
+}
+
+/* Navbar download button icon - responsive */
+.navbar #downloadBtn .material-icons-round {
+  font-size: clamp(18px, 4vw, 20px) !important;
+}
+
+/* Navbar download button text - hide on very small screens */
+.navbar #downloadBtn span:not(.material-icons-round) {
+  display: inline !important;
+}
+
+@media (max-width: 480px) {
+  .navbar #downloadBtn span:not(.material-icons-round) {
+    display: none !important;
+  }
+
+  .navbar #downloadBtn {
+    width: clamp(36px, 8vw, 40px) !important;
+    padding: 0 !important;
+  }
 }
 
 /* Navbar primary button - Pink */
