@@ -7345,7 +7345,14 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 24px !important;
 }
 
-/* Removed - no stat icons anymore */
+/* Stat icons - responsive sizing */
+.stat-value .material-icons-round,
+.stat-value .stat-icon {
+  font-size: clamp(1.1rem, 2.5vw, 1.25rem) !important;
+  display: inline-flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
 
 .bento-icon .material-icons-round {
   font-size: 28px !important;
