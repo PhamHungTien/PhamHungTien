@@ -1144,22 +1144,28 @@ body::before {
   flex-wrap: wrap;
 }
 
+/* ===== REDESIGNED STAT ITEMS - MODERN LAYOUT ===== */
 .stat-item {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(4px, 1.5vw, 6px);
-  padding: clamp(16px, 4vw, 20px) clamp(20px, 5vw, 28px);
-  border-radius: clamp(12px, 3vw, 14px);
+  gap: clamp(8px, 2vw, 12px);
+  padding: clamp(20px, 5vw, 28px) clamp(24px, 6vw, 32px);
+  border-radius: clamp(16px, 4vw, 20px);
   background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.06) 0%,
+    135deg,
+    rgba(255, 45, 85, 0.08) 0%,
+    rgba(255, 107, 157, 0.04) 50%,
     rgba(255, 255, 255, 0.02) 100%
   );
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  min-width: clamp(90px, 20vw, 110px);
+  backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(255, 45, 85, 0.15);
+  box-shadow:
+    0 8px 32px rgba(255, 45, 85, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  min-width: clamp(110px, 25vw, 140px);
   position: relative;
   overflow: hidden;
   text-align: center;
@@ -1167,101 +1173,108 @@ body::before {
 
 [data-theme='light'] .stat-item {
   background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.95) 0%,
-    rgba(255, 255, 255, 0.85) 100%
+    135deg,
+    rgba(255, 245, 248, 1) 0%,
+    rgba(255, 255, 255, 0.95) 100%
   );
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border: 1.5px solid rgba(255, 45, 85, 0.12);
+  box-shadow:
+    0 4px 24px rgba(255, 45, 85, 0.08),
+    0 0 0 1px rgba(255, 45, 85, 0.05) inset;
 }
 
+/* Animated gradient border on top */
 .stat-item::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #FF2D55, #FF6B9D, #FF2D55);
+  height: 3px;
+  background: linear-gradient(90deg, #FF2D55 0%, #FF6B9D 50%, #FF2D55 100%);
   background-size: 200% auto;
-  opacity: 0;
+  opacity: 0.6;
   transition: opacity 0.3s ease;
 }
 
 .stat-item:hover {
-  transform: translateY(-3px);
+  transform: translateY(-6px) scale(1.02);
   background: linear-gradient(
-    180deg,
-    rgba(255, 45, 85, 0.08) 0%,
-    rgba(255, 45, 85, 0.04) 100%
+    135deg,
+    rgba(255, 45, 85, 0.15) 0%,
+    rgba(255, 107, 157, 0.08) 50%,
+    rgba(255, 255, 255, 0.04) 100%
   );
-  border-color: rgba(255, 45, 85, 0.3);
+  border-color: rgba(255, 45, 85, 0.4);
   box-shadow:
-    0 12px 40px rgba(255, 45, 85, 0.2),
-    0 0 0 1px rgba(255, 45, 85, 0.1) inset;
+    0 16px 48px rgba(255, 45, 85, 0.25),
+    0 0 0 1px rgba(255, 45, 85, 0.2) inset,
+    0 0 40px rgba(255, 45, 85, 0.15);
 }
 
 [data-theme='light'] .stat-item:hover {
   background: linear-gradient(
-    180deg,
-    rgba(255, 245, 248, 1) 0%,
-    rgba(255, 255, 255, 0.95) 100%
+    135deg,
+    rgba(255, 240, 245, 1) 0%,
+    rgba(255, 250, 252, 1) 100%
   );
-  border-color: rgba(255, 45, 85, 0.2);
+  border-color: rgba(255, 45, 85, 0.3);
   box-shadow:
-    0 8px 24px rgba(255, 45, 85, 0.15),
-    0 0 0 1px rgba(255, 45, 85, 0.08) inset;
+    0 12px 36px rgba(255, 45, 85, 0.2),
+    0 0 0 1px rgba(255, 45, 85, 0.15) inset;
 }
 
 .stat-item:hover::before {
   opacity: 1;
+  animation: borderGlow 2s linear infinite;
 }
 
+@keyframes borderGlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* Stat value container - holds icon + number */
 .stat-item strong {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(6px, 1.5vw, 8px);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 3.5vw, 1.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   color: #ffffff;
-  font-weight: 800;
-  font-size: clamp(1.25rem, 3vw, 1.5rem);
-  display: block;
-  line-height: 1;
-  letter-spacing: -0.03em;
-  background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.85) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
   transition: all 0.3s ease;
 }
 
 [data-theme='light'] .stat-item strong {
-  background: linear-gradient(135deg, #000000 0%, rgba(0, 0, 0, 0.8) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #1a1a1a;
 }
 
 .stat-item:hover strong {
-  background: linear-gradient(135deg, #FF2D55 0%, #FF6B9D 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  transform: scale(1.05);
+  color: #FF2D55;
+  transform: scale(1.08);
 }
 
+/* Stat label styling */
 .stat-label {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: clamp(0.625rem, 1.5vw, 0.7rem);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: clamp(0.7rem, 1.6vw, 0.8rem);
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: clamp(0.5px, 0.15vw, 0.8px);
+  letter-spacing: clamp(0.8px, 0.2vw, 1px);
   white-space: nowrap;
   transition: color 0.3s ease;
 }
 
 [data-theme='light'] .stat-label {
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .stat-item:hover .stat-label {
   color: #FF2D55;
+  letter-spacing: clamp(1px, 0.25vw, 1.2px);
 }
 
 .stat-divider {
@@ -3813,30 +3826,32 @@ textarea:focus-visible {
 }
 
 /* --- GITHUB STATS ENHANCEMENT --- */
-/* Stat icon styling - centered and sized properly */
+/* Stat icon styling - modern redesign */
 .stat-value .stat-icon,
 .stat-value .material-icons-round {
-  font-size: clamp(1.1rem, 2.5vw, 1.25rem) !important;
+  font-size: clamp(1.3rem, 3vw, 1.5rem) !important;
   line-height: 1 !important;
-  vertical-align: middle !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
+  opacity: 1 !important;
+  visibility: visible !important;
   color: #FF2D55 !important;
-  filter: drop-shadow(0 2px 6px rgba(255, 45, 85, 0.3));
-  transition: all 0.3s var(--ease-out);
+  filter: drop-shadow(0 3px 8px rgba(255, 45, 85, 0.4));
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 [data-theme='light'] .stat-value .stat-icon,
 [data-theme='light'] .stat-value .material-icons-round {
   color: #FF2D55 !important;
-  filter: drop-shadow(0 2px 4px rgba(255, 45, 85, 0.2));
+  filter: drop-shadow(0 2px 6px rgba(255, 45, 85, 0.3));
 }
 
-.stat-item:hover .stat-icon,
-.stat-item:hover .material-icons-round {
-  transform: scale(1.1) rotate(5deg);
-  filter: drop-shadow(0 4px 10px rgba(255, 45, 85, 0.5));
+.stat-item:hover .stat-value .stat-icon,
+.stat-item:hover .stat-value .material-icons-round {
+  transform: scale(1.15) rotate(8deg);
+  filter: drop-shadow(0 6px 16px rgba(255, 45, 85, 0.6));
+  color: #FF375F !important;
 }
 
 .stat-value.loaded {
@@ -7345,11 +7360,13 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 24px !important;
 }
 
-/* Stat icons - responsive sizing */
+/* Stat icons - responsive sizing (redesigned) */
 .stat-value .material-icons-round,
 .stat-value .stat-icon {
-  font-size: clamp(1.1rem, 2.5vw, 1.25rem) !important;
+  font-size: clamp(1.3rem, 3vw, 1.5rem) !important;
   display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   opacity: 1 !important;
   visibility: visible !important;
 }
