@@ -6711,3 +6711,280 @@ h1, h2, h3, h4, h5, h6 {
   50% { transform: translateY(0); }
   75% { transform: translateY(-4px); }
 }
+
+/* ================================================
+   LARGER PHTV TEXT & UNIFIED ICON SHADOWS
+   ================================================ */
+
+/* --- LARGER PHTV LOGO TEXT --- */
+.logo-name {
+  font-size: 1.75rem !important; /* Increased from default */
+  font-weight: 800 !important;
+  line-height: 1 !important;
+}
+
+@media (max-width: 768px) {
+  .logo-name {
+    font-size: 1.5rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-name {
+    font-size: 1.25rem !important;
+  }
+}
+
+/* --- UNIFIED ICON SHADOW SYSTEM --- */
+/* All icons use the same shadow style for consistency */
+
+/* Bento card icons */
+.bento-icon {
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.2) inset,
+    0 8px 16px rgba(255, 45, 85, 0.25),
+    0 4px 8px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset !important;
+}
+
+.bento-card:hover .bento-icon {
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.25) inset,
+    0 12px 24px rgba(255, 45, 85, 0.35),
+    0 6px 12px rgba(0, 0, 0, 0.2),
+    0 0 24px rgba(255, 45, 85, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.15) inset !important;
+}
+
+/* Material icons in buttons - subtle shadow */
+.btn .material-icons-round,
+.btn .material-icons {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  transition: filter 0.2s var(--spring-easing);
+}
+
+.btn-primary .material-icons-round,
+.btn-primary .material-icons {
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
+}
+
+.btn:hover .material-icons-round,
+.btn:hover .material-icons {
+  filter: drop-shadow(0 3px 8px rgba(255, 45, 85, 0.4));
+}
+
+/* SVG icons in buttons (like GitHub) */
+.btn svg {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+  transition: filter 0.2s var(--spring-easing);
+}
+
+.btn:hover svg {
+  filter: drop-shadow(0 4px 8px rgba(255, 45, 85, 0.3));
+}
+
+/* Timeline icons/badges */
+.timeline-badge,
+.timeline-icon {
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.2) inset,
+    0 6px 12px rgba(255, 45, 85, 0.25),
+    0 3px 6px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* App icon in hero section */
+.hero-app-icon {
+  filter: 
+    drop-shadow(0 12px 24px rgba(255, 45, 85, 0.3))
+    drop-shadow(0 6px 12px rgba(0, 0, 0, 0.2));
+  transition: filter 0.3s var(--spring-easing);
+}
+
+.hero-app-icon:hover,
+.hero-branding:hover .hero-app-icon {
+  filter: 
+    drop-shadow(0 16px 32px rgba(255, 45, 85, 0.4))
+    drop-shadow(0 8px 16px rgba(0, 0, 0, 0.25))
+    drop-shadow(0 0 40px rgba(255, 45, 85, 0.3));
+}
+
+[data-theme='light'] .hero-app-icon {
+  filter: 
+    drop-shadow(0 12px 24px rgba(255, 45, 85, 0.25))
+    drop-shadow(0 6px 12px rgba(0, 0, 0, 0.12));
+}
+
+[data-theme='light'] .hero-app-icon:hover,
+[data-theme='light'] .hero-branding:hover .hero-app-icon {
+  filter: 
+    drop-shadow(0 16px 32px rgba(255, 45, 85, 0.35))
+    drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15))
+    drop-shadow(0 0 40px rgba(255, 45, 85, 0.25));
+}
+
+/* Gallery image icons/thumbnails */
+.gallery-card img,
+.gallery-image {
+  box-shadow:
+    0 8px 16px rgba(0, 0, 0, 0.15),
+    0 4px 8px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  transition: box-shadow 0.3s var(--spring-easing);
+}
+
+.gallery-card:hover img,
+.gallery-card:hover .gallery-image {
+  box-shadow:
+    0 12px 24px rgba(255, 45, 85, 0.25),
+    0 6px 12px rgba(0, 0, 0, 0.2),
+    0 0 32px rgba(255, 45, 85, 0.2),
+    0 0 0 1px rgba(255, 45, 85, 0.1) inset;
+}
+
+/* Social media icons in footer */
+.social-links svg,
+.social-links .material-icons-round {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+  transition: filter 0.2s var(--spring-easing);
+}
+
+.social-links a:hover svg,
+.social-links a:hover .material-icons-round {
+  filter: drop-shadow(0 4px 8px rgba(255, 45, 85, 0.3));
+}
+
+/* Feature icons in comparison table */
+.comparison-table .material-icons-round,
+.feature-icon {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+}
+
+/* FAQ icons */
+.faq-icon,
+.faq-item .material-icons-round {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12));
+  transition: filter 0.2s var(--spring-easing);
+}
+
+.faq-item:hover .material-icons-round,
+.faq-item.active .material-icons-round {
+  filter: drop-shadow(0 4px 8px rgba(255, 45, 85, 0.25));
+}
+
+/* Stats icons - pink shadow */
+.stat-icon {
+  filter: drop-shadow(0 3px 6px rgba(255, 45, 85, 0.3));
+  transition: filter 0.3s var(--spring-easing);
+}
+
+.stat-item:hover .stat-icon {
+  filter: drop-shadow(0 4px 10px rgba(255, 45, 85, 0.45));
+}
+
+/* Logo icon image */
+.logo img {
+  filter: drop-shadow(0 2px 6px rgba(255, 45, 85, 0.2));
+  transition: filter 0.2s var(--spring-easing);
+}
+
+.logo:hover img {
+  filter: drop-shadow(0 4px 10px rgba(255, 45, 85, 0.35));
+}
+
+/* Scroll to top icon */
+.scroll-top .material-icons-round {
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
+}
+
+.scroll-top:hover .material-icons-round {
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.4));
+}
+
+/* Mobile menu toggle icon */
+.mobile-toggle .material-icons-round {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+}
+
+.mobile-toggle:hover .material-icons-round {
+  filter: drop-shadow(0 3px 6px rgba(255, 45, 85, 0.25));
+}
+
+/* Theme toggle icon */
+#theme-btn .material-icons-round {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+  transition: filter 0.2s var(--spring-easing);
+}
+
+#theme-btn:hover .material-icons-round {
+  filter: drop-shadow(0 3px 6px rgba(255, 45, 85, 0.25));
+}
+
+/* Gallery tab icons */
+.gallery-tab .material-icons-round {
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+.gallery-tab.active .material-icons-round,
+.gallery-tab:hover .material-icons-round {
+  filter: drop-shadow(0 2px 4px rgba(255, 45, 85, 0.3));
+}
+
+/* Light mode adjustments - lighter shadows */
+[data-theme='light'] .bento-icon {
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.9) inset,
+    0 8px 16px rgba(255, 45, 85, 0.2),
+    0 4px 8px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(255, 255, 255, 0.8) inset !important;
+}
+
+[data-theme='light'] .bento-card:hover .bento-icon {
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 1) inset,
+    0 12px 24px rgba(255, 45, 85, 0.25),
+    0 6px 12px rgba(0, 0, 0, 0.1),
+    0 0 24px rgba(255, 45, 85, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 1) inset !important;
+}
+
+[data-theme='light'] .timeline-badge,
+[data-theme='light'] .timeline-icon {
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.9) inset,
+    0 6px 12px rgba(255, 45, 85, 0.2),
+    0 3px 6px rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme='light'] .gallery-card img,
+[data-theme='light'] .gallery-card .gallery-image {
+  box-shadow:
+    0 8px 16px rgba(0, 0, 0, 0.08),
+    0 4px 8px rgba(0, 0, 0, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+}
+
+[data-theme='light'] .gallery-card:hover img,
+[data-theme='light'] .gallery-card:hover .gallery-image {
+  box-shadow:
+    0 12px 24px rgba(255, 45, 85, 0.2),
+    0 6px 12px rgba(0, 0, 0, 0.1),
+    0 0 32px rgba(255, 45, 85, 0.15),
+    0 0 0 1px rgba(255, 45, 85, 0.08) inset;
+}
+
+/* Ensure all shadows transition smoothly */
+.bento-icon,
+.timeline-badge,
+.timeline-icon,
+.gallery-card img,
+.gallery-image,
+.hero-app-icon,
+.logo img,
+.stat-icon,
+.btn .material-icons-round,
+.btn svg {
+  transition: 
+    box-shadow 0.3s var(--spring-easing),
+    filter 0.3s var(--spring-easing),
+    transform 0.3s var(--spring-easing);
+}
