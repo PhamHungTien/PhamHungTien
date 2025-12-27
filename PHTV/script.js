@@ -762,13 +762,15 @@ function updateGitHubUI(repoData, releaseData) {
 }
 
 // Fetch data on page load
-document.addEventListener('DOMContentLoaded', () => {
-  // Fetch GitHub data
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    fetchGitHubData();
+    setInterval(fetchGitHubData, 5 * 60 * 1000);
+  });
+} else {
   fetchGitHubData();
-  
-  // Refresh every 5 minutes
   setInterval(fetchGitHubData, 5 * 60 * 1000);
-});
+}
 
 // Copy Homebrew command to clipboard with enhanced UX
 function copyHomebrewCommand() {
