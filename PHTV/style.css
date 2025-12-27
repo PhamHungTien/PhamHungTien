@@ -3804,7 +3804,8 @@ textarea:focus-visible {
 .stat-value {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  gap: clamp(4px, 1vw, 6px);
   transition: all 0.3s var(--ease-out);
 }
 .stat-value.counting {
@@ -3812,7 +3813,31 @@ textarea:focus-visible {
 }
 
 /* --- GITHUB STATS ENHANCEMENT --- */
-/* Removed - stat-icon now sibling of stat-value, styled at line 1266 */
+/* Stat icon styling - centered and sized properly */
+.stat-value .stat-icon,
+.stat-value .material-icons-round {
+  font-size: clamp(1.1rem, 2.5vw, 1.25rem) !important;
+  line-height: 1 !important;
+  vertical-align: middle !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #FF2D55 !important;
+  filter: drop-shadow(0 2px 6px rgba(255, 45, 85, 0.3));
+  transition: all 0.3s var(--ease-out);
+}
+
+[data-theme='light'] .stat-value .stat-icon,
+[data-theme='light'] .stat-value .material-icons-round {
+  color: #FF2D55 !important;
+  filter: drop-shadow(0 2px 4px rgba(255, 45, 85, 0.2));
+}
+
+.stat-item:hover .stat-icon,
+.stat-item:hover .material-icons-round {
+  transform: scale(1.1) rotate(5deg);
+  filter: drop-shadow(0 4px 10px rgba(255, 45, 85, 0.5));
+}
 
 .stat-value.loaded {
   animation: statPop 0.4s var(--ease-spring);
