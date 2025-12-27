@@ -256,7 +256,52 @@ initTheme();
 
 // Interactions
 function toggleMenu() {
-  document.getElementById('mobileMenu').classList.toggle('active');
+  const menu = document.getElementById('mobileMenu');
+  const toggle = document.querySelector('.mobile-toggle');
+  const isActive = menu.classList.toggle('active');
+
+  // Update ARIA attributes
+  if (toggle) {
+    toggle.setAttribute('aria-expanded', isActive);
+  }
+
+  // Trap focus in mobile menu when open
+  if (isActive) {
+    const focusableElements = menu.querySelectorAll('a, button');
+    if (focusableElements.length > 0) {
+      focusableElements[0].focus();
+    }
+
+    // Add keyboard event listener
+    menu.addEventListener('keydown', handleMenuKeyboard);
+  } else {
+    menu.removeEventListener('keydown', handleMenuKeyboard);
+    if (toggle) toggle.focus();
+  }
+}
+
+// Keyboard navigation for mobile menu
+function handleMenuKeyboard(e) {
+  const menu = document.getElementById('mobileMenu');
+  const focusableElements = Array.from(menu.querySelectorAll('a, button'));
+  const firstElement = focusableElements[0];
+  const lastElement = focusableElements[focusableElements.length - 1];
+
+  // Tab key navigation
+  if (e.key === 'Tab') {
+    if (e.shiftKey && document.activeElement === firstElement) {
+      e.preventDefault();
+      lastElement.focus();
+    } else if (!e.shiftKey && document.activeElement === lastElement) {
+      e.preventDefault();
+      firstElement.focus();
+    }
+  }
+
+  // Escape to close
+  if (e.key === 'Escape') {
+    toggleMenu();
+  }
 }
 function openDonate() {
   document.getElementById('donateModal').classList.add('active');
