@@ -6570,3 +6570,144 @@ input[type="submit"].btn {
   background-image: linear-gradient(180deg, #FF375F, #FF2D55) !important;
   background-color: #FF2D55 !important;
 }
+
+/* ================================================
+   PINK LOGO & ICON IMPROVEMENTS
+   ================================================ */
+
+/* --- PINK LOGO PHTV --- */
+.logo-name {
+  font-weight: 800 !important;
+  letter-spacing: -0.02em !important;
+  background: linear-gradient(135deg, #FF2D55 0%, #FF6B9D 50%, #FF2D55 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  background-size: 200% auto !important;
+  animation: gradient-shift 3s ease infinite !important;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+}
+
+[data-theme='light'] .logo-name {
+  background: linear-gradient(135deg, #FF2D55 0%, #FF6B9D 50%, #E60045 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  background-size: 200% auto !important;
+}
+
+.logo:hover .logo-name {
+  background: linear-gradient(135deg, #FF375F 0%, #FF8DB3 50%, #FF375F 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  background-size: 200% auto !important;
+}
+
+/* --- LARGER GITHUB ICON --- */
+.navbar .btn-icon svg {
+  transition: all 0.2s var(--spring-easing) !important;
+}
+
+.navbar .btn-icon:hover svg {
+  transform: scale(1.1) rotate(-5deg) !important;
+  filter: drop-shadow(0 2px 8px rgba(255, 45, 85, 0.3)) !important;
+}
+
+.navbar .btn-icon {
+  width: 40px !important;
+  min-width: 40px !important;
+  height: 40px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* --- PINK TEXT EVERYWHERE --- */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-main);
+}
+
+/* Hero title pink gradient */
+.hero-title {
+  background: linear-gradient(135deg, 
+    var(--text-main) 0%,
+    var(--text-main) 40%,
+    #FF2D55 60%,
+    #FF6B9D 80%,
+    #FF2D55 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  background-size: 200% auto !important;
+  animation: gradient-shift 4s ease infinite !important;
+}
+
+/* Section titles subtle pink tint */
+.section-title::after {
+  background: linear-gradient(90deg, 
+    #FF2D55,
+    #FF6B9D,
+    #AF52DE) !important;
+}
+
+/* Stats icons pink tint */
+.stat-icon {
+  color: #FF2D55 !important;
+}
+
+.stat-value.loaded .stat-icon {
+  animation: icon-pop 0.5s var(--bounce-easing);
+}
+
+@keyframes icon-pop {
+  0% { transform: scale(0.8); opacity: 0; }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Bento icons pink gradient */
+.bento-icon {
+  background: linear-gradient(135deg, #FF2D55, #FF6B9D) !important;
+}
+
+.bento-card:hover .bento-icon {
+  background: linear-gradient(135deg, #FF375F, #FF8DB3) !important;
+}
+
+/* Timeline badges pink */
+.timeline-badge {
+  background: linear-gradient(135deg, #FF2D55, #AF52DE) !important;
+}
+
+/* Footer links hover pink */
+.footer-links a:hover,
+.social-links a:hover {
+  color: #FF2D55 !important;
+}
+
+/* Download icon animation */
+.btn-primary .material-icons-round {
+  animation: download-pulse 2s ease-in-out infinite;
+}
+
+@keyframes download-pulse {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.btn-primary:hover .material-icons-round {
+  animation: download-bounce 0.6s ease;
+}
+
+@keyframes download-bounce {
+  0%, 100% { transform: translateY(0); }
+  25% { transform: translateY(-8px); }
+  50% { transform: translateY(0); }
+  75% { transform: translateY(-4px); }
+}
