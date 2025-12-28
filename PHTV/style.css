@@ -7973,25 +7973,25 @@ img {
   filter: drop-shadow(0 3px 12px rgba(255, 168, 194, 0.35)) !important;
 }
 
-/* Light Mode - Softer tones */
+/* Light Mode - Clean & Crisp */
 [data-theme='light'] .hero-app-icon {
-  filter: drop-shadow(0 6px 20px rgba(255, 107, 157, 0.15)) !important;
+  filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.1)) !important;
 }
 
 [data-theme='light'] .hero-app-icon:hover {
-  filter: drop-shadow(0 8px 28px rgba(255, 141, 179, 0.22)) !important;
+  filter: drop-shadow(0 6px 24px rgba(0, 0, 0, 0.15)) !important;
 }
 
 [data-theme='light'] .first-letter {
-  background: linear-gradient(180deg, #FF2D55 0%, #FF6B9D 100%) !important;
+  background: linear-gradient(180deg, #E81D48 0%, #FF2D55 100%) !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
   background-clip: text !important;
-  filter: drop-shadow(0 2px 6px rgba(255, 107, 157, 0.2)) !important;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1)) !important;
 }
 
 [data-theme='light'] .word-line:hover .first-letter {
-  filter: drop-shadow(0 3px 12px rgba(255, 141, 179, 0.28)) !important;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15)) !important;
 }
 
 /* Bento Icons - Pink Gradient Background & Glow */
