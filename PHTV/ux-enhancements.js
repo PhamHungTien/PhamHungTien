@@ -95,7 +95,19 @@ function initLazyImages() {
   });
 }
 
-// Parallax effect for hero icon (mouse movement)
+// Throttle function for performance
+function throttle(func, limit) {
+  let inThrottle;
+  return function(...args) {
+    if (!inThrottle) {
+      func.apply(this, args);
+      inThrottle = true;
+      setTimeout(() => inThrottle = false, limit);
+    }
+  };
+}
+
+// Parallax effect for hero icon (mouse movement) - OPTIMIZED
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initParallax);
 } else {
@@ -106,18 +118,32 @@ function initParallax() {
   const heroIcon = document.querySelector('.hero-app-icon');
 
   if (heroIcon) {
-    document.addEventListener('mousemove', (e) => {
+    // Use throttled handler with requestAnimationFrame for smooth performance
+    let ticking = false;
+    let lastX = 0, lastY = 0;
+
+    const updateParallax = () => {
+      heroIcon.style.transform = `translate3d(${lastX}px, ${lastY}px, 0)`;
+      ticking = false;
+    };
+
+    const handleMouseMove = throttle((e) => {
       // Only on desktop
       if (window.innerWidth > 768) {
         const { clientX, clientY } = e;
         const { innerWidth, innerHeight } = window;
 
-        const xPos = (clientX / innerWidth - 0.5) * 20;
-        const yPos = (clientY / innerHeight - 0.5) * 20;
+        lastX = (clientX / innerWidth - 0.5) * 20;
+        lastY = (clientY / innerHeight - 0.5) * 20;
 
-        heroIcon.style.transform = `translate(${xPos}px, ${yPos}px)`;
+        if (!ticking) {
+          requestAnimationFrame(updateParallax);
+          ticking = true;
+        }
       }
-    });
+    }, 16); // ~60fps
+
+    document.addEventListener('mousemove', handleMouseMove, { passive: true });
   }
 }
 

@@ -7429,3 +7429,127 @@ svg {
 .footer-links a:hover svg {
   fill: #FF2D55 !important;
 }
+
+/* ===========================================
+   PERFORMANCE OPTIMIZATIONS
+   =========================================== */
+
+/* GPU Acceleration for animated elements */
+.hero-app-icon,
+.bento-icon,
+.first-letter,
+.word-line,
+.btn,
+.bento-card,
+.gallery-card,
+.timeline-item,
+.scroll-top,
+.navbar {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Optimize gradient animations */
+.mesh-bg,
+.hero::before,
+.hero::after {
+  will-change: transform, opacity;
+}
+
+/* Reduce paint areas */
+.bento-card::before,
+.bento-card::after {
+  contain: strict;
+}
+
+/* Optimize text rendering */
+body {
+  text-rendering: optimizeSpeed;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .mesh-bg,
+  .hero::before,
+  .hero::after,
+  .bento-icon,
+  .first-letter,
+  .hero-app-icon {
+    animation: none !important;
+  }
+
+  .word-line,
+  .bento-card,
+  .btn {
+    transition: none !important;
+  }
+}
+
+/* Pause animations when not visible (Intersection Observer handles this in JS) */
+.bento-card:not(.visible) .bento-icon,
+.section:not(.active) .reveal {
+  animation-play-state: paused;
+}
+
+/* Optimize scrolling performance */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Contain layout for complex components */
+.bento-grid,
+.gallery-wrapper,
+.comparison-wrapper,
+.faq-container {
+  contain: layout style;
+}
+
+/* Optimize images */
+img {
+  content-visibility: auto;
+}
+
+/* Reduce complexity on mobile for better performance */
+@media (max-width: 768px) {
+  .mesh-bg {
+    animation: none !important;
+    opacity: 0.3;
+  }
+
+  .hero::before,
+  .hero::after {
+    animation: none !important;
+  }
+
+  .bento-icon {
+    animation: none !important;
+  }
+
+  .first-letter {
+    animation: gradientFlow 10s ease infinite !important;
+  }
+
+  .word-line:hover {
+    transform: none !important;
+  }
+
+  .bento-card:hover {
+    transform: translateY(-2px) !important;
+  }
+}

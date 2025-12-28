@@ -337,15 +337,23 @@ document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
 // Navbar Scroll Effect
 const navbar = document.querySelector('.navbar');
 
-// Card Glow Effect (follow mouse)
+// Card Glow Effect (follow mouse) - OPTIMIZED with throttle
 document.querySelectorAll('.bento-card').forEach((card) => {
+  let ticking = false;
+
   card.addEventListener('mousemove', (e) => {
-    const rect = card.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    card.style.setProperty('--mouse-x', x + '%');
-    card.style.setProperty('--mouse-y', y + '%');
-  });
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        card.style.setProperty('--mouse-x', x + '%');
+        card.style.setProperty('--mouse-y', y + '%');
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
 });
 
 // Smooth scroll for anchor links
@@ -443,27 +451,40 @@ function debounce(func, wait) {
   };
 }
 
-// Optimized scroll handlers
-const handleScroll = debounce(() => {
-  const currentScroll = window.pageYOffset;
+// Optimized scroll handlers with requestAnimationFrame
+let scrollTicking = false;
+const handleScroll = () => {
+  if (!scrollTicking) {
+    requestAnimationFrame(() => {
+      const currentScroll = window.pageYOffset;
 
-  // Navbar effect
-  if (currentScroll > 50) {
-    navbar.classList.add('scrolled');
-  } else {
-    navbar.classList.remove('scrolled');
+      // Navbar effect
+      if (currentScroll > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+
+      // Scroll to top button
+      if (scrollTopBtn) {
+        if (currentScroll > 500) {
+          scrollTopBtn.classList.add('visible');
+        } else {
+          scrollTopBtn.classList.remove('visible');
+        }
+      }
+
+      // Scroll spy (debounced separately for less critical updates)
+      scrollSpyUpdate(currentScroll);
+
+      scrollTicking = false;
+    });
+    scrollTicking = true;
   }
+};
 
-  // Scroll to top button
-  if (scrollTopBtn) {
-    if (currentScroll > 500) {
-      scrollTopBtn.classList.add('visible');
-    } else {
-      scrollTopBtn.classList.remove('visible');
-    }
-  }
-
-  // Scroll spy
+// Separate scroll spy for less frequent updates
+const scrollSpyUpdate = debounce((currentScroll) => {
   let current = '';
   sections.forEach((section) => {
     const sectionTop = section.offsetTop;
@@ -480,7 +501,7 @@ const handleScroll = debounce(() => {
       link.classList.add('active');
     }
   });
-}, 10);
+}, 100);
 
 // Replace multiple scroll listeners with single optimized one
 window.addEventListener('scroll', handleScroll, { passive: true });
