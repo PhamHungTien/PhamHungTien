@@ -7921,3 +7921,111 @@ img {
     height: 28px !important;
   }
 }
+
+/* ===========================================
+   UNIFIED PINK GLOW SYSTEM - ICONS & LETTERS
+   =========================================== */
+
+/* PHTV First Letters - Enhanced Pink Glow */
+.first-letter {
+  filter:
+    drop-shadow(0 0 20px rgba(255, 45, 85, 0.6))
+    drop-shadow(0 0 40px rgba(255, 45, 85, 0.4))
+    drop-shadow(0 8px 16px rgba(255, 45, 85, 0.3)) !important;
+}
+
+.first-letter::before {
+  filter: blur(25px) !important;
+  opacity: 0.5 !important;
+}
+
+.word-line:hover .first-letter {
+  filter:
+    drop-shadow(0 0 30px rgba(255, 45, 85, 0.8))
+    drop-shadow(0 0 60px rgba(255, 45, 85, 0.5))
+    drop-shadow(0 12px 24px rgba(255, 45, 85, 0.4)) !important;
+}
+
+[data-theme='light'] .first-letter {
+  filter:
+    drop-shadow(0 0 15px rgba(255, 45, 85, 0.5))
+    drop-shadow(0 0 30px rgba(255, 45, 85, 0.3))
+    drop-shadow(0 6px 12px rgba(255, 45, 85, 0.25)) !important;
+}
+
+[data-theme='light'] .word-line:hover .first-letter {
+  filter:
+    drop-shadow(0 0 25px rgba(255, 45, 85, 0.7))
+    drop-shadow(0 0 50px rgba(255, 45, 85, 0.4))
+    drop-shadow(0 10px 20px rgba(255, 45, 85, 0.35)) !important;
+}
+
+/* Bento Icons - Pink Gradient Background & Glow */
+.bento-icon {
+  background: linear-gradient(135deg, #FF2D55 0%, #FF6B9D 100%) !important;
+  box-shadow:
+    0 0 20px rgba(255, 45, 85, 0.4),
+    0 8px 24px rgba(255, 45, 85, 0.35),
+    0 4px 12px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+}
+
+.bento-card:hover .bento-icon {
+  box-shadow:
+    0 0 30px rgba(255, 45, 85, 0.6),
+    0 12px 32px rgba(255, 45, 85, 0.45),
+    0 6px 16px rgba(0, 0, 0, 0.2),
+    0 0 50px rgba(255, 45, 85, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Highlight card icon - slightly different shade */
+.bento-card.highlight .bento-icon {
+  background: linear-gradient(135deg, #FF375F 0%, #FF8DB3 100%) !important;
+}
+
+/* Icon glow animation on hover */
+.bento-icon::before {
+  content: '' !important;
+  position: absolute !important;
+  inset: -8px !important;
+  border-radius: inherit !important;
+  background: linear-gradient(135deg, #FF2D55 0%, #FF6B9D 100%) !important;
+  filter: blur(20px) !important;
+  opacity: 0 !important;
+  transition: opacity 0.4s ease !important;
+  z-index: -1 !important;
+}
+
+.bento-card:hover .bento-icon::before {
+  opacity: 0.5 !important;
+}
+
+/* Light mode adjustments */
+[data-theme='light'] .bento-icon {
+  box-shadow:
+    0 0 15px rgba(255, 45, 85, 0.3),
+    0 6px 20px rgba(255, 45, 85, 0.25),
+    0 3px 10px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+[data-theme='light'] .bento-card:hover .bento-icon {
+  box-shadow:
+    0 0 25px rgba(255, 45, 85, 0.45),
+    0 10px 28px rgba(255, 45, 85, 0.35),
+    0 5px 14px rgba(0, 0, 0, 0.12),
+    0 0 40px rgba(255, 45, 85, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35) !important;
+}
+
+[data-theme='light'] .bento-card:hover .bento-icon::before {
+  opacity: 0.35 !important;
+}
+
+/* Icon inner styling */
+.bento-icon .material-icons-round,
+.bento-icon .material-icons {
+  color: white !important;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2)) !important;
+}
