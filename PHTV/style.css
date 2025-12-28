@@ -7926,16 +7926,16 @@ img {
    HERO SECTION - CLEAN & PROFESSIONAL
    =========================================== */
 
-/* Hero App Icon - Clean Pink Glow */
+/* Hero App Icon - Soft Pink Glow */
 .hero-app-icon {
-  filter: drop-shadow(0 8px 24px rgba(255, 45, 85, 0.25)) !important;
+  filter: drop-shadow(0 6px 20px rgba(255, 107, 157, 0.2)) !important;
   animation: none !important;
   transition: transform 0.3s ease, filter 0.3s ease !important;
 }
 
 .hero-app-icon:hover {
-  transform: scale(1.03) !important;
-  filter: drop-shadow(0 12px 32px rgba(255, 45, 85, 0.35)) !important;
+  transform: scale(1.02) !important;
+  filter: drop-shadow(0 8px 28px rgba(255, 141, 179, 0.3)) !important;
 }
 
 /* Word Lines - Clean & Readable */
@@ -7945,21 +7945,21 @@ img {
 }
 
 .word-line:hover {
-  transform: translateX(8px) !important;
+  transform: translateX(6px) !important;
   text-shadow: none !important;
 }
 
-/* PHTV First Letters - Simple & Elegant */
+/* PHTV First Letters - Soft & Elegant */
 .first-letter {
   font-size: 4.5rem !important;
   font-weight: 800 !important;
-  background: linear-gradient(180deg, #FF2D55 0%, #FF6B9D 100%) !important;
+  background: linear-gradient(180deg, #FF5C7C 0%, #FF8DA8 100%) !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
   background-clip: text !important;
   background-size: 100% 100% !important;
   animation: none !important;
-  filter: drop-shadow(0 2px 8px rgba(255, 45, 85, 0.35)) !important;
+  filter: drop-shadow(0 2px 6px rgba(255, 141, 179, 0.25)) !important;
   margin-right: 2px !important;
   transition: transform 0.3s ease, filter 0.3s ease !important;
 }
@@ -7969,29 +7969,29 @@ img {
 }
 
 .word-line:hover .first-letter {
-  transform: scale(1.08) !important;
-  filter: drop-shadow(0 4px 16px rgba(255, 45, 85, 0.5)) !important;
+  transform: scale(1.05) !important;
+  filter: drop-shadow(0 3px 12px rgba(255, 168, 194, 0.35)) !important;
 }
 
-/* Light Mode */
+/* Light Mode - Softer tones */
 [data-theme='light'] .hero-app-icon {
-  filter: drop-shadow(0 8px 24px rgba(255, 45, 85, 0.2)) !important;
+  filter: drop-shadow(0 6px 20px rgba(255, 107, 157, 0.15)) !important;
 }
 
 [data-theme='light'] .hero-app-icon:hover {
-  filter: drop-shadow(0 12px 32px rgba(255, 45, 85, 0.3)) !important;
+  filter: drop-shadow(0 8px 28px rgba(255, 141, 179, 0.22)) !important;
 }
 
 [data-theme='light'] .first-letter {
-  background: linear-gradient(180deg, #E8002A 0%, #FF2D55 100%) !important;
+  background: linear-gradient(180deg, #FF2D55 0%, #FF6B9D 100%) !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
   background-clip: text !important;
-  filter: drop-shadow(0 2px 8px rgba(255, 45, 85, 0.3)) !important;
+  filter: drop-shadow(0 2px 6px rgba(255, 107, 157, 0.2)) !important;
 }
 
 [data-theme='light'] .word-line:hover .first-letter {
-  filter: drop-shadow(0 4px 16px rgba(255, 45, 85, 0.4)) !important;
+  filter: drop-shadow(0 3px 12px rgba(255, 141, 179, 0.28)) !important;
 }
 
 /* Bento Icons - Pink Gradient Background & Glow */
