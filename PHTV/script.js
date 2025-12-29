@@ -18,19 +18,19 @@ const translations = {
       'Được thiết kế để khắc phục các hạn chế của bộ gõ mặc định, mang lại trải nghiệm gõ phím mượt mà và ổn định nhất.',
     'feat1.title': 'Hiệu Năng Vượt Trội',
     'feat1.desc':
-      'Viết bằng Swift thuần túy, không sử dụng framework nặng. Phản hồi tức thì, không gây lag khi gõ nhanh, đặc biệt tối ưu cho chip M1/M2/M3.',
+      'Swift 6.0 + C++ engine (kế thừa từ OpenKey). Phản hồi tức thì, không lag. Hot Reload - thay đổi cài đặt không cần khởi động lại. Tự động cập nhật qua GitHub.',
     'feat2.title': 'Bảo Mật Tuyệt Đối',
     'feat2.desc':
       'Mã nguồn mở 100% trên GitHub. Không thu thập dữ liệu, offline 100%.',
     'feat3.title': 'Giao Diện Chuẩn macOS',
     'feat3.desc':
       'Hỗ trợ Dark Mode và giao diện trong suốt đẹp mắt.',
-    'feat4.title': 'Tùy Biến Mạnh Mẽ',
+    'feat4.title': 'Gõ Tắt Thông Minh',
     'feat4.desc':
-      'Hỗ trợ đầy đủ Telex, VNI, Simple Telex. Cho phép định nghĩa phím tắt và macro thông minh, giúp tăng tốc độ soạn thảo văn bản đáng kể.',
-    'feat5.title': 'Tương Thích Tuyệt Đối',
+      'Telex, VNI, Simple Telex. Quick Telex (cc→ch, gg→gi, kk→kh). Phím tắt đầu/cuối từ (f→ph, j→gi). Macro tự động viết hoa. Kiểm tra chính tả. Tự động khôi phục từ tiếng Anh. ESC hoàn tác dấu.',
+    'feat5.title': 'Tương Thích Mọi Ứng Dụng',
     'feat5.desc':
-      'Hoạt động ổn định trên mọi ứng dụng: Microsoft Office, Adobe Creative Cloud, VS Code, Chrome, Safari và các IDE lập trình chuyên dụng. Khắc phục triệt để lỗi gạch chân khó chịu.',
+      'Tối ưu cho Spotlight, WhatsApp, Chrome/Edge (Chromium Fix), Claude Code CLI. Smart Switch nhớ ngôn ngữ theo app. Excluded Apps tự động chuyển tiếng Anh. Nhớ bảng mã riêng cho từng ứng dụng.',
     'gallery.title': 'Giao Diện Ứng Dụng',
     'gallery.desc': 'Khám phá giao diện hiện đại và trực quan của PHTV',
     'gallery.img1': 'Kiểu gõ & Bảng mã',
@@ -59,7 +59,7 @@ const translations = {
     q1: 'PHTV có miễn phí không?',
     a1: 'Có, PHTV hoàn toàn miễn phí và là phần mềm mã nguồn mở (GPLv3).',
     q2: 'Yêu cầu hệ thống?',
-    a2: 'macOS 14.0 (Sonoma) trở lên. Tối ưu nhất cho chip Apple Silicon (M1/M2/M3/M4).',
+    a2: 'macOS 13.0 (Ventura) trở lên. Hỗ trợ cả Intel và Apple Silicon (M1/M2/M3/M4).',
     q3: 'PHTV có thu thập dữ liệu không?',
     a3: 'Không. PHTV hoạt động hoàn toàn offline, không kết nối internet và không gửi bất kỳ dữ liệu nào ra ngoài.',
     'feedback.title': 'Gửi Phản Hồi & Báo Lỗi',
@@ -110,15 +110,15 @@ const translations = {
     'features.title': 'Why PHTV?',
     'features.desc': 'Designed to overcome default input method limitations, providing the smoothest typing experience.',
     'feat1.title': 'High Performance',
-    'feat1.desc': 'Pure Swift, no heavy frameworks. Instant response, no lag when typing fast, optimized for M1/M2/M3.',
+    'feat1.desc': 'Swift 6.0 + C++ engine (inherited from OpenKey). Instant response, no lag. Hot Reload - change settings without restart. Auto-update via GitHub.',
     'feat2.title': 'Absolute Security',
     'feat2.desc': '100% Open Source on GitHub. No data collection, 100% offline.',
     'feat3.title': 'Native macOS UI',
     'feat3.desc': 'Dark Mode support and beautiful transparent interface.',
-    'feat4.title': 'Deep Customization',
-    'feat4.desc': 'Full support for Telex, VNI, Simple Telex. Define shortcuts and smart macros.',
-    'feat5.title': 'Full Compatibility',
-    'feat5.desc': 'Stable on all apps: Microsoft Office, Adobe Creative Cloud, VS Code, Chrome, Safari and IDEs. Fixes underline bug.',
+    'feat4.title': 'Smart Typing',
+    'feat4.desc': 'Telex, VNI, Simple Telex. Quick Telex (cc→ch, gg→gi, kk→kh). Fast consonants (f→ph, j→gi). Auto-capitalize macros. Spell check. Auto English recovery. ESC to undo tones.',
+    'feat5.title': 'Full App Compatibility',
+    'feat5.desc': 'Optimized for Spotlight, WhatsApp, Chrome/Edge (Chromium Fix), Claude Code CLI. Smart Switch remembers language per app. Excluded Apps auto-switch to English. Per-app charset memory.',
     'gallery.title': 'Application Interface',
     'gallery.desc': "Explore PHTV's modern and intuitive interface",
     'gallery.img1': 'Input Method & Charset',
@@ -144,7 +144,7 @@ const translations = {
     q1: 'Is PHTV free?',
     a1: 'Yes, PHTV is completely free and open source (GPLv3).',
     q2: 'System requirements?',
-    a2: 'macOS 14.0 (Sonoma) or later. Best for Apple Silicon (M1/M2/M3/M4).',
+    a2: 'macOS 13.0 (Ventura) or later. Supports both Intel and Apple Silicon (M1/M2/M3/M4).',
     q3: 'Does PHTV collect data?',
     a3: 'No. PHTV works completely offline, no internet connection, no data sent.',
     'feedback.title': 'Feedback & Bug Report',
@@ -687,13 +687,13 @@ function useFallbackStats() {
       stargazers_count: 50 // Approximate
     },
     release: {
-      tag_name: 'v1.2.8',
-      name: 'v1.2.8',
+      tag_name: 'v1.3.0',
+      name: 'v1.3.0',
       html_url: 'https://github.com/PhamHungTien/PHTV/releases/latest',
       assets: [{
-        name: 'PHTV-1.2.8.dmg',
-        browser_download_url: 'https://github.com/PhamHungTien/PHTV/releases/latest/download/PHTV-1.2.8.dmg',
-        download_count: 500 // Approximate
+        name: 'PHTV-1.3.0.dmg',
+        browser_download_url: 'https://github.com/PhamHungTien/PHTV/releases/latest/download/PHTV-1.3.0.dmg',
+        download_count: 1000
       }]
     }
   };
