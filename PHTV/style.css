@@ -2545,11 +2545,10 @@ footer::before {
 
   /* Hero Stats - Responsive grid optimized */
   .hero-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    justify-content: center;
     gap: 8px;
     padding: 6px;
-    width: 100%;
     max-width: 100%;
     margin-bottom: 32px;
     border-radius: 16px;
