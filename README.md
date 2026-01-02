@@ -51,20 +51,23 @@ I'm a macOS developer passionate about building native applications that enhance
 
 [![Swift](https://img.shields.io/badge/Swift-47.2%25-FA7343?style=flat-square&logo=swift)](https://github.com/PhamHungTien/PHTV)
 [![C++](https://img.shields.io/badge/C++-15.5%25-00599C?style=flat-square&logo=cplusplus)](https://github.com/PhamHungTien/PHTV)
-[![macOS](https://img.shields.io/badge/macOS-14.0+-000000?style=flat-square&logo=apple)](https://github.com/PhamHungTien/PHTV)
+[![macOS](https://img.shields.io/badge/macOS-13.0+-000000?style=flat-square&logo=apple)](https://github.com/PhamHungTien/PHTV)
 [![License](https://img.shields.io/badge/License-GPL%20v3-blue?style=flat-square)](https://github.com/PhamHungTien/PHTV/blob/main/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/PhamHungTien/PHTV?style=flat-square)](https://github.com/PhamHungTien/PHTV/stargazers)
 
-**PHTV (Precision Hybrid Typing Vietnamese)** is a modern, offline Vietnamese input method designed exclusively for macOS 14+.
+**PHTV (Precision Hybrid Typing Vietnamese)** is a modern, offline Vietnamese input method designed exclusively for macOS 13+.
 
 **Key Features:**
-- **Privacy-First**: Completely offline, no internet required
+- **Privacy-First**: Completely offline typing engine, no internet required for core functionality
 - **Fast & Native**: Built with Swift 6.0+ and SwiftUI for optimal performance
 - **Modern UI**: Native macOS design with dark mode support
 - **Multiple Input Methods**: Telex, VNI, Simple Telex
-- **Smart Typing**: Spell checking, quick shortcuts, auto-capitalization
-- **Highly Customizable**: Macros, hotkeys, app-specific settings
-- **Universal Binary**: Supports both Intel and Apple Silicon
+- **Smart Typing**: Spell checking, quick shortcuts, auto-capitalization, Vietnamese consonant detection
+- **GIF & Emoji Picker**: Modern emoji picker with unlimited GIF search powered by Klipy API
+- **Text Snippets**: Dynamic macros with date, time, clipboard, random text, and counter support
+- **Auto English Detection**: Intelligent restoration of English words when typing in Vietnamese mode
+- **Highly Customizable**: Macros, hotkeys, app-specific settings, custom dictionaries
+- **Universal Binary**: Supports both Intel and Apple Silicon (macOS 13.0+)
 
 **Technology Stack:**
 - Swift 6.0+ with SwiftUI
