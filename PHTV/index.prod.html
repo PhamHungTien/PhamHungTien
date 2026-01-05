@@ -131,6 +131,17 @@
       }
     </script>
     <style>
+      /* CRITICAL: Prevent SVG icons from exploding before Tailwind loads */
+      svg {
+        max-width: 100%;
+        height: auto;
+      }
+      svg[class*="lucide"] {
+        width: 1em;
+        height: 1em;
+        flex-shrink: 0;
+      }
+      
       /* Custom scrollbar for webkit */
       ::-webkit-scrollbar {
         width: 8px;

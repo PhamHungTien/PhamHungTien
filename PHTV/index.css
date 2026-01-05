@@ -14,3 +14,17 @@ body {
   background: #0f172a;
   color: #f1f5f9;
 }
+
+/* Fix: Prevent SVG icons from being oversized before Tailwind loads */
+/* This ensures icons have a sensible default size */
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Lucide icons default size constraint */
+svg[class*="lucide"] {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+}
