@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Features } from './components/Features';
 import { TerminalBlock } from './components/TerminalBlock';
@@ -7,14 +7,14 @@ import { Gallery } from './components/Gallery';
 import { Footer } from './components/Footer';
 import { Icons } from './components/Icons';
 
-const CopyBlock = React.memo(({ code, className = "", colorClass = "text-slate-300" }: { code: string, className?: string, colorClass?: string }) => {
+const CopyBlock = ({ code, className = "", colorClass = "text-slate-300" }: { code: string, className?: string, colorClass?: string }) => {
   const [copied, setCopied] = useState(false);
 
-  const handleCopy = useCallback(() => {
+  const handleCopy = () => {
     navigator.clipboard.writeText(code);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
-  }, [code]);
+  };
 
   return (
     <div className={`relative group bg-black/50 rounded-lg border border-white/5 ${className}`}>
@@ -30,16 +30,16 @@ const CopyBlock = React.memo(({ code, className = "", colorClass = "text-slate-3
       </button>
     </div>
   );
-});
+};
 
-const CommandRow = React.memo(({ icon: Icon, label, code, color }: { icon: any, label: string, code: string, color: string }) => {
+const CommandRow = ({ icon: Icon, label, code, color }: { icon: any, label: string, code: string, color: string }) => {
   const [copied, setCopied] = useState(false);
 
-  const handleCopy = useCallback(() => {
+  const handleCopy = () => {
     navigator.clipboard.writeText(code);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
-  }, [code]);
+  };
 
   return (
     <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 p-3 bg-slate-900/50 hover:bg-slate-800/80 border border-slate-800 hover:border-slate-600 rounded-lg transition-all duration-200">
@@ -64,32 +64,149 @@ const CommandRow = React.memo(({ icon: Icon, label, code, color }: { icon: any, 
       </div>
     </div>
   );
-});
+};
 
-const StatBadge = React.memo(({ icon: Icon, label, value, href, colorClass = "text-slate-300", external = true }: { icon: any, label: string, value: string, href: string, colorClass?: string, external?: boolean }) => (
-  <a 
-    href={href}
-    {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-    className="flex items-center gap-3 px-5 py-3 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-slate-600 hover:bg-slate-800/80 transition-all duration-300 group hover:-translate-y-0.5"
-  >
-    <div className={`p-2 rounded-xl bg-white/5 group-hover:bg-white/10 transition-colors ${colorClass}`}>
-      <Icon size={18} />
+interface StatBadgeProps {
+  icon: any;
+  label: string;
+  value: string;
+  href?: string;
+  onClick?: () => void;
+  colorClass?: string;
+}
+
+const StatBadge = ({ icon: Icon, label, value, href, onClick, colorClass = "text-slate-300" }: StatBadgeProps) => {
+  const content = (
+    <>
+      <div className={`p-2 rounded-xl bg-white/5 group-hover:bg-white/10 transition-colors ${colorClass}`}>
+        <Icon size={18} />
+      </div>
+      <div className="flex flex-col items-start leading-none gap-1">
+        <span className="text-[11px] uppercase tracking-wider font-bold text-slate-500 group-hover:text-slate-400 transition-colors">{label}</span>
+        <span className="text-base font-bold text-slate-200 group-hover:text-white transition-colors">{value}</span>
+      </div>
+    </>
+  );
+
+  const className = "flex items-center gap-3 px-5 py-3 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-slate-600 hover:bg-slate-800/80 transition-all duration-300 group hover:-translate-y-0.5 cursor-pointer";
+
+  if (onClick) {
+    return (
+      <button onClick={onClick} className={className} type="button">
+        {content}
+      </button>
+    );
+  }
+
+  return (
+    <a 
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={className}
+    >
+      {content}
+    </a>
+  );
+};
+
+// Donate Modal Component
+const DonateModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+      <div 
+        className="absolute inset-0 bg-slate-950/80 backdrop-blur-md transition-opacity"
+        onClick={onClose}
+      />
+      
+      <div className="relative bg-[#1e293b] border border-slate-700/50 rounded-3xl max-w-md w-full shadow-2xl overflow-hidden transform transition-all animate-in fade-in zoom-in-95 duration-200 ring-1 ring-white/10">
+        
+        {/* Header Background Gradient */}
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-br from-brand-600/30 via-purple-600/20 to-pink-600/30 blur-xl pointer-events-none" />
+        
+        <button 
+          onClick={onClose}
+          className="absolute top-4 right-4 p-2 bg-black/20 hover:bg-black/40 text-white/70 hover:text-white rounded-full transition-all z-10 backdrop-blur-md border border-white/5"
+        >
+          <Icons.X size={20} />
+        </button>
+
+        <div className="relative p-8 text-center pt-10">
+            <div className="w-16 h-16 mx-auto bg-gradient-to-br from-brand-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg shadow-brand-500/30 mb-6 rotate-3 ring-4 ring-[#1e293b]">
+                <Icons.Heart className="text-white" size={32} fill="currentColor" />
+            </div>
+
+            <h3 className="text-2xl font-bold text-white mb-2">Cảm ơn bạn đã ủng hộ! ❤️</h3>
+            <p className="text-slate-400 mb-8 leading-relaxed text-sm">
+                Mọi đóng góp của bạn đều là động lực to lớn để mình duy trì server và phát triển tính năng mới cho PHTV.
+            </p>
+
+            {/* QR Code Container */}
+            <div className="bg-white p-4 rounded-2xl shadow-xl shadow-black/20 mx-auto w-fit mb-8 transform transition-transform hover:scale-105 duration-300 ring-4 ring-white/50">
+                <img 
+                    src="https://phamhungtien.com/PHTV/donate.webp" 
+                    alt="QR Code Donate" 
+                    className="w-48 h-48 object-contain rounded-lg"
+                />
+                <div className="mt-3 pt-3 border-t border-gray-100 flex items-center justify-center gap-2">
+                   <span className="text-xs font-bold text-slate-800 uppercase tracking-wide">VietQR</span>
+                   <span className="w-1 h-1 rounded-full bg-slate-300"></span>
+                   <span className="text-xs text-slate-500">Mọi ngân hàng</span>
+                </div>
+            </div>
+
+            {/* Actions */}
+            <div className="space-y-4">
+                <a 
+                    href="https://www.paypal.com/paypalme/phamhungtien1404"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center justify-center gap-3 w-full py-3.5 bg-[#0070BA] hover:bg-[#003087] text-white rounded-xl font-bold transition-all shadow-lg shadow-blue-900/20 hover:shadow-blue-900/40 hover:-translate-y-0.5 border border-white/10"
+                >
+                    <Icons.Coffee size={20} />
+                    <span>Donate qua PayPal</span>
+                </a>
+                
+                <p className="text-xs text-slate-500 px-4">
+                    PHTV luôn miễn phí, donation là tùy tâm và không bắt buộc.
+                </p>
+            </div>
+        </div>
+      </div>
     </div>
-    <div className="flex flex-col items-start leading-none gap-1">
-      <span className="text-[11px] uppercase tracking-wider font-bold text-slate-500 group-hover:text-slate-400 transition-colors">{label}</span>
-      <span className="text-base font-bold text-slate-200 group-hover:text-white transition-colors">{value}</span>
+  );
+};
+
+// Helper component for the Hero Acronym
+const AcronymRow = ({ letter, word }: { letter: string, word: string }) => (
+  <div className="flex items-baseline group/row cursor-default select-none relative">
+    {/* Fixed Width Container for Letter */}
+    {/* Mobile w-8, Desktop w-16 */}
+    <div className="w-8 sm:w-12 md:w-16 flex justify-center shrink-0">
+        <span className="text-3xl sm:text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-red-500 via-orange-500 to-yellow-500 leading-none drop-shadow-[0_0_12px_rgba(239,68,68,0.6)] group-hover/row:scale-110 group-hover/row:brightness-125 transition-all duration-300 z-10">
+        {letter}
+        </span>
     </div>
-  </a>
-));
+    
+    {/* Word text: Pure White, brighter glow */}
+    <span className="text-lg sm:text-2xl md:text-3xl font-bold uppercase tracking-widest text-white group-hover/row:text-white group-hover/row:tracking-[0.25em] group-hover/row:drop-shadow-[0_0_10px_rgba(255,255,255,0.7)] transition-all duration-500 ease-out text-left pl-3 md:pl-5">
+      {word}
+    </span>
+  </div>
+);
 
 function App() {
   const [downloadUrl, setDownloadUrl] = useState("https://github.com/PhamHungTien/PHTV/releases/latest");
   const [version, setVersion] = useState("v1.0.0");
   const [totalDownloads, setTotalDownloads] = useState("0");
+  const [showDonate, setShowDonate] = useState(false);
 
   useEffect(() => {
-    const CACHE_KEY = 'phtv_releases_data_v3';
-    const CACHE_DURATION = 1800000; // 30 minutes
+    // Caching logic
+    const CACHE_KEY = 'phtv_releases_data_v2';
+    const CACHE_DURATION = 3600000; // 1 hour
 
     const fetchReleases = async () => {
       const now = Date.now();
@@ -97,100 +214,60 @@ function App() {
       try {
         const cached = localStorage.getItem(CACHE_KEY);
         if (cached) {
-          try {
-            const { url, version: cachedVer, downloads, timestamp } = JSON.parse(cached);
-            if (now - timestamp < CACHE_DURATION) {
-              console.log('[PHTV] Using cached releases data');
-              setDownloadUrl(url);
-              setVersion(cachedVer);
-              setTotalDownloads(downloads);
-              return;
-            }
-          } catch (e) {
-            console.warn('[PHTV] Invalid cache data');
-            localStorage.removeItem(CACHE_KEY);
+          const { url, version: cachedVer, downloads, timestamp } = JSON.parse(cached);
+          if (now - timestamp < CACHE_DURATION) {
+            setDownloadUrl(url);
+            setVersion(cachedVer);
+            setTotalDownloads(downloads);
+            return;
           }
         }
       } catch (e) {
-        console.warn('[PHTV] Cache read error:', e);
+        localStorage.removeItem(CACHE_KEY);
       }
 
       try {
-        console.log('[PHTV] Fetching releases from GitHub API...');
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
-
-        const res = await fetch('https://api.github.com/repos/PhamHungTien/PHTV/releases?per_page=100', {
-          signal: controller.signal,
-          headers: {
-            'Accept': 'application/vnd.github.v3+json',
-          }
-        });
-        
-        clearTimeout(timeoutId);
-
-        if (!res.ok) {
-          console.warn(`[PHTV] GitHub API returned ${res.status}`);
-          throw new Error(`API error ${res.status}`);
-        }
+        // Increase per_page to 100 to get a more accurate download count
+        const res = await fetch('https://api.github.com/repos/PhamHungTien/PHTV/releases?per_page=100');
+        if (!res.ok) throw new Error('Network error');
 
         const data = await res.json();
         
-        if (!Array.isArray(data) || data.length === 0) {
-          console.warn('[PHTV] No releases found');
-          return;
-        }
+        if (Array.isArray(data) && data.length > 0) {
+          const latest = data[0]; // Assuming API returns sorted desc
+          const latestVer = latest.tag_name;
+          const dmgAsset = latest.assets?.find((asset: any) => asset.name.endsWith('.dmg'));
+          const url = dmgAsset ? dmgAsset.browser_download_url : "https://github.com/PhamHungTien/PHTV/releases/latest";
 
-        const latest = data[0];
-        const latestVer = latest.tag_name || 'v1.0.0';
-        const dmgAsset = latest.assets?.find((asset: any) => asset.name.endsWith('.dmg'));
-        const url = dmgAsset ? dmgAsset.browser_download_url : "https://github.com/PhamHungTien/PHTV/releases/latest";
-
-        // Calculate total downloads across all releases
-        let dlCount = 0;
-        data.forEach((rel: any) => {
-          if (rel.assets && Array.isArray(rel.assets)) {
-            rel.assets.forEach((asset: any) => {
-              if (typeof asset.download_count === 'number') {
+          // Calculate total downloads
+          let dlCount = 0;
+          data.forEach((rel: any) => {
+            if (rel.assets) {
+              rel.assets.forEach((asset: any) => {
                 dlCount += asset.download_count;
-              }
-            });
-          }
-        });
+              });
+            }
+          });
+          
+          // Better formatting
+          const formattedDownloads = new Intl.NumberFormat('en-US', {
+            notation: "compact",
+            maximumFractionDigits: 1
+          }).format(dlCount);
 
-        // Format downloads count
-        let formattedDownloads = '0';
-        if (dlCount > 0) {
-          if (dlCount >= 1000000) {
-            formattedDownloads = `${(dlCount / 1000000).toFixed(1)}M+`;
-          } else if (dlCount >= 1000) {
-            formattedDownloads = `${(dlCount / 1000).toFixed(1)}k+`;
-          } else {
-            formattedDownloads = `${dlCount}`;
-          }
-        }
+          setVersion(latestVer);
+          setDownloadUrl(url);
+          setTotalDownloads(formattedDownloads);
 
-        console.log(`[PHTV] Version: ${latestVer}, Downloads: ${dlCount} (${formattedDownloads})`);
-
-        setVersion(latestVer);
-        setDownloadUrl(url);
-        setTotalDownloads(formattedDownloads);
-
-        // Save to cache
-        try {
           localStorage.setItem(CACHE_KEY, JSON.stringify({
             url,
             version: latestVer,
             downloads: formattedDownloads,
             timestamp: now
           }));
-        } catch (e) {
-          console.warn('[PHTV] Failed to cache data:', e);
         }
       } catch (err) {
-        console.error("[PHTV] Failed to fetch GitHub data:", err);
-        // Fallback to latest release page - always works
-        setDownloadUrl("https://github.com/PhamHungTien/PHTV/releases/latest");
+        console.error("Failed to fetch GitHub data", err);
       }
     };
 
@@ -456,14 +533,31 @@ function App() {
       <main className="relative pt-32 pb-16 md:pt-48 md:pb-24 px-6">
         <div className="max-w-7xl mx-auto text-center relative z-10">
           
-          <div className="flex justify-center mb-6">
-             <img src="https://raw.githubusercontent.com/PhamHungTien/PHTV/main/PHTV/Resources/icon.png" alt="PHTV Icon" className="w-32 h-32 drop-shadow-2xl animate-[fadeIn_0.5s_ease-out]" />
-          </div>
+          {/* New Logo & Name Lockup */}
+          {/* items-center is crucial here for vertical alignment */}
+          <div className="flex flex-row items-center justify-center gap-4 sm:gap-8 md:gap-12 mb-10 md:mb-20">
+            
+            {/* Left: Icon with glow */}
+            {/* Adjusted sizes: w-28 mobile (112px), w-40 tablet (160px), w-60 desktop (240px) */}
+            <div className="relative group shrink-0 w-28 h-28 sm:w-40 sm:h-40 md:w-60 md:h-60">
+               <div className="absolute inset-0 bg-red-500/20 blur-[30px] md:blur-[50px] rounded-full group-hover:bg-red-500/30 transition-all duration-700 animate-pulse"></div>
+               <img 
+                 src="https://raw.githubusercontent.com/PhamHungTien/PHTV/main/PHTV/Resources/icon.png" 
+                 alt="PHTV Icon" 
+                 className="relative w-full h-full drop-shadow-2xl rounded-[1.5rem] md:rounded-[2.5rem] transform group-hover:scale-105 transition-transform duration-500 ease-out z-10 object-cover" 
+               />
+            </div>
 
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-b from-white via-slate-200 to-slate-400">
-            PHTV
-          </h1>
-          <p className="text-2xl md:text-4xl text-slate-300 font-light mb-8">Precision Hybrid Typing Vietnamese</p>
+            {/* Right: Vertical Typography */}
+            {/* No fixed heights, justify-center allows natural centering against the icon */}
+            <div className="flex flex-col justify-center">
+               <AcronymRow letter="P" word="recision" />
+               <AcronymRow letter="H" word="ybrid" />
+               <AcronymRow letter="T" word="yping" />
+               <AcronymRow letter="V" word="ietnamese" />
+            </div>
+
+          </div>
 
           <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
             Bộ gõ tiếng Việt <strong>offline</strong>, <strong>nhanh</strong>, và <strong>riêng tư</strong> cho macOS 13+. <br/>
@@ -490,9 +584,8 @@ function App() {
                icon={Icons.Heart} 
                label="Ủng hộ" 
                value="Donate" 
-               href="./donate.html"
+               onClick={() => setShowDonate(true)}
                colorClass="text-pink-400"
-               external={false}
              />
           </div>
 
@@ -680,7 +773,10 @@ function App() {
          </div>
       </section>
 
-      <Footer />
+      <Footer onDonateClick={() => setShowDonate(true)} />
+      
+      {/* Render Modal */}
+      <DonateModal isOpen={showDonate} onClose={() => setShowDonate(false)} />
     </div>
   );
 }

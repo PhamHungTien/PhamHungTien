@@ -1,7 +1,11 @@
 import React from 'react';
 import { Icons } from './Icons';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  onDonateClick: () => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
   return (
     <footer className="border-t border-slate-800 bg-slate-950 pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-6">
@@ -48,7 +52,14 @@ export const Footer: React.FC = () => {
               <li><a href="https://github.com/PhamHungTien/PHTV/blob/main/LICENSE" className="hover:text-brand-400 transition-colors">Giấy phép GPL v3</a></li>
               <li><a href="https://github.com/PhamHungTien/PHTV/blob/main/SECURITY.md" className="hover:text-brand-400 transition-colors">Bảo mật</a></li>
               <li><a href="https://github.com/PhamHungTien/PHTV/blob/main/CONTRIBUTING.md" className="hover:text-brand-400 transition-colors">Đóng góp</a></li>
-              <li><a href="./donate.html" className="hover:text-brand-400 transition-colors flex items-center gap-1">☕ Ủng hộ <span className="text-xs bg-brand-900 text-brand-300 px-1 rounded">Donate</span></a></li>
+              <li>
+                <button 
+                  onClick={onDonateClick} 
+                  className="hover:text-brand-400 transition-colors flex items-center gap-1 text-left w-full sm:w-auto"
+                >
+                  ☕ Ủng hộ <span className="text-xs bg-brand-900 text-brand-300 px-1 rounded">Donate</span>
+                </button>
+              </li>
             </ul>
           </div>
         </div>

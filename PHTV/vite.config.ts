@@ -5,44 +5,19 @@ import react from '@vitejs/plugin-react';
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
     return {
-      base: './', // GitHub Pages subdirectory support - generate relative paths
       server: {
         port: 3000,
         host: '0.0.0.0',
       },
       plugins: [react()],
-      // Gemini API removed - no longer needed
-      define: {},
+      define: {
+        'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
+        'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
+      },
       resolve: {
         alias: {
           '@': path.resolve(__dirname, '.'),
         }
-      },
-      build: {
-        target: 'esnext',
-        minify: 'terser',
-        terserOptions: {
-          compress: {
-            drop_console: true,
-            drop_debugger: true,
-          },
-        },
-        rollupOptions: {
-          output: {
-            manualChunks: {
-              'vendor': ['react', 'react-dom'],
-              'icons': ['lucide-react'],
-            },
-            entryFileNames: 'assets/[name]-[hash].js',
-            chunkFileNames: 'assets/[name]-[hash].js',
-            assetFileNames: 'assets/[name]-[hash][extname]',
-          },
-        },
-        reportCompressedSize: false,
-        chunkSizeWarningLimit: 500,
-      },
-      optimize: {
-        prefetchChunkSize: 50000,
       }
     };
 });

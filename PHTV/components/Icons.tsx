@@ -23,11 +23,8 @@ import {
   Tag,
   Heart,
   CloudDownload,
-  Coffee,
-  DollarSign,
-  Banknote,
-  Mail,
-  QrCode
+  X,
+  Coffee
 } from 'lucide-react';
 
 export const Icons = {
@@ -55,9 +52,6 @@ export const Icons = {
   Tag,
   Heart,
   CloudDownload,
-  Coffee,
-  DollarSign,
-  Banknote,
-  Mail,
-  QrCode
+  X,
+  Coffee
 };
