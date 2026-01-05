@@ -66,11 +66,10 @@ const CommandRow = React.memo(({ icon: Icon, label, code, color }: { icon: any, 
   );
 });
 
-const StatBadge = React.memo(({ icon: Icon, label, value, href, colorClass = "text-slate-300" }: { icon: any, label: string, value: string, href: string, colorClass?: string }) => (
+const StatBadge = React.memo(({ icon: Icon, label, value, href, colorClass = "text-slate-300", external = true }: { icon: any, label: string, value: string, href: string, colorClass?: string, external?: boolean }) => (
   <a 
     href={href}
-    target="_blank"
-    rel="noopener noreferrer"
+    {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
     className="flex items-center gap-3 px-5 py-3 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-slate-600 hover:bg-slate-800/80 transition-all duration-300 group hover:-translate-y-0.5"
   >
     <div className={`p-2 rounded-xl bg-white/5 group-hover:bg-white/10 transition-colors ${colorClass}`}>
@@ -493,6 +492,7 @@ function App() {
                value="Donate" 
                href="./donate.html"
                colorClass="text-pink-400"
+               external={false}
              />
           </div>
 
