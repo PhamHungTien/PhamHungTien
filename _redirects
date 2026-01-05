@@ -1,0 +1,5 @@
+# Redirect root PHTV path to PHTV/
+/PHTV /PHTV/ 301
+
+# Single Page Application - redirect all non-file requests to index.html
+/PHTV/* /PHTV/index.html 200
