@@ -55,7 +55,7 @@ export const Gallery: React.FC = () => {
             <div className="group relative max-w-2xl">
               <div className="absolute inset-0 bg-purple-500/10 rounded-2xl blur-xl group-hover:bg-purple-500/20 transition-all"></div>
               <img 
-                src="./Resources/UI/phtv_picker.webp" 
+                src="./UI/phtv_picker.webp" 
                 alt="Emoji Picker" 
                 className="relative rounded-xl border border-slate-700 shadow-2xl w-full"
               />
