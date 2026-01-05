@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Icons } from './Icons';
+import iconImg from '../public/icon.webp';
 
 export const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -68,7 +69,7 @@ export const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <img 
-            src="/icon.webp" 
+            src={iconImg} 
             alt="PHTV Logo" 
             className="w-10 h-10 rounded-xl shadow-lg shadow-brand-500/20" 
           />

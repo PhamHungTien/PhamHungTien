@@ -1,6 +1,11 @@
 import React from 'react';
 import { Icons } from './Icons';
 
+// Helper function to get correct asset paths relative to public folder
+const getAssetPath = (filename: string) => {
+  return new URL(`../public/UI/${filename}`, import.meta.url).href;
+};
+
 export const Gallery: React.FC = () => {
   return (
     <section id="gallery" className="py-24 max-w-7xl mx-auto px-6">
@@ -28,7 +33,7 @@ export const Gallery: React.FC = () => {
               <div className="group relative">
                  <div className="absolute inset-0 bg-brand-500/10 rounded-2xl blur-xl group-hover:bg-brand-500/20 transition-all"></div>
                  <img 
-                    src="/UI/menu-input-methods.webp" 
+                    src={getAssetPath("menu-input-methods.webp")} 
                     alt="Menu Input Methods" 
                     className="relative rounded-xl border border-slate-700 shadow-2xl w-full"
                  />
@@ -37,7 +42,7 @@ export const Gallery: React.FC = () => {
               <div className="group relative">
                  <div className="absolute inset-0 bg-brand-500/10 rounded-2xl blur-xl group-hover:bg-brand-500/20 transition-all"></div>
                  <img 
-                    src="/UI/menu-charset.webp" 
+                    src={getAssetPath("menu-charset.webp")} 
                     alt="Menu Charset" 
                     className="relative rounded-xl border border-slate-700 shadow-2xl w-full"
                  />
@@ -54,9 +59,9 @@ export const Gallery: React.FC = () => {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                {[
-                 { src: "/UI/settings-typing.webp", label: "Typing Settings" },
-                 { src: "/UI/settings-macros.webp", label: "Macros Settings" },
-                 { src: "/UI/settings-system.webp", label: "System Settings" }
+                 { src: getAssetPath("settings-typing.webp"), label: "Typing Settings" },
+                 { src: getAssetPath("settings-macros.webp"), label: "Macros Settings" },
+                 { src: getAssetPath("settings-system.webp"), label: "System Settings" }
                ].map((item, idx) => (
                  <div key={idx} className="group relative">
                     <div className="absolute inset-0 bg-blue-500/10 rounded-2xl blur-xl group-hover:bg-blue-500/20 transition-all"></div>
@@ -79,9 +84,9 @@ export const Gallery: React.FC = () => {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                {[
-                 { src: "/UI/phtv_picker.webp", label: "Emoji & Kaomoji Picker" },
-                 { src: "/UI/phtv_picker_page2.webp", label: "GIF Picker" },
-                 { src: "/UI/phtv_picker_page3.webp", label: "Symbol & Text Picker" }
+                 { src: getAssetPath("phtv_picker.webp"), label: "Emoji & Kaomoji Picker" },
+                 { src: getAssetPath("phtv_picker_page2.webp"), label: "GIF Picker" },
+                 { src: getAssetPath("phtv_picker_page3.webp"), label: "Symbol & Text Picker" }
                ].map((item, idx) => (
                  <div key={idx} className="group relative">
                     <div className="absolute inset-0 bg-purple-500/10 rounded-2xl blur-xl group-hover:bg-purple-500/20 transition-all"></div>
