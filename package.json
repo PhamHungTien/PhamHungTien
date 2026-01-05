@@ -1,0 +1,28 @@
+{
+  "name": "phamhungtien-portfolio",
+  "version": "1.0.0",
+  "description": "Pham Hung Tien - Portfolio & PHTV Vietnamese Input Method",
+  "scripts": {
+    "dev": "cd PHTV && npm run dev",
+    "build": "cd PHTV && npm run build",
+    "preview": "cd PHTV && npm run preview",
+    "type-check": "cd PHTV && npx tsc --noEmit",
+    "install:deps": "npm install && cd PHTV && npm install",
+    "clean": "cd PHTV && rm -rf dist node_modules && npm install"
+  },
+  "keywords": [
+    "portfolio",
+    "phtv",
+    "vietnamese-input",
+    "macos",
+    "react",
+    "typescript"
+  ],
+  "author": "Pham Hung Tien",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PhamHungTien/PhamHungTien"
+  },
+  "homepage": "https://phamhungtien.com"
+}
