@@ -713,7 +713,7 @@ function App() {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <a 
-                href="https://www.paypal.com/donate/?hosted_button_id=YOUR_BUTTON_ID"
+                href="https://www.paypal.com/paypalme/phamhungtien1404"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-4 bg-slate-800/50 hover:bg-slate-700 rounded-lg transition-colors flex items-center gap-3 group"
