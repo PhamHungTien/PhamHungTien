@@ -447,7 +447,7 @@ function App() {
                icon={Icons.Heart} 
                label="Ủng hộ" 
                value="Donate" 
-               href="#donate"
+               href="./donate.html"
                colorClass="text-pink-400"
              />
           </div>
