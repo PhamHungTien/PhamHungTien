@@ -55,8 +55,8 @@ export const Gallery: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                {[
                  { src: "./UI/phtv_picker.webp", label: "Emoji Picker - Trang 1" },
-                 { src: "./UI/phtv_picker_page2.png", label: "Emoji Picker - Trang 2" },
-                 { src: "./UI/phtv_picker_page3.png", label: "Emoji Picker - Trang 3" }
+                 { src: "./UI/phtv_picker_page2.webp", label: "Emoji Picker - Trang 2" },
+                 { src: "./UI/phtv_picker_page3.webp", label: "Emoji Picker - Trang 3" }
                ].map((item, idx) => (
                  <div key={idx} className="group relative">
                     <div className="absolute inset-0 bg-purple-500/10 rounded-2xl blur-xl group-hover:bg-purple-500/20 transition-all"></div>
