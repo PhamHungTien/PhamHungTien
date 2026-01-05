@@ -1,0 +1,36 @@
+# robots.txt for phamhungtien.com
+# Updated: 2026-01-06
+
+User-agent: *
+Allow: /
+Disallow: /PHTV/src/
+Disallow: /PHTV/node_modules/
+Disallow: /*.json$
+
+# Sitemap location
+Sitemap: https://phamhungtien.com/sitemap.xml
+
+# Allow all search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+# Crawl delay for bots that respect it
+Crawl-delay: 1
