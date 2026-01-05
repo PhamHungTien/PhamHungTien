@@ -757,6 +757,25 @@ function App() {
             </div>
           </div>
 
+          {/* QR Code for Bank Transfer / MoMo */}
+          <div className="mt-12 bg-slate-900/50 border border-slate-800 rounded-xl p-8">
+            <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+              <Icons.QrCode size={20} className="text-brand-400" />
+              Quét mã QR - Ngân hàng / MoMo
+            </h3>
+            <div className="flex flex-col items-center">
+              <img 
+                src="./donate.webp"
+                alt="QR Code for Bank Transfer / MoMo Donation" 
+                className="w-full max-w-sm h-auto rounded-lg border-2 border-slate-700 shadow-lg hover:shadow-xl transition-shadow"
+                loading="lazy"
+              />
+              <p className="text-slate-400 text-center mt-4 text-sm">
+                Quét mã QR bằng ứng dụng ngân hàng hoặc MoMo để chuyển khoản trực tiếp
+              </p>
+            </div>
+          </div>
+
           {/* Gratitude message */}
           <div className="mt-12 text-center p-6 bg-gradient-to-r from-brand-500/10 via-pink-500/10 to-brand-500/10 border border-brand-500/20 rounded-xl">
             <p className="text-slate-300 text-lg">
