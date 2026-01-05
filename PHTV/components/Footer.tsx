@@ -21,13 +21,13 @@ export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
               Mã nguồn mở, miễn phí và tôn trọng quyền riêng tư.
             </p>
             <div className="flex gap-4">
-              <a href="https://github.com/PhamHungTien/PHTV" className="text-slate-400 hover:text-white transition-colors" title="GitHub">
+              <a href="https://github.com/PhamHungTien/PHTV" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors" title="GitHub">
                 <Icons.Github size={24} />
               </a>
-              <a href="https://www.facebook.com/phamhungtien1404" className="text-slate-400 hover:text-white transition-colors" title="Facebook">
+              <a href="https://www.facebook.com/phamhungtien1404" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors" title="Facebook">
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.33C10.24.5 9.5 3.44 9.5 5.32v2.15h-3v4h3v12h5v-12h3.85l.42-4z"/></svg>
               </a>
-              <a href="https://www.linkedin.com/in/ph%E1%BA%A1m-h%C3%B9ng-ti%E1%BA%BFn-a1b405327/" className="text-slate-400 hover:text-white transition-colors" title="LinkedIn">
+              <a href="https://www.linkedin.com/in/ph%E1%BA%A1m-h%C3%B9ng-ti%E1%BA%BFn-a1b405327/" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors" title="LinkedIn">
                 <Icons.Linkedin size={24} />
               </a>
               <a href="mailto:hungtien10a7@gmail.com" className="text-slate-400 hover:text-white transition-colors" title="Email">
@@ -40,19 +40,19 @@ export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
           <div>
             <h4 className="font-bold text-white mb-4">Tài liệu</h4>
             <ul className="space-y-3 text-sm text-slate-400">
-              <li><a href="https://github.com/PhamHungTien/PHTV/blob/main/INSTALL.md" className="hover:text-brand-400 transition-colors">Hướng dẫn cài đặt</a></li>
-              <li><a href="https://github.com/PhamHungTien/PHTV/blob/main/FAQ.md" className="hover:text-brand-400 transition-colors">FAQ</a></li>
-              <li><a href="https://github.com/PhamHungTien/PHTV/releases" className="hover:text-brand-400 transition-colors">Lịch sử phiên bản</a></li>
-              <li><a href="https://github.com/PhamHungTien/PHTV/issues" className="hover:text-brand-400 transition-colors">Báo lỗi</a></li>
+              <li><a href="https://github.com/PhamHungTien/PHTV/blob/main/INSTALL.md" target="_blank" rel="noopener noreferrer" className="hover:text-brand-400 transition-colors">Hướng dẫn cài đặt</a></li>
+              <li><a href="https://github.com/PhamHungTien/PHTV/blob/main/FAQ.md" target="_blank" rel="noopener noreferrer" className="hover:text-brand-400 transition-colors">FAQ</a></li>
+              <li><a href="https://github.com/PhamHungTien/PHTV/releases" target="_blank" rel="noopener noreferrer" className="hover:text-brand-400 transition-colors">Lịch sử phiên bản</a></li>
+              <li><a href="https://github.com/PhamHungTien/PHTV/issues" target="_blank" rel="noopener noreferrer" className="hover:text-brand-400 transition-colors">Báo lỗi</a></li>
             </ul>
           </div>
 
           <div>
             <h4 className="font-bold text-white mb-4">Dự án</h4>
             <ul className="space-y-3 text-sm text-slate-400">
-              <li><a href="https://github.com/PhamHungTien/PHTV/blob/main/LICENSE" className="hover:text-brand-400 transition-colors">Giấy phép GPL v3</a></li>
-              <li><a href="https://github.com/PhamHungTien/PHTV/blob/main/SECURITY.md" className="hover:text-brand-400 transition-colors">Bảo mật</a></li>
-              <li><a href="https://github.com/PhamHungTien/PHTV/blob/main/CONTRIBUTING.md" className="hover:text-brand-400 transition-colors">Đóng góp</a></li>
+              <li><a href="https://github.com/PhamHungTien/PHTV/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" className="hover:text-brand-400 transition-colors">Giấy phép GPL v3</a></li>
+              <li><a href="https://github.com/PhamHungTien/PHTV/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer" className="hover:text-brand-400 transition-colors">Bảo mật</a></li>
+              <li><a href="https://github.com/PhamHungTien/PHTV/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer" className="hover:text-brand-400 transition-colors">Đóng góp</a></li>
               <li>
                 <button 
                   onClick={onDonateClick} 
