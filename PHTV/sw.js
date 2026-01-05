@@ -1,9 +1,9 @@
 // PHTV Service Worker - Smart Cache Management & Performance Optimization
-// v3 - Intelligent versioning, storage management, and request deduplication
+// v5 - Force cache cleanup on every update
 
-const APP_VERSION = '1.0.1';
+const APP_VERSION = '1.0.2';
 const CACHE_PREFIX = 'phtv';
-const CACHE_VERSION = 'v4';
+const CACHE_VERSION = 'v5';
 const CACHE_STRATEGIES = {
   precache: `${CACHE_PREFIX}-precache-${CACHE_VERSION}`,
   runtime: `${CACHE_PREFIX}-runtime-${CACHE_VERSION}`,
@@ -21,14 +21,6 @@ const CACHE_TTL = {
   images: 30 * 24 * 60 * 60 * 1000, // 30 days for images
   fonts: 365 * 24 * 60 * 60 * 1000   // 1 year for fonts
 };
-
-// Critical assets for immediate availability
-const PRECACHE_ASSETS = [
-  '/PHTV/',
-  '/PHTV/index.html',
-  '/PHTV/manifest.json',
-  '/PHTV/index.css'
-];
 
 // Request deduplication map
 const pendingRequests = new Map();
@@ -101,7 +93,7 @@ self.addEventListener('install', (event) => {
       caches.open(CACHE_STRATEGIES.precache)
         .then((cache) => {
           console.log('[SW] Pre-caching critical assets...');
-          return cache.addAll(PRECACHE_ASSETS)
+          return cache.addAll(['/PHTV/'])
             .then(() => console.log('[SW] Pre-cache complete'))
             .catch((err) => console.error('[SW] Pre-cache error:', err));
         })
@@ -113,34 +105,49 @@ self.addEventListener('install', (event) => {
  * Activate event - clean up old caches and manage storage
  */
 self.addEventListener('activate', (event) => {
-  console.log('[SW] Activating service worker...');
-
-  const activeStrategyKeys = Object.values(CACHE_STRATEGIES);
+  console.log(`[SW v${CACHE_VERSION}] Activating service worker...`);
 
   event.waitUntil(
     caches.keys()
       .then((cacheNames) => {
-        // Delete old versioned caches
+        console.log('[SW] Found caches:', cacheNames);
+        // Delete ALL old phtv caches
         return Promise.all(
           cacheNames
-            .filter((name) => name.startsWith(CACHE_PREFIX) && !activeStrategyKeys.includes(name))
+            .filter((name) => name.startsWith(CACHE_PREFIX) && !name.includes(CACHE_VERSION))
             .map((name) => {
-              console.log('[SW] Deleting old cache:', name);
+              console.log(`[SW] Deleting old cache: ${name}`);
               return caches.delete(name);
             })
         );
       })
-      // Manage cache sizes for all active caches
       .then(() => {
-        return Promise.all(
-          Object.values(CACHE_STRATEGIES).map((name) => manageCacheSize(name))
-        );
-      })
-      .then(() => {
-        console.log('[SW] Activation complete');
+        console.log(`[SW v${CACHE_VERSION}] Old caches cleaned up. Claiming clients...`);
         return self.clients.claim();
       })
+      .then(() => {
+        // Notify all clients to reload
+        return self.clients.matchAll();
+      })
+      .then((clients) => {
+        clients.forEach((client) => {
+          client.postMessage({
+            type: 'SW_UPDATED',
+            version: CACHE_VERSION,
+            message: 'New version of PHTV is ready! Refreshing...'
+          });
+        });
+      })
   );
+});
+
+/**
+ * Message event - handle client messages
+ */
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
 
 /**
@@ -149,212 +156,118 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
-  const url = new URL(event.request.url);
+  const { request } = event;
+  const url = new URL(request.url);
 
-  // Strategy 1: GitHub API - Network-first with stale fallback
-  if (url.origin === 'https://api.github.com') {
-    event.respondWith(apiNetworkFirst(event.request));
-    return;
-  }
-
-  // Strategy 2: External CDN (esm.sh, cdn.tailwindcss.com) - Cache-first
-  if (url.origin === 'https://esm.sh' || 
-      url.origin === 'https://cdn.tailwindcss.com' ||
-      url.origin === 'https://cdn.jsdelivr.net') {
-    event.respondWith(cdnCacheFirst(event.request));
-    return;
-  }
-
-  // Strategy 3: Google Fonts - Cache-first (immutable)
-  if (url.origin === 'https://fonts.googleapis.com' ||
-      url.origin === 'https://fonts.gstatic.com') {
-    event.respondWith(fontsCacheFirst(event.request));
-    return;
-  }
-
-  // Strategy 4: Local images - Cache-first with network fallback
-  if (event.request.destination === 'image') {
-    event.respondWith(imageCacheFirst(event.request));
-    return;
-  }
-
-  // Skip other external origins
-  if (url.origin !== location.origin) {
-    return;
-  }
-
-  // Strategy 5: Local HTML/JS/CSS - Stale-while-revalidate
-  event.respondWith(staleWhileRevalidate(event.request));
-});
-
-/**
- * API Network-First: Try fresh data, fall back to stale cache
- */
-async function apiNetworkFirst(request) {
-  try {
-    const response = await fetchWithDedup(request);
-    if (response.ok) {
-      const cache = await caches.open(CACHE_STRATEGIES.api);
-      response.headers.set('sw-fetched-at', new Date().toISOString());
-      cache.put(request, response.clone());
-    }
-    return response;
-  } catch (error) {
-    console.log('[SW] API offline, returning cache...');
-    const cached = await caches.match(request);
-    return cached || new Response(
-      JSON.stringify({ error: 'Offline', cached: !!cached }),
-      { status: 503, headers: { 'Content-Type': 'application/json' } }
+  // Strategy 1: HTML pages - network first, fallback to cache, never cache
+  if (url.pathname.endsWith('.html') || url.pathname === '/PHTV/') {
+    event.respondWith(
+      fetchWithDedup(request)
+        .then((response) => {
+          // Don't cache HTML
+          if (response.ok) return response.clone();
+          throw new Error('Network failed');
+        })
+        .catch(() => {
+          return caches.match(request)
+            .then((cached) => cached || caches.match(new Request(OFFLINE_URL)));
+        })
     );
-  }
-}
-
-/**
- * CDN Cache-First: Use cached version if available and valid
- */
-async function cdnCacheFirst(request) {
-  const cache = await caches.open(CACHE_STRATEGIES.cdn);
-  const cached = await cache.match(request);
-
-  if (cached && isCacheValid(cached, CACHE_TTL.cdn)) {
-    console.log(`[SW] CDN cache hit: ${request.url}`);
-    return cached;
+    return;
   }
 
-  try {
-    const response = await fetchWithDedup(request);
-    if (response.ok) {
-      response.headers.set('sw-fetched-at', new Date().toISOString());
-      cache.put(request, response.clone());
-      await manageCacheSize(CACHE_STRATEGIES.cdn);
-    }
-    return response;
-  } catch (error) {
-    return cached || new Response('CDN unavailable', { status: 503 });
-  }
-}
-
-/**
- * Fonts Cache-First: Immutable, long-lived assets
- */
-async function fontsCacheFirst(request) {
-  const cache = await caches.open(CACHE_STRATEGIES.fonts);
-  const cached = await cache.match(request);
-
-  if (cached) {
-    console.log(`[SW] Font cache hit: ${request.url}`);
-    return cached;
+  // Strategy 2: JS/CSS with hash - cache first, long term
+  if (url.pathname.match(/\.(js|css)$/) && url.pathname.includes('-')) {
+    event.respondWith(
+      caches.match(request)
+        .then((cached) => {
+          if (cached) return cached;
+          return fetchWithDedup(request)
+            .then((response) => {
+              if (response.ok) {
+                const cache = caches.open(CACHE_STRATEGIES.runtime);
+                cache.then((c) => c.put(request, response.clone()));
+              }
+              return response;
+            })
+            .catch(() => new Response('Resource not found', { status: 404 }));
+        })
+    );
+    return;
   }
 
-  try {
-    const response = await fetchWithDedup(request);
-    if (response.ok) {
-      cache.put(request, response.clone());
-    }
-    return response;
-  } catch (error) {
-    return new Response('Font unavailable', { status: 503 });
+  // Strategy 3: Images - cache first with TTL
+  if (url.pathname.match(/\.(webp|png|jpg|jpeg|gif|svg)$/i)) {
+    event.respondWith(
+      caches.open(CACHE_STRATEGIES.images)
+        .then((cache) => {
+          return cache.match(request)
+            .then((cached) => {
+              if (cached) {
+                if (isCacheValid(cached, CACHE_TTL.images)) {
+                  return cached;
+                }
+                cache.delete(request);
+              }
+              return fetchWithDedup(request)
+                .then((response) => {
+                  if (response.ok) {
+                    cache.put(request, response.clone());
+                  }
+                  return response;
+                })
+                .catch(() => new Response('Image not found', { status: 404 }));
+            });
+        })
+    );
+    return;
   }
-}
 
-/**
- * Images Cache-First: With network fallback
- */
-async function imageCacheFirst(request) {
-  const cache = await caches.open(CACHE_STRATEGIES.images);
-  const cached = await cache.match(request);
-
-  if (cached) {
-    console.log(`[SW] Image cache hit: ${request.url}`);
-    return cached;
+  // Strategy 4: Fonts - cache first, very long TTL
+  if (url.pathname.match(/\.(woff2|woff|ttf|otf)$/i)) {
+    event.respondWith(
+      caches.open(CACHE_STRATEGIES.fonts)
+        .then((cache) => {
+          return cache.match(request)
+            .then((cached) => {
+              if (cached) return cached;
+              return fetchWithDedup(request)
+                .then((response) => {
+                  if (response.ok) {
+                    cache.put(request, response.clone());
+                  }
+                  return response;
+                })
+                .catch(() => new Response('Font not found', { status: 404 }));
+            });
+        })
+    );
+    return;
   }
 
-  try {
-    const response = await fetchWithDedup(request);
-    if (response.ok) {
-      response.headers.set('sw-fetched-at', new Date().toISOString());
-      cache.put(request, response.clone());
-      await manageCacheSize(CACHE_STRATEGIES.images);
-    }
-    return response;
-  } catch (error) {
-    return new Response('Image not available', { status: 503 });
+  // Strategy 5: API calls - network first with 1 hour cache
+  if (url.host !== location.host || url.pathname.includes('/api')) {
+    event.respondWith(
+      fetchWithDedup(request)
+        .then((response) => {
+          if (response.ok) {
+            caches.open(CACHE_STRATEGIES.api)
+              .then((cache) => cache.put(request, response.clone()));
+          }
+          return response;
+        })
+        .catch(() => {
+          return caches.match(request)
+            .catch(() => new Response('Network unavailable', { status: 503 }));
+        })
+    );
+    return;
   }
-}
 
-/**
- * Stale-While-Revalidate: Return cache immediately, update in background
- */
-async function staleWhileRevalidate(request) {
-  const cache = await caches.open(CACHE_STRATEGIES.runtime);
-  const cached = await cache.match(request);
-
-  // Return cached response immediately
-  const fetchPromise = fetchWithDedup(request)
-    .then((response) => {
-      if (response.ok) {
-        response.headers.set('sw-fetched-at', new Date().toISOString());
-        cache.put(request, response.clone());
-        manageCacheSize(CACHE_STRATEGIES.runtime).catch(console.error);
-      }
-      return response;
-    })
-    .catch((error) => {
-      console.log('[SW] Network failed:', error);
-      if (request.mode === 'navigate') {
-        return caches.match(OFFLINE_URL) || new Response('Offline', { status: 503 });
-      }
-      return cached || new Response('Offline', { status: 503 });
-    });
-
-  return cached || fetchPromise;
-}
-
-/**
- * Handle messages from clients
- */
-self.addEventListener('message', (event) => {
-  const { type, data } = event.data || {};
-
-  if (type === 'SKIP_WAITING') {
-    console.log('[SW] Skip waiting');
-    self.skipWaiting();
-  } else if (type === 'CLEAR_CACHE') {
-    console.log('[SW] Clearing cache:', data.cacheName);
-    caches.delete(data.cacheName).then(() => {
-      event.ports[0]?.postMessage({ success: true });
-    });
-  } else if (type === 'GET_CACHE_SIZE') {
-    calculateTotalCacheSize().then((size) => {
-      event.ports[0]?.postMessage({ size });
-    });
-  }
+  // Default: network first
+  event.respondWith(
+    fetchWithDedup(request)
+      .then((response) => response || caches.match(request))
+      .catch(() => caches.match(request))
+  );
 });
-
-/**
- * Calculate total cache size
- */
-async function calculateTotalCacheSize() {
-  let total = 0;
-  const cacheNames = await caches.keys();
-
-  for (const name of cacheNames) {
-    if (!name.startsWith(CACHE_PREFIX)) continue;
-    
-    const cache = await caches.open(name);
-    const keys = await cache.keys();
-
-    for (const request of keys) {
-      const response = await cache.match(request);
-      if (response) {
-        const size = parseInt(response.headers.get('content-length'), 10) || 0;
-        total += size;
-      }
-    }
-  }
-
-  return total;
-}
-
-console.log(`[SW] Service Worker v${CACHE_VERSION} loaded - App v${APP_VERSION}`);
-
