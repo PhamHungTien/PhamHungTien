@@ -52,14 +52,22 @@ export const Gallery: React.FC = () => {
               <span className="w-1 h-8 bg-purple-500 rounded-full"></span>
               Emoji Picker
             </h3>
-            <div className="group relative max-w-2xl">
-              <div className="absolute inset-0 bg-purple-500/10 rounded-2xl blur-xl group-hover:bg-purple-500/20 transition-all"></div>
-              <img 
-                src="./UI/phtv_picker.webp" 
-                alt="Emoji Picker" 
-                className="relative rounded-xl border border-slate-700 shadow-2xl w-full"
-              />
-              <p className="text-center text-slate-500 mt-2 text-sm italic">Bộ chọn Emoji tích hợp</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+               {[
+                 { src: "./UI/phtv_picker.webp", label: "Emoji Picker - Trang 1" },
+                 { src: "./UI/phtv_picker_page2.png", label: "Emoji Picker - Trang 2" },
+                 { src: "./UI/phtv_picker_page3.png", label: "Emoji Picker - Trang 3" }
+               ].map((item, idx) => (
+                 <div key={idx} className="group relative">
+                    <div className="absolute inset-0 bg-purple-500/10 rounded-2xl blur-xl group-hover:bg-purple-500/20 transition-all"></div>
+                    <img 
+                       src={item.src} 
+                       alt={item.label} 
+                       className="relative rounded-xl border border-slate-700 shadow-2xl w-full"
+                    />
+                    <p className="text-center text-slate-500 mt-2 text-sm italic">{item.label}</p>
+                 </div>
+               ))}
             </div>
           </div>
 
