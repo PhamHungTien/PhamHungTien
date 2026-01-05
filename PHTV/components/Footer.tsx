@@ -48,7 +48,7 @@ export const Footer: React.FC = () => {
               <li><a href="https://github.com/PhamHungTien/PHTV/blob/main/LICENSE" className="hover:text-brand-400 transition-colors">Giấy phép GPL v3</a></li>
               <li><a href="https://github.com/PhamHungTien/PHTV/blob/main/SECURITY.md" className="hover:text-brand-400 transition-colors">Bảo mật</a></li>
               <li><a href="https://github.com/PhamHungTien/PHTV/blob/main/CONTRIBUTING.md" className="hover:text-brand-400 transition-colors">Đóng góp</a></li>
-              <li><a href="https://phamhungtien.com/PHTV/donate.html" className="hover:text-brand-400 transition-colors flex items-center gap-1">☕ Ủng hộ <span className="text-xs bg-brand-900 text-brand-300 px-1 rounded">Donate</span></a></li>
+              <li><a href="#donate" className="hover:text-brand-400 transition-colors flex items-center gap-1">☕ Ủng hộ <span className="text-xs bg-brand-900 text-brand-300 px-1 rounded">Donate</span></a></li>
             </ul>
           </div>
         </div>
