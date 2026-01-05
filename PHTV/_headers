@@ -5,6 +5,18 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=()
 
+/index.html
+  Cache-Control: no-cache, must-revalidate, max-age=0
+  ETag: W/"index"
+
+/PHTV/index.html
+  Cache-Control: no-cache, must-revalidate, max-age=0
+  ETag: W/"index"
+
 /PHTV/*
   Cache-Control: max-age=31536000, immutable
   ETag: W/"PHTV"
+
+/icon.webp
+  Cache-Control: max-age=31536000, immutable
+  ETag: W/"favicon"
