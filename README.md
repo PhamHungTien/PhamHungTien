@@ -22,23 +22,4 @@ Modern, **offline** Vietnamese input method for macOS. Built with Swift & C++.
 brew install --cask phamhungtien/tap/phtv
 ```
 
-[**→ View Project**](https://github.com/PhamHungTien/PHTV) · [**→ Website**](https://phamhungtien.com/PHTV)
----
-
-## Development
-
-```bash
-# Available commands (run from root or PHTV folder)
-npm run dev       # Start dev server on http://localhost:5173
-npm run build     # Build for production
-npm run preview   # Preview production build
-npm run type-check # Check TypeScript types
-
-# Install dependencies
-npm run install:deps
-
-# Clean and reinstall
-npm run clean
-```
-
-All commands can be run from **root** or **PHTV** folder.
+[**→ View Project**](https://github.com/PhamHungTien/PHTV)
