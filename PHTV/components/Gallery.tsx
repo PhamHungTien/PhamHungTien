@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Icons } from './Icons';
 
 // Helper function to get correct asset paths
@@ -7,6 +7,43 @@ const getAssetPath = (filename: string) => {
 };
 
 export const Gallery: React.FC = () => {
+  const [selectedImage, setSelectedImage] = useState<{ src: string; label: string } | null>(null);
+  const [isClosing, setIsClosing] = useState(false);
+  const [isOpening, setIsOpening] = useState(false);
+
+  const openLightbox = (src: string, label: string) => {
+    setSelectedImage({ src, label });
+    setIsOpening(true);
+    setTimeout(() => setIsOpening(false), 10);
+  };
+
+  const closeLightbox = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setSelectedImage(null);
+      setIsClosing(false);
+    }, 200);
+  };
+
+  // Đóng lightbox khi nhấn ESC
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && selectedImage) {
+        closeLightbox();
+      }
+    };
+    
+    if (selectedImage) {
+      document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedImage]);
+
   return (
     <section id="gallery" className="py-24 max-w-7xl mx-auto px-6">
        <div className="text-center mb-16">
@@ -23,53 +60,31 @@ export const Gallery: React.FC = () => {
        </div>
 
        <div className="space-y-16">
-          {/* Menu Bar Images */}
-          <div>
-            <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-              <span className="w-1 h-8 bg-brand-500 rounded-full"></span>
-              Menu Bar
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="group relative">
-                 <div className="absolute inset-0 bg-brand-500/10 rounded-2xl blur-xl group-hover:bg-brand-500/20 transition-all"></div>
-                 <img 
-                    src={getAssetPath("menu-input-methods.webp")} 
-                    alt="Menu Input Methods" 
-                    className="relative rounded-xl border border-slate-700 shadow-2xl w-full"
-                 />
-                 <p className="text-center text-slate-500 mt-2 text-sm italic">Các kiểu gõ trên menu bar</p>
-              </div>
-              <div className="group relative">
-                 <div className="absolute inset-0 bg-brand-500/10 rounded-2xl blur-xl group-hover:bg-brand-500/20 transition-all"></div>
-                 <img 
-                    src={getAssetPath("menu-charset.webp")} 
-                    alt="Menu Charset" 
-                    className="relative rounded-xl border border-slate-700 shadow-2xl w-full"
-                 />
-                 <p className="text-center text-slate-500 mt-2 text-sm italic">Các bảng mã trên menu bar</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Settings Images */}
+          {/* Settings & Menu Bar Images */}
           <div>
             <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
               <span className="w-1 h-8 bg-blue-500 rounded-full"></span>
               Cài đặt (Settings)
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                {[
-                 { src: getAssetPath("settings-typing.webp"), label: "Typing Settings" },
-                 { src: getAssetPath("settings-macros.webp"), label: "Macros Settings" },
-                 { src: getAssetPath("settings-system.webp"), label: "System Settings" }
+                 { src: getAssetPath("menubar.webp"), label: "Menu Bar" },
+                 { src: getAssetPath("setting-bogo.webp"), label: "Kiểu gõ" },
+                 { src: getAssetPath("setting-phimtat.webp"), label: "Phím tắt" },
+                 { src: getAssetPath("setting-gotat.webp"), label: "Gõ tắt" },
+                 { src: getAssetPath("setting-ungdung.webp"), label: "Ứng dụng" },
+                 { src: getAssetPath("setting-hethong.webp"), label: "Hệ thống" },
+                 { src: getAssetPath("setting-baoloi.webp"), label: "Báo lỗi" },
+                 { src: getAssetPath("setting-thongtin.webp"), label: "Thông tin" }
                ].map((item, idx) => (
-                 <div key={idx} className="group relative">
-                    <div className="absolute inset-0 bg-blue-500/10 rounded-2xl blur-xl group-hover:bg-blue-500/20 transition-all"></div>
-                    <img 
-                       src={item.src} 
-                       alt={item.label} 
-                       className="relative rounded-xl border border-slate-700 shadow-2xl w-full"
-                    />
+                 <div key={idx} className="group flex flex-col cursor-pointer" onClick={() => openLightbox(item.src, item.label)}>
+                    <div className="flex-1 flex items-end">
+                      <img 
+                         src={item.src} 
+                         alt={item.label} 
+                         className="rounded-xl w-full object-contain hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
                     <p className="text-center text-slate-500 mt-2 text-sm italic">{item.label}</p>
                  </div>
                ))}
@@ -84,23 +99,59 @@ export const Gallery: React.FC = () => {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                {[
-                 { src: getAssetPath("phtv_picker.webp"), label: "Emoji & Kaomoji Picker" },
-                 { src: getAssetPath("phtv_picker_page2.webp"), label: "GIF Picker" },
-                 { src: getAssetPath("phtv_picker_page3.webp"), label: "Symbol & Text Picker" }
+                 { src: getAssetPath("picker-emoji.webp"), label: "Emoji & Kaomoji Picker" },
+                 { src: getAssetPath("picker-gif.webp"), label: "GIF Picker" },
+                 { src: getAssetPath("picker-sticker.webp"), label: "Sticker Picker" }
                ].map((item, idx) => (
-                 <div key={idx} className="group relative">
-                    <div className="absolute inset-0 bg-purple-500/10 rounded-2xl blur-xl group-hover:bg-purple-500/20 transition-all"></div>
-                    <img 
-                       src={item.src} 
-                       alt={item.label} 
-                       className="relative rounded-xl border border-slate-700 shadow-2xl w-full"
-                    />
+                 <div key={idx} className="group flex flex-col cursor-pointer" onClick={() => openLightbox(item.src, item.label)}>
+                    <div className="flex-1 flex items-end">
+                      <img 
+                         src={item.src} 
+                         alt={item.label} 
+                         className="rounded-xl w-full object-contain hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
                     <p className="text-center text-slate-500 mt-2 text-sm italic">{item.label}</p>
                  </div>
                ))}
             </div>
           </div>
        </div>
+
+       {/* Lightbox Modal */}
+       {selectedImage && (
+         <div 
+           className={`fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 transition-all duration-200 ease-out
+             ${isClosing || isOpening ? 'bg-black/0 backdrop-blur-none' : 'bg-black/90 backdrop-blur-md'}`}
+           onClick={closeLightbox}
+         >
+           <div 
+             className={`relative flex flex-col items-center justify-center w-full h-full transition-all duration-200 ease-out
+               ${isClosing || isOpening ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}
+             onClick={(e) => e.stopPropagation()}
+           >
+             {/* Close button */}
+             <button 
+               className="absolute top-0 right-0 md:top-4 md:right-4 z-10 p-2 text-white/70 hover:text-white transition-colors rounded-full hover:bg-white/10"
+               onClick={closeLightbox}
+             >
+               <Icons.X size={28} />
+             </button>
+             
+             {/* Image container */}
+             <div className="flex-1 flex items-center justify-center w-full max-h-[calc(100vh-120px)] overflow-hidden">
+               <img 
+                 src={selectedImage.src} 
+                 alt={selectedImage.label}
+                 className="max-w-full max-h-full object-contain rounded-xl shadow-2xl"
+               />
+             </div>
+             
+             {/* Label */}
+             <p className="text-center text-white/90 mt-4 text-base md:text-lg font-medium">{selectedImage.label}</p>
+           </div>
+         </div>
+       )}
     </section>
   );
 };
