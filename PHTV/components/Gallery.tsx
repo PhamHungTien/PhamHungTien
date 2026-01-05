@@ -46,6 +46,23 @@ export const Gallery: React.FC = () => {
             </div>
           </div>
 
+          {/* Picker */}
+          <div>
+            <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+              <span className="w-1 h-8 bg-purple-500 rounded-full"></span>
+              Emoji Picker
+            </h3>
+            <div className="group relative max-w-2xl">
+              <div className="absolute inset-0 bg-purple-500/10 rounded-2xl blur-xl group-hover:bg-purple-500/20 transition-all"></div>
+              <img 
+                src="./Resources/UI/phtv_picker.webp" 
+                alt="Emoji Picker" 
+                className="relative rounded-xl border border-slate-700 shadow-2xl w-full"
+              />
+              <p className="text-center text-slate-500 mt-2 text-sm italic">Bộ chọn Emoji tích hợp</p>
+            </div>
+          </div>
+
           {/* Settings Images */}
           <div>
             <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
