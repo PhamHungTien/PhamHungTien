@@ -7,18 +7,30 @@
   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://api.github.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 
+# HTML files - always revalidate
+/*.html
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+  Expires: 0
+
 /index.html
-  Cache-Control: no-cache, must-revalidate, max-age=0
-  ETag: W/"index"
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+  Expires: 0
 
-/PHTV/index.html
-  Cache-Control: no-cache, must-revalidate, max-age=0
-  ETag: W/"index"
+# Assets with hashes - cache forever
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
 
-/PHTV/*
-  Cache-Control: max-age=31536000, immutable
-  ETag: W/"PHTV"
+# Static images
+/*.webp
+  Cache-Control: public, max-age=31536000, immutable
 
-/icon.webp
-  Cache-Control: max-age=31536000, immutable
-  ETag: W/"favicon"
+/*.png
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.svg
+  Cache-Control: public, max-age=31536000, immutable
