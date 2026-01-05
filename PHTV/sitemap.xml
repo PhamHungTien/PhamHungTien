@@ -86,14 +86,6 @@
     <priority>0.5</priority>
   </url>
 
-  <!-- Donate Page -->
-  <url>
-    <loc>https://phamhungtien.com/PHTV/donate.html</loc>
-    <lastmod>2025-12-27</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
   <!-- GitHub Repository -->
   <url>
     <loc>https://github.com/PhamHungTien/PHTV</loc>
