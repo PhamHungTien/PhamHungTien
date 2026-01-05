@@ -6,6 +6,7 @@ import { Shortcuts } from './components/Shortcuts';
 import { Gallery } from './components/Gallery';
 import { Footer } from './components/Footer';
 import { Icons } from './components/Icons';
+import donateImg from './src/assets/donate.webp';
 
 const CopyBlock = ({ code, className = "", colorClass = "text-slate-300" }: { code: string, className?: string, colorClass?: string }) => {
   const [copied, setCopied] = useState(false);
@@ -146,7 +147,7 @@ const DonateModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
             {/* QR Code Container */}
             <div className="bg-white p-4 rounded-2xl shadow-xl shadow-black/20 mx-auto w-fit mb-8 transform transition-transform hover:scale-105 duration-300 ring-4 ring-white/50">
                 <img 
-                    src="https://phamhungtien.com/PHTV/donate.webp" 
+                    src={donateImg} 
                     alt="QR Code Donate" 
                     className="w-48 h-48 object-contain rounded-lg"
                 />
