@@ -16,15 +16,11 @@ const CACHE_DURATION = {
 const PRECACHE_ASSETS = [
   '/PHTV/',
   '/PHTV/index.html',
-  '/PHTV/style.css',
-  '/PHTV/script.js',
   '/PHTV/manifest.json',
+  '/PHTV/index.css',
   '/PHTV/Resources/icon.png',
-  '/PHTV/Resources/icons/favicon-32x32.png',
-  '/PHTV/Resources/icons/favicon-16x16.png',
-  '/PHTV/Resources/icons/apple-touch-icon.png',
-  '/PHTV/Resources/icons/android-chrome-192x192.png',
-  '/PHTV/Resources/icons/android-chrome-512x512.png'
+  '/PHTV/Resources/icons/favicon-32x32.webp',
+  '/PHTV/Resources/icons/favicon-16x16.webp'
 ];
 
 // Install event - cache essential assets
