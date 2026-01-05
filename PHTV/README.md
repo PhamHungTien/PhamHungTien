@@ -2,20 +2,61 @@
 <img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
 </div>
 
-# Run and deploy your AI Studio app
+# PHTV - Personal Portfolio & Project Showcase
 
-This contains everything you need to run your app locally.
+A modern, responsive portfolio application built with React and Vite.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1I9YGBgBpdQScfQsLIs11ZFlEn1saqONm
+## Features
 
-## Run Locally
+- **Responsive Design**: Works seamlessly across all devices
+- **Fast Performance**: Built with Vite for optimal speed
+- **Modern UI**: Clean and professional user interface
+- **Easy Deployment**: Ready for production deployment
 
-**Prerequisites:**  Node.js
+## Getting Started
 
+### Prerequisites
+
+- Node.js (v16 or higher)
+- npm or yarn
+
+### Installation
 
 1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
-# Build timestamp: Tue Jan  6 00:10:20 +07 2026
+   ```bash
+   npm install
+   ```
+
+2. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+3. Open your browser and navigate to the local development URL (typically `http://localhost:5173`)
+
+### Build for Production
+
+To create an optimized production build:
+
+```bash
+npm run build
+```
+
+## Project Structure
+
+- `src/` - Application source code
+- `public/` - Static assets
+- `components/` - React components
+- `assets/` - Images and media files
+- `vite.config.ts` - Vite configuration
+- `tsconfig.json` - TypeScript configuration
+
+## Deployment
+
+The app is configured for deployment and includes:
+- `_redirects` - URL routing configuration
+- `CNAME` - Custom domain setup
+- `robots.txt` - SEO configuration
+- `sitemap.xml` - Site map for search engines
+
+Build timestamp: Tue Jan  6 00:10:20 +07 2026
