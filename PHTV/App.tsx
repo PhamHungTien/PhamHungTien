@@ -89,9 +89,8 @@ function App() {
   const [totalDownloads, setTotalDownloads] = useState("0");
 
   useEffect(() => {
-    // Caching logic
-    const CACHE_KEY = 'phtv_releases_data_v2';
-    const CACHE_DURATION = 3600000; // 1 hour
+    const CACHE_KEY = 'phtv_releases_data_v3';
+    const CACHE_DURATION = 1800000; // 30 minutes
 
     const fetchReleases = async () => {
       const now = Date.now();
@@ -99,55 +98,99 @@ function App() {
       try {
         const cached = localStorage.getItem(CACHE_KEY);
         if (cached) {
-          const { url, version: cachedVer, downloads, timestamp } = JSON.parse(cached);
-          if (now - timestamp < CACHE_DURATION) {
-            setDownloadUrl(url);
-            setVersion(cachedVer);
-            setTotalDownloads(downloads);
-            return;
+          try {
+            const { url, version: cachedVer, downloads, timestamp } = JSON.parse(cached);
+            if (now - timestamp < CACHE_DURATION) {
+              console.log('[PHTV] Using cached releases data');
+              setDownloadUrl(url);
+              setVersion(cachedVer);
+              setTotalDownloads(downloads);
+              return;
+            }
+          } catch (e) {
+            console.warn('[PHTV] Invalid cache data');
+            localStorage.removeItem(CACHE_KEY);
           }
         }
       } catch (e) {
-        localStorage.removeItem(CACHE_KEY);
+        console.warn('[PHTV] Cache read error:', e);
       }
 
       try {
-        // Fetch list to get latest version AND calculate total downloads
-        const res = await fetch('https://api.github.com/repos/PhamHungTien/PHTV/releases?per_page=30');
-        if (!res.ok) throw new Error('Network error');
+        console.log('[PHTV] Fetching releases from GitHub API...');
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
+
+        const res = await fetch('https://api.github.com/repos/PhamHungTien/PHTV/releases?per_page=100', {
+          signal: controller.signal,
+          headers: {
+            'Accept': 'application/vnd.github.v3+json',
+          }
+        });
+        
+        clearTimeout(timeoutId);
+
+        if (!res.ok) {
+          console.warn(`[PHTV] GitHub API returned ${res.status}`);
+          throw new Error(`API error ${res.status}`);
+        }
 
         const data = await res.json();
         
-        if (Array.isArray(data) && data.length > 0) {
-          const latest = data[0]; // Assuming API returns sorted desc
-          const latestVer = latest.tag_name;
-          const dmgAsset = latest.assets?.find((asset: any) => asset.name.endsWith('.dmg'));
-          const url = dmgAsset ? dmgAsset.browser_download_url : "https://github.com/PhamHungTien/PHTV/releases/latest";
+        if (!Array.isArray(data) || data.length === 0) {
+          console.warn('[PHTV] No releases found');
+          return;
+        }
 
-          // Calculate total downloads
-          let dlCount = 0;
-          data.forEach((rel: any) => {
-            if (rel.assets) {
-              rel.assets.forEach((asset: any) => {
+        const latest = data[0];
+        const latestVer = latest.tag_name || 'v1.0.0';
+        const dmgAsset = latest.assets?.find((asset: any) => asset.name.endsWith('.dmg'));
+        const url = dmgAsset ? dmgAsset.browser_download_url : "https://github.com/PhamHungTien/PHTV/releases/latest";
+
+        // Calculate total downloads across all releases
+        let dlCount = 0;
+        data.forEach((rel: any) => {
+          if (rel.assets && Array.isArray(rel.assets)) {
+            rel.assets.forEach((asset: any) => {
+              if (typeof asset.download_count === 'number') {
                 dlCount += asset.download_count;
-              });
-            }
-          });
-          const formattedDownloads = dlCount > 1000 ? `${(dlCount / 1000).toFixed(1)}k+` : `${dlCount}`;
+              }
+            });
+          }
+        });
 
-          setVersion(latestVer);
-          setDownloadUrl(url);
-          setTotalDownloads(formattedDownloads);
+        // Format downloads count
+        let formattedDownloads = '0';
+        if (dlCount > 0) {
+          if (dlCount >= 1000000) {
+            formattedDownloads = `${(dlCount / 1000000).toFixed(1)}M+`;
+          } else if (dlCount >= 1000) {
+            formattedDownloads = `${(dlCount / 1000).toFixed(1)}k+`;
+          } else {
+            formattedDownloads = `${dlCount}`;
+          }
+        }
 
+        console.log(`[PHTV] Version: ${latestVer}, Downloads: ${dlCount} (${formattedDownloads})`);
+
+        setVersion(latestVer);
+        setDownloadUrl(url);
+        setTotalDownloads(formattedDownloads);
+
+        // Save to cache
+        try {
           localStorage.setItem(CACHE_KEY, JSON.stringify({
             url,
             version: latestVer,
             downloads: formattedDownloads,
             timestamp: now
           }));
+        } catch (e) {
+          console.warn('[PHTV] Failed to cache data:', e);
         }
       } catch (err) {
-        console.error("Failed to fetch GitHub data", err);
+        console.error("[PHTV] Failed to fetch GitHub data:", err);
+        // Silently fail - use default values
       }
     };
 

@@ -1,9 +1,9 @@
 // PHTV Service Worker - Smart Cache Management & Performance Optimization
-// v5 - Force cache cleanup on every update
+// v6 - Force cache cleanup on every update + LocalStorage cleanup
 
-const APP_VERSION = '1.0.2';
+const APP_VERSION = '1.0.3';
 const CACHE_PREFIX = 'phtv';
-const CACHE_VERSION = 'v5';
+const CACHE_VERSION = 'v6';
 const CACHE_STRATEGIES = {
   precache: `${CACHE_PREFIX}-precache-${CACHE_VERSION}`,
   runtime: `${CACHE_PREFIX}-runtime-${CACHE_VERSION}`,
@@ -108,25 +108,46 @@ self.addEventListener('activate', (event) => {
   console.log(`[SW v${CACHE_VERSION}] Activating service worker...`);
 
   event.waitUntil(
-    caches.keys()
-      .then((cacheNames) => {
-        console.log('[SW] Found caches:', cacheNames);
-        // Delete ALL old phtv caches
-        return Promise.all(
-          cacheNames
-            .filter((name) => name.startsWith(CACHE_PREFIX) && !name.includes(CACHE_VERSION))
-            .map((name) => {
-              console.log(`[SW] Deleting old cache: ${name}`);
-              return caches.delete(name);
-            })
-        );
+    Promise.all([
+      // Clean up old caches
+      caches.keys()
+        .then((cacheNames) => {
+          console.log('[SW] Found caches:', cacheNames);
+          return Promise.all(
+            cacheNames
+              .filter((name) => name.startsWith(CACHE_PREFIX) && !name.includes(CACHE_VERSION))
+              .map((name) => {
+                console.log(`[SW] Deleting old cache: ${name}`);
+                return caches.delete(name);
+              })
+          );
+        })
+        .then(() => {
+          console.log(`[SW v${CACHE_VERSION}] Old caches cleaned up.`);
+        }),
+      
+      // Clean up old localStorage cache keys
+      new Promise((resolve) => {
+        try {
+          const oldCacheKeys = ['phtv_releases_data_v1', 'phtv_releases_data_v2'];
+          oldCacheKeys.forEach(key => {
+            if (localStorage.getItem(key)) {
+              localStorage.removeItem(key);
+              console.log(`[SW] Removed old localStorage key: ${key}`);
+            }
+          });
+          resolve();
+        } catch (e) {
+          console.warn('[SW] Cannot access localStorage:', e);
+          resolve();
+        }
       })
+    ])
       .then(() => {
-        console.log(`[SW v${CACHE_VERSION}] Old caches cleaned up. Claiming clients...`);
+        console.log(`[SW v${CACHE_VERSION}] Activation complete. Claiming clients...`);
         return self.clients.claim();
       })
       .then(() => {
-        // Notify all clients to reload
         return self.clients.matchAll();
       })
       .then((clients) => {
