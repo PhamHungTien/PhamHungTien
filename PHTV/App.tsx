@@ -190,7 +190,8 @@ function App() {
         }
       } catch (err) {
         console.error("[PHTV] Failed to fetch GitHub data:", err);
-        // Silently fail - use default values
+        // Fallback to latest release page - always works
+        setDownloadUrl("https://github.com/PhamHungTien/PHTV/releases/latest");
       }
     };
 
