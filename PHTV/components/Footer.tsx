@@ -12,7 +12,7 @@ export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-3 mb-4">
-              <img src="https://raw.githubusercontent.com/PhamHungTien/PHTV/main/PHTV/Resources/icon.png" alt="PHTV Logo" className="w-8 h-8 rounded-lg" />
+              <img src="/icon.webp" alt="PHTV Logo" className="w-8 h-8 rounded-lg" />
               <span className="font-bold text-xl tracking-tight text-white">PHTV</span>
             </div>
             <p className="text-slate-400 mb-6 max-w-md">

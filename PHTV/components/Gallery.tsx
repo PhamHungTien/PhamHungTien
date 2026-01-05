@@ -28,7 +28,7 @@ export const Gallery: React.FC = () => {
               <div className="group relative">
                  <div className="absolute inset-0 bg-brand-500/10 rounded-2xl blur-xl group-hover:bg-brand-500/20 transition-all"></div>
                  <img 
-                    src="https://raw.githubusercontent.com/PhamHungTien/PHTV/main/PHTV/Resources/UI/menu-input-methods.png" 
+                    src="/UI/menu-input-methods.webp" 
                     alt="Menu Input Methods" 
                     className="relative rounded-xl border border-slate-700 shadow-2xl w-full"
                  />
@@ -37,7 +37,7 @@ export const Gallery: React.FC = () => {
               <div className="group relative">
                  <div className="absolute inset-0 bg-brand-500/10 rounded-2xl blur-xl group-hover:bg-brand-500/20 transition-all"></div>
                  <img 
-                    src="https://raw.githubusercontent.com/PhamHungTien/PHTV/main/PHTV/Resources/UI/menu-charset.png" 
+                    src="/UI/menu-charset.webp" 
                     alt="Menu Charset" 
                     className="relative rounded-xl border border-slate-700 shadow-2xl w-full"
                  />
@@ -54,9 +54,9 @@ export const Gallery: React.FC = () => {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                {[
-                 { src: "https://raw.githubusercontent.com/PhamHungTien/PHTV/main/PHTV/Resources/UI/settings-typing.png", label: "Typing Settings" },
-                 { src: "https://raw.githubusercontent.com/PhamHungTien/PHTV/main/PHTV/Resources/UI/settings-macros.png", label: "Macros Settings" },
-                 { src: "https://raw.githubusercontent.com/PhamHungTien/PHTV/main/PHTV/Resources/UI/settings-system.png", label: "System Settings" }
+                 { src: "/UI/settings-typing.webp", label: "Typing Settings" },
+                 { src: "/UI/settings-macros.webp", label: "Macros Settings" },
+                 { src: "/UI/settings-system.webp", label: "System Settings" }
                ].map((item, idx) => (
                  <div key={idx} className="group relative">
                     <div className="absolute inset-0 bg-blue-500/10 rounded-2xl blur-xl group-hover:bg-blue-500/20 transition-all"></div>

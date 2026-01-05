@@ -68,7 +68,7 @@ export const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <img 
-            src="https://raw.githubusercontent.com/PhamHungTien/PHTV/main/PHTV/Resources/icon.png" 
+            src="/icon.webp" 
             alt="PHTV Logo" 
             className="w-10 h-10 rounded-xl shadow-lg shadow-brand-500/20" 
           />
