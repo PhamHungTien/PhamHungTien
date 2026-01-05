@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Icons } from './Icons';
-import iconImg from '../public/icon.webp';
+import iconImg from '../src/assets/icon.webp';
 
 export const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);

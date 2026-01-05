@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icons } from './Icons';
-import iconImg from '../public/icon.webp';
+import iconImg from '../src/assets/icon.webp';
 
 interface FooterProps {
   onDonateClick: () => void;

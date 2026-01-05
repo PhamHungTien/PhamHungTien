@@ -1,9 +1,9 @@
 import React from 'react';
 import { Icons } from './Icons';
 
-// Helper function to get correct asset paths relative to public folder
+// Helper function to get correct asset paths
 const getAssetPath = (filename: string) => {
-  return new URL(`../public/UI/${filename}`, import.meta.url).href;
+  return new URL(`../src/assets/UI/${filename}`, import.meta.url).href;
 };
 
 export const Gallery: React.FC = () => {
