@@ -1,9 +1,9 @@
 // PHTV Service Worker - Smart Cache Management & Performance Optimization
 // v3 - Intelligent versioning, storage management, and request deduplication
 
-const APP_VERSION = '1.0.0';
+const APP_VERSION = '1.0.1';
 const CACHE_PREFIX = 'phtv';
-const CACHE_VERSION = 'v3';
+const CACHE_VERSION = 'v4';
 const CACHE_STRATEGIES = {
   precache: `${CACHE_PREFIX}-precache-${CACHE_VERSION}`,
   runtime: `${CACHE_PREFIX}-runtime-${CACHE_VERSION}`,
