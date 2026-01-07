@@ -1,6 +1,7 @@
 import React from 'react';
 import { Icons } from './Icons';
-import donateImg from '../src/assets/donate.webp';
+
+const donateImg = new URL('../src/assets/donate.webp', import.meta.url).href;
 
 export const DonateModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
   if (!isOpen) return null;

@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Icons } from './Icons';
 import { useGitHubData } from '../hooks/useGitHubData';
-import iconImg from '../src/assets/icon.webp';
 
-import React, { useState, useEffect } from 'react';
-import { Icons } from './Icons';
-import { useGitHubData } from '../hooks/useGitHubData';
-import iconImg from '../src/assets/icon.webp';
+const iconImg = new URL('../src/assets/icon.webp', import.meta.url).href;
 
 export const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
