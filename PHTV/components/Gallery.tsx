@@ -158,70 +158,73 @@ export const Gallery: React.FC = () => {
        {/* Enhanced Lightbox Modal */}
        {selectedIndex !== null && (
          <div 
-           className={`fixed inset-0 z-[100] flex flex-col items-center justify-center transition-all duration-300 ease-in-out
-             ${isClosing ? 'bg-black/0 backdrop-blur-none' : 'bg-slate-950/95 backdrop-blur-xl'}`}
+           className={`fixed inset-0 z-[100] flex items-center justify-center transition-all duration-500 ease-in-out
+             ${isClosing ? 'bg-black/0 backdrop-blur-none' : 'bg-slate-950/98 backdrop-blur-2xl'}`}
            onClick={closeLightbox}
          >
-           {/* Top Bar */}
-           <div className={`absolute top-0 left-0 right-0 p-6 flex justify-between items-center z-10 transition-transform duration-300 ${isClosing ? '-translate-y-full' : 'translate-y-0'}`}>
-              <div className="flex flex-col">
-                <span className="text-white font-bold text-lg">{IMAGES[selectedIndex].label}</span>
-                <span className="text-slate-500 text-xs uppercase tracking-widest font-bold">Hình {selectedIndex + 1} / {IMAGES.length}</span>
+           {/* Top Bar - Absolute to not affect flex centering */}
+           <div className={`absolute top-0 left-0 right-0 p-6 md:p-8 flex justify-between items-center z-30 transition-all duration-500 ${isClosing ? '-translate-y-full opacity-0' : 'translate-y-0 opacity-100'}`}>
+              <div className="flex flex-col gap-1">
+                <span className="text-white font-black text-xl md:text-2xl tracking-tight">{IMAGES[selectedIndex].label}</span>
+                <div className="flex items-center gap-2">
+                  <span className="bg-brand-500 text-white text-[10px] px-2 py-0.5 rounded-full font-black uppercase tracking-widest">{IMAGES[selectedIndex].category}</span>
+                  <span className="text-slate-500 text-[10px] uppercase tracking-[0.2em] font-black">{selectedIndex + 1} / {IMAGES.length}</span>
+                </div>
               </div>
               <button 
-                className="p-3 bg-white/5 hover:bg-white/10 text-white rounded-full transition-all border border-white/10"
+                className="p-4 bg-white/5 hover:bg-white/10 text-white rounded-2xl transition-all border border-white/10 hover:rotate-90 group"
                 onClick={closeLightbox}
               >
-                <Icons.X size={24} />
+                <Icons.X size={24} className="group-hover:scale-110" />
               </button>
            </div>
 
-           {/* Main Content Area */}
-           <div className="relative w-full h-full flex items-center justify-center p-4 md:p-12">
+           {/* Main Content Area - Perfectly Centered */}
+           <div className="w-full h-full flex items-center justify-center p-4 md:p-20 pointer-events-none">
               {/* Navigation - Left */}
               <button 
-                className="absolute left-4 md:left-8 z-20 p-4 bg-black/20 hover:bg-white/10 text-white rounded-full transition-all border border-white/5 hidden md:block group"
+                className={`absolute left-6 md:left-12 z-40 p-5 bg-white/5 hover:bg-brand-500 text-white rounded-[1.5rem] transition-all border border-white/10 hidden md:flex items-center justify-center group pointer-events-auto ${isClosing ? 'opacity-0 -translate-x-10' : 'opacity-100 translate-x-0 delay-300'}`}
                 onClick={(e) => { e.stopPropagation(); navigate(-1); }}
               >
-                <Icons.ArrowRight className="rotate-180 group-hover:-translate-x-1 transition-transform" size={28} />
+                <Icons.ArrowRight className="rotate-180 group-hover:-translate-x-1 transition-transform" size={32} />
               </button>
 
-              {/* Image with zoom animation */}
+              {/* Image Container */}
               <div 
-                className={`relative max-w-5xl max-h-full transition-all duration-300 ease-out flex items-center justify-center
-                  ${isClosing ? 'opacity-0 scale-90 blur-sm' : 'opacity-100 scale-100 blur-0'}`}
+                className={`relative w-full h-full flex items-center justify-center transition-all duration-500 cubic-bezier(0.34, 1.56, 0.64, 1) pointer-events-auto
+                  ${isClosing ? 'opacity-0 scale-90 blur-xl' : 'opacity-100 scale-100 blur-0'}`}
                 onClick={(e) => e.stopPropagation()}
               >
                  <img 
                    key={IMAGES[selectedIndex].src}
                    src={IMAGES[selectedIndex].src} 
                    alt={IMAGES[selectedIndex].label}
-                   className="max-w-full max-h-[75vh] md:max-h-[80vh] object-contain rounded-xl shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-white/5 animate-in fade-in zoom-in-95 duration-300"
+                   className="max-w-full max-h-full object-contain rounded-2xl shadow-[0_40px_100px_rgba(0,0,0,0.8)] border border-white/10 animate-in fade-in zoom-in-95 duration-500"
                  />
               </div>
 
               {/* Navigation - Right */}
               <button 
-                className="absolute right-4 md:right-8 z-20 p-4 bg-black/20 hover:bg-white/10 text-white rounded-full transition-all border border-white/5 hidden md:block group"
+                className={`absolute right-6 md:right-12 z-40 p-5 bg-white/5 hover:bg-brand-500 text-white rounded-[1.5rem] transition-all border border-white/10 hidden md:flex items-center justify-center group pointer-events-auto ${isClosing ? 'opacity-0 translate-x-10' : 'opacity-100 translate-x-0 delay-300'}`}
                 onClick={(e) => { e.stopPropagation(); navigate(1); }}
               >
-                <Icons.ArrowRight className="group-hover:translate-x-1 transition-transform" size={28} />
+                <Icons.ArrowRight className="group-hover:translate-x-1 transition-transform" size={32} />
               </button>
            </div>
 
-           {/* Bottom Thumbnails/Mobile Navigation */}
-           <div className={`absolute bottom-0 left-0 right-0 p-8 flex justify-center gap-4 md:hidden z-10 transition-transform duration-300 ${isClosing ? 'translate-y-full' : 'translate-y-0'}`}>
+           {/* Mobile Navigation - Absolute bottom */}
+           <div className={`absolute bottom-0 left-0 right-0 p-8 flex justify-center gap-4 md:hidden z-30 transition-all duration-500 ${isClosing ? 'translate-y-full opacity-0' : 'translate-y-0 opacity-100'}`}>
               <button 
-                className="flex-1 py-4 bg-white/5 rounded-2xl flex items-center justify-center border border-white/10"
+                className="flex-1 py-5 bg-white/5 backdrop-blur-xl rounded-2xl flex items-center justify-center border border-white/10 active:scale-95"
                 onClick={(e) => { e.stopPropagation(); navigate(-1); }}
               >
-                <Icons.ArrowRight className="rotate-180" size={24} />
+                <Icons.ArrowRight className="rotate-180 text-brand-400" size={28} />
               </button>
               <button 
-                className="flex-1 py-4 bg-white/5 rounded-2xl flex items-center justify-center border border-white/10"
+                className="flex-1 py-5 bg-white/5 backdrop-blur-xl rounded-2xl flex items-center justify-center border border-white/10 active:scale-95"
                 onClick={(e) => { e.stopPropagation(); navigate(1); }}
               >
-                <Icons.ArrowRight size={24} />
+                <Icons.ArrowRight className="text-brand-400" size={28} />
               </button>
            </div>
          </div>
