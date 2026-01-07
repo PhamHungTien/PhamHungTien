@@ -363,17 +363,17 @@ function App() {
                     setActiveTab('community');
                     window.location.hash = '#community';
                   }}
-                  className="w-full sm:w-auto px-10 py-5 bg-brand-500/10 backdrop-blur-xl border border-brand-500/20 text-brand-400 rounded-2xl font-extrabold text-lg hover:bg-brand-500/20 hover:border-brand-500/40 transition-all transform hover:scale-105 hover:-translate-y-1 flex items-center justify-center gap-3 relative group"
+                  className="w-full sm:w-auto px-8 py-4 bg-brand-500/5 backdrop-blur-xl border border-brand-500/20 text-brand-400 rounded-2xl font-black text-base hover:bg-brand-500/10 hover:border-brand-500/40 transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2.5 relative group shadow-lg"
                 >
-                  <div className="absolute -top-1.5 -right-1.5 z-30">
-                    <span className="relative flex h-4 w-4">
+                  <div className="absolute -top-1 -right-1 z-30">
+                    <span className="relative flex h-3 w-3">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-4 w-4 bg-green-500 border-2 border-slate-950 shadow-lg"></span>
+                      <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500 border border-slate-950 shadow-sm"></span>
                     </span>
                   </div>
-                  <Icons.MessageSquare size={22} className="group-hover:rotate-12 transition-transform" />
+                  <Icons.MessageSquare size={20} className="group-hover:rotate-12 transition-transform" />
                   <span className="tracking-tight">Thảo luận & Báo lỗi</span>
-                  <span className="bg-brand-500 text-white text-[8px] px-1.5 py-0.5 rounded font-black uppercase tracking-tighter ml-1 shadow-lg shadow-brand-500/20">New</span>
+                  <span className="text-[8px] px-1.5 py-0.5 rounded-md bg-brand-500 text-white font-black uppercase tracking-tighter ml-0.5 shadow-lg shadow-brand-500/20">New</span>
                 </button>
 
                 <a 
