@@ -49,9 +49,12 @@ export const Navbar: React.FC = () => {
               <a 
                 key={item.name}
                 href={item.href} 
-                className="text-sm font-bold text-slate-400 hover:text-white transition-all hover:-translate-y-0.5"
+                className="text-sm font-bold text-slate-400 hover:text-white transition-all hover:-translate-y-0.5 flex items-center gap-1.5"
               >
                 {item.name}
+                {item.name === 'Hỏi đáp' && (
+                  <span className="flex h-2 w-2 rounded-full bg-brand-500 animate-pulse shadow-[0_0_8px_rgba(245,158,11,0.8)]"></span>
+                )}
               </a>
             ))}
           </div>
@@ -103,7 +106,12 @@ export const Navbar: React.FC = () => {
                 className="text-lg font-bold text-slate-300 hover:text-white flex items-center justify-between group"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                {item.name}
+                <span className="flex items-center gap-3">
+                  {item.name}
+                  {item.name === 'Hỏi đáp' && (
+                    <span className="bg-brand-500 text-white text-[8px] px-1.5 py-0.5 rounded-md font-black uppercase tracking-tighter">New</span>
+                  )}
+                </span>
                 <Icons.ArrowRight size={18} className="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-brand-500" />
               </a>
             ))}

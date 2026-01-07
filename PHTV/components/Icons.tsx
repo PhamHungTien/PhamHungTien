@@ -46,7 +46,12 @@ import {
   Paperclip,
   Search,
   ExternalLink,
-  Info
+  Info,
+  Filter,
+  Eye,
+  EyeOff,
+  UserCheck,
+  AtSign
 } from 'lucide-react';
 
 export const Icons = {
@@ -97,5 +102,10 @@ export const Icons = {
   Paperclip,
   Search,
   ExternalLink,
-  Info
+  Info,
+  Filter,
+  Eye,
+  EyeOff,
+  UserCheck,
+  AtSign
 };

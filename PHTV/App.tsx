@@ -358,11 +358,24 @@ function App() {
               Tải xuống {version ? version : 'ngay'}
             </a>
             <a 
+              href="#qa"
+              className="w-full sm:w-auto px-10 py-5 bg-brand-600/20 backdrop-blur-xl border border-brand-500/30 text-white rounded-2xl font-bold text-lg hover:bg-brand-600/30 transition-all hover:border-brand-500/50 flex items-center justify-center gap-3 group relative overflow-hidden"
+            >
+              <div className="absolute -top-1 -right-1">
+                <span className="relative flex h-4 w-4">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-4 w-4 bg-brand-500 flex items-center justify-center text-[8px] font-black text-white">!</span>
+                </span>
+              </div>
+              <Icons.MessageSquare size={22} className="text-brand-400 group-hover:text-white transition-colors" />
+              Cộng đồng PHTV
+            </a>
+            <a 
               href="#install"
               className="w-full sm:w-auto px-10 py-5 bg-slate-900/50 backdrop-blur-xl border border-white/10 text-white rounded-2xl font-bold text-lg hover:bg-slate-800 transition-all hover:border-white/20 flex items-center justify-center gap-3 group"
             >
               <Icons.Terminal size={22} className="text-slate-400 group-hover:text-white transition-colors" />
-              Cài bằng Homebrew
+              Homebrew
             </a>
           </div>
         </div>
