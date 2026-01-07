@@ -14,6 +14,7 @@ import { CommandRow } from './components/CommandRow';
 import { StatBadge } from './components/StatBadge';
 import { DonateModal } from './components/DonateModal';
 import { AcronymRow } from './components/AcronymRow';
+import { QASection } from './components/QASection';
 
 const faqData = [
   {
@@ -506,6 +507,8 @@ function App() {
             </div>
          </div>
       </section>
+
+      <QASection />
 
       <section id="faq" className="py-24 max-w-4xl mx-auto px-6">
          <h2 className="text-3xl md:text-5xl font-bold mb-4 text-center text-white">Câu hỏi thường gặp</h2>

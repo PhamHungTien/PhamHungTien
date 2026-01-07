@@ -22,6 +22,7 @@ export const Navbar: React.FC = () => {
     { name: 'Phím tắt', href: '#shortcuts' },
     { name: 'Giao diện', href: '#gallery' },
     { name: 'Cài đặt', href: '#install' },
+    { name: 'Hỏi đáp', href: '#qa' },
     { name: 'FAQ', href: '#faq' },
   ];
 
