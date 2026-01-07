@@ -33,8 +33,8 @@ brew install --cask phamhungtien/tap/phtv
 
 ### 📊 GitHub Stats
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=PhamHungTien&show_icons=true&theme=tokyonight" alt="GitHub Stats" height="180px" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=PhamHungTien&layout=compact&theme=tokyonight" alt="Top Languages" height="180px" />
+  <img src="https://github-readme-stats.vercel.app/api?username=PhamHungTien&show_icons=true&theme=dark&hide_border=true" alt="GitHub Stats" height="170px" />
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=PhamHungTien&theme=dark&hide_border=true" alt="GitHub Streak" height="170px" />
 </p>
 
 ---
