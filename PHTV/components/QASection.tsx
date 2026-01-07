@@ -567,7 +567,7 @@ export const QASection: React.FC = () => {
         <div className="space-y-4 animate-in slide-in-from-bottom-2 duration-700">
            <div className="relative group shadow-lg">
               <Icons.Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-700 group-focus-within:text-rose-500 transition-colors" size={20} />
-              <input type="text" placeholder="Tìm nội dung, thành viên, lỗi..." value={searchQuery} onChange={e => setSearchBy(e.target.value)} className="w-full bg-slate-900/60 backdrop-blur-2xl border border-white/5 rounded-2xl py-3.5 pl-12 pr-6 text-white focus:outline-none focus:border-rose-500/30 transition-all text-sm font-medium placeholder:text-slate-700 shadow-inner" />
+              <input type="text" placeholder="Tìm nội dung, thành viên, lỗi..." value={searchQuery} onChange={e => setSearchBy(e.target.value)} className="w-full bg-slate-900/60 backdrop-blur-2xl border border-white/5 rounded-2xl py-3.5 pl-12 pr-6 text-white focus:outline-none focus:border-rose-500/30 transition-all text-sm font-medium placeholder:text-slate-500 shadow-inner" />
            </div>
            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex bg-slate-900/80 p-1 rounded-xl border border-white/5 shadow-xl backdrop-blur-xl w-full sm:w-auto">
@@ -587,7 +587,14 @@ export const QASection: React.FC = () => {
             <form onSubmit={handleAskQuestion} className="space-y-4">
               <div className="flex items-start gap-3.5">
                  <div className="hidden xs:block"><Avatar user={{ username: currentUser?.username || 'User', photoURL: currentUser?.photoURL, isAdmin: currentUser?.isAdmin }} isAdmin={currentUser?.isAdmin} size="w-9 h-9" /></div>
-                 <div className="flex-1 pt-0.5"><textarea placeholder={currentUser ? `Chào ${currentUser.username.split(' ')[0]}, bạn đang nghĩ gì?` : "Đăng nhập Google để thảo luận..."} value={newQuestion} onChange={(e) => setNewQuestion(e.target.value)} disabled={isSubmitting} className="w-full bg-transparent border-none p-0 text-sm md:text-base text-white focus:ring-0 placeholder:text-slate-800 min-h-[50px] md:min-h-[60px] resize-none leading-relaxed font-medium" required /></div>
+                 <div className="flex-1 pt-0.5">                    <textarea 
+                      placeholder={currentUser ? `Chào ${currentUser.username.split(' ')[0]}, bạn đang nghĩ gì?` : "Đăng nhập Google để thảo luận..."} 
+                      value={newQuestion} 
+                      onChange={(e) => setNewQuestion(e.target.value)} 
+                      disabled={isSubmitting} 
+                      className="w-full bg-transparent border-none p-0 text-sm md:text-base text-white focus:ring-0 placeholder:text-slate-500 min-h-[50px] md:min-h-[60px] resize-none leading-relaxed font-medium" 
+                      required 
+                    /></div>
               </div>
               
               <div className="flex flex-wrap items-center gap-2 mb-2">
