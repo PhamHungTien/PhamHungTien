@@ -524,15 +524,14 @@ export const QASection: React.FC = () => {
                                      )}
                                      <span className="text-[10px] md:text-xs text-slate-600 font-bold uppercase">{formatRelativeTime(r.timestamp)}</span>
                                    </div>
-                                   <div className="flex items-center gap-1 opacity-0 group-hover/reply:opacity-100 transition-opacity">
-                                     {(currentUser?.isAdmin || currentUser?.uid === r.authorId) && (
-                                       <>
-                                         <button onClick={() => {setEditingReplyId(r.id); setEditContent(r.content);}} className="p-2 text-slate-600 hover:text-white rounded-lg hover:bg-white/5"><Icons.Settings size={14} /></button>
-                                         <button onClick={() => deleteReply(q.id, r.id)} className="p-2 text-slate-600 hover:text-red-500 rounded-lg hover:bg-red-500/10"><Icons.Trash2 size={14} /></button>
-                                       </>
-                                     )}
-                                   </div>
-                                 </div>
+                                                                    <div className="flex items-center gap-1 opacity-0 group-hover/reply:opacity-100 transition-opacity">
+                                                                      {(currentUser?.isAdmin || currentUser?.uid === r.authorId) && (
+                                                                        <>
+                                                                          <button onClick={() => {setEditingReplyId(r.id); setEditContent(r.content);}} className="p-2 text-slate-700 hover:text-white rounded-xl hover:bg-white/5 transition-all" title="Sửa"><Icons.Settings size={18} /></button>
+                                                                          <button onClick={() => deleteReply(q.id, r.id)} className="p-2 text-slate-700 hover:text-red-500 rounded-xl hover:bg-red-500/10 transition-all" title="Xóa"><Icons.Trash2 size={18} /></button>
+                                                                        </>
+                                                                      )}
+                                                                    </div>                                 </div>
                                  {editingReplyId === r.id ? (
                                    <div className="space-y-3 animate-in zoom-in-95 duration-200">
                                      <textarea value={editContent} onChange={e => setEditContent(e.target.value)} className="w-full bg-slate-950 border border-white/10 rounded-xl p-4 text-sm text-white focus:border-brand-500/30 outline-none" />
