@@ -32,6 +32,23 @@ interface User {
   photoURL?: string;
 }
 
+type LabelType = 'bug' | 'enhancement' | 'feature' | 'question' | 'help' | null;
+
+interface LabelInfo {
+  id: LabelType;
+  label: string;
+  color: string;
+  bg: string;
+}
+
+const LABELS: LabelInfo[] = [
+  { id: 'bug', label: 'Bug', color: 'text-red-400', bg: 'bg-red-500/10' },
+  { id: 'enhancement', label: 'Enhancement', color: 'text-purple-400', bg: 'bg-purple-500/10' },
+  { id: 'feature', label: 'Feature', color: 'text-blue-400', bg: 'bg-blue-500/10' },
+  { id: 'question', label: 'Question', color: 'text-green-400', bg: 'bg-green-500/10' },
+  { id: 'help', label: 'Help Wanted', color: 'text-orange-400', bg: 'bg-orange-500/10' },
+];
+
 interface Reply {
   id: string;
   parentId?: string;
@@ -59,6 +76,7 @@ interface Question {
   isLocked?: boolean;
   isAdmin?: boolean;
   viewCount?: number;
+  label?: LabelType;
 }
 
 interface AppNotification {
@@ -89,7 +107,6 @@ const formatRelativeTime = (timestamp: any) => {
   const minutes = Math.floor(seconds / 60);
   const hours = Math.floor(minutes / 60);
   const days = Math.floor(hours / 24);
-
   if (seconds < 60) return 'Vừa xong';
   if (minutes < 60) return `${minutes}p`;
   if (hours < 24) return `${hours}h`;
@@ -100,18 +117,18 @@ const formatRelativeTime = (timestamp: any) => {
 const SmartContent: React.FC<{ content: string, className?: string }> = ({ content, className }) => {
   const parts = content.split(/(`[^`]+`|@[a-zA-Z0-9_]+|https?:\/\/[^\s]+)/g);
   return (
-    <div className={`whitespace-pre-wrap break-words ${className}`}>
+    <div className={className}>
       {parts.map((part, i) => {
         if (part.startsWith('`') && part.endsWith('`')) {
           return <code key={i} className="bg-white/10 px-1.5 py-0.5 rounded text-brand-300 font-mono text-[0.85em] border border-white/5">{part.slice(1, -1)}</code>;
         }
         if (part.startsWith('@')) {
-          return <span key={i} className="text-brand-400 font-bold hover:underline cursor-pointer">{part}</span>;
+          return <span key={i} className="text-brand-400 font-black hover:underline cursor-pointer">{part}</span>;
         }
         if (part.startsWith('http')) {
-          return <a key={i} href={part} target="_blank" rel="noopener noreferrer" className="text-blue-400 underline hover:text-blue-300 inline-flex items-center gap-1 transition-colors">{part.length > 40 ? part.substring(0, 40) + '...' : part} <Icons.ExternalLink size={10} /></a>;
+          return <a key={i} href={part} target="_blank" rel="noopener noreferrer" className="text-blue-400 underline hover:text-blue-300 inline-flex items-center gap-1 transition-colors">{part.length > 30 ? part.substring(0, 30) + '...' : part} <Icons.ExternalLink size={10} /></a>;
         }
-        return <span key={i}>{part}</span>;
+        return <span key={i} className="whitespace-pre-wrap">{part}</span>;
       })}
     </div>
   );
@@ -122,6 +139,7 @@ export const QASection: React.FC = () => {
   const [notifications, setNotifications] = useState<AppNotification[]>([]);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [newQuestion, setNewQuestion] = useState('');
+  const [selectedLabel, setSelectedLabel] = useState<LabelType>(null);
   const [sortBy, setSortBy] = useState<'newest' | 'popular' | 'trending'>('newest');
   const [filterBy, setFilterBy] = useState<'all' | 'mine' | 'reported' | 'unanswered'>('all');
   const [searchQuery, setSearchBy] = useState('');
@@ -135,6 +153,7 @@ export const QASection: React.FC = () => {
   const [showToast, setShowToast] = useState({ show: false, message: '' });
   const [postsLimit, setPostsLimit] = useState(POSTS_PER_PAGE);
   const [hasMore, setHasMore] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   
   const [replyingTo, setReplyingTo] = useState<{qId: string, rId?: string, name?: string, authorId?: string} | null>(null);
   const [replyContent, setReplyContent] = useState('');
@@ -199,6 +218,7 @@ export const QASection: React.FC = () => {
       const others = qList.filter(q => !q.isPinned);
       setQuestions([...pinned, ...others]);
       setHasMore(snapshot.docs.length >= postsLimit);
+      setIsLoading(false);
     });
     return () => unsubscribe();
   }, [sortBy, postsLimit]);
@@ -261,7 +281,7 @@ export const QASection: React.FC = () => {
       await updateProfile(auth.currentUser, { displayName: tempUsername });
       setCurrentUser(prev => prev ? { ...prev, username: tempUsername } : null);
       setShowNamePrompt(false);
-      triggerToast('Đã cập nhật tên!');
+      triggerToast('Đã cập nhật danh tính!');
     }
   };
 
@@ -269,10 +289,13 @@ export const QASection: React.FC = () => {
     e.preventDefault();
     if (!currentUser) { setShowAuthModal(true); return; }
     if (!newQuestion.trim() || isSubmitting) return;
-    if (Date.now() - lastPostTime < 10000 && !currentUser.isAdmin) {
-      triggerToast('Chậm lại một chút (10s)!');
+
+    const now = Date.now();
+    if (now - lastPostTime < 10000 && !currentUser.isAdmin) {
+      triggerToast('Hãy chậm lại (10s)!');
       return;
     }
+
     setIsSubmitting(true);
     try {
       await addDoc(collection(db, "questions"), {
@@ -287,11 +310,13 @@ export const QASection: React.FC = () => {
         isReported: false,
         isLocked: false,
         viewCount: 0,
-        isAdmin: currentUser.isAdmin
+        isAdmin: currentUser.isAdmin,
+        label: selectedLabel
       });
       setNewQuestion('');
+      setSelectedLabel(null);
       setLastPostTime(Date.now());
-      triggerToast('Đã đăng thảo luận!');
+      triggerToast('Đăng bài thành công!');
     } catch (err) {
       alert('Lỗi!');
     } finally {
@@ -432,10 +457,26 @@ export const QASection: React.FC = () => {
     </div>
   );
 
+  const SkeletonCard = () => (
+    <div className="rounded-[1.5rem] p-6 md:p-8 bg-white/[0.02] border border-white/5 animate-pulse space-y-6">
+      <div className="flex gap-6">
+        <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-white/5 shrink-0" />
+        <div className="flex-1 space-y-3 pt-2">
+          <div className="h-3 bg-white/10 rounded-full w-1/4" />
+          <div className="h-2 bg-white/5 rounded-full w-1/6" />
+        </div>
+      </div>
+      <div className="space-y-2 pl-16">
+        <div className="h-3 bg-white/5 rounded-full w-full" />
+        <div className="h-3 bg-white/5 rounded-full w-5/6" />
+      </div>
+    </div>
+  );
+
   return (
-    <div className="max-w-6xl mx-auto px-4 md:px-6 py-8 md:py-16 flex flex-col lg:flex-row gap-6">
+    <div className="max-w-6xl mx-auto px-4 md:px-6 py-8 md:py-16 flex flex-col lg:flex-row gap-6 min-h-screen">
       
-      {/* Sidebar - Compact */}
+      {/* Sidebar - Left */}
       <aside className="w-full lg:w-64 shrink-0 space-y-5 order-2 lg:order-1">
         <div className="glass-panel rounded-[1.5rem] p-6 border border-white/5 shadow-xl backdrop-blur-md">
            <div className="flex items-center justify-between mb-6">
@@ -459,7 +500,7 @@ export const QASection: React.FC = () => {
 
         <div className="glass-panel rounded-[1.5rem] p-6 border border-white/5 shadow-xl hidden md:block backdrop-blur-md group/dev">
            <h3 className="text-base font-black text-white mb-6 flex items-center gap-2"><Icons.Award size={16} className="text-brand-400" /> Tác giả</h3>
-           <div className="flex items-center gap-3 p-4 bg-gradient-to-br from-brand-500/10 to-purple-500/10 rounded-xl border border-brand-500/20 shadow-inner group-hover/dev:bg-gradient-to-br group-hover/dev:from-brand-500/20 group-hover/dev:to-purple-500/20 transition-all">
+           <div className="flex items-center gap-3 p-4 bg-gradient-to-br from-brand-500/10 to-purple-500/10 rounded-xl border border-brand-500/20 shadow-inner">
               <div className="w-10 h-10 rounded-xl bg-brand-500 flex items-center justify-center text-white shadow-lg transition-transform group-hover/dev:scale-110">
                  <Icons.User size={20} />
               </div>
@@ -471,10 +512,10 @@ export const QASection: React.FC = () => {
         </div>
       </aside>
 
-      {/* Main Content - Reduced Sizes */}
+      {/* Main Content */}
       <main className="flex-1 order-1 lg:order-2 space-y-6">
         
-        {/* Compact Header */}
+        {/* Header */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mb-8">
           <div className="text-center sm:text-left">
              <h2 className="text-3xl md:text-5xl font-black text-white tracking-tighter italic leading-none">
@@ -491,30 +532,19 @@ export const QASection: React.FC = () => {
             {currentUser ? (
               <div className="flex items-center gap-3">
                 <div className="relative">
-                  <button 
-                    onClick={() => setShowNotifs(!showNotifs)}
-                    className={`p-2.5 rounded-xl border transition-all relative ${showNotifs ? 'bg-white text-slate-950 border-white shadow-xl' : 'bg-white/5 border-white/5 text-slate-500 hover:text-white hover:bg-white/10'}`}
-                  >
+                  <button onClick={() => setShowNotifs(!showNotifs)} className={`p-2.5 rounded-xl border transition-all relative ${showNotifs ? 'bg-white text-slate-950 border-white shadow-xl' : 'bg-white/5 border-white/5 text-slate-500 hover:text-white hover:bg-white/10'}`}>
                     <Icons.Bell size={18} />
-                    {unreadCount > 0 && (
-                      <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[9px] font-black flex items-center justify-center rounded-full ring-2 ring-slate-950">{unreadCount}</span>
-                    )}
+                    {unreadCount > 0 && <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[9px] font-black flex items-center justify-center rounded-full ring-2 ring-slate-950">{unreadCount}</span>}
                   </button>
                   {showNotifs && (
                     <div className="fixed inset-x-4 top-24 sm:absolute sm:inset-x-auto sm:right-0 sm:top-12 sm:w-[320px] bg-slate-900 border border-white/10 rounded-[1.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.8)] z-[150] overflow-hidden animate-in zoom-in-95 duration-200">
-                       <div className="p-4 border-b border-white/5 flex items-center justify-between bg-slate-950/50">
-                          <span className="font-black text-[10px] uppercase tracking-widest text-white">Thông báo</span>
-                          <button onClick={() => setShowNotifs(false)} className="text-slate-500 hover:text-white"><Icons.X size={16} /></button>
-                       </div>
+                       <div className="p-4 border-b border-white/5 flex items-center justify-between bg-slate-950/50"><span className="font-black text-[10px] uppercase tracking-widest text-white">Thông báo</span><button onClick={() => setShowNotifs(false)} className="text-slate-500 hover:text-white"><Icons.X size={16} /></button></div>
                        <div className="max-h-[350px] overflow-y-auto custom-scrollbar">
                           {notifications.length === 0 ? <div className="p-8 text-center text-slate-600 font-bold text-[10px] uppercase tracking-widest">Trống</div> : 
                             notifications.map(n => (
-                              <div key={n.id} onClick={() => { markNotifRead(n.id); setShowNotifs(false); }} className={`p-4 border-b border-white/5 flex gap-3 cursor-pointer transition-colors ${n.isRead ? 'opacity-50' : 'bg-brand-500/[0.03] hover:bg-brand-500/[0.08]'}`}>
+                              <div key={n.id} onClick={() => { markNotifRead(n.id); setShowNotifs(false); }} className={`p-4 border-b border-white/5 flex gap-3 cursor-pointer transition-colors ${n.isRead ? 'opacity-50 grayscale' : 'bg-brand-500/[0.03] hover:bg-brand-500/[0.08]'}`}>
                                  <Avatar user={{ username: n.senderName, photoURL: n.senderPhoto }} size="w-8 h-8" />
-                                 <div className="flex-1">
-                                    <p className="text-[10px] text-white leading-tight mb-1"><span className="font-black">{n.senderName}</span> {n.type === 'reply' ? 'phản hồi bạn' : 'thích bài viết'}</p>
-                                    <span className="text-[8px] text-brand-500 font-black uppercase tracking-tighter">{formatRelativeTime(n.timestamp)}</span>
-                                 </div>
+                                 <div className="flex-1"><p className="text-[10px] text-white leading-tight mb-1"><span className="font-black">{n.senderName}</span> {n.type === 'reply' ? 'phản hồi bạn' : 'thích bài viết'}</p><span className="text-[8px] text-brand-500 font-black uppercase tracking-tighter">{formatRelativeTime(n.timestamp)}</span></div>
                               </div>
                             ))
                           }
@@ -522,97 +552,54 @@ export const QASection: React.FC = () => {
                     </div>
                   )}
                 </div>
-
                 <div className="flex items-center gap-2.5 p-1.5 pr-4 bg-white/5 rounded-2xl border border-white/10 group shadow-xl backdrop-blur-xl transition-all hover:bg-white/10">
                   <Avatar user={currentUser} size="w-8 h-8" isAdmin={currentUser.isAdmin} />
-                  <div className="flex flex-col">
-                    <span className="text-[10px] font-black text-white flex items-center gap-1 uppercase tracking-tight leading-none mb-1">
-                      {currentUser.username} 
-                      {currentUser.isAdmin && <Icons.CheckCircle2 size={10} className="text-brand-400" />}
-                    </span>
-                    <div className="flex gap-2">
-                      <button onClick={() => {setTempUsername(currentUser.username); setShowNamePrompt(true);}} className="text-[8px] font-black text-slate-500 hover:text-brand-400 uppercase">Sửa</button>
-                      <button onClick={() => signOut(auth)} className="text-[8px] font-black text-red-500/70 hover:text-red-400 uppercase">Thoát</button>
-                    </div>
-                  </div>
+                  <div className="flex flex-col"><span className="text-[10px] font-black text-white uppercase leading-none mb-1">{currentUser.username} {currentUser.isAdmin && <Icons.CheckCircle2 size={10} className="text-brand-400" />}</span><div className="flex gap-2"><button onClick={() => {setTempUsername(currentUser.username); setShowNamePrompt(true);}} className="text-[8px] font-black text-slate-500 hover:text-brand-400 uppercase">Sửa</button><button onClick={() => signOut(auth)} className="text-[8px] font-black text-red-500/70 hover:text-red-400 uppercase">Thoát</button></div></div>
                 </div>
               </div>
             ) : (
-              <button onClick={() => setShowAuthModal(true)} className="group flex items-center gap-3 px-6 py-3 bg-white text-slate-950 rounded-xl transition-all transform hover:scale-105 font-black text-xs shadow-xl">
-                <Icons.User size={16} className="group-hover:rotate-12 transition-transform" />
-                <span>Đăng nhập Google</span>
-              </button>
+              <button onClick={() => setShowAuthModal(true)} className="group flex items-center gap-3 px-6 py-3 bg-white text-slate-950 rounded-xl transition-all transform hover:scale-105 font-black text-xs shadow-xl"><Icons.User size={16} /><span>Đăng nhập Google</span></button>
             )}
           </div>
         </div>
 
-        {/* Compact Toolbar */}
+        {/* Toolbar */}
         <div className="space-y-4 animate-in slide-in-from-bottom-2 duration-700">
            <div className="relative group shadow-lg">
               <Icons.Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-700 group-focus-within:text-brand-500 transition-colors" size={20} />
-              <input 
-                type="text" 
-                placeholder="Tìm nội dung, thành viên, lỗi..." 
-                value={searchQuery}
-                onChange={e => setSearchBy(e.target.value)}
-                className="w-full bg-slate-900/60 backdrop-blur-2xl border border-white/5 rounded-2xl py-3.5 pl-12 pr-6 text-white focus:outline-none focus:border-brand-500/30 transition-all text-sm md:text-base font-medium placeholder:text-slate-700"
-              />
+              <input type="text" placeholder="Tìm nội dung, thành viên, lỗi..." value={searchQuery} onChange={e => setSearchBy(e.target.value)} className="w-full bg-slate-900/60 backdrop-blur-2xl border border-white/5 rounded-2xl py-3.5 pl-12 pr-6 text-white focus:outline-none focus:border-brand-500/30 transition-all text-sm font-medium placeholder:text-slate-700" />
            </div>
-           
            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex bg-slate-900/80 p-1 rounded-xl border border-white/5 shadow-xl backdrop-blur-xl w-full sm:w-auto">
-                 {[ 
-                   { id: 'newest', label: 'Mới nhất', icon: Icons.RefreshCw },
-                   { id: 'trending', label: 'Xu hướng', icon: Icons.Sparkles },
-                   { id: 'popular', label: 'Yêu thích', icon: Icons.Award }
-                 ].map(tab => (
-                   <button key={tab.id} onClick={() => setSortBy(tab.id as any)} className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-2 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${sortBy === tab.id ? 'bg-white text-slate-950 shadow-md scale-105' : 'text-slate-500 hover:text-white'}`}>
-                     <tab.icon size={12} />
-                     {tab.label}
-                   </button>
+                 {[{ id: 'newest', label: 'Mới nhất', icon: Icons.RefreshCw }, { id: 'trending', label: 'Xu hướng', icon: Icons.Sparkles }, { id: 'popular', label: 'Yêu thích', icon: Icons.Award }].map(tab => (
+                   <button key={tab.id} onClick={() => setSortBy(tab.id as any)} className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-2 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${sortBy === tab.id ? 'bg-white text-slate-950 shadow-lg scale-105' : 'text-slate-500 hover:text-white'}`}><tab.icon size={12} />{tab.label}</button>
                  ))}
               </div>
-
               <div className="flex items-center gap-3 bg-slate-900/60 px-5 py-2.5 rounded-xl border border-white/5 backdrop-blur-md w-full sm:w-auto justify-center">
-                 <Icons.Filter size={14} className="text-brand-500" />
-                 <select 
-                   value={filterBy} 
-                   onChange={e => setFilterBy(e.target.value as any)}
-                   className="bg-transparent text-white font-black text-[9px] uppercase tracking-widest focus:outline-none cursor-pointer"
-                 >
-                    <option value="all" className="bg-slate-900">Tất cả</option>
-                    <option value="mine" className="bg-slate-900">Bài của tôi</option>
-                    <option value="unanswered" className="bg-slate-900">Cần phản hồi</option>
-                    {currentUser?.isAdmin && <option value="reported" className="bg-slate-900 text-red-400">Bị báo cáo</option>}
-                 </select>
+                 <Icons.Filter size={14} className="text-brand-500" /><select value={filterBy} onChange={e => setFilterBy(e.target.value as any)} className="bg-transparent text-white font-black text-[9px] uppercase tracking-widest focus:outline-none cursor-pointer"><option value="all" className="bg-slate-900">Tất cả</option><option value="mine" className="bg-slate-900">Bài của tôi</option><option value="unanswered" className="bg-slate-900">Cần phản hồi</option>{currentUser?.isAdmin && <option value="reported" className="bg-slate-900 text-red-400">⚠️ Bị báo cáo</option>}</select>
               </div>
            </div>
         </div>
 
-        {/* Refined Compact Post Form */}
+        {/* Post Form */}
         <div className="glass-panel rounded-[1.5rem] p-0.5 shadow-lg border border-white/5 overflow-hidden group/form relative backdrop-blur-3xl">
           <div className="bg-slate-900/40 rounded-[1.4rem] p-4 md:p-5 transition-all group-focus-within/form:bg-slate-900/60 shadow-inner">
             <form onSubmit={handleAskQuestion} className="space-y-4">
               <div className="flex items-start gap-3.5">
-                 <div className="hidden xs:block">
-                    <Avatar user={{ username: currentUser?.username || 'User', photoURL: currentUser?.photoURL, isAdmin: currentUser?.isAdmin }} isAdmin={currentUser?.isAdmin} size="w-9 h-9" />
-                 </div>
-                 <div className="flex-1 pt-0.5">
-                    <textarea 
-                      placeholder={currentUser ? `Chào ${currentUser.username.split(' ')[0]}, bạn đang nghĩ gì?` : "Đăng nhập Google để thảo luận..."} 
-                      value={newQuestion} 
-                      onChange={(e) => setNewQuestion(e.target.value)} 
-                      disabled={isSubmitting} 
-                      className="w-full bg-transparent border-none p-0 text-sm md:text-base text-white focus:ring-0 placeholder:text-slate-800 min-h-[50px] md:min-h-[60px] resize-none leading-relaxed font-medium" 
-                      required 
-                    />
-                 </div>
+                 <div className="hidden xs:block"><Avatar user={{ username: currentUser?.username || 'User', photoURL: currentUser?.photoURL, isAdmin: currentUser?.isAdmin }} isAdmin={currentUser?.isAdmin} size="w-9 h-9" /></div>
+                 <div className="flex-1 pt-0.5"><textarea placeholder={currentUser ? `Chào ${currentUser.username.split(' ')[0]}, bạn đang nghĩ gì?` : "Đăng nhập Google để thảo luận..."} value={newQuestion} onChange={(e) => setNewQuestion(e.target.value)} disabled={isSubmitting} className="w-full bg-transparent border-none p-0 text-sm md:text-base text-white focus:ring-0 placeholder:text-slate-800 min-h-[50px] md:min-h-[60px] resize-none leading-relaxed font-medium" required /></div>
               </div>
               
+              <div className="flex flex-wrap items-center gap-2 mb-2">
+                 <span className="text-[10px] font-black text-slate-600 uppercase tracking-widest mr-2">Gắn thẻ:</span>
+                 {LABELS.map(l => (
+                   <button key={l.id} type="button" onClick={() => setSelectedLabel(selectedLabel === l.id ? null : l.id)} className={`px-3 py-1 rounded-full text-[9px] font-black uppercase transition-all border ${selectedLabel === l.id ? `${l.bg} ${l.color} border-current` : 'bg-transparent text-slate-700 border-white/5 hover:border-white/10'}`}>{l.label}</button>
+                 ))}
+              </div>
+
               <div className="flex items-center justify-between pt-3 border-t border-white/5">
                 <div className="flex items-center gap-4 text-slate-700">
-                   <Icons.Terminal size={16} className="hover:text-brand-400 cursor-help transition-colors" />
-                   <Icons.Link2 size={16} className="hover:text-brand-400 cursor-help transition-colors" />
+                   <Icons.Terminal size={16} className="hover:text-brand-400 cursor-help transition-colors" /><Icons.Link2 size={16} className="hover:text-brand-400 cursor-help transition-colors" />
                 </div>
                 <button type="submit" disabled={isSubmitting || !newQuestion.trim()} className="group flex items-center justify-center gap-2 px-5 py-2 bg-white text-slate-950 rounded-lg font-black text-[11px] md:text-xs transition-all transform hover:scale-[1.03] active:scale-95 shadow-md disabled:opacity-50">
                   {isSubmitting ? <Icons.RefreshCw className="animate-spin" size={14} /> : <><span>Đăng bài</span><Icons.Send size={12} /></>}
@@ -622,192 +609,70 @@ export const QASection: React.FC = () => {
           </div>
         </div>
 
-        {/* Compact Thread List */}
+        {/* Feed */}
         <div className="space-y-8 pb-32">
-          {displayQuestions.map((q) => (
+          {isLoading ? <div className="space-y-8">{[1, 2, 3].map(i => <SkeletonCard key={i} />)}</div> : 
+           displayQuestions.length === 0 ? <div className="text-center py-32 bg-white/5 rounded-[2rem] border border-dashed border-white/10 opacity-50"><Icons.MessageSquare size={48} className="mx-auto mb-4 text-slate-700" /><p className="text-slate-500 font-black uppercase tracking-widest text-[10px]">Trống</p></div> : 
+           displayQuestions.map((q) => (
             <div key={q.id} className={`group animate-in fade-in duration-700 ${q.isPinned ? 'ring-1 ring-brand-500/30 rounded-[2rem] p-6 bg-brand-500/[0.02] shadow-xl relative overflow-hidden' : ''}`} onMouseEnter={() => incrementViews(q.id)}>
                <div className="flex gap-5 md:gap-6">
-                  {/* Avatar Column */}
                   <div className="flex flex-col items-center">
                     <Avatar user={{ username: q.author, photoURL: q.authorPhoto, isAdmin: q.isAdmin }} isAdmin={q.isAdmin} size="w-10 h-10 md:w-12 md:h-12" />
                     <div className="w-[1.5px] flex-1 bg-gradient-to-b from-white/10 via-white/[0.05] to-transparent my-3 rounded-full opacity-50"></div>
                   </div>
-                  
-                  {/* Content Column */}
                   <div className="flex-1 space-y-4 pb-6">
                     <div className="flex justify-between items-start gap-4">
-                      <div className="space-y-0.5">
+                      <div className="space-y-1">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <h4 className={`font-black text-sm md:text-base tracking-tight transition-all ${q.isAdmin ? 'text-brand-400' : 'text-white'}`}>{q.author}</h4>
+                          <h4 className={`font-black text-sm md:text-base tracking-tight ${q.isAdmin ? 'text-brand-400' : 'text-white'}`}>{q.author}</h4>
+                          {q.label && <span className={`px-2 py-0.5 rounded text-[8px] font-black uppercase border ${LABELS.find(l => l.id === q.label)?.bg} ${LABELS.find(l => l.id === q.label)?.color} border-current`}>{LABELS.find(l => l.id === q.label)?.label}</span>}
                           {q.isAdmin && <span className="bg-brand-500 text-slate-950 text-[7px] px-2 py-0.5 rounded font-black uppercase tracking-widest shadow-md">Admin</span>}
                           {q.isPinned && <Icons.Paperclip size={12} className="text-brand-400" />}
                           <span className="text-[9px] text-slate-700 font-black uppercase tracking-widest ml-1">{formatRelativeTime(q.timestamp)}</span>
                         </div>
                         <div className="flex items-center gap-3 text-[8px] font-black text-slate-800 uppercase tracking-widest">
-                           <span>{q.viewCount || 0} views</span>
-                           <span className="text-red-500/40 hover:text-red-500 cursor-pointer transition-all" onClick={() => reportContent(q.id)}>Report</span>
+                           <span>{q.viewCount || 0} views</span><span className="text-red-500/40 hover:text-red-500 cursor-pointer transition-all" onClick={() => reportContent(q.id)}>Report</span>
                         </div>
                       </div>
-                      
                       <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0">
-                        {currentUser?.isAdmin && (
-                          <>
-                            <button onClick={() => toggleLock(q)} className="p-2 rounded-lg text-slate-700 hover:text-brand-500 transition-all">{q.isLocked ? <Icons.Lock size={16} /> : <Icons.Unlock size={16} />}</button>
-                            <button onClick={() => updateDoc(doc(db, "questions", q.id), { isPinned: !q.isPinned })} className="p-2 rounded-lg text-slate-700 hover:text-brand-500 transition-all"><Icons.Paperclip size={16} /></button>
-                          </>
-                        )}
-                        {(currentUser?.isAdmin || currentUser?.uid === q.authorId) && (
-                          <>
-                            <button onClick={() => {setEditingId(q.id); setEditContent(q.content);}} className="p-2 rounded-lg text-slate-700 hover:text-white transition-all"><Icons.Settings size={16} /></button>
-                            <button onClick={() => deleteQuestion(q.id)} className="p-2 rounded-lg text-slate-700 hover:text-red-500 transition-all"><Icons.Trash2 size={16} /></button>
-                          </>
-                        )}
+                        {currentUser?.isAdmin && (<><button onClick={() => toggleLock(q)} className="p-2 rounded-lg text-slate-700 hover:text-brand-500">{q.isLocked ? <Icons.Lock size={16} /> : <Icons.Unlock size={16} />}</button><button onClick={() => updateDoc(doc(db, "questions", q.id), { isPinned: !q.isPinned })} className="p-2 rounded-lg text-slate-700 hover:text-brand-500"><Icons.Paperclip size={16} /></button></>)}
+                        {(currentUser?.isAdmin || currentUser?.uid === q.authorId) && (<><button onClick={() => {setEditingId(q.id); setEditContent(q.content);}} className="p-2 rounded-lg text-slate-700 hover:text-white"><Icons.Settings size={16} /></button><button onClick={() => deleteQuestion(q.id)} className="p-2 rounded-lg text-slate-700 hover:text-red-500"><Icons.Trash2 size={16} /></button></>)}
                       </div>
                     </div>
-
                     {editingId === q.id ? (
-                      <div className="space-y-4 animate-in zoom-in-95 duration-300">
-                        <textarea value={editContent} onChange={e => setEditContent(e.target.value)} className="w-full bg-slate-900 border border-white/10 rounded-xl p-4 text-white text-sm focus:border-brand-500/30 outline-none shadow-xl" />
-                        <div className="flex gap-2"><button onClick={() => saveEdit(q.id)} className="px-5 py-2 bg-brand-600 text-white rounded-lg text-[10px] font-black shadow-lg">Lưu</button><button onClick={() => setEditingId(null)} className="px-5 py-2 bg-white/5 text-slate-400 rounded-lg text-[10px] font-black">Hủy</button></div>
-                      </div>
-                    ) : (
-                      <SmartContent content={q.content} className="text-slate-300 text-sm md:text-base leading-relaxed font-medium bg-white/[0.02] p-5 md:p-6 rounded-[1.5rem] border border-white/5 shadow-inner" />
-                    )}
-
+                      <div className="space-y-4 animate-in zoom-in-95 duration-300"><textarea value={editContent} onChange={e => setEditContent(e.target.value)} className="w-full bg-slate-900 border border-white/10 rounded-xl p-4 text-white text-sm focus:border-brand-500/30 outline-none shadow-xl" /><div className="flex gap-2"><button onClick={() => saveEdit(q.id)} className="px-5 py-2 bg-brand-600 text-white rounded-lg text-[10px] font-black shadow-lg">Lưu</button><button onClick={() => setEditingId(null)} className="px-5 py-2 bg-white/5 text-slate-400 rounded-lg text-[10px] font-black">Hủy</button></div></div>
+                    ) : <SmartContent content={q.content} className="text-slate-300 text-sm md:text-base leading-relaxed font-medium bg-white/[0.02] p-5 md:p-6 rounded-[1.5rem] border border-white/5 shadow-inner" />}
                     <div className="flex items-center gap-8 px-4">
-                       <button onClick={() => toggleLikeQuestion(q)} className={`flex items-center gap-2 font-black text-xs transition-all transform active:scale-50 ${q.likedBy?.includes(currentUser?.uid || '') ? 'text-brand-500' : 'text-slate-700 hover:text-slate-400'}`}>
-                         <Icons.ThumbsUp size={18} fill={q.likedBy?.includes(currentUser?.uid || '') ? 'currentColor' : 'none'} /> 
-                         <span className="tabular-nums">{q.likedBy?.length || 0}</span>
-                       </button>
-                       <button onClick={() => q.isLocked ? triggerToast('🔒 Đã khóa') : setReplyingTo({qId: q.id, name: q.author, authorId: q.authorId})} className={`flex items-center gap-2 font-black text-xs transition-all ${q.isLocked ? 'text-slate-900 opacity-30' : 'text-slate-700 hover:text-brand-400'}`}>
-                         <Icons.MessageSquareReply size={18} /> 
-                         <span>{q.replies?.length || 0} Phản hồi</span>
-                       </button>
-                       <button onClick={() => {
-                         navigator.clipboard.writeText(`${window.location.origin}${window.location.pathname}#community?qid=${q.id}`);
-                         triggerToast('Đã copy link!');
-                       }} className="flex items-center gap-2 text-slate-700 hover:text-white transition-all transform active:scale-90">
-                         <Icons.Link2 size={18} />
-                       </button>
+                       <button onClick={() => toggleLikeQuestion(q)} className={`flex items-center gap-2 font-black text-xs transition-all transform active:scale-50 ${q.likedBy?.includes(currentUser?.uid || '') ? 'text-brand-500' : 'text-slate-700 hover:text-slate-400'}`}><Icons.ThumbsUp size={18} fill={q.likedBy?.includes(currentUser?.uid || '') ? 'currentColor' : 'none'} /><span className="tabular-nums">{q.likedBy?.length || 0}</span></button>
+                       <button onClick={() => q.isLocked ? triggerToast('🔒 Đã khóa') : setReplyingTo({qId: q.id, name: q.author, authorId: q.authorId})} className={`flex items-center gap-2 font-black text-xs transition-all ${q.isLocked ? 'text-slate-900 opacity-30' : 'text-slate-700 hover:text-brand-400'}`}><Icons.MessageSquareReply size={18} /><span>{q.replies?.length || 0} Phản hồi</span></button>
+                       <button onClick={() => { navigator.clipboard.writeText(`${window.location.origin}${window.location.pathname}#community?qid=${q.id}`); triggerToast('Đã copy link!'); }} className="flex items-center gap-2 text-slate-700 hover:text-white transition-all transform active:scale-90"><Icons.Link2 size={18} /></button>
                     </div>
-
-                    {/* Replies - Compact */}
                     <div className="space-y-6 pt-6 border-l-[3px] border-white/[0.03] ml-3 pl-6 md:pl-10 relative">
                       {q.replies?.map((r) => (
-                        <div key={r.id} className="flex gap-4 group/reply animate-in fade-in slide-in-from-left-4 duration-1000">
-                          <Avatar user={{ username: r.author, photoURL: r.authorPhoto, isAdmin: r.isAdmin }} isAdmin={r.isAdmin} size="w-8 h-8 md:w-9 md:h-9" />
-                          <div className="flex-1 space-y-3">
-                            <div className={`rounded-[1.2rem] p-4 md:p-5 border transition-all ${
-                              r.isAdmin 
-                                ? 'bg-gradient-to-br from-brand-500/[0.05] to-purple-500/[0.05] border-brand-500/20' 
-                                : 'bg-slate-900/60 border-white/5 hover:bg-slate-900/80'
-                            }`}>
-                               <div className="flex justify-between items-center mb-2">
-                                 <div className="flex items-center gap-2 flex-wrap">
-                                   <span className={`font-black text-[11px] md:text-xs tracking-tight ${r.isAdmin ? 'text-brand-400' : 'text-white'}`}>{r.author} {r.isAdmin && <Icons.CheckCircle2 size={12} className="text-brand-500 inline ml-1" />}</span>
-                                   {r.replyToName && <span className="text-[8px] text-slate-600 flex items-center gap-1.5 font-black bg-white/5 px-2 py-0.5 rounded uppercase"><Icons.ArrowRight size={8} /> {r.replyToName}</span>}
-                                   <span className="text-[8px] text-slate-700 font-black uppercase tracking-widest ml-1">{formatRelativeTime(r.timestamp)}</span>
-                                 </div>
-                                 <div className="flex items-center gap-1 opacity-0 group-hover/reply:opacity-100 transition-all transform translate-x-1 group-hover/reply:translate-x-0">
-                                   {(currentUser?.isAdmin || currentUser?.uid === r.authorId) && (
-                                     <>
-                                       <button onClick={() => {setEditingReplyId(r.id); setEditContent(r.content);}} className="p-1.5 text-slate-700 hover:text-white rounded-lg transition-all hover:bg-white/5"><Icons.Settings size={14} /></button>
-                                       <button onClick={() => deleteReply(q.id, r.id)} className="p-1.5 text-slate-700 hover:text-red-500 rounded-lg transition-all hover:bg-red-500/10"><Icons.Trash2 size={14} /></button>
-                                     </>
-                                   )}
-                                 </div>
-                               </div>
-                               {editingReplyId === r.id ? (
-                                 <div className="space-y-3 animate-in zoom-in-95 duration-200">
-                                   <textarea autoFocus value={editContent} onChange={e => setEditContent(e.target.value)} className="w-full bg-slate-950 border border-white/10 rounded-xl p-4 text-white text-sm focus:border-brand-500/30 outline-none shadow-inner" />
-                                   <div className="flex gap-2"><button onClick={() => saveReplyEdit(q.id, r.id)} className="px-4 py-1.5 bg-brand-600 text-white rounded-lg text-[9px] font-black shadow-lg">Lưu</button><button onClick={() => setEditingReplyId(null)} className="px-4 py-1.5 bg-white/5 text-slate-400 rounded-lg text-[9px] font-black">Hủy</button></div>
-                                 </div>
-                               ) : <SmartContent content={r.content} className={`${r.isAdmin ? 'text-white' : 'text-slate-300'} text-[11px] md:text-sm leading-relaxed font-medium`} />}
-                            </div>
-                            <div className="flex gap-6 px-4">
-                               <button onClick={() => toggleLikeReply(q.id, r.id)} className={`flex items-center gap-2 text-[9px] font-black uppercase tracking-widest transition-all transform active:scale-50 ${r.likedBy?.includes(currentUser?.uid || '') ? 'text-brand-500 scale-110' : 'text-slate-700 hover:text-slate-400'}`}>
-                                 <Icons.ThumbsUp size={14} fill={r.likedBy?.includes(currentUser?.uid || '') ? 'currentColor' : 'none'} /> {r.likedBy?.length || 0}
-                               </button>
-                               <button onClick={() => setReplyingTo({qId: q.id, rId: r.id, name: r.author, authorId: r.authorId})} className="text-[9px] font-black text-slate-700 hover:text-brand-400 uppercase tracking-widest transition-all">Trả lời</button>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-
-                      {/* Compact Reply Input */}
+                        <div key={r.id} className="flex gap-4 group/reply animate-in fade-in duration-1000"><Avatar user={{ username: r.author, photoURL: r.authorPhoto, isAdmin: r.isAdmin }} isAdmin={r.isAdmin} size="w-8 h-8 md:w-9 md:h-9" /><div className="flex-1 space-y-3"><div className={`rounded-[1.2rem] p-4 md:p-5 border transition-all ${r.isAdmin ? 'bg-gradient-to-br from-brand-500/[0.05] to-purple-500/[0.05] border-brand-500/20 shadow-xl' : 'bg-slate-900/60 border-white/5 hover:bg-slate-900/80'}`}><div className="flex justify-between items-center mb-2"><div className="flex items-center gap-2 flex-wrap"><span className={`font-black text-[11px] md:text-xs tracking-tight ${r.isAdmin ? 'text-brand-400' : 'text-white'}`}>{r.author} {r.isAdmin && <Icons.CheckCircle2 size={12} className="text-brand-500 inline ml-1" />}</span>{r.replyToName && <span className="text-[8px] text-slate-600 flex items-center gap-1.5 font-black bg-white/5 px-2 py-0.5 rounded uppercase"><Icons.ArrowRight size={8} /> {r.replyToName}</span>}<span className="text-[8px] text-slate-700 font-black uppercase tracking-widest ml-1">{formatRelativeTime(r.timestamp)}</span></div><div className="flex items-center gap-1 opacity-0 group-hover/reply:opacity-100 transition-all transform translate-x-1 group-hover/reply:translate-x-0">{(currentUser?.isAdmin || currentUser?.uid === r.authorId) && (<div className="flex bg-black/20 rounded-lg p-0.5 border border-white/5"><button onClick={() => {setEditingReplyId(r.id); setEditContent(r.content);}} className="p-1.5 text-slate-700 hover:text-white rounded-lg transition-all hover:bg-white/5"><Icons.Settings size={14} /></button><button onClick={() => deleteReply(q.id, r.id)} className="p-1.5 text-slate-700 hover:text-red-500 rounded-lg transition-all hover:bg-red-500/10"><Icons.Trash2 size={14} /></button></div>)}</div></div>{editingReplyId === r.id ? (<div className="space-y-3 animate-in zoom-in-95 duration-200"><textarea autoFocus value={editContent} onChange={e => setEditContent(e.target.value)} className="w-full bg-slate-950 border border-white/10 rounded-xl p-4 text-white text-sm focus:border-brand-500/30 outline-none shadow-inner" /><div className="flex gap-2"><button onClick={() => saveReplyEdit(q.id, r.id)} className="px-4 py-1.5 bg-brand-600 text-white rounded-lg text-[9px] font-black shadow-lg">Lưu</button><button onClick={() => setEditingReplyId(null)} className="px-4 py-1.5 bg-white/5 text-slate-400 rounded-lg text-[9px] font-black">Hủy</button></div></div>) : <SmartContent content={r.content} className={`${r.isAdmin ? 'text-white' : 'text-slate-300'} text-[11px] md:text-sm leading-relaxed font-medium`} />}</div><div className="flex gap-6 px-4"><button onClick={() => toggleLikeReply(q.id, r.id)} className={`flex items-center gap-2 text-[9px] font-black uppercase tracking-widest transition-all transform active:scale-50 ${r.likedBy?.includes(currentUser?.uid || '') ? 'text-brand-500 scale-110' : 'text-slate-700 hover:text-slate-400'}`}><Icons.ThumbsUp size={14} fill={r.likedBy?.includes(currentUser?.uid || '') ? 'currentColor' : 'none'} /> <span className="tabular-nums">{r.likedBy?.length || 0}</span></button><button onClick={() => setReplyingTo({qId: q.id, rId: r.id, name: r.author, authorId: r.authorId})} className="text-[9px] font-black text-slate-700 hover:text-brand-400 uppercase tracking-widest transition-all">Trả lời</button></div></div></div>))}
                       {replyingTo?.qId === q.id && (
-                        <div className="flex gap-4 pt-6 animate-in slide-in-from-top-4 duration-500 border-t border-white/5">
-                           <div className="hidden sm:flex w-10 h-10 rounded-xl bg-brand-500/10 border border-brand-500/20 items-center justify-center text-brand-400 shrink-0"><Icons.MessageSquareReply size={18} /></div>
-                           <div className="flex-1 space-y-4">
-                              <div className="flex items-center justify-between bg-brand-500/[0.03] px-5 py-2 rounded-xl border border-brand-500/10">
-                                 <span className="text-[9px] font-black text-slate-500 uppercase tracking-[0.2em] flex items-center gap-3">Phản hồi <span className="text-brand-400 bg-brand-500/10 px-2 py-0.5 rounded border border-brand-500/20">@{replyingTo.name}</span></span>
-                                 <button onClick={() => setReplyingTo(null)} className="text-slate-700 hover:text-white transition-all"><Icons.X size={12} /></button>
-                              </div>
-                              <textarea autoFocus value={replyContent} onChange={(e) => setReplyContent(e.target.value)} placeholder={`Gửi câu trả lời của bạn...`} className="w-full bg-slate-900 border border-white/5 rounded-2xl py-4 px-6 text-white text-sm md:text-base focus:outline-none focus:border-brand-500/30 min-h-[100px] resize-none shadow-2xl backdrop-blur-md" />
-                              <div className="flex gap-3"><button onClick={() => handleReply(q.id)} className="px-8 py-3 bg-brand-600 hover:bg-brand-500 text-white rounded-xl font-black text-xs transition-all transform hover:scale-105 active:scale-95 shadow-lg">Gửi phản hồi</button><button onClick={() => {setReplyingTo(null); setReplyContent('');}} className="px-8 py-3 bg-white/5 text-slate-400 rounded-xl font-black text-xs hover:bg-white/10 transition-all">Hủy</button></div>
-                           </div>
-                        </div>
+                        <div className="flex gap-4 pt-6 animate-in slide-in-from-top-4 duration-500 border-t border-white/5"><div className="hidden sm:flex w-10 h-10 rounded-xl bg-brand-500/10 border border-brand-500/20 items-center justify-center text-brand-400 shrink-0"><Icons.MessageSquareReply size={18} /></div><div className="flex-1 space-y-4"><div className="flex items-center justify-between bg-brand-500/[0.03] px-5 py-2 rounded-xl border border-brand-500/10"><span className="text-[9px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-3">Phản hồi <span className="text-brand-400">@{replyingTo.name}</span></span><button onClick={() => setReplyingTo(null)} className="text-slate-700 hover:text-white transition-all"><Icons.X size={12} /></button></div><textarea autoFocus value={replyContent} onChange={(e) => setReplyContent(e.target.value)} placeholder={`Gửi câu trả lời của bạn...`} className="w-full bg-slate-900 border border-white/5 rounded-[1.8rem] py-6 px-8 text-white text-sm md:text-base focus:outline-none focus:border-brand-500/30 min-h-[100px] resize-none shadow-2xl backdrop-blur-md" /><div className="flex gap-3"><button onClick={() => handleReply(q.id)} className="px-10 py-4 bg-brand-600 hover:bg-brand-500 text-white rounded-2xl font-black text-xs shadow-xl transition-all transform hover:scale-105 active:scale-95">Gửi</button><button onClick={() => {setReplyingTo(null); setReplyContent('');}} className="px-10 py-4 bg-white/5 text-slate-400 rounded-2xl font-black text-xs hover:bg-white/10 transition-all">Hủy</button></div></div></div>
                       )}
                     </div>
                   </div>
                </div>
             </div>
           ))}
-          
           {hasMore && displayQuestions.length >= postsLimit && (
-            <div className="text-center pt-12 pb-32">
-               <button onClick={() => setPostsLimit(prev => prev + POSTS_PER_PAGE)} className="group px-10 py-4 bg-white text-slate-950 rounded-2xl font-black text-xs transition-all transform hover:scale-110 active:scale-95 flex items-center gap-3 mx-auto shadow-2xl">
-                  <span className="tracking-widest uppercase">Tải thêm nội dung</span>
-                  <Icons.ChevronDown size={18} className="group-hover:translate-y-1 transition-transform" />
-               </button>
-            </div>
+            <div className="text-center pt-12 pb-32"><button onClick={() => setPostsLimit(prev => prev + POSTS_PER_PAGE)} className="group px-10 py-4 bg-white text-slate-950 rounded-2xl font-black text-xs transition-all transform hover:scale-110 active:scale-95 flex items-center gap-3 mx-auto shadow-2xl"><span className="tracking-widest uppercase">Tải thêm nội dung</span><Icons.ChevronDown size={18} /></button></div>
           )}
         </div>
       </main>
 
-      {/* Auth Modal - Compact */}
+      {/* Modals */}
       {showAuthModal && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-6">
-          <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-3xl" onClick={() => setShowAuthModal(false)}></div>
-          <div className="relative w-full max-w-sm bg-slate-900 rounded-[3rem] p-10 md:p-12 border border-white/10 shadow-[0_0_100px_rgba(0,0,0,0.7)] animate-in zoom-in-95">
-            <button onClick={() => setShowAuthModal(false)} className="absolute top-8 right-8 text-slate-600 hover:text-white p-2 transition-colors"><Icons.X size={24} /></button>
-            <div className="text-center mb-10">
-               <div className="w-20 h-20 bg-gradient-to-br from-brand-500/20 via-purple-500/20 to-brand-500/20 rounded-[2rem] flex items-center justify-center mx-auto mb-8 text-brand-400 shadow-2xl border border-white/5 ring-1 ring-white/10"><Icons.User size={40} /></div>
-               <h3 className="text-2xl font-black text-white tracking-tighter leading-none mb-3 uppercase">Chào bạn!</h3>
-               <p className="text-slate-500 text-[10px] font-medium leading-relaxed uppercase tracking-widest">Cộng đồng PHTV Việt Nam</p>
-            </div>
-            <button onClick={handleGoogleLogin} className="w-full py-5 bg-white text-slate-950 rounded-2xl font-black text-sm flex items-center justify-center gap-4 transition-all transform hover:scale-[1.03] active:scale-95 shadow-xl">
-               <svg className="w-6 h-6" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-               Đăng nhập bằng Google
-            </button>
-          </div>
-        </div>
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-6"><div className="absolute inset-0 bg-slate-950/90 backdrop-blur-3xl" onClick={() => setShowAuthModal(false)}></div><div className="relative w-full max-w-sm bg-slate-900 rounded-[3.5rem] p-12 border border-white/10 shadow-2xl animate-in zoom-in-95"><button onClick={() => setShowAuthModal(false)} className="absolute top-10 right-10 text-slate-600 p-2"><Icons.X size={28} /></button><div className="text-center mb-10"><div className="w-20 h-20 bg-gradient-to-br from-brand-500/20 to-purple-500/20 rounded-[2rem] flex items-center justify-center mx-auto mb-10 text-brand-400 shadow-3xl"><Icons.User size={48} /></div><h3 className="text-4xl font-black text-white tracking-tighter leading-none mb-4 uppercase">Chào bạn!</h3><p className="text-slate-500 text-sm font-medium leading-relaxed uppercase tracking-widest text-[9px]">Cộng đồng PHTV Việt Nam</p></div><button onClick={handleGoogleLogin} className="w-full py-6 bg-white text-slate-950 rounded-[1.5rem] font-black text-lg flex items-center justify-center gap-4 transition-all active:scale-95 shadow-2xl"><svg className="w-7 h-7" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Đăng nhập ngay</button></div></div>
       )}
-
-      {/* Name Choice - Compact */}
       {showNamePrompt && (
-        <div className="fixed inset-0 z-[250] flex items-center justify-center p-6">
-          <div className="absolute inset-0 bg-slate-950/95 backdrop-blur-3xl animate-in fade-in duration-500"></div>
-          <div className="relative w-full max-w-md bg-slate-900 rounded-[3rem] p-10 md:p-14 border border-white/10 shadow-3xl animate-in zoom-in-95 duration-500">
-            <div className="text-center mb-10 space-y-3">
-               <div className="w-20 h-20 bg-gradient-to-br from-brand-500 to-purple-600 rounded-[1.5rem] flex items-center justify-center mx-auto shadow-2xl rotate-3"><Icons.UserCheck size={40} className="text-white" /></div>
-               <h3 className="text-3xl font-black text-white tracking-tighter uppercase italic leading-none">Bạn là ai?</h3>
-               <p className="text-slate-500 text-sm font-medium italic">Hãy chọn cho mình một danh xưng thật đẳng cấp</p>
-            </div>
-            <input type="text" value={tempUsername} onChange={e => setTempUsername(e.target.value)} className="w-full bg-slate-950 border border-white/10 rounded-2xl py-5 px-8 text-white font-black mb-10 text-center text-2xl focus:border-brand-500/50 outline-none transition-all shadow-inner placeholder:text-slate-800" placeholder="Nhập tên..." />
-            <button onClick={handleUpdateName} className="w-full py-5 bg-white text-slate-950 rounded-2xl font-black text-lg shadow-2xl hover:shadow-white/10 active:scale-95 transition-all transform hover:scale-[1.02]">Hoàn tất</button>
-          </div>
-        </div>
+        <div className="fixed inset-0 z-[250] flex items-center justify-center p-6"><div className="absolute inset-0 bg-slate-950/95 backdrop-blur-3xl animate-in fade-in duration-500"></div><div className="relative w-full max-w-lg bg-slate-900 rounded-[4rem] p-12 md:p-16 border border-white/10 shadow-3xl animate-in zoom-in-95 duration-500"><div className="text-center mb-12 space-y-4"><div className="w-24 h-24 bg-gradient-to-br from-brand-500 to-purple-600 rounded-[2rem] flex items-center justify-center mx-auto shadow-2xl rotate-3"><Icons.UserCheck size={48} className="text-white" /></div><h3 className="text-4xl font-black text-white tracking-tighter uppercase italic leading-none">Bạn là ai?</h3><p className="text-slate-500 text-lg font-medium italic">Chọn một danh xưng thật đẳng cấp cho cộng đồng</p></div><input type="text" value={tempUsername} onChange={e => setTempUsername(e.target.value)} className="w-full bg-slate-950 border border-white/10 rounded-[2rem] py-6 px-10 text-white font-black mb-10 text-center text-3xl focus:border-brand-500/50 outline-none transition-all shadow-inner placeholder:text-slate-800" placeholder="Nhập tên..." /><button onClick={handleUpdateName} className="w-full py-6 bg-white text-slate-950 rounded-[2rem] font-black text-xl shadow-2xl active:scale-95 transition-all transform hover:scale-[1.02]">Bắt đầu ngay</button></div></div>
       )}
-
-      {/* Toast Notification - Compact */}
       {showToast.show && (
-        <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[300] animate-in slide-in-from-bottom-10 fade-in duration-500">
-          <div className="bg-white text-slate-950 px-8 py-4 rounded-[2rem] font-black shadow-3xl flex items-center gap-4 border border-white/20">
-             <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white shadow-xl shadow-green-500/40"><Icons.Check size={16} /></div>
-             <span className="tracking-tight text-sm md:text-base italic">{showToast.message}</span>
-          </div>
-        </div>
+        <div className="fixed bottom-12 left-1/2 -translate-x-1/2 z-[300] animate-in slide-in-from-bottom-12 fade-in duration-500"><div className="bg-white text-slate-950 px-12 py-6 rounded-[2.5rem] font-black shadow-3xl flex items-center gap-5 border border-white/20"><div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white shadow-xl"><Icons.Check size={22} /></div><span className="tracking-tight text-xl italic">{showToast.message}</span></div></div>
       )}
     </div>
   );
