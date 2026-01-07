@@ -532,7 +532,7 @@ export const QASection: React.FC = () => {
             {currentUser ? (
               <div className="flex items-center gap-3">
                 <div className="relative">
-                  <button onClick={() => setShowNotifs(!showNotifs)} className={`p-2.5 rounded-xl border transition-all relative ${showNotifs ? 'bg-white text-slate-950 border-white shadow-xl' : 'bg-white/5 border-white/5 text-slate-500 hover:text-white hover:bg-white/10'}`}>
+                  <button onClick={() => setShowNotifs(!showNotifs)} className={`p-2.5 rounded-xl border transition-all relative ${showNotifs ? 'bg-white text-slate-950 border-white shadow-xl' : 'bg-white/5 border-white/5 text-slate-500 hover:text-white hover:bg-white/10'}`} aria-label="Xem thông báo">
                     <Icons.Bell size={18} />
                     {unreadCount > 0 && <span className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 text-white text-[9px] font-black flex items-center justify-center rounded-full ring-2 ring-slate-950">{unreadCount}</span>}
                   </button>

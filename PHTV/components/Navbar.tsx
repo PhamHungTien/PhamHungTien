@@ -92,6 +92,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
               rel="noopener noreferrer"
               className="hidden sm:flex items-center gap-2 text-slate-400 hover:text-white transition-colors p-2 hover:bg-white/5 rounded-full"
               title="GitHub Repository"
+              aria-label="Xem mã nguồn trên GitHub"
             >
               <Icons.Github size={22} />
             </a>
@@ -99,6 +100,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
             <a 
               href={downloadUrl}
               className="hidden xs:flex items-center gap-2 bg-white text-slate-950 px-6 py-2.5 rounded-xl text-sm font-black hover:bg-slate-100 transition-all transform hover:scale-105 active:scale-95 shadow-xl shadow-white/10"
+              aria-label="Tải xuống PHTV"
             >
               <Icons.Download size={18} />
               <span>Tải ngay</span>
@@ -108,6 +110,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
             <button 
               className="lg:hidden p-2 text-slate-400 hover:text-white transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label={mobileMenuOpen ? "Đóng menu" : "Mở menu"}
             >
               {mobileMenuOpen ? <Icons.X size={28} /> : <Icons.Menu size={28} />}
             </button>
