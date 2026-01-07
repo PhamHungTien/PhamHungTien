@@ -1,58 +1,48 @@
-# PHTV - Personal Portfolio & Project Showcase
+# PHTV - Website Official & Showcase
 
-A modern, responsive portfolio application built with React and Vite.
+Trang web chính thức giới thiệu bộ gõ tiếng Việt **PHTV** cho macOS. Được xây dựng bằng React, TypeScript và Vite với thiết kế hiện đại, mượt mà.
 
-## Features
+## 🚀 Tính năng của Website
+- **Hiệu ứng Glassmorphism**: Giao diện trong suốt hiện đại theo phong cách macOS.
+- **Dải màu chuyển động**: Hiệu ứng Typography động bắt mắt.
+- **Tối ưu SEO**: Cấu hình đầy đủ thẻ Meta, JSON-LD và Sitemap cho công cụ tìm kiếm.
+- **GitHub Integration**: Tự động cập nhật lượt tải và phiên bản mới nhất qua API.
+- **Responsive**: Hiển thị hoàn hảo trên mọi thiết bị từ di động đến máy tính để bàn.
 
-- **Responsive Design**: Works seamlessly across all devices
-- **Fast Performance**: Built with Vite for optimal speed
-- **Modern UI**: Clean and professional user interface
-- **Easy Deployment**: Ready for production deployment
+## 🛠️ Công nghệ sử dụng
+- [React 19](https://react.dev/)
+- [Vite](https://vitejs.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Lucide React](https://lucide.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
 
-## Getting Started
+## 📦 Phát triển local
 
-### Prerequisites
+### Yêu cầu hệ thống
+- **Node.js**: v20 hoặc mới hơn
+- **NPM**: v10 hoặc mới hơn
 
-- Node.js (v16 or higher)
-- npm or yarn
-
-### Installation
-
-1. Install dependencies:
+### Cài đặt & Chạy thử
+1. Cài đặt các gói phụ thuộc:
    ```bash
    npm install
    ```
 
-2. Run the development server:
+2. Chạy server phát triển:
    ```bash
    npm run dev
    ```
 
-3. Open your browser and navigate to the local development URL (typically `http://localhost:5173`)
+3. Mở trình duyệt tại địa chỉ: `http://localhost:3000/PHTV/`
 
-### Build for Production
-
-To create an optimized production build:
-
+### Đóng gói (Build)
+Để tạo bản build tối ưu cho sản xuất:
 ```bash
 npm run build
 ```
 
-## Project Structure
+## 📜 Giấy phép
+Toàn bộ mã nguồn trang web và ứng dụng được phát hành dưới giấy phép **GNU GPL v3.0**. Xem chi tiết tại tệp [LICENSE](../LICENSE).
 
-- `src/` - Application source code
-- `public/` - Static assets
-- `components/` - React components
-- `assets/` - Images and media files
-- `vite.config.ts` - Vite configuration
-- `tsconfig.json` - TypeScript configuration
-
-## Deployment
-
-The app is configured for deployment and includes:
-- `_redirects` - URL routing configuration
-- `CNAME` - Custom domain setup
-- `robots.txt` - SEO configuration
-- `sitemap.xml` - Site map for search engines
-
-Build timestamp: Tue Jan  6 00:10:20 +07 2026
+---
+© {new Date().getFullYear()} Phạm Hùng Tiến. Made with ❤️ for macOS users.
