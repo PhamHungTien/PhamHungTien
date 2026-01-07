@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Icons } from './Icons';
 import { TerminalCommandProps } from '../types';
 
-export const TerminalBlock: React.FC<TerminalCommandProps> = ({ command, label = "Terminal" }) => {
+export const TerminalBlock: React.FC<TerminalCommandProps> = ({ command, label = "Terminal", output }) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -38,11 +38,11 @@ export const TerminalBlock: React.FC<TerminalCommandProps> = ({ command, label =
           <span className="text-green-400 select-none">$</span>
           <span className="break-all">{command}</span>
         </div>
-        <div className="mt-2 text-slate-500 select-none">
-          Downloading PHTV... <br/>
-          Installing PHTV to /Applications... <br/>
-          <span className="text-green-400">Success!</span> PHTV installed successfully.
-        </div>
+        {output && (
+          <div className="mt-2 text-slate-500 select-none whitespace-pre-line">
+            {output}
+          </div>
+        )}
       </div>
     </div>
   );

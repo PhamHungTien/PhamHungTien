@@ -16,4 +16,5 @@ export interface NavLinkProps {
 export interface TerminalCommandProps {
   command: string;
   label?: string;
+  output?: string;
 }
