@@ -42,11 +42,11 @@ interface LabelInfo {
 }
 
 const LABELS: LabelInfo[] = [
-  { id: 'bug', label: 'Bug', color: 'text-white', bg: 'bg-red-600 shadow-lg shadow-red-900/20' },
-  { id: 'enhancement', label: 'Enhancement', color: 'text-white', bg: 'bg-rose-500 shadow-lg shadow-rose-900/20' },
-  { id: 'feature', label: 'Feature', color: 'text-white', bg: 'bg-blue-600 shadow-lg shadow-blue-900/20' },
-  { id: 'question', label: 'Question', color: 'text-white', bg: 'bg-emerald-600 shadow-lg shadow-emerald-900/20' },
-  { id: 'help', label: 'Help Wanted', color: 'text-white', bg: 'bg-orange-600 shadow-lg shadow-orange-900/20' },
+  { id: 'bug', label: 'Bug', color: 'text-white', bg: 'bg-red-600 shadow-lg shadow-red-900/40' },
+  { id: 'enhancement', label: 'Enhancement', color: 'text-white', bg: 'bg-rose-500 shadow-lg shadow-rose-900/40' },
+  { id: 'feature', label: 'Feature', color: 'text-white', bg: 'bg-blue-600 shadow-lg shadow-blue-900/40' },
+  { id: 'question', label: 'Question', color: 'text-white', bg: 'bg-emerald-600 shadow-lg shadow-emerald-900/40' },
+  { id: 'help', label: 'Help Wanted', color: 'text-white', bg: 'bg-orange-600 shadow-lg shadow-orange-900/40' },
 ];
 
 interface Reply {
@@ -591,9 +591,20 @@ export const QASection: React.FC = () => {
               </div>
               
               <div className="flex flex-wrap items-center gap-2 mb-2">
-                 <span className="text-[10px] font-black text-slate-600 uppercase tracking-widest mr-2">Gắn thẻ:</span>
+                 <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mr-2">Gắn thẻ:</span>
                  {LABELS.map(l => (
-                   <button key={l.id} type="button" onClick={() => setSelectedLabel(selectedLabel === l.id ? null : l.id)} className={`px-3 py-1 rounded-full text-[9px] font-black uppercase transition-all border ${selectedLabel === l.id ? `${l.bg} ${l.color} border-current` : 'bg-transparent text-slate-700 border-white/5 hover:border-white/10'}`}>{l.label}</button>
+                   <button 
+                     key={l.id} 
+                     type="button" 
+                     onClick={() => setSelectedLabel(selectedLabel === l.id ? null : l.id)} 
+                     className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase transition-all border ${
+                       selectedLabel === l.id 
+                         ? `${l.bg} ${l.color} border-transparent ring-2 ring-white/20 scale-105` 
+                         : 'bg-white/10 text-slate-200 border-white/10 hover:bg-white/20 hover:text-white'
+                     }`}
+                   >
+                     {l.label}
+                   </button>
                  ))}
               </div>
 
@@ -625,7 +636,11 @@ export const QASection: React.FC = () => {
                       <div className="space-y-1">
                         <div className="flex items-center gap-2 flex-wrap">
                           <h4 className={`font-black text-sm md:text-base tracking-tight ${q.isAdmin ? 'text-rose-400 text-glow-sm' : 'text-white'}`}>{q.author}</h4>
-                          {q.label && <span className={`px-2 py-0.5 rounded text-[8px] font-black uppercase border ${LABELS.find(l => l.id === q.label)?.bg} ${LABELS.find(l => l.id === q.label)?.color} border-current`}>{LABELS.find(l => l.id === q.label)?.label}</span>}
+                                                    {q.label && (
+                            <span className={`px-2 py-0.5 rounded-[4px] text-[9px] font-black uppercase shadow-sm ${LABELS.find(l => l.id === q.label)?.bg} ${LABELS.find(l => l.id === q.label)?.color}`}>
+                              {LABELS.find(l => l.id === q.label)?.label}
+                            </span>
+                          )}
                           {q.isAdmin && <span className="bg-rose-500 text-slate-950 text-[7px] px-2 py-0.5 rounded font-black uppercase tracking-widest shadow-md">Admin</span>}
                           {q.isPinned && <Icons.Paperclip size={12} className="text-rose-400" />}
                           <span className="text-[9px] text-slate-600 font-black uppercase tracking-widest ml-1">{formatRelativeTime(q.timestamp)}</span>
