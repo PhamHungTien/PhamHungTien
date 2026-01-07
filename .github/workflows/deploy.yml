@@ -23,7 +23,7 @@ permissions:
 
 concurrency:
   group: "pages"
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -51,6 +51,7 @@ jobs:
 
       - name: Prepare deployment
         run: |
+          rm -rf _site
           mkdir -p _site
           # Copy root level SEO and configuration files
           cp index.html _site/
@@ -67,11 +68,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: './_site'
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './_site'
+          name: github-pages
 
   deploy:
     environment:
