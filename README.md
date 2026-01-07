@@ -22,12 +22,4 @@ Modern, **offline** Vietnamese input method for macOS. Built with Swift & C++.
 brew install --cask phamhungtien/tap/phtv
 ```
 
----
-
-### Dự án & Cộng đồng
-- [📜 Giấy phép (GPL v3)](LICENSE)
-- [🤝 Hướng dẫn đóng góp](CONTRIBUTING.md)
-- [🛡️ Chính sách bảo mật](SECURITY.md)
-- [⚖️ Quy tắc ứng xử](CODE_OF_CONDUCT.md)
-
-[**→ View Project Website**](https://phamhungtien.com/PHTV/)
+[**→ View Project**](https://github.com/PhamHungTien/PHTV)
