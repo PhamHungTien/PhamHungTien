@@ -51,7 +51,14 @@ import {
   Eye,
   EyeOff,
   UserCheck,
-  AtSign
+  AtSign,
+  Quote,
+  Hash,
+  Award,
+  ShieldCheck,
+  Bell,
+  BellOff,
+  Link2
 } from 'lucide-react';
 
 export const Icons = {
@@ -107,5 +114,12 @@ export const Icons = {
   Eye,
   EyeOff,
   UserCheck,
-  AtSign
+  AtSign,
+  Quote,
+  Hash,
+  Award,
+  ShieldCheck,
+  Bell,
+  BellOff,
+  Link2
 };
