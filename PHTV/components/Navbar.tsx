@@ -3,8 +3,14 @@ import { Icons } from './Icons';
 import { useGitHubData } from '../hooks/useGitHubData';
 import iconImg from '../src/assets/icon.webp';
 
+import React, { useState, useEffect } from 'react';
+import { Icons } from './Icons';
+import { useGitHubData } from '../hooks/useGitHubData';
+import iconImg from '../src/assets/icon.webp';
+
 export const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { downloadUrl } = useGitHubData();
 
   useEffect(() => {
@@ -15,55 +21,112 @@ export const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const navLinks = [
+    { name: 'Tính năng', href: '#features' },
+    { name: 'Phím tắt', href: '#shortcuts' },
+    { name: 'Giao diện', href: '#gallery' },
+    { name: 'Cài đặt', href: '#install' },
+    { name: 'FAQ', href: '#faq' },
+  ];
+
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${scrolled ? 'glass-panel py-3 shadow-2xl shadow-black/40' : 'bg-transparent py-6'}`}>
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        <div className="flex items-center gap-4 group cursor-pointer">
-          <div className="relative">
-            <div className="absolute inset-0 bg-brand-500/20 blur-md rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <img 
-              src={iconImg} 
-              alt="PHTV Logo" 
-              className="relative w-10 h-10 rounded-xl shadow-lg transition-transform group-hover:scale-110" 
-            />
+    <>
+      <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${scrolled ? 'glass-panel py-3 shadow-2xl shadow-black/40' : 'bg-transparent py-6'}`}>
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+          {/* Logo */}
+          <a href="#" className="flex items-center gap-4 group cursor-pointer">
+            <div className="relative">
+              <div className="absolute inset-0 bg-brand-500/20 blur-md rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <img 
+                src={iconImg} 
+                alt="PHTV Logo" 
+                className="relative w-10 h-10 rounded-xl shadow-lg transition-transform group-hover:scale-110" 
+              />
+            </div>
+            <span className="font-black text-2xl tracking-tighter text-white hidden sm:block group-hover:text-glow transition-all">PHTV</span>
+          </a>
+
+          {/* Desktop Nav */}
+          <div className="hidden lg:flex items-center gap-8">
+            {navLinks.map((item) => (
+              <a 
+                key={item.name}
+                href={item.href} 
+                className="text-sm font-bold text-slate-400 hover:text-white transition-all hover:-translate-y-0.5"
+              >
+                {item.name}
+              </a>
+            ))}
           </div>
-          <span className="font-black text-2xl tracking-tighter text-white hidden sm:block group-hover:text-glow transition-all">PHTV</span>
-        </div>
 
-        <div className="hidden lg:flex items-center gap-8">
-          {['Features', 'Shortcuts', 'Gallery', 'Install', 'FAQ'].map((item) => (
+          <div className="flex items-center gap-2 sm:gap-5">
             <a 
-              key={item}
-              href={`#${item.toLowerCase()}`} 
-              className="text-sm font-bold text-slate-400 hover:text-white transition-all hover:-translate-y-0.5"
+              href="https://github.com/PhamHungTien/PHTV" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hidden sm:flex items-center gap-2 text-slate-400 hover:text-white transition-colors p-2 hover:bg-white/5 rounded-full"
+              title="GitHub Repository"
             >
-              {item === 'Features' ? 'Tính năng' : 
-               item === 'Shortcuts' ? 'Phím tắt' : 
-               item === 'Gallery' ? 'Giao diện' : 
-               item === 'Install' ? 'Cài đặt' : 'FAQ'}
+              <Icons.Github size={22} />
             </a>
-          ))}
-        </div>
+            
+            <a 
+              href={downloadUrl}
+              className="hidden xs:flex items-center gap-2 bg-white text-slate-950 px-6 py-2.5 rounded-xl text-sm font-black hover:bg-slate-100 transition-all transform hover:scale-105 active:scale-95 shadow-xl shadow-white/10"
+            >
+              <Icons.Download size={18} />
+              <span>Tải ngay</span>
+            </a>
 
-        <div className="flex items-center gap-5">
-          <a 
-            href="https://github.com/PhamHungTien/PHTV" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="hidden sm:flex items-center gap-2 text-slate-400 hover:text-white transition-colors p-2 hover:bg-white/5 rounded-full"
-            title="GitHub Repository"
-          >
-            <Icons.Github size={22} />
-          </a>
-          <a 
-            href={downloadUrl}
-            className="flex items-center gap-2 bg-white text-slate-950 px-6 py-2.5 rounded-xl text-sm font-black hover:bg-slate-100 transition-all transform hover:scale-105 active:scale-95 shadow-xl shadow-white/10"
-          >
-            <Icons.Download size={18} />
-            <span>Tải ngay</span>
-          </a>
+            {/* Mobile Menu Button */}
+            <button 
+              className="lg:hidden p-2 text-slate-400 hover:text-white transition-colors"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? <Icons.X size={28} /> : <Icons.Menu size={28} />}
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      {/* Mobile Menu Overlay */}
+      <div className={`fixed inset-0 z-[90] lg:hidden transition-all duration-500 ${mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+        <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-2xl" onClick={() => setMobileMenuOpen(false)}></div>
+        <div className={`absolute right-0 top-0 bottom-0 w-[280px] bg-slate-900 border-l border-white/5 p-8 flex flex-col transition-transform duration-500 ease-out shadow-2xl ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+          <div className="flex items-center gap-4 mb-12">
+            <img src={iconImg} alt="PHTV" className="w-10 h-10 rounded-xl" />
+            <span className="font-black text-2xl text-white">PHTV</span>
+          </div>
+          
+          <div className="flex flex-col gap-6">
+            {navLinks.map((item) => (
+              <a 
+                key={item.name}
+                href={item.href} 
+                className="text-lg font-bold text-slate-300 hover:text-white flex items-center justify-between group"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {item.name}
+                <Icons.ArrowRight size={18} className="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-brand-500" />
+              </a>
+            ))}
+          </div>
+
+          <div className="mt-auto space-y-4">
+            <a 
+              href={downloadUrl}
+              className="flex items-center justify-center gap-3 w-full py-4 bg-white text-slate-950 rounded-2xl font-black text-lg shadow-xl shadow-white/5"
+            >
+              <Icons.Download size={20} />
+              Tải ngay
+            </a>
+            <div className="flex justify-center gap-6 pt-4 border-t border-white/5">
+              <a href="https://github.com/PhamHungTien/PHTV" className="text-slate-400 hover:text-white transition-colors"><Icons.Github size={24} /></a>
+              <a href="mailto:hungtien10a7@gmail.com" className="text-slate-400 hover:text-white transition-colors"><Icons.Coffee size={24} /></a>
+            </div>
+          </div>
         </div>
       </div>
-    </nav>
+    </>
   );
 };

@@ -267,11 +267,16 @@ const faqData = [
 ];
 
 function App() {
-  const { downloadUrl, version, totalDownloads } = useGitHubData();
+  const { downloadUrl, version, totalDownloads, loading } = useGitHubData();
   const [showDonate, setShowDonate] = useState(false);
 
   return (
     <div className="min-h-screen mesh-gradient text-white selection:bg-brand-500 selection:text-white overflow-x-hidden">
+      {/* Top Loading Bar */}
+      <div className={`fixed top-0 left-0 right-0 h-1 z-[110] transition-transform duration-500 origin-left ${loading ? 'scale-x-100' : 'scale-x-0'}`}>
+        <div className="h-full bg-gradient-to-r from-brand-500 via-purple-500 to-red-500 animate-shimmer bg-[length:200%_auto]"></div>
+      </div>
+
       <Navbar />
 
       {/* Hero Section */}

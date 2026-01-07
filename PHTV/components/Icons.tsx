@@ -24,7 +24,8 @@ import {
   Heart,
   CloudDownload,
   X,
-  Coffee
+  Coffee,
+  Menu
 } from 'lucide-react';
 
 export const Icons = {
@@ -53,5 +54,6 @@ export const Icons = {
   Heart,
   CloudDownload,
   X,
-  Coffee
+  Coffee,
+  Menu
 };
