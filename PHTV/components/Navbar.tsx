@@ -4,7 +4,12 @@ import { useGitHubData } from '../hooks/useGitHubData';
 
 const iconImg = new URL('../src/assets/icon.webp', import.meta.url).href;
 
-export const Navbar: React.FC = () => {
+interface NavbarProps {
+  activeTab?: 'home' | 'community';
+  onTabChange?: (tab: 'home' | 'community') => void;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { downloadUrl } = useGitHubData();
@@ -18,20 +23,38 @@ export const Navbar: React.FC = () => {
   }, []);
 
   const navLinks = [
-    { name: 'Tính năng', href: '#features' },
-    { name: 'Phím tắt', href: '#shortcuts' },
-    { name: 'Giao diện', href: '#gallery' },
-    { name: 'Cài đặt', href: '#install' },
-    { name: 'Hỏi đáp', href: '#qa' },
-    { name: 'FAQ', href: '#faq' },
+    { name: 'Tính năng', href: '#features', tab: 'home' },
+    { name: 'Phím tắt', href: '#shortcuts', tab: 'home' },
+    { name: 'Giao diện', href: '#gallery', tab: 'home' },
+    { name: 'Cài đặt', href: '#install', tab: 'home' },
+    { name: 'Cộng đồng', href: '#community', tab: 'community' },
+    { name: 'FAQ', href: '#faq', tab: 'home' },
   ];
+
+  const handleLinkClick = (e: React.MouseEvent, tab: string, href: string) => {
+    if (tab === 'community') {
+      e.preventDefault();
+      onTabChange?.('community');
+      window.location.hash = '#community';
+    } else {
+      if (activeTab === 'community') {
+        // If we are in community and click a home link, switch back
+        onTabChange?.('home');
+        // Let the default anchor behavior scroll to the id after tab switch
+      }
+    }
+    setMobileMenuOpen(false);
+  };
 
   return (
     <>
       <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${scrolled ? 'glass-panel py-3 shadow-2xl shadow-black/40' : 'bg-transparent py-6'}`}>
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-4 group cursor-pointer">
+          <button 
+            onClick={() => { onTabChange?.('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+            className="flex items-center gap-4 group cursor-pointer"
+          >
             <div className="relative">
               <div className="absolute inset-0 bg-brand-500/20 blur-md rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
               <img 
@@ -41,7 +64,7 @@ export const Navbar: React.FC = () => {
               />
             </div>
             <span className="font-black text-2xl tracking-tighter text-white hidden sm:block group-hover:text-glow transition-all">PHTV</span>
-          </a>
+          </button>
 
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center gap-8">
@@ -49,10 +72,13 @@ export const Navbar: React.FC = () => {
               <a 
                 key={item.name}
                 href={item.href} 
-                className="text-sm font-bold text-slate-400 hover:text-white transition-all hover:-translate-y-0.5 flex items-center gap-1.5"
+                onClick={(e) => handleLinkClick(e, item.tab, item.href)}
+                className={`text-sm font-bold transition-all hover:-translate-y-0.5 flex items-center gap-1.5 ${
+                  (item.tab === activeTab) ? 'text-brand-400' : 'text-slate-400 hover:text-white'
+                }`}
               >
                 {item.name}
-                {item.name === 'Hỏi đáp' && (
+                {item.name === 'Cộng đồng' && (
                   <span className="flex h-2 w-2 rounded-full bg-brand-500 animate-pulse shadow-[0_0_8px_rgba(245,158,11,0.8)]"></span>
                 )}
               </a>
@@ -103,12 +129,14 @@ export const Navbar: React.FC = () => {
               <a 
                 key={item.name}
                 href={item.href} 
-                className="text-lg font-bold text-slate-300 hover:text-white flex items-center justify-between group"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={(e) => handleLinkClick(e, item.tab, item.href)}
+                className={`text-lg font-bold flex items-center justify-between group ${
+                  item.tab === activeTab ? 'text-brand-400' : 'text-slate-300 hover:text-white'
+                }`}
               >
                 <span className="flex items-center gap-3">
                   {item.name}
-                  {item.name === 'Hỏi đáp' && (
+                  {item.name === 'Cộng đồng' && (
                     <span className="bg-brand-500 text-white text-[8px] px-1.5 py-0.5 rounded-md font-black uppercase tracking-tighter">New</span>
                   )}
                 </span>

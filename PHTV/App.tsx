@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Features } from './components/Features';
 import { TerminalBlock } from './components/TerminalBlock';
@@ -270,6 +270,29 @@ const faqData = [
 function App() {
   const { downloadUrl, version, totalDownloads, loading } = useGitHubData();
   const [showDonate, setShowDonate] = useState(false);
+  const [activeTab, setActiveTab] = useState<'home' | 'community'>('home');
+
+  // Handle URL Hash for direct linking
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash === '#community' || hash === '#qa') {
+      setActiveTab('community');
+    } else {
+      setActiveTab('home');
+    }
+
+    const handleHashChange = () => {
+      const newHash = window.location.hash;
+      if (newHash === '#community' || newHash === '#qa') {
+        setActiveTab('community');
+      } else {
+        setActiveTab('home');
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   return (
     <div className="min-h-screen mesh-gradient text-white selection:bg-brand-500 selection:text-white overflow-x-hidden">
@@ -278,283 +301,207 @@ function App() {
         <div className="h-full bg-gradient-to-r from-brand-500 via-purple-500 to-red-500 animate-shimmer bg-[length:200%_auto]"></div>
       </div>
 
-      <Navbar />
+      <Navbar activeTab={activeTab} onTabChange={setActiveTab} />
 
-      {/* Hero Section */}
-      <main className="relative pt-32 pb-16 md:pt-48 md:pb-32 px-6 overflow-hidden">
-        {/* Decorative Background Elements */}
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-brand-600/10 rounded-full blur-[120px] -z-10 animate-pulse-slow"></div>
-        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-red-600/10 rounded-full blur-[100px] -z-10"></div>
+      {activeTab === 'home' ? (
+        <div className="animate-in fade-in duration-700">
+          {/* Hero Section */}
+          <main className="relative pt-32 pb-16 md:pt-48 md:pb-32 px-6 overflow-hidden">
+            <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-brand-600/10 rounded-full blur-[120px] -z-10 animate-pulse-slow"></div>
+            <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-red-600/10 rounded-full blur-[100px] -z-10"></div>
 
-        <h1 className="sr-only">PHTV - Bộ gõ tiếng Việt Precision Hybrid Typing Vietnamese cho macOS</h1>
-        <div className="max-w-7xl mx-auto text-center relative z-10">
-          
-          {/* Version Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-            </span>
-            <span className="text-xs font-bold text-slate-300 uppercase tracking-widest">Sẵn sàng cho macOS 26 Tahoe</span>
-          </div>
-
-          <div className="flex flex-row items-center justify-center gap-2 sm:gap-4 md:gap-8 mb-12 md:mb-24">
-            
-            {/* Left: Icon */}
-            <div className="relative group shrink-0 w-28 h-28 sm:w-44 sm:h-44 md:w-64 md:h-64">
-               <img 
-                 src="https://raw.githubusercontent.com/PhamHungTien/PHTV/main/PHTV/Resources/icon.png" 
-                 alt="PHTV - Bộ gõ tiếng Việt cho macOS Icon" 
-                 className="relative w-full h-full drop-shadow-[0_15px_35px_rgba(0,0,0,0.4)] rounded-[1.8rem] md:rounded-[3rem] transform group-hover:scale-105 transition-transform duration-500 ease-out z-10 object-cover" 
-                 fetchPriority="high"
-               />
-            </div>
-
-            {/* Right: Vertical Typography */}
-            <div className="flex flex-col justify-center gap-0.5 md:gap-1">
-               <AcronymRow letter="P" word="recision" />
-               <AcronymRow letter="H" word="ybrid" />
-               <AcronymRow letter="T" word="yping" />
-               <AcronymRow letter="V" word="ietnamese" />
-            </div>
-
-          </div>
-
-          <p className="text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto mb-12 leading-relaxed font-medium animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
-            Bộ gõ tiếng Việt <span className="text-white font-bold">offline</span>, <span className="text-white font-bold">nhanh</span>, và <span className="text-white font-bold text-glow">riêng tư</span> cho macOS.
-            <span className="block text-slate-500 text-lg mt-2">Xây dựng bằng Swift native tối ưu hiệu năng tuyệt đối.</span>
-          </p>
-
-          <div className="flex flex-wrap justify-center gap-4 mb-16 max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-500">
-             <StatBadge 
-               icon={Icons.Tag} 
-               label="Phiên bản" 
-               value={version} 
-               href="https://github.com/PhamHungTien/PHTV/releases/latest"
-               colorClass="text-blue-400"
-             />
-             <StatBadge 
-               icon={Icons.CloudDownload} 
-               label="Lượt tải" 
-               value={totalDownloads} 
-               href="https://github.com/PhamHungTien/PHTV/releases"
-               colorClass="text-green-400"
-             />
-             <StatBadge 
-               icon={Icons.Heart} 
-               label="Ủng hộ" 
-               value="Donate" 
-               onClick={() => setShowDonate(true)}
-               colorClass="text-pink-400"
-             />
-          </div>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-5 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-700">
-            <a 
-              href={downloadUrl}
-              className="w-full sm:w-auto px-10 py-5 bg-white text-slate-950 rounded-2xl font-extrabold text-lg hover:bg-slate-100 transition-all transform hover:scale-105 hover:-translate-y-1 shadow-[0_20px_40px_rgba(255,255,255,0.2)] flex items-center justify-center gap-3 group"
-            >
-              <Icons.Download size={22} className="group-hover:animate-bounce" />
-              Tải xuống {version ? version : 'ngay'}
-            </a>
-            <a 
-              href="#qa"
-              className="w-full sm:w-auto px-10 py-5 bg-brand-600/20 backdrop-blur-xl border border-brand-500/30 text-white rounded-2xl font-bold text-lg hover:bg-brand-600/30 transition-all hover:border-brand-500/50 flex items-center justify-center gap-3 group relative overflow-hidden"
-            >
-              <div className="absolute -top-1 -right-1">
-                <span className="relative flex h-4 w-4">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-4 w-4 bg-brand-500 flex items-center justify-center text-[8px] font-black text-white">!</span>
+            <h1 className="sr-only">PHTV - Bộ gõ tiếng Việt Precision Hybrid Typing Vietnamese cho macOS</h1>
+            <div className="max-w-7xl mx-auto text-center relative z-10">
+              
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
                 </span>
+                <span className="text-xs font-bold text-slate-300 uppercase tracking-widest">Sẵn sàng cho macOS 26 Tahoe</span>
               </div>
-              <Icons.MessageSquare size={22} className="text-brand-400 group-hover:text-white transition-colors" />
-              Cộng đồng PHTV
-            </a>
-            <a 
-              href="#install"
-              className="w-full sm:w-auto px-10 py-5 bg-slate-900/50 backdrop-blur-xl border border-white/10 text-white rounded-2xl font-bold text-lg hover:bg-slate-800 transition-all hover:border-white/20 flex items-center justify-center gap-3 group"
-            >
-              <Icons.Terminal size={22} className="text-slate-400 group-hover:text-white transition-colors" />
-              Homebrew
-            </a>
-          </div>
-        </div>
-      </main>
 
-      <Features />
-      <Gallery />
-      <Shortcuts />
+              <div className="flex flex-row items-center justify-center gap-2 sm:gap-4 md:gap-8 mb-12 md:mb-24">
+                <div className="relative group shrink-0 w-28 h-28 sm:w-44 sm:h-44 md:w-64 md:h-64">
+                   <img 
+                     src="https://raw.githubusercontent.com/PhamHungTien/PHTV/main/PHTV/Resources/icon.png" 
+                     alt="PHTV Icon" 
+                     className="relative w-full h-full drop-shadow-[0_15px_35px_rgba(0,0,0,0.4)] rounded-[1.8rem] md:rounded-[3rem] transform group-hover:scale-105 transition-transform duration-500 ease-out z-10 object-cover" 
+                     fetchPriority="high"
+                   />
+                </div>
+                <div className="flex flex-col justify-center gap-0.5 md:gap-1 text-left">
+                   <AcronymRow letter="P" word="recision" />
+                   <AcronymRow letter="H" word="ybrid" />
+                   <AcronymRow letter="T" word="yping" />
+                   <AcronymRow letter="V" word="ietnamese" />
+                </div>
+              </div>
 
-      <section id="install" className="py-32 bg-slate-950/30 border-y border-white/5 scroll-mt-32 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-600/5 rounded-full blur-[120px] -z-10"></div>
-        <div className="max-w-5xl mx-auto px-6 relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-extrabold mb-6 text-white tracking-tight">Cài đặt dễ dàng</h2>
-            <p className="text-slate-400 text-xl">
-              Hỗ trợ macOS 13.0 trở lên (Intel + Apple Silicon).
-            </p>
-          </div>
+              <p className="text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto mb-12 leading-relaxed font-medium animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
+                Bộ gõ tiếng Việt <span className="text-white font-bold">offline</span>, <span className="text-white font-bold">nhanh</span>, và <span className="text-white font-bold text-glow">riêng tư</span> cho macOS.
+                <span className="block text-slate-500 text-lg mt-2">Xây dựng bằng Swift native tối ưu hiệu năng tuyệt đối.</span>
+              </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-20">
-            {/* Method 1: Homebrew */}
-            <div className="glass-panel rounded-[2rem] p-10 flex flex-col shadow-2xl relative group overflow-hidden">
-               <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
-                  <Icons.Terminal size={120} />
-               </div>
-               <div className="flex items-center gap-4 mb-14">
-                  <div className="w-12 h-12 rounded-2xl bg-brand-500 flex items-center justify-center text-white shadow-lg shadow-brand-500/40">
-                    <Icons.Terminal size={24} />
+              <div className="flex flex-wrap justify-center gap-4 mb-16 max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-500">
+                 <StatBadge icon={Icons.Tag} label="Phiên bản" value={version} href="https://github.com/PhamHungTien/PHTV/releases/latest" colorClass="text-blue-400" />
+                 <StatBadge icon={Icons.CloudDownload} label="Lượt tải" value={totalDownloads} href="https://github.com/PhamHungTien/PHTV/releases" colorClass="text-green-400" />
+                 <StatBadge icon={Icons.Heart} label="Ủng hộ" value="Donate" onClick={() => setShowDonate(true)} colorClass="text-pink-400" />
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-5 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-700">
+                <a 
+                  href={downloadUrl}
+                  className="w-full sm:w-auto px-10 py-5 bg-white text-slate-950 rounded-2xl font-extrabold text-lg hover:bg-slate-100 transition-all transform hover:scale-105 hover:-translate-y-1 shadow-[0_20px_40px_rgba(255,255,255,0.2)] flex items-center justify-center gap-3 group"
+                >
+                  <Icons.Download size={22} className="group-hover:animate-bounce" />
+                  Tải xuống {version}
+                </a>
+                
+                <button 
+                  onClick={() => {
+                    setActiveTab('community');
+                    window.location.hash = '#community';
+                  }}
+                  className="w-full sm:w-auto px-10 py-5 bg-gradient-to-br from-brand-500 to-purple-600 text-white rounded-2xl font-extrabold text-lg hover:shadow-[0_20px_40px_rgba(245,158,11,0.2)] transition-all transform hover:scale-105 hover:-translate-y-1 flex items-center justify-center gap-3 relative group"
+                >
+                  <div className="absolute -top-1.5 -right-1.5 z-20">
+                    <span className="relative flex h-4 w-4">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-4 w-4 bg-green-500 border-2 border-slate-950 shadow-lg"></span>
+                    </span>
                   </div>
-                  <h3 className="text-2xl font-bold text-white">Homebrew</h3>
-               </div>
-               <div className="mb-6">
-                  <TerminalBlock 
-                    command="brew install --cask phamhungtien/tap/phtv" 
-                    label="Install" 
-                    output={`==> Downloading PHTV...\n==> Installing Cask phtv\n🍺  phtv was successfully installed!`}
-                  />
-               </div>
-               <p className="text-slate-400 mb-8 leading-relaxed">
-                  Cách nhanh nhất để cài đặt và cập nhật PHTV thông qua Terminal.
-               </p>
-               
-               <div className="mt-auto space-y-3 pt-6 border-t border-white/5">
-                  <CommandRow 
-                    icon={Icons.RefreshCw} 
-                    color="text-blue-400" 
-                    label="Cập nhật" 
-                    code="brew upgrade --cask phtv" 
-                  />
-                  <CommandRow 
-                    icon={Icons.Trash2} 
-                    color="text-red-400" 
-                    label="Gỡ cài đặt" 
-                    code="brew uninstall --zap --cask phtv" 
-                  />
-               </div>
+                  <Icons.MessageSquare size={22} className="group-hover:rotate-12 transition-transform" />
+                  <span>Cộng đồng PHTV</span>
+                  <span className="bg-white/20 text-[10px] px-2 py-0.5 rounded-full uppercase tracking-tighter ml-1 backdrop-blur-md border border-white/10">Mới</span>
+                </button>
+
+                <a 
+                  href="#install"
+                  className="w-full sm:w-auto px-10 py-5 bg-slate-900/50 backdrop-blur-xl border border-white/10 text-white rounded-2xl font-bold text-lg hover:bg-slate-800 transition-all flex items-center justify-center gap-3"
+                >
+                  <Icons.Terminal size={22} className="text-slate-400" />
+                  Homebrew
+                </a>
+              </div>
             </div>
+          </main>
 
-            {/* Method 2: Manual */}
-             <div className="glass-panel rounded-[2rem] p-10 flex flex-col shadow-2xl relative group overflow-hidden">
-               <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
-                  <Icons.Download size={120} />
-               </div>
-               <div className="flex items-center gap-4 mb-14">
-                  <div className="w-12 h-12 rounded-2xl bg-slate-700 flex items-center justify-center text-white shadow-lg shadow-slate-700/40">
-                    <Icons.Download size={24} />
-                  </div>
-                  <h3 className="text-2xl font-bold text-white">Tải trực tiếp</h3>
-               </div>
-               
-               <div className="flex-1 flex items-center mb-8">
-                 <a 
-                   href={downloadUrl}
-                   className="flex items-center justify-center gap-3 w-full py-5 bg-gradient-to-r from-brand-600 to-purple-600 hover:from-brand-500 hover:to-purple-500 text-white rounded-2xl transition-all font-extrabold text-lg shadow-xl shadow-brand-500/25 hover:-translate-y-1"
-                 >
-                   <Icons.Download size={24} />
-                   Tải PHTV.dmg
-                 </a>
-               </div>
+          <Features />
+          <Gallery />
+          <Shortcuts />
 
-               <div className="p-6 bg-yellow-500/5 border border-yellow-500/20 rounded-2xl">
-                 <div className="flex items-start gap-4">
-                    <div className="p-2 bg-yellow-500/10 rounded-xl">
-                      <Icons.Shield className="text-yellow-500 shrink-0" size={20} />
-                    </div>
-                    <div className="text-sm">
-                      <strong className="text-yellow-500 block mb-2 text-base">Mẹo bảo mật</strong>
-                      <span className="text-slate-400 leading-relaxed">Nếu macOS thông báo "App is damaged", bạn chỉ cần chạy lệnh sau:</span>
-                      <div className="mt-4">
-                        <TerminalBlock command="xattr -cr /Applications/PHTV.app" label="Fix Quarantine" />
+          <section id="install" className="py-32 bg-slate-950/30 border-y border-white/5 scroll-mt-32 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-600/5 rounded-full blur-[120px] -z-10"></div>
+            <div className="max-w-5xl mx-auto px-6 relative z-10">
+              <div className="text-center mb-16">
+                <h2 className="text-4xl md:text-5xl font-extrabold mb-6 text-white tracking-tight">Cài đặt dễ dàng</h2>
+                <p className="text-slate-400 text-xl">Hỗ trợ macOS 13.0 trở lên (Intel + Apple Silicon).</p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-20">
+                <div className="glass-panel rounded-[2rem] p-10 flex flex-col shadow-2xl group relative overflow-hidden">
+                   <div className="absolute top-0 right-0 p-6 opacity-5"><Icons.Terminal size={120} /></div>
+                   <div className="flex items-center gap-4 mb-14">
+                      <div className="w-12 h-12 rounded-2xl bg-brand-500 flex items-center justify-center text-white shadow-lg shadow-brand-500/40"><Icons.Terminal size={24} /></div>
+                      <h3 className="text-2xl font-bold text-white">Homebrew</h3>
+                   </div>
+                   <div className="mb-6">
+                      <TerminalBlock command="brew install --cask phamhungtien/tap/phtv" label="Install" output={`==> Downloading PHTV...\n==> Installing Cask phtv\n🍺  phtv was successfully installed!`}/>
+                   </div>
+                   <p className="text-slate-400 mb-8 leading-relaxed">Cách nhanh nhất để cài đặt và cập nhật PHTV thông qua Terminal.</p>
+                   <div className="mt-auto space-y-3 pt-6 border-t border-white/5">
+                      <CommandRow icon={Icons.RefreshCw} color="text-blue-400" label="Cập nhật" code="brew upgrade --cask phtv" />
+                      <CommandRow icon={Icons.Trash2} color="text-red-400" label="Gỡ cài đặt" code="brew uninstall --zap --cask phtv" />
+                   </div>
+                </div>
+
+                 <div className="glass-panel rounded-[2rem] p-10 flex flex-col shadow-2xl group relative overflow-hidden">
+                   <div className="absolute top-0 right-0 p-6 opacity-5"><Icons.Download size={120} /></div>
+                   <div className="flex items-center gap-4 mb-14">
+                      <div className="w-12 h-12 rounded-2xl bg-slate-700 flex items-center justify-center text-white shadow-lg shadow-slate-700/40"><Icons.Download size={24} /></div>
+                      <h3 className="text-2xl font-bold text-white">Tải trực tiếp</h3>
+                   </div>
+                   <div className="flex-1 flex items-center mb-8">
+                     <a href={downloadUrl} className="flex items-center justify-center gap-3 w-full py-5 bg-gradient-to-r from-brand-600 to-purple-600 hover:from-brand-500 hover:to-purple-500 text-white rounded-2xl transition-all font-extrabold text-lg shadow-xl shadow-brand-500/25 hover:-translate-y-1">
+                       <Icons.Download size={24} />
+                       Tải PHTV.dmg
+                     </a>
+                   </div>
+                   <div className="p-6 bg-yellow-500/5 border border-yellow-500/20 rounded-2xl">
+                     <div className="flex items-start gap-4">
+                        <div className="p-2 bg-yellow-500/10 rounded-xl"><Icons.Shield className="text-yellow-500 shrink-0" size={20} /></div>
+                        <div className="text-sm">
+                          <strong className="text-yellow-500 block mb-2 text-base">Mẹo bảo mật</strong>
+                          <span className="text-slate-400 leading-relaxed">Nếu macOS thông báo "App is damaged", chạy lệnh:</span>
+                          <div className="mt-4"><TerminalBlock command="xattr -cr /Applications/PHTV.app" label="Fix Quarantine" /></div>
+                        </div>
+                     </div>
+                   </div>
+                </div>
+              </div>
+
+              <div className="glass-panel rounded-[2.5rem] p-10 md:p-12 max-w-4xl mx-auto border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.3)]">
+                 <h3 className="text-2xl font-bold text-white mb-10 text-center flex items-center justify-center gap-3"><Icons.CheckCircle2 className="text-green-500" />Các bước cuối cùng</h3>
+                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {[ 
+                      { title: "Cấp quyền", desc: "System Settings → Accessibility → Bật PHTV", icon: Icons.Shield },
+                      { title: "Kích hoạt", desc: "Chọn 'Vi' từ Menu bar hoặc dùng phím tắt", icon: Icons.Keyboard },
+                      { title: "Sử dụng", desc: "Control + Shift để đổi ngôn ngữ nhanh", icon: Icons.Zap }
+                    ].map((step, i) => (
+                      <div key={i} className="flex flex-col items-center text-center">
+                        <div className="w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-4 text-brand-400"><step.icon size={24} /></div>
+                        <h4 className="font-bold text-white mb-2">{step.title}</h4>
+                        <p className="text-slate-400 text-sm leading-relaxed">{step.desc}</p>
                       </div>
-                    </div>
+                    ))}
                  </div>
-               </div>
+              </div>
             </div>
-          </div>
+          </section>
 
-          <div className="glass-panel rounded-[2.5rem] p-10 md:p-12 max-w-4xl mx-auto border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.3)]">
-             <h3 className="text-2xl font-bold text-white mb-10 text-center flex items-center justify-center gap-3">
-               <Icons.CheckCircle2 className="text-green-500" />
-               Các bước cuối cùng
-             </h3>
-             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {[
-                  { title: "Cấp quyền", desc: "System Settings → Accessibility → Bật PHTV", icon: Icons.Shield },
-                  { title: "Kích hoạt", desc: "Chọn 'Vi' từ Menu bar hoặc dùng phím tắt", icon: Icons.Keyboard },
-                  { title: "Sử dụng", desc: "Control + Shift để đổi ngôn ngữ nhanh", icon: Icons.Zap }
-                ].map((step, i) => (
-                  <div key={i} className="flex flex-col items-center text-center">
-                    <div className="w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-4 text-brand-400">
-                      <step.icon size={24} />
+          <section className="py-20 border-t border-slate-800 bg-slate-900/30">
+             <div className="max-w-4xl mx-auto px-6">
+                <h2 className="text-2xl font-bold text-white mb-8 text-center">Yêu cầu hệ thống</h2>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left border-collapse">
+                    <tbody>
+                      <tr className="border-b border-slate-800"><th className="py-4 text-slate-400 font-medium w-1/3">macOS</th><td className="py-4 text-white">13.0+ (Ventura trở lên)</td></tr>
+                      <tr className="border-b border-slate-800"><th className="py-4 text-slate-400 font-medium">Kiến trúc</th><td className="py-4 text-white">Universal Binary (Intel + Apple Silicon)</td></tr>
+                      <tr className="border-b border-slate-800"><th className="py-4 text-slate-400 font-medium">Quyền hạn</th><td className="py-4 text-white">Accessibility (Trợ năng)</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+             </div>
+          </section>
+
+          <section id="faq" className="py-24 max-w-4xl mx-auto px-6">
+             <h2 className="text-3xl md:text-5xl font-bold mb-4 text-center text-white">Câu hỏi thường gặp</h2>
+             <p className="text-center text-slate-400 mb-12">Giải đáp các thắc mắc phổ biến về PHTV</p>
+             <div className="space-y-8">
+                {faqData.map((category, idx) => (
+                  <div key={category.category}>
+                    <h3 className="text-xl font-bold text-brand-400 mb-4 px-2 flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-brand-500"></span>{category.category}</h3>
+                    <div className="space-y-3">
+                      {category.items.map((item, i) => (
+                        <div key={i} className="bg-slate-900/50 border border-slate-800 rounded-xl overflow-hidden hover:border-slate-700 transition-colors">
+                          <details className="group">
+                              <summary className="flex justify-between items-center cursor-pointer p-5 list-none bg-slate-900/50 hover:bg-slate-800 transition-colors"><span className="font-semibold text-white pr-4">{item.q}</span><span className="transition-transform group-open:rotate-180 shrink-0 text-brand-500"><Icons.ArrowRight className="rotate-90" size={18} /></span></summary>
+                              <div className="text-slate-300 p-5 pt-0 border-t border-slate-800/50 leading-relaxed"><div className="mt-4">{item.a}</div></div>
+                          </details>
+                        </div>
+                      ))}
                     </div>
-                    <h4 className="font-bold text-white mb-2">{step.title}</h4>
-                    <p className="text-slate-400 text-sm leading-relaxed">{step.desc}</p>
                   </div>
                 ))}
              </div>
-          </div>
+          </section>
         </div>
-      </section>
-
-      <section className="py-20 border-t border-slate-800 bg-slate-900/30">
-         <div className="max-w-4xl mx-auto px-6">
-            <h2 className="text-2xl font-bold text-white mb-8 text-center">Yêu cầu hệ thống</h2>
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
-                <tbody>
-                  <tr className="border-b border-slate-800">
-                    <th className="py-4 text-slate-400 font-medium w-1/3">macOS</th>
-                    <td className="py-4 text-white">13.0+ (Ventura trở lên)</td>
-                  </tr>
-                  <tr className="border-b border-slate-800">
-                    <th className="py-4 text-slate-400 font-medium">Kiến trúc</th>
-                    <td className="py-4 text-white">Universal Binary (Intel + Apple Silicon)</td>
-                  </tr>
-                  <tr className="border-b border-slate-800">
-                    <th className="py-4 text-slate-400 font-medium">Quyền hạn</th>
-                    <td className="py-4 text-white">Accessibility (Trợ năng)</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-         </div>
-      </section>
-
-      <QASection />
-
-      <section id="faq" className="py-24 max-w-4xl mx-auto px-6">
-         <h2 className="text-3xl md:text-5xl font-bold mb-4 text-center text-white">Câu hỏi thường gặp</h2>
-         <p className="text-center text-slate-400 mb-12">Giải đáp các thắc mắc phổ biến về PHTV</p>
-         
-         <div className="space-y-8">
-            {faqData.map((category, idx) => (
-              <div key={category.category}>
-                <h3 className="text-xl font-bold text-brand-400 mb-4 px-2 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-brand-500"></span>
-                  {category.category}
-                </h3>
-                <div className="space-y-3">
-                  {category.items.map((item, i) => (
-                    <div key={i} className="bg-slate-900/50 border border-slate-800 rounded-xl overflow-hidden hover:border-slate-700 transition-colors">
-                      <details className="group">
-                          <summary className="flex justify-between items-center cursor-pointer p-5 list-none bg-slate-900/50 hover:bg-slate-800 transition-colors">
-                            <span className="font-semibold text-white pr-4">{item.q}</span>
-                            <span className="transition-transform group-open:rotate-180 shrink-0 text-brand-500">
-                                <Icons.ArrowRight className="rotate-90" size={18} />
-                            </span>
-                          </summary>
-                          <div className="text-slate-300 p-5 pt-0 border-t border-slate-800/50 leading-relaxed">
-                            <div className="mt-4">{item.a}</div>
-                          </div>
-                      </details>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-         </div>
-      </section>
+      ) : (
+        <div className="pt-24 animate-in slide-in-from-right-4 fade-in duration-700">
+          <QASection />
+        </div>
+      )}
 
       <Footer onDonateClick={() => setShowDonate(true)} />
       <DonateModal isOpen={showDonate} onClose={() => setShowDonate(false)} />
