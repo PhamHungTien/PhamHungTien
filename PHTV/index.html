@@ -320,72 +320,103 @@
       }
     </script>
     <style>
-      /* Custom scrollbar for webkit */
+      /* Integrated scrollbar */
       ::-webkit-scrollbar {
-        width: 8px;
+        width: 6px;
+        height: 6px;
       }
       ::-webkit-scrollbar-track {
-        background: #0f172a;
+        background: transparent;
       }
       ::-webkit-scrollbar-thumb {
-        background: #334155;
-        border-radius: 4px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #475569;
+        background: rgba(139, 92, 246, 0.3);
       }
       
       .glass-panel {
-        background: rgba(30, 41, 59, 0.4);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
         border: 1px solid rgba(255, 255, 255, 0.08);
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        box-shadow: 
+          0 10px 40px -10px rgba(0, 0, 0, 0.5),
+          inset 0 1px 1px rgba(255, 255, 255, 0.05);
       }
 
       .glass-card {
-        background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.02);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       }
 
       .glass-card:hover {
-        background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        transform: translateY(-4px);
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(139, 92, 246, 0.3);
+        transform: translateY(-6px) scale(1.01);
+        box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
       }
       
       .mesh-gradient {
         background-color: #020617;
         background-image: 
           radial-gradient(at 0% 0%, hsla(253,16%,12%,1) 0, transparent 50%), 
-          radial-gradient(at 50% 0%, hsla(225,39%,15%,1) 0, transparent 50%), 
+          radial-gradient(at 50% 0%, hsla(263,45%,15%,1) 0, transparent 50%), 
           radial-gradient(at 100% 0%, hsla(339,49%,15%,1) 0, transparent 50%),
-          radial-gradient(at 50% 100%, hsla(260,50%,10%,1) 0, transparent 50%);
+          radial-gradient(at 80% 50%, hsla(260,50%,12%,1) 0, transparent 40%),
+          radial-gradient(at 20% 80%, hsla(240,40%,10%,1) 0, transparent 40%),
+          radial-gradient(at 50% 100%, hsla(260,50%,8%,1) 0, transparent 50%);
       }
 
       .noise-overlay {
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
         content: "";
-        opacity: 0.03;
-        z-index: 1000;
+        opacity: 0.025;
+        z-index: 9999;
         pointer-events: none;
         background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3%3Ffilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        animation: noise-move 0.2s steps(4) infinite;
       }
 
-      .shimmer-button {
-        background: linear-gradient(90deg, #fff 0%, #f1f5f9 50%, #fff 100%);
-        background-size: 200% 100%;
-        animation: shimmer 3s infinite;
+      @keyframes noise-move {
+        0% { transform: translate(0,0) }
+        10% { transform: translate(-1%,-1%) }
+        20% { transform: translate(1%,1%) }
+        30% { transform: translate(-2%,1%) }
+        40% { transform: translate(2%,-1%) }
+        50% { transform: translate(-1%,2%) }
+        60% { transform: translate(1%,-2%) }
+        70% { transform: translate(-2%,-2%) }
+        80% { transform: translate(2%,2%) }
+        90% { transform: translate(-1%,1%) }
+        100% { transform: translate(1%,-1%) }
+      }
+
+      .text-glow-sm {
+        text-shadow: 0 0 10px rgba(139, 92, 246, 0.4);
       }
 
       .text-glow {
-        text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.3), 0 0 40px rgba(139, 92, 246, 0.2);
+      }
+
+      /* Reveal Animation Utility */
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+      }
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
       }
     </style>
 </head>
