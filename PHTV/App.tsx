@@ -272,6 +272,10 @@ function App() {
   const [showDonate, setShowDonate] = useState(false);
   const [activeTab, setActiveTab] = useState<'home' | 'community'>('home');
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [activeTab]);
+
   // Handle URL Hash for direct linking
   useEffect(() => {
     const hash = window.location.hash;
