@@ -4,16 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'PHTV/**'
-      - '.github/workflows/deploy.yml'
-      - 'index.html'
-      - 'robots.txt'
-      - 'sitemap.xml'
-      - 'CNAME'
-      - '_redirects'
-      - '.htaccess'
-      - '.nojekyll'
   workflow_dispatch:
 
 permissions:
