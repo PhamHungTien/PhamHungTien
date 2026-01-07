@@ -501,10 +501,10 @@ export const QASection: React.FC = () => {
                     )}
                   </button>
                   {showNotifs && (
-                    <div className="absolute right-0 top-12 w-[280px] md:w-[320px] bg-slate-900 border border-white/10 rounded-[1.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.8)] z-[150] overflow-hidden animate-in zoom-in-95 duration-200">
+                    <div className="fixed inset-x-4 top-24 sm:absolute sm:inset-x-auto sm:right-0 sm:top-12 sm:w-[320px] bg-slate-900 border border-white/10 rounded-[1.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.8)] z-[150] overflow-hidden animate-in zoom-in-95 duration-200">
                        <div className="p-4 border-b border-white/5 flex items-center justify-between bg-slate-950/50">
                           <span className="font-black text-[10px] uppercase tracking-widest text-white">Thông báo</span>
-                          <button onClick={() => setShowNotifs(false)} className="text-slate-500 hover:text-white"><Icons.X size={14} /></button>
+                          <button onClick={() => setShowNotifs(false)} className="text-slate-500 hover:text-white"><Icons.X size={16} /></button>
                        </div>
                        <div className="max-h-[350px] overflow-y-auto custom-scrollbar">
                           {notifications.length === 0 ? <div className="p-8 text-center text-slate-600 font-bold text-[10px] uppercase tracking-widest">Trống</div> : 
