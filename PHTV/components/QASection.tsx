@@ -496,37 +496,62 @@ export const QASection: React.FC = () => {
                       </div>
 
                       {/* Replies */}
-                      <div className="space-y-6 pt-6 border-l-2 border-white/5 ml-2 pl-8">
+                      <div className="space-y-8 pt-8 border-l-2 border-white/5 ml-2 pl-6 md:pl-10">
                         {q.replies?.map((r) => (
-                          <div key={r.id} className="flex gap-4 group/reply animate-in fade-in slide-in-from-left-4 duration-500">
-                            <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-white font-black text-xs shrink-0 shadow-lg ${r.isAdmin ? 'bg-gradient-to-br from-brand-500 to-purple-600 ring-1 ring-brand-400/50' : 'bg-slate-800'}`}>{getInitials(r.author)}</div>
-                            <div className="flex-1 space-y-2">
-                              <div className={`rounded-[1.2rem] p-4 border transition-all ${r.isAdmin ? 'bg-brand-500/5 border-brand-500/20' : 'bg-slate-900/60 border-white/5'}`}>
-                                 <div className="flex justify-between items-center mb-1.5">
-                                   <div className="flex items-center gap-2 flex-wrap">
-                                     <span className={`text-xs font-black ${r.isAdmin ? 'text-brand-400' : 'text-white'}`}>{r.author} {r.isAdmin && <Icons.CheckCircle2 size={12} className="text-brand-500" />}</span>
-                                     {r.replyToName && <span className="text-[9px] text-slate-600 flex items-center gap-1 font-black bg-white/5 px-1.5 py-0.5 rounded uppercase tracking-tighter"><Icons.ArrowRight size={8} />{r.replyToName}</span>}
-                                     <span className="text-[9px] text-slate-700 font-bold uppercase">{formatRelativeTime(r.timestamp)}</span>
+                          <div key={r.id} className="flex gap-4 md:gap-6 group/reply animate-in fade-in slide-in-from-left-4 duration-500">
+                            <div className={`w-10 h-10 md:w-12 md:h-12 rounded-[1.1rem] flex items-center justify-center text-white font-black text-sm shrink-0 shadow-lg transition-transform group-hover/reply:scale-105 ${
+                              r.isAdmin ? 'bg-gradient-to-br from-brand-500 to-purple-600 ring-1 ring-brand-400/50' : 'bg-slate-800'
+                            }`}>
+                              {getInitials(r.author)}
+                            </div>
+                            <div className="flex-1 space-y-3">
+                              <div className={`rounded-[1.5rem] p-5 md:p-6 border transition-all ${
+                                r.isAdmin 
+                                  ? 'bg-brand-500/10 border-brand-500/30 shadow-[0_10px_30px_rgba(245,158,11,0.05)]' 
+                                  : 'bg-slate-900/80 border-white/10'
+                              }`}>
+                                 <div className="flex justify-between items-center mb-2">
+                                   <div className="flex items-center gap-3 flex-wrap">
+                                     <span className={`font-black text-sm md:text-base ${r.isAdmin ? 'text-brand-400' : 'text-white'}`}>
+                                       {r.author} 
+                                       {r.isAdmin && <Icons.CheckCircle2 size={14} className="text-brand-500 inline ml-1" />}
+                                     </span>
+                                     {r.replyToName && (
+                                       <span className="text-[10px] md:text-xs text-slate-500 flex items-center gap-1.5 font-black bg-white/5 px-2 py-1 rounded-full uppercase tracking-tighter">
+                                         <Icons.ArrowRight size={10} />
+                                         {r.replyToName}
+                                       </span>
+                                     )}
+                                     <span className="text-[10px] md:text-xs text-slate-600 font-bold uppercase">{formatRelativeTime(r.timestamp)}</span>
                                    </div>
                                    <div className="flex items-center gap-1 opacity-0 group-hover/reply:opacity-100 transition-opacity">
                                      {(currentUser?.isAdmin || currentUser?.uid === r.authorId) && (
-                                       <><button onClick={() => {setEditingReplyId(r.id); setEditContent(r.content);}} className="p-1.5 text-slate-700 hover:text-white rounded-lg hover:bg-white/5"><Icons.Settings size={12} /></button><button onClick={() => deleteReply(q.id, r.id)} className="p-1.5 text-slate-700 hover:text-red-500 rounded-lg hover:bg-red-500/10"><Icons.Trash2 size={12} /></button></>
+                                       <>
+                                         <button onClick={() => {setEditingReplyId(r.id); setEditContent(r.content);}} className="p-2 text-slate-600 hover:text-white rounded-lg hover:bg-white/5"><Icons.Settings size={14} /></button>
+                                         <button onClick={() => deleteReply(q.id, r.id)} className="p-2 text-slate-600 hover:text-red-500 rounded-lg hover:bg-red-500/10"><Icons.Trash2 size={14} /></button>
+                                       </>
                                      )}
                                    </div>
                                  </div>
                                  {editingReplyId === r.id ? (
-                                   <div className="space-y-3">
-                                     <textarea autoFocus value={editContent} onChange={e => setEditContent(e.target.value)} className="w-full bg-slate-950 border border-white/10 rounded-xl p-3 text-sm text-white" />
-                                     <div className="flex gap-2"><button onClick={() => saveReplyEdit(q.id, r.id)} className="px-4 py-1.5 bg-brand-600 text-white rounded-lg text-[10px] font-black shadow-lg">Lưu</button><button onClick={() => setEditingReplyId(null)} className="px-4 py-1.5 bg-white/5 text-slate-400 rounded-lg text-[10px] font-black">Hủy</button></div>
+                                   <div className="space-y-3 animate-in zoom-in-95 duration-200">
+                                     <textarea value={editContent} onChange={e => setEditContent(e.target.value)} className="w-full bg-slate-950 border border-white/10 rounded-xl p-4 text-sm text-white focus:border-brand-500/30 outline-none" />
+                                     <div className="flex gap-2">
+                                       <button onClick={() => saveReplyEdit(q.id, r.id)} className="px-5 py-2 bg-brand-600 text-white rounded-xl text-xs font-black shadow-lg">Lưu</button>
+                                       <button onClick={() => setEditingReplyId(null)} className="px-5 py-2 bg-white/5 text-slate-400 rounded-xl text-xs font-black">Hủy</button>
+                                     </div>
                                    </div>
-                                 ) : <SmartContent content={r.content} className={`${r.isAdmin ? 'text-slate-200' : 'text-slate-400'} text-sm leading-relaxed`} />}
+                                 ) : (
+                                   <SmartContent content={r.content} className={`${r.isAdmin ? 'text-slate-100' : 'text-slate-300'} text-sm md:text-base leading-relaxed`} />
+                                 )}
                               </div>
-                              <div className="flex gap-5 px-2">
-                                 <button onClick={() => toggleLikeReply(q.id, r.id)} className={`text-[10px] font-black uppercase flex items-center gap-1.5 transition-all active:scale-90 ${r.likedBy?.includes(currentUser?.uid || '') ? 'text-brand-500' : 'text-slate-600 hover:text-slate-400'}`}>
-                                   <Icons.ThumbsUp size={12} fill={r.likedBy?.includes(currentUser?.uid || '') ? 'currentColor' : 'none'} /> {r.likedBy?.length || 0} Thích
+                              <div className="flex gap-6 px-3">
+                                 <button onClick={() => toggleLikeReply(q.id, r.id)} className={`text-[11px] font-black uppercase flex items-center gap-2 transition-all active:scale-90 ${r.likedBy?.includes(currentUser?.uid || '') ? 'text-brand-500' : 'text-slate-600 hover:text-slate-400'}`}>
+                                   <Icons.ThumbsUp size={14} fill={r.likedBy?.includes(currentUser?.uid || '') ? 'currentColor' : 'none'} /> 
+                                   <span>{r.likedBy?.length || 0} Thích</span>
                                  </button>
-                                 <button onClick={() => setReplyingTo({qId: q.id, rId: r.id, name: r.author})} className="text-[10px] font-black text-slate-600 hover:text-brand-400 uppercase transition-colors">Phản hồi</button>
-                                 <button onClick={() => reportContent(q.id, r.id)} className="text-[10px] font-black text-slate-700 hover:text-yellow-500 uppercase transition-colors">Báo cáo</button>
+                                 <button onClick={() => setReplyingTo({qId: q.id, rId: r.id, name: r.author})} className="text-[11px] font-black text-slate-600 hover:text-brand-400 uppercase transition-colors">Phản hồi</button>
+                                 <button onClick={() => reportContent(q.id, r.id)} className="text-[11px] font-black text-slate-700 hover:text-yellow-500 uppercase">Báo cáo</button>
                               </div>
                             </div>
                           </div>
