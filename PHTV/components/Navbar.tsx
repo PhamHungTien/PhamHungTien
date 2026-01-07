@@ -27,7 +27,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
     { name: 'Phím tắt', href: '#shortcuts', tab: 'home' },
     { name: 'Giao diện', href: '#gallery', tab: 'home' },
     { name: 'Cài đặt', href: '#install', tab: 'home' },
-    { name: 'Cộng đồng', href: '#community', tab: 'community' },
+    { name: 'Thảo luận', href: '#community', tab: 'community' },
     { name: 'FAQ', href: '#faq', tab: 'home' },
   ];
 
@@ -63,7 +63,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
                 className="relative w-10 h-10 rounded-xl shadow-lg transition-transform group-hover:scale-110" 
               />
             </div>
-            <span className="font-black text-2xl tracking-tighter text-white hidden sm:block group-hover:text-glow transition-all">PHTV</span>
+            <span className="font-black text-2xl tracking-tighter text-white hidden sm:block group-hover:text-glow transition-all pr-1">PHTV</span>
           </button>
 
           {/* Desktop Nav */}
