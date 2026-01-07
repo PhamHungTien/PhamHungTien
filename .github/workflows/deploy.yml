@@ -48,6 +48,7 @@ jobs:
           cp CNAME _site/ || true
           cp robots.txt _site/ || true
           cp sitemap.xml _site/ || true
+          cp icon.webp _site/ || true
           cp _redirects _site/ || true
           cp .htaccess _site/ || true
           cp .nojekyll _site/ || true

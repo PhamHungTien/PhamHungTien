@@ -3,9 +3,10 @@
 
 User-agent: *
 Allow: /
+Allow: /icon.webp
+Allow: /PHTV/icon.webp
 Disallow: /PHTV/src/
 Disallow: /PHTV/node_modules/
-Disallow: /PHTV/dist/
 Disallow: /*.json$
 Disallow: /private/
 
