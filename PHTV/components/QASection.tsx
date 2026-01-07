@@ -20,7 +20,6 @@ import {
   arrayRemove,
   getDoc,
   limit,
-  serverTimestamp,
   increment
 } from 'firebase/firestore';
 
@@ -56,51 +55,46 @@ interface Question {
   likedBy: string[];
   isPinned?: boolean;
   isReported?: boolean;
-  isLocked?: boolean;
   isAdmin?: boolean;
   viewCount?: number;
 }
 
 const ADMIN_EMAILS = ['admin@phtv.com', 'hungtien10a7@gmail.com'];
-const POSTS_PER_PAGE = 15;
+const POSTS_PER_PAGE = 12;
 
 const getInitials = (name: string) => {
   if (!name) return '??';
   return name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
 };
 
-const formatRelativeTime = (timestamp: any) => {
-  if (!timestamp) return '...';
-  const date = typeof timestamp === 'number' ? timestamp : timestamp.toMillis?.() || Date.now();
-  const diff = Date.now() - date;
+const formatRelativeTime = (timestamp: number) => {
+  const diff = Date.now() - timestamp;
   const seconds = Math.floor(diff / 1000);
   const minutes = Math.floor(seconds / 60);
   const hours = Math.floor(minutes / 60);
   const days = Math.floor(hours / 24);
-
   if (seconds < 60) return 'Vừa xong';
-  if (minutes < 60) return `${minutes} phút trước`;
-  if (hours < 24) return `${hours} giờ trước`;
-  if (days < 7) return `${days} ngày trước`;
-  return new Date(date).toLocaleDateString('vi-VN');
+  if (minutes < 60) return `${minutes}p`;
+  if (hours < 24) return `${hours}h`;
+  if (days < 7) return `${days} ngày`;
+  return new Date(timestamp).toLocaleDateString('vi-VN', { day: 'numeric', month: 'short' });
 };
 
 const SmartContent: React.FC<{ content: string, className?: string }> = ({ content, className }) => {
-  // Regex for code, mentions, and links
   const parts = content.split(/(`[^`]+`|@[a-zA-Z0-9_]+|https?:\/\/[^\s]+)/g);
   return (
-    <div className={`whitespace-pre-wrap break-words ${className}`}>
+    <div className={className}>
       {parts.map((part, i) => {
         if (part.startsWith('`') && part.endsWith('`')) {
           return <code key={i} className="bg-white/10 px-1.5 py-0.5 rounded text-brand-300 font-mono text-[0.9em] border border-white/5">{part.slice(1, -1)}</code>;
         }
         if (part.startsWith('@')) {
-          return <span key={i} className="text-brand-400 font-bold hover:underline cursor-pointer">{part}</span>;
+          return <span key={i} className="text-brand-400 font-black hover:underline cursor-pointer">@{part.slice(1)}</span>;
         }
         if (part.startsWith('http')) {
-          return <a key={i} href={part} target="_blank" rel="noopener noreferrer" className="text-blue-400 underline hover:text-blue-300 inline-flex items-center gap-1">{part} <Icons.ExternalLink size={10} /></a>;
+          return <a key={i} href={part} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline inline-flex items-center gap-1">{part.length > 30 ? part.substring(0, 30) + '...' : part} <Icons.ExternalLink size={10} /></a>;
         }
-        return <span key={i}>{part}</span>;
+        return <span key={i} className="whitespace-pre-wrap">{part}</span>;
       })}
     </div>
   );
@@ -110,8 +104,8 @@ export const QASection: React.FC = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [newQuestion, setNewQuestion] = useState('');
-  const [sortBy, setSortBy] = useState<'newest' | 'popular' | 'trending'>('newest');
-  const [filterBy, setFilterBy] = useState<'all' | 'mine' | 'reported' | 'unanswered'>('all');
+  const [sortBy, setSortBy] = useState<'newest' | 'popular'>('newest');
+  const [filterBy, setFilterBy] = useState<'all' | 'mine' | 'reported'>('all');
   const [searchQuery, setSearchBy] = useState('');
   
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -129,17 +123,16 @@ export const QASection: React.FC = () => {
   const [editingReplyId, setEditingReplyId] = useState<string | null>(null);
   const [editContent, setEditContent] = useState('');
 
-  // Authentication Listener
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const isAdmin = ADMIN_EMAILS.includes(user.email || '');
         setCurrentUser({
           uid: user.uid,
-          username: user.displayName || user.email?.split('@')[0] || 'User',
+          username: user.email === 'hungtien10a7@gmail.com' ? 'Phạm Hùng Tiến' : (user.displayName || user.email?.split('@')[0] || 'User'),
           email: user.email || '',
-          photoURL: user.photoURL || undefined,
-          isAdmin: isAdmin
+          isAdmin: isAdmin,
+          photoURL: user.photoURL || undefined
         });
       } else {
         setCurrentUser(null);
@@ -148,7 +141,6 @@ export const QASection: React.FC = () => {
     return () => unsubscribe();
   }, []);
 
-  // Firestore Real-time Listener
   useEffect(() => {
     const q = query(collection(db, "questions"), orderBy("timestamp", "desc"), limit(postsLimit));
     const unsubscribe = onSnapshot(q, (snapshot) => {
@@ -157,16 +149,8 @@ export const QASection: React.FC = () => {
         ...doc.data()
       })) as Question[];
 
-      // Sort logic
       if (sortBy === 'popular') {
         qList = qList.sort((a, b) => (b.likedBy?.length || 0) - (a.likedBy?.length || 0));
-      } else if (sortBy === 'trending') {
-        // Simple trending: (likes + replies*2) within recent period
-        qList = qList.sort((a, b) => {
-          const scoreA = (a.likedBy?.length || 0) + (a.replies?.length || 0) * 2;
-          const scoreB = (b.likedBy?.length || 0) + (b.replies?.length || 0) * 2;
-          return scoreB - scoreA;
-        });
       }
       
       const pinned = qList.filter(q => q.isPinned);
@@ -179,17 +163,12 @@ export const QASection: React.FC = () => {
 
   const displayQuestions = useMemo(() => {
     let result = questions;
-    
-    // Filters
     if (filterBy === 'mine' && currentUser) {
       result = result.filter(q => q.authorId === currentUser.uid);
     } else if (filterBy === 'reported' && currentUser?.isAdmin) {
       result = result.filter(q => q.isReported);
-    } else if (filterBy === 'unanswered') {
-      result = result.filter(q => q.replies.length === 0);
     }
 
-    // Search
     if (searchQuery.trim()) {
       const lowSearch = searchQuery.toLowerCase();
       result = result.filter(q => 
@@ -217,7 +196,7 @@ export const QASection: React.FC = () => {
         setShowNamePrompt(true);
       }
     } catch (err: any) {
-      alert('Lỗi đăng nhập: ' + err.message);
+      triggerToast('Đăng nhập thất bại');
     }
   };
 
@@ -227,7 +206,7 @@ export const QASection: React.FC = () => {
       await updateProfile(auth.currentUser, { displayName: tempUsername });
       setCurrentUser(prev => prev ? { ...prev, username: tempUsername } : null);
       setShowNamePrompt(false);
-      triggerToast('Đã cập nhật tên hiển thị!');
+      triggerToast('Đã cập nhật danh tính!');
     }
   };
 
@@ -238,7 +217,7 @@ export const QASection: React.FC = () => {
 
     const now = Date.now();
     if (now - lastPostTime < 10000 && !currentUser.isAdmin) {
-      triggerToast('Vui lòng đợi 10 giây!');
+      alert('Chậm lại một chút! Vui lòng đợi 10s.');
       return;
     }
 
@@ -254,15 +233,14 @@ export const QASection: React.FC = () => {
         likedBy: [],
         isPinned: false,
         isReported: false,
-        isLocked: false,
-        viewCount: 0,
-        isAdmin: currentUser.isAdmin
+        isAdmin: currentUser.isAdmin,
+        viewCount: 0
       });
       setNewQuestion('');
       setLastPostTime(Date.now());
-      triggerToast('Thảo luận đã được đăng!');
+      triggerToast('Đăng thảo luận thành công ✨');
     } catch (err) {
-      alert('Lỗi khi lưu dữ liệu!');
+      alert('Lỗi khi gửi dữ liệu!');
     } finally {
       setIsSubmitting(false);
     }
@@ -273,18 +251,12 @@ export const QASection: React.FC = () => {
     if (!replyContent.trim()) return;
 
     const questionRef = doc(db, "questions", qId);
-    const snap = await getDoc(questionRef);
-    if (snap.exists() && snap.data().isLocked && !currentUser.isAdmin) {
-      alert('Cuộc thảo luận này đã bị khóa!');
-      return;
-    }
-
     const newReply: Reply = {
       id: Date.now().toString(),
       parentId: replyingTo.rId || qId,
       replyToName: replyingTo.name,
       authorId: currentUser.uid,
-      author: currentUser.isAdmin ? 'Phạm Hùng Tiến' : currentUser.username,
+      author: currentUser.isAdmin ? 'PHTV Admin' : currentUser.username,
       authorPhoto: currentUser.photoURL || undefined,
       content: replyContent,
       timestamp: Date.now(),
@@ -295,7 +267,7 @@ export const QASection: React.FC = () => {
     await updateDoc(questionRef, { replies: arrayUnion(newReply) });
     setReplyContent('');
     setReplyingTo(null);
-    triggerToast('Phản hồi đã gửi!');
+    triggerToast('Đã gửi phản hồi!');
   };
 
   const toggleLikeQuestion = async (q: Question) => {
@@ -325,13 +297,13 @@ export const QASection: React.FC = () => {
   };
 
   const deleteQuestion = async (id: string) => {
-    if (!window.confirm('Xóa vĩnh viễn thảo luận này?')) return;
+    if (!window.confirm('Xác nhận xóa thảo luận này?')) return;
     await deleteDoc(doc(db, "questions", id));
-    triggerToast('Đã xóa bài viết.');
+    triggerToast('Đã xóa thảo luận.');
   };
 
   const deleteReply = async (qId: string, rId: string) => {
-    if (!window.confirm('Xóa phản hồi này?')) return;
+    if (!window.confirm('Xác nhận xóa phản hồi này?')) return;
     const questionRef = doc(db, "questions", qId);
     const snap = await getDoc(questionRef);
     if (!snap.exists()) return;
@@ -340,78 +312,96 @@ export const QASection: React.FC = () => {
     triggerToast('Đã xóa phản hồi.');
   };
 
-  const saveEdit = async (id: string) => {
-    if (!editContent.trim()) return;
-    await updateDoc(doc(db, "questions", id), { content: editContent });
-    setEditingId(null);
-    triggerToast('Đã lưu thay đổi.');
+  const incrementViews = async (id: string) => {
+    const questionRef = doc(db, "questions", id);
+    await updateDoc(questionRef, { viewCount: increment(1) });
   };
 
-  const saveReplyEdit = async (qId: string, rId: string) => {
-    if (!editContent.trim()) return;
-    const questionRef = doc(db, "questions", qId);
-    const snap = await getDoc(questionRef);
-    if (!snap.exists()) return;
-    const updatedReplies = (snap.data() as Question).replies.map(r => r.id === rId ? { ...r, content: editContent } : r);
-    await updateDoc(questionRef, { replies: updatedReplies });
-    setEditingReplyId(null);
-    triggerToast('Đã lưu thay đổi.');
-  };
-
-  const reportContent = async (qId: string) => {
-    if (!window.confirm('Báo cáo nội dung vi phạm?')) return;
-    await updateDoc(doc(db, "questions", qId), { isReported: true });
-    triggerToast('Đã gửi báo cáo!');
-  };
-
-  const toggleLock = async (q: Question) => {
-    if (!currentUser?.isAdmin) return;
-    await updateDoc(doc(db, "questions", q.id), { isLocked: !q.isLocked });
-    triggerToast(q.isLocked ? 'Đã mở khóa thảo luận' : 'Đã khóa thảo luận');
-  };
+  const Avatar: React.FC<{ user: { username: string, photoURL?: string, isAdmin?: boolean }, size?: string }> = ({ user, size = "w-12 h-12", isAdmin }) => (
+    <div className={`${size} rounded-[1.3rem] flex items-center justify-center text-white font-black overflow-hidden shadow-2xl transition-all duration-500 hover:scale-105 shrink-0 ${
+      isAdmin 
+        ? 'bg-gradient-to-br from-brand-400 via-brand-600 to-purple-600 ring-2 ring-brand-400/50 shadow-[0_0_20px_rgba(245,158,11,0.3)]' 
+        : 'bg-slate-800'
+    }`}>
+      {user.photoURL ? (
+        <img src={user.photoURL} alt={user.username} className="w-full h-full object-cover" />
+      ) : (
+        <span className={size.includes('w-8') ? 'text-xs' : 'text-xl'}>{getInitials(user.username)}</span>
+      )}
+    </div>
+  );
 
   return (
-    <section id="qa" className="py-12 md:py-24 bg-slate-950/40 relative overflow-hidden border-t border-white/5 min-h-screen">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6">
-        
-        {/* Profile & Header Area */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-12 animate-in fade-in duration-1000">
-          <div className="space-y-3">
-             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-[10px] font-black uppercase tracking-widest">
-                <Icons.Globe size={12} /> Community Hub
-             </div>
-             <h2 className="text-4xl md:text-7xl font-black text-white tracking-tighter italic leading-none">
-               Thảo luận <span className="text-brand-500 text-glow-sm">PHTV</span>
-             </h2>
-             <p className="text-slate-500 font-medium text-sm md:text-lg max-w-lg">Góp ý, báo lỗi và tương tác cùng cộng đồng người dùng bộ gõ.</p>
-          </div>
+    <div className="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-24 flex flex-col lg:flex-row gap-8">
+      
+      {/* Sidebar - Left (Rules & Info) */}
+      <aside className="w-full lg:w-80 shrink-0 space-y-6 order-2 lg:order-1">
+        <div className="glass-panel rounded-[2rem] p-8 border border-white/5 shadow-2xl backdrop-blur-md">
+           <h3 className="text-xl font-black text-white mb-6 flex items-center gap-3">
+             <Icons.Info size={20} className="text-brand-400" />
+             Thông tin
+           </h3>
+           <div className="space-y-4">
+              <div className="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/5">
+                 <span className="text-slate-400 text-sm font-bold">Thảo luận</span>
+                 <span className="text-white font-black">{questions.length}</span>
+              </div>
+              <div className="p-4 bg-yellow-500/5 rounded-2xl border border-yellow-500/10">
+                 <div className="flex items-center gap-2 text-yellow-500 mb-2">
+                    <Icons.ShieldCheck size={16} />
+                    <span className="text-[10px] font-black uppercase tracking-widest">Nội quy</span>
+                 </div>
+                 <p className="text-xs text-slate-400 leading-relaxed font-medium">
+                   Hãy tôn trọng lẫn nhau, không spam, không quảng cáo và sử dụng ngôn từ văn minh. Chúc bạn có trải nghiệm tốt tại PHTV!
+                 </p>
+              </div>
+           </div>
+        </div>
 
-          <div className="flex items-center gap-4">
+        <div className="glass-panel rounded-[2rem] p-8 border border-white/5 shadow-2xl hidden md:block backdrop-blur-md">
+           <h3 className="text-xl font-black text-white mb-6 flex items-center gap-3">
+             <Icons.Award size={20} className="text-brand-400" />
+             Nhà phát triển
+           </h3>
+           <div className="flex items-center gap-4 p-4 bg-gradient-to-br from-brand-500/10 to-purple-500/10 rounded-2xl border border-brand-500/20 group cursor-default">
+              <div className="w-12 h-12 rounded-xl bg-brand-500 flex items-center justify-center text-white shadow-lg shadow-brand-500/20 transition-transform group-hover:rotate-12">
+                 <Icons.User size={24} />
+              </div>
+              <div>
+                 <h4 className="text-white font-black text-sm">Phạm Hùng Tiến</h4>
+                 <p className="text-[10px] text-brand-400 font-bold uppercase tracking-tighter">Official Admin</p>
+              </div>
+           </div>
+        </div>
+      </aside>
+
+      {/* Main Content */}
+      <main className="flex-1 order-1 lg:order-2 space-y-8">
+        
+        {/* Header Mobile / Desktop Mix */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mb-12">
+          <div className="text-center sm:text-left">
+             <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter italic">Hỏi đáp <span className="text-brand-500">&</span> Thảo luận</h2>
+             <p className="text-slate-500 text-sm md:text-base font-bold mt-2 uppercase tracking-widest">Cộng đồng PHTV Việt Nam</p>
+          </div>
+          
+          <div className="flex items-center gap-3">
             {currentUser ? (
-              <div className="flex items-center gap-4 p-2 pr-6 bg-white/5 rounded-3xl border border-white/10 group hover:border-brand-500/30 transition-all shadow-xl">
-                <div className="relative">
-                  {currentUser.photoURL ? (
-                    <img src={currentUser.photoURL} alt={currentUser.username} className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl object-cover ring-2 ${currentUser.isAdmin ? 'ring-brand-500 shadow-[0_0_15px_rgba(245,158,11,0.4)]' : 'ring-white/10'}`} />
-                  ) : (
-                    <div className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center text-white font-black text-xl shadow-2xl ${currentUser.isAdmin ? 'bg-brand-500' : 'bg-slate-700'}`}>
-                      {getInitials(currentUser.username)}
-                    </div>
-                  )}
-                  {currentUser.isAdmin && <div className="absolute -bottom-1 -right-1 bg-brand-500 text-white p-1 rounded-lg border-2 border-slate-900 shadow-lg"><Icons.Shield size={12} /></div>}
-                </div>
+              <div className="flex items-center gap-3 p-1.5 pr-4 bg-white/5 rounded-2xl border border-white/10 group shadow-2xl backdrop-blur-md transition-all hover:bg-white/10">
+                <Avatar user={{ username: currentUser.username, photoURL: currentUser.photoURL, isAdmin: currentUser.isAdmin }} size="w-10 h-10" isAdmin={currentUser.isAdmin} />
                 <div className="flex flex-col">
-                  <span className="text-sm md:text-base font-black text-white tracking-tight flex items-center gap-1.5 uppercase">
+                  <span className="text-xs font-black text-white flex items-center gap-1">
                     {currentUser.username} 
-                    {currentUser.isAdmin && <Icons.CheckCircle2 size={14} className="text-brand-400" />}
+                    {currentUser.isAdmin && <Icons.CheckCircle2 size={10} className="text-brand-400" />}
                   </span>
                   <div className="flex gap-3">
-                    <button onClick={() => {setTempUsername(currentUser.username); setShowNamePrompt(true);}} className="text-[10px] font-black text-slate-500 hover:text-brand-400 uppercase transition-colors">Sửa tên</button>
-                    <button onClick={() => signOut(auth)} className="text-[10px] font-black text-red-500/70 hover:text-red-400 uppercase transition-colors">Đăng xuất</button>
+                    <button onClick={() => {setTempUsername(currentUser.username); setShowNamePrompt(true);}} className="text-[9px] font-black text-brand-400 hover:text-white uppercase transition-colors">Sửa tên</button>
+                    <button onClick={() => signOut(auth)} className="text-[9px] font-black text-red-500 hover:text-white uppercase transition-colors">Thoát</button>
                   </div>
                 </div>
               </div>
             ) : (
-              <button onClick={() => setShowAuthModal(true)} className="group flex items-center gap-3 px-8 py-4 bg-white text-slate-950 rounded-[1.5rem] transition-all transform hover:scale-105 active:scale-95 font-black text-sm md:text-base shadow-2xl hover:shadow-white/10">
+              <button onClick={() => setShowAuthModal(true)} className="group flex items-center gap-3 px-8 py-4 bg-white text-slate-950 rounded-2xl transition-all transform hover:scale-105 active:scale-95 font-black text-sm shadow-[0_20px_40px_rgba(255,255,255,0.1)]">
                 <Icons.User size={20} className="group-hover:rotate-12 transition-transform" />
                 <span>Đăng nhập Google</span>
               </button>
@@ -419,250 +409,215 @@ export const QASection: React.FC = () => {
           </div>
         </div>
 
-        {/* Toolbar: Premium Design */}
-        <div className="flex flex-col gap-6 mb-12 animate-in slide-in-from-bottom-4 duration-700 delay-200">
-           <div className="relative group overflow-hidden rounded-[2rem]">
-              <div className="absolute inset-0 bg-brand-500/5 opacity-0 group-focus-within:opacity-100 transition-opacity"></div>
+        {/* Search & Toolbar */}
+        <div className="space-y-6">
+           <div className="relative group shadow-2xl">
               <Icons.Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-600 group-focus-within:text-brand-500 transition-colors" size={24} />
               <input 
                 type="text" 
-                placeholder="Tìm kiếm thảo luận, tính năng, lỗi..." 
+                placeholder="Tìm thảo luận, lỗi, hoặc ID..." 
                 value={searchQuery}
                 onChange={e => setSearchBy(e.target.value)}
-                className="w-full bg-slate-900/40 border border-white/5 rounded-[2rem] py-5 pl-16 pr-8 text-white focus:outline-none focus:border-brand-500/30 transition-all text-lg md:text-xl shadow-inner placeholder:text-slate-700"
+                className="w-full bg-slate-900/60 backdrop-blur-xl border border-white/5 rounded-[1.8rem] py-5 pl-16 pr-8 text-white focus:outline-none focus:border-brand-500/30 transition-all text-lg shadow-inner"
               />
            </div>
            
-           <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
-              <div className="flex bg-slate-900/60 p-1.5 rounded-2xl border border-white/5 shadow-2xl backdrop-blur-md w-full sm:w-auto">
+           <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="flex bg-white/5 p-1.5 rounded-2xl border border-white/5 shadow-xl backdrop-blur-md">
                  {[ 
                    { id: 'newest', label: 'Mới nhất', icon: Icons.RefreshCw },
-                   { id: 'trending', label: 'Xu hướng', icon: Icons.Sparkles },
-                   { id: 'popular', label: 'Yêu thích', icon: Icons.Heart }
+                   { id: 'popular', label: 'Yêu thích', icon: Icons.Award }
                  ].map(tab => (
-                   <button key={tab.id} onClick={() => setSortBy(tab.id as any)} className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all ${sortBy === tab.id ? 'bg-white text-slate-950 shadow-xl scale-[1.03]' : 'text-slate-500 hover:text-white hover:bg-white/5'}`}>
+                   <button key={tab.id} onClick={() => setSortBy(tab.id as any)} className={`flex items-center gap-2 px-6 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all ${sortBy === tab.id ? 'bg-white text-slate-950 shadow-xl scale-[1.02]' : 'text-slate-500 hover:text-white'}`}>
                      <tab.icon size={14} />
                      {tab.label}
                    </button>
                  ))}
               </div>
 
-              <div className="flex items-center gap-4 bg-slate-900/40 px-6 py-3 rounded-2xl border border-white/5 w-full sm:w-auto justify-center">
-                 <Icons.Filter size={16} className="text-brand-500" />
-                 <span className="text-[10px] font-black text-slate-600 uppercase tracking-widest">Lọc bài:</span>
+              <div className="flex items-center gap-3 bg-white/5 px-4 py-2.5 rounded-2xl border border-white/5 backdrop-blur-md">
+                 <Icons.Filter size={16} className="text-slate-600" />
                  <select 
                    value={filterBy} 
                    onChange={e => setFilterBy(e.target.value as any)}
-                   className="bg-transparent text-white font-black text-xs uppercase tracking-tighter focus:outline-none cursor-pointer"
+                   className="bg-transparent text-slate-400 font-black text-[11px] uppercase tracking-tighter focus:outline-none cursor-pointer hover:text-white"
                  >
-                    <option value="all" className="bg-slate-900">Tất cả bài viết</option>
+                    <option value="all" className="bg-slate-900">Tất cả bài đăng</option>
                     <option value="mine" className="bg-slate-900">Bài của tôi</option>
-                    <option value="unanswered" className="bg-slate-900">Chưa phản hồi</option>
-                    {currentUser?.isAdmin && <option value="reported" className="bg-slate-900 text-red-400">Đã bị báo cáo (!)</option>}
+                    {currentUser?.isAdmin && <option value="reported" className="bg-slate-900 text-red-400 font-black">Các bài bị báo cáo (!) </option>}
                  </select>
               </div>
            </div>
         </div>
 
-        {/* Post Form: Modern & Clean */}
-        <div className="glass-panel rounded-[3rem] p-1.5 mb-20 shadow-2xl border border-white/5 overflow-hidden group/form animate-in zoom-in-95 duration-700 delay-300">
-          <div className="bg-slate-900/40 rounded-[2.8rem] p-8 md:p-10 transition-all group-focus-within/form:bg-slate-900/60">
+        {/* Post Form */}
+        <div className="glass-panel rounded-[2.8rem] p-2 shadow-2xl border border-white/5 overflow-hidden group/form relative backdrop-blur-xl">
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-500 via-purple-500 to-red-500 opacity-20 group-focus-within/form:opacity-100 transition-opacity"></div>
+          <div className="bg-slate-900/40 rounded-[2.5rem] p-8 md:p-10 transition-all group-focus-within/form:bg-slate-900/60 shadow-inner">
             <form onSubmit={handleAskQuestion} className="space-y-8">
-              <div className="flex items-start gap-6">
-                 <div className="hidden md:flex w-14 h-14 rounded-2xl bg-gradient-to-br from-slate-700 to-slate-800 items-center justify-center text-white font-black text-2xl shadow-xl border border-white/10 shrink-0">
-                    {currentUser ? getInitials(currentUser.username) : <Icons.MessageSquare size={28} />}
+              <div className="flex items-start gap-5">
+                 <Avatar user={{ username: currentUser?.username || 'User', photoURL: currentUser?.photoURL, isAdmin: currentUser?.isAdmin }} isAdmin={currentUser?.isAdmin} />
+                 <div className="flex-1 pt-2">
+                    <textarea 
+                      placeholder={currentUser ? `Chào ${currentUser.username.split(' ')[0]}, bạn cần hỗ trợ hay báo lỗi gì?` : "Đăng nhập Google để tham gia thảo luận..."} 
+                      value={newQuestion} 
+                      onChange={(e) => setNewQuestion(e.target.value)} 
+                      disabled={isSubmitting} 
+                      className="w-full bg-transparent border-none p-0 text-white text-xl md:text-2xl focus:ring-0 placeholder:text-slate-700 min-h-[120px] resize-none font-medium leading-relaxed" 
+                      required 
+                    />
                  </div>
-                 <textarea 
-                   placeholder={currentUser ? `Chào ${currentUser.username}, chia sẻ ý kiến của bạn nhé...` : "Vui lòng đăng nhập Google để tham gia thảo luận..."} 
-                   value={newQuestion} 
-                   onChange={(e) => setNewQuestion(e.target.value)} 
-                   disabled={isSubmitting} 
-                   className="w-full bg-transparent border-none p-0 text-white text-xl md:text-2xl focus:ring-0 placeholder:text-slate-700 min-h-[120px] resize-none leading-relaxed" 
-                   required 
-                 />
               </div>
-              <div className="flex flex-col sm:flex-row items-center justify-between pt-6 border-t border-white/5 gap-6">
+              
+              <div className="flex items-center justify-between pt-6 border-t border-white/5">
                 <div className="flex items-center gap-6 text-slate-600">
-                   <div className="flex items-center gap-2 hover:text-brand-400 cursor-help transition-colors" title="Sử dụng @tên để nhắc đến ai đó">
-                      <Icons.AtSign size={18} />
-                      <span className="text-[10px] font-black uppercase tracking-widest hidden lg:inline">Mentions</span>
+                   <div className="flex items-center gap-2 hover:text-brand-400 cursor-help transition-colors group/hint">
+                      <Icons.Terminal size={22} />
+                      <span className="text-[10px] font-black uppercase tracking-tighter opacity-0 group-hover/hint:opacity-100 transition-opacity">Hỗ trợ code</span>
                    </div>
-                   <div className="flex items-center gap-2 hover:text-brand-400 cursor-help transition-colors" title="Viết `code` giữa hai dấu huyền">
-                      <Icons.Terminal size={18} />
-                      <span className="text-[10px] font-black uppercase tracking-widest hidden lg:inline">Code Support</span>
+                   <div className="flex items-center gap-2 hover:text-brand-400 cursor-help transition-colors group/hint">
+                      <Icons.Link2 size={22} />
+                      <span className="text-[10px] font-black uppercase tracking-tighter opacity-0 group-hover/hint:opacity-100 transition-opacity">Hỗ trợ link</span>
                    </div>
                 </div>
-                <button type="submit" disabled={isSubmitting || !newQuestion.trim()} className="w-full sm:w-auto flex items-center justify-center gap-4 px-12 py-5 bg-white text-slate-950 rounded-[1.5rem] font-black text-base transition-all transform hover:scale-[1.02] active:scale-95 shadow-[0_20px_40px_rgba(255,255,255,0.1)] disabled:opacity-50 disabled:cursor-not-allowed">
-                  {isSubmitting ? <Icons.RefreshCw className="animate-spin" size={24} /> : <><span>Đăng thảo luận</span><Icons.Send size={20} /></>}
+                <button type="submit" disabled={isSubmitting || !newQuestion.trim()} className="group flex items-center gap-3 px-12 py-5 bg-brand-600 hover:bg-brand-500 text-white rounded-[1.5rem] font-black transition-all transform hover:scale-[1.05] active:scale-95 shadow-xl shadow-brand-600/20 disabled:opacity-50">
+                  {isSubmitting ? (
+                    <Icons.RefreshCw className="animate-spin" size={20} />
+                  ) : (
+                    <>
+                      <span>Đăng ngay</span>
+                      <Icons.Send size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    </>
+                  )}
                 </button>
               </div>
             </form>
           </div>
         </div>
 
-        {/* Feed: High-quality threads */}
-        <div className="space-y-16 pb-32">
+        {/* Feed */}
+        <div className="space-y-16">
           {displayQuestions.length === 0 ? (
-            <div className="text-center py-40 bg-white/5 rounded-[4rem] border border-dashed border-white/10 animate-pulse">
-               <Icons.MessageCircle size={64} className="mx-auto mb-6 text-slate-800" />
-               <h3 className="text-xl font-black text-slate-600 uppercase tracking-[0.2em]">Không tìm thấy thảo luận nào</h3>
-               <p className="text-slate-700 text-sm mt-2">Hãy là người đầu tiên khơi dậy cuộc trò chuyện!</p>
+            <div className="text-center py-40 bg-white/5 rounded-[3.5rem] border border-dashed border-white/10 animate-pulse">
+               <Icons.MessageSquare size={64} className="mx-auto mb-6 text-slate-800" />
+               <p className="text-slate-600 font-black uppercase tracking-[0.2em] text-sm">Chưa có nội dung phù hợp</p>
             </div>
           ) : (
             displayQuestions.map((q) => (
-              <div key={q.id} className={`group animate-in fade-in slide-in-from-bottom-12 duration-1000 ${q.isPinned ? 'ring-2 ring-brand-500/40 rounded-[3rem] p-6 md:p-8 bg-brand-500/[0.03] shadow-2xl shadow-brand-500/10' : ''}`}>
-                 <div className="flex gap-5 md:gap-8">
-                    {/* Author Column */}
+              <div key={q.id} className={`group/card animate-in fade-in slide-in-from-bottom-12 duration-1000 ${q.isPinned ? 'ring-2 ring-brand-500/50 rounded-[3rem] p-6 md:p-10 bg-brand-500/5 shadow-[0_0_60px_rgba(139,92,246,0.1)]' : ''}`} onMouseEnter={() => incrementViews(q.id)}>
+                 <div className="flex gap-6 md:gap-8">
                     <div className="flex flex-col items-center">
-                      <div className="relative group/avt">
-                        <div className={`w-14 h-14 md:w-16 md:h-16 rounded-[1.5rem] flex items-center justify-center text-white font-black text-2xl shadow-2xl transition-all duration-500 group-hover:scale-110 ${
-                          q.isAdmin 
-                            ? 'bg-gradient-to-br from-brand-400 via-brand-600 to-purple-600 ring-2 ring-brand-400/50 shadow-[0_0_30px_rgba(245,158,11,0.3)]' 
-                            : q.isPinned ? 'bg-brand-500' : 'bg-slate-800 border border-white/5'
-                        }`}>
-                          {q.authorPhoto ? <img src={q.authorPhoto} className="w-full h-full rounded-[1.5rem] object-cover" /> : getInitials(q.author)}
-                        </div>
-                        {q.isAdmin && <div className="absolute -bottom-1 -right-1 bg-brand-500 p-1 rounded-lg border-2 border-slate-900 text-white"><Icons.Award size={12} /></div>}
-                      </div>
-                      <div className="w-[3px] flex-1 bg-gradient-to-b from-white/10 via-white/[0.05] to-transparent my-4 rounded-full"></div>
+                      <Avatar user={{ username: q.author, photoURL: q.authorPhoto, isAdmin: q.isAdmin }} isAdmin={q.isAdmin} size="w-14 h-14 md:w-16 md:h-16" />
+                      <div className="w-[2.5px] flex-1 bg-gradient-to-b from-white/10 via-white/5 to-transparent my-4 rounded-full"></div>
                     </div>
-
-                    {/* Content Column */}
-                    <div className="flex-1 space-y-6 pb-8">
-                      <div className="flex justify-between items-start">
-                        <div className="space-y-1">
+                    
+                    <div className="flex-1 space-y-6 pb-12">
+                      <div className="flex justify-between items-start gap-4">
+                        <div className="space-y-1.5">
                           <div className="flex items-center gap-3 flex-wrap">
-                            <h4 className={`font-black text-lg md:text-xl tracking-tight ${q.isAdmin ? 'text-brand-400 text-glow-sm' : 'text-white'}`}>{q.author}</h4>
-                            {q.isAdmin && <span className="flex items-center gap-1.5 bg-brand-500/10 text-brand-500 text-[10px] px-3 py-1 rounded-full font-black uppercase tracking-tighter border border-brand-500/20"><Icons.ShieldCheck size={12} />Official</span>}
-                            {q.isPinned && <div className="flex items-center gap-1.5 bg-white/5 text-slate-400 text-[10px] px-3 py-1 rounded-full font-black uppercase tracking-tighter border border-white/5"><Icons.Paperclip size={12} /> Ghim</div>}
-                            <span className="text-xs text-slate-600 font-bold uppercase tracking-tighter">{formatRelativeTime(q.timestamp)}</span>
+                            <h4 className={`font-black text-xl md:text-2xl tracking-tight transition-colors ${q.isAdmin ? 'text-brand-400 text-glow hover:text-brand-300' : 'text-white hover:text-brand-400'} cursor-pointer`}>{q.author}</h4>
+                            {q.isAdmin && <span className="flex items-center gap-1.5 bg-brand-500/10 text-brand-500 text-[10px] px-3.5 py-1.5 rounded-full font-black uppercase tracking-tighter border border-brand-500/20 shadow-lg backdrop-blur-md"><Icons.ShieldCheck size={12} />Verified</span>}
+                            {q.isPinned && <div className="flex items-center gap-1 bg-white/5 px-2.5 py-1.5 rounded-xl border border-white/5"><Icons.Paperclip size={16} className="text-brand-400 animate-bounce" /><span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Ghim</span></div>}
+                            <span className="text-[11px] text-slate-600 font-bold uppercase tracking-widest ml-1">{formatRelativeTime(q.timestamp)}</span>
                           </div>
-                          {q.isReported && <span className="text-[10px] text-red-500 font-black uppercase tracking-widest bg-red-500/10 px-3 py-1 rounded-full mt-2 inline-flex items-center gap-1.5"><Icons.Flag size={10} /> Đã bị báo cáo bởi cộng đồng</span>}
+                          <div className="flex items-center gap-5 text-[10px] font-black text-slate-700 uppercase tracking-[0.15em]">
+                             <span className="flex items-center gap-1.5"><Icons.Eye size={14} className="text-slate-800" /> {q.viewCount || 0} views</span>
+                             <span className="flex items-center gap-1.5 text-red-500/40 hover:text-red-500 cursor-pointer transition-colors group/report" onClick={() => reportContent(q.id)}><Icons.Flag size={12} className="group-hover/report:animate-pulse" /> Report</span>
+                          </div>
                         </div>
                         
-                        <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0">
-                          {currentUser?.isAdmin && (
-                            <>
-                              <button onClick={() => toggleLock(q)} className={`p-2.5 rounded-xl hover:bg-white/5 transition-all ${q.isLocked ? 'text-brand-500' : 'text-slate-700'}`} title={q.isLocked ? 'Mở khóa' : 'Khóa'}>{q.isLocked ? <Icons.Lock size={20} /> : <Icons.Unlock size={20} />}</button>
-                              <button onClick={() => updateDoc(doc(db, "questions", q.id), { isPinned: !q.isPinned })} className={`p-2.5 rounded-xl hover:bg-white/5 transition-all ${q.isPinned ? 'text-brand-500' : 'text-slate-700'}`}><Icons.Paperclip size={20} /></button>
-                            </>
-                          )}
+                        <div className="flex items-center gap-2 opacity-0 group-hover/card:opacity-100 transition-all transform translate-x-4 group-hover/card:translate-x-0">
+                          {currentUser?.isAdmin && <button onClick={() => updateDoc(doc(db, "questions", q.id), { isPinned: !q.isPinned })} className={`p-3 rounded-2xl border transition-all ${q.isPinned ? 'text-brand-500 bg-brand-500/10 border-brand-500/20' : 'text-slate-600 border-white/5 hover:bg-white/5'}`} title="Ghim"><Icons.Paperclip size={20} /></button>}
                           {(currentUser?.isAdmin || currentUser?.uid === q.authorId) && (
-                            <>
-                              <button onClick={() => {setEditingId(q.id); setEditContent(q.content);}} className="p-2.5 text-slate-700 hover:text-white rounded-xl hover:bg-white/5 transition-all"><Icons.Settings size={20} /></button>
-                              <button onClick={() => deleteQuestion(q.id)} className="p-2.5 text-slate-700 hover:text-red-500 rounded-xl hover:bg-red-500/10 transition-all"><Icons.Trash2 size={20} /></button>
-                            </>
+                            <div className="flex bg-slate-900/80 backdrop-blur-xl border border-white/5 rounded-2xl p-1.5 shadow-2xl">
+                              <button onClick={() => {setEditingId(q.id); setEditContent(q.content);}} className="p-3 text-slate-500 hover:text-white transition-all rounded-xl hover:bg-white/5"><Icons.Settings size={20} /></button>
+                              <button onClick={() => deleteQuestion(q.id)} className="p-3 text-slate-500 hover:text-red-500 transition-all rounded-xl hover:bg-red-500/10"><Icons.Trash2 size={20} /></button>
+                            </div>
                           )}
-                          <button onClick={() => reportContent(q.id)} className="p-2.5 text-slate-700 hover:text-yellow-500 rounded-xl hover:bg-white/5 transition-all"><Icons.Flag size={20} /></button>
                         </div>
                       </div>
 
                       {editingId === q.id ? (
                         <div className="space-y-5 animate-in zoom-in-95 duration-300">
-                          <textarea value={editContent} onChange={e => setEditContent(e.target.value)} className="w-full bg-slate-900 border border-white/10 rounded-[1.5rem] p-6 text-white text-lg focus:outline-none focus:border-brand-500/30 shadow-inner min-h-[150px]" />
-                          <div className="flex gap-4"><button onClick={() => saveEdit(q.id)} className="px-8 py-3 bg-brand-600 text-white rounded-xl text-xs font-black shadow-xl shadow-brand-600/20 hover:bg-brand-500 transition-all">Lưu thay đổi</button><button onClick={() => setEditingId(null)} className="px-8 py-3 bg-white/5 text-slate-400 rounded-xl text-xs font-black hover:bg-white/10 transition-all">Hủy bỏ</button></div>
+                          <textarea value={editContent} onChange={e => setEditContent(e.target.value)} className="w-full bg-slate-900/80 border border-white/10 rounded-[2rem] p-10 text-white text-xl focus:border-brand-500/30 outline-none shadow-2xl" />
+                          <div className="flex gap-4"><button onClick={() => saveEdit(q.id)} className="px-10 py-4 bg-brand-600 text-white rounded-[1.2rem] font-black shadow-2xl shadow-brand-600/30 active:scale-95 transition-all">Lưu thay đổi</button><button onClick={() => setEditingId(null)} className="px-10 py-4 bg-white/5 text-slate-400 rounded-[1.2rem] font-black hover:bg-white/10 transition-all">Hủy</button></div>
                         </div>
                       ) : (
-                        <SmartContent content={q.content} className="text-slate-300 text-lg md:text-xl leading-relaxed font-medium bg-white/[0.02] p-6 md:p-8 rounded-[2rem] border border-white/5 shadow-inner" />
+                        <SmartContent content={q.content} className="text-slate-200 text-lg md:text-2xl leading-relaxed font-medium bg-slate-900/30 rounded-[2.5rem] p-10 md:p-12 border border-white/5 shadow-inner hover:bg-slate-900/40 transition-colors backdrop-blur-sm" />
                       )}
 
-                      <div className="flex items-center gap-10 px-2">
-                         <button onClick={() => toggleLikeQuestion(q)} className={`flex items-center gap-2.5 font-black text-sm transition-all transform active:scale-75 ${q.likedBy?.includes(currentUser?.uid || '') ? 'text-brand-500 scale-110' : 'text-slate-600 hover:text-slate-400'}`}>
-                           <Icons.ThumbsUp size={22} fill={q.likedBy?.includes(currentUser?.uid || '') ? 'currentColor' : 'none'} className="transition-all" /> 
-                           <span className="tabular-nums text-lg">{q.likedBy?.length || 0}</span>
+                      <div className="flex items-center gap-12 px-6">
+                         <button onClick={() => toggleLikeQuestion(q)} className={`flex items-center gap-3 font-black text-sm transition-all transform active:scale-75 ${q.likedBy?.includes(currentUser?.uid || '') ? 'text-brand-500 scale-110' : 'text-slate-600 hover:text-slate-400'}`}>
+                           <Icons.ThumbsUp size={24} fill={q.likedBy?.includes(currentUser?.uid || '') ? 'currentColor' : 'none'} className="transition-transform group-active:rotate-12" /> 
+                           <span className="text-lg">{q.likedBy?.length || 0}</span>
                          </button>
-                         <button onClick={() => q.isLocked ? alert('Thảo luận này đã bị khóa!') : setReplyingTo({qId: q.id, name: q.author})} className={`flex items-center gap-2.5 font-black text-sm transition-all ${q.isLocked ? 'text-slate-800 cursor-not-allowed' : 'text-slate-600 hover:text-brand-400'}`}>
-                           <Icons.MessageSquareReply size={22} /> 
-                           <span className="text-lg">{q.replies?.length || 0} <span className="hidden sm:inline">Phản hồi</span></span>
+                         <button onClick={() => setReplyingTo({qId: q.id, name: q.author})} className="flex items-center gap-3 text-slate-600 hover:text-brand-400 font-black text-sm transition-all group/replybtn">
+                           <Icons.MessageSquareReply size={24} className="group-hover/replybtn:-translate-y-1 transition-transform" /> 
+                           <span className="text-lg">{q.replies?.length || 0}</span>
                          </button>
                          <button onClick={() => {
                            navigator.clipboard.writeText(`${window.location.origin}${window.location.pathname}#community`);
                            triggerToast('Đã sao chép liên kết!');
-                         }} className="flex items-center gap-2.5 text-slate-600 hover:text-white font-black text-sm transition-all">
-                           <Icons.Share2 size={22} />
-                           <span className="text-lg hidden sm:inline">Chia sẻ</span>
+                         }} className="flex items-center gap-3 text-slate-600 hover:text-white font-black text-sm transition-all transform active:scale-90">
+                           <Icons.Link2 size={24} />
+                           <span className="hidden sm:inline uppercase tracking-widest text-[10px]">Chia sẻ</span>
                          </button>
                       </div>
 
-                      {/* Replies List */}
-                      <div className="space-y-10 pt-10 border-l-4 border-white/5 ml-2 pl-8 md:pl-12">
+                      {/* Replies Container */}
+                      <div className="space-y-12 pt-12 border-l-2 border-white/5 ml-4 md:ml-8 pl-10 md:pl-16 relative">
                         {q.replies?.map((r) => (
-                          <div key={r.id} className="flex gap-5 group/reply animate-in fade-in slide-in-from-left-6 duration-700">
-                            <div className="relative shrink-0">
-                              <div className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center text-white font-black text-lg shrink-0 shadow-2xl transition-all group-hover/reply:scale-110 ${
+                          <div key={r.id} className="flex gap-6 group/reply animate-in fade-in slide-in-from-left-8 duration-700">
+                            <Avatar user={{ username: r.author, photoURL: r.authorPhoto, isAdmin: r.isAdmin }} isAdmin={r.isAdmin} size="w-12 h-12 md:w-14 md:h-14" />
+                            <div className="flex-1 space-y-5">
+                              <div className={`rounded-[2.2rem] p-8 md:p-10 border transition-all shadow-xl backdrop-blur-md ${
                                 r.isAdmin 
-                                  ? 'bg-gradient-to-br from-brand-500 to-purple-600 ring-2 ring-brand-400/30' 
-                                  : 'bg-slate-800'
+                                  ? 'bg-brand-500/10 border-brand-500/30 shadow-[0_20px_50px_rgba(139,92,246,0.1)]' 
+                                  : 'bg-slate-900/60 border-white/5'
                               }`}>
-                                {r.authorPhoto ? <img src={r.authorPhoto} className="w-full h-full rounded-2xl object-cover" /> : getInitials(r.author)}
-                              </div>
-                              {r.isAdmin && <div className="absolute -top-1 -right-1 bg-brand-500 text-[8px] p-0.5 rounded border border-slate-900 shadow-lg"><Icons.Shield size={8} /></div>}
-                            </div>
-                            <div className="flex-1 space-y-4">
-                              <div className={`rounded-[2rem] p-6 md:p-8 border transition-all hover:shadow-2xl ${
-                                r.isAdmin 
-                                  ? 'bg-brand-500/10 border-brand-500/30 shadow-[0_15px_40px_rgba(245,158,11,0.08)]' 
-                                  : 'bg-slate-900/80 border-white/10'
-                              }`}>
-                                 <div className="flex justify-between items-center mb-3">
+                                 <div className="flex justify-between items-center mb-4">
                                    <div className="flex items-center gap-3 flex-wrap">
-                                     <span className={`font-black text-base md:text-lg tracking-tight ${r.isAdmin ? 'text-brand-400 text-glow-sm' : 'text-white'}`}>
-                                       {r.author} 
-                                       {r.isAdmin && <Icons.CheckCircle2 size={16} className="text-brand-500 inline ml-1.5" />}
-                                     </span>
-                                     {r.replyToName && (
-                                       <span className="text-[10px] md:text-xs text-slate-500 flex items-center gap-2 font-black bg-white/5 px-3 py-1.5 rounded-full uppercase tracking-widest border border-white/5">
-                                         <Icons.ArrowRight size={12} className="text-brand-500" />
-                                         {r.replyToName}
-                                       </span>
-                                     )}
-                                     <span className="text-[10px] md:text-xs text-slate-700 font-bold uppercase tracking-tighter">{formatRelativeTime(r.timestamp)}</span>
+                                     <span className={`font-black text-lg ${r.isAdmin ? 'text-brand-400 text-glow' : 'text-white'}`}>{r.author} {r.isAdmin && <Icons.CheckCircle2 size={16} className="text-brand-500 inline" />}</span>
+                                     {r.replyToName && <span className="text-[10px] md:text-[11px] text-brand-400/80 font-black bg-brand-500/5 px-3 py-1.5 rounded-full uppercase tracking-widest flex items-center gap-2 border border-brand-500/10 shadow-sm"><Icons.ArrowRight size={12} /> {r.replyToName}</span>}
+                                     <span className="text-[10px] md:text-[11px] text-slate-700 font-bold uppercase tracking-widest ml-2">{formatRelativeTime(r.timestamp)}</span>
                                    </div>
                                    <div className="flex items-center gap-1 opacity-0 group-hover/reply:opacity-100 transition-opacity">
                                      {(currentUser?.isAdmin || currentUser?.uid === r.authorId) && (
-                                       <>
-                                         <button onClick={() => {setEditingReplyId(r.id); setEditContent(r.content);}} className="p-2.5 text-slate-700 hover:text-white rounded-xl hover:bg-white/5 transition-all"><Icons.Settings size={18} /></button>
-                                         <button onClick={() => deleteReply(q.id, r.id)} className="p-2.5 text-slate-700 hover:text-red-500 rounded-xl hover:bg-red-500/10 transition-all"><Icons.Trash2 size={18} /></button>
-                                       </>
+                                       <div className="flex bg-black/20 rounded-xl p-1 border border-white/5">
+                                         <button onClick={() => {setEditingReplyId(r.id); setEditContent(r.content);}} className="p-2 text-slate-600 hover:text-white rounded-lg transition-all"><Icons.Settings size={18} /></button>
+                                         <button onClick={() => deleteReply(q.id, r.id)} className="p-2 text-slate-600 hover:text-red-500 rounded-lg transition-all"><Icons.Trash2 size={18} /></button>
+                                       </div>
                                      )}
                                    </div>
                                  </div>
-                                 
                                  {editingReplyId === r.id ? (
-                                   <div className="space-y-4 animate-in zoom-in-95 duration-200">
-                                     <textarea value={editContent} onChange={e => setEditContent(e.target.value)} className="w-full bg-slate-950 border border-white/10 rounded-2xl p-5 text-white focus:border-brand-500/30 outline-none shadow-inner" />
-                                     <div className="flex gap-3">
-                                       <button onClick={() => saveReplyEdit(q.id, r.id)} className="px-6 py-2 bg-brand-600 text-white rounded-xl text-xs font-black shadow-xl">Lưu</button>
-                                       <button onClick={() => setEditingReplyId(null)} className="px-6 py-2 bg-white/5 text-slate-400 rounded-xl text-xs font-black">Hủy</button>
-                                     </div>
+                                   <div className="space-y-5 animate-in zoom-in-95 duration-200">
+                                     <textarea autoFocus value={editContent} onChange={e => setEditContent(e.target.value)} className="w-full bg-slate-950 border border-white/10 rounded-2xl p-6 text-white text-lg focus:border-brand-500/30 outline-none shadow-inner" />
+                                     <div className="flex gap-3"><button onClick={() => saveReplyEdit(q.id, r.id)} className="px-8 py-3 bg-brand-600 text-white rounded-xl font-black shadow-xl">Lưu thay đổi</button><button onClick={() => setEditingReplyId(null)} className="px-8 py-3 bg-white/5 text-slate-400 rounded-xl font-black">Hủy</button></div>
                                    </div>
-                                 ) : (
-                                   <SmartContent content={r.content} className={`${r.isAdmin ? 'text-slate-100' : 'text-slate-300'} text-base md:text-lg leading-relaxed font-medium`} />
-                                 )}
+                                 ) : <SmartContent content={r.content} className={`${r.isAdmin ? 'text-slate-100' : 'text-slate-300'} text-base md:text-lg leading-relaxed font-medium`} />}
                               </div>
-                              <div className="flex gap-8 px-4">
-                                 <button onClick={() => toggleLikeReply(q.id, r.id)} className={`text-xs font-black uppercase flex items-center gap-2.5 transition-all transform active:scale-75 ${r.likedBy?.includes(currentUser?.uid || '') ? 'text-brand-500 scale-110' : 'text-slate-600 hover:text-slate-400'}`}>
-                                   <Icons.ThumbsUp size={16} fill={r.likedBy?.includes(currentUser?.uid || '') ? 'currentColor' : 'none'} /> 
-                                   <span className="tabular-nums">{r.likedBy?.length || 0}</span>
+                              <div className="flex gap-10 px-6">
+                                 <button onClick={() => toggleLikeReply(q.id, r.id)} className={`text-[11px] font-black uppercase flex items-center gap-2.5 transition-all transform active:scale-75 ${r.likedBy?.includes(currentUser?.uid || '') ? 'text-brand-500 scale-110' : 'text-slate-600 hover:text-slate-400'}`}>
+                                   <Icons.ThumbsUp size={18} fill={r.likedBy?.includes(currentUser?.uid || '') ? 'currentColor' : 'none'} /> {r.likedBy?.length || 0}
                                  </button>
-                                 <button onClick={() => setReplyingTo({qId: q.id, rId: r.id, name: r.author})} className="text-xs font-black text-slate-600 hover:text-brand-400 uppercase tracking-widest transition-colors">Trả lời</button>
-                                 <button onClick={() => reportContent(q.id)} className="text-xs font-black text-slate-800 hover:text-yellow-500 uppercase tracking-widest ml-auto opacity-0 group-hover/reply:opacity-100 transition-opacity">Báo cáo</button>
+                                 <button onClick={() => setReplyingTo({qId: q.id, rId: r.id, name: r.author})} className="text-[11px] font-black text-slate-600 hover:text-brand-400 uppercase transition-all transform active:scale-95">Trả lời</button>
+                                 <button onClick={() => reportContent(q.id)} className="text-[11px] font-black text-slate-700 hover:text-yellow-500 uppercase transition-all opacity-0 group-hover/reply:opacity-100">Báo cáo</button>
                               </div>
                             </div>
                           </div>
                         ))}
-
-                        {/* Reply Input: Premium Experience */}
+                        
+                        {/* Final Nested Reply Input */}
                         {replyingTo?.qId === q.id && (
-                          <div className="flex gap-5 pt-10 animate-in slide-in-from-top-4 duration-500 border-t border-white/5">
-                             <div className="hidden sm:flex w-14 h-14 rounded-2xl bg-brand-500/10 border border-brand-500/20 items-center justify-center text-brand-400 shrink-0 shadow-2xl shadow-brand-500/5"><Icons.MessageSquareReply size={24} /></div>
+                          <div className="flex gap-6 pt-10 animate-in slide-in-from-top-6 duration-500">
+                             <Avatar user={{ username: currentUser?.username || 'User', photoURL: currentUser?.photoURL, isAdmin: currentUser?.isAdmin }} isAdmin={currentUser?.isAdmin} size="w-12 h-12 md:w-14 md:h-14" />
                              <div className="flex-1 space-y-6">
-                                <div className="flex items-center justify-between bg-brand-500/5 px-6 py-3 rounded-2xl border border-brand-500/10">
-                                   <span className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] flex items-center gap-2">Phản hồi <span className="text-brand-400 bg-brand-500/10 px-3 py-1 rounded-full border border-brand-500/20">{replyingTo.name}</span></span>
-                                   <button onClick={() => setReplyingTo(null)} className="text-slate-600 hover:text-white transition-colors"><Icons.X size={16} /></button>
+                                <div className="flex items-center gap-4">
+                                   <span className="text-[11px] font-black text-slate-500 uppercase tracking-[0.25em] bg-white/5 px-4 py-2 rounded-2xl border border-white/5">Đang phản hồi <span className="text-brand-400 ml-2">@{replyingTo.name}</span></span>
                                 </div>
-                                <textarea autoFocus value={replyContent} onChange={(e) => setReplyContent(e.target.value)} placeholder={`Viết phản hồi tâm huyết của bạn...`} className="w-full bg-slate-900/60 border border-white/5 rounded-[2rem] py-6 px-8 text-white text-lg focus:outline-none focus:border-brand-500/30 min-h-[150px] resize-none shadow-2xl" />
-                                <div className="flex gap-4"><button onClick={() => handleReply(q.id)} className="flex-1 sm:flex-none px-12 py-5 bg-brand-600 hover:bg-brand-500 text-white rounded-[1.5rem] font-black shadow-2xl shadow-brand-600/30 transition-all transform hover:scale-105 active:scale-95">Gửi phản hồi</button><button onClick={() => {setReplyingTo(null); setReplyContent('');}} className="px-10 py-5 bg-white/5 text-slate-400 rounded-[1.5rem] font-black hover:bg-white/10 transition-all">Hủy bỏ</button></div>
+                                <textarea autoFocus value={replyContent} onChange={(e) => setReplyContent(e.target.value)} placeholder={`Gửi câu trả lời chuyên nghiệp của bạn...`} className="w-full bg-slate-900 border border-white/5 rounded-[2.5rem] py-8 px-10 text-white text-lg md:text-xl focus:outline-none focus:border-brand-500/30 min-h-[150px] resize-none shadow-[0_30px_80px_rgba(0,0,0,0.5)] backdrop-blur-3xl" />
+                                <div className="flex gap-5"><button onClick={() => handleReply(q.id)} className="px-12 py-5 bg-brand-600 hover:bg-brand-500 text-white rounded-[1.5rem] font-black text-sm shadow-2xl shadow-brand-600/40 transition-all transform hover:scale-105 active:scale-95">Gửi phản hồi</button><button onClick={() => {setReplyingTo(null); setReplyContent('');}} className="px-12 py-5 bg-white/5 text-slate-400 rounded-[1.5rem] font-black text-sm hover:bg-white/10 transition-all transform hover:scale-105 active:scale-95">Hủy bỏ</button></div>
                              </div>
                           </div>
                         )}
@@ -674,22 +629,31 @@ export const QASection: React.FC = () => {
           )}
           
           {hasMore && displayQuestions.length >= postsLimit && (
-            <div className="text-center pt-20 pb-40">
-               <button onClick={() => setPostsLimit(prev => prev + POSTS_PER_PAGE)} className="group px-12 py-6 bg-white text-slate-950 rounded-[2rem] font-black text-base transition-all transform hover:scale-110 active:scale-95 flex items-center gap-4 mx-auto shadow-[0_25px_60px_rgba(255,255,255,0.15)]">
-                  Khám phá thêm thảo luận
-                  <Icons.ChevronDown size={24} className="group-hover:translate-y-1.5 transition-transform" />
+            <div className="text-center pt-24 pb-40">
+               <button onClick={() => setPostsLimit(prev => prev + POSTS_PER_PAGE)} className="group px-14 py-7 bg-slate-900 border border-white/10 text-white rounded-[2.5rem] font-black text-base transition-all transform hover:scale-[1.03] active:scale-95 flex items-center gap-5 mx-auto shadow-[0_40px_100px_rgba(0,0,0,0.6)] border-b-brand-500/50 border-b-2">
+                  <span className="tracking-[0.3em] uppercase ml-2">Tải thêm nội dung</span>
+                  <Icons.ChevronDown size={28} className="group-hover:translate-y-2 transition-transform text-brand-500" />
                </button>
             </div>
           )}
         </div>
-      </div>
+      </main>
 
-      {/* Modern Toast */}
-      {showToast.show && (
-        <div className="fixed bottom-12 left-1/2 -translate-x-1/2 z-[300] animate-in slide-in-from-bottom-12 duration-500">
-          <div className="bg-white text-slate-950 px-10 py-5 rounded-[2.5rem] font-black shadow-[0_30px_80px_rgba(255,255,255,0.3)] flex items-center gap-4 border border-white/20">
-             <div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white shadow-xl shadow-green-500/40"><Icons.Check size={20} /></div>
-             <span className="tracking-tight text-xl">{showToast.message}</span>
+      {/* Auth & Other Modals remain same but with enhanced design */}
+      {showAuthModal && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-6">
+          <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-3xl" onClick={() => setShowAuthModal(false)}></div>
+          <div className="relative w-full max-w-sm bg-slate-900 rounded-[4.5rem] p-16 border border-white/10 shadow-[0_0_150px_rgba(0,0,0,0.7)] animate-in zoom-in-95">
+            <button onClick={() => setShowAuthModal(false)} className="absolute top-12 right-12 text-slate-600 hover:text-white p-2 transition-colors"><Icons.X size={32} /></button>
+            <div className="text-center mb-16">
+               <div className="w-28 h-28 bg-gradient-to-br from-brand-500/20 to-purple-500/20 rounded-[2.5rem] flex items-center justify-center mx-auto mb-12 text-brand-400 shadow-3xl border border-white/5 ring-1 ring-white/10"><Icons.User size={56} /></div>
+               <h3 className="text-4xl font-black text-white tracking-tighter leading-tight mb-4 italic">Tham gia thảo luận</h3>
+               <p className="text-slate-500 text-base font-medium leading-relaxed uppercase tracking-widest text-[10px]">Cộng đồng PHTV Việt Nam</p>
+            </div>
+            <button onClick={handleGoogleLogin} className="w-full py-7 bg-white text-slate-950 rounded-[2rem] font-black text-xl flex items-center justify-center gap-5 transition-all transform hover:scale-[1.03] active:scale-95 shadow-[0_30px_60px_rgba(255,255,255,0.1)]">
+               <svg className="w-8 h-8" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+               Đăng nhập ngay
+            </button>
           </div>
         </div>
       )}
@@ -697,37 +661,27 @@ export const QASection: React.FC = () => {
       {/* Name Choice Modal */}
       {showNamePrompt && (
         <div className="fixed inset-0 z-[250] flex items-center justify-center p-6">
-          <div className="absolute inset-0 bg-slate-950/95 backdrop-blur-3xl animate-in fade-in duration-500"></div>
-          <div className="relative w-full max-w-lg bg-slate-900 rounded-[4rem] p-12 border border-white/10 shadow-[0_0_150px_rgba(0,0,0,0.8)] animate-in zoom-in-95 duration-500">
-            <div className="text-center mb-12 space-y-4">
-               <div className="w-24 h-24 bg-gradient-to-br from-brand-500 to-purple-600 rounded-[2rem] flex items-center justify-center mx-auto shadow-2xl rotate-3"><Icons.UserCheck size={48} className="text-white" /></div>
-               <h3 className="text-4xl font-black text-white tracking-tighter uppercase italic">Bạn là ai?</h3>
-               <p className="text-slate-500 font-medium text-lg italic">Chọn một danh xưng thật ấn tượng cho cộng đồng</p>
+          <div className="absolute inset-0 bg-slate-950/95 backdrop-blur-3xl"></div>
+          <div className="relative w-full max-w-lg bg-slate-900 rounded-[4.5rem] p-16 border border-white/10 shadow-3xl animate-in zoom-in-95">
+            <div className="text-center mb-14">
+               <h3 className="text-4xl font-black text-white tracking-tighter mb-4 italic">Danh tính cộng đồng</h3>
+               <p className="text-slate-500 text-base font-medium leading-relaxed">Chọn một tên hiển thị thật ấn tượng để bắt đầu thảo luận cùng mọi người</p>
             </div>
-            <input type="text" value={tempUsername} onChange={e => setTempUsername(e.target.value)} className="w-full bg-slate-950 border border-white/10 rounded-[2rem] py-6 px-10 text-white font-black mb-10 text-center text-3xl focus:border-brand-500/50 outline-none transition-all shadow-inner placeholder:text-slate-800" placeholder="Nhập tên..." />
-            <button onClick={handleUpdateName} className="w-full py-6 bg-white text-slate-950 rounded-[2rem] font-black text-xl shadow-2xl hover:shadow-white/10 active:scale-95 transition-all transform hover:scale-[1.02]">Bắt đầu ngay</button>
+            <input type="text" value={tempUsername} onChange={e => setTempUsername(e.target.value)} className="w-full bg-slate-950 border border-white/10 rounded-[2rem] py-7 px-10 text-white font-black mb-12 text-center text-3xl focus:border-brand-500/50 outline-none transition-all shadow-inner" placeholder="Tên của bạn..." />
+            <button onClick={handleUpdateName} className="w-full py-7 bg-brand-600 hover:bg-brand-500 text-white rounded-[2.2rem] font-black text-xl shadow-2xl shadow-brand-600/40 active:scale-95 transition-all transform hover:scale-[1.03]">Hoàn tất thiết lập</button>
           </div>
         </div>
       )}
 
-      {/* Auth Modal */}
-      {showAuthModal && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-6">
-          <div className="absolute inset-0 bg-slate-950/95 backdrop-blur-2xl"></div>
-          <div className="relative w-full max-w-md bg-slate-900 rounded-[4rem] p-12 border border-white/10 shadow-[0_0_150px_rgba(0,0,0,0.6)] animate-in zoom-in-95">
-            <button onClick={() => setShowAuthModal(false)} className="absolute top-12 right-12 text-slate-600 hover:text-white transition-colors p-2"><Icons.X size={32} /></button>
-            <div className="text-center mb-16 space-y-6">
-               <div className="w-24 h-24 bg-brand-500/10 rounded-[2rem] flex items-center justify-center mx-auto text-brand-400 shadow-2xl border border-white/5"><Icons.MessageCircle size={48} /></div>
-               <h3 className="text-4xl font-black text-white tracking-tighter uppercase italic leading-none">Tham gia<br/><span className="text-brand-500">Cộng đồng</span></h3>
-               <p className="text-slate-500 font-medium italic">Để bình luận và tương tác cùng mọi người</p>
-            </div>
-            <button onClick={handleGoogleLogin} className="w-full py-6 bg-white text-slate-950 rounded-[2rem] font-black text-xl flex items-center justify-center gap-5 transition-all transform hover:scale-[1.02] active:scale-95 shadow-2xl">
-               <svg className="w-8 h-8" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-               Tiếp tục với Google
-            </button>
+      {/* Toast Notification */}
+      {showToast.show && (
+        <div className="fixed bottom-14 left-1/2 -translate-x-1/2 z-[300] animate-in slide-in-from-bottom-12 fade-in duration-500">
+          <div className="bg-white text-slate-950 px-14 py-7 rounded-[3rem] font-black shadow-[0_40px_100px_rgba(255,255,255,0.35)] flex items-center gap-6 border border-white/20">
+             <div className="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center text-white shadow-2xl shadow-green-500/50"><Icons.Check size={28} /></div>
+             <span className="tracking-tight text-2xl italic">{showToast.message}</span>
           </div>
         </div>
       )}
-    </section>
+    </div>
   );
 };
