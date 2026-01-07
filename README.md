@@ -33,16 +33,20 @@ brew install --cask phamhungtien/tap/phtv
 
 ### 📊 GitHub Stats
 <p align="center">
-  <img height="180em" src="https://github-readme-stats.vercel.app/api?username=PhamHungTien&show_icons=true&theme=transparent&title_color=8b5cf6&icon_color=8b5cf6&text_color=94a3b8&bg_color=00000000&hide_border=true" />
-  <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=PhamHungTien&layout=compact&theme=transparent&title_color=8b5cf6&text_color=94a3b8&bg_color=00000000&hide_border=true" />
+  <img height="180em" src="https://github-readme-stats.vercel.app/api?username=PhamHungTien&show_icons=true&theme=radical&hide_border=true" />
+  <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=PhamHungTien&layout=compact&theme=radical&hide_border=true" />
 </p>
 
 ---
 
 ### 📫 Connect with me
 <p align="left">
-<a href="https://linkedin.com/in/phamhungtien" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="phamhungtien" height="30" width="40" /></a>
-<a href="mailto:hungtien10a7@gmail.com" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/gmail.svg" alt="hungtien10a7@gmail.com" height="30" width="40" /></a>
+<a href="https://linkedin.com/in/phamhungtien" target="blank">
+  <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" />
+</a>
+<a href="mailto:hungtien10a7@gmail.com" target="blank">
+  <img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" />
+</a>
 </p>
 
 <p align="right">
