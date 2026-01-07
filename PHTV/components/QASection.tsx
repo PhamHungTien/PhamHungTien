@@ -589,33 +589,33 @@ export const QASection: React.FC = () => {
            </div>
         </div>
 
-        {/* Compact Post Form */}
-        <div className="glass-panel rounded-[2rem] p-1 shadow-xl border border-white/5 overflow-hidden group/form relative backdrop-blur-3xl">
-          <div className="bg-slate-900/40 rounded-[1.9rem] p-6 md:p-8 transition-all group-focus-within/form:bg-slate-900/60">
-            <form onSubmit={handleAskQuestion} className="space-y-6">
-              <div className="flex items-start gap-4">
-                 <div className="hidden sm:block">
-                    <Avatar user={{ username: currentUser?.username || 'User', photoURL: currentUser?.photoURL, isAdmin: currentUser?.isAdmin }} isAdmin={currentUser?.isAdmin} size="w-10 h-10" />
+        {/* Refined Compact Post Form */}
+        <div className="glass-panel rounded-[1.5rem] p-0.5 shadow-lg border border-white/5 overflow-hidden group/form relative backdrop-blur-3xl">
+          <div className="bg-slate-900/40 rounded-[1.4rem] p-4 md:p-5 transition-all group-focus-within/form:bg-slate-900/60 shadow-inner">
+            <form onSubmit={handleAskQuestion} className="space-y-4">
+              <div className="flex items-start gap-3.5">
+                 <div className="hidden xs:block">
+                    <Avatar user={{ username: currentUser?.username || 'User', photoURL: currentUser?.photoURL, isAdmin: currentUser?.isAdmin }} isAdmin={currentUser?.isAdmin} size="w-9 h-9" />
                  </div>
-                 <div className="flex-1">
+                 <div className="flex-1 pt-0.5">
                     <textarea 
-                      placeholder={currentUser ? `Chào ${currentUser.username.split(' ')[0]}, chia sẻ ý kiến của bạn nhé...` : "Đăng nhập Google để thảo luận..."} 
+                      placeholder={currentUser ? `Chào ${currentUser.username.split(' ')[0]}, bạn đang nghĩ gì?` : "Đăng nhập Google để thảo luận..."} 
                       value={newQuestion} 
                       onChange={(e) => setNewQuestion(e.target.value)} 
                       disabled={isSubmitting} 
-                      className="w-full bg-transparent border-none p-0 text-base md:text-lg text-white focus:ring-0 placeholder:text-slate-800 min-h-[80px] resize-none leading-relaxed font-medium" 
+                      className="w-full bg-transparent border-none p-0 text-sm md:text-base text-white focus:ring-0 placeholder:text-slate-800 min-h-[50px] md:min-h-[60px] resize-none leading-relaxed font-medium" 
                       required 
                     />
                  </div>
               </div>
               
-              <div className="flex items-center justify-between pt-4 border-t border-white/5 gap-4">
+              <div className="flex items-center justify-between pt-3 border-t border-white/5">
                 <div className="flex items-center gap-4 text-slate-700">
-                   <Icons.Terminal size={18} className="hover:text-brand-400 cursor-help" />
-                   <Icons.Link2 size={18} className="hover:text-brand-400 cursor-help" />
+                   <Icons.Terminal size={16} className="hover:text-brand-400 cursor-help transition-colors" />
+                   <Icons.Link2 size={16} className="hover:text-brand-400 cursor-help transition-colors" />
                 </div>
-                <button type="submit" disabled={isSubmitting || !newQuestion.trim()} className="group flex items-center justify-center gap-3 px-8 py-3.5 bg-white text-slate-950 rounded-xl font-black text-xs md:text-sm transition-all transform hover:scale-[1.03] active:scale-95 shadow-xl disabled:opacity-50">
-                  {isSubmitting ? <Icons.RefreshCw className="animate-spin" size={18} /> : <><span>Đăng bài</span><Icons.Send size={16} /></>}
+                <button type="submit" disabled={isSubmitting || !newQuestion.trim()} className="group flex items-center justify-center gap-2 px-5 py-2 bg-white text-slate-950 rounded-lg font-black text-[11px] md:text-xs transition-all transform hover:scale-[1.03] active:scale-95 shadow-md disabled:opacity-50">
+                  {isSubmitting ? <Icons.RefreshCw className="animate-spin" size={14} /> : <><span>Đăng bài</span><Icons.Send size={12} /></>}
                 </button>
               </div>
             </form>
