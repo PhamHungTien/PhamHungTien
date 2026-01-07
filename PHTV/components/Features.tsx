@@ -22,37 +22,37 @@ export const Features: React.FC = () => {
       icon: Icons.Shield,
       title: "Core & Riêng tư",
       description: "Hoàn toàn offline, không cần Internet. Bảo mật tuyệt đối. Hỗ trợ Telex, VNI, Simple Telex và nhiều bảng mã chuyên dụng.",
-      color: "text-green-400"
+      color: "text-rose-400"
     },
     {
       icon: Icons.Zap,
       title: "Swift Native",
       description: "Viết bằng Swift 6.0 & SwiftUI. Tối ưu hóa hiệu năng cực cao, tiết kiệm pin và hỗ trợ Native Dark Mode chuẩn macOS.",
-      color: "text-yellow-400"
+      color: "text-red-400"
     },
     {
       icon: Icons.Sparkles,
       title: "Gõ Thông Minh",
       description: "Kiểm tra chính tả thông minh, hỗ trợ Quick Telex (cc=ch, kk=kh), tự động viết hoa và sửa lỗi gõ sai thông dụng.",
-      color: "text-purple-400"
+      color: "text-pink-400"
     },
     {
       icon: Icons.Command,
       title: "Macro & Snippets",
       description: "Gõ tắt thông minh (btw → by the way). Hỗ trợ Text Snippets động với ngày giờ, clipboard và biến tự định nghĩa.",
-      color: "text-pink-400"
+      color: "text-rose-500"
     },
     {
       icon: Icons.Keyboard,
       title: "Emoji & GIF Picker",
       description: "Giao diện Liquid Glass tuyệt đẹp. Tìm kiếm nhanh hơn 1,400 emoji. Tích hợp GIF Klipy không giới hạn.",
-      color: "text-orange-400"
+      color: "text-red-500"
     },
     {
       icon: Icons.Layers,
       title: "Tương thích cao",
       description: "Hỗ trợ bàn phím vật lý Dvorak/Colemak. Tự động chuyển đổi ngôn ngữ khi phát hiện các ứng dụng đặc biệt.",
-      color: "text-blue-400"
+      color: "text-pink-500"
     }
   ];
 

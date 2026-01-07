@@ -9,20 +9,20 @@ interface StatBadgeProps {
   colorClass?: string;
 }
 
-export const StatBadge = ({ icon: Icon, label, value, href, onClick, colorClass = "text-slate-300" }: StatBadgeProps) => {
+export const StatBadge = ({ icon: Icon, label, value, href, onClick, colorClass = "text-rose-400" }: StatBadgeProps) => {
   const content = (
     <>
-      <div className={`p-2 rounded-xl bg-white/5 group-hover:bg-white/10 transition-colors ${colorClass}`}>
+      <div className={`p-2 rounded-xl bg-white/5 group-hover:bg-rose-500/20 transition-all duration-500 ${colorClass} shadow-inner`}>
         <Icon size={18} />
       </div>
-      <div className="flex flex-col items-start leading-none gap-1">
-        <span className="text-[11px] uppercase tracking-wider font-bold text-slate-500 group-hover:text-slate-400 transition-colors">{label}</span>
-        <span className="text-base font-bold text-slate-200 group-hover:text-white transition-colors">{value}</span>
+      <div className="flex flex-col items-start leading-none gap-1.5">
+        <span className="text-[10px] uppercase tracking-[0.15em] font-black text-slate-500 group-hover:text-rose-400/70 transition-colors">{label}</span>
+        <span className="text-base font-black text-white group-hover:text-glow transition-all">{value}</span>
       </div>
     </>
   );
 
-  const className = "flex items-center gap-3 px-5 py-3 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-slate-600 hover:bg-slate-800/80 transition-all duration-300 group hover:-translate-y-0.5 cursor-pointer";
+  const className = "flex items-center gap-3.5 px-6 py-3.5 rounded-2xl bg-slate-900/40 backdrop-blur-md border border-white/5 hover:border-rose-500/30 hover:bg-slate-800/60 transition-all duration-500 group hover:-translate-y-1 cursor-pointer shadow-lg";
 
   if (onClick) {
     return (

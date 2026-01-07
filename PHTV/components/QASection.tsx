@@ -519,7 +519,7 @@ export const QASection: React.FC = () => {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mb-8">
           <div className="text-center sm:text-left">
              <h2 className="text-3xl md:text-5xl font-black text-white tracking-tighter italic leading-none">
-               Thảo luận <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-pink-500 drop-shadow-[0_0_10px_rgba(244,63,94,0.3)]">PHTV</span>
+               Thảo luận <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-pink-500 via-red-500 to-rose-400 bg-[length:200%_auto] animate-gradient-flow drop-shadow-[0_0_10px_rgba(244,63,94,0.3)] pr-3 py-1">PHTV</span>
              </h2>
              <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.3em] mt-2 flex items-center justify-center sm:justify-start gap-2">
                <span className="w-6 h-[0.5px] bg-slate-800"></span>
