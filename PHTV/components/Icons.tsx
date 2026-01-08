@@ -58,7 +58,8 @@ import {
   ShieldCheck,
   Bell,
   BellOff,
-  Link2
+  Link2,
+  Mail
 } from 'lucide-react';
 
 export const Icons = {
@@ -121,5 +122,6 @@ export const Icons = {
   ShieldCheck,
   Bell,
   BellOff,
-  Link2
+  Link2,
+  Mail
 };

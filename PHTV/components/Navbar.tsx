@@ -63,7 +63,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
                 className="relative w-10 h-10 rounded-xl shadow-lg transition-transform group-hover:scale-110" 
               />
             </div>
-            <span className="font-black text-2xl tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-pink-500 hidden sm:block group-hover:text-glow transition-all pr-2 py-1">PHTV</span>
+            <span className="font-black text-2xl tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-pink-500 via-red-500 to-rose-400 bg-[length:200%_auto] animate-gradient-flow hidden sm:block group-hover:text-glow transition-all pr-3 py-1">PHTV</span>
           </button>
 
           {/* Desktop Nav */}

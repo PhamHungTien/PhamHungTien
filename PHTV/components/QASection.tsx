@@ -567,7 +567,13 @@ export const QASection: React.FC = () => {
         <div className="space-y-4 animate-in slide-in-from-bottom-2 duration-700">
            <div className="relative group shadow-lg">
               <Icons.Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-700 group-focus-within:text-rose-500 transition-colors" size={20} />
-              <input type="text" placeholder="Tìm nội dung, thành viên, lỗi..." value={searchQuery} onChange={e => setSearchBy(e.target.value)} className="w-full bg-slate-900/60 backdrop-blur-2xl border border-white/5 rounded-2xl py-3.5 pl-12 pr-6 text-white focus:outline-none focus:border-rose-500/30 transition-all text-sm font-medium placeholder:text-slate-500 shadow-inner" />
+              <input 
+                type="text" 
+                placeholder="Tìm nội dung, thành viên, lỗi..." 
+                value={searchQuery}
+                onChange={e => setSearchBy(e.target.value)}
+                className="w-full bg-slate-900/60 backdrop-blur-2xl border border-white/5 rounded-2xl py-3.5 pl-12 pr-6 text-white focus:outline-none focus:border-brand-500/30 transition-all text-sm font-medium placeholder:text-slate-400 shadow-inner"
+              />
            </div>
            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex bg-slate-900/80 p-1 rounded-xl border border-white/5 shadow-xl backdrop-blur-xl w-full sm:w-auto">
@@ -592,13 +598,13 @@ export const QASection: React.FC = () => {
                       value={newQuestion} 
                       onChange={(e) => setNewQuestion(e.target.value)} 
                       disabled={isSubmitting} 
-                      className="w-full bg-transparent border-none p-0 text-sm md:text-base text-white focus:ring-0 placeholder:text-slate-500 min-h-[50px] md:min-h-[60px] resize-none leading-relaxed font-medium" 
+                      className="w-full bg-transparent border-none p-0 text-sm md:text-base text-white focus:ring-0 placeholder:text-slate-400 min-h-[50px] md:min-h-[60px] resize-none leading-relaxed font-medium" 
                       required 
                     /></div>
               </div>
               
               <div className="flex flex-wrap items-center gap-2 mb-2">
-                 <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mr-2">Gắn thẻ:</span>
+                 <span className="text-[10px] font-black text-slate-200 uppercase tracking-widest mr-2">Phân loại:</span>
                  {LABELS.map(l => (
                    <button 
                      key={l.id} 
@@ -606,8 +612,8 @@ export const QASection: React.FC = () => {
                      onClick={() => setSelectedLabel(selectedLabel === l.id ? null : l.id)} 
                      className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase transition-all border ${
                        selectedLabel === l.id 
-                         ? `${l.bg} ${l.color} border-transparent ring-2 ring-white/20 scale-105` 
-                         : 'bg-white/10 text-slate-200 border-white/10 hover:bg-white/20 hover:text-white'
+                         ? `${l.bg} ${l.color} border-transparent ring-2 ring-white/20 scale-105 shadow-lg` 
+                         : 'bg-white/20 text-white border-white/10 hover:bg-white/30 hover:scale-105'
                      }`}
                    >
                      {l.label}
