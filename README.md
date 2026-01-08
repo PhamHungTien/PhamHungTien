@@ -21,7 +21,7 @@ I'm a passionate developer focused on building high-performance, native macOS ap
 ### 🚀 Featured Project: [PHTV](https://github.com/PhamHungTien/PHTV)
 **Modern, offline Vietnamese input method for macOS.**
 
-- ⚡ **Native Performance**: Built with Swift 6.0 & SwiftUI.
+- ⚡ **Native Performance**: Built with Swift 6.0 & C/C++.
 - 🛡️ **Privacy First**: 100% offline, zero data collection.
 - ✨ **Smart Features**: Telex/VNI, Spell Check, Emoji & GIF Picker.
 
