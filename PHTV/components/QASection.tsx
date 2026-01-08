@@ -367,8 +367,8 @@ export const QASection: React.FC = () => {
     // EmailJS Notification
     if (replyingTo.authorEmail && replyingTo.authorEmail !== currentUser.email) {
       emailjs.send(
-        "YOUR_SERVICE_ID", // User needs to replace this
-        "YOUR_TEMPLATE_ID", // User needs to replace this
+        "PHTV Community", 
+        "template_qd4vozb", 
         {
           recipient_name: replyingTo.name,
           recipient_email: replyingTo.authorEmail,
