@@ -26,8 +26,8 @@ export const Features: React.FC = () => {
     },
     {
       icon: Icons.Zap,
-      title: "Swift Native",
-      description: "Viết bằng Swift 6.0 & SwiftUI. Tối ưu hóa hiệu năng cực cao, tiết kiệm pin và hỗ trợ Native Dark Mode chuẩn macOS.",
+      title: "Swift & C/C++",
+      description: "Viết bằng Swift 6.0 & C/C++. Tối ưu hóa hiệu năng cực cao, tiết kiệm pin và hỗ trợ Native Dark Mode chuẩn macOS.",
       color: "text-red-400"
     },
     {
