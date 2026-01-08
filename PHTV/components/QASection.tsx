@@ -365,25 +365,26 @@ export const QASection: React.FC = () => {
     if (recipientId) createNotification(recipientId, 'reply', qId, replyContent.substring(0, 50));
 
     // EmailJS Notification Logic
-    if (replyingTo.authorEmail && replyingTo.authorEmail !== currentUser.email) {
-      console.log("Preparing to send email to:", replyingTo.authorEmail);
+    const targetEmail = replyingTo.authorEmail || "hungtien10a7@gmail.com"; // Fallback to admin for old posts
+    
+    if (targetEmail !== currentUser.email) {
+      console.log("🚀 EmailJS: Attempting to notify:", targetEmail);
       emailjs.send(
         "PHTV Community", 
         "template_qd4vozb", 
         {
-          to_email: replyingTo.authorEmail,
-          recipient_name: replyingTo.name,
-          recipient_email: replyingTo.authorEmail,
+          to_email: targetEmail,
+          recipient_name: replyingTo.name || "Thành viên PHTV",
           sender_name: currentUser.username,
           message: replyContent,
           link: window.location.href
         }
       ).then(
-        () => console.log("✅ Email sent successfully to:", replyingTo.authorEmail),
-        (err) => console.error("❌ Email failed to send:", err)
+        () => console.log("✅ EmailJS: Success! Notified", targetEmail),
+        (err) => console.error("❌ EmailJS: Failed!", err)
       );
     } else {
-      console.log("Skipping email: Replying to self or email missing.");
+      console.log("ℹ️ EmailJS: Skipping (Self-reply)");
     }
 
     setReplyContent('');
