@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Icons } from './Icons';
 import { auth, db, requestNotificationPermission, googleProvider } from '../src/firebase';
+import emailjs from '@emailjs/browser';
 import { 
   onAuthStateChanged, 
   signOut,
@@ -54,6 +55,7 @@ interface Reply {
   parentId?: string;
   replyToName?: string;
   authorId: string;
+  authorEmail?: string;
   author: string;
   authorPhoto?: string;
   content: string;
@@ -65,6 +67,7 @@ interface Reply {
 interface Question {
   id: string;
   authorId: string;
+  authorEmail?: string;
   author: string;
   authorPhoto?: string;
   content: string;
@@ -155,11 +158,16 @@ export const QASection: React.FC = () => {
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   
-  const [replyingTo, setReplyingTo] = useState<{qId: string, rId?: string, name?: string, authorId?: string} | null>(null);
+  const [replyingTo, setReplyingTo] = useState<{qId: string, rId?: string, name?: string, authorId?: string, authorEmail?: string} | null>(null);
   const [replyContent, setReplyContent] = useState('');
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingReplyId, setEditingReplyId] = useState<string | null>(null);
   const [editContent, setEditContent] = useState('');
+
+  // Initialize EmailJS
+  useEffect(() => {
+    emailjs.init("BaMMIrujdXkrbCwLH");
+  }, []);
 
   // Authentication Listener
   useEffect(() => {
@@ -300,6 +308,7 @@ export const QASection: React.FC = () => {
     try {
       await addDoc(collection(db, "questions"), {
         authorId: currentUser.uid,
+        authorEmail: currentUser.email,
         author: currentUser.username,
         authorPhoto: currentUser.photoURL || null,
         content: newQuestion,
@@ -340,6 +349,7 @@ export const QASection: React.FC = () => {
       parentId: replyingTo.rId || qId,
       replyToName: replyingTo.name,
       authorId: currentUser.uid,
+      authorEmail: currentUser.email,
       author: currentUser.isAdmin ? 'Phạm Hùng Tiến' : currentUser.username,
       authorPhoto: currentUser.photoURL || undefined,
       content: replyContent,
@@ -349,11 +359,27 @@ export const QASection: React.FC = () => {
     };
 
     await updateDoc(questionRef, { replies: arrayUnion(newReply) });
+    
+    // Notification logic
     const recipientId = replyingTo.authorId || snap.data()?.authorId;
     if (recipientId) createNotification(recipientId, 'reply', qId, replyContent.substring(0, 50));
+
+    // EmailJS Notification
+    if (replyingTo.authorEmail && replyingTo.authorEmail !== currentUser.email) {
+      emailjs.send(
+        "YOUR_SERVICE_ID", // User needs to replace this
+        "YOUR_TEMPLATE_ID", // User needs to replace this
+        {
+          recipient_name: replyingTo.name,
+          recipient_email: replyingTo.authorEmail,
+          sender_name: currentUser.username,
+          message: replyContent,
+          link: window.location.href
+        }
+      ).catch(err => console.error("Email failed:", err));
+    }
+
     setReplyContent('');
-    setReplyingTo(null);
-    triggerToast('Đã phản hồi!');
   };
 
   const toggleLikeQuestion = async (q: Question) => {
@@ -672,7 +698,10 @@ export const QASection: React.FC = () => {
                     ) : <SmartContent content={q.content} className="text-slate-200 text-sm md:text-base leading-relaxed font-medium bg-white/[0.02] p-5 md:p-6 rounded-[1.5rem] border border-white/5 shadow-inner" />}
                     <div className="flex items-center gap-8 px-4">
                        <button onClick={() => toggleLikeQuestion(q)} className={`flex items-center gap-2 font-black text-xs transition-all transform active:scale-50 ${q.likedBy?.includes(currentUser?.uid || '') ? 'text-rose-500' : 'text-slate-700 hover:text-slate-400'}`}><Icons.ThumbsUp size={18} fill={q.likedBy?.includes(currentUser?.uid || '') ? 'currentColor' : 'none'} /><span className="tabular-nums">{q.likedBy?.length || 0}</span></button>
-                       <button onClick={() => q.isLocked ? triggerToast('🔒 Đã khóa') : setReplyingTo({qId: q.id, name: q.author, authorId: q.authorId})} className={`flex items-center gap-2 font-black text-xs transition-all ${q.isLocked ? 'text-slate-900 opacity-30' : 'text-slate-700 hover:text-rose-400'}`}><Icons.MessageSquareReply size={18} /><span>{q.replies?.length || 0} Phản hồi</span></button>
+                         <button onClick={() => q.isLocked ? triggerToast('🔒 Thảo luận này đã khóa') : setReplyingTo({qId: q.id, name: q.author, authorId: q.authorId, authorEmail: q.authorEmail})} className={`flex items-center gap-4 font-black text-lg transition-all ${q.isLocked ? 'text-slate-900 cursor-not-allowed opacity-30' : 'text-slate-700 hover:text-brand-400'}`}>
+                           <Icons.MessageSquareReply size={28} /> 
+                           <span>{q.replies?.length || 0} Phản hồi</span>
+                         </button>
                        <button onClick={() => { navigator.clipboard.writeText(`${window.location.origin}${window.location.pathname}#community?qid=${q.id}`); triggerToast('Đã copy link!'); }} className="flex items-center gap-2 text-slate-700 hover:text-white transition-all transform active:scale-90"><Icons.Link2 size={18} /></button>
                     </div>
                     <div className="space-y-6 pt-6 border-l-[3px] border-white/[0.03] ml-3 pl-6 md:pl-10 relative">
