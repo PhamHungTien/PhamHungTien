@@ -366,21 +366,24 @@ export const QASection: React.FC = () => {
 
     // EmailJS Notification Logic
     if (replyingTo.authorEmail && replyingTo.authorEmail !== currentUser.email) {
+      console.log("Preparing to send email to:", replyingTo.authorEmail);
       emailjs.send(
         "PHTV Community", 
         "template_qd4vozb", 
         {
-          to_email: replyingTo.authorEmail, // Standard EmailJS variable
+          to_email: replyingTo.authorEmail,
           recipient_name: replyingTo.name,
-          recipient_email: replyingTo.authorEmail, // Fallback variable
+          recipient_email: replyingTo.authorEmail,
           sender_name: currentUser.username,
           message: replyContent,
           link: window.location.href
         }
       ).then(
-        () => console.log("Email sent to:", replyingTo.authorEmail),
-        (err) => console.error("Email error:", err)
+        () => console.log("✅ Email sent successfully to:", replyingTo.authorEmail),
+        (err) => console.error("❌ Email failed to send:", err)
       );
+    } else {
+      console.log("Skipping email: Replying to self or email missing.");
     }
 
     setReplyContent('');
