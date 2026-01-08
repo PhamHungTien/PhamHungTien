@@ -364,32 +364,59 @@ export const QASection: React.FC = () => {
     const recipientId = replyingTo.authorId || snap.data()?.authorId;
     if (recipientId) createNotification(recipientId, 'reply', qId, replyContent.substring(0, 50));
 
-    // EmailJS Notification Logic - Optimized for accuracy
+    // EmailJS Notification Logic - Optimized with Daily Limit
     const targetEmail = replyingTo.authorEmail;
     const fallbackEmail = "hungtien10a7@gmail.com";
     const actualRecipient = targetEmail || fallbackEmail;
     
-    // Only send if the recipient is not the current user
     if (actualRecipient !== currentUser.email) {
-      console.log(`✉️ Attempting to send email to ${actualRecipient} (Reason: ${targetEmail ? 'Direct' : 'Fallback'})`);
+      const statsRef = doc(db, "system", "email_stats");
       
-      emailjs.send(
-        "PHTV Community", 
-        "template_qd4vozb", 
-        {
-          to_email: actualRecipient,
-          recipient_name: replyingTo.name || "Thành viên PHTV",
-          recipient_email: actualRecipient, 
-          sender_name: currentUser.username,
-          message: replyContent,
-          link: window.location.href
+      getDoc(statsRef).then(async (statsSnap) => {
+        const now = new Date();
+        const todayStr = now.toISOString().split('T')[0]; // YYYY-MM-DD
+        let currentCount = 0;
+        
+        if (statsSnap.exists()) {
+          const data = statsSnap.data();
+          if (data.lastResetDate === todayStr) {
+            currentCount = data.dailyCount || 0;
+          }
         }
-      ).then(
-        () => console.log("✅ Email sent to:", actualRecipient),
-        (err) => console.error("❌ Email failed:", err)
-      );
+
+        const DAILY_LIMIT = 10; // Max 10 emails per day to stay safe (200/month)
+
+        if (currentCount < DAILY_LIMIT) {
+          console.log(`✉️ Sending email ${currentCount + 1}/${DAILY_LIMIT} to ${actualRecipient}`);
+          
+          emailjs.send(
+            "PHTV Community", 
+            "template_qd4vozb", 
+            {
+              to_email: actualRecipient,
+              recipient_name: replyingTo.name || "Thành viên PHTV",
+              recipient_email: actualRecipient, 
+              sender_name: currentUser.username,
+              message: replyContent,
+              link: window.location.href
+            }
+          ).then(async () => {
+            console.log("✅ Email sent!");
+            // Increment the counter in Firestore
+            await updateDoc(statsRef, {
+              dailyCount: increment(1),
+              lastResetDate: todayStr
+            }).catch(async () => {
+              // If document doesn't exist, create it
+              await addDoc(collection(db, "system"), { id: "email_stats", dailyCount: 1, lastResetDate: todayStr });
+            });
+          });
+        } else {
+          console.log("🚫 Daily email limit reached. Internal notification only.");
+        }
+      });
     } else {
-      console.log("⏭️ Skipping email (Current user is the recipient)");
+      console.log("⏭️ Skipping email (Self-reply)");
     }
 
     setReplyContent('');
