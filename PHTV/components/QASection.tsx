@@ -364,59 +364,31 @@ export const QASection: React.FC = () => {
     const recipientId = replyingTo.authorId || snap.data()?.authorId;
     if (recipientId) createNotification(recipientId, 'reply', qId, replyContent.substring(0, 50));
 
-    // EmailJS Notification Logic - Optimized with Daily Limit
+    // EmailJS Notification Logic - Direct (Unlimited until EmailJS quota hits)
     const targetEmail = replyingTo.authorEmail;
     const fallbackEmail = "hungtien10a7@gmail.com";
     const actualRecipient = targetEmail || fallbackEmail;
     
     if (actualRecipient !== currentUser.email) {
-      const statsRef = doc(db, "system", "email_stats");
+      console.log(`✉️ Attempting to send email to ${actualRecipient}`);
       
-      getDoc(statsRef).then(async (statsSnap) => {
-        const now = new Date();
-        const todayStr = now.toISOString().split('T')[0]; // YYYY-MM-DD
-        let currentCount = 0;
-        
-        if (statsSnap.exists()) {
-          const data = statsSnap.data();
-          if (data.lastResetDate === todayStr) {
-            currentCount = data.dailyCount || 0;
-          }
+      emailjs.send(
+        "PHTV Community", 
+        "template_qd4vozb", 
+        {
+          to_email: actualRecipient,
+          recipient_name: replyingTo.name || "Thành viên PHTV",
+          recipient_email: actualRecipient, 
+          sender_name: currentUser.username,
+          message: replyContent,
+          link: window.location.href
         }
-
-        const DAILY_LIMIT = 10; // Max 10 emails per day to stay safe (200/month)
-
-        if (currentCount < DAILY_LIMIT) {
-          console.log(`✉️ Sending email ${currentCount + 1}/${DAILY_LIMIT} to ${actualRecipient}`);
-          
-          emailjs.send(
-            "PHTV Community", 
-            "template_qd4vozb", 
-            {
-              to_email: actualRecipient,
-              recipient_name: replyingTo.name || "Thành viên PHTV",
-              recipient_email: actualRecipient, 
-              sender_name: currentUser.username,
-              message: replyContent,
-              link: window.location.href
-            }
-          ).then(async () => {
-            console.log("✅ Email sent!");
-            // Increment the counter in Firestore
-            await updateDoc(statsRef, {
-              dailyCount: increment(1),
-              lastResetDate: todayStr
-            }).catch(async () => {
-              // If document doesn't exist, create it
-              await addDoc(collection(db, "system"), { id: "email_stats", dailyCount: 1, lastResetDate: todayStr });
-            });
-          });
-        } else {
-          console.log("🚫 Daily email limit reached. Internal notification only.");
-        }
-      });
+      ).then(
+        () => console.log("✅ Email sent successfully to:", actualRecipient),
+        (err) => console.error("❌ Email failed to send:", err)
+      );
     } else {
-      console.log("⏭️ Skipping email (Self-reply)");
+      console.log("⏭️ Skipping email (Self-reply or current user)");
     }
 
     setReplyContent('');
