@@ -360,7 +360,7 @@ function App() {
 
               <p className="text-xl md:text-3xl text-slate-300 max-w-3xl mx-auto mb-16 leading-relaxed font-medium animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
                 Bộ gõ tiếng Việt <span className="text-white font-bold text-glow-sm">offline</span>, <span className="text-white font-bold text-glow-sm">nhanh</span>, và <span className="text-white font-bold text-glow">riêng tư</span> cho macOS.
-                <span className="block text-slate-500 text-lg md:text-xl mt-4 font-semibold opacity-80 tracking-tight">Xây dựng bằng Swift native tối ưu hiệu năng tuyệt đối.</span>
+                <span className="block text-slate-500 text-lg md:text-xl mt-4 font-semibold opacity-80 tracking-tight">Xây dựng bằng Swift & C/C++ native tối ưu hiệu năng tuyệt đối.</span>
               </p>
 
               <div className="flex flex-wrap justify-center gap-4 mb-20 max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-500">
