@@ -364,21 +364,22 @@ export const QASection: React.FC = () => {
     const recipientId = replyingTo.authorId || snap.data()?.authorId;
     if (recipientId) createNotification(recipientId, 'reply', qId, replyContent.substring(0, 50));
 
-    // EmailJS Notification Logic - Targeting the specific person being replied to
+    // EmailJS Notification Logic
     if (replyingTo.authorEmail && replyingTo.authorEmail !== currentUser.email) {
       emailjs.send(
         "PHTV Community", 
         "template_qd4vozb", 
         {
+          to_email: replyingTo.authorEmail, // Standard EmailJS variable
           recipient_name: replyingTo.name,
-          recipient_email: replyingTo.authorEmail, // This is now guaranteed to be the email of the person who wrote the comment you clicked 'Reply' on
+          recipient_email: replyingTo.authorEmail, // Fallback variable
           sender_name: currentUser.username,
           message: replyContent,
           link: window.location.href
         }
       ).then(
-        () => console.log("Notification email sent successfully to", replyingTo.authorEmail),
-        (err) => console.error("Email failed to send:", err)
+        () => console.log("Email sent to:", replyingTo.authorEmail),
+        (err) => console.error("Email error:", err)
       );
     }
 
@@ -548,7 +549,7 @@ export const QASection: React.FC = () => {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mb-8">
           <div className="text-center sm:text-left">
              <h2 className="text-3xl md:text-5xl font-black text-white tracking-tighter italic leading-none">
-               Thảo luận <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-pink-500 via-red-500 to-rose-400 bg-[length:200%_auto] animate-gradient-flow drop-shadow-[0_0_10px_rgba(244,63,94,0.3)] pr-3 py-1">PHTV</span>
+               Thảo luận <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-pink-500 via-red-500 to-rose-400 bg-[length:200%_auto] animate-gradient-flow drop-shadow-[0_0_10px_rgba(244,63,94,0.3)] pr-4 py-1">PHTV</span>
              </h2>
              <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.3em] mt-2 flex items-center justify-center sm:justify-start gap-2">
                <span className="w-6 h-[0.5px] bg-slate-800"></span>
@@ -639,10 +640,10 @@ export const QASection: React.FC = () => {
                      key={l.id} 
                      type="button" 
                      onClick={() => setSelectedLabel(selectedLabel === l.id ? null : l.id)} 
-                     className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase transition-all border ${
+                     className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase transition-all border shadow-sm ${
                        selectedLabel === l.id 
                          ? `${l.bg} ${l.color} border-transparent ring-2 ring-white/20 scale-105 shadow-lg` 
-                         : 'bg-white/20 text-white border-white/10 hover:bg-white/30 hover:scale-105'
+                         : 'bg-white/30 text-white border-white/20 hover:bg-white/40'
                      }`}
                    >
                      {l.label}
