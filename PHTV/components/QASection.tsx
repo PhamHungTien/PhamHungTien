@@ -364,19 +364,22 @@ export const QASection: React.FC = () => {
     const recipientId = replyingTo.authorId || snap.data()?.authorId;
     if (recipientId) createNotification(recipientId, 'reply', qId, replyContent.substring(0, 50));
 
-    // EmailJS Notification
+    // EmailJS Notification Logic - Targeting the specific person being replied to
     if (replyingTo.authorEmail && replyingTo.authorEmail !== currentUser.email) {
       emailjs.send(
         "PHTV Community", 
         "template_qd4vozb", 
         {
           recipient_name: replyingTo.name,
-          recipient_email: replyingTo.authorEmail,
+          recipient_email: replyingTo.authorEmail, // This is now guaranteed to be the email of the person who wrote the comment you clicked 'Reply' on
           sender_name: currentUser.username,
           message: replyContent,
           link: window.location.href
         }
-      ).catch(err => console.error("Email failed:", err));
+      ).then(
+        () => console.log("Notification email sent successfully to", replyingTo.authorEmail),
+        (err) => console.error("Email failed to send:", err)
+      );
     }
 
     setReplyContent('');
