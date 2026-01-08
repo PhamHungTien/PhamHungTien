@@ -19,8 +19,8 @@
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://phamhungtien.com/PHTV/assets/social_preview.webp</image:loc>
-      <image:title>PHTV - Bộ gõ tiếng Việt hiện đại cho macOS</image:title>
-      <image:caption>Bộ gõ tiếng Việt Native Swift cho macOS. Nhanh, nhẹ, riêng tư và hoàn toàn miễn phí.</image:caption>
+      <image:title>PHTV - Bộ gõ tiếng Việt cho macOS</image:title>
+      <image:caption>Bộ gõ tiếng Việt Native Swift & C/C++ cho macOS. Nhanh, nhẹ, riêng tư và hoàn toàn miễn phí.</image:caption>
     </image:image>
     <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/PHTV/" />
   </url>
