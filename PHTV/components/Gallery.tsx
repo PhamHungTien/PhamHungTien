@@ -4,7 +4,7 @@ import { Icons } from './Icons';
 
 // Helper function to get correct asset paths
 const getAssetPath = (filename: string) => {
-  return new URL(`../src/assets/UI/${filename}`, import.meta.url).href;
+  return `/PHTV/assets/UI/${filename}`;
 };
 
 const IMAGES = [
