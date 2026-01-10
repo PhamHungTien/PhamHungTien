@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Icons } from './Icons';
 import { useGitHubData } from '../hooks/useGitHubData';
 
-const iconImg = new URL('../src/assets/icon.webp', import.meta.url).href;
+const iconImg = '/PHTV/icon.webp';
 
 interface NavbarProps {
   activeTab?: 'home' | 'community';
