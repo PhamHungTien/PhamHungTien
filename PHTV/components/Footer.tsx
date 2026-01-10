@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icons } from './Icons';
 
-const iconImg = '/PHTV/icon.webp';
+const iconImg = '/PHTV/phtv-icon.webp';
 
 interface FooterProps {
   onDonateClick: () => void;
