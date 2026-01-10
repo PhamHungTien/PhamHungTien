@@ -10,7 +10,7 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "icon.webp",
+      "src": "phtv-icon.webp",
       "sizes": "1024x1024",
       "type": "image/webp",
       "purpose": "any maskable"
