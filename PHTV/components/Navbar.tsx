@@ -50,19 +50,15 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
     <>
       <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${scrolled ? 'glass-panel py-3 shadow-2xl shadow-black/40' : 'bg-transparent py-6'}`}>
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          {/* Logo */}
           <button 
             onClick={() => { onTabChange?.('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
             className="flex items-center gap-4 group cursor-pointer"
           >
-            <div className="relative">
-              <div className="absolute inset-0 bg-brand-500/20 blur-md rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <img 
-                src={iconImg} 
-                alt="PHTV Logo" 
-                className="relative w-10 h-10 rounded-xl shadow-lg transition-transform group-hover:scale-110" 
-              />
-            </div>
+            <img 
+              src={iconImg} 
+              alt="PHTV Logo" 
+              className="w-10 h-10 rounded-xl shadow-lg transition-transform group-hover:scale-110" 
+            />
             <span className="font-black text-2xl tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-pink-500 via-red-500 to-rose-400 bg-[length:200%_auto] animate-gradient-flow hidden sm:block group-hover:text-glow transition-all pr-3 py-1">PHTV</span>
           </button>
 

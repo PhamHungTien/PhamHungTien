@@ -342,11 +342,10 @@ function App() {
 
               <div className="flex flex-row items-center justify-center gap-4 sm:gap-8 md:gap-12 mb-16 md:mb-28">
                 <div className="relative group shrink-0 w-32 h-32 sm:w-48 sm:h-48 md:w-72 md:h-72">
-                   <div className="absolute inset-0 bg-brand-500/20 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000 scale-110"></div>
                    <img 
                      src="/PHTV/icon.webp" 
                      alt="PHTV Icon" 
-                     className="relative w-full h-full drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] rounded-[2rem] md:rounded-[3.5rem] transform group-hover:scale-105 transition-all duration-700 ease-out z-10 object-cover ring-1 ring-white/10" 
+                     className="w-full h-full drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] rounded-[2rem] md:rounded-[3.5rem] transform group-hover:scale-105 transition-all duration-700 ease-out z-10 object-cover" 
                      fetchPriority="high"
                    />
                 </div>
