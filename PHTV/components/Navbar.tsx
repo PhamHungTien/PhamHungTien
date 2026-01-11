@@ -57,7 +57,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
             <img 
               src={iconImg} 
               alt="PHTV Logo" 
-              className="w-10 h-10 rounded-xl transition-all duration-500 group-hover:scale-110 object-cover" 
+              className="w-10 h-10 transition-all duration-500 group-hover:scale-110 object-contain" 
             />
             <span className="font-black text-2xl tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-pink-500 via-red-500 to-rose-400 bg-[length:200%_auto] animate-gradient-flow hidden sm:block group-hover:text-glow transition-all pr-3 py-1">PHTV</span>
           </button>
@@ -119,7 +119,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
         <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-2xl" onClick={() => setMobileMenuOpen(false)}></div>
         <div className={`absolute right-0 top-0 bottom-0 w-[280px] bg-slate-900 border-l border-white/5 p-8 flex flex-col transition-transform duration-500 ease-out shadow-2xl ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
           <div className="flex items-center gap-4 mb-12">
-            <img src={iconImg} alt="PHTV" className="w-10 h-10 rounded-xl shadow-lg object-cover" />
+            <img src={iconImg} alt="PHTV" className="w-10 h-10 object-contain" />
             <span className="font-black text-2xl text-white">PHTV</span>
           </div>
           

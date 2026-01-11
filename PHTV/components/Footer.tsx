@@ -18,7 +18,7 @@ export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
           {/* Brand Column */}
           <div className="lg:col-span-5">
             <div className="flex items-center gap-4 mb-8">
-              <img src={iconImg} alt="PHTV Logo" className="w-12 h-12 rounded-2xl" />
+              <img src={iconImg} alt="PHTV Logo" className="w-12 h-12 object-contain" />
               <span className="font-black text-3xl tracking-tighter text-white">PHTV</span>
             </div>
             <p className="text-slate-400 mb-8 max-w-md leading-relaxed text-lg font-medium">
