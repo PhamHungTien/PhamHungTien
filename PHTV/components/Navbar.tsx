@@ -116,7 +116,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
 
       {/* Mobile Menu Overlay */}
       <div className={`fixed inset-0 z-[90] lg:hidden transition-all duration-500 ${mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
-        <div className="absolute inset-0 bg-slate-50/90 dark:bg-slate-950/90 backdrop-blur-2xl" onClick={() => setMobileMenuOpen(false)}></div>
+        <div className="absolute inset-0 bg-white/90 dark:bg-slate-950/90 backdrop-blur-2xl" onClick={() => setMobileMenuOpen(false)}></div>
         <div className={`absolute right-0 top-0 bottom-0 w-[280px] bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-white/5 p-8 flex flex-col transition-transform duration-500 ease-out shadow-2xl ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
           <div className="flex items-center gap-4 mb-12">
             <img src={iconImg} alt="PHTV" className="w-10 h-10 rounded-xl" />

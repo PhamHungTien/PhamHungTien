@@ -9,7 +9,7 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
   return (
-    <footer className="relative border-t border-slate-200/50 dark:border-white/5 bg-slate-50 dark:bg-[#020617] pt-24 pb-12 overflow-hidden transition-colors duration-500">
+    <footer className="relative border-t border-slate-200/50 dark:border-white/5 bg-white dark:bg-[#020617] pt-24 pb-12 overflow-hidden transition-colors duration-500">
       {/* Decorative background glow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[300px] bg-brand-900/10 blur-[120px] -z-10 rounded-full"></div>
 

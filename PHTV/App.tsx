@@ -412,7 +412,7 @@ function App() {
           <div className="reveal"><Gallery /></div>
           <div className="reveal"><Shortcuts /></div>
 
-          <section id="install" className="reveal py-32 md:py-48 bg-slate-50/50 dark:bg-slate-950/30 border-y border-slate-200/50 dark:border-white/5 scroll-mt-32 relative overflow-hidden backdrop-blur-sm">
+          <section id="install" className="reveal py-32 md:py-48 bg-white/30 dark:bg-slate-950/30 border-y border-slate-100/50 dark:border-white/5 scroll-mt-32 relative overflow-hidden backdrop-blur-sm">
             <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-600/5 rounded-full blur-[140px] -z-10"></div>
             <div className="max-w-5xl mx-auto px-6 relative z-10">
               <div className="text-center mb-24">
@@ -481,7 +481,7 @@ function App() {
             </div>
           </section>
 
-          <section className="reveal py-32 border-t border-slate-200/50 dark:border-white/5 bg-slate-100/50 dark:bg-slate-950/20 backdrop-blur-sm">
+          <section className="reveal py-32 border-t border-slate-100/50 dark:border-white/5 bg-white/30 dark:bg-slate-950/20 backdrop-blur-sm">
              <div className="max-w-4xl mx-auto px-6">
                 <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-12 text-center tracking-tighter uppercase italic">Cấu hình yêu cầu</h2>
                 <div className="overflow-hidden rounded-3xl border border-slate-200/50 dark:border-white/5 bg-white/40 dark:bg-white/[0.02] shadow-2xl">
