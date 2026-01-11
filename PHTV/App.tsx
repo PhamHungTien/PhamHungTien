@@ -316,7 +316,7 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen mesh-gradient text-slate-900 dark:text-white selection:bg-brand-500 selection:text-white overflow-x-hidden transition-colors duration-500">
+    <div className="min-h-screen mesh-gradient text-white selection:bg-brand-500 selection:text-white overflow-x-hidden">
       {/* Top Loading Bar */}
       <div className={`fixed top-0 left-0 right-0 h-1 z-[110] transition-transform duration-500 origin-left ${loading ? 'scale-x-100' : 'scale-x-0'}`}>
         <div className="h-full bg-gradient-to-r from-brand-500 via-purple-500 to-red-500 animate-shimmer bg-[length:200%_auto]"></div>
@@ -334,12 +334,12 @@ function App() {
             <h1 className="sr-only">PHTV - Bộ gõ tiếng Việt Precision Hybrid Typing Vietnamese cho macOS</h1>
             <div className="max-w-7xl mx-auto text-center relative z-10">
               
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/40 dark:bg-white/5 border border-slate-200/50 dark:border-white/10 mb-10 animate-in fade-in slide-in-from-bottom-4 duration-1000 backdrop-blur-md shadow-sm dark:shadow-none">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-10 animate-in fade-in slide-in-from-bottom-4 duration-1000 backdrop-blur-md shadow-none">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
                 </span>
-                <span className="text-[10px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-[0.2em]">Sẵn sàng cho macOS 26 Tahoe</span>
+                <span className="text-[10px] font-black text-slate-300 uppercase tracking-[0.2em]">Sẵn sàng cho macOS 26 Tahoe</span>
               </div>
 
               <div className="flex flex-row items-center justify-center gap-4 sm:gap-8 md:gap-12 mb-16 md:mb-28">
@@ -347,7 +347,7 @@ function App() {
                    <img 
                      src="/PHTV/phtv-icon.webp" 
                      alt="PHTV Icon" 
-                     className="w-full h-full drop-shadow-[0_20px_50px_rgba(0,0,0,0.2)] dark:drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] rounded-[2rem] md:rounded-[3.5rem] transform group-hover:scale-105 transition-all duration-700 ease-out z-10 object-cover" 
+                     className="w-full h-full drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] rounded-[2rem] md:rounded-[3.5rem] transform group-hover:scale-105 transition-all duration-700 ease-out z-10 object-cover" 
                      fetchPriority="high"
                    />
                 </div>
@@ -359,21 +359,21 @@ function App() {
                 </div>
               </div>
 
-              <p className="text-xl md:text-3xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto mb-16 leading-relaxed font-medium animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
-                Bộ gõ tiếng Việt <span className="text-slate-900 dark:text-white font-bold text-glow-sm">offline</span>, <span className="text-slate-900 dark:text-white font-bold text-glow-sm">nhanh</span>, và <span className="text-slate-900 dark:text-white font-bold text-glow">riêng tư</span> cho macOS.
-                <span className="block text-slate-500 dark:text-slate-500 text-lg md:text-xl mt-4 font-semibold opacity-80 tracking-tight">Xây dựng bằng Swift & C/C++ native tối ưu hiệu năng tuyệt đối.</span>
+              <p className="text-xl md:text-3xl text-slate-300 max-w-3xl mx-auto mb-16 leading-relaxed font-medium animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
+                Bộ gõ tiếng Việt <span className="text-white font-bold text-glow-sm">offline</span>, <span className="text-white font-bold text-glow-sm">nhanh</span>, và <span className="text-white font-bold text-glow">riêng tư</span> cho macOS.
+                <span className="block text-slate-500 text-lg md:text-xl mt-4 font-semibold opacity-80 tracking-tight">Xây dựng bằng Swift & C/C++ native tối ưu hiệu năng tuyệt đối.</span>
               </p>
 
               <div className="flex flex-wrap justify-center gap-4 mb-20 max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-500">
-                 <StatBadge icon={Icons.Tag} label="Phiên bản" value={version} href="https://github.com/PhamHungTien/PHTV/releases/latest" colorClass="text-blue-500 dark:text-blue-400" />
-                 <StatBadge icon={Icons.CloudDownload} label="Lượt tải" value={totalDownloads} href="https://github.com/PhamHungTien/PHTV/releases" colorClass="text-green-600 dark:text-green-400" />
-                 <StatBadge icon={Icons.Heart} label="Ủng hộ" value="Donate" onClick={() => setShowDonate(true)} colorClass="text-pink-500 dark:text-pink-400" />
+                 <StatBadge icon={Icons.Tag} label="Phiên bản" value={version} href="https://github.com/PhamHungTien/PHTV/releases/latest" colorClass="text-blue-400" />
+                 <StatBadge icon={Icons.CloudDownload} label="Lượt tải" value={totalDownloads} href="https://github.com/PhamHungTien/PHTV/releases" colorClass="text-green-400" />
+                 <StatBadge icon={Icons.Heart} label="Ủng hộ" value="Donate" onClick={() => setShowDonate(true)} colorClass="text-pink-400" />
               </div>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-5 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-700">
                 <a 
                   href={downloadUrl}
-                  className="w-full sm:w-auto px-12 py-5 bg-slate-900 dark:bg-white text-white dark:text-slate-950 rounded-2xl font-black text-lg hover:bg-slate-800 dark:hover:bg-slate-100 transition-all transform hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(0,0,0,0.2)] dark:shadow-[0_20px_50px_rgba(255,255,255,0.2)] flex items-center justify-center gap-3 group"
+                  className="w-full sm:w-auto px-12 py-5 bg-white text-slate-950 rounded-2xl font-black text-lg hover:bg-slate-100 transition-all transform hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(255,255,255,0.2)] flex items-center justify-center gap-3 group"
                 >
                   <Icons.Download size={24} className="group-hover:animate-bounce" />
                   Tải xuống {version}
@@ -384,12 +384,12 @@ function App() {
                     setActiveTab('community');
                     window.location.hash = '#community';
                   }}
-                  className="w-full sm:w-auto px-10 py-5 bg-white/50 dark:bg-brand-500/5 backdrop-blur-xl border border-slate-200 dark:border-brand-500/20 text-brand-600 dark:text-brand-400 rounded-2xl font-black text-lg hover:bg-white/80 dark:hover:bg-brand-500/10 hover:border-brand-300 dark:hover:border-brand-500/40 transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center gap-3 relative group shadow-xl dark:shadow-2xl"
+                  className="w-full sm:w-auto px-10 py-5 bg-brand-500/5 backdrop-blur-xl border border-brand-500/20 text-brand-400 rounded-2xl font-black text-lg hover:bg-brand-500/10 hover:border-brand-500/40 transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center gap-3 relative group shadow-2xl"
                 >
                   <div className="absolute -top-1.5 -right-1.5 z-30">
                     <span className="relative flex h-4 w-4">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-4 w-4 bg-green-500 border-2 border-white dark:border-slate-950 shadow-lg"></span>
+                      <span className="relative inline-flex rounded-full h-4 w-4 bg-green-500 border-2 border-slate-950 shadow-lg"></span>
                     </span>
                   </div>
                   <Icons.MessageSquare size={22} className="group-hover:rotate-12 transition-transform" />
@@ -399,7 +399,7 @@ function App() {
 
                 <a 
                   href="#install"
-                  className="w-full sm:w-auto px-10 py-5 bg-white/40 dark:bg-slate-900/50 backdrop-blur-xl border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400 rounded-2xl font-bold text-lg hover:bg-white/60 dark:hover:bg-slate-800 transition-all flex items-center justify-center gap-3 shadow-lg dark:shadow-none"
+                  className="w-full sm:w-auto px-10 py-5 bg-slate-900/50 backdrop-blur-xl border border-white/10 text-slate-400 rounded-2xl font-bold text-lg hover:bg-slate-800 transition-all flex items-center justify-center gap-3"
                 >
                   <Icons.Terminal size={22} />
                   Homebrew
@@ -481,15 +481,15 @@ function App() {
             </div>
           </section>
 
-          <section className="reveal py-32 border-t border-slate-100/50 dark:border-white/5 bg-white/30 dark:bg-slate-950/20 backdrop-blur-sm">
+          <section className="reveal py-32 border-t border-white/5 bg-slate-950/20 backdrop-blur-sm">
              <div className="max-w-4xl mx-auto px-6">
-                <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-12 text-center tracking-tighter uppercase italic">Cấu hình yêu cầu</h2>
-                <div className="overflow-hidden rounded-3xl border border-slate-200/50 dark:border-white/5 bg-white/40 dark:bg-white/[0.02] shadow-2xl">
+                <h2 className="text-3xl md:text-4xl font-black text-white mb-12 text-center tracking-tighter uppercase italic">Cấu hình yêu cầu</h2>
+                <div className="overflow-hidden rounded-3xl border border-white/5 bg-white/[0.02] shadow-2xl">
                   <table className="w-full text-left border-collapse">
                     <tbody>
-                      <tr className="border-b border-slate-200/50 dark:border-white/5 group hover:bg-white/50 dark:hover:bg-white/[0.03] transition-colors"><th className="py-6 px-8 text-slate-500 font-bold uppercase tracking-widest text-xs w-1/3">Hệ điều hành</th><td className="py-6 px-8 text-slate-900 dark:text-white font-black text-lg">macOS 13.0+</td></tr>
-                      <tr className="border-b border-slate-200/50 dark:border-white/5 group hover:bg-white/50 dark:hover:bg-white/[0.03] transition-colors"><th className="py-6 px-8 text-slate-500 font-bold uppercase tracking-widest text-xs">Kiến trúc</th><td className="py-6 px-8 text-slate-900 dark:text-white font-black text-lg">Universal Binary (Intel & Apple Silicon)</td></tr>
-                      <tr className="group hover:bg-white/50 dark:hover:bg-white/[0.03] transition-colors"><th className="py-6 px-8 text-slate-500 font-bold uppercase tracking-widest text-xs">Yêu cầu quyền</th><td className="py-6 px-8 text-slate-900 dark:text-white font-black text-lg inline-flex items-center gap-3"><Icons.ShieldCheck className="text-brand-500 dark:text-brand-400" size={20} /> Accessibility (Trợ năng)</td></tr>
+                      <tr className="border-b border-white/5 group hover:bg-white/[0.03] transition-colors"><th className="py-6 px-8 text-slate-500 font-bold uppercase tracking-widest text-xs w-1/3">Hệ điều hành</th><td className="py-6 px-8 text-white font-black text-lg">macOS 13.0+</td></tr>
+                      <tr className="border-b border-white/5 group hover:bg-white/[0.03] transition-colors"><th className="py-6 px-8 text-slate-500 font-bold uppercase tracking-widest text-xs">Kiến trúc</th><td className="py-6 px-8 text-white font-black text-lg">Universal Binary (Intel & Apple Silicon)</td></tr>
+                      <tr className="group hover:bg-white/[0.03] transition-colors"><th className="py-6 px-8 text-slate-500 font-bold uppercase tracking-widest text-xs">Yêu cầu quyền</th><td className="py-6 px-8 text-white font-black text-lg inline-flex items-center gap-3"><Icons.ShieldCheck className="text-brand-400" size={20} /> Accessibility (Trợ năng)</td></tr>
                     </tbody>
                   </table>
                 </div>
@@ -497,18 +497,18 @@ function App() {
           </section>
 
           <section id="faq" className="reveal py-32 max-w-4xl mx-auto px-6">
-             <h2 className="text-4xl md:text-6xl font-black mb-6 text-center text-slate-900 dark:text-white tracking-tighter italic leading-none">Hỏi đáp <span className="text-brand-500">&</span> Giải đáp</h2>
+             <h2 className="text-4xl md:text-6xl font-black mb-6 text-center text-white tracking-tighter italic leading-none">Hỏi đáp <span className="text-brand-500">&</span> Giải đáp</h2>
              <p className="text-center text-slate-500 text-lg md:text-xl font-medium mb-20 opacity-80 uppercase tracking-widest">Những thắc mắc thường gặp về PHTV</p>
              <div className="space-y-6">
                 {faqData.map((category, idx) => (
                   <div key={category.category} className="space-y-4">
-                    <h3 className="text-xl font-black text-brand-600 dark:text-brand-400 mb-6 px-4 flex items-center gap-3 uppercase tracking-wider"><div className="w-8 h-[2px] bg-brand-500/30 rounded-full"></div>{category.category}</h3>
+                    <h3 className="text-xl font-black text-brand-400 mb-6 px-4 flex items-center gap-3 uppercase tracking-wider"><div className="w-8 h-[2px] bg-brand-500/30 rounded-full"></div>{category.category}</h3>
                     <div className="space-y-4">
                       {category.items.map((item, i) => (
-                        <div key={i} className="bg-white/40 dark:bg-white/[0.03] border border-slate-200/50 dark:border-white/5 rounded-3xl overflow-hidden hover:border-brand-500/30 transition-all duration-500 group shadow-lg">
+                        <div key={i} className="bg-white/[0.03] border border-white/5 rounded-3xl overflow-hidden hover:border-brand-500/30 transition-all duration-500 group shadow-lg">
                           <details className="group/details">
-                              <summary className="flex justify-between items-center cursor-pointer p-6 list-none bg-transparent hover:bg-white/50 dark:hover:bg-white/[0.02] transition-colors"><span className="font-black text-slate-900 dark:text-white pr-6 text-sm md:text-lg tracking-tight group-hover/details:text-brand-500 dark:group-hover/details:text-brand-400 transition-colors uppercase">{item.q}</span><span className="transition-all duration-500 group-open/details:rotate-180 group-open/details:text-brand-500 shrink-0 text-slate-500 dark:text-slate-600"><Icons.ChevronDown size={24} /></span></summary>
-                              <div className="text-slate-600 dark:text-slate-400 p-8 pt-2 border-t border-slate-200/50 dark:border-white/5 leading-relaxed font-medium bg-white/20 dark:bg-white/[0.01]"><div className="mt-4 animate-in fade-in slide-in-from-top-2 duration-500">{item.a}</div></div>
+                              <summary className="flex justify-between items-center cursor-pointer p-6 list-none bg-transparent hover:bg-white/[0.02] transition-colors"><span className="font-black text-white pr-6 text-sm md:text-lg tracking-tight group-hover/details:text-brand-400 transition-colors uppercase">{item.q}</span><span className="transition-all duration-500 group-open/details:rotate-180 group-open/details:text-brand-500 shrink-0 text-slate-600"><Icons.ChevronDown size={24} /></span></summary>
+                              <div className="text-slate-400 p-8 pt-2 border-t border-white/5 leading-relaxed font-medium bg-white/[0.01]"><div className="mt-4 animate-in fade-in slide-in-from-top-2 duration-500">{item.a}</div></div>
                           </details>
                         </div>
                       ))}
