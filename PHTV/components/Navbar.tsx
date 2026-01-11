@@ -154,7 +154,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
             </a>
             <div className="flex justify-center gap-6 pt-4 border-t border-white/5">
               <a href="https://github.com/PhamHungTien/PHTV" className="text-slate-400 hover:text-white transition-colors"><Icons.Github size={24} /></a>
-              <a href="mailto:hungtien10a7@gmail.com" className="text-slate-400 hover:text-white transition-colors"><Icons.Coffee size={24} /></a>
+              <a href="mailto:phamhungtien.contact@gmail.com" className="text-slate-400 hover:text-white transition-colors"><Icons.Coffee size={24} /></a>
             </div>
           </div>
         </div>

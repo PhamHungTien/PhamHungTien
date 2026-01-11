@@ -1,0 +1,15 @@
+# Robots.txt for PHTV Website
+# Allow all search engines to crawl the site
+
+User-agent: *
+Allow: /
+
+# Allow Googlebot to crawl images (including favicon)
+User-agent: Googlebot-Image
+Allow: /
+
+# Sitemap location
+Sitemap: https://phamhungtien.com/PHTV/sitemap.xml
+
+# Disallow admin or private paths (if any)
+# Disallow: /admin/

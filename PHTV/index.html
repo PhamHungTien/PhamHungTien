@@ -35,11 +35,12 @@
     <link rel="dns-prefetch" href="https://api.github.com" />
     <link rel="preload" as="image" href="phtv-icon.webp" />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/PHTV/phtv-icon.png" sizes="1024x1024" />
-    <link rel="icon" type="image/webp" href="/PHTV/phtv-icon.webp" />
-    <link rel="apple-touch-icon" href="/PHTV/phtv-icon.png" />
-    <meta name="msapplication-TileImage" content="/PHTV/phtv-icon.png" />
+    <!-- Favicon - Optimized for Google Search -->
+    <link rel="icon" type="image/png" href="/PHTV/PHTV-icontron.png" sizes="1088x1088" />
+    <link rel="shortcut icon" type="image/png" href="/PHTV/PHTV-icontron.png" />
+    <link rel="apple-touch-icon" href="/PHTV/PHTV-icontron.png" sizes="1088x1088" />
+    <link rel="apple-touch-icon-precomposed" href="/PHTV/PHTV-icontron.png" sizes="1088x1088" />
+    <meta name="msapplication-TileImage" content="/PHTV/PHTV-icontron.png" />
 
     <!-- Open Graph / Facebook / Zalo -->
     <meta property="og:type" content="website" />
@@ -78,7 +79,6 @@
     <meta name="apple-mobile-web-app-cache" content="no" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="format-detection" content="telephone=no" />
-    <meta name="msapplication-TileImage" content="/PHTV/phtv-icon.png" />
     <meta name="msapplication-TileColor" content="#0f172a" />
 
     <!-- Structured Data (JSON-LD) for Software Application -->
@@ -220,12 +220,24 @@
     {
       "@context": "https://schema.org",
       "@type": "Organization",
-      "name": "Pham Hung Tien",
-      "url": "https://phamhungtien.com",
-      "logo": "https://phamhungtien.com/PHTV/phtv-icon.png",
+      "name": "PHTV - Pham Hung Tien",
+      "url": "https://phamhungtien.com/PHTV/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://phamhungtien.com/PHTV/PHTV-icontron.png",
+        "width": 1088,
+        "height": 1088
+      },
       "sameAs": [
-        "https://github.com/PhamHungTien"
-      ]
+        "https://github.com/PhamHungTien",
+        "https://www.facebook.com/PHTVInput/",
+        "https://www.linkedin.com/in/ph%E1%BA%A1m-h%C3%B9ng-ti%E1%BA%BFn-a1b405327/"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "phamhungtien.contact@gmail.com",
+        "contactType": "Customer Support"
+      }
     }
     </script>
 

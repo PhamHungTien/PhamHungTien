@@ -31,7 +31,7 @@ export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
                 { icon: Icons.Linkedin, href: "https://www.linkedin.com/in/ph%E1%BA%A1m-h%C3%B9ng-ti%E1%BA%BFn-a1b405327/", label: "LinkedIn" },
                 { icon: () => (
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.33C10.24.5 9.5 3.44 9.5 5.32v2.15h-3v4h3v12h5v-12h3.85l.42-4z"/></svg>
-                ), href: "https://www.facebook.com/phamhungtien1404", label: "Facebook" }
+                ), href: "https://www.facebook.com/PHTVInput/", label: "Facebook" }
               ].map((social) => (
                 <a 
                   key={social.label}
@@ -44,9 +44,9 @@ export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
                   <social.icon size={20} />
                 </a>
               ))}
-              <a 
-                href="mailto:hungtien10a7@gmail.com" 
-                className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-all border border-white/5 shadow-none" 
+              <a
+                href="mailto:phamhungtien.contact@gmail.com"
+                className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-all border border-white/5 shadow-none"
                 title="Email"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
