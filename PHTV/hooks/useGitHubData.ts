@@ -7,8 +7,8 @@ export interface GitHubData {
   loading: boolean;
 }
 
-const CACHE_KEY = 'phtv_releases_data_v3';
-const CACHE_DURATION = 3600000; // 1 hour
+const CACHE_KEY = 'phtv_releases_data_v4';
+const CACHE_DURATION = 600000; // 10 minutes
 
 export const useGitHubData = (): GitHubData => {
   const [data, setData] = useState<GitHubData>({
@@ -47,11 +47,7 @@ export const useGitHubData = (): GitHubData => {
         const releases = await res.json();
         
         if (Array.isArray(releases) && releases.length > 0) {
-          const latest = releases[0];
-          const latestVer = latest.tag_name;
-          const dmgAsset = latest.assets?.find((asset: any) => asset.name.endsWith('.dmg'));
-          const url = dmgAsset ? dmgAsset.browser_download_url : "https://github.com/PhamHungTien/PHTV/releases/latest";
-
+          // Calculate total downloads
           let dlCount = 0;
           releases.forEach((rel: any) => {
             if (rel.assets) {
@@ -65,6 +61,18 @@ export const useGitHubData = (): GitHubData => {
             notation: "compact",
             maximumFractionDigits: 1
           }).format(dlCount);
+
+          // Find the latest stable release
+          let targetRelease = releases.find((r: any) => !r.prerelease && !r.draft);
+          
+          // Fallback to the absolute latest if no stable release found
+          if (!targetRelease) {
+            targetRelease = releases[0];
+          }
+
+          const latestVer = targetRelease.tag_name;
+          const dmgAsset = targetRelease.assets?.find((asset: any) => asset.name.endsWith('.dmg'));
+          const url = dmgAsset ? dmgAsset.browser_download_url : targetRelease.html_url;
 
           const newData = {
             downloadUrl: url,
