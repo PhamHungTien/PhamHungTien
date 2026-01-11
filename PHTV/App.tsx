@@ -316,7 +316,10 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen mesh-gradient text-white selection:bg-brand-500 selection:text-white overflow-x-hidden">
+    <div className="min-h-screen bg-slate-950 text-white selection:bg-brand-500 selection:text-white overflow-x-hidden">
+      {/* Background Layer */}
+      <div className="fixed inset-0 z-0 mesh-gradient pointer-events-none" />
+      
       {/* Top Loading Bar */}
       <div className={`fixed top-0 left-0 right-0 h-1 z-[110] transition-transform duration-500 origin-left ${loading ? 'scale-x-100' : 'scale-x-0'}`}>
         <div className="h-full bg-gradient-to-r from-brand-500 via-purple-500 to-red-500 animate-shimmer bg-[length:200%_auto]"></div>
@@ -328,9 +331,7 @@ function App() {
         <div className="relative z-10 animate-in fade-in duration-1000">
           {/* Hero Section */}
           <main className="relative pt-32 pb-20 md:pt-56 md:pb-40 px-6 overflow-hidden">
-            <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-brand-600/10 rounded-full blur-[140px] -z-10 animate-pulse-slow"></div>
-            <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-red-600/10 rounded-full blur-[120px] -z-10"></div>
-
+            
             <h1 className="sr-only">PHTV - Bộ gõ tiếng Việt Precision Hybrid Typing Vietnamese cho macOS</h1>
             <div className="max-w-7xl mx-auto text-center relative z-10">
               
@@ -347,7 +348,7 @@ function App() {
                    <img 
                      src="/PHTV/phtv-icon.webp" 
                      alt="PHTV Icon" 
-                     className="w-full h-full drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] rounded-[2rem] md:rounded-[3.5rem] transform group-hover:scale-105 transition-all duration-700 ease-out z-10 object-cover" 
+                     className="w-full h-full drop-shadow-[0_20px_40px_rgba(0,0,0,0.3)] rounded-[2rem] md:rounded-[3.5rem] transform group-hover:scale-105 transition-all duration-700 ease-out z-10 object-cover" 
                      fetchPriority="high"
                    />
                 </div>
@@ -413,7 +414,6 @@ function App() {
           <div className="reveal"><Shortcuts /></div>
 
           <section id="install" className="reveal py-32 md:py-48 bg-slate-950/30 border-y border-white/5 scroll-mt-32 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-600/5 rounded-full blur-[140px] -z-10"></div>
             <div className="max-w-5xl mx-auto px-6 relative z-10">
               <div className="text-center mb-24">
                 <h2 className="text-4xl md:text-6xl font-black mb-8 text-slate-900 dark:text-white tracking-tighter italic">Cài đặt dễ dàng</h2>
