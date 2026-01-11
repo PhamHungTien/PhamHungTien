@@ -17,9 +17,19 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
 export const db = getFirestore(app);
-export const messaging = getMessaging(app);
+
+let messagingInstance: any = null;
+try {
+  if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+    messagingInstance = getMessaging(app);
+  }
+} catch (e) {
+  console.warn('Firebase Messaging not supported in this environment', e);
+}
+export const messaging = messagingInstance;
 
 export const requestNotificationPermission = async () => {
+  if (!messaging) return null;
   try {
     const permission = await Notification.requestPermission();
     if (permission === 'granted') {

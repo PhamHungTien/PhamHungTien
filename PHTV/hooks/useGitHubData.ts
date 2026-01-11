@@ -83,12 +83,16 @@ export const useGitHubData = (): GitHubData => {
 
           setData(newData);
 
-          localStorage.setItem(CACHE_KEY, JSON.stringify({
-            url,
-            version: latestVer,
-            downloads: formattedDownloads,
-            timestamp: now
-          }));
+          try {
+            localStorage.setItem(CACHE_KEY, JSON.stringify({
+              url,
+              version: latestVer,
+              downloads: formattedDownloads,
+              timestamp: now
+            }));
+          } catch (e) {
+            console.warn('Failed to save to localStorage:', e);
+          }
         }
       } catch (err) {
         console.error("Failed to fetch GitHub data", err);
