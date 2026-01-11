@@ -113,7 +113,7 @@
   }
 
   .text-glow {
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.4), 0 0 40px rgba(244, 63, 94, 0.5);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(244, 63, 94, 0.6), 0 0 60px rgba(244, 63, 94, 0.2);
   }
 
   /* Reveal Animation Utility */
