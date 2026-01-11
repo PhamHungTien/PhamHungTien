@@ -22,7 +22,7 @@ export default defineConfig(({ mode }) => {
         }),
         {
           name: 'copy-headers',
-          closeBundle() {
+          writeBundle() {
             // Copy _headers file to dist for Cloudflare Pages/Netlify
             if (existsSync('_headers')) {
               copyFileSync('_headers', 'dist/_headers');
