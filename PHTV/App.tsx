@@ -412,7 +412,7 @@ function App() {
           <div className="reveal"><Gallery /></div>
           <div className="reveal"><Shortcuts /></div>
 
-          <section id="install" className="reveal py-32 md:py-48 bg-white/30 dark:bg-slate-950/30 border-y border-slate-100/50 dark:border-white/5 scroll-mt-32 relative overflow-hidden backdrop-blur-sm">
+          <section id="install" className="reveal py-32 md:py-48 bg-slate-950/30 border-y border-white/5 scroll-mt-32 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-600/5 rounded-full blur-[140px] -z-10"></div>
             <div className="max-w-5xl mx-auto px-6 relative z-10">
               <div className="text-center mb-24">

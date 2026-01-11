@@ -70,7 +70,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
                 href={item.href} 
                 onClick={(e) => handleLinkClick(e, item.tab, item.href)}
                 className={`text-sm font-bold transition-all hover:-translate-y-0.5 flex items-center gap-1.5 ${
-                  (item.tab === activeTab) ? 'text-brand-500 dark:text-brand-400' : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                  (item.tab === activeTab) ? 'text-brand-400' : 'text-slate-400 hover:text-white'
                 }`}
               >
                 {item.name}
@@ -86,7 +86,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
               href="https://github.com/PhamHungTien/PHTV" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="hidden sm:flex items-center gap-2 text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-full"
+              className="hidden sm:flex items-center gap-2 text-slate-400 hover:text-white transition-colors p-2 hover:bg-white/5 rounded-full"
               title="GitHub Repository"
               aria-label="Xem mã nguồn trên GitHub"
             >
@@ -95,7 +95,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
             
             <a 
               href={downloadUrl}
-              className="hidden xs:flex items-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-950 px-6 py-2.5 rounded-xl text-sm font-black hover:bg-slate-800 dark:hover:bg-slate-100 transition-all transform hover:scale-105 active:scale-95 shadow-xl shadow-slate-900/10 dark:shadow-white/10"
+              className="hidden xs:flex items-center gap-2 bg-white text-slate-950 px-6 py-2.5 rounded-xl text-sm font-black hover:bg-slate-100 transition-all transform hover:scale-105 active:scale-95 shadow-xl shadow-white/10"
               aria-label="Tải xuống PHTV"
             >
               <Icons.Download size={18} />
@@ -104,7 +104,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
 
             {/* Mobile Menu Button */}
             <button 
-              className="lg:hidden p-2 text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
+              className="lg:hidden p-2 text-slate-400 hover:text-white transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label={mobileMenuOpen ? "Đóng menu" : "Mở menu"}
             >
@@ -116,11 +116,11 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
 
       {/* Mobile Menu Overlay */}
       <div className={`fixed inset-0 z-[90] lg:hidden transition-all duration-500 ${mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
-        <div className="absolute inset-0 bg-white/90 dark:bg-slate-950/90 backdrop-blur-2xl" onClick={() => setMobileMenuOpen(false)}></div>
-        <div className={`absolute right-0 top-0 bottom-0 w-[280px] bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-white/5 p-8 flex flex-col transition-transform duration-500 ease-out shadow-2xl ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-2xl" onClick={() => setMobileMenuOpen(false)}></div>
+        <div className={`absolute right-0 top-0 bottom-0 w-[280px] bg-slate-900 border-l border-white/5 p-8 flex flex-col transition-transform duration-500 ease-out shadow-2xl ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
           <div className="flex items-center gap-4 mb-12">
             <img src={iconImg} alt="PHTV" className="w-10 h-10 rounded-xl" />
-            <span className="font-black text-2xl text-slate-900 dark:text-white">PHTV</span>
+            <span className="font-black text-2xl text-white">PHTV</span>
           </div>
           
           <div className="flex flex-col gap-6">
@@ -130,7 +130,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
                 href={item.href} 
                 onClick={(e) => handleLinkClick(e, item.tab, item.href)}
                 className={`text-lg font-bold flex items-center justify-between group ${
-                  item.tab === activeTab ? 'text-brand-500 dark:text-brand-400' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
+                  item.tab === activeTab ? 'text-brand-400' : 'text-slate-300 hover:text-white'
                 }`}
               >
                 <span className="flex items-center gap-3">
@@ -147,14 +147,14 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
           <div className="mt-auto space-y-4">
             <a 
               href={downloadUrl}
-              className="flex items-center justify-center gap-3 w-full py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-950 rounded-2xl font-black text-lg shadow-xl shadow-slate-900/10 dark:shadow-white/5"
+              className="flex items-center justify-center gap-3 w-full py-4 bg-white text-slate-950 rounded-2xl font-black text-lg shadow-xl shadow-white/5"
             >
               <Icons.Download size={20} />
               Tải ngay
             </a>
-            <div className="flex justify-center gap-6 pt-4 border-t border-slate-200 dark:border-white/5">
-              <a href="https://github.com/PhamHungTien/PHTV" className="text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"><Icons.Github size={24} /></a>
-              <a href="mailto:hungtien10a7@gmail.com" className="text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"><Icons.Coffee size={24} /></a>
+            <div className="flex justify-center gap-6 pt-4 border-t border-white/5">
+              <a href="https://github.com/PhamHungTien/PHTV" className="text-slate-400 hover:text-white transition-colors"><Icons.Github size={24} /></a>
+              <a href="mailto:hungtien10a7@gmail.com" className="text-slate-400 hover:text-white transition-colors"><Icons.Coffee size={24} /></a>
             </div>
           </div>
         </div>
