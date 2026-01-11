@@ -325,7 +325,7 @@ function App() {
       <Navbar activeTab={activeTab} onTabChange={setActiveTab} />
 
       {activeTab === 'home' ? (
-        <div className="animate-in fade-in duration-1000">
+        <div className="relative z-10 animate-in fade-in duration-1000">
           {/* Hero Section */}
           <main className="relative pt-32 pb-20 md:pt-56 md:pb-40 px-6 overflow-hidden">
             <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-brand-600/10 rounded-full blur-[140px] -z-10 animate-pulse-slow"></div>
@@ -519,7 +519,7 @@ function App() {
           </section>
         </div>
       ) : (
-        <div className="pt-24 animate-in slide-in-from-right-4 fade-in duration-1000">
+        <div className="relative z-10 pt-24 animate-in slide-in-from-right-4 fade-in duration-1000">
           <QASection />
         </div>
       )}
