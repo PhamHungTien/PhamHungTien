@@ -40,6 +40,7 @@ export default defineConfig(({ mode }) => {
         outDir: 'dist',
         sourcemap: false,
         minify: 'terser',
+        target: 'es2015',
         rollupOptions: {
           output: {
             entryFileNames: `assets/[name]-[hash].js`,
