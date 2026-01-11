@@ -18,7 +18,7 @@ export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
           {/* Brand Column */}
           <div className="lg:col-span-5">
             <div className="flex items-center gap-4 mb-8">
-              <img src={iconImg} alt="PHTV Logo" className="w-12 h-12 rounded-2xl shadow-xl" />
+              <img src={iconImg} alt="PHTV Logo" className="w-12 h-12 rounded-2xl" />
               <span className="font-black text-3xl tracking-tighter text-white">PHTV</span>
             </div>
             <p className="text-slate-400 mb-8 max-w-md leading-relaxed text-lg font-medium">
@@ -38,7 +38,7 @@ export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
                   href={social.href} 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-all border border-white/5 shadow-none" 
+                  className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-all shadow-none" 
                   title={social.label}
                 >
                   <social.icon size={20} />
@@ -46,7 +46,7 @@ export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
               ))}
               <a
                 href="mailto:phamhungtien.contact@gmail.com"
-                className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-all border border-white/5 shadow-none"
+                className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-all shadow-none"
                 title="Email"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
@@ -79,7 +79,7 @@ export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
               <h4 className="font-bold text-white mb-6 uppercase tracking-widest text-xs">Hỗ trợ</h4>
               <button 
                 onClick={onDonateClick} 
-                className="group flex items-center gap-3 px-5 py-3 bg-brand-600/10 hover:bg-brand-600/20 text-brand-400 rounded-xl transition-all border border-brand-500/20 font-bold text-sm"
+                className="group flex items-center gap-3 px-5 py-3 bg-brand-600/10 hover:bg-brand-600/20 text-brand-400 rounded-xl transition-all font-bold text-sm"
               >
                 <Icons.Coffee size={18} className="group-hover:animate-bounce" />
                 Mua cho mình cafe
