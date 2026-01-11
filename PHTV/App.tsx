@@ -303,6 +303,8 @@ function App() {
       const hash = window.location.hash;
       if (hash === '#community' || hash === '#qa') {
         setActiveTab('community');
+      } else if (hash === '#donate') {
+        setShowDonate(true);
       } else if (hash === '' || hash === '#home') {
         setActiveTab('home');
       }
