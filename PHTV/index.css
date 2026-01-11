@@ -20,7 +20,17 @@
     background: rgba(244, 63, 94, 0.6);
   }
 
+  body {
+    background-color: #f8fafc;
+    color: #0f172a;
+  }
+
   @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #020617;
+      color: white;
+    }
+    
     ::-webkit-scrollbar-thumb {
       background: rgba(255, 255, 255, 0.15);
       border: 1px solid rgba(255, 255, 255, 0.05);
