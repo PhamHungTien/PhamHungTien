@@ -411,9 +411,9 @@ function App() {
             </div>
           </main>
 
-          <div className="reveal"><VideoTutorial /></div>
           <div className="reveal"><Features /></div>
           <div className="reveal"><Gallery /></div>
+          <div className="reveal"><VideoTutorial /></div>
           <div className="reveal"><Shortcuts /></div>
 
           <section id="install" className="reveal py-32 md:py-48 bg-slate-950/30 border-y border-white/5 scroll-mt-32 relative overflow-hidden">
