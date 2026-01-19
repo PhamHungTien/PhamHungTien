@@ -6,6 +6,7 @@ import { Shortcuts } from './components/Shortcuts';
 import { Gallery } from './components/Gallery';
 import { Footer } from './components/Footer';
 import { Icons } from './components/Icons';
+import { VideoTutorial } from './components/VideoTutorial';
 import { useGitHubData } from './hooks/useGitHubData';
 
 // Moved components
@@ -44,6 +45,7 @@ const faqData = [
             </div>
 
             <p className="text-sm">Hoặc tải trực tiếp từ <a href="https://phamhungtien.com/PHTV/" className="text-brand-400 hover:underline">phamhungtien.com/PHTV</a> hoặc <a href="https://github.com/PhamHungTien/PHTV/releases" className="text-brand-400 hover:underline">GitHub Releases</a>.</p>
+            <p className="mt-2 text-sm italic text-slate-500">Xem thêm: <a href="#tutorial" className="text-brand-400 hover:underline font-bold">Video hướng dẫn cài đặt chi tiết</a></p>
           </div>
         )
       },
@@ -409,6 +411,7 @@ function App() {
             </div>
           </main>
 
+          <div className="reveal"><VideoTutorial /></div>
           <div className="reveal"><Features /></div>
           <div className="reveal"><Gallery /></div>
           <div className="reveal"><Shortcuts /></div>
