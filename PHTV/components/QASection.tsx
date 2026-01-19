@@ -533,6 +533,20 @@ export const QASection: React.FC = () => {
                  </div>
                  <p className="text-[11px] text-slate-400 leading-relaxed font-medium">Tôn trọng, không spam, văn minh. Chúc bạn vui vẻ!</p>
               </div>
+              <a 
+                href="https://discord.gg/hm2C4tbaDz" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 p-4 bg-[#5865F2]/10 rounded-xl border border-[#5865F2]/20 hover:bg-[#5865F2]/20 transition-all group/discord"
+              >
+                 <div className="w-8 h-8 rounded-lg bg-[#5865F2] flex items-center justify-center text-white shadow-lg group-hover/discord:scale-110 transition-transform">
+                    <Icons.MessageSquare size={16} />
+                 </div>
+                 <div>
+                    <h4 className="text-white font-black text-[11px] uppercase tracking-tight leading-none">Discord</h4>
+                    <p className="text-[9px] text-[#5865F2] font-black uppercase tracking-widest mt-1">Báo lỗi & Hỗ trợ</p>
+                 </div>
+              </a>
            </div>
         </div>
 

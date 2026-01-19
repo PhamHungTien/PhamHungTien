@@ -243,7 +243,7 @@ const faqData = [
              <li>Kiểm tra quyền Accessibility</li>
              <li>Tắt/bật lại PHTV</li>
              <li>Restart ứng dụng gặp lỗi</li>
-             <li>Tạo issue trên GitHub</li>
+             <li>Tạo issue trên <a href="https://github.com/PhamHungTien/PHTV/issues" target="_blank" rel="noopener noreferrer" className="text-brand-400 hover:underline">GitHub</a> hoặc báo lỗi qua <a href="https://discord.gg/hm2C4tbaDz" target="_blank" rel="noopener noreferrer" className="text-brand-400 hover:underline">Discord</a></li>
            </ol>
         )
       },
