@@ -10,13 +10,13 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "phtv-icon.png",
+      "src": "phtv-icon.png?v=2",
       "sizes": "1024x1024",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "phtv-icon.webp",
+      "src": "phtv-icon.webp?v=2",
       "sizes": "1024x1024",
       "type": "image/webp",
       "purpose": "any maskable"
