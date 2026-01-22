@@ -423,6 +423,43 @@ function App() {
                 <p className="text-slate-500 dark:text-slate-400 text-xl md:text-2xl font-medium max-w-2xl mx-auto opacity-80">Hỗ trợ tuyệt vời cho macOS 13.0+ trên cả Intel và Apple Silicon.</p>
               </div>
 
+              <div className="glass-panel rounded-[2.5rem] p-8 md:p-12 mb-24 border border-brand-500/20 shadow-[0_0_50px_rgba(139,92,246,0.1)] relative overflow-hidden">
+                <div className="flex flex-col md:flex-row items-center gap-12">
+                   <div className="flex-1 space-y-6">
+                      <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-500 font-bold text-xs uppercase tracking-widest mb-2">
+                        <Icons.Settings size={14} />
+                        <span>Lưu ý quan trọng</span>
+                      </div>
+                      <h3 className="text-3xl md:text-4xl font-black text-white leading-tight">Tắt bộ gõ mặc định</h3>
+                      <p className="text-slate-400 text-lg leading-relaxed font-medium">
+                        Trước khi cài đặt, hãy vào <strong className="text-white">System Settings</strong> → <strong className="text-white">Keyboard</strong> → <strong className="text-white">Edit Input Sources...</strong> và tắt tất cả các tùy chọn tự động sửa lỗi của macOS để tránh xung đột với PHTV.
+                      </p>
+                      <ul className="space-y-3">
+                        {[
+                          "Correct spelling automatically",
+                          "Capitalize words automatically", 
+                          "Show inline predictive text",
+                          "Add period with double-space",
+                          "Use smart quotes and dashes"
+                        ].map((item, i) => (
+                           <li key={i} className="flex items-center gap-3 text-slate-300 font-medium">
+                              <Icons.X className="text-red-400 shrink-0" size={18} />
+                              <span>Tắt <span className="text-white">{item}</span></span>
+                           </li>
+                        ))}
+                      </ul>
+                   </div>
+                   <div className="flex-1 w-full relative group">
+                      <div className="absolute inset-0 bg-gradient-to-tr from-brand-500/20 to-transparent rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-700"></div>
+                      <img 
+                        src="/PHTV/assets/UI/input-source-settings.webp" 
+                        alt="MacOS Input Source Settings" 
+                        className="relative w-full rounded-2xl border border-white/10 shadow-2xl transform group-hover:scale-[1.02] transition-transform duration-700"
+                      />
+                   </div>
+                </div>
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-24">
                 <div className="glass-panel rounded-[2.5rem] p-10 md:p-12 flex flex-col shadow-3xl group relative overflow-hidden transition-all duration-500 hover:border-brand-500/30">
                    <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity duration-700 transform group-hover:scale-110"><Icons.Terminal size={160} /></div>
