@@ -10,7 +10,7 @@ export const AcronymRow = ({ letter, word }: { letter: string, word: string }) =
     </div>
     
     {/* Word suffix: Professional typography */}
-    <span className="text-lg sm:text-2xl md:text-4xl font-black uppercase tracking-[0.12em] text-white/60 group-hover/row:text-white group-hover/row:tracking-[0.2em] group-hover/row:text-glow transition-all duration-700 ease-out text-left pl-1.5 md:pl-3 relative leading-none flex items-center h-full">
+    <span className="text-lg sm:text-2xl md:text-4xl font-black uppercase tracking-[0.12em] text-white/60 group-hover/row:text-white group-hover/row:tracking-[0.2em] group-hover/row:text-glow transition-all duration-700 ease-out text-left pl-1.5 md:pl-3 relative leading-none flex items-center h-full italic">
       {word}
       {/* Subtle animated underline decoration */}
       <span className="absolute bottom-0 left-1.5 md:left-3 right-0 h-[1.5px] md:h-[2px] bg-gradient-to-r from-brand-400 via-rose-400 to-transparent scale-x-0 group-hover/row:scale-x-100 transition-transform duration-700 origin-left opacity-90 rounded-full shadow-[0_0_10px_rgba(244,63,94,0.5)]"></span>
