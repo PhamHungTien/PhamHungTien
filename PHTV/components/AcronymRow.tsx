@@ -4,7 +4,7 @@ export const AcronymRow = ({ letter, word }: { letter: string, word: string }) =
   <div className="flex items-center group/row cursor-default select-none relative h-[28px] sm:h-[44px] md:h-[64px] overflow-visible pr-6 sm:pr-10 md:pr-16">
     {/* Letter: Precisely aligned with icon segments */}
     <div className="w-10 sm:w-16 md:w-20 flex justify-end shrink-0 overflow-visible pr-1 sm:pr-2">
-        <span className="text-3xl sm:text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-br from-rose-500 via-rose-600 via-amber-400 via-rose-600 to-rose-700 bg-[length:300%_auto] animate-gradient-flow filter drop-shadow-[0_0_15px_rgba(244,63,94,0.5)] drop-shadow-[0_0_30px_rgba(244,63,94,0.3)] group-hover/row:drop-shadow-[0_0_25px_rgba(244,63,94,0.8)] group-hover/row:scale-110 transition-all duration-500 z-10 font-sans italic leading-none flex items-center h-full pr-2 md:pr-3">
+        <span className="text-3xl sm:text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-br from-[#450a04] via-red-500 via-rose-400 via-red-500 to-[#450a04] bg-[length:300%_auto] animate-gradient-flow filter drop-shadow-[0_0_15px_rgba(239,68,68,0.6)] drop-shadow-[0_0_30px_rgba(239,68,68,0.4)] group-hover/row:drop-shadow-[0_0_25px_rgba(239,68,68,0.9)] group-hover/row:scale-110 transition-all duration-500 z-10 font-sans italic leading-none flex items-center h-full pr-2 md:pr-3">
         {letter}
         </span>
     </div>
