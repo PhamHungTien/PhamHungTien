@@ -146,6 +146,7 @@ export const QASection: React.FC = () => {
   const [sortBy, setSortBy] = useState<'newest' | 'popular' | 'trending'>('newest');
   const [filterBy, setFilterBy] = useState<'all' | 'mine' | 'reported' | 'unanswered'>('all');
   const [searchQuery, setSearchBy] = useState('');
+  const [visibleQuestions, setVisibleQuestions] = useState<Set<string>>(new Set());
   
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showNamePrompt, setShowNamePrompt] = useState(false);
@@ -728,19 +729,37 @@ export const QASection: React.FC = () => {
                     ) : <SmartContent content={q.content} className="text-slate-200 text-sm md:text-base leading-relaxed font-medium bg-white/[0.02] p-5 md:p-6 rounded-[1.5rem] border border-white/5 shadow-inner" />}
                     <div className="flex items-center gap-8 px-4">
                        <button onClick={() => toggleLikeQuestion(q)} className={`flex items-center gap-2 font-black text-xs transition-all transform active:scale-50 ${q.likedBy?.includes(currentUser?.uid || '') ? 'text-rose-500' : 'text-slate-700 hover:text-slate-400'}`}><Icons.ThumbsUp size={18} fill={q.likedBy?.includes(currentUser?.uid || '') ? 'currentColor' : 'none'} /><span className="tabular-nums">{q.likedBy?.length || 0}</span></button>
-                         <button onClick={() => q.isLocked ? triggerToast('🔒 Thảo luận này đã khóa') : setReplyingTo({qId: q.id, name: q.author, authorId: q.authorId, authorEmail: q.authorEmail})} className={`flex items-center gap-4 font-black text-lg transition-all ${q.isLocked ? 'text-slate-900 cursor-not-allowed opacity-30' : 'text-slate-700 hover:text-brand-400'}`}>
+                         <button onClick={() => {
+                            if (q.isLocked) { triggerToast('🔒 Thảo luận này đã khóa'); return; }
+                            if ((q.replies?.length || 0) > 0) {
+                                setVisibleQuestions(prev => {
+                                    const newSet = new Set(prev);
+                                    if (newSet.has(q.id)) newSet.delete(q.id);
+                                    else newSet.add(q.id);
+                                    return newSet;
+                                });
+                            } else {
+                                setReplyingTo({qId: q.id, name: q.author, authorId: q.authorId, authorEmail: q.authorEmail});
+                            }
+                         }} className={`flex items-center gap-4 font-black text-lg transition-all ${q.isLocked ? 'text-slate-900 cursor-not-allowed opacity-30' : 'text-slate-700 hover:text-brand-400'}`}>
                            <Icons.MessageSquareReply size={28} /> 
-                           <span>{q.replies?.length || 0} Phản hồi</span>
+                           <span>{q.replies?.length || 0} Phản hồi {(q.replies?.length || 0) > 0 && (visibleQuestions.has(q.id) ? '(Thu gọn)' : '(Xem)')}</span>
                          </button>
                        <button onClick={() => { navigator.clipboard.writeText(`${window.location.origin}${window.location.pathname}#community?qid=${q.id}`); triggerToast('Đã copy link!'); }} className="flex items-center gap-2 text-slate-700 hover:text-white transition-all transform active:scale-90"><Icons.Link2 size={18} /></button>
                     </div>
+                    {(visibleQuestions.has(q.id) || replyingTo?.qId === q.id) && (
                     <div className="space-y-6 pt-6 border-l-[3px] border-white/[0.03] ml-3 pl-6 md:pl-10 relative">
-                      {q.replies?.map((r) => (
+                      {visibleQuestions.has(q.id) && q.replies?.map((r) => (
                         <div key={r.id} className="flex gap-4 group/reply animate-in fade-in duration-1000"><Avatar user={{ username: r.author, photoURL: r.authorPhoto, isAdmin: r.isAdmin }} isAdmin={r.isAdmin} size="w-8 h-8 md:w-9 md:h-9" /><div className="flex-1 space-y-3"><div className={`rounded-[1.2rem] p-4 md:p-5 border transition-all ${r.isAdmin ? 'bg-gradient-to-br from-rose-500/[0.05] to-pink-500/[0.05] border-rose-500/20 shadow-xl' : 'bg-slate-900/60 border-white/5 hover:bg-slate-900/80'}`}><div className="flex justify-between items-center mb-2"><div className="flex items-center gap-2 flex-wrap"><span className={`font-black text-[11px] md:text-xs tracking-tight ${r.isAdmin ? 'text-rose-400' : 'text-white'}`}>{r.author} {r.isAdmin && <Icons.CheckCircle2 size={12} className="text-rose-500 inline ml-1" />}</span>{r.replyToName && <span className="text-[8px] text-slate-600 flex items-center gap-1.5 font-black bg-white/5 px-2 py-0.5 rounded uppercase"><Icons.ArrowRight size={8} /> {r.replyToName}</span>}<span className="text-[8px] text-slate-700 font-black uppercase tracking-widest ml-1">{formatRelativeTime(r.timestamp)}</span></div><div className="flex items-center gap-1 opacity-0 group-hover/reply:opacity-100 transition-all transform translate-x-1 group-hover/reply:translate-x-0">{(currentUser?.isAdmin || currentUser?.uid === r.authorId) && (<div className="flex bg-black/20 rounded-lg p-0.5 border border-white/5"><button onClick={() => {setEditingReplyId(r.id); setEditContent(r.content);}} className="p-1.5 text-slate-700 hover:text-white rounded-lg transition-all hover:bg-white/5"><Icons.Settings size={14} /></button><button onClick={() => deleteReply(q.id, r.id)} className="p-1.5 text-slate-700 hover:text-red-500 rounded-lg transition-all hover:bg-red-500/10"><Icons.Trash2 size={14} /></button></div>)}</div></div>{editingReplyId === r.id ? (<div className="space-y-3 animate-in zoom-in-95 duration-200"><textarea autoFocus value={editContent} onChange={e => setEditContent(e.target.value)} className="w-full bg-slate-950 border border-white/10 rounded-xl p-4 text-white text-sm focus:border-brand-500/30 outline-none shadow-inner" /><div className="flex gap-2"><button onClick={() => saveReplyEdit(q.id, r.id)} className="px-4 py-1.5 bg-brand-600 text-white rounded-lg text-[9px] font-black shadow-lg">Lưu</button><button onClick={() => setEditingReplyId(null)} className="px-4 py-1.5 bg-white/5 text-slate-400 rounded-lg text-[9px] font-black">Hủy</button></div></div>) : <SmartContent content={r.content} className={`${r.isAdmin ? 'text-white' : 'text-slate-300'} text-[11px] md:text-sm leading-relaxed font-medium`} />}</div><div className="flex gap-6 px-4"><button onClick={() => toggleLikeReply(q.id, r.id)} className={`flex items-center gap-2 text-[9px] font-black uppercase tracking-widest transition-all transform active:scale-50 ${r.likedBy?.includes(currentUser?.uid || '') ? 'text-rose-500 scale-110' : 'text-slate-700 hover:text-slate-400'}`}><Icons.ThumbsUp size={14} fill={r.likedBy?.includes(currentUser?.uid || '') ? 'currentColor' : 'none'} /> <span className="tabular-nums">{r.likedBy?.length || 0}</span></button><button onClick={() => setReplyingTo({qId: q.id, rId: r.id, name: r.author, authorId: r.authorId, authorEmail: r.authorEmail})} className="text-[9px] font-black text-slate-700 hover:text-rose-400 uppercase tracking-widest transition-all">Trả lời</button></div></div></div>))}
-                      {replyingTo?.qId === q.id && (
+                      {replyingTo?.qId === q.id ? (
                         <div className="flex gap-4 pt-6 animate-in slide-in-from-top-4 duration-500 border-t border-white/5"><div className="hidden sm:flex w-10 h-10 rounded-xl bg-brand-500/10 border border-brand-500/20 items-center justify-center text-brand-400 shrink-0"><Icons.MessageSquareReply size={18} /></div><div className="flex-1 space-y-4"><div className="flex items-center justify-between bg-brand-500/[0.03] px-5 py-2 rounded-xl border border-brand-500/10"><span className="text-[9px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-3">Phản hồi <span className="text-brand-400">@{replyingTo.name}</span></span><button onClick={() => setReplyingTo(null)} className="text-slate-700 hover:text-white transition-all"><Icons.X size={12} /></button></div><textarea id="reply-input" name="reply" autoFocus value={replyContent} onChange={(e) => setReplyContent(e.target.value)} placeholder={`Gửi câu trả lời của bạn...`} className="w-full bg-slate-900 border border-white/5 rounded-[1.8rem] py-6 px-8 text-white text-sm md:text-base focus:outline-none focus:border-brand-500/30 min-h-[100px] resize-none shadow-2xl backdrop-blur-md" /><div className="flex gap-3"><button onClick={() => handleReply(q.id)} className="px-10 py-4 bg-brand-600 hover:bg-brand-500 text-white rounded-2xl font-black text-xs shadow-xl transition-all transform hover:scale-105 active:scale-95">Gửi</button><button onClick={() => {setReplyingTo(null); setReplyContent('');}} className="px-10 py-4 bg-white/5 text-slate-400 rounded-2xl font-black text-xs hover:bg-white/10 transition-all">Hủy</button></div></div></div>
+                      ) : (
+                         visibleQuestions.has(q.id) && (
+                            <button onClick={() => setReplyingTo({qId: q.id, name: q.author, authorId: q.authorId, authorEmail: q.authorEmail})} className="flex items-center gap-2 text-rose-400 font-black text-[10px] uppercase tracking-widest hover:text-rose-300 transition-colors mt-4 pl-4"><Icons.MessageSquare size={14} /> Viết phản hồi</button>
+                         )
                       )}
                     </div>
+                    )}
                   </div>
                </div>
             </div>
