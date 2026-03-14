@@ -12,9 +12,14 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { downloadUrl, hasSplitDownloads } = useGitHubData();
-  const downloadHref = hasSplitDownloads ? '#install' : downloadUrl;
-  const downloadLabel = hasSplitDownloads ? 'Chọn bản tải' : 'Tải ngay';
+  const {
+    downloadUrl,
+    releaseUrl,
+    arm64DownloadUrl,
+    intelDownloadUrl,
+    hasSplitDownloads
+  } = useGitHubData();
+  const downloadLabel = hasSplitDownloads ? 'Tải cho Mac' : 'Tải ngay';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,13 +53,17 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
     setMobileMenuOpen(false);
   };
 
-  const handleDownloadClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (hasSplitDownloads && activeTab === 'community') {
+  const handleInstallClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (activeTab === 'community') {
       e.preventDefault();
       onTabChange?.('home');
       window.location.hash = '#install';
     }
 
+    setMobileMenuOpen(false);
+  };
+
+  const handleDirectDownloadClick = () => {
     setMobileMenuOpen(false);
   };
 
@@ -77,7 +86,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center gap-8">
             {navLinks.map((item) => (
-              <a 
+              <a
                 key={item.name}
                 href={item.href} 
                 onClick={(e) => handleLinkClick(e, item.tab, item.href)}
@@ -105,15 +114,85 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
               <Icons.Github size={22} />
             </a>
             
-            <a 
-              href={downloadHref}
-              onClick={handleDownloadClick}
-              className="hidden xs:flex items-center gap-2 bg-white text-slate-950 px-6 py-2.5 rounded-xl text-sm font-black hover:bg-slate-100 transition-all transform hover:scale-105 active:scale-95 shadow-xl shadow-white/10"
-              aria-label="Tải xuống PHTV"
-            >
-              <Icons.Download size={18} />
-              <span>{downloadLabel}</span>
-            </a>
+            {hasSplitDownloads ? (
+              <div className="relative hidden xs:block group">
+                <button
+                  type="button"
+                  className="flex items-center gap-2 bg-white text-slate-950 px-6 py-2.5 rounded-xl text-sm font-black hover:bg-slate-100 transition-all transform hover:scale-105 active:scale-95 shadow-xl shadow-white/10"
+                  aria-label="Tải xuống PHTV"
+                >
+                  <Icons.Download size={18} />
+                  <span>{downloadLabel}</span>
+                  <Icons.ChevronDown size={16} className="transition-transform group-hover:rotate-180" />
+                </button>
+
+                <div className="absolute right-0 top-full pt-3 opacity-0 pointer-events-none translate-y-2 transition-all duration-200 group-hover:opacity-100 group-hover:pointer-events-auto group-hover:translate-y-0">
+                  <div className="w-[320px] rounded-3xl border border-white/10 bg-slate-950/95 p-3 shadow-[0_25px_80px_rgba(0,0,0,0.45)] backdrop-blur-2xl">
+                    <div className="px-3 pb-3 pt-1 border-b border-white/5">
+                      <p className="text-[11px] font-black uppercase tracking-[0.22em] text-brand-400">Tải nhanh</p>
+                      <p className="mt-1 text-sm font-semibold text-slate-300">Chọn đúng bản cho Apple Silicon hoặc Intel ngay tại đây.</p>
+                    </div>
+
+                    <div className="mt-3 space-y-2">
+                      <a
+                        href={arm64DownloadUrl ?? releaseUrl}
+                        onClick={handleDirectDownloadClick}
+                        className="flex items-center justify-between gap-3 rounded-2xl bg-gradient-to-r from-brand-600 to-purple-600 px-4 py-3 text-left text-white transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-brand-500/20"
+                      >
+                        <span className="flex items-center gap-3">
+                          <Icons.Download size={18} />
+                          <span>
+                            <span className="block text-sm font-black">Apple Silicon</span>
+                            <span className="block text-xs font-semibold uppercase tracking-widest text-white/75">M1 / M2 / M3 / M4</span>
+                          </span>
+                        </span>
+                        <Icons.ArrowRight size={18} className="shrink-0" />
+                      </a>
+
+                      <a
+                        href={intelDownloadUrl ?? releaseUrl}
+                        onClick={handleDirectDownloadClick}
+                        className="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-left text-white transition-all hover:-translate-y-0.5 hover:bg-white/10"
+                      >
+                        <span className="flex items-center gap-3">
+                          <Icons.Download size={18} />
+                          <span>
+                            <span className="block text-sm font-black">Intel</span>
+                            <span className="block text-xs font-semibold uppercase tracking-widest text-slate-400">Core i5 / i7 / i9</span>
+                          </span>
+                        </span>
+                        <Icons.ArrowRight size={18} className="shrink-0 text-slate-400" />
+                      </a>
+
+                      <a
+                        href="#install"
+                        onClick={handleInstallClick}
+                        className="flex items-center justify-between gap-3 rounded-2xl border border-brand-500/20 bg-brand-500/10 px-4 py-3 text-left text-brand-300 transition-all hover:bg-brand-500/15"
+                      >
+                        <span className="flex items-center gap-3">
+                          <Icons.Terminal size={18} />
+                          <span>
+                            <span className="block text-sm font-black">Homebrew</span>
+                            <span className="block text-xs font-semibold text-brand-200/80">Tự chọn đúng binary</span>
+                          </span>
+                        </span>
+                        <Icons.ArrowRight size={18} className="shrink-0" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <a
+                href={downloadUrl}
+                onClick={handleDirectDownloadClick}
+                className="hidden xs:flex items-center gap-2 bg-white text-slate-950 px-6 py-2.5 rounded-xl text-sm font-black hover:bg-slate-100 transition-all transform hover:scale-105 active:scale-95 shadow-xl shadow-white/10"
+                aria-label="Tải xuống PHTV"
+              >
+                <Icons.Download size={18} />
+                <span>{downloadLabel}</span>
+              </a>
+            )}
 
             {/* Mobile Menu Button */}
             <button 
@@ -158,14 +237,56 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
           </div>
 
           <div className="mt-auto space-y-4">
-            <a 
-              href={downloadHref}
-              onClick={handleDownloadClick}
-              className="flex items-center justify-center gap-3 w-full py-4 bg-white text-slate-950 rounded-2xl font-black text-lg shadow-xl shadow-white/5"
-            >
-              <Icons.Download size={20} />
-              {downloadLabel}
-            </a>
+            {hasSplitDownloads ? (
+              <>
+                <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
+                  <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-400">Tải nhanh</p>
+                  <p className="mt-2 text-sm text-slate-400">Chọn đúng file ngay trong menu này, không cần kéo xuống dưới.</p>
+                </div>
+
+                <a
+                  href={arm64DownloadUrl ?? releaseUrl}
+                  onClick={handleDirectDownloadClick}
+                  className="flex items-center justify-between gap-3 w-full py-4 px-5 bg-gradient-to-r from-brand-600 to-purple-600 text-white rounded-2xl font-black text-base shadow-xl shadow-brand-500/20"
+                >
+                  <span className="flex items-center gap-3">
+                    <Icons.Download size={20} />
+                    Apple Silicon
+                  </span>
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-white/75">M1-M4</span>
+                </a>
+
+                <a
+                  href={intelDownloadUrl ?? releaseUrl}
+                  onClick={handleDirectDownloadClick}
+                  className="flex items-center justify-between gap-3 w-full py-4 px-5 bg-white/10 border border-white/10 text-white rounded-2xl font-black text-base"
+                >
+                  <span className="flex items-center gap-3">
+                    <Icons.Download size={20} />
+                    Intel
+                  </span>
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-slate-400">Core Intel</span>
+                </a>
+
+                <a
+                  href="#install"
+                  onClick={handleInstallClick}
+                  className="flex items-center justify-center gap-3 w-full py-4 bg-brand-500/10 border border-brand-500/20 text-brand-300 rounded-2xl font-black text-base"
+                >
+                  <Icons.Terminal size={20} />
+                  Homebrew tự chọn bản
+                </a>
+              </>
+            ) : (
+              <a
+                href={downloadUrl}
+                onClick={handleDirectDownloadClick}
+                className="flex items-center justify-center gap-3 w-full py-4 bg-white text-slate-950 rounded-2xl font-black text-lg shadow-xl shadow-white/5"
+              >
+                <Icons.Download size={20} />
+                {downloadLabel}
+              </a>
+            )}
             <div className="flex justify-center gap-6 pt-4 border-t border-white/5">
               <a href="https://github.com/PhamHungTien/PHTV" className="text-slate-400 hover:text-white transition-colors"><Icons.Github size={24} /></a>
               <a href="mailto:phamhungtien.contact@gmail.com" className="text-slate-400 hover:text-white transition-colors"><Icons.Coffee size={24} /></a>

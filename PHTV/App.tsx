@@ -284,8 +284,6 @@ function App() {
   } = useGitHubData();
   const [showDonate, setShowDonate] = useState(false);
   const [activeTab, setActiveTab] = useState<'home' | 'community'>('home');
-  const primaryDownloadHref = hasSplitDownloads ? '#install' : downloadUrl;
-  const primaryDownloadLabel = hasSplitDownloads ? 'Chọn bản tải phù hợp' : `Tải xuống ${version}`;
 
   // Reveal Animation Logic
   useEffect(() => {
@@ -386,40 +384,103 @@ function App() {
                  <StatBadge icon={Icons.Heart} label="Ủng hộ" value="Donate" onClick={() => setShowDonate(true)} colorClass="text-pink-400" />
               </div>
 
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-5 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-700 px-4 md:px-0">
-                <a 
-                  href={primaryDownloadHref}
-                  className="w-full sm:w-auto px-8 py-4 md:px-12 md:py-5 bg-white text-slate-950 rounded-2xl font-black text-base md:text-lg hover:bg-slate-100 transition-all transform hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(255,255,255,0.2)] flex items-center justify-center gap-2 md:gap-3 group"
-                >
-                  <Icons.Download size={20} className="md:w-6 md:h-6 group-hover:animate-bounce" />
-                  {primaryDownloadLabel}
-                </a>
-                
-                <button 
-                  onClick={() => {
-                    setActiveTab('community');
-                    window.location.hash = '#community';
-                  }}
-                  className="w-full sm:w-auto px-6 py-4 md:px-10 md:py-5 bg-brand-500/5 backdrop-blur-xl border border-brand-500/20 text-brand-400 rounded-2xl font-black text-base md:text-lg hover:bg-brand-500/10 hover:border-brand-500/40 transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 md:gap-3 relative group shadow-2xl"
-                >
-                  <div className="absolute -top-1.5 -right-1.5 z-30">
-                    <span className="relative flex h-3 w-3 md:h-4 md:w-4">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-3 w-3 md:h-4 md:w-4 bg-green-500 border-2 border-slate-950 shadow-lg"></span>
-                    </span>
-                  </div>
-                  <Icons.MessageSquare size={18} className="md:w-[22px] md:h-[22px] group-hover:rotate-12 transition-transform" />
-                  <span className="tracking-tight">Thảo luận & Báo lỗi</span>
-                  <span className="text-[9px] md:text-[10px] px-1.5 py-0.5 md:px-2 rounded-md bg-brand-500 text-white font-black uppercase tracking-tighter ml-1 shadow-lg shadow-brand-500/20">New</span>
-                </button>
+              <div className="flex flex-col items-center gap-4 md:gap-5 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-700 px-4 md:px-0 w-full">
+                {hasSplitDownloads ? (
+                  <div className="w-full max-w-5xl rounded-[2rem] border border-white/10 bg-white/5 p-4 md:p-6 shadow-[0_25px_80px_rgba(0,0,0,0.35)] backdrop-blur-2xl">
+                    <div className="flex flex-col xl:flex-row xl:items-center gap-5 md:gap-8">
+                      <div className="text-left xl:max-w-md">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-300 text-[10px] md:text-xs font-black uppercase tracking-[0.22em]">
+                          <Icons.Download size={14} />
+                          Tải ngay trong 10 giây
+                        </div>
+                        <h2 className="mt-4 text-2xl md:text-4xl font-black tracking-tight text-white">Chọn đúng bản cho Mac của bạn ngay tại đây</h2>
+                        <p className="mt-3 text-sm md:text-base text-slate-400 leading-relaxed font-medium">
+                          Không cần kéo xuống phần cài đặt nữa. <span className="text-white font-bold">Mac M1/M2/M3/M4</span> chọn <span className="text-white font-bold">Apple Silicon</span>, còn các máy <span className="text-white font-bold">Intel</span> chọn nút còn lại.
+                        </p>
+                      </div>
 
-                <a 
-                  href="#install"
-                  className="w-full sm:w-auto px-6 py-4 md:px-10 md:py-5 bg-slate-900/50 backdrop-blur-xl border border-white/10 text-slate-400 rounded-2xl font-bold text-base md:text-lg hover:bg-slate-800 transition-all flex items-center justify-center gap-2 md:gap-3"
-                >
-                  <Icons.Terminal size={18} className="md:w-[22px] md:h-[22px]" />
-                  Homebrew
-                </a>
+                      <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+                        <a
+                          href={arm64DownloadUrl ?? releaseUrl}
+                          className="flex items-center justify-between gap-3 rounded-[1.75rem] bg-gradient-to-r from-brand-600 to-purple-600 px-5 py-5 text-white shadow-2xl transition-all hover:-translate-y-1 hover:shadow-brand-500/25 active:scale-[0.99]"
+                        >
+                          <span className="flex items-center gap-3">
+                            <Icons.Download size={24} className="md:w-7 md:h-7" />
+                            <span>
+                              <span className="block text-lg md:text-xl font-black">Apple Silicon</span>
+                              <span className="block text-[11px] md:text-xs font-extrabold uppercase tracking-[0.22em] text-white/75">M1 / M2 / M3 / M4</span>
+                            </span>
+                          </span>
+                          <Icons.ArrowRight size={20} className="shrink-0" />
+                        </a>
+
+                        <a
+                          href={intelDownloadUrl ?? releaseUrl}
+                          className="flex items-center justify-between gap-3 rounded-[1.75rem] border border-white/10 bg-white/10 px-5 py-5 text-white shadow-xl transition-all hover:-translate-y-1 hover:bg-white/15 active:scale-[0.99]"
+                        >
+                          <span className="flex items-center gap-3">
+                            <Icons.Download size={24} className="md:w-7 md:h-7" />
+                            <span>
+                              <span className="block text-lg md:text-xl font-black">Intel</span>
+                              <span className="block text-[11px] md:text-xs font-extrabold uppercase tracking-[0.22em] text-slate-300">Core i5 / i7 / i9</span>
+                            </span>
+                          </span>
+                          <Icons.ArrowRight size={20} className="shrink-0 text-slate-300" />
+                        </a>
+
+                        <a
+                          href="#install"
+                          className="md:col-span-2 flex items-center justify-between gap-3 rounded-[1.75rem] border border-brand-500/20 bg-brand-500/10 px-5 py-4 text-brand-200 transition-all hover:bg-brand-500/15"
+                        >
+                          <span className="flex items-center gap-3">
+                            <Icons.Terminal size={22} />
+                            <span>
+                              <span className="block text-base md:text-lg font-black">Dùng Homebrew để tự chọn đúng bản</span>
+                              <span className="block text-xs md:text-sm font-semibold text-brand-200/75">Phù hợp nếu bạn thích cài đặt nhanh bằng Terminal</span>
+                            </span>
+                          </span>
+                          <Icons.ArrowRight size={20} className="shrink-0" />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <a
+                    href={universalDownloadUrl ?? downloadUrl}
+                    className="w-full sm:w-auto px-8 py-4 md:px-12 md:py-5 bg-white text-slate-950 rounded-2xl font-black text-base md:text-lg hover:bg-slate-100 transition-all transform hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(255,255,255,0.2)] flex items-center justify-center gap-2 md:gap-3 group"
+                  >
+                    <Icons.Download size={20} className="md:w-6 md:h-6 group-hover:animate-bounce" />
+                    {`Tải xuống ${version}`}
+                  </a>
+                )}
+
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-5 w-full">
+                  <button
+                    onClick={() => {
+                      setActiveTab('community');
+                      window.location.hash = '#community';
+                    }}
+                    className="w-full sm:w-auto px-6 py-4 md:px-10 md:py-5 bg-brand-500/5 backdrop-blur-xl border border-brand-500/20 text-brand-400 rounded-2xl font-black text-base md:text-lg hover:bg-brand-500/10 hover:border-brand-500/40 transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 md:gap-3 relative group shadow-2xl"
+                  >
+                    <div className="absolute -top-1.5 -right-1.5 z-30">
+                      <span className="relative flex h-3 w-3 md:h-4 md:w-4">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-3 w-3 md:h-4 md:w-4 bg-green-500 border-2 border-slate-950 shadow-lg"></span>
+                      </span>
+                    </div>
+                    <Icons.MessageSquare size={18} className="md:w-[22px] md:h-[22px] group-hover:rotate-12 transition-transform" />
+                    <span className="tracking-tight">Thảo luận & Báo lỗi</span>
+                    <span className="text-[9px] md:text-[10px] px-1.5 py-0.5 md:px-2 rounded-md bg-brand-500 text-white font-black uppercase tracking-tighter ml-1 shadow-lg shadow-brand-500/20">New</span>
+                  </button>
+
+                  <a
+                    href="#install"
+                    className="w-full sm:w-auto px-6 py-4 md:px-10 md:py-5 bg-slate-900/50 backdrop-blur-xl border border-white/10 text-slate-400 rounded-2xl font-bold text-base md:text-lg hover:bg-slate-800 transition-all flex items-center justify-center gap-2 md:gap-3"
+                  >
+                    <Icons.Terminal size={18} className="md:w-[22px] md:h-[22px]" />
+                    Xem hướng dẫn cài đặt
+                  </a>
+                </div>
               </div>
             </div>
           </main>
