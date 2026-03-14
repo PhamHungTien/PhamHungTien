@@ -16,6 +16,7 @@ import { StatBadge } from './components/StatBadge';
 import { DonateModal } from './components/DonateModal';
 import { AcronymRow } from './components/AcronymRow';
 import { QASection } from './components/QASection';
+import { AdBanner } from './components/AdBanner';
 
 const faqData = [
   {
@@ -411,9 +412,16 @@ function App() {
             </div>
           </main>
 
+          {/* Ad 1: Sau Hero, trước Features */}
+          <AdBanner adSlot="REPLACE_WITH_SLOT_ID" className="max-w-4xl mx-auto px-4 py-4" />
+
           <div className="reveal"><Features /></div>
           <div className="reveal"><Gallery /></div>
           <div className="reveal"><VideoTutorial /></div>
+
+          {/* Ad 2: Sau VideoTutorial, trước Shortcuts */}
+          <AdBanner adSlot="REPLACE_WITH_SLOT_ID" className="max-w-4xl mx-auto px-4 py-4" />
+
           <div className="reveal"><Shortcuts /></div>
 
           <section id="install" className="reveal py-20 md:py-48 bg-slate-950/30 border-y border-white/5 scroll-mt-20 md:scroll-mt-32 relative overflow-hidden">
@@ -557,6 +565,9 @@ function App() {
                 ))}
              </div>
           </section>
+
+          {/* Ad 3: Sau FAQ, trước Footer */}
+          <AdBanner adSlot="REPLACE_WITH_SLOT_ID" className="max-w-4xl mx-auto px-4 py-4" />
         </div>
       ) : (
         <div className="relative z-10 pt-24 animate-in slide-in-from-right-4 fade-in duration-1000">
