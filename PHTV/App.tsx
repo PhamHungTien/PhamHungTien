@@ -270,6 +270,55 @@ const faqData = [
   }
 ];
 
+interface DownloadChoiceCardProps {
+  href: string;
+  title: string;
+  chip: string;
+  note: string;
+  tone?: 'accent' | 'neutral';
+}
+
+const DownloadChoiceCard: React.FC<DownloadChoiceCardProps> = ({
+  href,
+  title,
+  chip,
+  note,
+  tone = 'neutral',
+}) => {
+  const accent = tone === 'accent';
+
+  return (
+    <a
+      href={href}
+      className={`group rounded-[1.5rem] border px-5 py-5 transition-all duration-300 hover:-translate-y-0.5 ${
+        accent
+          ? 'border-brand-500/20 bg-brand-500/[0.12] hover:bg-brand-500/[0.16] hover:shadow-[0_18px_45px_rgba(244,114,182,0.12)]'
+          : 'border-white/10 bg-white/[0.04] hover:bg-white/[0.07]'
+      }`}
+    >
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center gap-4 min-w-0">
+          <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border ${
+            accent
+              ? 'border-brand-400/25 bg-white/10 text-white'
+              : 'border-white/10 bg-white/[0.05] text-slate-200'
+          }`}>
+            <Icons.Download size={18} />
+          </div>
+          <div className="min-w-0 text-left">
+            <p className={`text-[10px] font-black uppercase tracking-[0.22em] ${accent ? 'text-brand-200' : 'text-slate-500'}`}>
+              {chip}
+            </p>
+            <h3 className="mt-1 text-lg md:text-xl font-black tracking-tight text-white">{title}</h3>
+            <p className="mt-1 text-sm text-slate-400">{note}</p>
+          </div>
+        </div>
+        <Icons.ArrowRight size={18} className={`shrink-0 transition-transform group-hover:translate-x-0.5 ${accent ? 'text-white' : 'text-slate-500'}`} />
+      </div>
+    </a>
+  );
+};
+
 function App() {
   const {
     downloadUrl,
@@ -394,60 +443,48 @@ function App() {
 
               <div className="flex flex-col items-center gap-4 md:gap-5 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-700 px-4 md:px-0 w-full">
                 {hasSplitDownloads ? (
-                  <div className="w-full max-w-5xl rounded-[2rem] border border-white/10 bg-white/5 p-4 md:p-6 shadow-[0_25px_80px_rgba(0,0,0,0.35)] backdrop-blur-2xl">
-                    <div className="flex flex-col xl:flex-row xl:items-center gap-5 md:gap-8">
-                      <div className="text-left xl:max-w-md">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-300 text-[10px] md:text-xs font-black uppercase tracking-[0.22em]">
-                          <Icons.Download size={14} />
-                          Tải ngay trong 10 giây
+                  <div className="w-full max-w-4xl rounded-[1.75rem] border border-white/10 bg-slate-950/45 p-5 md:p-7 shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur-2xl">
+                    <div className="flex flex-col gap-5">
+                      <div className="flex flex-col gap-3 text-left md:flex-row md:items-end md:justify-between">
+                        <div>
+                          <p className="text-[10px] font-black uppercase tracking-[0.24em] text-slate-500">Tải về</p>
+                          <h2 className="mt-2 text-2xl md:text-3xl font-black tracking-tight text-white">Chọn đúng bản cho máy Mac của bạn</h2>
                         </div>
-                        <h2 className="mt-4 text-2xl md:text-4xl font-black tracking-tight text-white">Chọn đúng bản cho Mac của bạn ngay tại đây</h2>
-                        <p className="mt-3 text-sm md:text-base text-slate-400 leading-relaxed font-medium">
-                          Không cần kéo xuống phần cài đặt nữa. <span className="text-white font-bold">Mac M1/M2/M3/M4</span> chọn <span className="text-white font-bold">Apple Silicon</span>, còn các máy <span className="text-white font-bold">Intel</span> chọn nút còn lại.
+                        <p className="max-w-md text-sm md:text-base text-slate-400 leading-relaxed">
+                          <span className="text-white font-semibold">M1, M2, M3, M4</span> chọn Apple Silicon. Các máy Mac dùng chip Intel chọn bản Intel.
                         </p>
                       </div>
 
-                      <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-                        <a
+                      <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                        <DownloadChoiceCard
                           href={arm64DownloadUrl ?? releaseUrl}
-                          className="flex items-center justify-between gap-3 rounded-[1.75rem] bg-gradient-to-r from-brand-600 to-purple-600 px-5 py-5 text-white shadow-2xl transition-all hover:-translate-y-1 hover:shadow-brand-500/25 active:scale-[0.99]"
-                        >
-                          <span className="flex items-center gap-3">
-                            <Icons.Download size={24} className="md:w-7 md:h-7" />
-                            <span>
-                              <span className="block text-lg md:text-xl font-black">Apple Silicon</span>
-                              <span className="block text-[11px] md:text-xs font-extrabold uppercase tracking-[0.22em] text-white/75">M1 / M2 / M3 / M4</span>
-                            </span>
-                          </span>
-                          <Icons.ArrowRight size={20} className="shrink-0" />
-                        </a>
-
-                        <a
+                          title="Apple Silicon"
+                          chip="M1 / M2 / M3 / M4"
+                          note="Dành cho hầu hết các máy Mac đời mới."
+                          tone="accent"
+                        />
+                        <DownloadChoiceCard
                           href={intelDownloadUrl ?? releaseUrl}
-                          className="flex items-center justify-between gap-3 rounded-[1.75rem] border border-white/10 bg-white/10 px-5 py-5 text-white shadow-xl transition-all hover:-translate-y-1 hover:bg-white/15 active:scale-[0.99]"
-                        >
-                          <span className="flex items-center gap-3">
-                            <Icons.Download size={24} className="md:w-7 md:h-7" />
-                            <span>
-                              <span className="block text-lg md:text-xl font-black">Intel</span>
-                              <span className="block text-[11px] md:text-xs font-extrabold uppercase tracking-[0.22em] text-slate-300">Core i5 / i7 / i9</span>
-                            </span>
-                          </span>
-                          <Icons.ArrowRight size={20} className="shrink-0 text-slate-300" />
-                        </a>
+                          title="Intel"
+                          chip="Core i5 / i7 / i9"
+                          note="Dành cho các máy Mac dùng chip Intel."
+                        />
+                      </div>
 
+                      <div className="flex flex-col gap-3 border-t border-white/10 pt-4 md:flex-row md:items-center md:justify-between">
                         <a
                           href="#install"
-                          className="md:col-span-2 flex items-center justify-between gap-3 rounded-[1.75rem] border border-brand-500/20 bg-brand-500/10 px-5 py-4 text-brand-200 transition-all hover:bg-brand-500/15"
+                          className="inline-flex items-center gap-2 text-sm font-semibold text-brand-300 transition-colors hover:text-white"
                         >
-                          <span className="flex items-center gap-3">
-                            <Icons.Terminal size={22} />
-                            <span>
-                              <span className="block text-base md:text-lg font-black">Dùng Homebrew để tự chọn đúng bản</span>
-                              <span className="block text-xs md:text-sm font-semibold text-brand-200/75">Phù hợp nếu bạn thích cài đặt nhanh bằng Terminal</span>
-                            </span>
-                          </span>
-                          <Icons.ArrowRight size={20} className="shrink-0" />
+                          <Icons.Terminal size={16} />
+                          Cài bằng Homebrew nếu muốn tự chọn đúng bản
+                        </a>
+                        <a
+                          href={releaseUrl}
+                          className="inline-flex items-center gap-2 text-sm font-semibold text-slate-400 transition-colors hover:text-white"
+                        >
+                          Xem GitHub Releases
+                          <Icons.ArrowRight size={16} />
                         </a>
                       </div>
                     </div>
@@ -462,32 +499,17 @@ function App() {
                   </a>
                 )}
 
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-5 w-full">
+                <div className="flex w-full justify-center">
                   <button
                     onClick={() => {
                       setActiveTab('community');
                       window.location.hash = '#community';
                     }}
-                    className="w-full sm:w-auto px-6 py-4 md:px-10 md:py-5 bg-brand-500/5 backdrop-blur-xl border border-brand-500/20 text-brand-400 rounded-2xl font-black text-base md:text-lg hover:bg-brand-500/10 hover:border-brand-500/40 transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 md:gap-3 relative group shadow-2xl"
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-5 py-3 text-sm font-semibold text-slate-400 transition-all hover:border-white/15 hover:bg-white/[0.06] hover:text-white"
                   >
-                    <div className="absolute -top-1.5 -right-1.5 z-30">
-                      <span className="relative flex h-3 w-3 md:h-4 md:w-4">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-3 w-3 md:h-4 md:w-4 bg-green-500 border-2 border-slate-950 shadow-lg"></span>
-                      </span>
-                    </div>
-                    <Icons.MessageSquare size={18} className="md:w-[22px] md:h-[22px] group-hover:rotate-12 transition-transform" />
-                    <span className="tracking-tight">Thảo luận & Báo lỗi</span>
-                    <span className="text-[9px] md:text-[10px] px-1.5 py-0.5 md:px-2 rounded-md bg-brand-500 text-white font-black uppercase tracking-tighter ml-1 shadow-lg shadow-brand-500/20">New</span>
+                    <Icons.MessageSquare size={16} />
+                    <span>Thảo luận hoặc báo lỗi</span>
                   </button>
-
-                  <a
-                    href="#install"
-                    className="w-full sm:w-auto px-6 py-4 md:px-10 md:py-5 bg-slate-900/50 backdrop-blur-xl border border-white/10 text-slate-400 rounded-2xl font-bold text-base md:text-lg hover:bg-slate-800 transition-all flex items-center justify-center gap-2 md:gap-3"
-                  >
-                    <Icons.Terminal size={18} className="md:w-[22px] md:h-[22px]" />
-                    Xem hướng dẫn cài đặt
-                  </a>
                 </div>
               </div>
             </div>
@@ -567,42 +589,43 @@ function App() {
                    </div>
                 </div>
 
-                 <div className="glass-panel rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-12 flex flex-col shadow-3xl group relative overflow-hidden transition-all duration-500 hover:border-brand-500/30">
-                   <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity duration-700 transform group-hover:scale-110"><Icons.Download size={120} className="md:w-[160px] md:h-[160px]" /></div>
-                   <div className="flex items-center gap-4 md:gap-5 mb-8 md:mb-16">
-                      <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-slate-700 flex items-center justify-center text-white shadow-xl transition-transform group-hover:rotate-6"><Icons.Download size={24} className="md:w-7 md:h-7" /></div>
-                      <h3 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight">Tải trực tiếp</h3>
+                 <div className="glass-panel rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-12 flex flex-col shadow-3xl relative overflow-hidden transition-all duration-500 hover:border-brand-500/20">
+                   <div className="flex items-center gap-4 md:gap-5 mb-8 md:mb-10">
+                      <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/10 border border-white/10 flex items-center justify-center text-white"><Icons.Download size={24} className="md:w-7 md:h-7" /></div>
+                      <div>
+                        <h3 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight">Tải file .dmg</h3>
+                        <p className="mt-1 text-sm md:text-base text-slate-500 dark:text-slate-400">Tối giản, rõ ràng, đúng bản cho từng dòng Mac.</p>
+                      </div>
                    </div>
                    <div className="flex-1 flex flex-col gap-4 mb-8 md:mb-10">
                      {hasSplitDownloads ? (
                        <>
-                         <a href={arm64DownloadUrl ?? releaseUrl} className="flex items-center justify-between gap-3 md:gap-4 w-full py-5 px-5 md:px-6 bg-gradient-to-r from-brand-600 to-purple-600 hover:from-brand-500 hover:to-purple-500 text-white rounded-3xl transition-all font-black text-base md:text-lg shadow-2xl hover:shadow-brand-500/30 hover:-translate-y-1 active:scale-95">
-                           <span className="flex items-center gap-3 md:gap-4">
-                             <Icons.Download size={24} className="md:w-7 md:h-7" />
-                             Apple Silicon
-                           </span>
-                           <span className="text-xs md:text-sm font-extrabold uppercase tracking-widest text-white/80">M1 / M2 / M3 / M4</span>
-                         </a>
-                         <a href={intelDownloadUrl ?? releaseUrl} className="flex items-center justify-between gap-3 md:gap-4 w-full py-5 px-5 md:px-6 bg-white/10 hover:bg-white/15 border border-white/10 text-white rounded-3xl transition-all font-black text-base md:text-lg shadow-xl hover:-translate-y-1 active:scale-95">
-                           <span className="flex items-center gap-3 md:gap-4">
-                             <Icons.Download size={24} className="md:w-7 md:h-7" />
-                             Intel
-                           </span>
-                           <span className="text-xs md:text-sm font-extrabold uppercase tracking-widest text-slate-300">Core i5 / i7 / i9</span>
-                         </a>
-                         <div className="rounded-3xl border border-white/10 bg-white/[0.04] px-5 py-4 text-sm md:text-base text-slate-400 leading-relaxed">
-                           Không chắc máy bạn thuộc loại nào? <span className="text-white font-bold">Mac M1/M2/M3/M4</span> chọn <span className="text-white font-bold">Apple Silicon</span>. Các máy Mac đời cũ dùng chip Intel chọn <span className="text-white font-bold">Intel</span>.
-                           <a href={releaseUrl} className="ml-2 text-brand-400 hover:underline font-bold">Xem tất cả bản phát hành</a>
+                         <DownloadChoiceCard
+                           href={arm64DownloadUrl ?? releaseUrl}
+                           title="Apple Silicon"
+                           chip="M1 / M2 / M3 / M4"
+                           note="Bản dành cho Apple Silicon."
+                           tone="accent"
+                         />
+                         <DownloadChoiceCard
+                           href={intelDownloadUrl ?? releaseUrl}
+                           title="Intel"
+                           chip="Core i5 / i7 / i9"
+                           note="Bản dành cho các máy Intel."
+                         />
+                         <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.03] px-5 py-4 text-sm md:text-base text-slate-400 leading-relaxed">
+                           Không chắc máy bạn đang dùng loại nào? <span className="text-white font-semibold">M1 đến M4</span> là Apple Silicon, còn Mac đời cũ dùng chip Intel chọn bản Intel.
+                           <a href={releaseUrl} className="ml-2 text-brand-400 hover:underline font-semibold">Xem mọi bản phát hành</a>
                          </div>
                        </>
                      ) : (
-                       <a href={universalDownloadUrl ?? downloadUrl} className="flex items-center justify-center gap-3 md:gap-4 w-full py-5 md:py-6 bg-gradient-to-r from-brand-600 to-purple-600 hover:from-brand-500 hover:to-purple-500 text-white rounded-3xl transition-all font-black text-lg md:text-xl shadow-2xl hover:shadow-brand-500/30 hover:-translate-y-1 active:scale-95">
+                       <a href={universalDownloadUrl ?? downloadUrl} className="flex items-center justify-center gap-3 md:gap-4 w-full py-5 md:py-6 border border-brand-500/20 bg-brand-500/[0.12] hover:bg-brand-500/[0.16] text-white rounded-[1.5rem] transition-all font-black text-lg md:text-xl hover:-translate-y-0.5">
                          <Icons.Download size={24} className="md:w-7 md:h-7" />
                          Tải PHTV.dmg
                        </a>
                      )}
                    </div>
-                   <div className="p-6 md:p-8 bg-yellow-500/10 dark:bg-yellow-500/[0.03] border border-yellow-500/20 dark:border-yellow-500/10 rounded-3xl backdrop-blur-md">
+                   <div className="p-5 md:p-6 bg-yellow-500/10 dark:bg-yellow-500/[0.03] border border-yellow-500/20 dark:border-yellow-500/10 rounded-[1.5rem] backdrop-blur-md">
                      <div className="flex items-start gap-4 md:gap-5">
                         <div className="p-2.5 md:p-3 bg-yellow-500/20 dark:bg-yellow-500/10 rounded-2xl"><Icons.Shield className="text-yellow-600 dark:text-yellow-500 shrink-0" size={20} /></div>
                         <div className="text-sm md:text-base">
