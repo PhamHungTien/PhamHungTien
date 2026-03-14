@@ -1,24 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Icons } from './Icons';
-import { useGitHubData } from '../hooks/useGitHubData';
 
 const iconImg = '/PHTV/phtv-icon.webp';
 
 interface NavbarProps {
   activeTab?: 'home' | 'community';
   onTabChange?: (tab: 'home' | 'community') => void;
+  downloadUrl: string;
+  releaseUrl: string;
+  arm64DownloadUrl: string | null;
+  intelDownloadUrl: string | null;
+  hasSplitDownloads: boolean;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange }) => {
+export const Navbar: React.FC<NavbarProps> = ({
+  activeTab = 'home',
+  onTabChange,
+  downloadUrl,
+  releaseUrl,
+  arm64DownloadUrl,
+  intelDownloadUrl,
+  hasSplitDownloads
+}) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const {
-    downloadUrl,
-    releaseUrl,
-    arm64DownloadUrl,
-    intelDownloadUrl,
-    hasSplitDownloads
-  } = useGitHubData();
+  const [desktopDownloadOpen, setDesktopDownloadOpen] = useState(false);
+  const desktopDownloadRef = useRef<HTMLDivElement | null>(null);
   const downloadLabel = hasSplitDownloads ? 'Tải cho Mac' : 'Tải ngay';
 
   useEffect(() => {
@@ -28,6 +35,32 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (!desktopDownloadOpen) return;
+
+    const handlePointerDown = (event: MouseEvent | TouchEvent) => {
+      if (!desktopDownloadRef.current?.contains(event.target as Node)) {
+        setDesktopDownloadOpen(false);
+      }
+    };
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setDesktopDownloadOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handlePointerDown);
+    document.addEventListener('touchstart', handlePointerDown);
+    document.addEventListener('keydown', handleEscape);
+
+    return () => {
+      document.removeEventListener('mousedown', handlePointerDown);
+      document.removeEventListener('touchstart', handlePointerDown);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [desktopDownloadOpen]);
 
   const navLinks = [
     { name: 'Tính năng', href: '#features', tab: 'home' },
@@ -51,6 +84,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
       }
     }
     setMobileMenuOpen(false);
+    setDesktopDownloadOpen(false);
   };
 
   const handleInstallClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -61,10 +95,12 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
     }
 
     setMobileMenuOpen(false);
+    setDesktopDownloadOpen(false);
   };
 
   const handleDirectDownloadClick = () => {
     setMobileMenuOpen(false);
+    setDesktopDownloadOpen(false);
   };
 
   return (
@@ -95,7 +131,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
                 }`}
               >
                 {item.name}
-                {item.name === 'Cộng đồng' && (
+                {item.tab === 'community' && (
                   <span className="flex h-2 w-2 rounded-full bg-brand-500 animate-pulse shadow-[0_0_8px_rgba(245,158,11,0.8)]"></span>
                 )}
               </a>
@@ -115,18 +151,27 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
             </a>
             
             {hasSplitDownloads ? (
-              <div className="relative hidden xs:block group">
+              <div
+                ref={desktopDownloadRef}
+                className="relative hidden xs:block"
+                onMouseEnter={() => setDesktopDownloadOpen(true)}
+                onMouseLeave={() => setDesktopDownloadOpen(false)}
+              >
                 <button
                   type="button"
+                  onClick={() => setDesktopDownloadOpen((current) => !current)}
+                  onFocus={() => setDesktopDownloadOpen(true)}
                   className="flex items-center gap-2 bg-white text-slate-950 px-6 py-2.5 rounded-xl text-sm font-black hover:bg-slate-100 transition-all transform hover:scale-105 active:scale-95 shadow-xl shadow-white/10"
                   aria-label="Tải xuống PHTV"
+                  aria-expanded={desktopDownloadOpen}
+                  aria-haspopup="menu"
                 >
                   <Icons.Download size={18} />
                   <span>{downloadLabel}</span>
-                  <Icons.ChevronDown size={16} className="transition-transform group-hover:rotate-180" />
+                  <Icons.ChevronDown size={16} className={`transition-transform ${desktopDownloadOpen ? 'rotate-180' : ''}`} />
                 </button>
 
-                <div className="absolute right-0 top-full pt-3 opacity-0 pointer-events-none translate-y-2 transition-all duration-200 group-hover:opacity-100 group-hover:pointer-events-auto group-hover:translate-y-0">
+                <div className={`absolute right-0 top-full pt-3 transition-all duration-200 ${desktopDownloadOpen ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none translate-y-2'}`}>
                   <div className="w-[320px] rounded-3xl border border-white/10 bg-slate-950/95 p-3 shadow-[0_25px_80px_rgba(0,0,0,0.45)] backdrop-blur-2xl">
                     <div className="px-3 pb-3 pt-1 border-b border-white/5">
                       <p className="text-[11px] font-black uppercase tracking-[0.22em] text-brand-400">Tải nhanh</p>
@@ -227,7 +272,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
               >
                 <span className="flex items-center gap-3">
                   {item.name}
-                  {item.name === 'Cộng đồng' && (
+                  {item.tab === 'community' && (
                     <span className="bg-brand-500 text-white text-[8px] px-1.5 py-0.5 rounded-md font-black uppercase tracking-tighter">New</span>
                   )}
                 </span>

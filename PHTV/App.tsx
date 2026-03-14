@@ -338,7 +338,15 @@ function App() {
         <div className="h-full bg-gradient-to-r from-brand-500 via-purple-500 to-red-500 animate-shimmer bg-[length:200%_auto]"></div>
       </div>
 
-      <Navbar activeTab={activeTab} onTabChange={setActiveTab} />
+      <Navbar
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+        downloadUrl={downloadUrl}
+        releaseUrl={releaseUrl}
+        arm64DownloadUrl={arm64DownloadUrl}
+        intelDownloadUrl={intelDownloadUrl}
+        hasSplitDownloads={hasSplitDownloads}
+      />
 
       {activeTab === 'home' ? (
         <div className="relative z-10 animate-in fade-in duration-1000">
