@@ -12,7 +12,9 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { downloadUrl } = useGitHubData();
+  const { downloadUrl, hasSplitDownloads } = useGitHubData();
+  const downloadHref = hasSplitDownloads ? '#install' : downloadUrl;
+  const downloadLabel = hasSplitDownloads ? 'Chọn bản tải' : 'Tải ngay';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,6 +45,16 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
         // Let the default anchor behavior scroll to the id after tab switch
       }
     }
+    setMobileMenuOpen(false);
+  };
+
+  const handleDownloadClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (hasSplitDownloads && activeTab === 'community') {
+      e.preventDefault();
+      onTabChange?.('home');
+      window.location.hash = '#install';
+    }
+
     setMobileMenuOpen(false);
   };
 
@@ -94,12 +106,13 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
             </a>
             
             <a 
-              href={downloadUrl}
+              href={downloadHref}
+              onClick={handleDownloadClick}
               className="hidden xs:flex items-center gap-2 bg-white text-slate-950 px-6 py-2.5 rounded-xl text-sm font-black hover:bg-slate-100 transition-all transform hover:scale-105 active:scale-95 shadow-xl shadow-white/10"
               aria-label="Tải xuống PHTV"
             >
               <Icons.Download size={18} />
-              <span>Tải ngay</span>
+              <span>{downloadLabel}</span>
             </a>
 
             {/* Mobile Menu Button */}
@@ -146,11 +159,12 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab = 'home', onTabChange 
 
           <div className="mt-auto space-y-4">
             <a 
-              href={downloadUrl}
+              href={downloadHref}
+              onClick={handleDownloadClick}
               className="flex items-center justify-center gap-3 w-full py-4 bg-white text-slate-950 rounded-2xl font-black text-lg shadow-xl shadow-white/5"
             >
               <Icons.Download size={20} />
-              Tải ngay
+              {downloadLabel}
             </a>
             <div className="flex justify-center gap-6 pt-4 border-t border-white/5">
               <a href="https://github.com/PhamHungTien/PHTV" className="text-slate-400 hover:text-white transition-colors"><Icons.Github size={24} /></a>

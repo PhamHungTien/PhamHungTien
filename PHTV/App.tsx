@@ -24,7 +24,7 @@ const faqData = [
     items: [
       {
         q: "PHTV có tương thích với phiên bản macOS nào?",
-        a: "PHTV hỗ trợ macOS 13.0+ (Ventura trở lên). Universal Binary - hoạt động trên cả Intel và Apple Silicon (M1/M2/M3/M4/...). Tương thích với mọi Mac chạy macOS 13.0+."
+        a: "PHTV hỗ trợ macOS 13.0+ (Ventura trở lên). Từ các bản phát hành mới, PHTV tách riêng binary cho Apple Silicon và Intel để tải đúng theo từng dòng máy, đồng thời vẫn tương thích với mọi Mac chạy macOS 13.0+."
       },
       {
         q: "Cách nào dễ nhất để cài đặt PHTV?",
@@ -45,7 +45,7 @@ const faqData = [
                </div>
             </div>
 
-            <p className="text-sm">Hoặc tải trực tiếp từ <a href="https://phamhungtien.com/PHTV/" className="text-brand-400 hover:underline">phamhungtien.com/PHTV</a> hoặc <a href="https://github.com/PhamHungTien/PHTV/releases" className="text-brand-400 hover:underline">GitHub Releases</a>.</p>
+            <p className="text-sm">Hoặc tải trực tiếp từ <a href="https://phamhungtien.com/PHTV/" className="text-brand-400 hover:underline">phamhungtien.com/PHTV</a> hoặc <a href="https://github.com/PhamHungTien/PHTV/releases" className="text-brand-400 hover:underline">GitHub Releases</a>. Nếu tải tay, hãy chọn đúng bản <strong>Apple Silicon</strong> hoặc <strong>Intel</strong>.</p>
             <p className="mt-2 text-sm italic text-slate-500">Xem thêm: <a href="#tutorial" className="text-brand-400 hover:underline font-bold">Video hướng dẫn cài đặt chi tiết</a></p>
           </div>
         )
@@ -271,9 +271,21 @@ const faqData = [
 ];
 
 function App() {
-  const { downloadUrl, version, totalDownloads, loading } = useGitHubData();
+  const {
+    downloadUrl,
+    releaseUrl,
+    arm64DownloadUrl,
+    intelDownloadUrl,
+    universalDownloadUrl,
+    hasSplitDownloads,
+    version,
+    totalDownloads,
+    loading
+  } = useGitHubData();
   const [showDonate, setShowDonate] = useState(false);
   const [activeTab, setActiveTab] = useState<'home' | 'community'>('home');
+  const primaryDownloadHref = hasSplitDownloads ? '#install' : downloadUrl;
+  const primaryDownloadLabel = hasSplitDownloads ? 'Chọn bản tải phù hợp' : `Tải xuống ${version}`;
 
   // Reveal Animation Logic
   useEffect(() => {
@@ -376,11 +388,11 @@ function App() {
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-5 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-700 px-4 md:px-0">
                 <a 
-                  href={downloadUrl}
+                  href={primaryDownloadHref}
                   className="w-full sm:w-auto px-8 py-4 md:px-12 md:py-5 bg-white text-slate-950 rounded-2xl font-black text-base md:text-lg hover:bg-slate-100 transition-all transform hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(255,255,255,0.2)] flex items-center justify-center gap-2 md:gap-3 group"
                 >
                   <Icons.Download size={20} className="md:w-6 md:h-6 group-hover:animate-bounce" />
-                  Tải xuống {version}
+                  {primaryDownloadLabel}
                 </a>
                 
                 <button 
@@ -478,7 +490,8 @@ function App() {
                    <div className="mb-6 md:mb-8">
                       <TerminalBlock command="brew install --cask phamhungtien/tap/phtv" label="Install" output={`==> Downloading PHTV...\n==> Installing Cask phtv\n🍺  phtv was successfully installed!`}/>
                    </div>
-                   <p className="text-slate-500 dark:text-slate-400 text-base md:text-lg mb-6 md:mb-10 leading-relaxed font-medium">Lựa chọn hàng đầu cho lập trình viên và những ai yêu thích sự gọn nhẹ của Terminal.</p>
+                   <p className="text-slate-500 dark:text-slate-400 text-base md:text-lg mb-4 md:mb-6 leading-relaxed font-medium">Lựa chọn hàng đầu cho lập trình viên và những ai yêu thích sự gọn nhẹ của Terminal.</p>
+                   <p className="text-sm md:text-base text-brand-500 dark:text-brand-400 font-bold mb-6 md:mb-10">Homebrew tự chọn đúng binary cho Apple Silicon hoặc Intel, nên bạn không cần nhớ tên file.</p>
                    <div className="mt-auto space-y-3 md:space-y-4 pt-6 md:pt-8 border-t border-slate-200/50 dark:border-white/5">
                       <CommandRow icon={Icons.RefreshCw} color="text-blue-500 dark:text-blue-400" label="Cập nhật" code="brew upgrade --cask phtv" />
                       <CommandRow icon={Icons.Trash2} color="text-red-500 dark:text-red-400" label="Gỡ cài đặt" code="brew uninstall --zap --cask phtv" />
@@ -491,11 +504,34 @@ function App() {
                       <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-slate-700 flex items-center justify-center text-white shadow-xl transition-transform group-hover:rotate-6"><Icons.Download size={24} className="md:w-7 md:h-7" /></div>
                       <h3 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight">Tải trực tiếp</h3>
                    </div>
-                   <div className="flex-1 flex items-center mb-8 md:mb-10">
-                     <a href={downloadUrl} className="flex items-center justify-center gap-3 md:gap-4 w-full py-5 md:py-6 bg-gradient-to-r from-brand-600 to-purple-600 hover:from-brand-500 hover:to-purple-500 text-white rounded-3xl transition-all font-black text-lg md:text-xl shadow-2xl hover:shadow-brand-500/30 hover:-translate-y-1 active:scale-95">
-                       <Icons.Download size={24} className="md:w-7 md:h-7" />
-                       Tải PHTV.dmg
-                     </a>
+                   <div className="flex-1 flex flex-col gap-4 mb-8 md:mb-10">
+                     {hasSplitDownloads ? (
+                       <>
+                         <a href={arm64DownloadUrl ?? releaseUrl} className="flex items-center justify-between gap-3 md:gap-4 w-full py-5 px-5 md:px-6 bg-gradient-to-r from-brand-600 to-purple-600 hover:from-brand-500 hover:to-purple-500 text-white rounded-3xl transition-all font-black text-base md:text-lg shadow-2xl hover:shadow-brand-500/30 hover:-translate-y-1 active:scale-95">
+                           <span className="flex items-center gap-3 md:gap-4">
+                             <Icons.Download size={24} className="md:w-7 md:h-7" />
+                             Apple Silicon
+                           </span>
+                           <span className="text-xs md:text-sm font-extrabold uppercase tracking-widest text-white/80">M1 / M2 / M3 / M4</span>
+                         </a>
+                         <a href={intelDownloadUrl ?? releaseUrl} className="flex items-center justify-between gap-3 md:gap-4 w-full py-5 px-5 md:px-6 bg-white/10 hover:bg-white/15 border border-white/10 text-white rounded-3xl transition-all font-black text-base md:text-lg shadow-xl hover:-translate-y-1 active:scale-95">
+                           <span className="flex items-center gap-3 md:gap-4">
+                             <Icons.Download size={24} className="md:w-7 md:h-7" />
+                             Intel
+                           </span>
+                           <span className="text-xs md:text-sm font-extrabold uppercase tracking-widest text-slate-300">Core i5 / i7 / i9</span>
+                         </a>
+                         <div className="rounded-3xl border border-white/10 bg-white/[0.04] px-5 py-4 text-sm md:text-base text-slate-400 leading-relaxed">
+                           Không chắc máy bạn thuộc loại nào? <span className="text-white font-bold">Mac M1/M2/M3/M4</span> chọn <span className="text-white font-bold">Apple Silicon</span>. Các máy Mac đời cũ dùng chip Intel chọn <span className="text-white font-bold">Intel</span>.
+                           <a href={releaseUrl} className="ml-2 text-brand-400 hover:underline font-bold">Xem tất cả bản phát hành</a>
+                         </div>
+                       </>
+                     ) : (
+                       <a href={universalDownloadUrl ?? downloadUrl} className="flex items-center justify-center gap-3 md:gap-4 w-full py-5 md:py-6 bg-gradient-to-r from-brand-600 to-purple-600 hover:from-brand-500 hover:to-purple-500 text-white rounded-3xl transition-all font-black text-lg md:text-xl shadow-2xl hover:shadow-brand-500/30 hover:-translate-y-1 active:scale-95">
+                         <Icons.Download size={24} className="md:w-7 md:h-7" />
+                         Tải PHTV.dmg
+                       </a>
+                     )}
                    </div>
                    <div className="p-6 md:p-8 bg-yellow-500/10 dark:bg-yellow-500/[0.03] border border-yellow-500/20 dark:border-yellow-500/10 rounded-3xl backdrop-blur-md">
                      <div className="flex items-start gap-4 md:gap-5">
@@ -536,7 +572,7 @@ function App() {
                   <table className="w-full text-left border-collapse">
                     <tbody>
                       <tr className="border-b border-white/5 group hover:bg-white/[0.03] transition-colors"><th className="py-4 px-6 md:py-6 md:px-8 text-slate-500 font-bold uppercase tracking-widest text-[10px] md:text-xs w-1/3">Hệ điều hành</th><td className="py-4 px-6 md:py-6 md:px-8 text-white font-black text-base md:text-lg">macOS 13.0+</td></tr>
-                      <tr className="border-b border-white/5 group hover:bg-white/[0.03] transition-colors"><th className="py-4 px-6 md:py-6 md:px-8 text-slate-500 font-bold uppercase tracking-widest text-[10px] md:text-xs">Kiến trúc</th><td className="py-4 px-6 md:py-6 md:px-8 text-white font-black text-base md:text-lg">Universal Binary (Intel & Apple Silicon)</td></tr>
+                      <tr className="border-b border-white/5 group hover:bg-white/[0.03] transition-colors"><th className="py-4 px-6 md:py-6 md:px-8 text-slate-500 font-bold uppercase tracking-widest text-[10px] md:text-xs">Kiến trúc</th><td className="py-4 px-6 md:py-6 md:px-8 text-white font-black text-base md:text-lg">Phát hành riêng cho Apple Silicon (arm64) và Intel</td></tr>
                       <tr className="group hover:bg-white/[0.03] transition-colors"><th className="py-4 px-6 md:py-6 md:px-8 text-slate-500 font-bold uppercase tracking-widest text-[10px] md:text-xs">Yêu cầu quyền</th><td className="py-4 px-6 md:py-6 md:px-8 text-white font-black text-base md:text-lg inline-flex items-center gap-2 md:gap-3"><Icons.ShieldCheck className="text-brand-400" size={18} /> Accessibility (Trợ năng)</td></tr>
                     </tbody>
                   </table>

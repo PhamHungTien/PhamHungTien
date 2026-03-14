@@ -2,17 +2,27 @@ import { useState, useEffect } from 'react';
 
 export interface GitHubData {
   downloadUrl: string;
+  releaseUrl: string;
+  arm64DownloadUrl: string | null;
+  intelDownloadUrl: string | null;
+  universalDownloadUrl: string | null;
+  hasSplitDownloads: boolean;
   version: string;
   totalDownloads: string;
   loading: boolean;
 }
 
-const CACHE_KEY = 'phtv_releases_data_v4';
+const CACHE_KEY = 'phtv_releases_data_v5';
 const CACHE_DURATION = 600000; // 10 minutes
 
 export const useGitHubData = (): GitHubData => {
   const [data, setData] = useState<GitHubData>({
     downloadUrl: "https://github.com/PhamHungTien/PHTV/releases/latest",
+    releaseUrl: "https://github.com/PhamHungTien/PHTV/releases/latest",
+    arm64DownloadUrl: null,
+    intelDownloadUrl: null,
+    universalDownloadUrl: null,
+    hasSplitDownloads: false,
     version: "v1.0.0",
     totalDownloads: "0",
     loading: true,
@@ -29,6 +39,11 @@ export const useGitHubData = (): GitHubData => {
           if (now - parsed.timestamp < CACHE_DURATION) {
             setData({
               downloadUrl: parsed.url,
+              releaseUrl: parsed.releaseUrl ?? parsed.url,
+              arm64DownloadUrl: parsed.arm64DownloadUrl ?? null,
+              intelDownloadUrl: parsed.intelDownloadUrl ?? null,
+              universalDownloadUrl: parsed.universalDownloadUrl ?? null,
+              hasSplitDownloads: parsed.hasSplitDownloads ?? false,
               version: parsed.version,
               totalDownloads: parsed.downloads,
               loading: false,
@@ -71,11 +86,23 @@ export const useGitHubData = (): GitHubData => {
           }
 
           const latestVer = targetRelease.tag_name;
-          const dmgAsset = targetRelease.assets?.find((asset: any) => asset.name.endsWith('.dmg'));
-          const url = dmgAsset ? dmgAsset.browser_download_url : targetRelease.html_url;
+          const dmgAssets = targetRelease.assets?.filter((asset: any) => asset.name.endsWith('.dmg')) ?? [];
+          const arm64Asset = dmgAssets.find((asset: any) => /-arm64\.dmg$/i.test(asset.name));
+          const intelAsset = dmgAssets.find((asset: any) => /-(intel|x86_64)\.dmg$/i.test(asset.name));
+          const universalAsset = dmgAssets.find((asset: any) => !/-(arm64|intel|x86_64)\.dmg$/i.test(asset.name));
+          const hasSplitDownloads = Boolean(arm64Asset && intelAsset);
+          const releaseUrl = targetRelease.html_url;
+          const url = hasSplitDownloads
+            ? releaseUrl
+            : (universalAsset?.browser_download_url ?? releaseUrl);
 
           const newData = {
             downloadUrl: url,
+            releaseUrl,
+            arm64DownloadUrl: arm64Asset?.browser_download_url ?? null,
+            intelDownloadUrl: intelAsset?.browser_download_url ?? null,
+            universalDownloadUrl: universalAsset?.browser_download_url ?? null,
+            hasSplitDownloads,
             version: latestVer,
             totalDownloads: formattedDownloads,
             loading: false,
@@ -86,6 +113,11 @@ export const useGitHubData = (): GitHubData => {
           try {
             localStorage.setItem(CACHE_KEY, JSON.stringify({
               url,
+              releaseUrl,
+              arm64DownloadUrl: arm64Asset?.browser_download_url ?? null,
+              intelDownloadUrl: intelAsset?.browser_download_url ?? null,
+              universalDownloadUrl: universalAsset?.browser_download_url ?? null,
+              hasSplitDownloads,
               version: latestVer,
               downloads: formattedDownloads,
               timestamp: now
