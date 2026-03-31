@@ -1,33 +1,691 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHTV - Bộ gõ tiếng Việt hiện đại cho macOS</title>
-    <meta name="description" content="PHTV (Precision Hybrid Typing Vietnamese): Bộ gõ tiếng Việt Native Swift & C/C++ tối ưu nhất cho macOS. Miễn phí, mã nguồn mở và bảo mật.">
-    <meta http-equiv="cache-control" content="no-cache, must-revalidate, max-age=0" />
-    <meta http-equiv="expires" content="0" />
-    <meta http-equiv="pragma" content="no-cache" />
-    <meta http-equiv="refresh" content="0; url=/PHTV/">
-    <link rel="canonical" href="https://phamhungtien.com/PHTV/">
-    <link rel="icon" type="image/svg+xml" href="/PHTV/phtv-favicon.svg" sizes="any" />
-    <link rel="icon" type="image/webp" href="/PHTV/phtv-icon.webp" />
-    <link rel="apple-touch-icon" href="/PHTV/phtv-icon.webp" />
-    <link rel="mask-icon" href="/PHTV/phtv-favicon.svg" color="#f43f5e">
-    
-    <!-- Open Graph for better social sharing even from root -->
-    <meta property="og:title" content="PHTV - Bộ gõ tiếng Việt cho macOS" />
-    <meta property="og:description" content="Bộ gõ tiếng Việt Native Swift & C/C++. Miễn phí, offline, không thu thập dữ liệu." />
-    <meta property="og:image" content="https://phamhungtien.com/PHTV/assets/social_preview.webp" />
-    
-    <script>
-        // Use replace to keep history clean
-        window.location.replace("/PHTV/" + window.location.hash);
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pham Hung Tien | Sản phẩm cho macOS</title>
+  <meta name="description" content="Trang chính thức của Pham Hung Tien với các sản phẩm dành cho macOS, gồm PHTV và LunarV.">
+  <meta http-equiv="cache-control" content="no-cache, must-revalidate, max-age=0">
+  <meta http-equiv="expires" content="0">
+  <meta http-equiv="pragma" content="no-cache">
+  <link rel="canonical" href="https://phamhungtien.com/">
+  <link rel="icon" type="image/svg+xml" href="/PHTV/phtv-favicon.svg" sizes="any">
+  <link rel="icon" type="image/webp" href="/PHTV/phtv-icon.webp">
+  <link rel="apple-touch-icon" href="/PHTV/phtv-icon.webp">
+  <link rel="mask-icon" href="/PHTV/phtv-favicon.svg" color="#f43f5e">
+  <meta name="theme-color" content="#12091a">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://phamhungtien.com/">
+  <meta property="og:title" content="Pham Hung Tien | Sản phẩm cho macOS">
+  <meta property="og:description" content="Khám phá các sản phẩm phần mềm do Pham Hung Tien phát triển cho macOS, gồm PHTV và LunarV.">
+  <meta property="og:image" content="https://phamhungtien.com/PHTV/assets/social_preview.webp">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pham Hung Tien | Sản phẩm cho macOS">
+  <meta name="twitter:description" content="Trang giới thiệu các sản phẩm phần mềm dành cho macOS của Pham Hung Tien.">
+  <meta name="twitter:image" content="https://phamhungtien.com/PHTV/assets/social_preview.webp">
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg-top: #160a1c;
+      --bg-bottom: #0a0d14;
+      --surface: rgba(255, 255, 255, 0.04);
+      --surface-strong: rgba(255, 255, 255, 0.07);
+      --border: rgba(255, 255, 255, 0.09);
+      --text: #f8fafc;
+      --muted: #9aa4b2;
+      --accent: #fbbf24;
+      --accent-rose: #fb7185;
+      --shadow: 0 28px 70px rgba(0, 0, 0, 0.28);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: "Avenir Next", "SF Pro Display", "Segoe UI Variable", "Helvetica Neue", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(180, 40, 40, 0.18), transparent 30%),
+        radial-gradient(circle at top right, rgba(255, 196, 0, 0.09), transparent 24%),
+        radial-gradient(circle at bottom center, rgba(126, 18, 18, 0.22), transparent 36%),
+        linear-gradient(180deg, var(--bg-top) 0%, #100818 34%, var(--bg-bottom) 100%);
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .page-shell {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .page-shell::before {
+      content: "";
+      position: fixed;
+      inset: -12%;
+      z-index: -2;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(255, 208, 94, 0.1), transparent 20%),
+        radial-gradient(circle at 80% 12%, rgba(244, 63, 94, 0.08), transparent 24%),
+        radial-gradient(circle at 50% 56%, rgba(127, 29, 29, 0.18), transparent 32%),
+        radial-gradient(circle at 84% 78%, rgba(120, 53, 15, 0.12), transparent 26%);
+      filter: blur(56px);
+      opacity: 0.92;
+      pointer-events: none;
+    }
+
+    .page-shell::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent 22%),
+        radial-gradient(circle at center, rgba(255, 255, 255, 0.012), transparent 50%);
+      pointer-events: none;
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      padding: 20px 0 0;
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 16px 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.12);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(251, 113, 133, 0.12));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: #fff7ed;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    .brand-copy {
+      min-width: 0;
+    }
+
+    .brand-copy strong {
+      display: block;
+      font-size: 1.05rem;
+      line-height: 1.15;
+      letter-spacing: 0.02em;
+    }
+
+    .brand-copy span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .pill-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.04);
+      color: #e2e8f0;
+      font-size: 0.92rem;
+      font-weight: 700;
+      transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+    }
+
+    .pill-link:hover {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: rgba(251, 191, 36, 0.24);
+      transform: translateY(-1px);
+    }
+
+    main {
+      padding: 88px 0 72px;
+    }
+
+    .hero {
+      display: grid;
+      gap: 40px;
+      align-items: end;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.04);
+      color: #dbe4f0;
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+    }
+
+    .eyebrow-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-rose));
+      box-shadow: 0 0 18px rgba(251, 191, 36, 0.45);
+    }
+
+    .hero h1 {
+      margin: 22px 0 0;
+      max-width: 11ch;
+      font-size: clamp(3rem, 8vw, 6.1rem);
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+    }
+
+    .hero p {
+      margin: 20px 0 0;
+      max-width: 720px;
+      color: #cbd5e1;
+      font-size: clamp(1rem, 2.2vw, 1.18rem);
+      line-height: 1.85;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .cta-primary,
+    .cta-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 20px;
+      border-radius: 999px;
+      font-weight: 800;
+      transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease;
+    }
+
+    .cta-primary {
+      background: #ffffff;
+      color: #0f172a;
+    }
+
+    .cta-primary:hover,
+    .cta-secondary:hover {
+      transform: translateY(-1px);
+    }
+
+    .cta-secondary {
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.04);
+      color: #e2e8f0;
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .stat {
+      padding: 12px 15px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.04);
+      color: #dbe4f0;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .section-head {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 84px;
+      margin-bottom: 28px;
+    }
+
+    .section-head span {
+      color: rgba(251, 191, 36, 0.88);
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(1.9rem, 4vw, 3.1rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    .section-head p {
+      margin: 0;
+      max-width: 700px;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 1rem;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .product-card {
+      position: relative;
+      overflow: hidden;
+      padding: 28px;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(180deg, rgba(18, 24, 38, 0.72), rgba(10, 14, 24, 0.78));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .product-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -10% -25% auto;
+      width: 220px;
+      height: 220px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(251, 191, 36, 0.12), transparent 62%);
+      pointer-events: none;
+    }
+
+    .product-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 26px;
+    }
+
+    .product-mark {
+      position: relative;
+      flex-shrink: 0;
+      width: 72px;
+      height: 72px;
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.04);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .product-mark img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .moon-mark {
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at 35% 30%, rgba(255, 240, 193, 0.22), transparent 35%),
+        linear-gradient(135deg, rgba(15, 23, 42, 0.94), rgba(26, 15, 50, 0.96));
+    }
+
+    .moon-mark::before {
+      content: "";
+      position: absolute;
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #fde68a, #f9a8d4);
+      transform: translateX(-2px);
+      box-shadow: 0 0 18px rgba(253, 224, 71, 0.2);
+    }
+
+    .moon-mark::after {
+      content: "";
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: rgba(20, 8, 29, 0.98);
+      transform: translate(8px, -3px);
+    }
+
+    .product-title-wrap {
+      min-width: 0;
+    }
+
+    .product-title-wrap h3 {
+      margin: 0;
+      font-size: 1.75rem;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+
+    .product-subtitle {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.65;
+    }
+
+    .product-description {
+      margin: 0;
+      color: #dbe4f0;
+      line-height: 1.85;
+      font-size: 1rem;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 22px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .tag-list li {
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.04);
+      color: #dbe4f0;
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .product-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .button-main,
+    .button-subtle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 46px;
+      padding: 0 18px;
+      border-radius: 999px;
+      font-weight: 800;
+      transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease;
+    }
+
+    .button-main {
+      background: linear-gradient(135deg, #fcd34d, #fb7185);
+      color: #160b12;
+    }
+
+    .button-subtle {
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.04);
+      color: #e2e8f0;
+    }
+
+    .button-main:hover,
+    .button-subtle:hover {
+      transform: translateY(-1px);
+    }
+
+    .footer {
+      margin-top: 84px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+      color: var(--muted);
+      font-size: 0.93rem;
+      line-height: 1.8;
+    }
+
+    .footer strong {
+      color: #e2e8f0;
+    }
+
+    @media (max-width: 960px) {
+      .product-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        gap: 28px;
+      }
+
+      .hero h1 {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .topbar-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        border-radius: 28px;
+      }
+
+      .topbar-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      main {
+        padding-top: 60px;
+      }
+
+      .product-card {
+        padding: 22px;
+        border-radius: 26px;
+      }
+
+      .product-header {
+        align-items: flex-start;
+      }
+    }
+  </style>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Pham Hung Tien Products",
+      "url": "https://phamhungtien.com/",
+      "description": "Trang giới thiệu các sản phẩm phần mềm dành cho macOS của Pham Hung Tien.",
+      "hasPart": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "PHTV",
+          "url": "https://phamhungtien.com/PHTV/",
+          "sameAs": "https://github.com/PhamHungTien/PHTV",
+          "operatingSystem": "macOS 13+"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "LunarV",
+          "url": "https://github.com/PhamHungTien/LunarV",
+          "sameAs": "https://github.com/PhamHungTien/LunarV",
+          "operatingSystem": "macOS 15+"
+        }
+      ]
+    }
+  </script>
 </head>
-<body style="background: #020617;">
-    <noscript>
-        <p>Đang chuyển hướng đến <a href="/PHTV/">PHTV - Bộ gõ tiếng Việt cho macOS</a>...</p>
-    </noscript>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <div class="brand">
+          <div class="brand-mark">PH</div>
+          <div class="brand-copy">
+            <strong>Pham Hung Tien</strong>
+            <span>Product Index</span>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <a class="pill-link" href="https://github.com/PhamHungTien" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a class="pill-link" href="mailto:phamhungtien.contact@gmail.com">Liên hệ</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="container hero">
+        <div>
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            Sản phẩm dành cho macOS
+          </div>
+
+          <h1>Gọn, native và tập trung vào trải nghiệm thực tế.</h1>
+          <p>
+            Đây là trang tổng hợp các sản phẩm phần mềm mình đang phát triển. Mỗi sản phẩm được thiết kế theo cùng một tinh thần: rõ ràng, nhanh và phù hợp với cách người dùng macOS làm việc hằng ngày.
+          </p>
+
+          <div class="hero-actions">
+            <a class="cta-primary" href="#products">Xem sản phẩm</a>
+            <a class="cta-secondary" href="/PHTV/">Mở PHTV</a>
+          </div>
+
+          <div class="stats" aria-label="Thông tin nhanh">
+            <div class="stat">2 sản phẩm công khai</div>
+            <div class="stat">Tập trung cho macOS</div>
+            <div class="stat">Mã nguồn mở trên GitHub</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="products" class="container">
+        <div class="section-head">
+          <span>Danh mục</span>
+          <h2>Các sản phẩm hiện có</h2>
+          <p>
+            Một điểm vào gọn gàng cho toàn bộ sản phẩm, thay cho việc chuyển hướng thẳng sang một microsite duy nhất.
+          </p>
+        </div>
+
+        <div class="product-grid">
+          <article class="product-card">
+            <div class="product-header">
+              <div class="product-mark">
+                <img src="/PHTV/phtv-icon.webp" alt="PHTV icon">
+              </div>
+              <div class="product-title-wrap">
+                <h3>PHTV</h3>
+                <div class="product-subtitle">Bộ gõ tiếng Việt hiện đại cho macOS.</div>
+              </div>
+            </div>
+
+            <p class="product-description">
+              Precision Hybrid Typing Vietnamese tập trung vào tốc độ, độ chính xác và quyền riêng tư, với trải nghiệm gõ tiếng Việt native, gọn và ổn định.
+            </p>
+
+            <ul class="tag-list" aria-label="PHTV tags">
+              <li>macOS 13+</li>
+              <li>Offline</li>
+              <li>Open source</li>
+            </ul>
+
+            <div class="product-actions">
+              <a class="button-main" href="/PHTV/">Mở trang sản phẩm</a>
+              <a class="button-subtle" href="https://github.com/PhamHungTien/PHTV" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+          </article>
+
+          <article class="product-card">
+            <div class="product-header">
+              <div class="product-mark moon-mark" aria-hidden="true"></div>
+              <div class="product-title-wrap">
+                <h3>LunarV</h3>
+                <div class="product-subtitle">Vietnamese Lunar Calendar cho macOS.</div>
+              </div>
+            </div>
+
+            <p class="product-description">
+              LunarV hỗ trợ theo dõi lịch âm, ngày lễ và các mốc thời gian quen thuộc theo cách nhẹ nhàng, rõ ràng và phù hợp với giao diện hệ thống.
+            </p>
+
+            <ul class="tag-list" aria-label="LunarV tags">
+              <li>macOS 15+</li>
+              <li>Lunar calendar</li>
+              <li>Reminders</li>
+            </ul>
+
+            <div class="product-actions">
+              <a class="button-main" href="https://github.com/PhamHungTien/LunarV" target="_blank" rel="noopener noreferrer">Xem trên GitHub</a>
+              <a class="button-subtle" href="https://github.com/PhamHungTien/LunarV/issues" target="_blank" rel="noopener noreferrer">Issues</a>
+            </div>
+          </article>
+        </div>
+
+        <div class="footer">
+          <strong>Pham Hung Tien</strong> phát triển các sản phẩm tập trung vào trải nghiệm native, bố cục rõ ràng và hiệu năng ổn định trên macOS.
+        </div>
+      </section>
+    </main>
+  </div>
 </body>
 </html>
