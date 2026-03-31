@@ -181,7 +181,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <div className="w-[320px] rounded-[1.75rem] border border-white/10 bg-[#0b0f18]/96 p-3 shadow-[0_25px_80px_rgba(0,0,0,0.42)] backdrop-blur-2xl">
                     <div className="border-b border-white/6 px-3 pb-3 pt-1">
                       <p className="text-[11px] font-black uppercase tracking-[0.22em] text-amber-300">Tải nhanh</p>
-                      <p className="mt-1 text-sm text-slate-400">Chọn đúng bản cho Apple Silicon hoặc Intel.</p>
+                      <p className="mt-1 text-sm text-slate-400">Chọn theo kiến trúc máy, không cần quan tâm đời chip cụ thể.</p>
                     </div>
 
                     <div className="mt-3 space-y-2">
@@ -194,7 +194,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                           <Icons.Download size={18} />
                           <span>
                             <span className="block text-sm font-black">Apple Silicon</span>
-                            <span className="block text-xs font-semibold uppercase tracking-widest text-slate-900/65">M1 / M2 / M3 / M4</span>
+                            <span className="block text-xs font-semibold uppercase tracking-widest text-slate-900/65">Mac dùng chip Apple</span>
                           </span>
                         </span>
                         <Icons.ArrowRight size={18} className="shrink-0" />
@@ -209,7 +209,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                           <Icons.Download size={18} />
                           <span>
                             <span className="block text-sm font-black">Intel</span>
-                            <span className="block text-xs font-semibold uppercase tracking-widest text-slate-400">Core i5 / i7 / i9</span>
+                            <span className="block text-xs font-semibold uppercase tracking-widest text-slate-400">Mac dùng chip Intel</span>
                           </span>
                         </span>
                         <Icons.ArrowRight size={18} className="shrink-0 text-slate-400" />
@@ -307,7 +307,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     <Icons.Download size={20} />
                     Apple Silicon
                   </span>
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-slate-900/65">M1-M4</span>
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-slate-900/65">Mac dùng chip Apple</span>
                 </a>
 
                 <a
@@ -319,7 +319,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     <Icons.Download size={20} />
                     Intel
                   </span>
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-slate-400">Core Intel</span>
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-slate-400">Mac dùng chip Intel</span>
                 </a>
 
                 <a

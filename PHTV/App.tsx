@@ -462,7 +462,7 @@ function App() {
                         </h2>
                       </div>
                       <p className="max-w-md text-sm leading-7 text-slate-400 md:text-base">
-                        Apple Silicon cho M1 đến M4. Intel dành cho các máy Mac đời cũ hơn.
+                        Chọn theo kiến trúc máy: Apple Silicon cho các Mac dùng chip Apple, Intel cho các máy Mac đời cũ hơn.
                       </p>
                     </div>
 
@@ -470,14 +470,14 @@ function App() {
                       <DownloadChoiceCard
                         href={arm64DownloadUrl ?? releaseUrl}
                         title="Apple Silicon"
-                        chip="M1 / M2 / M3 / M4"
-                        note="Bản phù hợp cho hầu hết máy Mac mới."
+                        chip="Mac dùng chip Apple"
+                        note="Phù hợp cho hầu hết máy Mac hiện nay."
                         tone="accent"
                       />
                       <DownloadChoiceCard
                         href={intelDownloadUrl ?? releaseUrl}
                         title="Intel"
-                        chip="Core i5 / i7 / i9"
+                        chip="Mac dùng chip Intel"
                         note="Dành cho các máy Mac chạy Intel."
                       />
                     </div>
@@ -587,14 +587,14 @@ function App() {
                           <DownloadChoiceCard
                             href={arm64DownloadUrl ?? releaseUrl}
                             title="Apple Silicon"
-                            chip="M1 / M2 / M3 / M4"
-                            note="Phù hợp cho đa số máy Mac mới."
+                            chip="Mac dùng chip Apple"
+                            note="Phù hợp cho hầu hết máy Mac hiện nay."
                             tone="accent"
                           />
                           <DownloadChoiceCard
                             href={intelDownloadUrl ?? releaseUrl}
                             title="Intel"
-                            chip="Core i5 / i7 / i9"
+                            chip="Mac dùng chip Intel"
                             note="Dành cho các máy chạy Intel."
                           />
                         </>
