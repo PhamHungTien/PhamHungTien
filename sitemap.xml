@@ -35,7 +35,7 @@
 
   <!-- LunarV Main Page -->
   <url>
-    <loc>https://phamhungtien.com/products/lunarv/</loc>
+    <loc>https://phamhungtien.com/LunarV/</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
@@ -44,7 +44,7 @@
       <image:title>LunarV - Lịch âm Việt Nam cho macOS</image:title>
       <image:caption>Ứng dụng lịch âm, ngày lễ và dịp gia đình cho macOS với giao diện menu bar gọn gàng.</image:caption>
     </image:image>
-    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/products/lunarv/" />
+    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/LunarV/" />
   </url>
 
 </urlset>

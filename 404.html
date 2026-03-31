@@ -62,7 +62,7 @@
 </head>
 <body>
   <div class="card">
-    <h1>Trang này đang được chuyển sang địa chỉ mới.</h1>
+    <h1>Trang này đang được chuyển sang địa chỉ đúng.</h1>
     <p id="message">Nếu trình duyệt chưa tự mở trang đúng, bạn có thể quay lại <a href="/">trang chính</a>.</p>
   </div>
 
@@ -70,12 +70,12 @@
     (function () {
       const path = window.location.pathname;
       const redirects = {
-        "/LunarV": "/products/lunarv/",
-        "/LunarV/": "/products/lunarv/",
-        "/LunarV/index.html": "/products/lunarv/",
-        "/lunarv": "/products/lunarv/",
-        "/lunarv/": "/products/lunarv/",
-        "/lunarv/index.html": "/products/lunarv/"
+        "/products/lunarv": "/LunarV/",
+        "/products/lunarv/": "/LunarV/",
+        "/products/lunarv/index.html": "/LunarV/",
+        "/lunarv": "/LunarV/",
+        "/lunarv/": "/LunarV/",
+        "/lunarv/index.html": "/LunarV/"
       };
 
       const target = redirects[path];

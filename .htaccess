@@ -2,9 +2,8 @@
   RewriteEngine On
   RewriteBase /
 
-  # Redirect LunarV legacy paths to the stable product route
-  RewriteRule ^LunarV/?$ products/lunarv/ [R=301,L]
-  RewriteRule ^lunarv/?$ products/lunarv/ [R=301,L]
+  # Redirect the fallback LunarV product path to the canonical URL
+  RewriteRule ^products/lunarv/?$ LunarV/ [R=301,L]
   
   # Redirect /PHTV to /PHTV/
   RewriteCond %{REQUEST_FILENAME} !-f
