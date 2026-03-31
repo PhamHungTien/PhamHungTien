@@ -2,19 +2,15 @@
   RewriteEngine On
   RewriteBase /
 
-  # Serve LunarV landing page directly for hosts that do not auto-resolve folder index files
-  RewriteRule ^LunarV/?$ LunarV/index.html [L]
+  # Redirect LunarV legacy paths to the stable product route
+  RewriteRule ^LunarV/?$ products/lunarv/ [R=301,L]
+  RewriteRule ^lunarv/?$ products/lunarv/ [R=301,L]
   
   # Redirect /PHTV to /PHTV/
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^PHTV$ PHTV/ [R=301,L]
 
-  # Redirect /LunarV to /LunarV/
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule ^LunarV$ LunarV/ [R=301,L]
-  
   # SPA routing - redirect all PHTV requests to PHTV/index.html
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d

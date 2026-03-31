@@ -1,7 +1,9 @@
 # Redirect root PHTV path to PHTV/
 /PHTV /PHTV/ 301
-/LunarV /LunarV/index.html 200
-/LunarV/ /LunarV/index.html 200
+/LunarV /products/lunarv/ 301
+/LunarV/ /products/lunarv/ 301
+/lunarv /products/lunarv/ 301
+/lunarv/ /products/lunarv/ 301
 
 # Single Page Application - redirect all non-file requests to index.html
 /PHTV/* /PHTV/index.html 200
