@@ -117,6 +117,65 @@ const formatRelativeTime = (timestamp: any) => {
   return new Date(date).toLocaleDateString('vi-VN');
 };
 
+const getContentPreview = (content: string, maxLength = 180) => {
+  const normalized = content.replace(/\s+/g, ' ').trim();
+  if (normalized.length <= maxLength) return normalized;
+  return `${normalized.slice(0, maxLength).trimEnd()}...`;
+};
+
+const getOrderedReplies = (question: Question) =>
+  [...(question.replies || [])].sort((a, b) => {
+    if (a.isAdmin !== b.isAdmin) return a.isAdmin ? -1 : 1;
+    return a.timestamp - b.timestamp;
+  });
+
+const getLatestAdminReply = (question: Question) =>
+  [...(question.replies || [])]
+    .filter((reply) => reply.isAdmin)
+    .sort((a, b) => b.timestamp - a.timestamp)[0] ?? null;
+
+const getQuestionStatusMeta = (question: Question) => {
+  const latestAdminReply = getLatestAdminReply(question);
+
+  if (question.isLocked && !latestAdminReply) {
+    return {
+      label: 'Đã khóa',
+      note: 'Thảo luận đã khóa',
+      icon: Icons.Lock,
+      containerClassName: 'border-white/10 bg-white/[0.03]',
+      badgeClassName: 'border-white/10 bg-white/[0.04] text-slate-300'
+    };
+  }
+
+  if (!latestAdminReply) {
+    return {
+      label: 'Chưa phản hồi',
+      note: 'Đang chờ admin xem',
+      icon: Icons.MessageSquareReply,
+      containerClassName: 'border-white/8 bg-white/[0.03]',
+      badgeClassName: 'border-white/10 bg-white/[0.04] text-slate-300'
+    };
+  }
+
+  if (/(đã fix|đã sửa|fixed|resolved|đã xử lý|đã khắc phục|đã cập nhật|đã release|đã ra bản)/i.test(latestAdminReply.content)) {
+    return {
+      label: 'Đã xử lý',
+      note: 'Admin xác nhận đã xử lý',
+      icon: Icons.CheckCircle2,
+      containerClassName: 'border-emerald-400/20 bg-emerald-400/[0.08]',
+      badgeClassName: 'border-emerald-400/20 bg-emerald-400/[0.12] text-emerald-200'
+    };
+  }
+
+  return {
+    label: 'Đã phản hồi',
+    note: 'Admin đã có cập nhật',
+    icon: Icons.ShieldCheck,
+    containerClassName: 'border-rose-400/20 bg-rose-400/[0.08]',
+    badgeClassName: 'border-rose-400/20 bg-rose-400/[0.12] text-rose-200'
+  };
+};
+
 const SmartContent: React.FC<{ content: string, className?: string }> = ({ content, className }) => {
   const parts = content.split(/(`[^`]+`|@[a-zA-Z0-9_]+|https?:\/\/[^\s]+)/g);
   return (
@@ -164,6 +223,7 @@ export const QASection: React.FC = () => {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingReplyId, setEditingReplyId] = useState<string | null>(null);
   const [editContent, setEditContent] = useState('');
+  const viewedQuestionsRef = useRef<Set<string>>(new Set());
 
   // Initialize EmailJS
   useEffect(() => {
@@ -238,7 +298,7 @@ export const QASection: React.FC = () => {
     let result = questions;
     if (filterBy === 'mine' && currentUser) result = result.filter(q => q.authorId === currentUser.uid);
     else if (filterBy === 'reported' && currentUser?.isAdmin) result = result.filter(q => q.isReported);
-    else if (filterBy === 'unanswered') result = result.filter(q => q.replies.length === 0);
+    else if (filterBy === 'unanswered') result = result.filter(q => !q.replies.some(r => r.isAdmin));
 
     if (searchQuery.trim()) {
       const lowSearch = searchQuery.toLowerCase();
@@ -250,6 +310,21 @@ export const QASection: React.FC = () => {
     }
     return result;
   }, [questions, filterBy, searchQuery, currentUser]);
+
+  const communityStats = useMemo(() => {
+    const responded = questions.filter((question) => question.replies.some((reply) => reply.isAdmin)).length;
+    const locked = questions.filter((question) => question.isLocked).length;
+    const pending = Math.max(questions.length - responded, 0);
+    const totalReplies = questions.reduce((sum, question) => sum + (question.replies?.length || 0), 0);
+
+    return {
+      total: questions.length,
+      responded,
+      pending,
+      locked,
+      totalReplies
+    };
+  }, [questions]);
 
   const triggerToast = (message: string) => {
     setShowToast({ show: true, message });
@@ -477,24 +552,98 @@ export const QASection: React.FC = () => {
     await updateDoc(doc(db, "notifications", notifId), { isRead: true });
   };
 
-  const incrementViews = async (id: string) => {
-    const questionRef = doc(db, "questions", id);
-    await updateDoc(questionRef, { viewCount: increment(1) });
+  const incrementViewsOnce = async (id: string) => {
+    if (viewedQuestionsRef.current.has(id)) return;
+    viewedQuestionsRef.current.add(id);
+
+    try {
+      await updateDoc(doc(db, "questions", id), { viewCount: increment(1) });
+    } catch (error) {
+      viewedQuestionsRef.current.delete(id);
+      console.error('Failed to increment question views', error);
+    }
   };
 
-  const Avatar: React.FC<{ user: { username: string, photoURL?: string, isAdmin?: boolean }, size?: string }> = ({ user, size = "w-10 h-10", isAdmin }) => (
-    <div className={`${size} rounded-[1rem] flex items-center justify-center text-white font-black overflow-hidden shadow-lg transition-all duration-500 hover:scale-105 shrink-0 ${
-      isAdmin 
-        ? 'bg-gradient-to-br from-rose-400 via-rose-600 to-pink-600 ring-2 ring-rose-400/50 shadow-rose-500/20' 
-        : 'bg-slate-800 border border-white/5'
-    }`}>
-      {user.photoURL ? (
-        <img src={user.photoURL} alt={user.username} className="w-full h-full object-cover" />
-      ) : (
-        <span className={size.includes('w-8') ? 'text-[9px]' : 'text-base'}>{getInitials(user.username)}</span>
-      )}
-    </div>
-  );
+  const openReplyComposer = (question: Question, reply?: Reply) => {
+    if (!currentUser) {
+      setShowAuthModal(true);
+      return;
+    }
+
+    if (question.isLocked && !currentUser.isAdmin) {
+      triggerToast('Thảo luận này đã khóa.');
+      return;
+    }
+
+    setVisibleQuestions((prev) => {
+      const next = new Set(prev);
+      next.add(question.id);
+      return next;
+    });
+
+    const nextReplyTarget = {
+      qId: question.id,
+      rId: reply?.id,
+      name: reply?.author || question.author,
+      authorId: reply?.authorId || question.authorId,
+      authorEmail: reply?.authorEmail || question.authorEmail
+    };
+
+    if (replyingTo?.qId !== nextReplyTarget.qId || replyingTo?.rId !== nextReplyTarget.rId) {
+      setReplyContent('');
+    }
+
+    setReplyingTo(nextReplyTarget);
+  };
+
+  const toggleQuestionReplies = (question: Question) => {
+    const hasReplies = (question.replies?.length || 0) > 0;
+    if (!hasReplies) {
+      openReplyComposer(question);
+      return;
+    }
+
+    const isOpen = visibleQuestions.has(question.id);
+    setVisibleQuestions((prev) => {
+      const next = new Set(prev);
+      if (isOpen) next.delete(question.id);
+      else next.add(question.id);
+      return next;
+    });
+
+    if (isOpen && replyingTo?.qId === question.id) {
+      setReplyingTo(null);
+      setReplyContent('');
+    }
+  };
+
+  const togglePin = async (question: Question) => {
+    if (!currentUser?.isAdmin) return;
+    await updateDoc(doc(db, "questions", question.id), { isPinned: !question.isPinned });
+    triggerToast(question.isPinned ? 'Đã bỏ ghim.' : 'Đã ghim thảo luận.');
+  };
+
+  const Avatar: React.FC<{
+    user: { username: string; photoURL?: string; isAdmin?: boolean };
+    size?: string;
+    isAdmin?: boolean;
+  }> = ({ user, size = "w-10 h-10", isAdmin }) => {
+    const showAdminStyle = user.isAdmin ?? isAdmin;
+
+    return (
+      <div className={`${size} rounded-2xl flex items-center justify-center text-white font-black overflow-hidden shadow-lg shrink-0 ${
+        showAdminStyle
+          ? 'bg-gradient-to-br from-rose-400 via-rose-500 to-pink-600 ring-1 ring-rose-300/40'
+          : 'bg-slate-800 border border-white/5'
+      }`}>
+        {user.photoURL ? (
+          <img src={user.photoURL} alt={user.username} className="w-full h-full object-cover" />
+        ) : (
+          <span className={size.includes('w-8') ? 'text-[9px]' : 'text-sm'}>{getInitials(user.username)}</span>
+        )}
+      </div>
+    );
+  };
 
   const SkeletonCard = () => (
     <div className="rounded-[1.5rem] p-6 md:p-8 bg-white/[0.02] border border-white/5 animate-pulse space-y-6">
@@ -513,262 +662,726 @@ export const QASection: React.FC = () => {
   );
 
   return (
-    <div className="max-w-5xl mx-auto px-4 md:px-6 py-6 md:py-10 flex flex-col lg:flex-row gap-5 min-h-screen">
-      
-      {/* Sidebar - Left */}
-      <aside className="w-full lg:w-64 shrink-0 space-y-4 order-2 lg:order-1">
-        <div className="glass-panel rounded-[1.5rem] p-5 border border-white/5 shadow-xl backdrop-blur-md">
-           <div className="flex items-center justify-between mb-5">
-              <h3 className="text-sm font-black text-white flex items-center gap-2"><Icons.Info size={14} className="text-rose-400" /> Thống kê</h3>
-              <span className="bg-rose-500/10 text-rose-400 text-[9px] px-2 py-0.5 rounded font-black uppercase border border-rose-500/20">Live</span>
-           </div>
-           <div className="space-y-2">
-              <div className="flex items-center justify-between p-3 bg-white/[0.03] rounded-xl border border-white/5 group hover:bg-white/[0.05] transition-all">
-                 <span className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Thảo luận</span>
-                 <span className="text-white font-black text-sm tabular-nums">{questions.length}</span>
+    <div className="mx-auto min-h-screen max-w-6xl px-4 py-6 md:px-6 md:py-10">
+      <div className="grid gap-5 lg:grid-cols-[280px_minmax(0,1fr)] lg:items-start">
+        <aside className="order-2 space-y-4 lg:order-1 lg:sticky lg:top-24">
+          <section className="rounded-[2rem] border border-white/8 bg-slate-950/70 p-5 shadow-[0_20px_60px_rgba(2,6,23,0.45)] backdrop-blur">
+            <div className="mb-4 flex items-center justify-between">
+              <div>
+                <p className="text-[10px] font-black uppercase tracking-[0.24em] text-slate-500">Tổng quan</p>
+                <h3 className="mt-1 text-lg font-black tracking-tight text-white">Tình trạng thảo luận</h3>
               </div>
-              <div className="p-3.5 bg-rose-500/[0.03] rounded-xl border border-rose-500/10">
-                 <div className="flex items-center gap-2 text-rose-500 mb-1.5">
-                    <Icons.ShieldCheck size={12} />
-                    <span className="text-[9px] font-black uppercase tracking-widest">Quy tắc</span>
-                 </div>
-                 <p className="text-[10px] text-slate-400 leading-relaxed font-medium">Tôn trọng, không spam, văn minh. Chúc bạn vui vẻ!</p>
-              </div>
-              <a 
-                href="https://discord.gg/hm2C4tbaDz" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 p-3.5 bg-[#5865F2]/10 rounded-xl border border-[#5865F2]/20 hover:bg-[#5865F2]/20 transition-all group/discord"
-              >
-                 <div className="w-7 h-7 rounded-lg bg-[#5865F2] flex items-center justify-center text-white shadow-lg group-hover/discord:scale-110 transition-transform">
-                    <Icons.MessageSquare size={14} />
-                 </div>
-                 <div>
-                    <h4 className="text-white font-black text-[10px] uppercase tracking-tight leading-none">Discord</h4>
-                    <p className="text-[8px] text-[#5865F2] font-black uppercase tracking-widest mt-1">Báo lỗi & Hỗ trợ</p>
-                 </div>
-              </a>
-           </div>
-        </div>
+              <span className="rounded-full border border-emerald-400/15 bg-emerald-400/10 px-2.5 py-1 text-[10px] font-bold text-emerald-300">
+                Live
+              </span>
+            </div>
 
-        <div className="glass-panel rounded-[1.5rem] p-5 border border-white/5 shadow-xl hidden md:block backdrop-blur-md group/dev">
-           <h3 className="text-sm font-black text-white mb-5 flex items-center gap-2"><Icons.Award size={14} className="text-rose-400" /> Tác giả</h3>
-           <div className="flex items-center gap-3 p-3 bg-gradient-to-br from-rose-500/10 to-pink-500/10 rounded-xl border border-rose-500/20 shadow-inner group-hover/dev:bg-rose-500/20 transition-all">
-              <div className="w-9 h-9 rounded-xl bg-rose-500 flex items-center justify-center text-white shadow-lg transition-transform group-hover/dev:scale-110">
-                 <Icons.User size={18} />
+            <div className="grid grid-cols-2 gap-3">
+              <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-3">
+                <p className="text-[10px] font-semibold text-slate-400">Tổng bài</p>
+                <p className="mt-2 text-2xl font-black text-white tabular-nums">{communityStats.total}</p>
+              </div>
+              <div className="rounded-2xl border border-emerald-400/12 bg-emerald-400/[0.06] p-3">
+                <p className="text-[10px] font-semibold text-emerald-200">Đã phản hồi</p>
+                <p className="mt-2 text-2xl font-black text-white tabular-nums">{communityStats.responded}</p>
+              </div>
+              <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-3">
+                <p className="text-[10px] font-semibold text-slate-400">Đang chờ</p>
+                <p className="mt-2 text-2xl font-black text-white tabular-nums">{communityStats.pending}</p>
+              </div>
+              <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-3">
+                <p className="text-[10px] font-semibold text-slate-400">Phản hồi</p>
+                <p className="mt-2 text-2xl font-black text-white tabular-nums">{communityStats.totalReplies}</p>
+              </div>
+            </div>
+
+            <div className="mt-4 rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+              <div className="flex items-center gap-2 text-sm font-semibold text-white">
+                <Icons.ShieldCheck size={15} className="text-rose-400" />
+                Lưu ý ngắn
+              </div>
+              <p className="mt-2 text-sm leading-6 text-slate-400">
+                Ưu tiên mô tả rõ lỗi, bước tái hiện và phiên bản đang dùng để admin phản hồi nhanh hơn.
+              </p>
+            </div>
+          </section>
+
+          <section className="rounded-[2rem] border border-white/8 bg-slate-950/70 p-5 shadow-[0_20px_60px_rgba(2,6,23,0.45)] backdrop-blur">
+            <div className="flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-rose-500/15 text-rose-300">
+                <Icons.MessageSquare size={18} />
               </div>
               <div>
-                 <h4 className="text-white font-black text-[10px] uppercase tracking-tight leading-none">Phạm Hùng Tiến</h4>
-                 <p className="text-[8px] text-rose-400 font-black uppercase tracking-widest mt-1">Developer</p>
+                <h3 className="text-base font-black tracking-tight text-white">Kênh hỗ trợ</h3>
+                <p className="text-sm text-slate-400">Cần trao đổi nhanh hơn thì vào Discord.</p>
               </div>
-           </div>
-        </div>
-      </aside>
+            </div>
 
-      {/* Main Content */}
-      <main className="flex-1 order-1 lg:order-2 space-y-5">
-        
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-5 mb-6">
-          <div className="text-center sm:text-left">
-             <h2 className="text-2xl md:text-4xl font-black text-white tracking-tighter italic leading-none">
-               Thảo luận <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-pink-500 via-red-500 to-rose-400 bg-[length:200%_auto] animate-gradient-flow drop-shadow-[0_0_10px_rgba(244,63,94,0.3)] pr-4 py-1">PHTV</span>
-             </h2>
-             <p className="text-slate-500 text-[9px] font-black uppercase tracking-[0.3em] mt-2 flex items-center justify-center sm:justify-start gap-2">
-               <span className="w-5 h-[0.5px] bg-slate-800"></span>
-               Cộng đồng bộ gõ
-               <span className="w-5 h-[0.5px] bg-slate-800"></span>
-             </p>
-          </div>
-          
-          <div className="flex items-center gap-3">
-            {currentUser ? (
-              <div className="flex items-center gap-3">
-                <div className="relative">
-                  <button onClick={() => setShowNotifs(!showNotifs)} className={`p-2 rounded-xl border transition-all relative ${showNotifs ? 'bg-white text-slate-950 border-white shadow-xl' : 'bg-white/5 border-white/5 text-slate-500 hover:text-white hover:bg-white/10'}`} aria-label="Xem thông báo">
-                    <Icons.Bell size={16} />
-                    {unreadCount > 0 && <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-rose-500 text-white text-[8px] font-black flex items-center justify-center rounded-full ring-2 ring-slate-950">{unreadCount}</span>}
-                  </button>
-                  {showNotifs && (
-                    <div className="fixed inset-x-4 top-24 sm:absolute sm:inset-x-auto sm:right-0 sm:top-12 sm:w-[320px] bg-slate-900 border border-white/10 rounded-[1.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.8)] z-[150] overflow-hidden animate-in zoom-in-95 duration-200">
-                       <div className="p-4 border-b border-white/5 flex items-center justify-between bg-slate-950/50"><span className="font-black text-[10px] uppercase tracking-widest text-white">Thông báo</span><button onClick={() => setShowNotifs(false)} className="text-slate-500 hover:text-white"><Icons.X size={16} /></button></div>
-                       <div className="max-h-[350px] overflow-y-auto custom-scrollbar">
-                          {notifications.length === 0 ? <div className="p-8 text-center text-slate-600 font-bold text-[10px] uppercase tracking-widest">Trống</div> : 
-                            notifications.map(n => (
-                              <div key={n.id} onClick={() => { markNotifRead(n.id); setShowNotifs(false); }} className={`p-4 border-b border-white/5 flex gap-3 cursor-pointer transition-colors ${n.isRead ? 'opacity-50 grayscale' : 'bg-rose-500/[0.03] hover:bg-rose-500/[0.08]'}`}>
-                                 <Avatar user={{ username: n.senderName, photoURL: n.senderPhoto }} size="w-8 h-8" />
-                                 <div className="flex-1"><p className="text-[10px] text-white leading-tight mb-1"><span className="font-black">{n.senderName}</span> {n.type === 'reply' ? 'phản hồi bạn' : 'thích bài viết'}</p><span className="text-[8px] text-rose-500 font-black uppercase tracking-tighter">{formatRelativeTime(n.timestamp)}</span></div>
-                              </div>
-                            ))
-                          }
-                       </div>
+            <a
+              href="https://discord.gg/hm2C4tbaDz"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 flex items-center justify-between rounded-2xl border border-[#5865F2]/25 bg-[#5865F2]/10 px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#5865F2]/15"
+            >
+              <span>Vào Discord hỗ trợ</span>
+              <Icons.ArrowRight size={15} className="text-[#aeb7ff]" />
+            </a>
+
+            <div className="mt-4 rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+              <p className="text-sm font-semibold text-white">Admin chính</p>
+              <div className="mt-3 flex items-center gap-3">
+                <Avatar user={{ username: 'Phạm Hùng Tiến', isAdmin: true }} size="w-10 h-10" isAdmin />
+                <div>
+                  <p className="text-sm font-semibold text-white">Phạm Hùng Tiến</p>
+                  <p className="text-sm text-slate-400">Theo dõi phản hồi và cập nhật fix trên PHTV.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </aside>
+
+        <main className="order-1 space-y-5 lg:order-2">
+          <section className="rounded-[2rem] border border-white/8 bg-slate-950/70 p-5 shadow-[0_20px_60px_rgba(2,6,23,0.45)] backdrop-blur md:p-6">
+            <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+              <div className="space-y-3">
+                <div className="inline-flex items-center gap-2 rounded-full border border-white/8 bg-white/[0.03] px-3 py-1 text-[10px] font-black uppercase tracking-[0.24em] text-slate-400">
+                  <Icons.Info size={12} className="text-rose-400" />
+                  Thảo luận PHTV
+                </div>
+                <div>
+                  <h2 className="text-3xl font-black tracking-tight text-white md:text-[2.15rem]">
+                    Gọn, rõ và tập trung vào việc xử lý vấn đề.
+                  </h2>
+                  <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-400 md:text-[15px]">
+                    Admin reply được đưa ra ngay ngoài card để bạn biết bài nào đã có phản hồi, bài nào đang chờ và bài nào đã được xác nhận xử lý.
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-2 text-xs">
+                  <span className="rounded-full border border-white/8 bg-white/[0.03] px-3 py-1.5 text-slate-300">
+                    {communityStats.responded} bài đã có phản hồi admin
+                  </span>
+                  <span className="rounded-full border border-white/8 bg-white/[0.03] px-3 py-1.5 text-slate-300">
+                    {communityStats.pending} bài đang chờ
+                  </span>
+                  <span className="rounded-full border border-white/8 bg-white/[0.03] px-3 py-1.5 text-slate-300">
+                    {communityStats.locked} bài đã khóa
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3 lg:justify-end">
+                {currentUser ? (
+                  <>
+                    <div className="relative">
+                      <button
+                        onClick={() => setShowNotifs(!showNotifs)}
+                        className={`relative flex h-11 w-11 items-center justify-center rounded-2xl border transition ${
+                          showNotifs
+                            ? 'border-white bg-white text-slate-950'
+                            : 'border-white/8 bg-white/[0.03] text-slate-300 hover:bg-white/[0.06] hover:text-white'
+                        }`}
+                        aria-label="Xem thông báo"
+                      >
+                        <Icons.Bell size={16} />
+                        {unreadCount > 0 && (
+                          <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-500 px-1 text-[9px] font-black text-white">
+                            {unreadCount}
+                          </span>
+                        )}
+                      </button>
+
+                      {showNotifs && (
+                        <div className="fixed inset-x-4 top-24 z-[150] overflow-hidden rounded-[1.5rem] border border-white/10 bg-slate-900 shadow-[0_24px_80px_rgba(0,0,0,0.65)] sm:absolute sm:inset-x-auto sm:right-0 sm:top-14 sm:w-[340px]">
+                          <div className="flex items-center justify-between border-b border-white/5 px-4 py-3">
+                            <span className="text-sm font-semibold text-white">Thông báo</span>
+                            <button onClick={() => setShowNotifs(false)} className="text-slate-500 transition hover:text-white">
+                              <Icons.X size={16} />
+                            </button>
+                          </div>
+                          <div className="max-h-[360px] overflow-y-auto custom-scrollbar">
+                            {notifications.length === 0 ? (
+                              <div className="p-8 text-center text-sm text-slate-500">Chưa có thông báo nào.</div>
+                            ) : (
+                              notifications.map((notification) => (
+                                <button
+                                  key={notification.id}
+                                  onClick={() => {
+                                    markNotifRead(notification.id);
+                                    setShowNotifs(false);
+                                  }}
+                                  className={`flex w-full items-start gap-3 border-b border-white/5 px-4 py-3 text-left transition ${
+                                    notification.isRead
+                                      ? 'bg-transparent opacity-60'
+                                      : 'bg-rose-500/[0.04] hover:bg-rose-500/[0.08]'
+                                  }`}
+                                >
+                                  <Avatar user={{ username: notification.senderName, photoURL: notification.senderPhoto }} size="w-8 h-8" />
+                                  <div className="min-w-0 flex-1">
+                                    <p className="text-sm leading-5 text-white">
+                                      <span className="font-semibold">{notification.senderName}</span>{' '}
+                                      {notification.type === 'reply' ? 'đã phản hồi bạn.' : 'đã tương tác với bài viết.'}
+                                    </p>
+                                    <p className="mt-1 text-xs text-slate-400">{formatRelativeTime(notification.timestamp)}</p>
+                                  </div>
+                                </button>
+                              ))
+                            )}
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-                <div className="flex items-center gap-2 p-1.5 pr-3.5 bg-white/5 rounded-2xl border border-white/10 group shadow-xl backdrop-blur-xl transition-all hover:bg-white/10">
-                  <Avatar user={currentUser} size="w-7 h-7" isAdmin={currentUser.isAdmin} />
-                  <div className="flex flex-col"><span className="text-[9px] font-black text-white uppercase leading-none mb-0.5">{currentUser.username} {currentUser.isAdmin && <Icons.CheckCircle2 size={8} className="text-rose-400" />}</span><div className="flex gap-2"><button onClick={() => {setTempUsername(currentUser.username); setShowNamePrompt(true);}} className="text-[7px] font-black text-rose-400 hover:text-white uppercase transition-colors">Sửa</button><button onClick={() => signOut(auth)} className="text-[7px] font-black text-red-500/70 hover:text-red-400 uppercase transition-colors">Thoát</button></div></div>
-                </div>
-              </div>
-            ) : (
-              <button onClick={() => setShowAuthModal(true)} className="group flex items-center gap-3 px-5 py-2.5 bg-white text-slate-950 rounded-xl transition-all transform hover:scale-105 font-black text-[10px] shadow-xl"><Icons.User size={14} /><span>Đăng nhập Google</span></button>
-            )}
-          </div>
-        </div>
 
-        {/* Toolbar */}
-        <div className="space-y-3 animate-in slide-in-from-bottom-2 duration-700">
-           <div className="relative group shadow-lg">
-              <Icons.Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-700 group-focus-within:text-rose-500 transition-colors" size={16} />
-              <input 
-                id="search-input"
-                name="search"
-                type="text" 
-                placeholder="Tìm nội dung, thành viên, lỗi..." 
-                value={searchQuery}
-                onChange={e => setSearchBy(e.target.value)}
-                className="w-full bg-slate-900/60 backdrop-blur-2xl border border-white/5 rounded-2xl py-3 pl-10 pr-5 text-white focus:outline-none focus:border-brand-500/30 transition-all text-xs font-medium placeholder:text-slate-400 shadow-inner"
-              />
-           </div>
-           <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-              <div className="flex bg-slate-900/80 p-1 rounded-xl border border-white/5 shadow-xl backdrop-blur-xl w-full sm:w-auto">
-                 {[{ id: 'newest', label: 'Mới nhất', icon: Icons.RefreshCw }, { id: 'trending', label: 'Xu hướng', icon: Icons.Sparkles }, { id: 'popular', label: 'Yêu thích', icon: Icons.Award }].map(tab => (
-                   <button key={tab.id} onClick={() => setSortBy(tab.id as any)} className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${sortBy === tab.id ? 'bg-white text-slate-950 shadow-lg scale-105' : 'text-slate-500 hover:text-white'}`}><tab.icon size={10} />{tab.label}</button>
-                 ))}
+                    <div className="flex items-center gap-3 rounded-[1.4rem] border border-white/8 bg-white/[0.03] px-3 py-2">
+                      <Avatar user={currentUser} size="w-9 h-9" isAdmin={currentUser.isAdmin} />
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-2">
+                          <p className="truncate text-sm font-semibold text-white">{currentUser.username}</p>
+                          {currentUser.isAdmin && <Icons.CheckCircle2 size={14} className="text-rose-400" />}
+                        </div>
+                        <div className="mt-1 flex items-center gap-3 text-xs text-slate-400">
+                          <button
+                            onClick={() => {
+                              setTempUsername(currentUser.username);
+                              setShowNamePrompt(true);
+                            }}
+                            className="transition hover:text-white"
+                          >
+                            Sửa tên
+                          </button>
+                          <button onClick={() => signOut(auth)} className="transition hover:text-white">
+                            Đăng xuất
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <button
+                    onClick={() => setShowAuthModal(true)}
+                    className="inline-flex items-center gap-2 rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-slate-950 transition hover:opacity-90"
+                  >
+                    <Icons.User size={15} />
+                    Đăng nhập Google
+                  </button>
+                )}
               </div>
-              <div className="flex items-center gap-3 bg-slate-900/60 px-4 py-2 rounded-xl border border-white/5 backdrop-blur-md w-full sm:w-auto justify-center">
-                 <Icons.Filter size={12} className="text-rose-500" /><select id="filter-select" name="filter" value={filterBy} onChange={e => setFilterBy(e.target.value as any)} className="bg-transparent text-white font-black text-[9px] uppercase tracking-widest focus:outline-none cursor-pointer"><option value="all" className="bg-slate-900">Tất cả</option><option value="mine" className="bg-slate-900">Bài của tôi</option><option value="unanswered" className="bg-slate-900">Cần phản hồi</option>{currentUser?.isAdmin && <option value="reported" className="bg-slate-900 text-red-400">⚠️ Bị báo cáo</option>}</select>
-              </div>
-           </div>
-        </div>
+            </div>
 
-        {/* Refined Compact Post Form */}
-        <div className="glass-panel rounded-[1.5rem] p-0.5 shadow-lg border border-white/5 overflow-hidden group/form relative backdrop-blur-3xl">
-          <div className="bg-slate-900/40 rounded-[1.4rem] p-3 md:p-4 transition-all group-focus-within/form:bg-slate-900/60 shadow-inner">
-            <form onSubmit={handleAskQuestion} className="space-y-3">
+            <div className="mt-5 grid gap-3 xl:grid-cols-[minmax(0,1fr)_auto_auto]">
+              <label className="relative block">
+                <Icons.Search className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
+                <input
+                  id="search-input"
+                  name="search"
+                  type="text"
+                  placeholder="Tìm nội dung, thành viên hoặc tình trạng xử lý..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchBy(e.target.value)}
+                  className="w-full rounded-2xl border border-white/8 bg-white/[0.03] py-3 pl-11 pr-4 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-rose-400/30"
+                />
+              </label>
+
+              <div className="grid grid-cols-3 gap-1 rounded-2xl border border-white/8 bg-white/[0.03] p-1">
+                {[
+                  { id: 'newest', label: 'Mới nhất', icon: Icons.RefreshCw },
+                  { id: 'trending', label: 'Xu hướng', icon: Icons.Sparkles },
+                  { id: 'popular', label: 'Yêu thích', icon: Icons.Award }
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setSortBy(tab.id as typeof sortBy)}
+                    className={`flex items-center justify-center gap-2 rounded-xl px-3 py-2 text-xs font-semibold transition ${
+                      sortBy === tab.id
+                        ? 'bg-white text-slate-950'
+                        : 'text-slate-300 hover:bg-white/[0.04] hover:text-white'
+                    }`}
+                  >
+                    <tab.icon size={14} />
+                    <span>{tab.label}</span>
+                  </button>
+                ))}
+              </div>
+
+              <label className="flex items-center gap-2 rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-3 text-sm text-slate-300">
+                <Icons.Filter size={14} className="text-rose-400" />
+                <select
+                  id="filter-select"
+                  name="filter"
+                  value={filterBy}
+                  onChange={(e) => setFilterBy(e.target.value as typeof filterBy)}
+                  className="w-full bg-transparent text-sm text-white outline-none"
+                >
+                  <option value="all" className="bg-slate-900">Tất cả</option>
+                  <option value="mine" className="bg-slate-900">Bài của tôi</option>
+                  <option value="unanswered" className="bg-slate-900">Chưa có phản hồi admin</option>
+                  {currentUser?.isAdmin && <option value="reported" className="bg-slate-900">Bài bị báo cáo</option>}
+                </select>
+              </label>
+            </div>
+          </section>
+
+          <section className="rounded-[2rem] border border-white/8 bg-slate-950/70 p-5 shadow-[0_20px_60px_rgba(2,6,23,0.45)] backdrop-blur md:p-6">
+            <form onSubmit={handleAskQuestion} className="space-y-4">
               <div className="flex items-start gap-3">
-                 <div className="hidden xs:block"><Avatar user={{ username: currentUser?.username || 'User', photoURL: currentUser?.photoURL, isAdmin: currentUser?.isAdmin }} isAdmin={currentUser?.isAdmin} size="w-8 h-8" /></div>
-                 <div className="flex-1 pt-0.5">                    <textarea 
-                      id="new-question-input"
-                      name="question"
-                      placeholder={currentUser ? `Chào ${currentUser.username.split(' ')[0]}, bạn đang nghĩ gì?` : "Đăng nhập Google để thảo luận..."} 
-                      value={newQuestion} 
-                      onChange={(e) => setNewQuestion(e.target.value)} 
-                      disabled={isSubmitting} 
-                      className="w-full bg-transparent border-none p-0 text-sm text-white focus:ring-0 placeholder:text-slate-400 min-h-[40px] md:min-h-[50px] resize-none leading-relaxed font-medium" 
-                      required 
-                    /></div>
-              </div>
-              
-              <div className="flex flex-wrap items-center gap-2 mb-1">
-                 <span className="text-[9px] font-black text-slate-200 uppercase tracking-widest mr-2">Phân loại:</span>
-                 {LABELS.map(l => (
-                   <button 
-                     key={l.id} 
-                     type="button" 
-                     onClick={() => setSelectedLabel(selectedLabel === l.id ? null : l.id)} 
-                     className={`px-2.5 py-1 rounded-lg text-[9px] font-black uppercase transition-all border shadow-sm ${
-                       selectedLabel === l.id 
-                         ? `${l.bg} ${l.color} border-transparent ring-2 ring-white/20 scale-105 shadow-lg` 
-                         : 'bg-white/30 text-white border-white/20 hover:bg-white/40'
-                     }`}
-                   >
-                     {l.label}
-                   </button>
-                 ))}
+                <Avatar
+                  user={{ username: currentUser?.username || 'User', photoURL: currentUser?.photoURL, isAdmin: currentUser?.isAdmin }}
+                  size="w-10 h-10"
+                  isAdmin={currentUser?.isAdmin}
+                />
+                <div className="min-w-0 flex-1">
+                  <textarea
+                    id="new-question-input"
+                    name="question"
+                    placeholder={currentUser ? 'Mô tả ngắn gọn vấn đề hoặc câu hỏi của bạn...' : 'Đăng nhập Google để bắt đầu thảo luận...'}
+                    value={newQuestion}
+                    onChange={(e) => setNewQuestion(e.target.value)}
+                    disabled={isSubmitting}
+                    className="min-h-[110px] w-full resize-none rounded-[1.5rem] border border-white/8 bg-white/[0.03] px-4 py-3 text-sm leading-6 text-white outline-none transition placeholder:text-slate-500 focus:border-rose-400/30"
+                    required
+                  />
+                </div>
               </div>
 
-              <div className="flex items-center justify-between pt-2.5 border-t border-white/5">
-                <div className="flex items-center gap-3 text-slate-700">
-                   <Icons.Terminal size={14} className="hover:text-rose-400 cursor-help transition-colors" /><Icons.Link2 size={14} className="hover:text-rose-400 cursor-help transition-colors" />
-                </div>
-                <button type="submit" disabled={isSubmitting || !newQuestion.trim()} className="group flex items-center justify-center gap-2 px-4 py-1.5 bg-white text-slate-950 rounded-lg font-black text-[10px] md:text-[11px] transition-all transform hover:scale-[1.03] active:scale-95 shadow-md disabled:opacity-50">
-                  {isSubmitting ? <Icons.RefreshCw className="animate-spin" size={12} /> : <><span>Đăng bài</span><Icons.Send size={10} /></>}
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="mr-1 text-xs font-semibold text-slate-400">Phân loại:</span>
+                {LABELS.map((label) => (
+                  <button
+                    key={label.id}
+                    type="button"
+                    onClick={() => setSelectedLabel(selectedLabel === label.id ? null : label.id)}
+                    className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition ${
+                      selectedLabel === label.id
+                        ? `${label.bg} ${label.color} border-transparent`
+                        : 'border-white/10 bg-white/[0.03] text-slate-300 hover:bg-white/[0.05]'
+                    }`}
+                  >
+                    {label.label}
+                  </button>
+                ))}
+              </div>
+
+              <div className="flex flex-col gap-3 border-t border-white/8 pt-4 sm:flex-row sm:items-center sm:justify-between">
+                <p className="text-sm text-slate-400">
+                  Viết rõ lỗi, bước tái hiện hoặc phiên bản để người khác và admin dễ hỗ trợ hơn.
+                </p>
+                <button
+                  type="submit"
+                  disabled={isSubmitting || !newQuestion.trim()}
+                  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-slate-950 transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {isSubmitting ? <Icons.RefreshCw className="animate-spin" size={15} /> : <Icons.Send size={15} />}
+                  <span>Đăng thảo luận</span>
                 </button>
               </div>
             </form>
-          </div>
-        </div>
+          </section>
 
-        {/* Feed */}
-        <div className="space-y-6 pb-24">
-          {isLoading ? <div className="space-y-6">{[1, 2, 3].map(i => <SkeletonCard key={i} />)}</div> : 
-           displayQuestions.length === 0 ? <div className="text-center py-24 bg-white/5 rounded-[2rem] border border-dashed border-white/10 opacity-50"><Icons.MessageSquare size={40} className="mx-auto mb-3 text-slate-700" /><p className="text-slate-500 font-black uppercase tracking-widest text-[9px]">Trống</p></div> : 
-           displayQuestions.map((q) => (
-            <div key={q.id} className={`group animate-in fade-in duration-700 ${q.isPinned ? 'ring-1 ring-rose-500/30 rounded-[2rem] p-5 bg-rose-500/[0.02] shadow-xl relative overflow-hidden' : ''}`} onMouseEnter={() => incrementViews(q.id)}>
-               <div className="flex gap-4">
-                  <div className="flex flex-col items-center">
-                    <Avatar user={{ username: q.author, photoURL: q.authorPhoto, isAdmin: q.isAdmin }} isAdmin={q.isAdmin} size="w-9 h-9 md:w-10 md:h-10" />
-                    <div className="w-[1.5px] flex-1 bg-gradient-to-b from-white/10 via-white/[0.05] to-transparent my-2 rounded-full opacity-50"></div>
-                  </div>
-                  <div className="flex-1 space-y-3 pb-4">
-                    <div className="flex justify-between items-start gap-3">
-                      <div className="space-y-0.5">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <h4 className={`font-black text-sm tracking-tight ${q.isAdmin ? 'text-rose-400 text-glow-sm' : 'text-white'}`}>{q.author}</h4>
-                                                    {q.label && (
-                            <span className={`px-1.5 py-0.5 rounded-[4px] text-[8px] font-black uppercase shadow-sm ${LABELS.find(l => l.id === q.label)?.bg} ${LABELS.find(l => l.id === q.label)?.color}`}>
-                              {LABELS.find(l => l.id === q.label)?.label}
+          <section className="space-y-4 pb-20">
+            {isLoading ? (
+              <div className="space-y-4">
+                {[1, 2, 3].map((index) => <SkeletonCard key={index} />)}
+              </div>
+            ) : displayQuestions.length === 0 ? (
+              <div className="rounded-[2rem] border border-dashed border-white/10 bg-white/[0.02] px-6 py-20 text-center">
+                <Icons.MessageSquare size={34} className="mx-auto text-slate-600" />
+                <p className="mt-4 text-base font-semibold text-white">Chưa có nội dung phù hợp.</p>
+                <p className="mt-2 text-sm text-slate-400">Thử đổi bộ lọc hoặc đăng câu hỏi mới.</p>
+              </div>
+            ) : (
+              displayQuestions.map((question) => {
+                const labelInfo = LABELS.find((label) => label.id === question.label);
+                const latestAdminReply = getLatestAdminReply(question);
+                const orderedReplies = getOrderedReplies(question);
+                const statusMeta = getQuestionStatusMeta(question);
+                const StatusIcon = statusMeta.icon;
+                const replyCount = question.replies?.length || 0;
+                const isExpanded = visibleQuestions.has(question.id);
+                const hasManagePermission = Boolean(currentUser?.isAdmin || currentUser?.uid === question.authorId);
+
+                return (
+                  <article
+                    key={question.id}
+                    className={`rounded-[2rem] border bg-slate-950/70 p-5 shadow-[0_20px_60px_rgba(2,6,23,0.45)] backdrop-blur transition md:p-6 ${
+                      question.isPinned ? 'border-rose-400/20' : 'border-white/8'
+                    }`}
+                    onPointerEnter={() => incrementViewsOnce(question.id)}
+                  >
+                    <div className="flex gap-4">
+                      <Avatar
+                        user={{ username: question.author, photoURL: question.authorPhoto, isAdmin: question.isAdmin }}
+                        size="w-11 h-11"
+                        isAdmin={question.isAdmin}
+                      />
+
+                      <div className="min-w-0 flex-1 space-y-4">
+                        <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+                          <div className="min-w-0">
+                            <div className="flex flex-wrap items-center gap-2">
+                              <h3 className={`text-base font-black tracking-tight ${question.isAdmin ? 'text-rose-300' : 'text-white'}`}>
+                                {question.author}
+                              </h3>
+                              {question.isAdmin && (
+                                <span className="rounded-full border border-rose-400/20 bg-rose-400/10 px-2 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-rose-200">
+                                  Admin
+                                </span>
+                              )}
+                              {labelInfo && (
+                                <span className={`rounded-full px-2.5 py-1 text-[10px] font-black uppercase ${labelInfo.bg} ${labelInfo.color}`}>
+                                  {labelInfo.label}
+                                </span>
+                              )}
+                              {question.isPinned && (
+                                <span className="inline-flex items-center gap-1 rounded-full border border-rose-400/20 bg-rose-400/10 px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-rose-200">
+                                  <Icons.Paperclip size={11} />
+                                  Ghim
+                                </span>
+                              )}
+                            </div>
+
+                            <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-slate-400">
+                              <span>{formatRelativeTime(question.timestamp)}</span>
+                              <span className="inline-flex items-center gap-1">
+                                <Icons.Eye size={13} />
+                                {question.viewCount || 0}
+                              </span>
+                              <button onClick={() => reportContent(question.id)} className="transition hover:text-white">
+                                Báo cáo
+                              </button>
+                            </div>
+                          </div>
+
+                          <div className="flex flex-wrap items-center gap-2">
+                            {currentUser?.isAdmin && (
+                              <>
+                                <button
+                                  onClick={() => toggleLock(question)}
+                                  className="rounded-xl border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition hover:bg-white/[0.06] hover:text-white"
+                                  aria-label={question.isLocked ? 'Mở khóa' : 'Khóa'}
+                                >
+                                  {question.isLocked ? <Icons.Lock size={14} /> : <Icons.Unlock size={14} />}
+                                </button>
+                                <button
+                                  onClick={() => togglePin(question)}
+                                  className="rounded-xl border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition hover:bg-white/[0.06] hover:text-white"
+                                  aria-label={question.isPinned ? 'Bỏ ghim' : 'Ghim'}
+                                >
+                                  <Icons.Paperclip size={14} />
+                                </button>
+                              </>
+                            )}
+                            {hasManagePermission && (
+                              <>
+                                <button
+                                  onClick={() => {
+                                    setEditingId(question.id);
+                                    setEditContent(question.content);
+                                  }}
+                                  className="rounded-xl border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition hover:bg-white/[0.06] hover:text-white"
+                                  aria-label="Sửa bài viết"
+                                >
+                                  <Icons.Settings size={14} />
+                                </button>
+                                <button
+                                  onClick={() => deleteQuestion(question.id)}
+                                  className="rounded-xl border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition hover:border-red-400/25 hover:bg-red-500/10 hover:text-red-300"
+                                  aria-label="Xóa bài viết"
+                                >
+                                  <Icons.Trash2 size={14} />
+                                </button>
+                              </>
+                            )}
+                          </div>
+                        </div>
+
+                        {editingId === question.id ? (
+                          <div className="space-y-3">
+                            <textarea
+                              value={editContent}
+                              onChange={(e) => setEditContent(e.target.value)}
+                              className="w-full rounded-[1.5rem] border border-white/8 bg-white/[0.03] px-4 py-3 text-sm leading-6 text-white outline-none focus:border-rose-400/30"
+                            />
+                            <div className="flex flex-wrap gap-2">
+                              <button onClick={() => saveEdit(question.id)} className="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-950">
+                                Lưu
+                              </button>
+                              <button onClick={() => setEditingId(null)} className="rounded-xl border border-white/8 bg-white/[0.03] px-4 py-2 text-sm text-slate-300">
+                                Hủy
+                              </button>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="rounded-[1.5rem] border border-white/8 bg-white/[0.03] p-4">
+                            <SmartContent content={question.content} className="text-sm leading-7 text-slate-200" />
+                          </div>
+                        )}
+
+                        <div className={`rounded-[1.5rem] border p-4 ${statusMeta.containerClassName}`}>
+                          <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                            <div className="min-w-0 flex-1">
+                              <div className="flex flex-wrap items-center gap-2">
+                                <span className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold ${statusMeta.badgeClassName}`}>
+                                  <StatusIcon size={14} />
+                                  {statusMeta.label}
+                                </span>
+                                <span className="text-sm text-slate-300">{statusMeta.note}</span>
+                              </div>
+
+                              <div className="mt-3 space-y-2">
+                                {latestAdminReply ? (
+                                  <>
+                                    <p className="text-sm leading-6 text-slate-200">
+                                      {getContentPreview(latestAdminReply.content)}
+                                    </p>
+                                    <div className="flex flex-wrap items-center gap-3 text-xs text-slate-400">
+                                      <span className="font-semibold text-white">{latestAdminReply.author}</span>
+                                      <span>{formatRelativeTime(latestAdminReply.timestamp)}</span>
+                                    </div>
+                                  </>
+                                ) : (
+                                  <p className="text-sm leading-6 text-slate-400">
+                                    Admin chưa phản hồi trên thảo luận này.
+                                  </p>
+                                )}
+                              </div>
+                            </div>
+
+                            <button
+                              onClick={() => {
+                                if (!isExpanded) toggleQuestionReplies(question);
+                              }}
+                              className="inline-flex items-center gap-2 self-start rounded-xl border border-white/8 bg-white/[0.03] px-3 py-2 text-sm text-slate-300 transition hover:bg-white/[0.06] hover:text-white"
+                            >
+                              <Icons.MessageSquareReply size={14} />
+                              {replyCount > 0 ? 'Mở thảo luận' : 'Phản hồi'}
+                            </button>
+                          </div>
+                        </div>
+
+                        <div className="flex flex-wrap items-center gap-3 border-t border-white/8 pt-1">
+                          <button
+                            onClick={() => toggleLikeQuestion(question)}
+                            className={`inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold transition ${
+                              question.likedBy?.includes(currentUser?.uid || '')
+                                ? 'bg-rose-500/10 text-rose-300'
+                                : 'text-slate-400 hover:bg-white/[0.03] hover:text-white'
+                            }`}
+                          >
+                            <Icons.ThumbsUp
+                              size={15}
+                              fill={question.likedBy?.includes(currentUser?.uid || '') ? 'currentColor' : 'none'}
+                            />
+                            <span>{question.likedBy?.length || 0}</span>
+                          </button>
+
+                          <button
+                            onClick={() => toggleQuestionReplies(question)}
+                            className={`inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold transition ${
+                              question.isLocked && !currentUser?.isAdmin
+                                ? 'cursor-not-allowed text-slate-600'
+                                : 'text-slate-400 hover:bg-white/[0.03] hover:text-white'
+                            }`}
+                          >
+                            <Icons.MessageSquareReply size={15} />
+                            <span>
+                              {replyCount > 0
+                                ? isExpanded
+                                  ? `Ẩn ${replyCount} phản hồi`
+                                  : `Xem ${replyCount} phản hồi`
+                                : 'Phản hồi'}
                             </span>
-                          )}
-                          {q.isAdmin && <span className="bg-rose-500 text-slate-950 text-[7px] px-1.5 py-0.5 rounded font-black uppercase tracking-widest shadow-md">Admin</span>}
-                          {q.isPinned && <Icons.Paperclip size={10} className="text-rose-400" />}
-                          <span className="text-[8px] text-slate-600 font-black uppercase tracking-widest ml-1">{formatRelativeTime(q.timestamp)}</span>
+                          </button>
+
+                          <button
+                            onClick={() => {
+                              navigator.clipboard.writeText(`${window.location.origin}${window.location.pathname}#community?qid=${question.id}`);
+                              triggerToast('Đã copy link!');
+                            }}
+                            className="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-slate-400 transition hover:bg-white/[0.03] hover:text-white"
+                          >
+                            <Icons.Link2 size={15} />
+                            Chia sẻ
+                          </button>
                         </div>
-                        <div className="flex items-center gap-2 text-[7px] font-black text-slate-800 uppercase tracking-widest">
-                           <span>{q.viewCount || 0} views</span><span className="text-red-500/40 hover:text-red-500 cursor-pointer transition-all" onClick={() => reportContent(q.id)}>Report</span>
-                        </div>
+
+                        {(isExpanded || replyingTo?.qId === question.id) && (
+                          <div className="space-y-4 border-t border-white/8 pt-5">
+                            {orderedReplies.length > 0 && (
+                              <div className="space-y-3">
+                                {orderedReplies.map((reply) => (
+                                  <div key={reply.id} className="flex gap-3">
+                                    <Avatar
+                                      user={{ username: reply.author, photoURL: reply.authorPhoto, isAdmin: reply.isAdmin }}
+                                      size="w-9 h-9"
+                                      isAdmin={reply.isAdmin}
+                                    />
+                                    <div className="min-w-0 flex-1">
+                                      <div className={`rounded-[1.4rem] border p-4 ${reply.isAdmin ? 'border-rose-400/20 bg-rose-400/[0.06]' : 'border-white/8 bg-white/[0.03]'}`}>
+                                        <div className="mb-2 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+                                          <div className="flex flex-wrap items-center gap-2 text-sm">
+                                            <span className={`font-semibold ${reply.isAdmin ? 'text-rose-200' : 'text-white'}`}>
+                                              {reply.author}
+                                            </span>
+                                            {reply.isAdmin && (
+                                              <span className="rounded-full border border-rose-400/20 bg-rose-400/10 px-2 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-rose-200">
+                                                Admin
+                                              </span>
+                                            )}
+                                            {reply.replyToName && (
+                                              <span className="inline-flex items-center gap-1 text-xs text-slate-400">
+                                                <Icons.ArrowRight size={12} />
+                                                {reply.replyToName}
+                                              </span>
+                                            )}
+                                            <span className="text-xs text-slate-500">{formatRelativeTime(reply.timestamp)}</span>
+                                          </div>
+
+                                          {(currentUser?.isAdmin || currentUser?.uid === reply.authorId) && (
+                                            <div className="flex items-center gap-2">
+                                              <button
+                                                onClick={() => {
+                                                  setEditingReplyId(reply.id);
+                                                  setEditContent(reply.content);
+                                                }}
+                                                className="rounded-xl border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition hover:bg-white/[0.06] hover:text-white"
+                                                aria-label="Sửa phản hồi"
+                                              >
+                                                <Icons.Settings size={13} />
+                                              </button>
+                                              <button
+                                                onClick={() => deleteReply(question.id, reply.id)}
+                                                className="rounded-xl border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition hover:border-red-400/25 hover:bg-red-500/10 hover:text-red-300"
+                                                aria-label="Xóa phản hồi"
+                                              >
+                                                <Icons.Trash2 size={13} />
+                                              </button>
+                                            </div>
+                                          )}
+                                        </div>
+
+                                        {editingReplyId === reply.id ? (
+                                          <div className="space-y-3">
+                                            <textarea
+                                              autoFocus
+                                              value={editContent}
+                                              onChange={(e) => setEditContent(e.target.value)}
+                                              className="w-full rounded-[1.25rem] border border-white/8 bg-slate-950 px-4 py-3 text-sm leading-6 text-white outline-none focus:border-rose-400/30"
+                                            />
+                                            <div className="flex flex-wrap gap-2">
+                                              <button onClick={() => saveReplyEdit(question.id, reply.id)} className="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-950">
+                                                Lưu
+                                              </button>
+                                              <button onClick={() => setEditingReplyId(null)} className="rounded-xl border border-white/8 bg-white/[0.03] px-4 py-2 text-sm text-slate-300">
+                                                Hủy
+                                              </button>
+                                            </div>
+                                          </div>
+                                        ) : (
+                                          <SmartContent content={reply.content} className="text-sm leading-6 text-slate-200" />
+                                        )}
+                                      </div>
+
+                                      <div className="mt-2 flex flex-wrap items-center gap-3 px-2">
+                                        <button
+                                          onClick={() => toggleLikeReply(question.id, reply.id)}
+                                          className={`inline-flex items-center gap-2 text-xs font-semibold transition ${
+                                            reply.likedBy?.includes(currentUser?.uid || '')
+                                              ? 'text-rose-300'
+                                              : 'text-slate-400 hover:text-white'
+                                          }`}
+                                        >
+                                          <Icons.ThumbsUp
+                                            size={13}
+                                            fill={reply.likedBy?.includes(currentUser?.uid || '') ? 'currentColor' : 'none'}
+                                          />
+                                          <span>{reply.likedBy?.length || 0}</span>
+                                        </button>
+                                        <button onClick={() => openReplyComposer(question, reply)} className="text-xs font-semibold text-slate-400 transition hover:text-white">
+                                          Trả lời
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+
+                            {replyingTo?.qId === question.id ? (
+                              <div className="rounded-[1.5rem] border border-white/8 bg-white/[0.03] p-4">
+                                <div className="mb-3 flex items-center justify-between gap-3">
+                                  <p className="text-sm font-semibold text-white">
+                                    Đang phản hồi {replyingTo.name ? `@${replyingTo.name}` : 'thảo luận này'}
+                                  </p>
+                                  <button
+                                    onClick={() => {
+                                      setReplyingTo(null);
+                                      setReplyContent('');
+                                    }}
+                                    className="text-slate-500 transition hover:text-white"
+                                  >
+                                    <Icons.X size={14} />
+                                  </button>
+                                </div>
+
+                                <textarea
+                                  id="reply-input"
+                                  name="reply"
+                                  autoFocus
+                                  value={replyContent}
+                                  onChange={(e) => setReplyContent(e.target.value)}
+                                  placeholder="Viết phản hồi của bạn..."
+                                  className="min-h-[110px] w-full resize-none rounded-[1.25rem] border border-white/8 bg-slate-950 px-4 py-3 text-sm leading-6 text-white outline-none focus:border-rose-400/30"
+                                />
+
+                                <div className="mt-3 flex flex-wrap gap-2">
+                                  <button
+                                    onClick={() => handleReply(question.id)}
+                                    className="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-950"
+                                  >
+                                    Gửi phản hồi
+                                  </button>
+                                  <button
+                                    onClick={() => {
+                                      setReplyingTo(null);
+                                      setReplyContent('');
+                                    }}
+                                    className="rounded-xl border border-white/8 bg-white/[0.03] px-4 py-2 text-sm text-slate-300"
+                                  >
+                                    Hủy
+                                  </button>
+                                </div>
+                              </div>
+                            ) : (
+                              <button
+                                onClick={() => openReplyComposer(question)}
+                                className="inline-flex items-center gap-2 text-sm font-semibold text-rose-300 transition hover:text-rose-200"
+                              >
+                                <Icons.MessageSquare size={15} />
+                                Viết phản hồi
+                              </button>
+                            )}
+                          </div>
+                        )}
                       </div>
-                      <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0">
-                        {currentUser?.isAdmin && (<><button onClick={() => toggleLock(q)} className="p-1.5 rounded-lg text-slate-700 hover:text-rose-500">{q.isLocked ? <Icons.Lock size={14} /> : <Icons.Unlock size={14} />}</button><button onClick={() => updateDoc(doc(db, "questions", q.id), { isPinned: !q.isPinned })} className="p-1.5 rounded-lg text-slate-700 hover:text-rose-500"><Icons.Paperclip size={14} /></button></>)}
-                        {(currentUser?.isAdmin || currentUser?.uid === q.authorId) && (<><button onClick={() => {setEditingId(q.id); setEditContent(q.content);}} className="p-1.5 rounded-lg text-slate-700 hover:text-white"><Icons.Settings size={14} /></button><button onClick={() => deleteQuestion(q.id)} className="p-1.5 rounded-lg text-slate-700 hover:text-red-500"><Icons.Trash2 size={14} /></button></>)}
-                      </div>
                     </div>
-                    {editingId === q.id ? (
-                      <div className="space-y-3 animate-in zoom-in-95 duration-300"><textarea value={editContent} onChange={e => setEditContent(e.target.value)} className="w-full bg-slate-900 border border-white/10 rounded-xl p-3 text-white text-sm focus:border-rose-500/30 outline-none shadow-xl" /><div className="flex gap-2"><button onClick={() => saveEdit(q.id)} className="px-4 py-1.5 bg-rose-600 text-white rounded-lg text-[9px] font-black shadow-lg">Lưu</button><button onClick={() => setEditingId(null)} className="px-4 py-1.5 bg-white/5 text-slate-400 rounded-lg text-[9px] font-black">Hủy</button></div></div>
-                    ) : <SmartContent content={q.content} className="text-slate-200 text-sm leading-relaxed font-medium bg-white/[0.02] p-4 md:p-5 rounded-[1.2rem] border border-white/5 shadow-inner" />}
-                    <div className="flex items-center gap-6 px-3">
-                       <button onClick={() => toggleLikeQuestion(q)} className={`flex items-center gap-2 font-black text-[10px] transition-all transform active:scale-50 ${q.likedBy?.includes(currentUser?.uid || '') ? 'text-rose-500' : 'text-slate-700 hover:text-slate-400'}`}><Icons.ThumbsUp size={16} fill={q.likedBy?.includes(currentUser?.uid || '') ? 'currentColor' : 'none'} /><span className="tabular-nums">{q.likedBy?.length || 0}</span></button>
-                         <button onClick={() => {
-                            if (q.isLocked) { triggerToast('🔒 Thảo luận này đã khóa'); return; }
-                            if ((q.replies?.length || 0) > 0) {
-                                setVisibleQuestions(prev => {
-                                    const newSet = new Set(prev);
-                                    if (newSet.has(q.id)) newSet.delete(q.id);
-                                    else newSet.add(q.id);
-                                    return newSet;
-                                });
-                            } else {
-                                setReplyingTo({qId: q.id, name: q.author, authorId: q.authorId, authorEmail: q.authorEmail});
-                            }
-                         }} className={`flex items-center gap-3 font-black text-sm transition-all ${q.isLocked ? 'text-slate-900 cursor-not-allowed opacity-30' : 'text-slate-700 hover:text-brand-400'}`}>
-                           <Icons.MessageSquareReply size={20} /> 
-                           <span className="text-[11px]">{q.replies?.length || 0} Phản hồi {(q.replies?.length || 0) > 0 && (visibleQuestions.has(q.id) ? '(Thu gọn)' : '(Xem)')}</span>
-                         </button>
-                       <button onClick={() => { navigator.clipboard.writeText(`${window.location.origin}${window.location.pathname}#community?qid=${q.id}`); triggerToast('Đã copy link!'); }} className="flex items-center gap-2 text-slate-700 hover:text-white transition-all transform active:scale-90"><Icons.Link2 size={16} /></button>
-                    </div>
-                    {(visibleQuestions.has(q.id) || replyingTo?.qId === q.id) && (
-                    <div className="space-y-4 pt-4 border-l-[2px] border-white/[0.03] ml-2 pl-4 md:pl-8 relative">
-                      {visibleQuestions.has(q.id) && q.replies?.map((r) => (
-                        <div key={r.id} className="flex gap-3 group/reply animate-in fade-in duration-1000"><Avatar user={{ username: r.author, photoURL: r.authorPhoto, isAdmin: r.isAdmin }} isAdmin={r.isAdmin} size="w-7 h-7 md:w-8 md:h-8" /><div className="flex-1 space-y-2"><div className={`rounded-[1rem] p-3 md:p-4 border transition-all ${r.isAdmin ? 'bg-gradient-to-br from-rose-500/[0.05] to-pink-500/[0.05] border-rose-500/20 shadow-xl' : 'bg-slate-900/60 border-white/5 hover:bg-slate-900/80'}`}><div className="flex justify-between items-center mb-1.5"><div className="flex items-center gap-2 flex-wrap"><span className={`font-black text-[10px] md:text-[11px] tracking-tight ${r.isAdmin ? 'text-rose-400' : 'text-white'}`}>{r.author} {r.isAdmin && <Icons.CheckCircle2 size={10} className="text-rose-500 inline ml-1" />}</span>{r.replyToName && <span className="text-[7px] text-slate-600 flex items-center gap-1 font-black bg-white/5 px-1.5 py-0.5 rounded uppercase"><Icons.ArrowRight size={7} /> {r.replyToName}</span>}<span className="text-[7px] text-slate-700 font-black uppercase tracking-widest ml-1">{formatRelativeTime(r.timestamp)}</span></div><div className="flex items-center gap-1 opacity-0 group-hover/reply:opacity-100 transition-all transform translate-x-1 group-hover/reply:translate-x-0">{(currentUser?.isAdmin || currentUser?.uid === r.authorId) && (<div className="flex bg-black/20 rounded-lg p-0.5 border border-white/5"><button onClick={() => {setEditingReplyId(r.id); setEditContent(r.content);}} className="p-1 text-slate-700 hover:text-white rounded-lg transition-all hover:bg-white/5"><Icons.Settings size={12} /></button><button onClick={() => deleteReply(q.id, r.id)} className="p-1 text-slate-700 hover:text-red-500 rounded-lg transition-all hover:bg-red-500/10"><Icons.Trash2 size={12} /></button></div>)}</div></div>{editingReplyId === r.id ? (<div className="space-y-2 animate-in zoom-in-95 duration-200"><textarea autoFocus value={editContent} onChange={e => setEditContent(e.target.value)} className="w-full bg-slate-950 border border-white/10 rounded-xl p-3 text-white text-sm focus:border-brand-500/30 outline-none shadow-inner" /><div className="flex gap-2"><button onClick={() => saveReplyEdit(q.id, r.id)} className="px-3 py-1 bg-brand-600 text-white rounded-lg text-[8px] font-black shadow-lg">Lưu</button><button onClick={() => setEditingReplyId(null)} className="px-3 py-1 bg-white/5 text-slate-400 rounded-lg text-[8px] font-black">Hủy</button></div></div>) : <SmartContent content={r.content} className={`${r.isAdmin ? 'text-white' : 'text-slate-300'} text-[11px] md:text-[13px] leading-relaxed font-medium`} />}</div><div className="flex gap-4 px-3"><button onClick={() => toggleLikeReply(q.id, r.id)} className={`flex items-center gap-1.5 text-[8px] font-black uppercase tracking-widest transition-all transform active:scale-50 ${r.likedBy?.includes(currentUser?.uid || '') ? 'text-rose-500 scale-110' : 'text-slate-700 hover:text-slate-400'}`}><Icons.ThumbsUp size={12} fill={r.likedBy?.includes(currentUser?.uid || '') ? 'currentColor' : 'none'} /> <span className="tabular-nums">{r.likedBy?.length || 0}</span></button><button onClick={() => setReplyingTo({qId: q.id, rId: r.id, name: r.author, authorId: r.authorId, authorEmail: r.authorEmail})} className="text-[8px] font-black text-slate-700 hover:text-rose-400 uppercase tracking-widest transition-all">Trả lời</button></div></div></div>))}
-                      {replyingTo?.qId === q.id ? (
-                        <div className="flex gap-3 pt-4 animate-in slide-in-from-top-4 duration-500 border-t border-white/5"><div className="hidden sm:flex w-8 h-8 rounded-xl bg-brand-500/10 border border-brand-500/20 items-center justify-center text-brand-400 shrink-0"><Icons.MessageSquareReply size={16} /></div><div className="flex-1 space-y-3"><div className="flex items-center justify-between bg-brand-500/[0.03] px-4 py-1.5 rounded-xl border border-brand-500/10"><span className="text-[8px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">Phản hồi <span className="text-brand-400">@{replyingTo.name}</span></span><button onClick={() => setReplyingTo(null)} className="text-slate-700 hover:text-white transition-all"><Icons.X size={10} /></button></div><textarea id="reply-input" name="reply" autoFocus value={replyContent} onChange={(e) => setReplyContent(e.target.value)} placeholder={`Gửi câu trả lời của bạn...`} className="w-full bg-slate-900 border border-white/5 rounded-[1.5rem] py-4 px-6 text-white text-sm focus:outline-none focus:border-brand-500/30 min-h-[80px] resize-none shadow-2xl backdrop-blur-md" /><div className="flex gap-2"><button onClick={() => handleReply(q.id)} className="px-6 py-3 bg-brand-600 hover:bg-brand-500 text-white rounded-xl font-black text-[10px] shadow-xl transition-all transform hover:scale-105 active:scale-95">Gửi</button><button onClick={() => {setReplyingTo(null); setReplyContent('');}} className="px-6 py-3 bg-white/5 text-slate-400 rounded-xl font-black text-[10px] hover:bg-white/10 transition-all">Hủy</button></div></div></div>
-                      ) : (
-                         visibleQuestions.has(q.id) && (
-                            <button onClick={() => setReplyingTo({qId: q.id, name: q.author, authorId: q.authorId, authorEmail: q.authorEmail})} className="flex items-center gap-2 text-rose-400 font-black text-[9px] uppercase tracking-widest hover:text-rose-300 transition-colors mt-2 pl-2"><Icons.MessageSquare size={12} /> Viết phản hồi</button>
-                         )
-                      )}
-                    </div>
-                    )}
-                  </div>
-               </div>
-            </div>
-          ))}
-          {hasMore && displayQuestions.length >= postsLimit && (
-            <div className="text-center pt-8 pb-24"><button onClick={() => setPostsLimit(prev => prev + POSTS_PER_PAGE)} className="group px-8 py-3 bg-white text-slate-950 rounded-xl font-black text-[10px] transition-all transform hover:scale-110 active:scale-95 flex items-center gap-2 mx-auto shadow-2xl"><span className="tracking-widest uppercase">Tải thêm nội dung</span><Icons.ChevronDown size={16} /></button></div>
-          )}
-        </div>
-      </main>
+                  </article>
+                );
+              })
+            )}
+
+            {hasMore && displayQuestions.length >= postsLimit && (
+              <div className="pt-4 text-center">
+                <button
+                  onClick={() => setPostsLimit((prev) => prev + POSTS_PER_PAGE)}
+                  className="inline-flex items-center gap-2 rounded-2xl border border-white/8 bg-white/[0.03] px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/[0.06]"
+                >
+                  <span>Tải thêm thảo luận</span>
+                  <Icons.ChevronDown size={15} />
+                </button>
+              </div>
+            )}
+          </section>
+        </main>
+      </div>
 
       {/* Modals */}
       {showAuthModal && (

@@ -115,10 +115,14 @@
     }
 
     .topbar {
+      position: relative;
+      z-index: 5;
       padding: 20px 0 0;
     }
 
     .topbar-inner {
+      position: relative;
+      z-index: 2;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -174,6 +178,8 @@
     }
 
     .topbar-actions {
+      position: relative;
+      z-index: 3;
       display: flex;
       align-items: center;
       gap: 10px;
@@ -182,6 +188,8 @@
     }
 
     .pill-link {
+      position: relative;
+      z-index: 1;
       display: inline-flex;
       align-items: center;
       gap: 10px;
@@ -549,9 +557,6 @@
       <section class="container hero">
         <div>
           <h1>Gọn, native và tập trung vào trải nghiệm thực tế.</h1>
-          <p>
-            Đây là trang tổng hợp các sản phẩm phần mềm mình đang phát triển thôi.
-          </p>
 
           <div class="hero-actions">
             <a class="cta-primary" href="#products">Xem sản phẩm</a>
