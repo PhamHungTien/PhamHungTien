@@ -94,8 +94,26 @@ interface AppNotification {
   isRead: boolean;
 }
 
-const ADMIN_EMAILS = ['admin@phtv.com', 'phamhungtien.contact@gmail.com'];
+const ADMIN_EMAILS = ['admin@phtv.com', 'phamhungtien.contact@gmail.com', 'hungtien10a7@gmail.com'];
+const ADMIN_NAME_KEYS = ['pham hung tien'];
 const POSTS_PER_PAGE = 15;
+
+const normalizeIdentity = (value?: string) =>
+  (value || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim();
+
+const isAdminIdentity = (author?: string, email?: string, isAdmin?: boolean) => {
+  if (isAdmin) return true;
+
+  const normalizedEmail = (email || '').toLowerCase().trim();
+  if (normalizedEmail && ADMIN_EMAILS.includes(normalizedEmail)) return true;
+
+  const normalizedAuthor = normalizeIdentity(author);
+  return normalizedAuthor ? ADMIN_NAME_KEYS.includes(normalizedAuthor) : false;
+};
 
 const getInitials = (name: string) => {
   if (!name) return '??';
@@ -125,13 +143,15 @@ const getContentPreview = (content: string, maxLength = 180) => {
 
 const getOrderedReplies = (question: Question) =>
   [...(question.replies || [])].sort((a, b) => {
-    if (a.isAdmin !== b.isAdmin) return a.isAdmin ? -1 : 1;
+    const aIsAdmin = isAdminIdentity(a.author, a.authorEmail, a.isAdmin);
+    const bIsAdmin = isAdminIdentity(b.author, b.authorEmail, b.isAdmin);
+    if (aIsAdmin !== bIsAdmin) return aIsAdmin ? -1 : 1;
     return a.timestamp - b.timestamp;
   });
 
 const getLatestAdminReply = (question: Question) =>
   [...(question.replies || [])]
-    .filter((reply) => reply.isAdmin)
+    .filter((reply) => isAdminIdentity(reply.author, reply.authorEmail, reply.isAdmin))
     .sort((a, b) => b.timestamp - a.timestamp)[0] ?? null;
 
 const getQuestionStatusMeta = (question: Question) => {
@@ -298,7 +318,7 @@ export const QASection: React.FC = () => {
     let result = questions;
     if (filterBy === 'mine' && currentUser) result = result.filter(q => q.authorId === currentUser.uid);
     else if (filterBy === 'reported' && currentUser?.isAdmin) result = result.filter(q => q.isReported);
-    else if (filterBy === 'unanswered') result = result.filter(q => !q.replies.some(r => r.isAdmin));
+    else if (filterBy === 'unanswered') result = result.filter(q => !q.replies.some(r => isAdminIdentity(r.author, r.authorEmail, r.isAdmin)));
 
     if (searchQuery.trim()) {
       const lowSearch = searchQuery.toLowerCase();
@@ -312,7 +332,7 @@ export const QASection: React.FC = () => {
   }, [questions, filterBy, searchQuery, currentUser]);
 
   const communityStats = useMemo(() => {
-    const responded = questions.filter((question) => question.replies.some((reply) => reply.isAdmin)).length;
+    const responded = questions.filter((question) => question.replies.some((reply) => isAdminIdentity(reply.author, reply.authorEmail, reply.isAdmin))).length;
     const locked = questions.filter((question) => question.isLocked).length;
     const pending = Math.max(questions.length - responded, 0);
     const totalReplies = questions.reduce((sum, question) => sum + (question.replies?.length || 0), 0);
@@ -752,9 +772,6 @@ export const QASection: React.FC = () => {
                   <h2 className="text-3xl font-black tracking-tight text-white md:text-[2.15rem]">
                     Gọn, rõ và tập trung vào việc xử lý vấn đề.
                   </h2>
-                  <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-400 md:text-[15px]">
-                    Admin reply được đưa ra ngay ngoài card để bạn biết bài nào đã có phản hồi, bài nào đang chờ và bài nào đã được xác nhận xử lý.
-                  </p>
                 </div>
                 <div className="flex flex-wrap gap-2 text-xs">
                   <span className="rounded-full border border-white/8 bg-white/[0.03] px-3 py-1.5 text-slate-300">
@@ -997,6 +1014,7 @@ export const QASection: React.FC = () => {
                 const replyCount = question.replies?.length || 0;
                 const isExpanded = visibleQuestions.has(question.id);
                 const hasManagePermission = Boolean(currentUser?.isAdmin || currentUser?.uid === question.authorId);
+                const questionIsAdmin = isAdminIdentity(question.author, question.authorEmail, question.isAdmin);
 
                 return (
                   <article
@@ -1008,19 +1026,19 @@ export const QASection: React.FC = () => {
                   >
                     <div className="flex gap-4">
                       <Avatar
-                        user={{ username: question.author, photoURL: question.authorPhoto, isAdmin: question.isAdmin }}
+                        user={{ username: question.author, photoURL: question.authorPhoto, isAdmin: questionIsAdmin }}
                         size="w-11 h-11"
-                        isAdmin={question.isAdmin}
+                        isAdmin={questionIsAdmin}
                       />
 
                       <div className="min-w-0 flex-1 space-y-4">
                         <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
                           <div className="min-w-0">
                             <div className="flex flex-wrap items-center gap-2">
-                              <h3 className={`text-base font-black tracking-tight ${question.isAdmin ? 'text-rose-300' : 'text-white'}`}>
+                              <h3 className={`text-base font-black tracking-tight ${questionIsAdmin ? 'text-rose-300' : 'text-white'}`}>
                                 {question.author}
                               </h3>
-                              {question.isAdmin && (
+                              {questionIsAdmin && (
                                 <span className="rounded-full border border-rose-400/20 bg-rose-400/10 px-2 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-rose-200">
                                   Admin
                                 </span>
@@ -1191,117 +1209,111 @@ export const QASection: React.FC = () => {
                             </span>
                           </button>
 
-                          <button
-                            onClick={() => {
-                              navigator.clipboard.writeText(`${window.location.origin}${window.location.pathname}#community?qid=${question.id}`);
-                              triggerToast('Đã copy link!');
-                            }}
-                            className="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-slate-400 transition hover:bg-white/[0.03] hover:text-white"
-                          >
-                            <Icons.Link2 size={15} />
-                            Chia sẻ
-                          </button>
                         </div>
 
                         {(isExpanded || replyingTo?.qId === question.id) && (
                           <div className="space-y-4 border-t border-white/8 pt-5">
                             {orderedReplies.length > 0 && (
                               <div className="space-y-3">
-                                {orderedReplies.map((reply) => (
-                                  <div key={reply.id} className="flex gap-3">
-                                    <Avatar
-                                      user={{ username: reply.author, photoURL: reply.authorPhoto, isAdmin: reply.isAdmin }}
-                                      size="w-9 h-9"
-                                      isAdmin={reply.isAdmin}
-                                    />
-                                    <div className="min-w-0 flex-1">
-                                      <div className={`rounded-[1.4rem] border p-4 ${reply.isAdmin ? 'border-rose-400/20 bg-rose-400/[0.06]' : 'border-white/8 bg-white/[0.03]'}`}>
-                                        <div className="mb-2 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-                                          <div className="flex flex-wrap items-center gap-2 text-sm">
-                                            <span className={`font-semibold ${reply.isAdmin ? 'text-rose-200' : 'text-white'}`}>
-                                              {reply.author}
-                                            </span>
-                                            {reply.isAdmin && (
-                                              <span className="rounded-full border border-rose-400/20 bg-rose-400/10 px-2 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-rose-200">
-                                                Admin
+                                {orderedReplies.map((reply) => {
+                                  const replyIsAdmin = isAdminIdentity(reply.author, reply.authorEmail, reply.isAdmin);
+
+                                  return (
+                                    <div key={reply.id} className="flex gap-3">
+                                      <Avatar
+                                        user={{ username: reply.author, photoURL: reply.authorPhoto, isAdmin: replyIsAdmin }}
+                                        size="w-9 h-9"
+                                        isAdmin={replyIsAdmin}
+                                      />
+                                      <div className="min-w-0 flex-1">
+                                        <div className={`rounded-[1.4rem] border p-4 ${replyIsAdmin ? 'border-rose-400/20 bg-rose-400/[0.06]' : 'border-white/8 bg-white/[0.03]'}`}>
+                                          <div className="mb-2 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+                                            <div className="flex flex-wrap items-center gap-2 text-sm">
+                                              <span className={`font-semibold ${replyIsAdmin ? 'text-rose-200' : 'text-white'}`}>
+                                                {reply.author}
                                               </span>
+                                              {replyIsAdmin && (
+                                                <span className="rounded-full border border-rose-400/20 bg-rose-400/10 px-2 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-rose-200">
+                                                  Admin
+                                                </span>
+                                              )}
+                                              {reply.replyToName && (
+                                                <span className="inline-flex items-center gap-1 text-xs text-slate-400">
+                                                  <Icons.ArrowRight size={12} />
+                                                  {reply.replyToName}
+                                                </span>
+                                              )}
+                                              <span className="text-xs text-slate-500">{formatRelativeTime(reply.timestamp)}</span>
+                                            </div>
+
+                                            {(currentUser?.isAdmin || currentUser?.uid === reply.authorId) && (
+                                              <div className="flex items-center gap-2">
+                                                <button
+                                                  onClick={() => {
+                                                    setEditingReplyId(reply.id);
+                                                    setEditContent(reply.content);
+                                                  }}
+                                                  className="rounded-xl border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition hover:bg-white/[0.06] hover:text-white"
+                                                  aria-label="Sửa phản hồi"
+                                                >
+                                                  <Icons.Settings size={13} />
+                                                </button>
+                                                <button
+                                                  onClick={() => deleteReply(question.id, reply.id)}
+                                                  className="rounded-xl border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition hover:border-red-400/25 hover:bg-red-500/10 hover:text-red-300"
+                                                  aria-label="Xóa phản hồi"
+                                                >
+                                                  <Icons.Trash2 size={13} />
+                                                </button>
+                                              </div>
                                             )}
-                                            {reply.replyToName && (
-                                              <span className="inline-flex items-center gap-1 text-xs text-slate-400">
-                                                <Icons.ArrowRight size={12} />
-                                                {reply.replyToName}
-                                              </span>
-                                            )}
-                                            <span className="text-xs text-slate-500">{formatRelativeTime(reply.timestamp)}</span>
                                           </div>
 
-                                          {(currentUser?.isAdmin || currentUser?.uid === reply.authorId) && (
-                                            <div className="flex items-center gap-2">
-                                              <button
-                                                onClick={() => {
-                                                  setEditingReplyId(reply.id);
-                                                  setEditContent(reply.content);
-                                                }}
-                                                className="rounded-xl border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition hover:bg-white/[0.06] hover:text-white"
-                                                aria-label="Sửa phản hồi"
-                                              >
-                                                <Icons.Settings size={13} />
-                                              </button>
-                                              <button
-                                                onClick={() => deleteReply(question.id, reply.id)}
-                                                className="rounded-xl border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition hover:border-red-400/25 hover:bg-red-500/10 hover:text-red-300"
-                                                aria-label="Xóa phản hồi"
-                                              >
-                                                <Icons.Trash2 size={13} />
-                                              </button>
+                                          {editingReplyId === reply.id ? (
+                                            <div className="space-y-3">
+                                              <textarea
+                                                autoFocus
+                                                value={editContent}
+                                                onChange={(e) => setEditContent(e.target.value)}
+                                                className="w-full rounded-[1.25rem] border border-white/8 bg-slate-950 px-4 py-3 text-sm leading-6 text-white outline-none focus:border-rose-400/30"
+                                              />
+                                              <div className="flex flex-wrap gap-2">
+                                                <button onClick={() => saveReplyEdit(question.id, reply.id)} className="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-950">
+                                                  Lưu
+                                                </button>
+                                                <button onClick={() => setEditingReplyId(null)} className="rounded-xl border border-white/8 bg-white/[0.03] px-4 py-2 text-sm text-slate-300">
+                                                  Hủy
+                                                </button>
+                                              </div>
                                             </div>
+                                          ) : (
+                                            <SmartContent content={reply.content} className="text-sm leading-6 text-slate-200" />
                                           )}
                                         </div>
 
-                                        {editingReplyId === reply.id ? (
-                                          <div className="space-y-3">
-                                            <textarea
-                                              autoFocus
-                                              value={editContent}
-                                              onChange={(e) => setEditContent(e.target.value)}
-                                              className="w-full rounded-[1.25rem] border border-white/8 bg-slate-950 px-4 py-3 text-sm leading-6 text-white outline-none focus:border-rose-400/30"
+                                        <div className="mt-2 flex flex-wrap items-center gap-3 px-2">
+                                          <button
+                                            onClick={() => toggleLikeReply(question.id, reply.id)}
+                                            className={`inline-flex items-center gap-2 text-xs font-semibold transition ${
+                                              reply.likedBy?.includes(currentUser?.uid || '')
+                                                ? 'text-rose-300'
+                                                : 'text-slate-400 hover:text-white'
+                                            }`}
+                                          >
+                                            <Icons.ThumbsUp
+                                              size={13}
+                                              fill={reply.likedBy?.includes(currentUser?.uid || '') ? 'currentColor' : 'none'}
                                             />
-                                            <div className="flex flex-wrap gap-2">
-                                              <button onClick={() => saveReplyEdit(question.id, reply.id)} className="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-950">
-                                                Lưu
-                                              </button>
-                                              <button onClick={() => setEditingReplyId(null)} className="rounded-xl border border-white/8 bg-white/[0.03] px-4 py-2 text-sm text-slate-300">
-                                                Hủy
-                                              </button>
-                                            </div>
-                                          </div>
-                                        ) : (
-                                          <SmartContent content={reply.content} className="text-sm leading-6 text-slate-200" />
-                                        )}
-                                      </div>
-
-                                      <div className="mt-2 flex flex-wrap items-center gap-3 px-2">
-                                        <button
-                                          onClick={() => toggleLikeReply(question.id, reply.id)}
-                                          className={`inline-flex items-center gap-2 text-xs font-semibold transition ${
-                                            reply.likedBy?.includes(currentUser?.uid || '')
-                                              ? 'text-rose-300'
-                                              : 'text-slate-400 hover:text-white'
-                                          }`}
-                                        >
-                                          <Icons.ThumbsUp
-                                            size={13}
-                                            fill={reply.likedBy?.includes(currentUser?.uid || '') ? 'currentColor' : 'none'}
-                                          />
-                                          <span>{reply.likedBy?.length || 0}</span>
-                                        </button>
-                                        <button onClick={() => openReplyComposer(question, reply)} className="text-xs font-semibold text-slate-400 transition hover:text-white">
-                                          Trả lời
-                                        </button>
+                                            <span>{reply.likedBy?.length || 0}</span>
+                                          </button>
+                                          <button onClick={() => openReplyComposer(question, reply)} className="text-xs font-semibold text-slate-400 transition hover:text-white">
+                                            Trả lời
+                                          </button>
+                                        </div>
                                       </div>
                                     </div>
-                                  </div>
-                                ))}
+                                  );
+                                })}
                               </div>
                             )}
 
