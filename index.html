@@ -53,7 +53,7 @@
       margin: 0;
       min-height: 100vh;
       color: var(--text);
-      font-family: "Avenir Next", "SF Pro Display", "Segoe UI Variable", "Helvetica Neue", sans-serif;
+      font-family: "SF Pro Display", "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
       background:
         radial-gradient(circle at top left, rgba(180, 40, 40, 0.18), transparent 30%),
         radial-gradient(circle at top right, rgba(255, 196, 0, 0.09), transparent 24%),
@@ -282,23 +282,6 @@
       color: #e2e8f0;
     }
 
-    .stats {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 28px;
-    }
-
-    .stat {
-      padding: 12px 15px;
-      border-radius: 18px;
-      border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.04);
-      color: #dbe4f0;
-      font-size: 0.9rem;
-      font-weight: 700;
-    }
-
     .section-head {
       display: flex;
       flex-direction: column;
@@ -367,50 +350,16 @@
     }
 
     .product-mark {
-      position: relative;
       flex-shrink: 0;
       width: 72px;
       height: 72px;
-      border-radius: 22px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      overflow: hidden;
-      background: rgba(255, 255, 255, 0.04);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.24));
     }
 
     .product-mark img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
-    }
-
-    .moon-mark {
-      display: grid;
-      place-items: center;
-      background:
-        radial-gradient(circle at 35% 30%, rgba(255, 240, 193, 0.22), transparent 35%),
-        linear-gradient(135deg, rgba(15, 23, 42, 0.94), rgba(26, 15, 50, 0.96));
-    }
-
-    .moon-mark::before {
-      content: "";
-      position: absolute;
-      width: 34px;
-      height: 34px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #fde68a, #f9a8d4);
-      transform: translateX(-2px);
-      box-shadow: 0 0 18px rgba(253, 224, 71, 0.2);
-    }
-
-    .moon-mark::after {
-      content: "";
-      position: absolute;
-      width: 28px;
-      height: 28px;
-      border-radius: 999px;
-      background: rgba(20, 8, 29, 0.98);
-      transform: translate(8px, -3px);
+      object-fit: contain;
     }
 
     .product-title-wrap {
@@ -491,19 +440,6 @@
     .button-main:hover,
     .button-subtle:hover {
       transform: translateY(-1px);
-    }
-
-    .footer {
-      margin-top: 84px;
-      padding-top: 22px;
-      border-top: 1px solid rgba(255, 255, 255, 0.07);
-      color: var(--muted);
-      font-size: 0.93rem;
-      line-height: 1.8;
-    }
-
-    .footer strong {
-      color: #e2e8f0;
     }
 
     @media (max-width: 960px) {
@@ -602,7 +538,7 @@
 
           <h1>Gọn, native và tập trung vào trải nghiệm thực tế.</h1>
           <p>
-            Đây là trang tổng hợp các sản phẩm phần mềm mình đang phát triển. Mỗi sản phẩm được thiết kế theo cùng một tinh thần: rõ ràng, nhanh và phù hợp với cách người dùng macOS làm việc hằng ngày.
+            Đây là trang tổng hợp các sản phẩm phần mềm mình đang phát triển thôi.
           </p>
 
           <div class="hero-actions">
@@ -610,11 +546,6 @@
             <a class="cta-secondary" href="/PHTV/">Mở PHTV</a>
           </div>
 
-          <div class="stats" aria-label="Thông tin nhanh">
-            <div class="stat">2 sản phẩm công khai</div>
-            <div class="stat">Tập trung cho macOS</div>
-            <div class="stat">Mã nguồn mở trên GitHub</div>
-          </div>
         </div>
       </section>
 
@@ -657,7 +588,9 @@
 
           <article class="product-card">
             <div class="product-header">
-              <div class="product-mark moon-mark" aria-hidden="true"></div>
+              <div class="product-mark">
+                <img src="/assets/lunarv-icon.png" alt="LunarV icon">
+              </div>
               <div class="product-title-wrap">
                 <h3>LunarV</h3>
                 <div class="product-subtitle">Vietnamese Lunar Calendar cho macOS.</div>
@@ -681,9 +614,6 @@
           </article>
         </div>
 
-        <div class="footer">
-          <strong>Pham Hung Tien</strong> phát triển các sản phẩm tập trung vào trải nghiệm native, bố cục rõ ràng và hiệu năng ổn định trên macOS.
-        </div>
       </section>
     </main>
   </div>

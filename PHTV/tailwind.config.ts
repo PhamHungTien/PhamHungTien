@@ -26,7 +26,7 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['Avenir Next', 'SF Pro Display', 'Segoe UI Variable', 'Helvetica Neue', 'sans-serif'],
+        sans: ['SF Pro Display', 'SF Pro Text', 'Segoe UI Variable Text', 'Segoe UI', 'Helvetica Neue', 'Arial', 'sans-serif'],
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',
