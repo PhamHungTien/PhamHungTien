@@ -142,12 +142,7 @@ const getContentPreview = (content: string, maxLength = 180) => {
 };
 
 const getOrderedReplies = (question: Question) =>
-  [...(question.replies || [])].sort((a, b) => {
-    const aIsAdmin = isAdminIdentity(a.author, a.authorEmail, a.isAdmin);
-    const bIsAdmin = isAdminIdentity(b.author, b.authorEmail, b.isAdmin);
-    if (aIsAdmin !== bIsAdmin) return aIsAdmin ? -1 : 1;
-    return a.timestamp - b.timestamp;
-  });
+  [...(question.replies || [])].sort((a, b) => a.timestamp - b.timestamp);
 
 const getLatestAdminReply = (question: Question) =>
   [...(question.replies || [])]
@@ -199,18 +194,18 @@ const getQuestionStatusMeta = (question: Question) => {
 const SmartContent: React.FC<{ content: string, className?: string }> = ({ content, className }) => {
   const parts = content.split(/(`[^`]+`|@[a-zA-Z0-9_]+|https?:\/\/[^\s]+)/g);
   return (
-    <div className={`whitespace-pre-wrap break-words leading-relaxed ${className}`}>
+    <div className={`min-w-0 max-w-full whitespace-pre-wrap break-words [overflow-wrap:anywhere] leading-relaxed ${className}`}>
       {parts.map((part, i) => {
         if (part.startsWith('`') && part.endsWith('`')) {
-          return <code key={i} className="bg-white/10 px-1.5 py-0.5 rounded text-rose-300 font-mono text-[0.85em] border border-white/5">{part.slice(1, -1)}</code>;
+          return <code key={i} className="inline max-w-full break-all rounded border border-white/5 bg-white/10 px-1.5 py-0.5 font-mono text-[0.85em] text-rose-300 [overflow-wrap:anywhere]">{part.slice(1, -1)}</code>;
         }
         if (part.startsWith('@')) {
-          return <span key={i} className="text-rose-400 font-black hover:underline cursor-pointer">{part}</span>;
+          return <span key={i} className="break-all font-black text-rose-400 [overflow-wrap:anywhere] hover:underline cursor-pointer">{part}</span>;
         }
         if (part.startsWith('http')) {
-          return <a key={i} href={part} target="_blank" rel="noopener noreferrer" className="text-blue-400 underline hover:text-blue-300 inline-flex items-center gap-1 transition-colors">{part.length > 40 ? part.substring(0, 40) + '...' : part} <Icons.ExternalLink size={10} /></a>;
+          return <a key={i} href={part} target="_blank" rel="noopener noreferrer" className="inline break-all text-blue-400 underline [overflow-wrap:anywhere] transition-colors hover:text-blue-300">{part.length > 40 ? part.substring(0, 40) + '...' : part} <Icons.ExternalLink size={10} className="ml-1 inline-block align-baseline" /></a>;
         }
-        return <span key={i} className="text-slate-200">{part}</span>;
+        return <span key={i} className="text-slate-200 [overflow-wrap:anywhere]">{part}</span>;
       })}
     </div>
   );

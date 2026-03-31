@@ -338,7 +338,6 @@ function App() {
     universalDownloadUrl,
     hasSplitDownloads,
     version,
-    totalDownloads,
     loading
   } = useGitHubData();
   const [showDonate, setShowDonate] = useState(false);
@@ -447,7 +446,6 @@ function App() {
 
               <div className="mx-auto mt-8 flex max-w-4xl flex-wrap justify-center gap-3 md:mt-10 md:gap-4">
                 <StatBadge icon={Icons.Tag} label="Phiên bản" value={version} href="https://github.com/PhamHungTien/PHTV/releases/latest" colorClass="text-blue-300" />
-                <StatBadge icon={Icons.CloudDownload} label="Lượt tải" value={totalDownloads} href="https://github.com/PhamHungTien/PHTV/releases" colorClass="text-emerald-300" />
                 <StatBadge icon={Icons.Heart} label="Ủng hộ" value="Donate" onClick={() => setShowDonate(true)} colorClass="text-rose-300" />
               </div>
 
