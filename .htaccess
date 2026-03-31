@@ -1,6 +1,9 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+
+  # Serve LunarV landing page directly for hosts that do not auto-resolve folder index files
+  RewriteRule ^LunarV/?$ LunarV/index.html [L]
   
   # Redirect /PHTV to /PHTV/
   RewriteCond %{REQUEST_FILENAME} !-f
