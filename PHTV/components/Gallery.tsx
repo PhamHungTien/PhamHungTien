@@ -135,45 +135,45 @@ export const Gallery: React.FC = () => {
   ) : null;
 
   return (
-    <section id="gallery" className="py-24 max-w-7xl mx-auto px-6">
-       <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 text-brand-400 font-bold mb-4 uppercase tracking-wider text-sm">
-            <Icons.Layers size={16} />
+    <section id="gallery" className="mx-auto max-w-6xl px-4 py-20 md:px-6 md:py-24">
+       <div className="mb-12 text-center md:mb-14">
+          <div className="inline-flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.28em] text-amber-300/80">
+            <Icons.Layers size={14} />
             <span>Giao diện</span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold mb-4 text-white">
-            Screenshots
+          <h2 className="mt-4 text-3xl font-black tracking-tight text-white md:text-4xl">
+            Một giao diện gọn, rõ và gần với trải nghiệm macOS
           </h2>
-          <p className="text-slate-400 text-lg max-w-2xl mx-auto font-medium">
-             Giao diện trực quan, tinh tế và đồng bộ tuyệt đối với macOS.
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-400 md:text-base">
+             Xem nhanh các màn hình quan trọng để nắm rõ cách PHTV hoạt động trong thực tế.
           </p>
        </div>
 
-       <div className="space-y-16">
+       <div className="space-y-12">
           {/* Settings Section */}
           <div>
-            <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
-              <div className="w-1.5 h-8 bg-rose-500 rounded-full shadow-[0_0_15px_rgba(244,63,94,0.5)]"></div>
-              Cài đặt hệ thống
+            <h3 className="mb-6 flex items-center gap-3 text-xl font-black text-white md:text-2xl">
+              <div className="h-7 w-1 rounded-full bg-amber-300"></div>
+              Cài đặt
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
                {settingsImages.map((item, idx) => {
                  const globalIndex = IMAGES.indexOf(item);
                  return (
                    <div 
                      key={idx} 
-                     className="group relative flex flex-col bg-slate-900/40 rounded-2xl p-4 border border-white/5 hover:border-brand-500/30 transition-all duration-500 cursor-pointer overflow-hidden shadow-lg"
+                     className="glass-card group relative flex cursor-pointer flex-col overflow-hidden rounded-[1.5rem] p-4"
                      onClick={() => openLightbox(globalIndex)}
                    >
-                      <div className="aspect-[4/3] flex items-center justify-center overflow-hidden rounded-xl bg-black/20">
-                        <img src={item.src} alt={item.label} className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-700 ease-out" loading="lazy" />
+                      <div className="aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[1rem] bg-black/20">
+                        <img src={item.src} alt={item.label} className="h-full w-full object-contain transition-transform duration-500 ease-out group-hover:scale-[1.03]" loading="lazy" />
                       </div>
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center pb-6">
-                         <span className="bg-white/10 backdrop-blur-md px-4 py-2 rounded-full text-[10px] font-black uppercase text-white border border-white/10 flex items-center gap-2 tracking-widest">
+                      <div className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pb-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                         <span className="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-white backdrop-blur-md">
                            Phóng to
                          </span>
                       </div>
-                      <p className="text-center text-slate-400 mt-4 text-xs font-black uppercase tracking-widest group-hover:text-white transition-colors">{item.label}</p>
+                      <p className="mt-4 text-center text-xs font-black uppercase tracking-[0.18em] text-slate-400 transition-colors group-hover:text-white">{item.label}</p>
                    </div>
                  );
                })}
@@ -182,28 +182,28 @@ export const Gallery: React.FC = () => {
 
           {/* PHTV Picker Section */}
           <div>
-            <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
-              <div className="w-1.5 h-8 bg-pink-500 rounded-full shadow-[0_0_15px_rgba(236,72,153,0.5)]"></div>
+            <h3 className="mb-6 flex items-center gap-3 text-xl font-black text-white md:text-2xl">
+              <div className="h-7 w-1 rounded-full bg-rose-300"></div>
               PHTV Picker
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                {pickerImages.map((item, idx) => {
                  const globalIndex = IMAGES.indexOf(item);
                  return (
                    <div 
                      key={idx} 
-                     className="group relative flex flex-col bg-slate-900/40 rounded-2xl p-4 border border-white/5 hover:border-brand-500/30 transition-all duration-500 cursor-pointer overflow-hidden shadow-lg"
+                     className="glass-card group relative flex cursor-pointer flex-col overflow-hidden rounded-[1.5rem] p-4"
                      onClick={() => openLightbox(globalIndex)}
                    >
-                      <div className="aspect-[16/10] flex items-center justify-center overflow-hidden rounded-xl bg-black/20">
-                        <img src={item.src} alt={item.label} className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-700 ease-out" loading="lazy" />
+                      <div className="aspect-[16/10] flex items-center justify-center overflow-hidden rounded-[1rem] bg-black/20">
+                        <img src={item.src} alt={item.label} className="h-full w-full object-contain transition-transform duration-500 ease-out group-hover:scale-[1.03]" loading="lazy" />
                       </div>
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center pb-6">
-                         <span className="bg-white/10 backdrop-blur-md px-4 py-2 rounded-full text-[10px] font-black uppercase text-white border border-white/10 flex items-center gap-2 tracking-widest">
+                      <div className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pb-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                         <span className="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-white backdrop-blur-md">
                            Phóng to
                          </span>
                       </div>
-                      <p className="text-center text-slate-400 mt-4 text-xs font-black uppercase tracking-widest group-hover:text-white transition-colors">{item.label}</p>
+                      <p className="mt-4 text-center text-xs font-black uppercase tracking-[0.18em] text-slate-400 transition-colors group-hover:text-white">{item.label}</p>
                    </div>
                  );
                })}

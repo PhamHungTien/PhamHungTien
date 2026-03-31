@@ -26,7 +26,7 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        sans: ['Avenir Next', 'SF Pro Display', 'Segoe UI Variable', 'Helvetica Neue', 'sans-serif'],
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',

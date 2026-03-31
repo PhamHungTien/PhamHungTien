@@ -64,11 +64,10 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const navLinks = [
     { name: 'Tính năng', href: '#features', tab: 'home' },
-    { name: 'Phím tắt', href: '#shortcuts', tab: 'home' },
     { name: 'Giao diện', href: '#gallery', tab: 'home' },
     { name: 'Cài đặt', href: '#install', tab: 'home' },
-    { name: 'Thảo luận', href: '#community', tab: 'community' },
     { name: 'FAQ', href: '#faq', tab: 'home' },
+    { name: 'Thảo luận', href: '#community', tab: 'community' },
   ];
 
   const handleLinkClick = (e: React.MouseEvent, tab: string, href: string) => {
@@ -105,45 +104,52 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${scrolled ? 'glass-panel py-3 shadow-2xl shadow-black/40' : 'bg-transparent py-6'}`}>
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+      <nav className="fixed top-0 left-0 right-0 z-[100] px-4 pt-4 md:px-6 md:pt-5">
+        <div className={`mx-auto flex max-w-7xl items-center justify-between rounded-full border px-4 py-3 transition-all duration-300 md:px-6 ${
+          scrolled
+            ? 'glass-panel border-white/10 shadow-[0_18px_50px_rgba(0,0,0,0.28)]'
+            : 'border-white/6 bg-black/10 backdrop-blur-md'
+        }`}>
           <button 
             onClick={() => { onTabChange?.('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-            className="flex items-center gap-4 group cursor-pointer"
+            className="group flex items-center gap-3"
           >
             <img 
               src={iconImg} 
               alt="PHTV Logo" 
-              className="w-10 h-10 transition-all duration-500 group-hover:scale-110 object-contain" 
+              className="h-10 w-10 object-contain transition-transform duration-300 group-hover:scale-105" 
             />
-            <span className="font-black text-2xl tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-pink-500 via-red-500 to-rose-400 bg-[length:200%_auto] animate-gradient-flow hidden sm:block group-hover:text-glow transition-all pr-3 py-1">PHTV</span>
+            <div className="hidden text-left sm:block">
+              <span className="block text-lg font-black tracking-[0.04em] text-white">PHTV</span>
+              <span className="block text-[10px] font-bold uppercase tracking-[0.28em] text-amber-300/80">macOS Vietnamese Input</span>
+            </div>
           </button>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-7">
             {navLinks.map((item) => (
               <a
                 key={item.name}
                 href={item.href} 
                 onClick={(e) => handleLinkClick(e, item.tab, item.href)}
-                className={`text-sm font-bold transition-all hover:-translate-y-0.5 flex items-center gap-1.5 ${
-                  (item.tab === activeTab) ? 'text-brand-400' : 'text-slate-400 hover:text-white'
+                className={`flex items-center gap-2 text-sm font-semibold transition-colors ${
+                  item.tab === activeTab ? 'text-white' : 'text-slate-400 hover:text-slate-100'
                 }`}
               >
                 {item.name}
                 {item.tab === 'community' && (
-                  <span className="flex h-2 w-2 rounded-full bg-brand-500 animate-pulse shadow-[0_0_8px_rgba(245,158,11,0.8)]"></span>
+                  <span className="flex h-2 w-2 rounded-full bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.45)]"></span>
                 )}
               </a>
             ))}
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-5">
+          <div className="flex items-center gap-2 sm:gap-4">
             <a 
               href="https://github.com/PhamHungTien/PHTV" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="hidden sm:flex items-center gap-2 text-slate-400 hover:text-white transition-colors p-2 hover:bg-white/5 rounded-full"
+              className="hidden rounded-full border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition-colors hover:text-white sm:flex"
               title="GitHub Repository"
               aria-label="Xem mã nguồn trên GitHub"
             >
@@ -161,7 +167,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   type="button"
                   onClick={() => setDesktopDownloadOpen((current) => !current)}
                   onFocus={() => setDesktopDownloadOpen(true)}
-                  className="flex items-center gap-2 bg-white text-slate-950 px-6 py-2.5 rounded-xl text-sm font-black hover:bg-slate-100 transition-all transform hover:scale-105 active:scale-95 shadow-xl shadow-white/10"
+                  className="flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-black text-slate-950 transition-all hover:bg-slate-100"
                   aria-label="Tải xuống PHTV"
                   aria-expanded={desktopDownloadOpen}
                   aria-haspopup="menu"
@@ -171,24 +177,24 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <Icons.ChevronDown size={16} className={`transition-transform ${desktopDownloadOpen ? 'rotate-180' : ''}`} />
                 </button>
 
-                <div className={`absolute right-0 top-full pt-3 transition-all duration-200 ${desktopDownloadOpen ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none translate-y-2'}`}>
-                  <div className="w-[320px] rounded-3xl border border-white/10 bg-slate-950/95 p-3 shadow-[0_25px_80px_rgba(0,0,0,0.45)] backdrop-blur-2xl">
-                    <div className="px-3 pb-3 pt-1 border-b border-white/5">
-                      <p className="text-[11px] font-black uppercase tracking-[0.22em] text-brand-400">Tải nhanh</p>
-                      <p className="mt-1 text-sm font-semibold text-slate-300">Chọn đúng bản cho Apple Silicon hoặc Intel ngay tại đây.</p>
+                <div className={`absolute right-0 top-full pt-3 transition-all duration-200 ${desktopDownloadOpen ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none translate-y-2 opacity-0'}`}>
+                  <div className="w-[320px] rounded-[1.75rem] border border-white/10 bg-[#0b0f18]/96 p-3 shadow-[0_25px_80px_rgba(0,0,0,0.42)] backdrop-blur-2xl">
+                    <div className="border-b border-white/6 px-3 pb-3 pt-1">
+                      <p className="text-[11px] font-black uppercase tracking-[0.22em] text-amber-300">Tải nhanh</p>
+                      <p className="mt-1 text-sm text-slate-400">Chọn đúng bản cho Apple Silicon hoặc Intel.</p>
                     </div>
 
                     <div className="mt-3 space-y-2">
                       <a
                         href={arm64DownloadUrl ?? releaseUrl}
                         onClick={handleDirectDownloadClick}
-                        className="flex items-center justify-between gap-3 rounded-2xl bg-gradient-to-r from-brand-600 to-purple-600 px-4 py-3 text-left text-white transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-brand-500/20"
+                        className="flex items-center justify-between gap-3 rounded-2xl bg-gradient-to-r from-amber-400 to-orange-500 px-4 py-3 text-left text-slate-950 transition-all hover:-translate-y-0.5"
                       >
                         <span className="flex items-center gap-3">
                           <Icons.Download size={18} />
                           <span>
                             <span className="block text-sm font-black">Apple Silicon</span>
-                            <span className="block text-xs font-semibold uppercase tracking-widest text-white/75">M1 / M2 / M3 / M4</span>
+                            <span className="block text-xs font-semibold uppercase tracking-widest text-slate-900/65">M1 / M2 / M3 / M4</span>
                           </span>
                         </span>
                         <Icons.ArrowRight size={18} className="shrink-0" />
@@ -197,7 +203,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       <a
                         href={intelDownloadUrl ?? releaseUrl}
                         onClick={handleDirectDownloadClick}
-                        className="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-left text-white transition-all hover:-translate-y-0.5 hover:bg-white/10"
+                        className="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-left text-white transition-all hover:-translate-y-0.5 hover:bg-white/9"
                       >
                         <span className="flex items-center gap-3">
                           <Icons.Download size={18} />
@@ -212,7 +218,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       <a
                         href="#install"
                         onClick={handleInstallClick}
-                        className="flex items-center justify-between gap-3 rounded-2xl border border-brand-500/20 bg-brand-500/10 px-4 py-3 text-left text-brand-300 transition-all hover:bg-brand-500/15"
+                        className="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-[#131b2a] px-4 py-3 text-left text-slate-200 transition-all hover:bg-[#182235]"
                       >
                         <span className="flex items-center gap-3">
                           <Icons.Terminal size={18} />
@@ -231,7 +237,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <a
                 href={downloadUrl}
                 onClick={handleDirectDownloadClick}
-                className="hidden xs:flex items-center gap-2 bg-white text-slate-950 px-6 py-2.5 rounded-xl text-sm font-black hover:bg-slate-100 transition-all transform hover:scale-105 active:scale-95 shadow-xl shadow-white/10"
+                className="hidden xs:flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-black text-slate-950 transition-all hover:bg-slate-100"
                 aria-label="Tải xuống PHTV"
               >
                 <Icons.Download size={18} />
@@ -241,7 +247,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             {/* Mobile Menu Button */}
             <button 
-              className="lg:hidden p-2 text-slate-400 hover:text-white transition-colors"
+              className="rounded-full border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition-colors hover:text-white lg:hidden"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label={mobileMenuOpen ? "Đóng menu" : "Mở menu"}
             >
@@ -252,12 +258,15 @@ export const Navbar: React.FC<NavbarProps> = ({
       </nav>
 
       {/* Mobile Menu Overlay */}
-      <div className={`fixed inset-0 z-[90] lg:hidden transition-all duration-500 ${mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
-        <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-2xl" onClick={() => setMobileMenuOpen(false)}></div>
-        <div className={`absolute right-0 top-0 bottom-0 w-[280px] bg-slate-900 border-l border-white/5 p-8 flex flex-col transition-transform duration-500 ease-out shadow-2xl ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+      <div className={`fixed inset-0 z-[90] lg:hidden transition-all duration-300 ${mobileMenuOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}>
+        <div className="absolute inset-0 bg-slate-950/75 backdrop-blur-xl" onClick={() => setMobileMenuOpen(false)}></div>
+        <div className={`absolute right-4 top-4 bottom-4 w-[min(320px,calc(100vw-2rem))] rounded-[2rem] border border-white/10 bg-[#0c111b]/96 p-7 flex flex-col transition-transform duration-300 ease-out shadow-[0_25px_80px_rgba(0,0,0,0.45)] ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
           <div className="flex items-center gap-4 mb-12">
             <img src={iconImg} alt="PHTV" className="w-10 h-10 object-contain" />
-            <span className="font-black text-2xl text-white">PHTV</span>
+            <div>
+              <span className="block text-xl font-black text-white">PHTV</span>
+              <span className="block text-[10px] uppercase tracking-[0.24em] text-slate-500">Precision Hybrid Typing</span>
+            </div>
           </div>
           
           <div className="flex flex-col gap-6">
@@ -266,17 +275,17 @@ export const Navbar: React.FC<NavbarProps> = ({
                 key={item.name}
                 href={item.href} 
                 onClick={(e) => handleLinkClick(e, item.tab, item.href)}
-                className={`text-lg font-bold flex items-center justify-between group ${
+                className={`group flex items-center justify-between text-lg font-semibold ${
                   item.tab === activeTab ? 'text-brand-400' : 'text-slate-300 hover:text-white'
                 }`}
               >
                 <span className="flex items-center gap-3">
                   {item.name}
                   {item.tab === 'community' && (
-                    <span className="bg-brand-500 text-white text-[8px] px-1.5 py-0.5 rounded-md font-black uppercase tracking-tighter">New</span>
+                    <span className="rounded-md bg-amber-400 px-1.5 py-0.5 text-[8px] font-black uppercase tracking-tighter text-slate-950">New</span>
                   )}
                 </span>
-                <Icons.ArrowRight size={18} className="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-brand-500" />
+                <Icons.ArrowRight size={18} className="text-amber-300 opacity-0 -translate-x-2 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
               </a>
             ))}
           </div>
@@ -285,20 +294,20 @@ export const Navbar: React.FC<NavbarProps> = ({
             {hasSplitDownloads ? (
               <>
                 <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
-                  <p className="text-[10px] font-black uppercase tracking-[0.22em] text-brand-400">Tải nhanh</p>
+                  <p className="text-[10px] font-black uppercase tracking-[0.22em] text-amber-300">Tải nhanh</p>
                   <p className="mt-2 text-sm text-slate-400">Chọn đúng file ngay trong menu này, không cần kéo xuống dưới.</p>
                 </div>
 
                 <a
                   href={arm64DownloadUrl ?? releaseUrl}
                   onClick={handleDirectDownloadClick}
-                  className="flex items-center justify-between gap-3 w-full py-4 px-5 bg-gradient-to-r from-brand-600 to-purple-600 text-white rounded-2xl font-black text-base shadow-xl shadow-brand-500/20"
+                  className="flex items-center justify-between gap-3 w-full rounded-2xl bg-gradient-to-r from-amber-400 to-orange-500 px-5 py-4 font-black text-base text-slate-950"
                 >
                   <span className="flex items-center gap-3">
                     <Icons.Download size={20} />
                     Apple Silicon
                   </span>
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-white/75">M1-M4</span>
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-slate-900/65">M1-M4</span>
                 </a>
 
                 <a
@@ -316,7 +325,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <a
                   href="#install"
                   onClick={handleInstallClick}
-                  className="flex items-center justify-center gap-3 w-full py-4 bg-brand-500/10 border border-brand-500/20 text-brand-300 rounded-2xl font-black text-base"
+                  className="flex items-center justify-center gap-3 w-full rounded-2xl border border-white/10 bg-[#131b2a] py-4 font-black text-base text-slate-200"
                 >
                   <Icons.Terminal size={20} />
                   Homebrew tự chọn bản
@@ -326,15 +335,15 @@ export const Navbar: React.FC<NavbarProps> = ({
               <a
                 href={downloadUrl}
                 onClick={handleDirectDownloadClick}
-                className="flex items-center justify-center gap-3 w-full py-4 bg-white text-slate-950 rounded-2xl font-black text-lg shadow-xl shadow-white/5"
+                className="flex items-center justify-center gap-3 w-full rounded-2xl bg-white py-4 text-lg font-black text-slate-950"
               >
                 <Icons.Download size={20} />
                 {downloadLabel}
               </a>
             )}
-            <div className="flex justify-center gap-6 pt-4 border-t border-white/5">
-              <a href="https://github.com/PhamHungTien/PHTV" className="text-slate-400 hover:text-white transition-colors"><Icons.Github size={24} /></a>
-              <a href="mailto:phamhungtien.contact@gmail.com" className="text-slate-400 hover:text-white transition-colors"><Icons.Coffee size={24} /></a>
+            <div className="flex justify-center gap-6 border-t border-white/5 pt-4">
+              <a href="https://github.com/PhamHungTien/PHTV" className="text-slate-400 transition-colors hover:text-white"><Icons.Github size={24} /></a>
+              <a href="mailto:phamhungtien.contact@gmail.com" className="text-slate-400 transition-colors hover:text-white"><Icons.Coffee size={24} /></a>
             </div>
           </div>
         </div>
