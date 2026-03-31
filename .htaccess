@@ -6,6 +6,11 @@
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^PHTV$ PHTV/ [R=301,L]
+
+  # Redirect /LunarV to /LunarV/
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^LunarV$ LunarV/ [R=301,L]
   
   # SPA routing - redirect all PHTV requests to PHTV/index.html
   RewriteCond %{REQUEST_FILENAME} !-f

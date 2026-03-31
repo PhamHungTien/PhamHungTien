@@ -110,7 +110,7 @@
     }
 
     .container {
-      width: min(1120px, calc(100% - 32px));
+      width: min(1160px, calc(100% - 32px));
       margin: 0 auto;
     }
 
@@ -202,12 +202,12 @@
     }
 
     main {
-      padding: 88px 0 72px;
+      padding: 76px 0 72px;
     }
 
     .hero {
       display: grid;
-      gap: 40px;
+      gap: 32px;
       align-items: end;
     }
 
@@ -236,17 +236,17 @@
 
     .hero h1 {
       margin: 22px 0 0;
-      max-width: 11ch;
-      font-size: clamp(3rem, 8vw, 6.1rem);
-      line-height: 0.95;
-      letter-spacing: -0.05em;
+      max-width: 12ch;
+      font-size: clamp(2.5rem, 5vw + 0.9rem, 4.95rem);
+      line-height: 1.16;
+      letter-spacing: -0.045em;
     }
 
     .hero p {
       margin: 20px 0 0;
-      max-width: 720px;
+      max-width: 640px;
       color: #cbd5e1;
-      font-size: clamp(1rem, 2.2vw, 1.18rem);
+      font-size: clamp(0.98rem, 1.15vw + 0.82rem, 1.08rem);
       line-height: 1.85;
     }
 
@@ -254,11 +254,10 @@
       display: flex;
       flex-wrap: wrap;
       gap: 14px;
-      margin-top: 28px;
+      margin-top: 24px;
     }
 
-    .cta-primary,
-    .cta-secondary {
+    .cta-primary {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -266,23 +265,13 @@
       padding: 14px 20px;
       border-radius: 999px;
       font-weight: 800;
-      transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease;
-    }
-
-    .cta-primary {
+      transition: transform 180ms ease, background-color 180ms ease;
       background: #ffffff;
       color: #0f172a;
     }
 
-    .cta-primary:hover,
-    .cta-secondary:hover {
+    .cta-primary:hover {
       transform: translateY(-1px);
-    }
-
-    .cta-secondary {
-      border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.04);
-      color: #e2e8f0;
     }
 
     .section-head {
@@ -451,11 +440,15 @@
       }
 
       .hero {
-        gap: 28px;
+        gap: 26px;
       }
 
       .hero h1 {
         max-width: 100%;
+      }
+
+      .section-head {
+        margin-top: 72px;
       }
     }
 
@@ -472,12 +465,33 @@
       }
 
       main {
-        padding-top: 60px;
+        padding-top: 52px;
       }
 
       .product-card {
         padding: 22px;
         border-radius: 26px;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.2rem, 9vw, 3rem);
+        line-height: 1.18;
+      }
+
+      .hero p {
+        font-size: 0.98rem;
+        line-height: 1.82;
+      }
+
+      .hero-actions,
+      .product-actions {
+        width: 100%;
+      }
+
+      .cta-primary,
+      .button-main,
+      .button-subtle {
+        width: 100%;
       }
 
       .product-header {
@@ -504,7 +518,7 @@
         {
           "@type": "SoftwareApplication",
           "name": "LunarV",
-          "url": "https://github.com/PhamHungTien/LunarV",
+          "url": "https://phamhungtien.com/LunarV/",
           "sameAs": "https://github.com/PhamHungTien/LunarV",
           "operatingSystem": "macOS 15+"
         }
@@ -546,7 +560,6 @@
 
           <div class="hero-actions">
             <a class="cta-primary" href="#products">Xem sản phẩm</a>
-            <a class="cta-secondary" href="/PHTV/">Mở PHTV</a>
           </div>
 
         </div>
@@ -592,7 +605,7 @@
           <article class="product-card">
             <div class="product-header">
               <div class="product-mark">
-                <img src="/assets/lunarv-icon.png" alt="LunarV icon">
+                <img src="/LunarV/assets/lunarv-icon.png" alt="LunarV icon">
               </div>
               <div class="product-title-wrap">
                 <h3>LunarV</h3>
@@ -611,8 +624,8 @@
             </ul>
 
             <div class="product-actions">
-              <a class="button-main" href="https://github.com/PhamHungTien/LunarV" target="_blank" rel="noopener noreferrer">Xem trên GitHub</a>
-              <a class="button-subtle" href="https://github.com/PhamHungTien/LunarV/issues" target="_blank" rel="noopener noreferrer">Issues</a>
+              <a class="button-main" href="/LunarV/">Mở trang sản phẩm</a>
+              <a class="button-subtle" href="https://github.com/PhamHungTien/LunarV" target="_blank" rel="noopener noreferrer">GitHub</a>
             </div>
           </article>
         </div>

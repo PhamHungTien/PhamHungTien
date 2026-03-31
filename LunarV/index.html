@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LunarV | Lịch âm Việt Nam cho macOS</title>
+  <meta name="description" content="LunarV là ứng dụng lịch âm Việt Nam cho macOS, hỗ trợ xem ngày, dịp gia đình và thông báo trong giao diện menu bar gọn gàng.">
+  <meta name="theme-color" content="#0e1724">
+  <meta http-equiv="cache-control" content="no-cache, must-revalidate, max-age=0">
+  <meta http-equiv="expires" content="0">
+  <meta http-equiv="pragma" content="no-cache">
+  <link rel="canonical" href="https://phamhungtien.com/LunarV/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="/LunarV/assets/lunarv-icon.png">
+  <link rel="apple-touch-icon" href="/LunarV/assets/lunarv-icon.png">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://phamhungtien.com/LunarV/">
+  <meta property="og:title" content="LunarV | Lịch âm Việt Nam cho macOS">
+  <meta property="og:description" content="Trang tải về LunarV cho macOS với giao diện đồng bộ và đường dẫn tải .dmg trực tiếp.">
+  <meta property="og:image" content="https://phamhungtien.com/LunarV/assets/ui-review-2.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="LunarV | Lịch âm Việt Nam cho macOS">
+  <meta name="twitter:description" content="Ứng dụng lịch âm Việt Nam cho macOS với giao diện menu bar gọn gàng và thông báo thông minh.">
+  <meta name="twitter:image" content="https://phamhungtien.com/LunarV/assets/ui-review-2.png">
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg-top: #101b29;
+      --bg-bottom: #0b1119;
+      --surface: rgba(255, 255, 255, 0.04);
+      --surface-strong: rgba(255, 255, 255, 0.07);
+      --border: rgba(255, 255, 255, 0.09);
+      --text: #f8fafc;
+      --muted: #97a7bc;
+      --accent: #82c7eb;
+      --accent-strong: #ff905b;
+      --shadow: 0 28px 70px rgba(0, 0, 0, 0.28);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: "Be Vietnam Pro", "Noto Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(130, 199, 235, 0.14), transparent 32%),
+        radial-gradient(circle at top right, rgba(255, 144, 91, 0.12), transparent 24%),
+        radial-gradient(circle at bottom center, rgba(85, 125, 185, 0.16), transparent 34%),
+        linear-gradient(180deg, var(--bg-top) 0%, #0f1723 34%, var(--bg-bottom) 100%);
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .page-shell {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .page-shell::before {
+      content: "";
+      position: fixed;
+      inset: -12%;
+      z-index: -2;
+      background:
+        radial-gradient(circle at 16% 14%, rgba(130, 199, 235, 0.12), transparent 20%),
+        radial-gradient(circle at 80% 16%, rgba(255, 144, 91, 0.12), transparent 22%),
+        radial-gradient(circle at 52% 58%, rgba(93, 154, 216, 0.1), transparent 28%);
+      filter: blur(52px);
+      opacity: 0.92;
+      pointer-events: none;
+    }
+
+    .page-shell::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent 22%),
+        radial-gradient(circle at center, rgba(255, 255, 255, 0.012), transparent 50%);
+      pointer-events: none;
+    }
+
+    .container {
+      width: min(1160px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      padding: 20px 0 0;
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 16px 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.12);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .brand img {
+      width: 46px;
+      height: 46px;
+      object-fit: contain;
+      filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.24));
+    }
+
+    .brand-copy strong {
+      display: block;
+      font-size: 1.05rem;
+      line-height: 1.15;
+      letter-spacing: 0.02em;
+    }
+
+    .brand-copy span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .pill-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.04);
+      color: #e2e8f0;
+      font-size: 0.92rem;
+      font-weight: 700;
+      transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+    }
+
+    .pill-link:hover,
+    .button-main:hover,
+    .button-subtle:hover,
+    .download-link:hover {
+      transform: translateY(-1px);
+    }
+
+    .pill-link:hover {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: rgba(130, 199, 235, 0.3);
+    }
+
+    main {
+      padding: 74px 0 72px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: 28px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.04);
+      color: #dbe7f3;
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+    }
+
+    .eyebrow-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      box-shadow: 0 0 18px rgba(130, 199, 235, 0.45);
+    }
+
+    .hero h1 {
+      margin: 22px 0 0;
+      max-width: 12ch;
+      font-size: clamp(2.6rem, 5.4vw + 0.9rem, 5rem);
+      line-height: 1.12;
+      letter-spacing: -0.045em;
+    }
+
+    .hero p {
+      margin: 18px 0 0;
+      max-width: 660px;
+      color: #d4deea;
+      font-size: clamp(0.98rem, 1.2vw + 0.82rem, 1.08rem);
+      line-height: 1.85;
+    }
+
+    .hero-badges,
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 24px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .hero-badges li,
+    .tag-list li {
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.04);
+      color: #dbe4f0;
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .hero-preview {
+      padding: 18px;
+      border-radius: 32px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(180deg, rgba(18, 24, 38, 0.72), rgba(10, 14, 24, 0.78));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .hero-preview img {
+      width: 100%;
+      border-radius: 24px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+    }
+
+    .hero-preview-caption {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.8;
+    }
+
+    .section-head {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 86px;
+      margin-bottom: 28px;
+    }
+
+    .section-head span {
+      color: rgba(130, 199, 235, 0.92);
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.06;
+      letter-spacing: -0.04em;
+    }
+
+    .section-head p {
+      margin: 0;
+      max-width: 720px;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 1rem;
+    }
+
+    .download-panel,
+    .feature-card,
+    .install-card,
+    .gallery-card {
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(180deg, rgba(18, 24, 38, 0.72), rgba(10, 14, 24, 0.78));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .download-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 0.9fr);
+      gap: 24px;
+      padding: 28px;
+    }
+
+    .kicker {
+      color: rgba(130, 199, 235, 0.92);
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+    }
+
+    .download-panel h3,
+    .install-card h3 {
+      margin: 12px 0 0;
+      font-size: 2rem;
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+    }
+
+    .download-panel p,
+    .install-card p {
+      margin: 14px 0 0;
+      color: #d4deea;
+      line-height: 1.8;
+    }
+
+    .download-meta {
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    .meta-pill {
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .meta-label {
+      display: block;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+    }
+
+    .meta-value {
+      display: block;
+      margin-top: 6px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #f8fafc;
+    }
+
+    .download-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .button-main,
+    .button-subtle,
+    .download-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 999px;
+      font-weight: 800;
+      transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease;
+    }
+
+    .button-main {
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      color: #102033;
+    }
+
+    .button-subtle,
+    .download-link {
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.04);
+      color: #e2e8f0;
+    }
+
+    .feature-grid,
+    .install-grid,
+    .gallery-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .feature-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .feature-card {
+      padding: 22px;
+    }
+
+    .feature-card h3 {
+      margin: 0;
+      font-size: 1.05rem;
+      line-height: 1.35;
+    }
+
+    .feature-card p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 0.95rem;
+    }
+
+    .install-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    .install-card {
+      padding: 24px;
+    }
+
+    .step-list {
+      margin: 18px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+
+    .step-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      color: #d4deea;
+      line-height: 1.8;
+    }
+
+    .step-number {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      background: rgba(130, 199, 235, 0.12);
+      color: var(--accent);
+      font-size: 0.84rem;
+      font-weight: 800;
+    }
+
+    .code-block {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+      color: #dbe4f0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 0.92rem;
+      line-height: 1.7;
+      overflow-x: auto;
+    }
+
+    .gallery-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .gallery-card {
+      overflow: hidden;
+      padding: 16px;
+    }
+
+    .gallery-card img {
+      width: 100%;
+      border-radius: 22px;
+    }
+
+    .gallery-card p {
+      margin: 14px 4px 2px;
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.8;
+    }
+
+    .footer {
+      margin-top: 82px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 1040px) {
+      .hero,
+      .download-panel,
+      .install-grid,
+      .feature-grid,
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .topbar-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        border-radius: 28px;
+      }
+
+      .topbar-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      main {
+        padding-top: 52px;
+      }
+
+      .download-panel,
+      .feature-card,
+      .install-card,
+      .gallery-card {
+        border-radius: 26px;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.25rem, 9vw, 3.1rem);
+        line-height: 1.16;
+      }
+
+      .hero p,
+      .hero-preview-caption,
+      .section-head p {
+        font-size: 0.98rem;
+        line-height: 1.82;
+      }
+
+      .download-panel,
+      .install-card,
+      .feature-card {
+        padding: 22px;
+      }
+
+      .download-actions,
+      .topbar-actions {
+        width: 100%;
+      }
+
+      .pill-link,
+      .button-main,
+      .button-subtle,
+      .download-link {
+        width: 100%;
+      }
+    }
+  </style>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "LunarV",
+      "url": "https://phamhungtien.com/LunarV/",
+      "sameAs": "https://github.com/PhamHungTien/LunarV",
+      "image": "https://phamhungtien.com/LunarV/assets/lunarv-icon.png",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "macOS 15+",
+      "description": "Ứng dụng lịch âm Việt Nam cho macOS với menu bar, dịp gia đình và thông báo thông minh."
+    }
+  </script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <div class="brand">
+          <img src="/LunarV/assets/lunarv-icon.png" alt="LunarV icon">
+          <div class="brand-copy">
+            <strong>LunarV</strong>
+            <span>Lịch âm Việt Nam cho macOS</span>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <a class="pill-link" href="/">Trang chính</a>
+          <a class="pill-link" href="https://github.com/PhamHungTien/LunarV" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="container hero">
+        <div>
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            Menu bar app cho macOS
+          </div>
+
+          <h1>Theo dõi lịch âm và những dịp quan trọng theo cách gọn gàng hơn.</h1>
+          <p>
+            LunarV mang lịch âm Việt Nam lên macOS với giao diện rõ ràng, nhẹ mắt và phù hợp để xem nhanh trong menu bar mỗi ngày.
+          </p>
+
+          <ul class="hero-badges" aria-label="LunarV highlights">
+            <li>macOS 15+</li>
+            <li>Lịch âm & dương</li>
+            <li>Dịp gia đình</li>
+            <li>Thông báo nhắc nhở</li>
+          </ul>
+        </div>
+
+        <div class="hero-preview">
+          <img src="/LunarV/assets/ui-review-2.png" alt="LunarV preview">
+          <div class="hero-preview-caption">
+            Giao diện menu bar được tối ưu để xem ngày, tiết khí, can chi và thông tin trong ngày một cách nhanh chóng.
+          </div>
+        </div>
+      </section>
+
+      <section class="container">
+        <div class="section-head">
+          <span>Tải về</span>
+          <h2>Tải bản `.dmg` mới nhất của LunarV</h2>
+          <p>
+            Trang này tự lấy bản phát hành mới nhất từ GitHub để bạn không phải cập nhật link thủ công mỗi lần release mới.
+          </p>
+        </div>
+
+        <div class="download-panel">
+          <div>
+            <div class="kicker">Phiên bản mới nhất</div>
+            <h3>LunarV cho macOS</h3>
+            <p>
+              Tải nhanh file `.dmg`, mở ra rồi kéo ứng dụng vào thư mục `Applications`. Nếu muốn xem changelog đầy đủ, bạn vẫn có thể mở GitHub Releases.
+            </p>
+
+            <div class="download-actions">
+              <a id="primary-download" class="button-main" href="https://github.com/PhamHungTien/LunarV/releases/latest" target="_blank" rel="noopener noreferrer">
+                Tải file .dmg
+              </a>
+              <a class="button-subtle" href="https://github.com/PhamHungTien/LunarV/releases/latest" target="_blank" rel="noopener noreferrer">
+                GitHub Releases
+              </a>
+            </div>
+          </div>
+
+          <div class="download-meta">
+            <div class="meta-pill">
+              <span class="meta-label">Phiên bản</span>
+              <span id="release-version" class="meta-value">1.1.3</span>
+            </div>
+            <div class="meta-pill">
+              <span class="meta-label">Yêu cầu hệ thống</span>
+              <span class="meta-value">macOS 15 trở lên</span>
+            </div>
+            <div class="meta-pill">
+              <span class="meta-label">Ngày phát hành</span>
+              <span id="release-date" class="meta-value">31/03/2026</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="container">
+        <div class="section-head">
+          <span>Điểm nổi bật</span>
+          <h2>Những gì LunarV tập trung làm tốt</h2>
+          <p>
+            Giao diện và tính năng được giữ gọn để việc xem lịch hằng ngày, dịp gia đình và thông báo trở nên tự nhiên trên macOS.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>Lịch âm và dương trong cùng một nơi</h3>
+            <p>Xem nhanh ngày âm, ngày dương, can chi, tiết khí và các thông tin liên quan trong cùng một panel.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Dịp gia đình và ngày lễ</h3>
+            <p>Quản lý các dịp quan trọng và theo dõi các mốc thời gian quen thuộc một cách gọn gàng hơn.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Thông báo nhắc nhở</h3>
+            <p>Giữ những dịp quan trọng luôn ở gần với các thông báo được thiết kế cho bối cảnh sử dụng hằng ngày.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Tối ưu cho menu bar</h3>
+            <p>Hiển thị nhanh, ít thao tác và phù hợp với cách người dùng macOS mở app tiện ích trong ngày.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="container">
+        <div class="section-head">
+          <span>Giao diện</span>
+          <h2>Xem nhanh cách LunarV hoạt động</h2>
+          <p>
+            Hai màn hình dưới đây cho thấy rõ cách LunarV trình bày thông tin ngày âm, gợi ý trong ngày và các khối nội dung quan trọng.
+          </p>
+        </div>
+
+        <div class="gallery-grid">
+          <article class="gallery-card">
+            <img src="/LunarV/assets/ui-review-2.png" alt="LunarV daily overview">
+            <p>Tổng quan ngày hiện tại với ngày âm, tiết khí, can chi và các thông tin cần xem nhanh.</p>
+          </article>
+          <article class="gallery-card">
+            <img src="/LunarV/assets/ui-review-1.png" alt="LunarV daily suggestions">
+            <p>Phần gợi ý trong ngày giúp xem nhanh các điểm đáng chú ý mà không cần mở ứng dụng lớn.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="container">
+        <div class="section-head">
+          <span>Cài đặt</span>
+          <h2>Cài LunarV trong vài bước ngắn</h2>
+          <p>
+            Quy trình cài đặt giữ rất gọn: tải `.dmg`, kéo vào `Applications`, rồi mở app từ Launchpad hoặc Applications.
+          </p>
+        </div>
+
+        <div class="install-grid">
+          <article class="install-card">
+            <h3>Bắt đầu</h3>
+            <ol class="step-list">
+              <li><span class="step-number">1</span><span>Tải file `.dmg` mới nhất bằng nút phía trên.</span></li>
+              <li><span class="step-number">2</span><span>Mở file `.dmg` rồi kéo `LunarV.app` vào thư mục `Applications`.</span></li>
+              <li><span class="step-number">3</span><span>Mở LunarV và cấp quyền thông báo nếu bạn muốn nhận nhắc nhở cho các dịp quan trọng.</span></li>
+            </ol>
+          </article>
+
+          <article class="install-card">
+            <h3>Nếu macOS chặn app</h3>
+            <p>
+              Trong trường hợp Gatekeeper báo app không mở được, bạn có thể chạy lệnh dưới đây rồi mở lại LunarV.
+            </p>
+            <div class="code-block">xattr -cr /Applications/LunarV.app</div>
+            <a class="download-link" href="https://github.com/PhamHungTien/LunarV/issues" target="_blank" rel="noopener noreferrer">
+              Báo lỗi hoặc góp ý
+            </a>
+          </article>
+        </div>
+      </section>
+
+      <section class="container footer">
+        LunarV được phát triển tại <a href="https://github.com/PhamHungTien/LunarV" target="_blank" rel="noopener noreferrer">PhamHungTien/LunarV</a>.
+      </section>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      const fallback = {
+        version: '1.1.3',
+        date: '31/03/2026',
+        dmgUrl: 'https://github.com/PhamHungTien/LunarV/releases/download/v1.1.3/LunarV-1.1.3.dmg',
+        releaseUrl: 'https://github.com/PhamHungTien/LunarV/releases/latest'
+      };
+
+      const versionEl = document.getElementById('release-version');
+      const dateEl = document.getElementById('release-date');
+      const primaryDownloadEl = document.getElementById('primary-download');
+
+      function applyRelease(data) {
+        versionEl.textContent = data.version;
+        dateEl.textContent = data.date;
+        primaryDownloadEl.href = data.dmgUrl;
+      }
+
+      applyRelease(fallback);
+
+      fetch('https://api.github.com/repos/PhamHungTien/LunarV/releases/latest')
+        .then(function (response) {
+          if (!response.ok) {
+            throw new Error('Failed to fetch latest release');
+          }
+          return response.json();
+        })
+        .then(function (release) {
+          const dmgAsset = (release.assets || []).find(function (asset) {
+            return asset.name && asset.name.toLowerCase().endsWith('.dmg');
+          });
+
+          const publishedDate = release.published_at
+            ? new Intl.DateTimeFormat('vi-VN', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+              }).format(new Date(release.published_at))
+            : fallback.date;
+
+          applyRelease({
+            version: (release.tag_name || '').replace(/^v/, '') || fallback.version,
+            date: publishedDate,
+            dmgUrl: (dmgAsset && dmgAsset.browser_download_url) || fallback.dmgUrl
+          });
+        })
+        .catch(function () {
+          applyRelease(fallback);
+        });
+    }());
+  </script>
+</body>
+</html>
