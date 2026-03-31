@@ -289,30 +289,41 @@ const DownloadChoiceCard: React.FC<DownloadChoiceCardProps> = ({
   return (
     <a
       href={href}
-      className={`glass-card group rounded-[1.5rem] px-5 py-5 transition-all duration-300 hover:-translate-y-0.5 ${
+      className={`glass-card group block rounded-[1.5rem] px-5 py-5 transition-all duration-300 hover:-translate-y-0.5 md:px-6 md:py-6 ${
         accent
           ? 'border-amber-300/15 bg-gradient-to-br from-amber-400/10 to-orange-500/8'
           : ''
       }`}
     >
-      <div className="flex items-center justify-between gap-4">
-        <div className="flex items-center gap-4 min-w-0">
-          <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border ${
+      <div className="flex items-start justify-between gap-4">
+        <div
+          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border ${
             accent
               ? 'border-amber-200/20 bg-amber-300/10 text-amber-200'
               : 'border-white/10 bg-white/[0.05] text-slate-200'
-          }`}>
-            <Icons.Download size={18} />
-          </div>
-          <div className="min-w-0 text-left">
-            <p className={`text-[10px] font-black uppercase tracking-[0.22em] ${accent ? 'text-amber-200/85' : 'text-slate-500'}`}>
-              {chip}
-            </p>
-            <h3 className="mt-1 text-lg md:text-xl font-black tracking-tight text-white">{title}</h3>
-            <p className="mt-1 text-sm text-slate-400">{note}</p>
-          </div>
+          }`}
+        >
+          <Icons.Download size={18} />
         </div>
-        <Icons.ArrowRight size={18} className={`shrink-0 transition-transform group-hover:translate-x-0.5 ${accent ? 'text-amber-200' : 'text-slate-500'}`} />
+        <span
+          className={`inline-flex shrink-0 rounded-full border px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] ${
+            accent
+              ? 'border-amber-200/15 bg-amber-300/10 text-amber-100/90'
+              : 'border-white/10 bg-white/[0.04] text-slate-400'
+          }`}
+        >
+          {chip}
+        </span>
+      </div>
+
+      <div className="mt-5 text-left">
+        <h3 className="text-lg font-black tracking-tight text-white md:text-xl">{title}</h3>
+        <p className="mt-2 text-sm leading-7 text-slate-400">{note}</p>
+      </div>
+
+      <div className={`mt-5 inline-flex items-center gap-2 text-sm font-semibold ${accent ? 'text-amber-200' : 'text-slate-300'}`}>
+        Tải bản này
+        <Icons.ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
       </div>
     </a>
   );
