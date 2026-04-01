@@ -45,13 +45,19 @@ jobs:
           mkdir -p _site
           # Copy root level SEO and configuration files
           cp index.html _site/
+          cp 404.html _site/ || true
           cp CNAME _site/ || true
           cp robots.txt _site/ || true
           cp sitemap.xml _site/ || true
+          cp ads.txt _site/ || true
           cp icon.webp _site/ || true
           cp _redirects _site/ || true
           cp .htaccess _site/ || true
           cp .nojekyll _site/ || true
+          # Copy shared assets
+          cp -r assets _site/assets
+          # Copy LunarV product page
+          cp -r LunarV _site/LunarV
           # Copy PHTV app to its subdirectory
           cp -r PHTV/dist _site/PHTV
 
