@@ -23,7 +23,7 @@ const faqData = [
     items: [
       {
         q: "PHTV có tương thích với phiên bản macOS nào?",
-        a: "PHTV hỗ trợ macOS 13.0+ (Ventura trở lên). Từ các bản phát hành mới, PHTV tách riêng binary cho Apple Silicon và Intel để tải đúng theo từng dòng máy, đồng thời vẫn tương thích với mọi Mac chạy macOS 13.0+."
+        a: "PHTV hỗ trợ macOS 14.0+ (Sonoma trở lên). Từ các bản phát hành mới, PHTV tách riêng binary cho Apple Silicon và Intel để tải đúng theo từng dòng máy, đồng thời vẫn tương thích với mọi Mac chạy macOS 14.0+."
       },
       {
         q: "Cách nào dễ nhất để cài đặt PHTV?",
@@ -415,7 +415,7 @@ function App() {
               <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 backdrop-blur-md">
                 <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.55)]"></span>
                 <span className="text-[10px] font-black uppercase tracking-[0.24em] text-slate-300">
-                  Native cho macOS 13+
+                  Native cho macOS 14+
                 </span>
               </div>
 
@@ -620,7 +620,7 @@ function App() {
                     <h3 className="text-xl font-black tracking-tight text-white">Yêu cầu hệ thống</h3>
                     <div className="mt-5 space-y-4">
                       {[
-                        ['Hệ điều hành', 'macOS 13.0+'],
+                        ['Hệ điều hành', 'macOS 14.0+'],
                         ['Kiến trúc', 'Apple Silicon hoặc Intel'],
                         ['Quyền cần cấp', 'Accessibility'],
                       ].map(([label, value]) => (
