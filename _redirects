@@ -3,6 +3,10 @@
 /LunarV /LunarV/ 301
 /products/lunarv /LunarV/ 301
 /products/lunarv/ /LunarV/ 301
+/aipadcode /AiPadCode/ 301
+/aipadcode/ /AiPadCode/ 301
+/Aipadcode /AiPadCode/ 301
+/Aipadcode/ /AiPadCode/ 301
 
 # Single Page Application - redirect all non-file requests to index.html
 /PHTV/* /PHTV/index.html 200
