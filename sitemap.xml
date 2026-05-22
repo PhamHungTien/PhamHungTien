@@ -47,4 +47,20 @@
     <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/LunarV/" />
   </url>
 
+  <!-- AiPadCode Privacy Policy -->
+  <url>
+    <loc>https://phamhungtien.com/AiPadCode/privacy.html</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- AiPadCode Terms of Use -->
+  <url>
+    <loc>https://phamhungtien.com/AiPadCode/terms.html</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>

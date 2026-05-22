@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AiPadCode - Privacy Policy / Chính Sách Quyền Riêng Tư</title>
+    <meta name="description" content="AiPadCode Privacy Policy - Local-first code editor for iOS. No data collection.">
+    <link rel="canonical" href="https://phamhungtien.com/AiPadCode/privacy.html">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --surface: #1a1a1a;
+            --text: #e8e8e8;
+            --muted: #999;
+            --accent: #6366f1;
+            --border: #2a2a2a;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 0 20px;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 60px 0 80px;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        .logo a {
+            text-decoration: none;
+            background: inherit;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 48px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            font-size: 14px;
+        }
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            padding: 6px 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+        .lang-toggle {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 40px;
+        }
+        .lang-toggle button {
+            padding: 8px 20px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--surface);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .lang-toggle button:hover { border-color: var(--accent); }
+        .lang-toggle button.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 36px;
+            margin-bottom: 12px;
+            color: #c4b5fd;
+        }
+        p, li {
+            color: var(--muted);
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+        strong { color: var(--text); }
+        ul { padding-left: 24px; }
+        li { margin-bottom: 8px; }
+        .footer {
+            font-size: 13px;
+            color: var(--muted);
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+            margin-top: 48px;
+        }
+        .section { display: none; }
+        .section.active { display: block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo"><a href="https://phamhungtien.com/AiPadCode/">AiPadCode</a></div>
+        <div class="subtitle">Code Editor with Apple Intelligence</div>
+
+        <nav class="nav-links">
+            <a href="https://phamhungtien.com/AiPadCode/">Home</a>
+            <a href="https://phamhungtien.com/AiPadCode/privacy.html" class="active">Privacy Policy</a>
+            <a href="https://phamhungtien.com/AiPadCode/terms.html">Terms of Use</a>
+        </nav>
+
+        <div class="lang-toggle">
+            <button class="active" onclick="switchLang('en')">English</button>
+            <button onclick="switchLang('vi')">Tiếng Việt</button>
+        </div>
+
+        <!-- ENGLISH -->
+        <div id="en" class="section active">
+            <h1>Privacy Policy</h1>
+            <p>Last updated: May 23, 2026</p>
+
+            <h2>Overview</h2>
+            <p>AiPadCode is a local-first code editor for iOS. Your privacy is our top priority. This policy explains how AiPadCode handles your data.</p>
+
+            <h2>Data Collection</h2>
+            <p><strong>AiPadCode does not collect, store, or transmit any personal data.</strong></p>
+            <ul>
+                <li>All project files and source code are stored locally on your device in the app's sandbox or in directories you explicitly open through the Files app.</li>
+                <li>AiPadCode does not include third-party analytics, advertising SDKs, or tracking frameworks.</li>
+                <li>No telemetry, crash reports, or usage data is sent to our servers or any third party.</li>
+            </ul>
+
+            <h2>Apple Intelligence</h2>
+            <p>AiPadCode uses Apple's on-device Foundation Models (Apple Intelligence) for its AI assistant. All AI processing happens entirely on your device. No prompts, code, or responses are sent to external servers.</p>
+
+            <h2>Network Access</h2>
+            <p>AiPadCode only uses network access in the following cases, and only when you explicitly initiate the action:</p>
+            <ul>
+                <li><strong>Git Clone</strong>: Downloads repository files from GitHub when you use the Clone Repository feature.</li>
+                <li><strong>Git Push</strong>: Uploads committed changes to GitHub when you use the Push feature with a personal access token you provide.</li>
+                <li><strong>In-App Purchase</strong>: StoreKit communicates with Apple's servers to process purchases and restore transactions.</li>
+            </ul>
+
+            <h2>In-App Purchases</h2>
+            <p>AiPadCode offers a one-time lifetime purchase ("AiPadCode Pro") handled entirely by Apple's StoreKit framework. We do not process or store any payment information.</p>
+
+            <h2>Children's Privacy</h2>
+            <p>AiPadCode does not knowingly collect data from children under 13. Since the app does not collect any personal data from any user, it is safe for users of all ages.</p>
+
+            <h2>Changes to This Policy</h2>
+            <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated effective date.</p>
+
+            <h2>Contact</h2>
+            <p>If you have questions about this Privacy Policy, please contact us at:<br>
+            <strong>phamhungtien.contact@gmail.com</strong></p>
+        </div>
+
+        <!-- VIETNAMESE -->
+        <div id="vi" class="section">
+            <h1>Chính Sách Quyền Riêng Tư</h1>
+            <p>Cập nhật lần cuối: 23 tháng 5, 2026</p>
+
+            <h2>Tổng Quan</h2>
+            <p>AiPadCode là trình soạn mã ưu tiên nội bộ cho iOS. Quyền riêng tư của bạn là ưu tiên hàng đầu. Chính sách này giải thích cách AiPadCode xử lý dữ liệu của bạn.</p>
+
+            <h2>Thu Thập Dữ Liệu</h2>
+            <p><strong>AiPadCode không thu thập, lưu trữ hoặc truyền bất kỳ dữ liệu cá nhân nào.</strong></p>
+            <ul>
+                <li>Tất cả tệp dự án và mã nguồn được lưu trữ nội bộ trên thiết bị của bạn trong sandbox của ứng dụng hoặc trong thư mục bạn mở qua ứng dụng Tệp.</li>
+                <li>AiPadCode không bao gồm phân tích bên thứ ba, SDK quảng cáo, hoặc framework theo dõi.</li>
+                <li>Không có dữ liệu telemetry, báo cáo lỗi, hoặc dữ liệu sử dụng nào được gửi đến máy chủ của chúng tôi hoặc bên thứ ba.</li>
+            </ul>
+
+            <h2>Apple Intelligence</h2>
+            <p>AiPadCode sử dụng Foundation Models trên thiết bị của Apple (Apple Intelligence) cho trợ lý AI. Tất cả xử lý AI diễn ra hoàn toàn trên thiết bị. Không có prompt, mã, hoặc phản hồi nào được gửi đến máy chủ bên ngoài.</p>
+
+            <h2>Truy Cập Mạng</h2>
+            <p>AiPadCode chỉ sử dụng mạng trong các trường hợp sau, và chỉ khi bạn chủ động thực hiện:</p>
+            <ul>
+                <li><strong>Git Clone</strong>: Tải tệp kho mã nguồn từ GitHub khi bạn sử dụng tính năng Clone Repository.</li>
+                <li><strong>Git Push</strong>: Tải lên các thay đổi đã commit lên GitHub khi bạn sử dụng tính năng Push với token truy cập cá nhân bạn cung cấp.</li>
+                <li><strong>Mua Trong Ứng Dụng</strong>: StoreKit giao tiếp với máy chủ Apple để xử lý mua hàng và khôi phục giao dịch.</li>
+            </ul>
+
+            <h2>Mua Trong Ứng Dụng</h2>
+            <p>AiPadCode cung cấp giao dịch mua trọn đời một lần ("AiPadCode Pro") được xử lý hoàn toàn bởi framework StoreKit của Apple. Chúng tôi không xử lý hoặc lưu trữ bất kỳ thông tin thanh toán nào.</p>
+
+            <h2>Quyền Riêng Tư Trẻ Em</h2>
+            <p>AiPadCode không cố ý thu thập dữ liệu từ trẻ em dưới 13 tuổi. Vì ứng dụng không thu thập bất kỳ dữ liệu cá nhân nào từ bất kỳ người dùng nào, ứng dụng an toàn cho người dùng mọi lứa tuổi.</p>
+
+            <h2>Thay Đổi Chính Sách</h2>
+            <p>Chúng tôi có thể cập nhật Chính Sách Quyền Riêng Tư này theo thời gian. Mọi thay đổi sẽ được đăng trên trang này với ngày có hiệu lực mới.</p>
+
+            <h2>Liên Hệ</h2>
+            <p>Nếu bạn có câu hỏi về Chính Sách Quyền Riêng Tư này, vui lòng liên hệ:<br>
+            <strong>phamhungtien.dev@gmail.com</strong></p>
+        </div>
+
+        <div class="footer">© 2026 Pham Hung Tien. All rights reserved.</div>
+    </div>
+
+    <script>
+        function switchLang(lang) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(lang).classList.add('active');
+            document.querySelectorAll('.lang-toggle button').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
