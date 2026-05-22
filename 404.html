@@ -84,6 +84,20 @@
         "/AiPadCode": "/AiPadCode/"
       };
 
+      const lowerPath = path.toLowerCase();
+      if (lowerPath.startsWith("/aipadcode/") && path !== "/AiPadCode/") {
+        const rest = path.substring(11);
+        if (path.startsWith("/AiPadCode/")) {
+           // It is exactly /AiPadCode/ something, so no redirect loop
+        } else {
+           window.location.replace("/AiPadCode/" + rest);
+           return;
+        }
+      } else if (lowerPath === "/aipadcode" && path !== "/AiPadCode/") {
+        window.location.replace("/AiPadCode/");
+        return;
+      }
+
       const target = redirects[path];
       if (target) {
         window.location.replace(target);

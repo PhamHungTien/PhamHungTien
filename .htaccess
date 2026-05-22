@@ -5,8 +5,9 @@
   # Redirect the fallback LunarV product path to the canonical URL
   RewriteRule ^products/lunarv/?$ LunarV/ [R=301,L]
   
-  # Redirect lowercase aipadcode to canonical URL
-  RewriteRule ^(?i)aipadcode/?$ AiPadCode/ [R=301,L]
+  # Redirect lowercase aipadcode and any subpaths to canonical URL
+  RewriteRule ^(?i)aipadcode/(.*)$ AiPadCode/$1 [R=301,L]
+  RewriteRule ^(?i)aipadcode$ AiPadCode/ [R=301,L]
   
   # Redirect /PHTV to /PHTV/
   RewriteCond %{REQUEST_FILENAME} !-f
