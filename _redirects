@@ -1,6 +1,7 @@
 # Redirect root paths (no trailing slash) to canonical URLs
 /PHTV /PHTV/ 301
 /LunarV /LunarV/ 301
+/AiPadCode /AiPadCode/ 301
 /products/lunarv /LunarV/ 301
 /products/lunarv/ /LunarV/ 301
 /aipadcode /AiPadCode/ 301
