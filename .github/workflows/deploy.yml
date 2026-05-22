@@ -58,6 +58,8 @@ jobs:
           cp -r assets _site/assets
           # Copy LunarV product page
           cp -r LunarV _site/LunarV
+          # Copy AiPadCode product page
+          cp -r AiPadCode _site/AiPadCode
           # Copy PHTV app to its subdirectory
           cp -r PHTV/dist _site/PHTV
 
