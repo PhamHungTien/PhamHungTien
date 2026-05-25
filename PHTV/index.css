@@ -153,6 +153,7 @@
   .reveal {
     opacity: 0;
     transform: translateY(24px);
+    will-change: opacity, transform;
     transition:
       opacity 650ms ease,
       transform 650ms ease;
