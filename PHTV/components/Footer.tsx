@@ -2,7 +2,7 @@ import React from 'react';
 import { Icons } from './Icons';
 import { useI18n } from '../i18n';
 
-const iconImg = '/PHTV/phtv-icon.webp';
+const iconImg = '/assets/phtv-icon.webp';
 
 interface FooterProps {
   onDonateClick: () => void;

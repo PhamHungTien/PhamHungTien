@@ -272,7 +272,7 @@ function App() {
               <div className="mt-10 flex flex-row items-center justify-center gap-4 sm:gap-8 md:mt-14 md:gap-12">
                 <div className="relative h-24 w-24 shrink-0 sm:h-48 sm:w-48 md:h-72 md:w-72">
                   <img
-                    src="/PHTV/phtv-icon.webp"
+                    src="/assets/phtv-icon.webp"
                     alt="PHTV Icon"
                     className="h-full w-full rounded-[1.6rem] object-cover drop-shadow-[0_16px_36px_rgba(0,0,0,0.34)] md:rounded-[3.5rem] md:drop-shadow-[0_28px_55px_rgba(0,0,0,0.38)]"
                     fetchPriority="high"
