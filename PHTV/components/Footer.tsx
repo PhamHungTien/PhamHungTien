@@ -65,6 +65,8 @@ export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
               <li><a href="#install" className="transition-colors hover:text-white">Cài đặt</a></li>
               <li><a href="#faq" className="transition-colors hover:text-white">FAQ</a></li>
               <li><a href="https://github.com/PhamHungTien/PHTV/releases" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-white">GitHub Releases</a></li>
+              <li><a href="privacy.html" className="transition-colors hover:text-white">Privacy Policy</a></li>
+              <li><a href="terms.html" className="transition-colors hover:text-white">Terms of Use</a></li>
             </ul>
           </div>
 

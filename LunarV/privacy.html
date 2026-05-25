@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LunarV - Privacy Policy / Chính Sách Quyền Riêng Tư</title>
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --surface: #1a1a1a;
+            --text: #e8e8e8;
+            --muted: #999;
+            --accent: #fbbf24;
+            --border: #2a2a2a;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 0 20px;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 60px 0 80px;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fbbf24, #fb7185);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        .logo a {
+            text-decoration: none;
+            background: inherit;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 48px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            font-size: 14px;
+        }
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            padding: 6px 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+        .lang-toggle {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 40px;
+        }
+        .lang-toggle button {
+            padding: 8px 20px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--surface);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .lang-toggle button:hover { border-color: var(--accent); }
+        .lang-toggle button.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #111;
+        }
+        h1 { font-size: 32px; font-weight: 700; margin-bottom: 12px; }
+        h2 { font-size: 20px; font-weight: 600; margin-top: 36px; margin-bottom: 12px; color: #fde68a; }
+        p, li { color: var(--muted); font-size: 15px; margin-bottom: 12px; }
+        strong { color: var(--text); }
+        ul { padding-left: 24px; }
+        li { margin-bottom: 8px; }
+        .footer {
+            font-size: 13px;
+            color: var(--muted);
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+            margin-top: 48px;
+        }
+        .section { display: none; }
+        .section.active { display: block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo"><a href="https://phamhungtien.com/LunarV/">LunarV</a></div>
+        <div class="subtitle">Vietnamese Lunar Calendar for macOS</div>
+
+        <nav class="nav-links">
+            <a href="https://phamhungtien.com/LunarV/">Home</a>
+            <a href="privacy.html" class="active">Privacy Policy</a>
+            <a href="terms.html">Terms of Use</a>
+        </nav>
+
+        <div class="lang-toggle">
+            <button class="active" onclick="switchLang('vi')">Tiếng Việt</button>
+            <button onclick="switchLang('en')">English</button>
+        </div>
+
+        <!-- VIETNAMESE -->
+        <div id="vi" class="section active">
+            <h1>Chính Sách Quyền Riêng Tư</h1>
+            <p>Cập nhật lần cuối: 25 tháng 5, 2026</p>
+
+            <h2>Tổng Quan</h2>
+            <p>LunarV là ứng dụng xem lịch âm dành cho macOS. Quyền riêng tư của bạn là ưu tiên hàng đầu của chúng tôi. Chính sách này giải thích cách LunarV xử lý dữ liệu của bạn.</p>
+
+            <h2>Thu Thập Dữ Liệu</h2>
+            <p><strong>LunarV không thu thập, lưu trữ, hoặc truyền tải bất kỳ dữ liệu cá nhân nào.</strong></p>
+            <ul>
+                <li>LunarV không chứa bất kỳ SDK phân tích (analytics), quảng cáo, hay framework theo dõi nào từ bên thứ ba.</li>
+                <li>Mọi dữ liệu lịch, ngày lễ, nhắc nhở (nếu có) được xử lý hoàn toàn cục bộ trên máy tính (local) của bạn.</li>
+            </ul>
+
+            <h2>Truy Cập Mạng</h2>
+            <p>Ứng dụng LunarV chỉ sử dụng kết nối mạng để tự động kiểm tra phiên bản cập nhật mới trên GitHub (thông qua cơ chế cập nhật phần mềm tiêu chuẩn) hoặc khi bạn chủ động nhấn mở các liên kết ngoài.</p>
+
+            <h2>Liên Hệ</h2>
+            <p>Nếu bạn có bất kỳ câu hỏi nào về chính sách này, vui lòng liên hệ:<br>
+            <strong>phamhungtien.contact@gmail.com</strong></p>
+        </div>
+
+        <!-- ENGLISH -->
+        <div id="en" class="section">
+            <h1>Privacy Policy</h1>
+            <p>Last updated: May 25, 2026</p>
+
+            <h2>Overview</h2>
+            <p>LunarV is a Lunar calendar application for macOS. Your privacy is our top priority. This policy explains how LunarV handles your data.</p>
+
+            <h2>Data Collection</h2>
+            <p><strong>LunarV does not collect, store, or transmit any personal data.</strong></p>
+            <ul>
+                <li>LunarV does not include any third-party analytics SDKs, advertising, or tracking frameworks.</li>
+                <li>All calendar data, holidays, and reminders are processed entirely locally on your machine.</li>
+            </ul>
+
+            <h2>Network Access</h2>
+            <p>LunarV only uses a network connection to check for software updates via GitHub (through standard update mechanisms) or when you explicitly click on external links.</p>
+
+            <h2>Contact</h2>
+            <p>If you have any questions about this policy, please contact:<br>
+            <strong>phamhungtien.contact@gmail.com</strong></p>
+        </div>
+
+        <div class="footer">© 2026 Pham Hung Tien. All rights reserved.</div>
+    </div>
+
+    <script>
+        function switchLang(lang) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(lang).classList.add('active');
+            document.querySelectorAll('.lang-toggle button').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

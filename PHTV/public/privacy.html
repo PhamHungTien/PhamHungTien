@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHTV - Privacy Policy / Chính Sách Quyền Riêng Tư</title>
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --surface: #1a1a1a;
+            --text: #e8e8e8;
+            --muted: #999;
+            --accent: #fb7185;
+            --border: #2a2a2a;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 0 20px;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 60px 0 80px;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fbbf24, #fb7185);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        .logo a {
+            text-decoration: none;
+            background: inherit;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 48px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            font-size: 14px;
+        }
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            padding: 6px 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+        .lang-toggle {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 40px;
+        }
+        .lang-toggle button {
+            padding: 8px 20px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--surface);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .lang-toggle button:hover { border-color: var(--accent); }
+        .lang-toggle button.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #111;
+        }
+        h1 { font-size: 32px; font-weight: 700; margin-bottom: 12px; }
+        h2 { font-size: 20px; font-weight: 600; margin-top: 36px; margin-bottom: 12px; color: #fda4af; }
+        p, li { color: var(--muted); font-size: 15px; margin-bottom: 12px; }
+        strong { color: var(--text); }
+        ul { padding-left: 24px; }
+        li { margin-bottom: 8px; }
+        .footer {
+            font-size: 13px;
+            color: var(--muted);
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+            margin-top: 48px;
+        }
+        .section { display: none; }
+        .section.active { display: block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo"><a href="https://phamhungtien.com/PHTV/">PHTV</a></div>
+        <div class="subtitle">Precision Hybrid Typing Vietnamese</div>
+
+        <nav class="nav-links">
+            <a href="https://phamhungtien.com/PHTV/">Home</a>
+            <a href="privacy.html" class="active">Privacy Policy</a>
+            <a href="terms.html">Terms of Use</a>
+        </nav>
+
+        <div class="lang-toggle">
+            <button class="active" onclick="switchLang('vi')">Tiếng Việt</button>
+            <button onclick="switchLang('en')">English</button>
+        </div>
+
+        <!-- VIETNAMESE -->
+        <div id="vi" class="section active">
+            <h1>Chính Sách Quyền Riêng Tư</h1>
+            <p>Cập nhật lần cuối: 25 tháng 5, 2026</p>
+
+            <h2>Tổng Quan</h2>
+            <p>PHTV là bộ gõ tiếng Việt dành cho macOS. Quyền riêng tư của bạn là ưu tiên tuyệt đối của chúng tôi, đặc biệt là với một ứng dụng bộ gõ xử lý từng phím bấm của bạn.</p>
+
+            <h2>Thu Thập Dữ Liệu</h2>
+            <p><strong>PHTV hoàn toàn KHÔNG thu thập, lưu trữ, hay truyền bất kỳ dữ liệu cá nhân hay lịch sử gõ phím nào ra bên ngoài.</strong></p>
+            <ul>
+                <li>Mọi quá trình xử lý phím bấm (keystroke processing) diễn ra cục bộ (offline) trên thiết bị của bạn thông qua InputMethodKit của Apple.</li>
+                <li>PHTV không có tính năng gửi log gõ phím lên máy chủ.</li>
+                <li>Không sử dụng bất kỳ thư viện theo dõi (tracking) hay phân tích dữ liệu (analytics) nào của bên thứ ba.</li>
+            </ul>
+
+            <h2>Quyền Hoạt Động Của Ứng Dụng</h2>
+            <p>Là một Input Method, macOS yêu cầu bạn cấp quyền truy cập để ứng dụng có thể "đọc" phím bấm nhằm chuyển đổi thành ký tự tiếng Việt. Tuy nhiên, PHTV chỉ sử dụng quyền này để xử lý nội bộ theo thời gian thực và lập tức quên đi sau khi từ tiếng Việt được hoàn thiện.</p>
+
+            <h2>Truy Cập Mạng</h2>
+            <p>PHTV chỉ dùng kết nối mạng để tải bản cập nhật mới (nếu bạn dùng chức năng kiểm tra cập nhật), hoàn toàn không truyền tải nội dung người dùng.</p>
+
+            <h2>Liên Hệ</h2>
+            <p>Nếu bạn có câu hỏi về chính sách này, vui lòng liên hệ:<br>
+            <strong>phamhungtien.contact@gmail.com</strong></p>
+        </div>
+
+        <!-- ENGLISH -->
+        <div id="en" class="section">
+            <h1>Privacy Policy</h1>
+            <p>Last updated: May 25, 2026</p>
+
+            <h2>Overview</h2>
+            <p>PHTV is a Vietnamese Input Method (typing app) for macOS. Your privacy is our absolute priority, especially for an application that processes keystrokes.</p>
+
+            <h2>Data Collection</h2>
+            <p><strong>PHTV does NOT collect, store, or transmit any personal data or keystroke history.</strong></p>
+            <ul>
+                <li>All keystroke processing occurs completely locally (offline) on your device using Apple's InputMethodKit.</li>
+                <li>PHTV has no capability to send keystroke logs to external servers.</li>
+                <li>We do not use any third-party tracking or analytics SDKs.</li>
+            </ul>
+
+            <h2>Application Permissions</h2>
+            <p>As an Input Method, macOS requires you to grant permissions so the app can "read" your keystrokes to convert them into Vietnamese characters. However, PHTV only uses this permission for real-time internal processing and immediately discards the data once the Vietnamese word is formed.</p>
+
+            <h2>Network Access</h2>
+            <p>PHTV only uses a network connection to check for software updates (if initiated), and never transmits user content.</p>
+
+            <h2>Contact</h2>
+            <p>If you have questions about this policy, please contact:<br>
+            <strong>phamhungtien.contact@gmail.com</strong></p>
+        </div>
+
+        <div class="footer">© 2026 Pham Hung Tien. All rights reserved.</div>
+    </div>
+
+    <script>
+        function switchLang(lang) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(lang).classList.add('active');
+            document.querySelectorAll('.lang-toggle button').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
