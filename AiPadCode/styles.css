@@ -120,6 +120,10 @@ img {
 .brand-img {
   width: 46px;
   height: 46px;
+  min-width: 46px;
+  min-height: 46px;
+  flex-shrink: 0;
+  object-fit: contain;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
