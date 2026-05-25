@@ -186,17 +186,16 @@
     }
 
     .brand-mark {
-      display: grid;
-      place-items: center;
-      width: 46px;
-      height: 46px;
+      flex-shrink: 0;
+      width: 46px !important;
+      height: 46px !important;
+      max-width: 46px !important;
+      max-height: 46px !important;
       border-radius: 16px;
-      background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(251, 113, 133, 0.12));
       border: 1px solid rgba(255, 255, 255, 0.08);
-      font-size: 1.25rem;
-      font-weight: 900;
-      color: #fff7ed;
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      object-fit: cover;
+      display: block;
     }
 
     .brand-copy {
@@ -394,16 +393,21 @@
 
     .product-mark {
       flex-shrink: 0;
-      width: 72px;
-      height: 72px;
+      width: 72px !important;
+      height: 72px !important;
+      max-width: 72px !important;
+      max-height: 72px !important;
+      overflow: hidden;
       filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.24));
       border-radius: 18px;
       background: rgba(255, 255, 255, 0.06);
     }
 
     .product-mark img {
-      width: 100%;
-      height: 100%;
+      width: 100% !important;
+      height: 100% !important;
+      max-width: 100% !important;
+      max-height: 100% !important;
       object-fit: contain;
       border-radius: 18px;
     }
@@ -590,7 +594,7 @@
     <header class="topbar">
       <div class="container topbar-inner">
         <div class="brand">
-          <div class="brand-mark">PH</div>
+          <img src="https://github.com/PhamHungTien.png" alt="Pham Hung Tien Avatar" class="brand-mark">
           <div class="brand-copy">
             <strong>Pham Hung Tien</strong>
             <span data-i18n="root.brand_subtitle">Product Index</span>
