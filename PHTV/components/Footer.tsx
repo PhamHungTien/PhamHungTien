@@ -1,5 +1,6 @@
 import React from 'react';
 import { Icons } from './Icons';
+import { useI18n } from '../i18n';
 
 const iconImg = '/PHTV/phtv-icon.webp';
 
@@ -8,6 +9,8 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
+  const { t } = useI18n();
+
   return (
     <footer className="border-t border-white/6 bg-black/10 py-16 md:py-20">
       <div className="mx-auto max-w-6xl px-4 md:px-6">
@@ -24,7 +27,7 @@ export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
             </div>
 
             <p className="mt-6 max-w-md text-sm leading-7 text-slate-400 md:text-base">
-              Bộ gõ tiếng Việt hiện đại cho macOS, tập trung vào hiệu năng, độ ổn định và quyền riêng tư.
+              {t('footer.desc')}
             </p>
 
             <div className="mt-6 flex flex-wrap gap-3">
@@ -51,19 +54,19 @@ export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
                 title="Email"
               >
                 <svg className="h-[18px] w-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z" />
                 </svg>
               </a>
             </div>
           </div>
 
           <div>
-            <h4 className="text-[11px] font-black uppercase tracking-[0.28em] text-amber-300/80">Liên kết</h4>
+            <h4 className="text-[11px] font-black uppercase tracking-[0.28em] text-amber-300/80">{t('footer.links')}</h4>
             <ul className="mt-5 space-y-3 text-sm text-slate-400">
-              <li><a href="#features" className="transition-colors hover:text-white">Tính năng</a></li>
-              <li><a href="#gallery" className="transition-colors hover:text-white">Giao diện</a></li>
-              <li><a href="#install" className="transition-colors hover:text-white">Cài đặt</a></li>
-              <li><a href="#faq" className="transition-colors hover:text-white">FAQ</a></li>
+              <li><a href="#features" className="transition-colors hover:text-white">{t('nav.features')}</a></li>
+              <li><a href="#gallery" className="transition-colors hover:text-white">{t('nav.gallery')}</a></li>
+              <li><a href="#install" className="transition-colors hover:text-white">{t('nav.install')}</a></li>
+              <li><a href="#faq" className="transition-colors hover:text-white">{t('nav.faq')}</a></li>
               <li><a href="https://github.com/PhamHungTien/PHTV/releases" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-white">GitHub Releases</a></li>
               <li><a href="privacy.html" className="transition-colors hover:text-white">Privacy Policy</a></li>
               <li><a href="terms.html" className="transition-colors hover:text-white">Terms of Use</a></li>
@@ -71,16 +74,16 @@ export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
           </div>
 
           <div>
-            <h4 className="text-[11px] font-black uppercase tracking-[0.28em] text-amber-300/80">Hỗ trợ</h4>
+            <h4 className="text-[11px] font-black uppercase tracking-[0.28em] text-amber-300/80">{t('footer.support')}</h4>
             <p className="mt-5 text-sm leading-7 text-slate-400">
-              Nếu PHTV hữu ích với bạn, mình rất trân trọng mọi phản hồi, issue hoặc một ly cà phê ủng hộ.
+              {t('footer.support_desc')}
             </p>
             <button
               onClick={onDonateClick}
               className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/[0.08]"
             >
               <Icons.Coffee size={16} />
-              Ủng hộ dự án
+              {t('footer.donate_btn')}
             </button>
           </div>
         </div>

@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+    (function() {
+      var lang = localStorage.getItem('preferred_lang');
+      if (!lang) {
+        var browserLang = navigator.language || navigator.userLanguage || '';
+        lang = browserLang.toLowerCase().startsWith('vi') ? 'vi' : 'en';
+      }
+      document.documentElement.lang = lang;
+    })();
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AiPadCode - The Ultimate Code Editor for iPad & iPhone</title>
+  <title data-i18n="aipad.title">AiPadCode - Trình soạn thảo & Biên dịch code cho iPad & iPhone</title>
   <meta name="description" content="Write, run, and manage code in 24+ languages directly on your device. AiPadCode features a local compiler, integrated terminal, and Apple Intelligence.">
   <meta name="keywords" content="code,ide,compiler,python,swift,c++,java,javascript,programming,editor,git,html,developer,coding,ipad,iphone">
   <meta name="author" content="Pham Hung Tien">
@@ -13,7 +23,11 @@
   <link rel="icon" type="image/png" href="assets/app-icon.png">
 </head>
 <body>
-
+  <div class="liquid-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
   <div class="page-shell">
     <header class="topbar">
       <div class="container topbar-inner">
@@ -21,11 +35,11 @@
           <img src="assets/app-icon.png" alt="AiPadCode Icon" class="brand-img">
           <div class="brand-copy">
             <strong>AiPadCode</strong>
-            <span>IDE cho iPad/iPhone</span>
+            <span data-i18n="aipad.brand_subtitle">IDE cho iPad/iPhone</span>
           </div>
         </div>
         <nav class="topbar-actions">
-          <a href="#features" class="pill-link">Tính năng</a>
+          <a href="#features" class="pill-link" data-i18n="aipad.features_nav">Tính năng</a>
           <a href="#" class="cta-primary" style="padding: 10px 16px;">App Store</a>
         </nav>
       </div>
@@ -38,10 +52,10 @@
             <div class="eyebrow-dot"></div>
             App Store Release
           </div>
-          <h1>Code mọi lúc, mọi nơi.<br><span class="gradient-text">Không giới hạn.</span></h1>
-          <p>Code Editor và IDE chuyên nghiệp dành riêng cho iPad và iPhone. Viết và biên dịch code offline với sự hỗ trợ của Apple Intelligence!</p>
+          <h1 data-i18n="aipad.hero_title">Code mọi lúc, mọi nơi.<br><span class="gradient-text">Không giới hạn.</span></h1>
+          <p data-i18n="aipad.hero_desc">Code Editor và IDE chuyên nghiệp dành riêng cho iPad và iPhone. Viết và biên dịch code offline với sự hỗ trợ của Apple Intelligence!</p>
           <div class="hero-actions">
-            <a href="#" class="button-main">Tải trên App Store</a>
+            <a href="#" class="button-main" data-i18n="aipad.download_btn">Tải trên App Store</a>
           </div>
         </div>
       </section>
@@ -57,46 +71,58 @@
 
       <section id="features" class="features container">
         <div class="section-head text-center">
-          <span>Tính năng nổi bật</span>
-          <h2>Dành cho <span class="gradient-text">Serious Developers</span></h2>
-          <p>Tất cả mọi công cụ bạn cần để xây dựng, biên dịch và triển khai phần mềm trực tiếp từ thiết bị di động.</p>
+          <span data-i18n="aipad.features_kicker">Tính năng nổi bật</span>
+          <h2 data-i18n="aipad.features_title">Dành cho <span class="gradient-text">Serious Developers</span></h2>
+          <p data-i18n="aipad.features_desc">Tất cả mọi công cụ bạn cần để xây dựng, biên dịch và triển khai phần mềm trực tiếp từ thiết bị di động.</p>
         </div>
         
         <div class="features-grid">
           <div class="feature-card">
-            <span class="feature-icon">⚡</span>
-            <h3>Local Code Runner</h3>
-            <p>Thực thi mã trực tiếp trên thiết bị mà không cần internet. Hỗ trợ đầy đủ các thuật toán phức tạp.</p>
+            <span class="feature-icon" style="display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+              <svg class="feature-svg" xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="url(#cyan-blue-grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </span>
+            <h3 data-i18n="aipad.feat1_title">Local Code Runner</h3>
+            <p data-i18n="aipad.feat1_desc">Thực thi mã trực tiếp trên thiết bị mà không cần internet. Hỗ trợ đầy đủ các thuật toán phức tạp.</p>
           </div>
           
           <div class="feature-card">
-            <span class="feature-icon">🧠</span>
-            <h3>Apple Intelligence</h3>
-            <p>Trợ lý AI tích hợp sâu, giúp giải thích code, gỡ lỗi và tối ưu hóa mã nguồn theo thời gian thực.</p>
+            <span class="feature-icon" style="display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+              <svg class="feature-svg" xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="url(#cyan-blue-grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="m5 3 1 2.5L8.5 6 6 7 5 9.5 4 7 1.5 6 4 5.5 5 3Z"/><path d="m19 17 1 2.5 2.5.5-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1 1-2.5Z"/></svg>
+            </span>
+            <h3 data-i18n="aipad.feat2_title">Apple Intelligence</h3>
+            <p data-i18n="aipad.feat2_desc">Trợ lý AI tích hợp sâu, giúp giải thích code, gỡ lỗi và tối ưu hóa mã nguồn theo thời gian thực.</p>
           </div>
           
           <div class="feature-card">
-            <span class="feature-icon">🌐</span>
-            <h3>24+ Ngôn ngữ</h3>
-            <p>Tô màu cú pháp và tự động hoàn thành cho Swift, Python, JS, C++, Java, Go, Rust, v.v.</p>
+            <span class="feature-icon" style="display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+              <svg class="feature-svg" xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="url(#cyan-blue-grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20M2 12h20"/><path d="M12 2a14.5 14.5 0 0 1 0 20"/></svg>
+            </span>
+            <h3 data-i18n="aipad.feat3_title">24+ Ngôn ngữ</h3>
+            <p data-i18n="aipad.feat3_desc">Tô màu cú pháp và tự động hoàn thành cho Swift, Python, JS, C++, Java, Go, Rust, v.v.</p>
           </div>
 
           <div class="feature-card">
-            <span class="feature-icon">💻</span>
-            <h3>Integrated Terminal</h3>
-            <p>Giao diện dòng lệnh chân thực, cho phép bạn tương tác trực tiếp với môi trường lập trình.</p>
+            <span class="feature-icon" style="display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+              <svg class="feature-svg" xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="url(#cyan-blue-grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg>
+            </span>
+            <h3 data-i18n="aipad.feat4_title">Integrated Terminal</h3>
+            <p data-i18n="aipad.feat4_desc">Giao diện dòng lệnh chân thực, cho phép bạn tương tác trực tiếp với môi trường lập trình.</p>
           </div>
 
           <div class="feature-card">
-            <span class="feature-icon">🔄</span>
-            <h3>Git Source Control</h3>
-            <p>Hệ thống quản lý phiên bản tích hợp. Clone repo, commit và push mã nguồn trực tiếp lên GitHub.</p>
+            <span class="feature-icon" style="display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+              <svg class="feature-svg" xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="url(#cyan-blue-grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="6" y1="3" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+            </span>
+            <h3 data-i18n="aipad.feat5_title">Git Source Control</h3>
+            <p data-i18n="aipad.feat5_desc">Hệ thống quản lý phiên bản tích hợp. Clone repo, commit và push mã nguồn trực tiếp lên GitHub.</p>
           </div>
 
           <div class="feature-card">
-            <span class="feature-icon">📂</span>
-            <h3>Smart Workspaces</h3>
-            <p>Quản lý dự án, điều hướng thư mục và dễ dàng tìm kiếm/thay thế văn bản trên nhiều tệp.</p>
+            <span class="feature-icon" style="display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+              <svg class="feature-svg" xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="url(#cyan-blue-grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/><path d="M2 10h20"/></svg>
+            </span>
+            <h3 data-i18n="aipad.feat6_title">Smart Workspaces</h3>
+            <p data-i18n="aipad.feat6_desc">Quản lý dự án, điều hướng thư mục và dễ dàng tìm kiếm/thay thế văn bản trên nhiều tệp.</p>
           </div>
         </div>
       </section>
@@ -107,9 +133,18 @@
         <a href="privacy.html">Privacy Policy</a>
         <a href="terms.html">Terms of Service</a>
       </div>
-      <p>&copy; 2026 Pham Hung Tien. All rights reserved.</p>
+      <p data-i18n="aipad.copyright">&copy; 2026 Pham Hung Tien. All rights reserved.</p>
     </footer>
   </div>
 
+  <!-- Shared SVG Gradient for premium feature icons -->
+  <svg style="width:0; height:0; position:absolute;" aria-hidden="true" focusable="false">
+    <linearGradient id="cyan-blue-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe" />
+      <stop offset="100%" stop-color="#4facfe" />
+    </linearGradient>
+  </svg>
+
+  <script src="/assets/i18n.js" defer></script>
 </body>
 </html>

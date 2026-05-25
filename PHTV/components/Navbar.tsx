@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Icons } from './Icons';
+import { useI18n } from '../i18n';
 
 const iconImg = '/PHTV/phtv-icon.webp';
 
@@ -22,11 +23,12 @@ export const Navbar: React.FC<NavbarProps> = ({
   intelDownloadUrl,
   hasSplitDownloads
 }) => {
+  const { lang, changeLanguage, t } = useI18n();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [desktopDownloadOpen, setDesktopDownloadOpen] = useState(false);
   const desktopDownloadRef = useRef<HTMLDivElement | null>(null);
-  const downloadLabel = hasSplitDownloads ? 'Tải cho Mac' : 'Tải ngay';
+  const downloadLabel = hasSplitDownloads ? t('nav.download_label') : t('nav.download_now');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,11 +65,11 @@ export const Navbar: React.FC<NavbarProps> = ({
   }, [desktopDownloadOpen]);
 
   const navLinks = [
-    { name: 'Tính năng', href: '#features', tab: 'home' },
-    { name: 'Giao diện', href: '#gallery', tab: 'home' },
-    { name: 'Cài đặt', href: '#install', tab: 'home' },
-    { name: 'FAQ', href: '#faq', tab: 'home' },
-    { name: 'Thảo luận', href: '#community', tab: 'community' },
+    { name: t('nav.features'), href: '#features', tab: 'home' },
+    { name: t('nav.gallery'), href: '#gallery', tab: 'home' },
+    { name: t('nav.install'), href: '#install', tab: 'home' },
+    { name: t('nav.faq'), href: '#faq', tab: 'home' },
+    { name: t('nav.community'), href: '#community', tab: 'community' },
   ];
 
   const handleLinkClick = (e: React.MouseEvent, tab: string, href: string) => {
@@ -145,6 +147,27 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           <div className="flex items-center gap-2 sm:gap-4">
+            {/* Language Toggle Button */}
+            <button
+              onClick={() => changeLanguage(lang === 'vi' ? 'en' : 'vi')}
+              className="rounded-full border border-white/8 bg-white/[0.03] px-3.5 py-2 text-sm font-semibold transition-all hover:bg-white/[0.07] outline-none cursor-pointer flex items-center justify-center min-h-[38px]"
+              title={lang === 'vi' ? 'Switch to English' : 'Chuyển sang Tiếng Việt'}
+            >
+              {lang === 'vi' ? (
+                <>
+                  <span className="font-extrabold text-white">VI</span>
+                  <span className="mx-1.5 opacity-30">|</span>
+                  <span className="opacity-55 font-medium text-slate-300">EN</span>
+                </>
+              ) : (
+                <>
+                  <span className="opacity-55 font-medium text-slate-300">VI</span>
+                  <span className="mx-1.5 opacity-30">|</span>
+                  <span className="font-extrabold text-white">EN</span>
+                </>
+              )}
+            </button>
+
             <a 
               href="https://github.com/PhamHungTien/PHTV" 
               target="_blank" 
@@ -180,8 +203,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <div className={`absolute right-0 top-full pt-3 transition-all duration-200 ${desktopDownloadOpen ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none translate-y-2 opacity-0'}`}>
                   <div className="w-[320px] rounded-[1.75rem] border border-white/10 bg-[#0b0f18]/96 p-3 shadow-[0_25px_80px_rgba(0,0,0,0.42)] backdrop-blur-2xl">
                     <div className="border-b border-white/6 px-3 pb-3 pt-1">
-                      <p className="text-[11px] font-black uppercase tracking-[0.22em] text-amber-300">Tải nhanh</p>
-                      <p className="mt-1 text-sm text-slate-400">Chọn theo kiến trúc máy, không cần quan tâm đời chip cụ thể.</p>
+                      <p className="text-[11px] font-black uppercase tracking-[0.22em] text-amber-300">{t('nav.quick_download')}</p>
+                      <p className="mt-1 text-sm text-slate-400">{t('nav.download_desc')}</p>
                     </div>
 
                     <div className="mt-3 space-y-2">
@@ -194,7 +217,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                           <Icons.Download size={18} />
                           <span>
                             <span className="block text-sm font-black">Apple Silicon</span>
-                            <span className="block text-xs font-semibold uppercase tracking-widest text-slate-900/65">Mac dùng chip Apple</span>
+                            <span className="block text-xs font-semibold uppercase tracking-widest text-slate-900/65">{t('nav.apple_silicon_desc')}</span>
                           </span>
                         </span>
                         <Icons.ArrowRight size={18} className="shrink-0" />
@@ -209,7 +232,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                           <Icons.Download size={18} />
                           <span>
                             <span className="block text-sm font-black">Intel</span>
-                            <span className="block text-xs font-semibold uppercase tracking-widest text-slate-400">Mac dùng chip Intel</span>
+                            <span className="block text-xs font-semibold uppercase tracking-widest text-slate-400">{t('nav.intel_desc')}</span>
                           </span>
                         </span>
                         <Icons.ArrowRight size={18} className="shrink-0 text-slate-400" />
@@ -224,7 +247,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                           <Icons.Terminal size={18} />
                           <span>
                             <span className="block text-sm font-black">Homebrew</span>
-                            <span className="block text-xs font-semibold text-brand-200/80">Tự chọn đúng binary</span>
+                            <span className="block text-xs font-semibold text-brand-200/80">{t('nav.homebrew_desc')}</span>
                           </span>
                         </span>
                         <Icons.ArrowRight size={18} className="shrink-0" />
@@ -249,7 +272,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button 
               className="rounded-full border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition-colors hover:text-white lg:hidden"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label={mobileMenuOpen ? "Đóng menu" : "Mở menu"}
+              aria-label={mobileMenuOpen ? t('nav.close_menu') : t('nav.open_menu')}
             >
               {mobileMenuOpen ? <Icons.X size={28} /> : <Icons.Menu size={28} />}
             </button>
@@ -294,8 +317,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             {hasSplitDownloads ? (
               <>
                 <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
-                  <p className="text-[10px] font-black uppercase tracking-[0.22em] text-amber-300">Tải nhanh</p>
-                  <p className="mt-2 text-sm text-slate-400">Chọn đúng file ngay trong menu này, không cần kéo xuống dưới.</p>
+                  <p className="text-[10px] font-black uppercase tracking-[0.22em] text-amber-300">{t('nav.quick_download')}</p>
+                  <p className="mt-2 text-sm text-slate-400">{t('nav.download_desc')}</p>
                 </div>
 
                 <a
@@ -307,7 +330,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     <Icons.Download size={20} />
                     Apple Silicon
                   </span>
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-slate-900/65">Mac dùng chip Apple</span>
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-slate-900/65">{t('nav.apple_silicon_desc')}</span>
                 </a>
 
                 <a
@@ -319,7 +342,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     <Icons.Download size={20} />
                     Intel
                   </span>
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-slate-400">Mac dùng chip Intel</span>
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-slate-400">{t('nav.intel_desc')}</span>
                 </a>
 
                 <a
@@ -328,7 +351,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   className="flex items-center justify-center gap-3 w-full rounded-2xl border border-white/10 bg-[#131b2a] py-4 font-black text-base text-slate-200"
                 >
                   <Icons.Terminal size={20} />
-                  Homebrew tự chọn bản
+                  Homebrew ({t('nav.homebrew_desc')})
                 </a>
               </>
             ) : (

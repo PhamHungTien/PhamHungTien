@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+  <script>
+    (function() {
+      var lang = localStorage.getItem('preferred_lang');
+      if (!lang) {
+        var browserLang = navigator.language || navigator.userLanguage || '';
+        lang = browserLang.toLowerCase().startsWith('vi') ? 'vi' : 'en';
+      }
+      document.documentElement.lang = lang;
+    })();
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pham Hung Tien | Sản phẩm</title>
+  <title data-i18n="root.title">Pham Hung Tien | Sản phẩm</title>
   <meta name="description" content="Trang chính thức của Pham Hung Tien với các sản phẩm dành cho macOS, gồm PHTV và LunarV.">
   <meta http-equiv="cache-control" content="no-cache, must-revalidate, max-age=0">
   <meta http-equiv="expires" content="0">
@@ -32,16 +42,16 @@
   <style>
     :root {
       color-scheme: dark;
-      --bg-top: #160a1c;
-      --bg-bottom: #0a0d14;
-      --surface: rgba(255, 255, 255, 0.04);
-      --surface-strong: rgba(255, 255, 255, 0.07);
-      --border: rgba(255, 255, 255, 0.09);
+      --bg-top: #0a0b10;
+      --bg-bottom: #050608;
+      --surface: rgba(255, 255, 255, 0.03);
+      --surface-strong: rgba(255, 255, 255, 0.06);
+      --border: rgba(255, 255, 255, 0.08);
       --text: #f8fafc;
       --muted: #9aa4b2;
       --accent: #fbbf24;
       --accent-rose: #fb7185;
-      --shadow: 0 28px 70px rgba(0, 0, 0, 0.28);
+      --shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
     }
 
     * {
@@ -57,14 +67,73 @@
       min-height: 100vh;
       color: var(--text);
       font-family: "Be Vietnam Pro", "Noto Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(180, 40, 40, 0.18), transparent 30%),
-        radial-gradient(circle at top right, rgba(255, 196, 0, 0.09), transparent 24%),
-        radial-gradient(circle at bottom center, rgba(126, 18, 18, 0.22), transparent 36%),
-        linear-gradient(180deg, var(--bg-top) 0%, #100818 34%, var(--bg-bottom) 100%);
+      background-color: var(--bg-top);
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Animated Liquid Glass Background Blobs */
+    .liquid-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      overflow: hidden;
+      pointer-events: none;
+      background: linear-gradient(180deg, #090a0f 0%, #050608 100%);
+    }
+
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.55;
+      mix-blend-mode: screen;
+      animation: moveBlob 25s infinite alternate ease-in-out;
+    }
+
+    .blob-1 {
+      width: 550px;
+      height: 550px;
+      background: radial-gradient(circle, rgba(251, 113, 133, 0.35) 0%, rgba(244, 63, 94, 0.02) 80%);
+      top: -12%;
+      left: -8%;
+      animation-duration: 20s;
+    }
+
+    .blob-2 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(251, 191, 36, 0.22) 0%, rgba(217, 119, 6, 0.02) 80%);
+      top: 45%;
+      right: -12%;
+      animation-duration: 26s;
+      animation-delay: -4s;
+    }
+
+    .blob-3 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(0, 242, 254, 0.32) 0%, rgba(79, 172, 254, 0.02) 80%);
+      bottom: -10%;
+      left: 20%;
+      animation-duration: 24s;
+      animation-delay: -8s;
+    }
+
+    @keyframes moveBlob {
+      0% {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+      }
+      33% {
+        transform: translate(50px, -30px) scale(1.1) rotate(120deg);
+      }
+      66% {
+        transform: translate(-30px, 50px) scale(0.9) rotate(240deg);
+      }
+      100% {
+        transform: translate(0, 0) scale(1) rotate(360deg);
+      }
     }
 
     a {
@@ -81,32 +150,6 @@
       position: relative;
       overflow: hidden;
       isolation: isolate;
-    }
-
-    .page-shell::before {
-      content: "";
-      position: fixed;
-      inset: -12%;
-      z-index: -2;
-      background:
-        radial-gradient(circle at 18% 18%, rgba(255, 208, 94, 0.1), transparent 20%),
-        radial-gradient(circle at 80% 12%, rgba(244, 63, 94, 0.08), transparent 24%),
-        radial-gradient(circle at 50% 56%, rgba(127, 29, 29, 0.18), transparent 32%),
-        radial-gradient(circle at 84% 78%, rgba(120, 53, 15, 0.12), transparent 26%);
-      filter: blur(56px);
-      opacity: 0.92;
-      pointer-events: none;
-    }
-
-    .page-shell::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent 22%),
-        radial-gradient(circle at center, rgba(255, 255, 255, 0.012), transparent 50%);
-      pointer-events: none;
     }
 
     .container {
@@ -538,6 +581,11 @@
   </script>
 </head>
 <body>
+  <div class="liquid-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
   <div class="page-shell">
     <header class="topbar">
       <div class="container topbar-inner">
@@ -545,13 +593,13 @@
           <div class="brand-mark">PH</div>
           <div class="brand-copy">
             <strong>Pham Hung Tien</strong>
-            <span>Product Index</span>
+            <span data-i18n="root.brand_subtitle">Product Index</span>
           </div>
         </div>
 
         <div class="topbar-actions">
           <a class="pill-link" href="https://github.com/PhamHungTien" target="_blank" rel="noopener noreferrer">GitHub</a>
-          <a class="pill-link" href="mailto:phamhungtien.contact@gmail.com">Liên hệ</a>
+          <a class="pill-link" href="mailto:phamhungtien.contact@gmail.com" data-i18n="root.contact">Liên hệ</a>
         </div>
       </div>
     </header>
@@ -559,8 +607,8 @@
     <main>
       <section id="products" class="container">
         <div class="section-head" style="margin-top: 24px;">
-          <span>Developer</span>
-          <h2>Apps & Products</h2>
+          <span data-i18n="root.developer">Developer</span>
+          <h2 data-i18n="root.apps_products">Apps & Products</h2>
         </div>
 
         <div class="product-grid">
@@ -571,22 +619,22 @@
               </div>
               <div class="product-title-wrap">
                 <h3>PHTV</h3>
-                <div class="product-subtitle">Bộ gõ tiếng Việt hiện đại cho macOS.</div>
+                <div class="product-subtitle" data-i18n="root.phtv_subtitle">Bộ gõ tiếng Việt hiện đại cho macOS.</div>
               </div>
             </div>
 
-            <p class="product-description">
+            <p class="product-description" data-i18n="root.phtv_desc">
               Precision Hybrid Typing Vietnamese tập trung vào tốc độ, độ chính xác và quyền riêng tư, với trải nghiệm gõ tiếng Việt native, gọn và ổn định.
             </p>
 
             <ul class="tag-list" aria-label="PHTV tags">
               <li>macOS 14+</li>
-              <li>Offline</li>
-              <li>Open source</li>
+              <li data-i18n="root.tag_offline">Offline</li>
+              <li data-i18n="root.tag_opensource">Open source</li>
             </ul>
 
             <div class="product-actions">
-              <a class="button-main" href="/PHTV/">Mở trang sản phẩm</a>
+              <a class="button-main" href="/PHTV/" data-i18n="root.open_product">Mở trang sản phẩm</a>
               <a class="button-subtle" href="https://github.com/PhamHungTien/PHTV" target="_blank" rel="noopener noreferrer">GitHub</a>
             </div>
           </article>
@@ -598,22 +646,22 @@
               </div>
               <div class="product-title-wrap">
                 <h3>LunarV</h3>
-                <div class="product-subtitle">Vietnamese Lunar Calendar cho macOS.</div>
+                <div class="product-subtitle" data-i18n="root.lunarv_subtitle">Vietnamese Lunar Calendar cho macOS.</div>
               </div>
             </div>
 
-            <p class="product-description">
+            <p class="product-description" data-i18n="root.lunarv_desc">
               LunarV hỗ trợ theo dõi lịch âm, ngày lễ và các mốc thời gian quen thuộc theo cách nhẹ nhàng, rõ ràng và phù hợp với giao diện hệ thống.
             </p>
 
             <ul class="tag-list" aria-label="LunarV tags">
               <li>macOS 15+</li>
-              <li>Lunar calendar</li>
-              <li>Reminders</li>
+              <li data-i18n="root.tag_lunar">Lunar calendar</li>
+              <li data-i18n="root.tag_reminders">Reminders</li>
             </ul>
 
             <div class="product-actions">
-              <a class="button-main" href="/LunarV/">Mở trang sản phẩm</a>
+              <a class="button-main" href="/LunarV/" data-i18n="root.open_product">Mở trang sản phẩm</a>
               <a class="button-subtle" href="https://github.com/PhamHungTien/LunarV" target="_blank" rel="noopener noreferrer">GitHub</a>
             </div>
           </article>
@@ -625,22 +673,22 @@
               </div>
               <div class="product-title-wrap">
                 <h3>AiPadCode</h3>
-                <div class="product-subtitle">Code Editor & IDE cho iPad/iPhone</div>
+                <div class="product-subtitle" data-i18n="root.aipadcode_subtitle">Code Editor & IDE cho iPad/iPhone</div>
               </div>
             </div>
 
-            <p class="product-description">
+            <p class="product-description" data-i18n="root.aipadcode_desc">
               Viết, chạy và quản lý code trên thiết bị di động với Compiler offline và Apple Intelligence tích hợp.
             </p>
 
             <ul class="tag-list" aria-label="AiPadCode tags">
               <li>iOS/iPadOS</li>
-              <li>Offline Compiler</li>
+              <li data-i18n="root.tag_compiler">Offline Compiler</li>
               <li>Apple Intelligence</li>
             </ul>
 
             <div class="product-actions">
-              <a class="button-main" href="/AiPadCode/">Mở trang sản phẩm</a>
+              <a class="button-main" href="/AiPadCode/" data-i18n="root.open_product">Mở trang sản phẩm</a>
             </div>
           </article>
         </div>
@@ -648,5 +696,6 @@
       </section>
     </main>
   </div>
+  <script src="/assets/i18n.js" defer></script>
 </body>
 </html>

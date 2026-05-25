@@ -1,15 +1,15 @@
 :root {
   color-scheme: dark;
-  --bg-top: #160a1c;
-  --bg-bottom: #0a0d14;
-  --surface: rgba(255, 255, 255, 0.04);
-  --surface-strong: rgba(255, 255, 255, 0.07);
-  --border: rgba(255, 255, 255, 0.09);
+  --bg-top: #0a0b10;
+  --bg-bottom: #050608;
+  --surface: rgba(255, 255, 255, 0.03);
+  --surface-strong: rgba(255, 255, 255, 0.06);
+  --border: rgba(255, 255, 255, 0.08);
   --text: #f8fafc;
   --muted: #9aa4b2;
-  --accent: #fbbf24;
-  --accent-rose: #fb7185;
-  --shadow: 0 28px 70px rgba(0, 0, 0, 0.28);
+  --accent: #00f2fe;
+  --accent-rose: #4facfe;
+  --shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
 }
 
 * {
@@ -25,14 +25,73 @@ body {
   min-height: 100vh;
   color: var(--text);
   font-family: "Be Vietnam Pro", "Noto Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  background:
-    radial-gradient(circle at top left, rgba(180, 40, 40, 0.18), transparent 30%),
-    radial-gradient(circle at top right, rgba(255, 196, 0, 0.09), transparent 24%),
-    radial-gradient(circle at bottom center, rgba(126, 18, 18, 0.22), transparent 36%),
-    linear-gradient(180deg, var(--bg-top) 0%, #100818 34%, var(--bg-bottom) 100%);
+  background-color: var(--bg-top);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Animated Liquid Glass Background Blobs */
+.liquid-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+  pointer-events: none;
+  background: linear-gradient(180deg, #090a0f 0%, #050608 100%);
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.55;
+  mix-blend-mode: screen;
+  animation: moveBlob 25s infinite alternate ease-in-out;
+}
+
+.blob-1 {
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, rgba(0, 242, 254, 0.35) 0%, rgba(79, 172, 254, 0.02) 80%);
+  top: -12%;
+  left: -8%;
+  animation-duration: 20s;
+}
+
+.blob-2 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(79, 172, 254, 0.22) 0%, rgba(0, 242, 254, 0.02) 80%);
+  top: 45%;
+  right: -12%;
+  animation-duration: 26s;
+  animation-delay: -4s;
+}
+
+.blob-3 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(0, 242, 254, 0.28) 0%, rgba(79, 172, 254, 0.02) 80%);
+  bottom: -10%;
+  left: 20%;
+  animation-duration: 24s;
+  animation-delay: -8s;
+}
+
+@keyframes moveBlob {
+  0% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  33% {
+    transform: translate(50px, -30px) scale(1.1) rotate(120deg);
+  }
+  66% {
+    transform: translate(-30px, 50px) scale(0.9) rotate(240deg);
+  }
+  100% {
+    transform: translate(0, 0) scale(1) rotate(360deg);
+  }
 }
 
 a {
@@ -56,32 +115,6 @@ img {
   position: relative;
   overflow: hidden;
   isolation: isolate;
-}
-
-.page-shell::before {
-  content: "";
-  position: fixed;
-  inset: -12%;
-  z-index: -2;
-  background:
-    radial-gradient(circle at 18% 18%, rgba(255, 208, 94, 0.1), transparent 20%),
-    radial-gradient(circle at 80% 12%, rgba(244, 63, 94, 0.08), transparent 24%),
-    radial-gradient(circle at 50% 56%, rgba(127, 29, 29, 0.18), transparent 32%),
-    radial-gradient(circle at 84% 78%, rgba(120, 53, 15, 0.12), transparent 26%);
-  filter: blur(56px);
-  opacity: 0.92;
-  pointer-events: none;
-}
-
-.page-shell::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent 22%),
-    radial-gradient(circle at center, rgba(255, 255, 255, 0.012), transparent 50%);
-  pointer-events: none;
 }
 
 .container {
