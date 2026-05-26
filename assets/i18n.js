@@ -176,11 +176,13 @@
   function getLang() {
     let lang = localStorage.getItem("preferred_lang");
     if (!lang) {
-      if (window.location.pathname.includes("AiPadCode")) {
-        lang = "en";
+      const path = window.location.pathname;
+      if (path.includes("LunarV") || path.includes("PHTV")) {
+        // LunarV and PHTV default to Vietnamese
+        lang = "vi";
       } else {
-        const browserLang = navigator.language || navigator.userLanguage || "";
-        lang = browserLang.toLowerCase().startsWith("vi") ? "vi" : "en";
+        // Main portfolio page and AiPadCode default to English
+        lang = "en";
       }
     }
     return lang;
@@ -312,8 +314,9 @@
     // Only check IP geolocation if preferred_lang is not stored in localStorage
     if (localStorage.getItem("preferred_lang")) return;
 
-    // Skip IP language detection on AiPadCode so it defaults to English
-    if (window.location.pathname.includes("AiPadCode")) return;
+    // Skip IP language detection on main page and AiPadCode so they default to English
+    const path = window.location.pathname;
+    if (!path.includes("LunarV") && !path.includes("PHTV")) return;
 
     try {
       const res = await fetch("https://freeipapi.com/api/json");
