@@ -162,7 +162,7 @@ export const Gallery: React.FC = () => {
                  return (
                    <div 
                      key={idx} 
-                     className="glass-card group relative flex cursor-pointer flex-col overflow-hidden rounded-[1.5rem] p-4"
+                     className="glass-card min-w-0 group relative flex cursor-pointer flex-col overflow-hidden rounded-[1.5rem] p-4"
                      onClick={() => openLightbox(globalIndex)}
                    >
                       <div className="aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[1rem] bg-black/20">
@@ -192,7 +192,7 @@ export const Gallery: React.FC = () => {
                  return (
                    <div 
                      key={idx} 
-                     className="glass-card group relative flex cursor-pointer flex-col overflow-hidden rounded-[1.5rem] p-4"
+                     className="glass-card min-w-0 group relative flex cursor-pointer flex-col overflow-hidden rounded-[1.5rem] p-4"
                      onClick={() => openLightbox(globalIndex)}
                    >
                       <div className="aspect-[16/10] flex items-center justify-center overflow-hidden rounded-[1rem] bg-black/20">
