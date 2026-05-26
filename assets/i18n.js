@@ -296,8 +296,13 @@
         window.dispatchEvent(new CustomEvent("langchange", { detail: nextLang }));
       });
 
-      // Append to the navigation container
-      nav.appendChild(btn);
+      // Look for the App Store button/badge or main button in nav to insert before it
+      const storeButton = nav.querySelector(".store-link, .button-primary");
+      if (storeButton) {
+        nav.insertBefore(btn, storeButton);
+      } else {
+        nav.appendChild(btn);
+      }
       updateToggleButton(lang);
     }
   }
