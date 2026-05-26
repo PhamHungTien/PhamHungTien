@@ -16,11 +16,13 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
 
   body {
     min-height: 100vh;
     margin: 0;
+    overflow-x: hidden;
     background: var(--phtv-background);
     color: var(--phtv-text);
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;

@@ -29,7 +29,7 @@ export const Shortcuts: React.FC = () => {
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {shortcuts.map((item, index) => (
-            <div key={index} className="glass-card rounded-[1.5rem] p-5 md:p-6">
+            <div key={index} className="glass-card min-w-0 rounded-[1.5rem] p-5 md:p-6">
               <div className="flex flex-wrap items-center gap-2">
                 {item.keys.map((key, i) => (
                   <React.Fragment key={i}>

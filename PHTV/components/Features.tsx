@@ -3,7 +3,7 @@ import { Icons } from './Icons';
 import { FeatureProps } from '../types';
 
 const FeatureCard: React.FC<FeatureProps> = ({ icon: Icon, title, description, color = 'text-amber-300' }) => (
-  <article className="glass-card h-full p-5 md:p-6">
+  <article className="glass-card min-w-0 h-full p-5 md:p-6">
     <div className={`mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-slate-100 ${color}`}>
       <Icon size={22} />
     </div>
