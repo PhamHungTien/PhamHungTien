@@ -250,6 +250,19 @@ img {
   object-position: left top;
 }
 
+.product-media.phtv-settings {
+  display: flex;
+  align-items: center;
+  min-height: 0;
+  padding: 22px;
+  background: transparent;
+}
+
+.product-media.phtv-settings img {
+  height: auto;
+  object-fit: contain;
+}
+
 .site-footer {
   border-top: 1px solid var(--line);
   color: var(--muted);
@@ -301,6 +314,12 @@ img {
   .product-media {
     height: 230px;
     min-height: 230px;
+  }
+
+  .product-media.phtv-settings {
+    height: auto;
+    min-height: 0;
+    padding: 18px 18px 0;
   }
 
   .site-footer .container {
