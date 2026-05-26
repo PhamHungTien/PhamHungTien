@@ -3,12 +3,12 @@ import { Icons } from './Icons';
 import { FeatureProps } from '../types';
 
 const FeatureCard: React.FC<FeatureProps> = ({ icon: Icon, title, description, color = 'text-amber-300' }) => (
-  <article className="glass-card rounded-[1.75rem] p-6 md:p-7 h-full">
-    <div className={`mb-5 flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] ${color}`}>
+  <article className="glass-card h-full p-5 md:p-6">
+    <div className={`mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-slate-100 ${color}`}>
       <Icon size={22} />
     </div>
-    <h3 className="text-lg font-black tracking-tight text-white">{title}</h3>
-    <p className="mt-3 text-sm leading-7 text-slate-400">{description}</p>
+    <h3 className="text-base font-semibold text-white">{title}</h3>
+    <p className="mt-2 text-sm leading-6 text-slate-400">{description}</p>
   </article>
 );
 
@@ -32,40 +32,21 @@ export const Features: React.FC = () => {
       description: 'Spell check, quick telex, tự động khôi phục và nhiều tinh chỉnh hữu ích cho người gõ song ngữ.',
       color: 'text-orange-300'
     },
-    {
-      icon: Icons.Command,
-      title: 'Macro và snippets',
-      description: 'Tạo cụm gõ tắt, chèn ngày giờ và nội dung động để tăng tốc các thao tác lặp lại.',
-      color: 'text-amber-200'
-    },
-    {
-      icon: Icons.Keyboard,
-      title: 'Picker tích hợp',
-      description: 'Emoji, GIF và sticker được gom vào một bộ chọn gọn, dễ dùng và đồng nhất với phần còn lại.',
-      color: 'text-rose-200'
-    },
-    {
-      icon: Icons.Layers,
-      title: 'Tương thích tốt',
-      description: 'Hỗ trợ nhiều ứng dụng, nhiều kiểu bàn phím và các tình huống gõ pha tiếng Việt, tiếng Anh.',
-      color: 'text-red-300'
-    }
   ];
 
   return (
-    <section id="features" className="py-20 md:py-28">
-      <div className="mx-auto max-w-6xl px-4 md:px-6">
-        <div className="mx-auto mb-12 max-w-3xl text-center md:mb-16">
-          <p className="text-[11px] font-black uppercase tracking-[0.28em] text-amber-300/80">Điểm nổi bật</p>
-          <h2 className="mt-4 text-3xl font-black tracking-tight text-white md:text-5xl">
-            Tập trung vào tốc độ, độ chính xác và cảm giác native trên macOS
+    <section id="features" className="py-12 md:py-16">
+      <div className="mx-auto max-w-5xl px-4 md:px-6">
+        <div className="mb-7 max-w-2xl">
+          <h2 className="text-2xl font-semibold text-white md:text-3xl">
+            Phần cốt lõi của PHTV
           </h2>
-          <p className="mt-4 text-base leading-8 text-slate-400 md:text-lg">
-            Tập trung vào những điểm quan trọng nhất cho trải nghiệm gõ tiếng Việt hằng ngày trên macOS.
+          <p className="mt-3 text-sm leading-6 text-slate-400">
+            Ba điểm cần biết trước khi cài bộ gõ trên máy Mac.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
           {allFeatures.map((feature, idx) => (
             <FeatureCard key={idx} {...feature} />
           ))}

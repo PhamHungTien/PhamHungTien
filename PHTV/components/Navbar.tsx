@@ -66,9 +66,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const navLinks = [
     { name: t('nav.features'), href: '#features', tab: 'home' },
-    { name: t('nav.gallery'), href: '#gallery', tab: 'home' },
     { name: t('nav.install'), href: '#install', tab: 'home' },
-    { name: t('nav.faq'), href: '#faq', tab: 'home' },
     { name: t('nav.community'), href: '#community', tab: 'community' },
   ];
 
@@ -201,23 +199,18 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </button>
 
                 <div className={`absolute right-0 top-full pt-3 transition-all duration-200 ${desktopDownloadOpen ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none translate-y-2 opacity-0'}`}>
-                  <div className="w-[320px] rounded-[1.75rem] border border-white/10 bg-[#0b0f18]/96 p-3 shadow-[0_25px_80px_rgba(0,0,0,0.42)] backdrop-blur-2xl">
-                    <div className="border-b border-white/6 px-3 pb-3 pt-1">
-                      <p className="text-[11px] font-black uppercase tracking-[0.22em] text-amber-300">{t('nav.quick_download')}</p>
-                      <p className="mt-1 text-sm text-slate-400">{t('nav.download_desc')}</p>
-                    </div>
-
-                    <div className="mt-3 space-y-2">
+                  <div className="w-[270px] rounded-lg border border-white/10 bg-white p-2 shadow-lg">
+                    <div className="space-y-1">
                       <a
                         href={arm64DownloadUrl ?? releaseUrl}
                         onClick={handleDirectDownloadClick}
-                        className="flex items-center justify-between gap-3 rounded-2xl bg-gradient-to-r from-amber-400 to-orange-500 px-4 py-3 text-left text-slate-950 transition-all hover:-translate-y-0.5"
+                        className="flex items-center justify-between gap-3 rounded-md bg-blue-600 px-3 py-2.5 text-left text-white"
                       >
                         <span className="flex items-center gap-3">
                           <Icons.Download size={18} />
                           <span>
                             <span className="block text-sm font-black">Apple Silicon</span>
-                            <span className="block text-xs font-semibold uppercase tracking-widest text-slate-900/65">{t('nav.apple_silicon_desc')}</span>
+                            <span className="block text-xs text-white/75">{t('nav.apple_silicon_desc')}</span>
                           </span>
                         </span>
                         <Icons.ArrowRight size={18} className="shrink-0" />
@@ -226,13 +219,13 @@ export const Navbar: React.FC<NavbarProps> = ({
                       <a
                         href={intelDownloadUrl ?? releaseUrl}
                         onClick={handleDirectDownloadClick}
-                        className="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-left text-white transition-all hover:-translate-y-0.5 hover:bg-white/9"
+                        className="flex items-center justify-between gap-3 rounded-md px-3 py-2.5 text-left text-slate-900 hover:bg-slate-100"
                       >
                         <span className="flex items-center gap-3">
                           <Icons.Download size={18} />
                           <span>
                             <span className="block text-sm font-black">Intel</span>
-                            <span className="block text-xs font-semibold uppercase tracking-widest text-slate-400">{t('nav.intel_desc')}</span>
+                          <span className="block text-xs text-slate-500">{t('nav.intel_desc')}</span>
                           </span>
                         </span>
                         <Icons.ArrowRight size={18} className="shrink-0 text-slate-400" />
@@ -241,13 +234,13 @@ export const Navbar: React.FC<NavbarProps> = ({
                       <a
                         href="#install"
                         onClick={handleInstallClick}
-                        className="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-[#131b2a] px-4 py-3 text-left text-slate-200 transition-all hover:bg-[#182235]"
+                        className="flex items-center justify-between gap-3 rounded-md px-3 py-2.5 text-left text-slate-900 hover:bg-slate-100"
                       >
                         <span className="flex items-center gap-3">
                           <Icons.Terminal size={18} />
                           <span>
                             <span className="block text-sm font-black">Homebrew</span>
-                            <span className="block text-xs font-semibold text-brand-200/80">{t('nav.homebrew_desc')}</span>
+                            <span className="block text-xs text-slate-500">{t('nav.homebrew_desc')}</span>
                           </span>
                         </span>
                         <Icons.ArrowRight size={18} className="shrink-0" />
@@ -283,8 +276,8 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* Mobile Menu Overlay */}
       <div className={`fixed inset-0 z-[90] lg:hidden transition-all duration-300 ${mobileMenuOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}>
         <div className="absolute inset-0 bg-slate-950/75 backdrop-blur-xl" onClick={() => setMobileMenuOpen(false)}></div>
-        <div className={`absolute right-4 top-4 bottom-4 w-[min(320px,calc(100vw-2rem))] rounded-[2rem] border border-white/10 bg-[#0c111b]/96 p-7 flex flex-col transition-transform duration-300 ease-out shadow-[0_25px_80px_rgba(0,0,0,0.45)] ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-          <div className="flex items-center gap-4 mb-12">
+        <div className={`absolute right-3 top-3 bottom-3 w-[min(300px,calc(100vw-1.5rem))] rounded-lg border border-white/10 bg-white p-5 flex flex-col transition-transform duration-300 ease-out shadow-xl ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+          <div className="mb-8 flex items-center gap-3">
             <img src={iconImg} alt="PHTV" className="w-10 h-10 object-contain" />
             <div>
               <span className="block text-xl font-black text-white">PHTV</span>
@@ -292,7 +285,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
           </div>
           
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-4">
             {navLinks.map((item) => (
               <a 
                 key={item.name}
@@ -316,39 +309,34 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="mt-auto space-y-4">
             {hasSplitDownloads ? (
               <>
-                <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
-                  <p className="text-[10px] font-black uppercase tracking-[0.22em] text-amber-300">{t('nav.quick_download')}</p>
-                  <p className="mt-2 text-sm text-slate-400">{t('nav.download_desc')}</p>
-                </div>
-
                 <a
                   href={arm64DownloadUrl ?? releaseUrl}
                   onClick={handleDirectDownloadClick}
-                  className="flex items-center justify-between gap-3 w-full rounded-2xl bg-gradient-to-r from-amber-400 to-orange-500 px-5 py-4 font-black text-base text-slate-950"
+                  className="flex items-center justify-between gap-3 w-full rounded-md bg-blue-600 px-4 py-3 font-semibold text-sm text-white"
                 >
                   <span className="flex items-center gap-3">
                     <Icons.Download size={20} />
                     Apple Silicon
                   </span>
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-slate-900/65">{t('nav.apple_silicon_desc')}</span>
+                  <span className="text-xs text-white/75">{t('nav.apple_silicon_desc')}</span>
                 </a>
 
                 <a
                   href={intelDownloadUrl ?? releaseUrl}
                   onClick={handleDirectDownloadClick}
-                  className="flex items-center justify-between gap-3 w-full py-4 px-5 bg-white/10 border border-white/10 text-white rounded-2xl font-black text-base"
+                  className="flex items-center justify-between gap-3 w-full rounded-md border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-900"
                 >
                   <span className="flex items-center gap-3">
                     <Icons.Download size={20} />
                     Intel
                   </span>
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-slate-400">{t('nav.intel_desc')}</span>
+                  <span className="text-xs text-slate-500">{t('nav.intel_desc')}</span>
                 </a>
 
                 <a
                   href="#install"
                   onClick={handleInstallClick}
-                  className="flex items-center justify-center gap-3 w-full rounded-2xl border border-white/10 bg-[#131b2a] py-4 font-black text-base text-slate-200"
+                  className="flex items-center justify-center gap-3 w-full rounded-md py-3 text-sm font-medium text-blue-600"
                 >
                   <Icons.Terminal size={20} />
                   Homebrew ({t('nav.homebrew_desc')})

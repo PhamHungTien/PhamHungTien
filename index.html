@@ -2,567 +2,33 @@
 <html lang="vi">
 <head>
   <script>
-    (function() {
-      var lang = localStorage.getItem('preferred_lang');
-      if (!lang) {
-        var browserLang = navigator.language || navigator.userLanguage || '';
-        lang = browserLang.toLowerCase().startsWith('vi') ? 'vi' : 'en';
-      }
-      document.documentElement.lang = lang;
+    (function () {
+      var preferred = localStorage.getItem("preferred_lang");
+      var browser = navigator.language || navigator.userLanguage || "";
+      document.documentElement.lang = preferred || (browser.toLowerCase().startsWith("vi") ? "vi" : "en");
     })();
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title data-i18n="root.title">Pham Hung Tien | Sản phẩm</title>
   <meta name="description" content="Trang chính thức của Pham Hung Tien với các ứng dụng cho thiết bị Apple, gồm PHTV, LunarV và AiPadCode.">
-  <meta http-equiv="cache-control" content="no-cache, must-revalidate, max-age=0">
-  <meta http-equiv="expires" content="0">
-  <meta http-equiv="pragma" content="no-cache">
+  <meta name="theme-color" content="#f5f5f7">
   <link rel="canonical" href="https://phamhungtien.com/">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/svg+xml" href="/assets/phtv-favicon.svg" sizes="any">
   <link rel="icon" type="image/webp" href="/assets/phtv-icon.webp">
   <link rel="apple-touch-icon" href="/assets/phtv-favicon.png">
-  <link rel="mask-icon" href="/assets/phtv-favicon.svg" color="#f43f5e">
-  <meta name="theme-color" content="#12091a">
+  <link rel="stylesheet" href="/assets/site.css">
 
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://phamhungtien.com/">
   <meta property="og:title" content="Pham Hung Tien | Ứng dụng cho thiết bị Apple">
-  <meta property="og:description" content="Khám phá PHTV, LunarV và AiPadCode do Pham Hung Tien phát triển.">
-  <meta property="og:image" content="https://phamhungtien.com/assets/phtv-social-preview.webp">
-
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Pham Hung Tien | Ứng dụng cho thiết bị Apple">
-  <meta name="twitter:description" content="Trang giới thiệu PHTV, LunarV và AiPadCode.">
-  <meta name="twitter:image" content="https://phamhungtien.com/assets/phtv-social-preview.webp">
-
-  <style>
-    :root {
-      color-scheme: dark;
-      --bg-top: #0a0b10;
-      --bg-bottom: #050608;
-      --surface: rgba(255, 255, 255, 0.03);
-      --surface-strong: rgba(255, 255, 255, 0.06);
-      --border: rgba(255, 255, 255, 0.08);
-      --text: #f8fafc;
-      --muted: #9aa4b2;
-      --accent: #fbbf24;
-      --accent-rose: #fb7185;
-      --shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      color: var(--text);
-      font-family: "Be Vietnam Pro", "Noto Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-      background-color: var(--bg-top);
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    /* Animated Liquid Glass Background Blobs */
-    .liquid-bg {
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      overflow: hidden;
-      pointer-events: none;
-      background: linear-gradient(180deg, #090a0f 0%, #050608 100%);
-    }
-
-    .blob {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(90px);
-      opacity: 0.55;
-      mix-blend-mode: screen;
-      animation: moveBlob 25s infinite alternate ease-in-out;
-    }
-
-    .blob-1 {
-      width: 550px;
-      height: 550px;
-      background: radial-gradient(circle, rgba(251, 113, 133, 0.35) 0%, rgba(244, 63, 94, 0.02) 80%);
-      top: -12%;
-      left: -8%;
-      animation-duration: 20s;
-    }
-
-    .blob-2 {
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(251, 191, 36, 0.22) 0%, rgba(217, 119, 6, 0.02) 80%);
-      top: 45%;
-      right: -12%;
-      animation-duration: 26s;
-      animation-delay: -4s;
-    }
-
-    .blob-3 {
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(0, 242, 254, 0.32) 0%, rgba(79, 172, 254, 0.02) 80%);
-      bottom: -10%;
-      left: 20%;
-      animation-duration: 24s;
-      animation-delay: -8s;
-    }
-
-    @keyframes moveBlob {
-      0% {
-        transform: translate(0, 0) scale(1) rotate(0deg);
-      }
-      33% {
-        transform: translate(50px, -30px) scale(1.1) rotate(120deg);
-      }
-      66% {
-        transform: translate(-30px, 50px) scale(0.9) rotate(240deg);
-      }
-      100% {
-        transform: translate(0, 0) scale(1) rotate(360deg);
-      }
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    img {
-      max-width: 100%;
-      display: block;
-    }
-
-    .page-shell {
-      position: relative;
-      overflow: hidden;
-      isolation: isolate;
-    }
-
-    .container {
-      width: min(1160px, calc(100% - 32px));
-      margin: 0 auto;
-    }
-
-    .topbar {
-      position: relative;
-      z-index: 5;
-      padding: 20px 0 0;
-    }
-
-    .topbar-inner {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      padding: 16px 18px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 999px;
-      background: rgba(0, 0, 0, 0.12);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      min-width: 0;
-    }
-
-    .brand-mark {
-      flex-shrink: 0;
-      width: 46px !important;
-      height: 46px !important;
-      max-width: 46px !important;
-      max-height: 46px !important;
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
-      object-fit: cover;
-      display: block;
-    }
-
-    .brand-copy {
-      min-width: 0;
-    }
-
-    .brand-copy strong {
-      display: block;
-      font-size: 1.05rem;
-      line-height: 1.15;
-      letter-spacing: 0.02em;
-    }
-
-    .brand-copy span {
-      display: block;
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.22em;
-    }
-
-    .topbar-actions {
-      position: relative;
-      z-index: 3;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    .pill-link {
-      position: relative;
-      z-index: 1;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 16px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.04);
-      color: #e2e8f0;
-      font-size: 0.92rem;
-      font-weight: 700;
-      transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
-    }
-
-    .pill-link:hover {
-      background: rgba(255, 255, 255, 0.07);
-      border-color: rgba(251, 191, 36, 0.24);
-      transform: translateY(-1px);
-    }
-
-    main {
-      padding: 76px 0 72px;
-    }
-
-    .hero {
-      display: grid;
-      gap: 32px;
-      align-items: end;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 11px 16px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(255, 255, 255, 0.04);
-      color: #dbe4f0;
-      font-size: 0.72rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.22em;
-    }
-
-    .eyebrow-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-rose));
-      box-shadow: 0 0 18px rgba(251, 191, 36, 0.45);
-    }
-
-    .hero h1 {
-      margin: 22px 0 0;
-      max-width: 12ch;
-      font-size: clamp(2.5rem, 5vw + 0.9rem, 4.95rem);
-      line-height: 1.16;
-      letter-spacing: -0.045em;
-    }
-
-    .hero p {
-      margin: 20px 0 0;
-      max-width: 640px;
-      color: #cbd5e1;
-      font-size: clamp(0.98rem, 1.15vw + 0.82rem, 1.08rem);
-      line-height: 1.85;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 24px;
-    }
-
-    .cta-primary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 14px 20px;
-      border-radius: 999px;
-      font-weight: 800;
-      transition: transform 180ms ease, background-color 180ms ease;
-      background: #ffffff;
-      color: #0f172a;
-    }
-
-    .cta-primary:hover {
-      transform: translateY(-1px);
-    }
-
-    .section-head {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      margin-top: 84px;
-      margin-bottom: 28px;
-    }
-
-    .section-head span {
-      color: rgba(251, 191, 36, 0.88);
-      font-size: 0.72rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.24em;
-    }
-
-    .section-head h2 {
-      margin: 0;
-      font-size: clamp(1.9rem, 4vw, 3.1rem);
-      line-height: 1.05;
-      letter-spacing: -0.04em;
-    }
-
-    .section-head p {
-      margin: 0;
-      max-width: 700px;
-      color: var(--muted);
-      line-height: 1.8;
-      font-size: 1rem;
-    }
-
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 22px;
-    }
-
-    .product-card {
-      position: relative;
-      overflow: hidden;
-      padding: 28px;
-      border-radius: 30px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      background: linear-gradient(180deg, rgba(18, 24, 38, 0.72), rgba(10, 14, 24, 0.78));
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-    }
-
-    .product-card::after {
-      content: "";
-      position: absolute;
-      inset: auto -10% -25% auto;
-      width: 220px;
-      height: 220px;
-      border-radius: 999px;
-      background: radial-gradient(circle, rgba(251, 191, 36, 0.12), transparent 62%);
-      pointer-events: none;
-    }
-
-    .product-header {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      margin-bottom: 26px;
-    }
-
-    .product-mark {
-      flex-shrink: 0;
-      width: 72px !important;
-      height: 72px !important;
-      max-width: 72px !important;
-      max-height: 72px !important;
-      overflow: hidden;
-      filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.24));
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.06);
-    }
-
-    .product-mark img {
-      width: 100% !important;
-      height: 100% !important;
-      max-width: 100% !important;
-      max-height: 100% !important;
-      object-fit: contain;
-      border-radius: 18px;
-    }
-
-    .product-title-wrap {
-      min-width: 0;
-    }
-
-    .product-title-wrap h3 {
-      margin: 0;
-      font-size: 1.75rem;
-      line-height: 1.05;
-      letter-spacing: -0.03em;
-    }
-
-    .product-subtitle {
-      margin-top: 8px;
-      color: var(--muted);
-      font-size: 0.95rem;
-      line-height: 1.65;
-    }
-
-    .product-description {
-      margin: 0;
-      color: #dbe4f0;
-      line-height: 1.85;
-      font-size: 1rem;
-    }
-
-    .tag-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 22px 0 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .tag-list li {
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(255, 255, 255, 0.04);
-      color: #dbe4f0;
-      font-size: 0.84rem;
-      font-weight: 700;
-    }
-
-    .product-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 28px;
-    }
-
-    .button-main,
-    .button-subtle {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      min-height: 46px;
-      padding: 0 18px;
-      border-radius: 999px;
-      font-weight: 800;
-      transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease;
-    }
-
-    .button-main {
-      background: linear-gradient(135deg, #fcd34d, #fb7185);
-      color: #160b12;
-    }
-
-    .button-subtle {
-      border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.04);
-      color: #e2e8f0;
-    }
-
-    .button-main:hover,
-    .button-subtle:hover {
-      transform: translateY(-1px);
-    }
-
-    @media (max-width: 960px) {
-      .product-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero {
-        gap: 26px;
-      }
-
-      .hero h1 {
-        max-width: 100%;
-      }
-
-      .section-head {
-        margin-top: 72px;
-      }
-    }
-
-    @media (max-width: 720px) {
-      .topbar-inner {
-        flex-direction: column;
-        align-items: flex-start;
-        border-radius: 28px;
-      }
-
-      .topbar-actions {
-        width: 100%;
-        justify-content: flex-start;
-      }
-
-      main {
-        padding-top: 52px;
-      }
-
-      .product-card {
-        padding: 22px;
-        border-radius: 26px;
-      }
-
-      .hero h1 {
-        font-size: clamp(2.2rem, 9vw, 3rem);
-        line-height: 1.18;
-      }
-
-      .hero p {
-        font-size: 0.98rem;
-        line-height: 1.82;
-      }
-
-      .hero-actions,
-      .product-actions {
-        width: 100%;
-      }
-
-      .cta-primary,
-      .button-main,
-      .button-subtle {
-        width: 100%;
-      }
-
-      .product-header {
-        align-items: flex-start;
-      }
-    }
-  </style>
+  <meta property="og:description" content="PHTV, LunarV và AiPadCode được thiết kế cho trải nghiệm Apple gọn và rõ.">
+  <meta property="og:image" content="https://phamhungtien.com/LunarV/assets/lunarv-ipad.jpg">
 
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "CollectionPage",
-      "name": "Pham Hung Tien Products",
+      "@type": "WebSite",
+      "name": "Pham Hung Tien",
       "url": "https://phamhungtien.com/",
       "description": "Trang giới thiệu các ứng dụng cho thiết bị Apple của Pham Hung Tien.",
       "hasPart": [
@@ -578,128 +44,123 @@
           "name": "LunarV",
           "url": "https://phamhungtien.com/LunarV/",
           "operatingSystem": "iOS, iPadOS, macOS, visionOS"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "AiPadCode",
+          "url": "https://phamhungtien.com/AiPadCode/",
+          "operatingSystem": "iOS, iPadOS"
         }
       ]
     }
   </script>
 </head>
 <body>
-  <div class="liquid-bg">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
-  </div>
-  <div class="page-shell">
-    <header class="topbar">
-      <div class="container topbar-inner">
-        <div class="brand">
-          <img src="https://github.com/PhamHungTien.png" alt="Pham Hung Tien Avatar" class="brand-mark">
-          <div class="brand-copy">
-            <strong>Pham Hung Tien</strong>
-            <span data-i18n="root.brand_subtitle">Product Index</span>
+  <header class="topbar">
+    <div class="container">
+      <a class="brand" href="/" aria-label="Pham Hung Tien">
+        <img src="/assets/phtv-icon.webp" alt="">
+        <span>Pham Hung Tien</span>
+      </a>
+      <nav class="nav" aria-label="Điều hướng">
+        <a class="desktop-link" href="/LunarV/">LunarV</a>
+        <a class="desktop-link" href="/PHTV/">PHTV</a>
+        <a class="button-primary" href="mailto:phamhungtien.contact@gmail.com" data-i18n="root.contact">Liên hệ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="catalog-hero container">
+      <h1 data-i18n="root.apps_products">Ứng dụng &amp; Sản phẩm</h1>
+      <p data-i18n="root.hero_desc">Những công cụ gọn, riêng tư và quen thuộc dành cho thiết bị Apple.</p>
+    </section>
+
+    <section class="product-list container" aria-label="Sản phẩm">
+      <article class="product-row">
+        <div class="product-copy">
+          <div class="product-title">
+            <img src="/assets/lunarv-icon.png" alt="LunarV">
+            <div>
+              <h2>LunarV</h2>
+              <p class="subtitle" data-i18n="root.lunarv_subtitle">Lịch âm Việt Nam trên thiết bị Apple.</p>
+            </div>
+          </div>
+          <p data-i18n="root.lunarv_desc">LunarV mang lịch âm, widget, thông báo và dịp gia đình lên iPhone, iPad, Mac và Apple Vision Pro.</p>
+          <ul class="tags">
+            <li>iPhone, iPad, Mac, Vision Pro</li>
+            <li data-i18n="root.tag_lunar">Lịch âm</li>
+            <li data-i18n="root.tag_reminders">Nhắc nhở</li>
+          </ul>
+          <div class="actions">
+            <a class="button-primary" href="/LunarV/" data-i18n="root.open_product">Mở trang sản phẩm</a>
+            <a class="button-secondary" href="https://apps.apple.com/vn/app/lunarv-l%E1%BB%8Bch-%C3%A2m-vi%E1%BB%87t-nam/id6770913893?l=vi" target="_blank" rel="noopener noreferrer">App Store</a>
           </div>
         </div>
+        <figure class="product-media lunar">
+          <img src="/LunarV/assets/lunarv-ipad.jpg" alt="Giao diện LunarV trên iPad" loading="eager">
+        </figure>
+      </article>
 
-        <div class="topbar-actions">
-          <a class="pill-link" href="https://github.com/PhamHungTien" target="_blank" rel="noopener noreferrer">GitHub</a>
-          <a class="pill-link" href="mailto:phamhungtien.contact@gmail.com" data-i18n="root.contact">Liên hệ</a>
+      <article class="product-row">
+        <div class="product-copy">
+          <div class="product-title">
+            <img src="/assets/phtv-icon.webp" alt="PHTV">
+            <div>
+              <h2>PHTV</h2>
+              <p class="subtitle" data-i18n="root.phtv_subtitle">Bộ gõ tiếng Việt hiện đại cho macOS.</p>
+            </div>
+          </div>
+          <p data-i18n="root.phtv_desc">Precision Hybrid Typing Vietnamese tập trung vào tốc độ, độ chính xác và quyền riêng tư, với trải nghiệm gõ tiếng Việt native, gọn và ổn định.</p>
+          <ul class="tags">
+            <li>macOS 14+</li>
+            <li data-i18n="root.tag_offline">Ngoại tuyến</li>
+            <li>Homebrew</li>
+          </ul>
+          <div class="actions">
+            <a class="button-primary" href="/PHTV/" data-i18n="root.open_product">Mở trang sản phẩm</a>
+          </div>
         </div>
-      </div>
-    </header>
+        <figure class="product-media">
+          <img src="/assets/phtv-social-preview.webp" alt="PHTV Precision Hybrid Typing Vietnamese" loading="lazy">
+        </figure>
+      </article>
 
-    <main>
-      <section id="products" class="container">
-        <div class="section-head" style="margin-top: 24px;">
-          <span data-i18n="root.developer">Developer</span>
-          <h2 data-i18n="root.apps_products">Apps & Products</h2>
+      <article class="product-row">
+        <div class="product-copy">
+          <div class="product-title">
+            <img src="/AiPadCode/assets/app-icon.png" alt="AiPadCode">
+            <div>
+              <h2>AiPadCode</h2>
+              <p class="subtitle" data-i18n="root.aipadcode_subtitle">Code Editor &amp; IDE cho iPad/iPhone</p>
+            </div>
+          </div>
+          <p data-i18n="root.aipadcode_desc">Viết, chạy và quản lý code trên thiết bị di động với Compiler offline và Apple Intelligence tích hợp.</p>
+          <ul class="tags">
+            <li>iPhone, iPad</li>
+            <li data-i18n="root.tag_compiler">Biên dịch offline</li>
+            <li>Apple Intelligence</li>
+          </ul>
+          <div class="actions">
+            <a class="button-primary" href="/AiPadCode/" data-i18n="root.open_product">Mở trang sản phẩm</a>
+          </div>
         </div>
+        <figure class="product-media aipad">
+          <img src="/AiPadCode/assets/ipad-editor.png" alt="Giao diện AiPadCode trên iPad" loading="lazy">
+        </figure>
+      </article>
+    </section>
+  </main>
 
-        <div class="product-grid">
-          <article class="product-card">
-            <div class="product-header">
-              <div class="product-mark">
-                <img src="/assets/phtv-icon.webp" alt="PHTV icon" width="96" height="96" loading="eager" decoding="async">
-              </div>
-              <div class="product-title-wrap">
-                <h3>PHTV</h3>
-                <div class="product-subtitle" data-i18n="root.phtv_subtitle">Bộ gõ tiếng Việt hiện đại cho macOS.</div>
-              </div>
-            </div>
-
-            <p class="product-description" data-i18n="root.phtv_desc">
-              Precision Hybrid Typing Vietnamese tập trung vào tốc độ, độ chính xác và quyền riêng tư, với trải nghiệm gõ tiếng Việt native, gọn và ổn định.
-            </p>
-
-            <ul class="tag-list" aria-label="PHTV tags">
-              <li>macOS 14+</li>
-              <li data-i18n="root.tag_offline">Offline</li>
-              <li data-i18n="root.tag_opensource">Open source</li>
-            </ul>
-
-            <div class="product-actions">
-              <a class="button-main" href="/PHTV/" data-i18n="root.open_product">Mở trang sản phẩm</a>
-              <a class="button-subtle" href="https://github.com/PhamHungTien/PHTV" target="_blank" rel="noopener noreferrer">GitHub</a>
-            </div>
-          </article>
-
-          <article class="product-card">
-            <div class="product-header">
-              <div class="product-mark">
-                <img src="/assets/lunarv-icon.png" alt="LunarV icon" width="96" height="96" loading="eager" decoding="async">
-              </div>
-              <div class="product-title-wrap">
-                <h3>LunarV</h3>
-                <div class="product-subtitle" data-i18n="root.lunarv_subtitle">Lịch âm Việt Nam trên thiết bị Apple.</div>
-              </div>
-            </div>
-
-            <p class="product-description" data-i18n="root.lunarv_desc">
-              LunarV mang lịch âm, widget, thông báo và dịp gia đình lên iPhone, iPad, Mac và Apple Vision Pro.
-            </p>
-
-            <ul class="tag-list" aria-label="LunarV tags">
-              <li>iOS, iPadOS, macOS, visionOS</li>
-              <li data-i18n="root.tag_lunar">Lunar calendar</li>
-              <li data-i18n="root.tag_reminders">Reminders</li>
-            </ul>
-
-            <div class="product-actions">
-              <a class="button-main" href="/LunarV/" data-i18n="root.open_product">Mở trang sản phẩm</a>
-              <a class="button-subtle" href="https://apps.apple.com/vn/app/lunarv-l%E1%BB%8Bch-%C3%A2m-vi%E1%BB%87t-nam/id6770913893?l=vi" target="_blank" rel="noopener noreferrer">App Store</a>
-            </div>
-          </article>
-
-          <article class="product-card">
-            <div class="product-header">
-              <div class="product-mark">
-                <img src="/AiPadCode/assets/app-icon.png" alt="AiPadCode icon" width="96" height="96" loading="eager" decoding="async">
-              </div>
-              <div class="product-title-wrap">
-                <h3>AiPadCode</h3>
-                <div class="product-subtitle" data-i18n="root.aipadcode_subtitle">Code Editor & IDE cho iPad/iPhone</div>
-              </div>
-            </div>
-
-            <p class="product-description" data-i18n="root.aipadcode_desc">
-              Viết, chạy và quản lý code trên thiết bị di động với Compiler offline và Apple Intelligence tích hợp.
-            </p>
-
-            <ul class="tag-list" aria-label="AiPadCode tags">
-              <li>iOS/iPadOS</li>
-              <li data-i18n="root.tag_compiler">Offline Compiler</li>
-              <li>Apple Intelligence</li>
-            </ul>
-
-            <div class="product-actions">
-              <a class="button-main" href="/AiPadCode/" data-i18n="root.open_product">Mở trang sản phẩm</a>
-            </div>
-          </article>
-        </div>
-
-      </section>
-    </main>
-  </div>
+  <footer class="site-footer">
+    <div class="container">
+      <span>&copy; 2026 Pham Hung Tien.</span>
+      <nav>
+        <a href="mailto:phamhungtien.contact@gmail.com">Support</a>
+        <a href="/LunarV/privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
   <script src="/assets/i18n.js" defer></script>
-  <script src="/assets/liquid-glass.js" defer></script>
 </body>
 </html>

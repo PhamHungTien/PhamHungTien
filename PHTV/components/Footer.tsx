@@ -14,7 +14,7 @@ export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
   return (
     <footer className="border-t border-white/6 bg-black/10 py-16 md:py-20">
       <div className="mx-auto max-w-6xl px-4 md:px-6">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-[1.2fr_0.8fr_0.8fr]">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-[1.35fr_0.65fr]">
           <div>
             <div className="flex items-center gap-4">
               <img src={iconImg} alt="PHTV Logo" className="h-12 w-12 object-contain" />
@@ -60,31 +60,15 @@ export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
             </div>
           </div>
 
-          <div>
-            <h4 className="text-[11px] font-black uppercase tracking-[0.28em] text-amber-300/80">{t('footer.links')}</h4>
-            <ul className="mt-5 space-y-3 text-sm text-slate-400">
+          <div className="md:text-right">
+            <h4 className="text-sm font-semibold text-white">{t('footer.links')}</h4>
+            <ul className="mt-4 space-y-2 text-sm text-slate-400">
               <li><a href="#features" className="transition-colors hover:text-white">{t('nav.features')}</a></li>
-              <li><a href="#gallery" className="transition-colors hover:text-white">{t('nav.gallery')}</a></li>
               <li><a href="#install" className="transition-colors hover:text-white">{t('nav.install')}</a></li>
-              <li><a href="#faq" className="transition-colors hover:text-white">{t('nav.faq')}</a></li>
               <li><a href="https://github.com/PhamHungTien/PHTV/releases" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-white">GitHub Releases</a></li>
               <li><a href="privacy.html" className="transition-colors hover:text-white">Privacy Policy</a></li>
               <li><a href="terms.html" className="transition-colors hover:text-white">Terms of Use</a></li>
             </ul>
-          </div>
-
-          <div>
-            <h4 className="text-[11px] font-black uppercase tracking-[0.28em] text-amber-300/80">{t('footer.support')}</h4>
-            <p className="mt-5 text-sm leading-7 text-slate-400">
-              {t('footer.support_desc')}
-            </p>
-            <button
-              onClick={onDonateClick}
-              className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/[0.08]"
-            >
-              <Icons.Coffee size={16} />
-              {t('footer.donate_btn')}
-            </button>
           </div>
         </div>
 

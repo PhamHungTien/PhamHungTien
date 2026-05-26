@@ -2,17 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Features } from './components/Features';
 import { TerminalBlock } from './components/TerminalBlock';
-import { Shortcuts } from './components/Shortcuts';
-import { Gallery } from './components/Gallery';
 import { Footer } from './components/Footer';
 import { Icons } from './components/Icons';
-import { VideoTutorial } from './components/VideoTutorial';
 import { useGitHubData } from './hooks/useGitHubData';
 import { useI18n } from './i18n';
 
 // Moved components
 import { CopyBlock } from './components/CopyBlock';
-import { StatBadge } from './components/StatBadge';
 import { DonateModal } from './components/DonateModal';
 import { AcronymRow } from './components/AcronymRow';
 import { QASection } from './components/QASection';
@@ -138,42 +134,23 @@ const DownloadChoiceCard: React.FC<DownloadChoiceCardProps> = ({
   return (
     <a
       href={href}
-      className={`glass-card group block rounded-[1.5rem] px-5 py-5 transition-all duration-300 hover:-translate-y-0.5 md:px-6 md:py-6 ${
-        accent
-          ? 'border-amber-300/15 bg-gradient-to-br from-amber-400/10 to-orange-500/8'
-          : ''
+      className={`download-choice group flex items-center justify-between gap-4 px-4 py-3.5 ${
+        accent ? 'download-choice-primary' : ''
       }`}
     >
-      <div className="flex items-start justify-between gap-4">
-        <div
-          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border ${
-            accent
-              ? 'border-amber-200/20 bg-amber-300/10 text-amber-200'
-              : 'border-white/10 bg-white/[0.05] text-slate-200'
-          }`}
-        >
+      <div className="flex min-w-0 items-center gap-3">
+        <div className="download-choice-icon flex h-9 w-9 shrink-0 items-center justify-center">
           <Icons.Download size={18} />
         </div>
-        <span
-          className={`inline-flex shrink-0 rounded-full border px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] ${
-            accent
-              ? 'border-amber-200/15 bg-amber-300/10 text-amber-100/90'
-              : 'border-white/10 bg-white/[0.04] text-slate-400'
-          }`}
-        >
-          {chip}
-        </span>
+        <div className="min-w-0 text-left">
+          <div className="flex flex-wrap items-baseline gap-x-2">
+            <h3 className="text-base font-semibold text-white">{title}</h3>
+            <span className="text-xs text-slate-400">{chip}</span>
+          </div>
+          <p className="truncate text-xs text-slate-400">{note}</p>
+        </div>
       </div>
-
-      <div className="mt-5 text-left">
-        <h3 className="text-lg font-black tracking-tight text-white md:text-xl">{title}</h3>
-        <p className="mt-2 text-sm leading-7 text-slate-400">{note}</p>
-      </div>
-
-      <div className={`mt-5 inline-flex items-center gap-2 text-sm font-semibold ${accent ? 'text-amber-200' : 'text-slate-300'}`}>
-        {localStorage.getItem('preferred_lang') === 'en' ? 'Download this build' : 'Tải bản này'}
-        <Icons.ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
-      </div>
+      <Icons.ArrowRight size={16} className="shrink-0 text-slate-400" />
     </a>
   );
 };
@@ -237,13 +214,13 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white selection:bg-brand-500 selection:text-white overflow-x-hidden">
+    <div className="phtv-page min-h-screen overflow-x-hidden bg-[#f5f5f7] text-[#1d1d1f] selection:bg-blue-100 selection:text-[#1d1d1f]">
       {/* Background Layer */}
       <div className="fixed inset-0 z-0 mesh-gradient pointer-events-none" />
       
       {/* Top Loading Bar */}
       <div className={`fixed top-0 left-0 right-0 h-1 z-[110] transition-transform duration-500 origin-left ${loading ? 'scale-x-100' : 'scale-x-0'}`}>
-        <div className="h-full bg-gradient-to-r from-brand-500 via-purple-500 to-red-500 animate-shimmer bg-[length:200%_auto]"></div>
+        <div className="h-full bg-[#0071e3]"></div>
       </div>
 
       <Navbar
@@ -258,7 +235,7 @@ function App() {
 
       {activeTab === 'home' ? (
         <div className="relative z-10 animate-in fade-in duration-1000">
-          <main className="relative overflow-hidden px-4 pb-14 pt-28 md:px-6 md:pb-20 md:pt-40">
+          <main className="relative overflow-hidden px-4 pb-12 pt-24 md:px-6 md:pb-16 md:pt-28">
             <h1 className="sr-only">PHTV - Bộ gõ tiếng Việt Precision Hybrid Typing Vietnamese cho macOS</h1>
 
             <div className="mx-auto max-w-6xl text-center">
@@ -269,12 +246,12 @@ function App() {
                 </span>
               </div>
 
-              <div className="mt-10 flex flex-row items-center justify-center gap-4 sm:gap-8 md:mt-14 md:gap-12">
-                <div className="relative h-24 w-24 shrink-0 sm:h-48 sm:w-48 md:h-72 md:w-72">
+              <div className="mt-7 flex flex-row items-center justify-center gap-4 sm:gap-8 md:mt-10 md:gap-10">
+                <div className="relative h-24 w-24 shrink-0 sm:h-44 sm:w-44 md:h-52 md:w-52">
                   <img
                     src="/assets/phtv-icon.webp"
                     alt="PHTV Icon"
-                    className="h-full w-full rounded-[1.6rem] object-cover drop-shadow-[0_16px_36px_rgba(0,0,0,0.34)] md:rounded-[3.5rem] md:drop-shadow-[0_28px_55px_rgba(0,0,0,0.38)]"
+                    className="h-full w-full rounded-[1.6rem] object-cover drop-shadow-[0_12px_24px_rgba(0,0,0,0.18)] md:rounded-[2.2rem]"
                     fetchPriority="high"
                   />
                 </div>
@@ -287,7 +264,7 @@ function App() {
                 </div>
               </div>
 
-              <p className="mx-auto mt-10 max-w-3xl px-2 text-lg font-medium leading-relaxed text-slate-300 md:mt-14 md:text-2xl">
+              <p className="mx-auto mt-7 max-w-3xl px-2 text-lg font-medium leading-relaxed text-slate-300 md:mt-9 md:text-2xl">
                 {lang === 'vi' ? (
                   <>
                     Bộ gõ tiếng Việt <span className="font-bold text-white text-glow-sm">offline</span>, <span className="font-bold text-white text-glow-sm">nhanh</span> và <span className="font-bold text-white text-glow">riêng tư</span> cho macOS.
@@ -298,31 +275,18 @@ function App() {
                   </>
                 )}
               </p>
-              <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-400 md:text-lg">
-                {t('home.desc_sub')}
-              </p>
-
-              <div className="mx-auto mt-8 flex max-w-4xl flex-wrap justify-center gap-3 md:mt-10 md:gap-4">
-                <StatBadge icon={Icons.Tag} label={t('home.version')} value={version} href="https://github.com/PhamHungTien/PHTV/releases/latest" colorClass="text-blue-300" />
-                <StatBadge icon={Icons.Heart} label={t('home.donate')} value="Donate" onClick={() => setShowDonate(true)} colorClass="text-rose-300" />
-              </div>
-
-              <div className="mx-auto mt-10 w-full max-w-4xl px-1 md:mt-12">
+              <div className="mx-auto mt-7 w-full max-w-xl px-1">
                 {hasSplitDownloads ? (
-                  <div className="glass-panel rounded-[2rem] border border-white/10 p-5 md:p-7">
-                    <div className="flex flex-col gap-4 text-left md:flex-row md:items-end md:justify-between">
+                  <div className="glass-panel p-4 md:p-5">
+                    <div className="mb-4 flex items-center justify-between gap-3 text-left">
                       <div>
-                        <p className="text-[10px] font-black uppercase tracking-[0.24em] text-amber-300/80">{t('nav.quick_download')}</p>
-                        <h2 className="mt-2 text-2xl font-black tracking-tight text-white md:text-3xl">
-                          {t('home.download_title')}
-                        </h2>
+                        <h2 className="text-base font-semibold text-white">{t('home.download_title')}</h2>
+                        <p className="mt-1 text-xs text-slate-400">{version} / macOS 14+</p>
                       </div>
-                      <p className="max-w-md text-sm leading-7 text-slate-400 md:text-base">
-                        {t('home.download_subtitle')}
-                      </p>
+                      <Icons.Download size={18} className="text-blue-500" />
                     </div>
 
-                    <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
+                    <div className="space-y-2">
                       <DownloadChoiceCard
                         href={arm64DownloadUrl ?? releaseUrl}
                         title="Apple Silicon"
@@ -348,10 +312,10 @@ function App() {
                   </a>
                 )}
 
-                <div className="mt-5 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <div className="mt-4 flex flex-wrap items-center justify-center gap-4">
                   <a
                     href="#install"
-                    className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-5 py-3 text-sm font-semibold text-slate-200 transition-colors hover:bg-white/[0.06]"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-blue-600"
                   >
                     <Icons.Terminal size={16} />
                     {t('home.install_btn')}
@@ -361,10 +325,17 @@ function App() {
                       setActiveTab('community');
                       window.location.hash = '#community';
                     }}
-                    className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-transparent px-5 py-3 text-sm font-semibold text-slate-400 transition-colors hover:text-white"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-blue-600"
                   >
                     <Icons.MessageSquare size={16} />
                     {t('home.discuss_btn')}
+                  </button>
+                  <button
+                    onClick={() => setShowDonate(true)}
+                    className="inline-flex items-center gap-2 text-sm font-medium text-blue-600"
+                  >
+                    <Icons.Heart size={16} />
+                    {t('home.donate')}
                   </button>
                 </div>
               </div>
@@ -372,33 +343,31 @@ function App() {
           </main>
 
           <div className="reveal"><Features /></div>
-          <div className="reveal"><Gallery /></div>
 
-          <section id="install" className="reveal border-y border-white/6 bg-black/10 py-20 scroll-mt-24 md:py-24 md:scroll-mt-28">
-            <div className="mx-auto max-w-6xl px-4 md:px-6">
-              <div className="mb-12 max-w-3xl">
-                <p className="text-[11px] font-black uppercase tracking-[0.28em] text-amber-300/80">{t('install.kicker')}</p>
-                <h2 className="mt-4 text-3xl font-black tracking-tight text-white md:text-4xl">
+          <section id="install" className="reveal scroll-mt-24 py-14 md:py-16">
+            <div className="mx-auto max-w-5xl px-4 md:px-6">
+              <div className="mb-8 max-w-2xl">
+                <h2 className="text-2xl font-semibold text-white md:text-3xl">
                   {t('install.title')}
                 </h2>
-                <p className="mt-4 text-sm leading-7 text-slate-400 md:text-base">
+                <p className="mt-3 text-sm leading-6 text-slate-400">
                   {t('install.desc')}
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.1fr_0.9fr]">
-                <div className="glass-panel rounded-[2rem] p-6 md:p-8">
+              <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1.08fr_0.92fr]">
+                <div className="glass-panel p-5 md:p-6">
                   <div className="flex items-center gap-3">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] text-amber-300">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-slate-100 text-blue-600">
                       <Icons.Terminal size={20} />
                     </div>
                     <div>
-                      <h3 className="text-xl font-black tracking-tight text-white">{t('install.brew_title')}</h3>
+                      <h3 className="text-lg font-semibold text-white">{t('install.brew_title')}</h3>
                       <p className="text-sm text-slate-400">{t('install.brew_sub')}</p>
                     </div>
                   </div>
 
-                  <div className="mt-6">
+                  <div className="mt-5">
                     <TerminalBlock
                       command="brew install --cask phamhungtien/tap/phtv"
                       label="Install"
@@ -406,135 +375,34 @@ function App() {
                     />
                   </div>
 
-                  <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2">
-                    <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5">
-                      <p className="text-[11px] font-black uppercase tracking-[0.24em] text-slate-500">{t('install.before_use')}</p>
-                      <ul className="mt-4 space-y-3 text-sm leading-7 text-slate-300">
-                        <li className="flex gap-3"><Icons.X size={16} className="mt-1 shrink-0 text-rose-300" />{t('install.before_rule1')}</li>
+                  <div className="mt-5 border-t border-slate-200 pt-4">
+                      <ul className="space-y-2 text-sm leading-6 text-slate-300">
                         <li className="flex gap-3"><Icons.ShieldCheck size={16} className="mt-1 shrink-0 text-emerald-300" />{t('install.before_rule2')}</li>
                         <li className="flex gap-3"><Icons.Keyboard size={16} className="mt-1 shrink-0 text-amber-300" />{t('install.before_rule3')}</li>
                       </ul>
-                    </div>
-
-                    <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5">
-                      <p className="text-[11px] font-black uppercase tracking-[0.24em] text-slate-500">{t('install.gatekeeper')}</p>
-                      <div className="mt-4">
-                        <TerminalBlock command="xattr -cr /Applications/PHTV.app" label="Fix" />
-                      </div>
-                    </div>
                   </div>
                 </div>
 
-                <div className="space-y-5">
-                  <div className="glass-panel rounded-[2rem] p-6 md:p-8">
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] text-rose-300">
-                        <Icons.Download size={20} />
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-black tracking-tight text-white">{t('install.dmg_title')}</h3>
-                        <p className="text-sm text-slate-400">{t('install.dmg_sub')}</p>
-                      </div>
-                    </div>
-
-                    <div className="mt-6 space-y-3">
-                      {hasSplitDownloads ? (
-                        <>
-                          <DownloadChoiceCard
-                            href={arm64DownloadUrl ?? releaseUrl}
-                            title="Apple Silicon"
-                            chip={t('nav.apple_silicon_desc')}
-                            note={t('home.download_silicon_note')}
-                            tone="accent"
-                          />
-                          <DownloadChoiceCard
-                            href={intelDownloadUrl ?? releaseUrl}
-                            title="Intel"
-                            chip={t('nav.intel_desc')}
-                            note={t('home.download_intel_note')}
-                          />
-                        </>
-                      ) : (
-                        <a
-                          href={universalDownloadUrl ?? downloadUrl}
-                          className="inline-flex w-full items-center justify-center gap-3 rounded-full bg-white px-6 py-4 text-base font-black text-slate-950 transition-colors hover:bg-slate-100"
-                        >
-                          <Icons.Download size={20} />
-                          {t('nav.download_now')}
-                        </a>
-                      )}
-                    </div>
-
-                    <a
-                      href={releaseUrl}
-                      className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-slate-400 transition-colors hover:text-white"
-                    >
-                      {lang === 'vi' ? 'Xem GitHub Releases' : 'View GitHub Releases'}
-                      <Icons.ArrowRight size={15} />
-                    </a>
-                  </div>
-
-                  <div className="glass-panel rounded-[2rem] p-6 md:p-8">
-                    <h3 className="text-xl font-black tracking-tight text-white">{t('install.sys_req')}</h3>
-                    <div className="mt-5 space-y-4">
+                <div className="glass-panel p-5 md:p-6">
+                    <h3 className="text-lg font-semibold text-white">{t('install.sys_req')}</h3>
+                    <div className="mt-4 space-y-3">
                       {[
                         [t('install.os'), 'macOS 14.0+'],
                         [t('install.arch'), 'Apple Silicon / Intel'],
                         [t('install.permissions'), 'Accessibility'],
                       ].map(([label, value]) => (
                         <div key={label} className="flex items-start justify-between gap-4 border-b border-white/6 pb-4 last:border-b-0 last:pb-0">
-                          <span className="text-[11px] font-black uppercase tracking-[0.24em] text-slate-500">{label}</span>
-                          <span className="text-right text-sm font-semibold text-white md:text-base">{value}</span>
+                          <span className="text-sm text-slate-500">{label}</span>
+                          <span className="text-right text-sm font-medium text-white">{value}</span>
                         </div>
                       ))}
-                    </div>
-                  </div>
+                    <a href={releaseUrl} className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-blue-600">
+                      {lang === 'vi' ? 'Bản phát hành và ghi chú' : 'Releases and notes'}
+                      <Icons.ArrowRight size={15} />
+                    </a>
+                </div>
                 </div>
               </div>
-            </div>
-          </section>
-
-          <div className="reveal"><Shortcuts /></div>
-          <div className="reveal"><VideoTutorial /></div>
-
-          <section id="faq" className="reveal mx-auto max-w-5xl px-4 py-20 md:px-6 md:py-24">
-            <div className="mx-auto mb-12 max-w-3xl text-center">
-              <p className="text-[11px] font-black uppercase tracking-[0.28em] text-amber-300/80">FAQ</p>
-              <h2 className="mt-4 text-3xl font-black tracking-tight text-white md:text-4xl">
-                {t('faq.title')}
-              </h2>
-              <p className="mt-4 text-sm leading-7 text-slate-400 md:text-base">
-                {t('faq.desc')}
-              </p>
-            </div>
-
-            <div className="space-y-8">
-              {faqData.map((category) => (
-                <div key={category.category}>
-                  <h3 className="mb-4 text-sm font-black uppercase tracking-[0.22em] text-amber-200/85">
-                    {lang === 'vi' ? category.category : category.categoryEn}
-                  </h3>
-                  <div className="space-y-3">
-                    {category.items.map((item, i) => (
-                      <div key={i} className="glass-card overflow-hidden rounded-[1.5rem]">
-                        <details className="group/details">
-                          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-5 text-left md:px-6">
-                            <span className="pr-2 text-sm font-black tracking-tight text-white md:text-base">
-                              {lang === 'vi' ? item.q : item.qEn}
-                            </span>
-                            <span className="shrink-0 text-slate-500 transition-transform duration-300 group-open/details:rotate-180 group-open/details:text-amber-300">
-                              <Icons.ChevronDown size={18} />
-                            </span>
-                          </summary>
-                          <div className="border-t border-white/6 px-5 pb-5 pt-4 text-sm leading-7 text-slate-400 md:px-6 md:text-base">
-                            {lang === 'vi' ? item.a : item.aEn}
-                          </div>
-                        </details>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
             </div>
           </section>
         </div>

@@ -1,0 +1,158 @@
+:root {
+  color-scheme: light;
+  --bg: #f5f5f7;
+  --surface: #ffffff;
+  --text: #1d1d1f;
+  --muted: #62626a;
+  --accent: #0071e3;
+  --border: rgba(29, 29, 31, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0 20px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  width: min(720px, 100%);
+  margin: 0 auto;
+  padding: 42px 0 70px;
+}
+
+.logo {
+  margin: 0 0 4px;
+  background: none;
+  color: var(--text);
+  font-size: 26px;
+  font-weight: 650;
+  -webkit-text-fill-color: currentColor;
+}
+
+.logo a {
+  color: inherit;
+  background: none;
+  text-decoration: none;
+  -webkit-text-fill-color: currentColor;
+}
+
+.subtitle {
+  margin-bottom: 34px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  margin-bottom: 34px;
+  padding-bottom: 13px;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+
+.nav-links a {
+  padding: 6px 0;
+  border: 0;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.nav-links a:hover {
+  color: var(--text);
+}
+
+.nav-links a.active {
+  color: var(--accent);
+  border: 0;
+}
+
+.lang-toggle {
+  display: inline-flex;
+  gap: 2px;
+  margin-bottom: 38px;
+  padding: 3px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: rgba(118, 118, 128, 0.08);
+}
+
+.lang-toggle button {
+  min-height: 34px;
+  padding: 0 17px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 14px;
+}
+
+.lang-toggle button:hover {
+  border: 0;
+}
+
+.lang-toggle button.active {
+  border: 0;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 1px 2px rgba(29, 29, 31, 0.08);
+}
+
+h1 {
+  margin: 0 0 12px;
+  color: var(--text);
+  font-size: 34px;
+  line-height: 1.2;
+  font-weight: 650;
+  letter-spacing: 0;
+}
+
+h2 {
+  margin: 34px 0 12px;
+  color: var(--text);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+p,
+li {
+  margin-bottom: 12px;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+strong {
+  color: var(--text);
+}
+
+ul {
+  padding-left: 23px;
+}
+
+.footer {
+  margin-top: 48px;
+  padding: 18px 0;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.section {
+  display: none;
+}
+
+.section.active {
+  display: block;
+}

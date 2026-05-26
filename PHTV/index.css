@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  color-scheme: light;
+  --phtv-background: #f5f5f7;
+  --phtv-surface: #ffffff;
+  --phtv-soft: #eef3f8;
+  --phtv-text: #1d1d1f;
+  --phtv-muted: #62626a;
+  --phtv-line: rgba(29, 29, 31, 0.1);
+  --phtv-blue: #0071e3;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -9,17 +20,18 @@
 
   body {
     min-height: 100vh;
-    background-color: #0a0b10;
-    color: #f8fafc;
-    font-family: "Be Vietnam Pro", "Noto Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    background: var(--phtv-background);
+    color: var(--phtv-text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   ::selection {
-    background: rgba(244, 63, 94, 0.28);
-    color: #fff7ed;
+    background: rgba(0, 113, 227, 0.2);
+    color: var(--phtv-text);
   }
 
   ::-webkit-scrollbar {
@@ -32,135 +44,194 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.12);
     border: 2px solid transparent;
     border-radius: 999px;
-    background-clip: padding-box;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgba(251, 191, 36, 0.28);
+    background: rgba(29, 29, 31, 0.16);
     background-clip: padding-box;
   }
 }
 
 @layer components {
-  /* Dynamic Liquid Glass Background Mesh Gradients via CSS Animations */
   .mesh-gradient {
     position: fixed;
     inset: 0;
     z-index: 0;
-    overflow: hidden;
     pointer-events: none;
-    background: linear-gradient(180deg, #090a0f 0%, #050608 100%);
+    background: var(--phtv-background);
   }
 
-  .mesh-gradient::before {
-    content: '';
-    position: absolute;
-    width: 600px;
-    height: 600px;
-    border-radius: 50%;
-    filter: blur(100px);
-    opacity: 0.55;
-    background: radial-gradient(circle, rgba(244, 63, 94, 0.32) 0%, rgba(225, 29, 72, 0.01) 80%);
-    top: -12%;
-    left: -8%;
-    animation: moveBlobReact1 22s infinite alternate ease-in-out;
-  }
-
-  .mesh-gradient::after {
-    content: '';
-    position: absolute;
-    width: 650px;
-    height: 650px;
-    border-radius: 50%;
-    filter: blur(100px);
-    opacity: 0.45;
-    background: radial-gradient(circle, rgba(251, 191, 36, 0.2) 0%, rgba(217, 119, 6, 0.01) 80%);
-    top: 45%;
-    right: -12%;
-    animation: moveBlobReact2 28s infinite alternate ease-in-out;
-  }
-
-  @keyframes moveBlobReact1 {
-    0% {
-      transform: translate(0, 0) scale(1) rotate(0deg);
-    }
-    50% {
-      transform: translate(50px, -30px) scale(1.1) rotate(180deg);
-    }
-    100% {
-      transform: translate(-30px, 40px) scale(0.95) rotate(360deg);
-    }
-  }
-
-  @keyframes moveBlobReact2 {
-    0% {
-      transform: translate(0, 0) scale(1) rotate(0deg);
-    }
-    50% {
-      transform: translate(-40px, 50px) scale(0.9) rotate(-180deg);
-    }
-    100% {
-      transform: translate(30px, -30px) scale(1.05) rotate(-360deg);
-    }
-  }
-
-  /* Frosted Glass Panels and Cards overrides */
-  .glass-panel {
-    background: rgba(255, 255, 255, 0.035) !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    box-shadow: 
-      0 25px 60px rgba(0, 0, 0, 0.35), 
-      inset 0 1px 0 rgba(255, 255, 255, 0.1),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.02) !important;
-    backdrop-filter: blur(25px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(25px) saturate(180%) !important;
+  .glass-panel,
+  .glass-card {
+    background: var(--phtv-surface) !important;
+    border: 1px solid var(--phtv-line) !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
 
   .glass-card {
-    background: rgba(255, 255, 255, 0.03) !important;
-    border: 1px solid rgba(255, 255, 255, 0.07) !important;
-    box-shadow: 
-      0 16px 36px rgba(0, 0, 0, 0.22), 
-      inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
-    backdrop-filter: blur(20px) saturate(160%) !important;
-    -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
-    transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.3s ease, box-shadow 0.3s ease !important;
+    transition: border-color 180ms ease, background-color 180ms ease !important;
   }
 
   .glass-card:hover {
-    transform: translateY(-3px) !important;
-    background: rgba(255, 255, 255, 0.055) !important;
-    border-color: rgba(255, 255, 255, 0.15) !important;
-    box-shadow: 
-      0 25px 50px rgba(0, 0, 0, 0.35), 
-      inset 0 1px 0 rgba(255, 255, 255, 0.18),
-      0 0 25px rgba(244, 63, 94, 0.12) !important; /* Soft rose glow on hover for PHTV theme! */
+    transform: none !important;
+    border-color: rgba(29, 29, 31, 0.18) !important;
   }
 
+  .download-choice {
+    border: 1px solid var(--phtv-line);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--phtv-text);
+    transition: background-color 180ms ease, border-color 180ms ease;
+  }
+
+  .download-choice:hover {
+    border-color: rgba(29, 29, 31, 0.18);
+    background: #f8fafc;
+  }
+
+  .download-choice-primary {
+    border-color: rgba(0, 113, 227, 0.2);
+    background: rgba(0, 113, 227, 0.05);
+  }
+
+  .download-choice-icon {
+    border-radius: 7px;
+    background: rgba(0, 113, 227, 0.1);
+    color: var(--phtv-blue);
+  }
+
+  .text-glow,
   .text-glow-sm {
-    text-shadow: 0 0 20px rgba(251, 191, 36, 0.18);
+    text-shadow: none;
   }
 
-  .text-glow {
-    text-shadow:
-      0 0 18px rgba(251, 191, 36, 0.18),
-      0 0 28px rgba(225, 29, 72, 0.16);
-  }
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(24px);
-    will-change: opacity, transform;
-    transition:
-      opacity 650ms ease,
-      transform 650ms ease;
-  }
-
+  .reveal,
   .reveal.active {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
+    transition: none;
+  }
+}
+
+/* The page keeps PHTV's four-line wordmark while the surrounding UI uses the
+   same restrained, light visual language as LunarV. */
+.phtv-page {
+  background: var(--phtv-background) !important;
+  color: var(--phtv-text) !important;
+}
+
+.phtv-page nav.fixed {
+  height: 62px;
+  padding: 0 !important;
+  border-bottom: 1px solid var(--phtv-line);
+  background: rgba(245, 245, 247, 0.84);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+}
+
+.phtv-page nav.fixed > div {
+  height: 62px;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.phtv-page [class*="tracking-"] {
+  letter-spacing: 0 !important;
+}
+
+.phtv-page [class*="text-white"] {
+  color: var(--phtv-text) !important;
+}
+
+.phtv-page [class*="text-slate-"] {
+  color: var(--phtv-muted) !important;
+}
+
+.phtv-page [class*="text-brand-"],
+.phtv-page [class*="text-blue-"],
+.phtv-page [class*="text-amber-"],
+.phtv-page [class*="text-orange-"],
+.phtv-page [class*="text-rose-"],
+.phtv-page [class*="text-red-"] {
+  color: var(--phtv-blue) !important;
+}
+
+.phtv-page [class*="border-white"],
+.phtv-page [class*="border-amber"],
+.phtv-page [class*="border-rose"] {
+  border-color: var(--phtv-line) !important;
+}
+
+.phtv-page [class*="bg-black"],
+.phtv-page [class*="bg-slate-9"],
+.phtv-page [class*="bg-[#0"],
+.phtv-page [class*="bg-[#1"] {
+  background: transparent !important;
+}
+
+.phtv-page [class*="bg-[linear-gradient"],
+.phtv-page [class*="bg-\\[linear-gradient"] {
+  background: var(--phtv-surface) !important;
+}
+
+.phtv-page [class*="rgba(15,23,42"],
+.phtv-page [class*="rgba(8,11,18"] {
+  background: var(--phtv-surface) !important;
+}
+
+.phtv-page [class*="bg-white/"],
+.phtv-page [class*="bg-white["],
+.phtv-page [class*="bg-white\\/"] {
+  background: rgba(118, 118, 128, 0.08) !important;
+}
+
+.phtv-page a[class*="bg-white"],
+.phtv-page a[class*="bg-gradient"],
+.phtv-page button[class*="bg-gradient"] {
+  background: var(--phtv-blue) !important;
+  color: #fff !important;
+}
+
+.phtv-page a[class*="bg-white"] *,
+.phtv-page a[class*="bg-gradient"] *,
+.phtv-page button[class*="bg-gradient"] * {
+  color: #fff !important;
+}
+
+.phtv-page section[id="install"],
+.phtv-page footer {
+  border-color: var(--phtv-line) !important;
+  background: var(--phtv-surface) !important;
+}
+
+.phtv-page section[class*="rounded-"][class*="border"],
+.phtv-page div[class*="rounded-"][class*="border"] {
+  border-color: var(--phtv-line) !important;
+  box-shadow: none !important;
+}
+
+.phtv-page summary,
+.phtv-page h1,
+.phtv-page h2,
+.phtv-page h3,
+.phtv-page h4,
+.phtv-page strong {
+  color: var(--phtv-text);
+}
+
+.phtv-page code,
+.phtv-page pre {
+  color: var(--phtv-text);
+}
+
+@media (max-width: 760px) {
+  .phtv-page nav.fixed > div {
+    padding-left: 16px;
+    padding-right: 16px;
   }
 }
