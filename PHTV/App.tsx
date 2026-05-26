@@ -238,117 +238,143 @@ function App() {
           <main className="relative overflow-hidden px-4 pb-12 pt-24 md:px-6 md:pb-16 md:pt-28">
             <h1 className="sr-only">PHTV - Bộ gõ tiếng Việt Precision Hybrid Typing Vietnamese cho macOS</h1>
 
-            <div className="mx-auto grid max-w-7xl items-center gap-8 text-center lg:grid-cols-[420px_minmax(0,1fr)] lg:gap-10 lg:text-left">
-              <div>
-                <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 backdrop-blur-md">
-                  <span className="h-2 w-2 rounded-full bg-emerald-400"></span>
-                  <span className="text-[10px] font-black uppercase text-slate-300">
-                    {t('home.tag_native')}
-                  </span>
-                </div>
-
-                <div className="mt-6 flex flex-row items-center justify-center gap-4 lg:justify-start">
-                  <div className="relative h-20 w-20 shrink-0 sm:h-24 sm:w-24">
-                    <img
-                      src="/assets/phtv-icon.webp"
-                      alt="PHTV Icon"
-                      className="h-full w-full rounded-[1.25rem] object-cover"
-                      fetchPriority="high"
-                    />
+            <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 text-center lg:grid-cols-[440px_minmax(0,1fr)] lg:gap-16 lg:text-left">
+              {/* Left Column: Grouped info and download card */}
+              <div className="flex flex-col space-y-6 md:space-y-8 min-w-0">
+                <div className="flex flex-col items-center lg:items-start">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 backdrop-blur-md">
+                    <span className="h-2 w-2 rounded-full bg-emerald-400"></span>
+                    <span className="text-[10px] font-black uppercase text-slate-300">
+                      {t('home.tag_native')}
+                    </span>
                   </div>
 
-                  <div className="flex flex-col justify-center gap-1 text-left">
-                    <AcronymRow letter="P" word="recision" />
-                    <AcronymRow letter="H" word="ybrid" />
-                    <AcronymRow letter="T" word="yping" />
-                    <AcronymRow letter="V" word="ietnamese" />
+                  <div className="mt-6 flex flex-row items-center justify-center gap-4 lg:justify-start">
+                    <div className="relative h-20 w-20 shrink-0 sm:h-24 sm:w-24">
+                      <img
+                        src="/assets/phtv-icon.webp"
+                        alt="PHTV Icon"
+                        className="h-full w-full rounded-[1.25rem] object-cover"
+                        fetchPriority="high"
+                      />
+                    </div>
+
+                    <div className="flex flex-col justify-center gap-1 text-left">
+                      <AcronymRow letter="P" word="recision" />
+                      <AcronymRow letter="H" word="ybrid" />
+                      <AcronymRow letter="T" word="yping" />
+                      <AcronymRow letter="V" word="ietnamese" />
+                    </div>
                   </div>
+
+                  <p className="mx-auto mt-6 max-w-md text-base font-medium leading-relaxed text-slate-300 lg:mx-0 lg:max-w-none lg:text-lg">
+                    {lang === 'vi' ? (
+                      <>
+                        Bộ gõ tiếng Việt <span className="font-bold text-white">offline</span>, <span className="font-bold text-white">nhanh</span> và <span className="font-bold text-white">riêng tư</span> cho macOS.
+                      </>
+                    ) : (
+                      <>
+                        An <span className="font-bold text-white">offline</span>, <span className="font-bold text-white">fast</span> and <span className="font-bold text-white">private</span> Vietnamese typing method for macOS.
+                      </>
+                    )}
+                  </p>
                 </div>
 
-                <p className="mx-auto mt-6 max-w-md text-base font-medium leading-relaxed text-slate-300 lg:mx-0 lg:text-lg">
-                  {lang === 'vi' ? (
-                    <>
-                      Bộ gõ tiếng Việt <span className="font-bold text-white">offline</span>, <span className="font-bold text-white">nhanh</span> và <span className="font-bold text-white">riêng tư</span> cho macOS.
-                    </>
+                <div className="mx-auto w-full max-w-xl px-1 lg:mx-0 min-w-0">
+                  {hasSplitDownloads ? (
+                    <div className="glass-panel p-4 md:p-5">
+                      <div className="mb-4 flex items-center justify-between gap-3 text-left">
+                        <div>
+                          <h2 className="text-base font-semibold text-white">{t('home.download_title')}</h2>
+                          <p className="mt-1 text-xs text-slate-400">{version} / macOS 14+</p>
+                        </div>
+                        <Icons.Download size={18} className="text-blue-500" />
+                      </div>
+
+                      <div className="space-y-2">
+                        <DownloadChoiceCard
+                          href={arm64DownloadUrl ?? releaseUrl}
+                          title="Apple Silicon"
+                          chip={t('nav.apple_silicon_desc')}
+                          note={t('home.download_silicon_note')}
+                          tone="accent"
+                        />
+                        <DownloadChoiceCard
+                          href={intelDownloadUrl ?? releaseUrl}
+                          title="Intel"
+                          chip={t('nav.intel_desc')}
+                          note={t('home.download_intel_note')}
+                        />
+                      </div>
+                    </div>
                   ) : (
-                    <>
-                      An <span className="font-bold text-white">offline</span>, <span className="font-bold text-white">fast</span> and <span className="font-bold text-white">private</span> Vietnamese typing method for macOS.
-                    </>
+                    <a
+                      href={universalDownloadUrl ?? downloadUrl}
+                      className="inline-flex w-full items-center justify-center gap-3 rounded-full bg-white px-8 py-4 text-base font-black text-slate-950 transition-colors hover:bg-slate-100 md:w-auto md:text-lg"
+                    >
+                      <Icons.Download size={20} />
+                      {t('home.download_universal').replace('{version}', version)}
+                    </a>
                   )}
-                </p>
+
+                  <div className="mt-4 flex flex-wrap items-center justify-center lg:justify-start gap-4">
+                    <a
+                      href="#install"
+                      className="inline-flex items-center gap-2 text-sm font-medium text-blue-600"
+                    >
+                      <Icons.Terminal size={16} />
+                      {t('home.install_btn')}
+                    </a>
+                    <button
+                      onClick={() => {
+                        setActiveTab('community');
+                        window.location.hash = '#community';
+                      }}
+                      className="inline-flex items-center gap-2 text-sm font-medium text-blue-600"
+                    >
+                      <Icons.MessageSquare size={16} />
+                      {t('home.discuss_btn')}
+                    </button>
+                    <button
+                      onClick={() => setShowDonate(true)}
+                      className="inline-flex items-center gap-2 text-sm font-medium text-blue-600"
+                    >
+                      <Icons.Heart size={16} />
+                      {t('home.donate')}
+                    </button>
+                  </div>
+                </div>
               </div>
 
-              <figure className="overflow-hidden rounded-lg lg:col-start-2 lg:row-span-2 lg:row-start-1">
-                <img
-                  src="/PHTV/assets/UI/settings-hero.png"
-                  alt={lang === 'vi' ? 'Giao diện thiết lập bộ gõ PHTV trên macOS' : 'PHTV input method settings on macOS'}
-                  className="block h-auto w-full"
-                  fetchPriority="high"
-                />
-              </figure>
-
-              <div className="mx-auto w-full max-w-xl px-1 lg:col-start-1 lg:mx-0">
-                {hasSplitDownloads ? (
-                  <div className="glass-panel p-4 md:p-5">
-                    <div className="mb-4 flex items-center justify-between gap-3 text-left">
-                      <div>
-                        <h2 className="text-base font-semibold text-white">{t('home.download_title')}</h2>
-                        <p className="mt-1 text-xs text-slate-400">{version} / macOS 14+</p>
+              {/* Right Column: Premium Mockup macOS Settings Window */}
+              <div className="w-full flex justify-center items-center lg:justify-end min-w-0">
+                <div className="relative w-full max-w-2xl group">
+                  {/* Dynamic background colorful gradient glow */}
+                  <div className="absolute -inset-2 rounded-2xl bg-gradient-to-tr from-blue-500/10 via-indigo-500/10 to-purple-500/10 opacity-30 blur-2xl group-hover:opacity-50 transition-opacity duration-700 pointer-events-none" />
+                  
+                  {/* The Premium macOS Window Mockup container */}
+                  <div className="relative overflow-hidden rounded-2xl border border-black/[0.08] dark:border-white/[0.08] bg-slate-900/5 backdrop-blur-xl shadow-[0_30px_80px_rgba(0,0,0,0.16)] dark:shadow-[0_30px_80px_rgba(0,0,0,0.4)] transition-all duration-500 ease-out group-hover:scale-[1.015] group-hover:-translate-y-1">
+                    {/* macOS Title Bar Controls */}
+                    <div className="flex h-10 items-center justify-between border-b border-black/[0.06] dark:border-white/[0.06] bg-slate-100/40 px-4 select-none">
+                      <div className="flex gap-2">
+                        <span className="h-3 w-3 rounded-full bg-[#ff5f56] border border-black/5" />
+                        <span className="h-3 w-3 rounded-full bg-[#ffbd2e] border border-black/5" />
+                        <span className="h-3 w-3 rounded-full bg-[#27c93f] border border-black/5" />
                       </div>
-                      <Icons.Download size={18} className="text-blue-500" />
+                      <div className="text-[11px] font-medium text-slate-400 dark:text-slate-500">PHTV Settings</div>
+                      <div className="w-[52px]" /> {/* Spacer to balance traffic lights */}
                     </div>
 
-                    <div className="space-y-2">
-                      <DownloadChoiceCard
-                        href={arm64DownloadUrl ?? releaseUrl}
-                        title="Apple Silicon"
-                        chip={t('nav.apple_silicon_desc')}
-                        note={t('home.download_silicon_note')}
-                        tone="accent"
-                      />
-                      <DownloadChoiceCard
-                        href={intelDownloadUrl ?? releaseUrl}
-                        title="Intel"
-                        chip={t('nav.intel_desc')}
-                        note={t('home.download_intel_note')}
+                    {/* Screenshot Container */}
+                    <div className="w-full bg-[#f5f5f7] overflow-hidden">
+                      <img
+                        src="/PHTV/assets/UI/settings-hero.png"
+                        alt={lang === 'vi' ? 'Giao diện thiết lập bộ gõ PHTV trên macOS' : 'PHTV input method settings on macOS'}
+                        className="block h-auto w-full select-none"
+                        fetchPriority="high"
                       />
                     </div>
                   </div>
-                ) : (
-                  <a
-                    href={universalDownloadUrl ?? downloadUrl}
-                    className="inline-flex w-full items-center justify-center gap-3 rounded-full bg-white px-8 py-4 text-base font-black text-slate-950 transition-colors hover:bg-slate-100 md:w-auto md:text-lg"
-                  >
-                    <Icons.Download size={20} />
-                    {t('home.download_universal').replace('{version}', version)}
-                  </a>
-                )}
-
-                <div className="mt-4 flex flex-wrap items-center justify-center gap-4">
-                  <a
-                    href="#install"
-                    className="inline-flex items-center gap-2 text-sm font-medium text-blue-600"
-                  >
-                    <Icons.Terminal size={16} />
-                    {t('home.install_btn')}
-                  </a>
-                  <button
-                    onClick={() => {
-                      setActiveTab('community');
-                      window.location.hash = '#community';
-                    }}
-                    className="inline-flex items-center gap-2 text-sm font-medium text-blue-600"
-                  >
-                    <Icons.MessageSquare size={16} />
-                    {t('home.discuss_btn')}
-                  </button>
-                  <button
-                    onClick={() => setShowDonate(true)}
-                    className="inline-flex items-center gap-2 text-sm font-medium text-blue-600"
-                  >
-                    <Icons.Heart size={16} />
-                    {t('home.donate')}
-                  </button>
                 </div>
               </div>
             </div>
