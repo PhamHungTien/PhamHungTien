@@ -176,8 +176,12 @@
   function getLang() {
     let lang = localStorage.getItem("preferred_lang");
     if (!lang) {
-      const browserLang = navigator.language || navigator.userLanguage || "";
-      lang = browserLang.toLowerCase().startsWith("vi") ? "vi" : "en";
+      if (window.location.pathname.includes("AiPadCode")) {
+        lang = "en";
+      } else {
+        const browserLang = navigator.language || navigator.userLanguage || "";
+        lang = browserLang.toLowerCase().startsWith("vi") ? "vi" : "en";
+      }
     }
     return lang;
   }
@@ -244,45 +248,56 @@
     if (toggleBtn) {
       if (lang === "vi") {
         toggleBtn.innerHTML =
-          '<span style="font-weight: 800; color: #ffffff;">VI</span><span style="opacity: 0.3; margin: 0 6px;">|</span><span style="opacity: 0.55; font-weight: 500;">EN</span>';
+          '<span style="font-weight: 800; color: var(--text, #1d1d1f);">VI</span><span style="opacity: 0.3; margin: 0 4px; color: var(--text, #1d1d1f);">|</span><span style="opacity: 0.55; font-weight: 500; color: var(--text, #1d1d1f);">EN</span>';
       } else {
         toggleBtn.innerHTML =
-          '<span style="opacity: 0.55; font-weight: 500;">VI</span><span style="opacity: 0.3; margin: 0 6px;">|</span><span style="font-weight: 800; color: #ffffff;">EN</span>';
+          '<span style="opacity: 0.55; font-weight: 500; color: var(--text, #1d1d1f);">VI</span><span style="opacity: 0.3; margin: 0 4px; color: var(--text, #1d1d1f);">|</span><span style="font-weight: 800; color: var(--text, #1d1d1f);">EN</span>';
       }
     }
   }
 
-  // Inject toggle button into .topbar-actions
+  // Inject toggle button into .nav
   function injectToggleButton(lang) {
-    const actions = document.querySelector(".topbar-actions");
-    if (actions && !document.getElementById("lang-toggle-btn")) {
+    const nav = document.querySelector(".nav");
+    if (nav && !document.getElementById("lang-toggle-btn")) {
       const btn = document.createElement("button");
       btn.id = "lang-toggle-btn";
-      btn.className = "pill-link lang-toggle";
+      btn.className = "lang-toggle";
       btn.style.cursor = "pointer";
       btn.style.outline = "none";
       btn.style.display = "inline-flex";
       btn.style.alignItems = "center";
       btn.style.justifyContent = "center";
-      btn.style.minHeight = "45px";
-      btn.style.border = "1px solid var(--border)";
-      btn.style.backgroundColor = "rgba(255, 255, 255, 0.04)";
-      btn.style.padding = "0 16px";
+      btn.style.height = "32px";
+      btn.style.border = "1px solid var(--line, rgba(29, 29, 31, 0.1))";
+      btn.style.backgroundColor = "rgba(0, 113, 227, 0.04)";
+      btn.style.padding = "0 12px";
       btn.style.borderRadius = "999px";
-      btn.style.color = "#e2e8f0";
-      btn.style.fontSize = "0.92rem";
-      btn.style.transition = "background-color 180ms ease, border-color 180ms ease, transform 180ms ease";
+      btn.style.color = "var(--text, #1d1d1f)";
+      btn.style.fontFamily = "inherit";
+      btn.style.fontSize = "12px";
+      btn.style.fontWeight = "500";
+      btn.style.transition = "background-color 180ms ease, border-color 180ms ease";
       
+      btn.addEventListener("mouseover", () => {
+        btn.style.backgroundColor = "rgba(0, 113, 227, 0.08)";
+        btn.style.borderColor = "var(--text, #1d1d1f)";
+      });
+      btn.addEventListener("mouseout", () => {
+        btn.style.backgroundColor = "rgba(0, 113, 227, 0.04)";
+        btn.style.borderColor = "var(--line, rgba(29, 29, 31, 0.1))";
+      });
+
       btn.addEventListener("click", () => {
         const nextLang = getLang() === "vi" ? "en" : "vi";
         localStorage.setItem("preferred_lang", nextLang);
         applyTranslations(nextLang);
-        // Dispatch custom event to notify React app PHTV if active in context
+        // Dispatch custom event to notify other scripts/apps
         window.dispatchEvent(new CustomEvent("langchange", { detail: nextLang }));
       });
 
-      // Insert at the beginning of actions
-      actions.insertBefore(btn, actions.firstChild);
+      // Append to the navigation container
+      nav.appendChild(btn);
       updateToggleButton(lang);
     }
   }
@@ -291,6 +306,9 @@
   async function detectIPLanguage() {
     // Only check IP geolocation if preferred_lang is not stored in localStorage
     if (localStorage.getItem("preferred_lang")) return;
+
+    // Skip IP language detection on AiPadCode so it defaults to English
+    if (window.location.pathname.includes("AiPadCode")) return;
 
     try {
       const res = await fetch("https://freeipapi.com/api/json");
