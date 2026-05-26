@@ -238,44 +238,56 @@ function App() {
           <main className="relative overflow-hidden px-4 pb-12 pt-24 md:px-6 md:pb-16 md:pt-28">
             <h1 className="sr-only">PHTV - Bộ gõ tiếng Việt Precision Hybrid Typing Vietnamese cho macOS</h1>
 
-            <div className="mx-auto max-w-6xl text-center">
-              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 backdrop-blur-md">
-                <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.55)]"></span>
-                <span className="text-[10px] font-black uppercase tracking-[0.24em] text-slate-300">
-                  {t('home.tag_native')}
-                </span>
-              </div>
-
-              <div className="mt-7 flex flex-row items-center justify-center gap-4 sm:gap-8 md:mt-10 md:gap-10">
-                <div className="relative h-24 w-24 shrink-0 sm:h-44 sm:w-44 md:h-52 md:w-52">
-                  <img
-                    src="/assets/phtv-icon.webp"
-                    alt="PHTV Icon"
-                    className="h-full w-full rounded-[1.6rem] object-cover drop-shadow-[0_12px_24px_rgba(0,0,0,0.18)] md:rounded-[2.2rem]"
-                    fetchPriority="high"
-                  />
+            <div className="mx-auto grid max-w-7xl items-center gap-8 text-center lg:grid-cols-[420px_minmax(0,1fr)] lg:gap-10 lg:text-left">
+              <div>
+                <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 backdrop-blur-md">
+                  <span className="h-2 w-2 rounded-full bg-emerald-400"></span>
+                  <span className="text-[10px] font-black uppercase text-slate-300">
+                    {t('home.tag_native')}
+                  </span>
                 </div>
 
-                <div className="flex flex-col justify-center gap-1 text-left md:gap-2">
-                  <AcronymRow letter="P" word="recision" />
-                  <AcronymRow letter="H" word="ybrid" />
-                  <AcronymRow letter="T" word="yping" />
-                  <AcronymRow letter="V" word="ietnamese" />
+                <div className="mt-6 flex flex-row items-center justify-center gap-4 lg:justify-start">
+                  <div className="relative h-20 w-20 shrink-0 sm:h-24 sm:w-24">
+                    <img
+                      src="/assets/phtv-icon.webp"
+                      alt="PHTV Icon"
+                      className="h-full w-full rounded-[1.25rem] object-cover"
+                      fetchPriority="high"
+                    />
+                  </div>
+
+                  <div className="flex flex-col justify-center gap-1 text-left">
+                    <AcronymRow letter="P" word="recision" />
+                    <AcronymRow letter="H" word="ybrid" />
+                    <AcronymRow letter="T" word="yping" />
+                    <AcronymRow letter="V" word="ietnamese" />
+                  </div>
                 </div>
+
+                <p className="mx-auto mt-6 max-w-md text-base font-medium leading-relaxed text-slate-300 lg:mx-0 lg:text-lg">
+                  {lang === 'vi' ? (
+                    <>
+                      Bộ gõ tiếng Việt <span className="font-bold text-white">offline</span>, <span className="font-bold text-white">nhanh</span> và <span className="font-bold text-white">riêng tư</span> cho macOS.
+                    </>
+                  ) : (
+                    <>
+                      An <span className="font-bold text-white">offline</span>, <span className="font-bold text-white">fast</span> and <span className="font-bold text-white">private</span> Vietnamese typing method for macOS.
+                    </>
+                  )}
+                </p>
               </div>
 
-              <p className="mx-auto mt-7 max-w-3xl px-2 text-lg font-medium leading-relaxed text-slate-300 md:mt-9 md:text-2xl">
-                {lang === 'vi' ? (
-                  <>
-                    Bộ gõ tiếng Việt <span className="font-bold text-white text-glow-sm">offline</span>, <span className="font-bold text-white text-glow-sm">nhanh</span> và <span className="font-bold text-white text-glow">riêng tư</span> cho macOS.
-                  </>
-                ) : (
-                  <>
-                    An <span className="font-bold text-white text-glow-sm">offline</span>, <span className="font-bold text-white text-glow-sm">fast</span> and <span className="font-bold text-white text-glow">private</span> Vietnamese typing method for macOS.
-                  </>
-                )}
-              </p>
-              <div className="mx-auto mt-7 w-full max-w-xl px-1">
+              <figure className="overflow-hidden rounded-lg lg:col-start-2 lg:row-span-2 lg:row-start-1">
+                <img
+                  src="/PHTV/assets/UI/settings-hero.png"
+                  alt={lang === 'vi' ? 'Giao diện thiết lập bộ gõ PHTV trên macOS' : 'PHTV input method settings on macOS'}
+                  className="block h-auto w-full"
+                  fetchPriority="high"
+                />
+              </figure>
+
+              <div className="mx-auto w-full max-w-xl px-1 lg:col-start-1 lg:mx-0">
                 {hasSplitDownloads ? (
                   <div className="glass-panel p-4 md:p-5">
                     <div className="mb-4 flex items-center justify-between gap-3 text-left">

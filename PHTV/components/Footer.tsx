@@ -12,7 +12,7 @@ export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
   const { t } = useI18n();
 
   return (
-    <footer className="border-t border-white/6 bg-black/10 py-16 md:py-20">
+    <footer className="relative z-10 border-t border-white/6 bg-black/10 py-12 md:py-14">
       <div className="mx-auto max-w-6xl px-4 md:px-6">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-[1.35fr_0.65fr]">
           <div>

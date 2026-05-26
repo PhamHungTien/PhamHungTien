@@ -12,34 +12,34 @@ export const TerminalBlock: React.FC<TerminalCommandProps> = ({ command, label =
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto overflow-hidden rounded-xl bg-[#1e1e1e] border border-slate-700 shadow-2xl">
-      <div className="flex items-center justify-between px-4 py-3 bg-[#252526] border-b border-slate-700">
+    <div className="mx-auto w-full max-w-2xl overflow-hidden rounded-lg border border-slate-200 bg-white">
+      <div className="flex items-center justify-between border-b border-slate-200 bg-slate-100 px-4 py-3">
         <div className="flex items-center gap-2">
           <div className="flex gap-1.5">
-            <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
-            <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-            <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
+            <div className="h-3 w-3 rounded-full bg-red-400"></div>
+            <div className="h-3 w-3 rounded-full bg-yellow-400"></div>
+            <div className="h-3 w-3 rounded-full bg-green-400"></div>
           </div>
-          <span className="ml-3 text-xs text-slate-400 font-mono flex items-center gap-1">
+          <span className="ml-3 flex items-center gap-1 font-mono text-xs text-slate-500">
             <Icons.Terminal size={12} />
             {label}
           </span>
         </div>
         <button 
           onClick={handleCopy}
-          className="text-slate-400 hover:text-white transition-colors focus:outline-none"
+          className="text-slate-500 transition-colors hover:text-blue-600 focus:outline-none"
           title="Copy command"
         >
-          {copied ? <Icons.Check size={16} className="text-green-400" /> : <Icons.Copy size={16} />}
+          {copied ? <Icons.Check size={16} className="text-green-600" /> : <Icons.Copy size={16} />}
         </button>
       </div>
-      <div className="p-6 font-mono text-sm sm:text-base">
-        <div className="flex items-start gap-2 text-slate-300">
-          <span className="text-green-400 select-none">$</span>
+      <div className="p-4 font-mono text-sm sm:text-base">
+        <div className="flex items-start gap-2 text-slate-700">
+          <span className="select-none text-green-600">$</span>
           <span className="break-all">{command}</span>
         </div>
         {output && (
-          <div className="mt-2 text-slate-500 select-none whitespace-pre-line">
+          <div className="mt-2 select-none whitespace-pre-line text-slate-500">
             {output}
           </div>
         )}
