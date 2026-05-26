@@ -165,7 +165,7 @@ export const Gallery: React.FC = () => {
                      className="glass-card min-w-0 group relative flex cursor-pointer flex-col overflow-hidden rounded-[1.5rem] p-4"
                      onClick={() => openLightbox(globalIndex)}
                    >
-                      <div className="aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[1rem] bg-black/20">
+                      <div className="w-full aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[1rem] bg-black/20">
                         <img src={item.src} alt={item.label} className="h-full w-full object-contain transition-transform duration-500 ease-out group-hover:scale-[1.03]" loading="lazy" />
                       </div>
                       <div className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pb-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
@@ -195,7 +195,7 @@ export const Gallery: React.FC = () => {
                      className="glass-card min-w-0 group relative flex cursor-pointer flex-col overflow-hidden rounded-[1.5rem] p-4"
                      onClick={() => openLightbox(globalIndex)}
                    >
-                      <div className="aspect-[16/10] flex items-center justify-center overflow-hidden rounded-[1rem] bg-black/20">
+                      <div className="w-full aspect-[16/10] flex items-center justify-center overflow-hidden rounded-[1rem] bg-black/20">
                         <img src={item.src} alt={item.label} className="h-full w-full object-contain transition-transform duration-500 ease-out group-hover:scale-[1.03]" loading="lazy" />
                       </div>
                       <div className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pb-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
