@@ -353,24 +353,13 @@ function App() {
                   <div className="absolute -inset-2 rounded-2xl bg-gradient-to-tr from-blue-500/10 via-indigo-500/10 to-purple-500/10 opacity-30 blur-2xl group-hover:opacity-50 transition-opacity duration-700 pointer-events-none" />
                   
                   {/* The Premium macOS Window Mockup container */}
-                  <div className="relative overflow-hidden rounded-2xl border border-black/[0.08] dark:border-white/[0.08] bg-slate-900/5 backdrop-blur-xl shadow-[0_30px_80px_rgba(0,0,0,0.16)] dark:shadow-[0_30px_80px_rgba(0,0,0,0.4)] transition-all duration-500 ease-out group-hover:scale-[1.015] group-hover:-translate-y-1">
-                    {/* macOS Title Bar Controls */}
-                    <div className="flex h-10 items-center justify-between border-b border-black/[0.06] dark:border-white/[0.06] bg-slate-100/40 px-4 select-none">
-                      <div className="flex gap-2">
-                        <span className="h-3 w-3 rounded-full bg-[#ff5f56] border border-black/5" />
-                        <span className="h-3 w-3 rounded-full bg-[#ffbd2e] border border-black/5" />
-                        <span className="h-3 w-3 rounded-full bg-[#27c93f] border border-black/5" />
-                      </div>
-                      <div className="text-[11px] font-medium text-slate-400 dark:text-slate-500">PHTV Settings</div>
-                      <div className="w-[52px]" /> {/* Spacer to balance traffic lights */}
-                    </div>
-
+                  <div className="relative w-full overflow-hidden rounded-2xl border border-black/[0.08] dark:border-white/[0.08] bg-slate-900/5 backdrop-blur-xl shadow-[0_30px_80px_rgba(0,0,0,0.16)] dark:shadow-[0_30px_80px_rgba(0,0,0,0.4)] transition-all duration-500 ease-out group-hover:scale-[1.015] group-hover:-translate-y-1">
                     {/* Screenshot Container */}
                     <div className="w-full bg-[#f5f5f7] overflow-hidden">
                       <img
                         src="/PHTV/assets/UI/settings-hero.png"
                         alt={lang === 'vi' ? 'Giao diện thiết lập bộ gõ PHTV trên macOS' : 'PHTV input method settings on macOS'}
-                        className="block h-auto w-full select-none"
+                        className="block h-auto w-full max-w-full select-none"
                         fetchPriority="high"
                       />
                     </div>
