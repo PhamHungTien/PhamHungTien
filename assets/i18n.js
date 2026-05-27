@@ -3,7 +3,7 @@
     vi: {
       // Root Index
       "root.title": "Pham Hung Tien | Sản phẩm",
-      "root.meta_desc": "Trang chính thức của Pham Hung Tien với các ứng dụng cho thiết bị Apple, gồm PHTV, LunarV và AI Pad Code.",
+      "root.meta_desc": "Trang chính thức của Pham Hung Tien với các ứng dụng cho thiết bị Apple, gồm PHTV, LunarV và Pad Code AI.",
       "root.brand_subtitle": "Danh sách sản phẩm",
       "root.contact": "Liên hệ",
       "root.developer": "Nhà phát triển",
@@ -23,8 +23,8 @@
       "root.tag_compiler": "Biên dịch offline",
 
       // PadCodeAI Index
-      "aipad.title": "AI Pad Code - Trình soạn thảo & Biên dịch code cho iPad & iPhone",
-      "aipad.meta_desc": "Viết, chạy và quản lý mã nguồn trong hơn 24 ngôn ngữ lập trình trực tiếp trên thiết bị của bạn. AI Pad Code tích hợp local compiler, terminal và Apple Intelligence.",
+      "aipad.title": "Pad Code AI - Trình soạn thảo & Biên dịch code cho iPad & iPhone",
+      "aipad.meta_desc": "Viết, chạy và quản lý mã nguồn trong hơn 24 ngôn ngữ lập trình trực tiếp trên thiết bị của bạn. Pad Code AI tích hợp local compiler, terminal và Apple Intelligence.",
       "aipad.brand_subtitle": "IDE cho iPad/iPhone",
       "aipad.features_nav": "Tính năng",
       "aipad.hero_title": "Code mọi lúc, mọi nơi. Không giới hạn.",
@@ -89,7 +89,7 @@
     en: {
       // Root Index
       "root.title": "Pham Hung Tien | Products",
-      "root.meta_desc": "Official website of Pham Hung Tien featuring apps for Apple devices, including PHTV, LunarV, and AI Pad Code.",
+      "root.meta_desc": "Official website of Pham Hung Tien featuring apps for Apple devices, including PHTV, LunarV, and Pad Code AI.",
       "root.brand_subtitle": "Product Index",
       "root.contact": "Contact",
       "root.developer": "Developer",
@@ -109,8 +109,8 @@
       "root.tag_compiler": "Offline Compiler",
 
       // PadCodeAI Index
-      "aipad.title": "AI Pad Code - The Ultimate Code Editor for iPad & iPhone",
-      "aipad.meta_desc": "Write, run, and manage code in 24+ languages directly on your device. AI Pad Code features a local compiler, integrated terminal, and Apple Intelligence.",
+      "aipad.title": "Pad Code AI - The Ultimate Code Editor for iPad & iPhone",
+      "aipad.meta_desc": "Write, run, and manage code in 24+ languages directly on your device. Pad Code AI features a local compiler, integrated terminal, and Apple Intelligence.",
       "aipad.brand_subtitle": "IDE for iPad/iPhone",
       "aipad.features_nav": "Features",
       "aipad.hero_title": "Code anytime, anywhere. No limits.",
