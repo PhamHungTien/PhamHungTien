@@ -3,7 +3,7 @@
     vi: {
       // Root Index
       "root.title": "Pham Hung Tien | Sản phẩm",
-      "root.meta_desc": "Trang chính thức của Pham Hung Tien với các ứng dụng cho thiết bị Apple, gồm PHTV, LunarV và AiPadCode.",
+      "root.meta_desc": "Trang chính thức của Pham Hung Tien với các ứng dụng cho thiết bị Apple, gồm PHTV, LunarV và AI Pad Code.",
       "root.brand_subtitle": "Danh sách sản phẩm",
       "root.contact": "Liên hệ",
       "root.developer": "Nhà phát triển",
@@ -23,13 +23,14 @@
       "root.tag_compiler": "Biên dịch offline",
 
       // AiPadCode Index
-      "aipad.title": "AiPadCode - Trình soạn thảo & Biên dịch code cho iPad & iPhone",
-      "aipad.meta_desc": "Viết, chạy và quản lý mã nguồn trong hơn 24 ngôn ngữ lập trình trực tiếp trên thiết bị của bạn. AiPadCode tích hợp local compiler, terminal và Apple Intelligence.",
+      "aipad.title": "AI Pad Code - Trình soạn thảo & Biên dịch code cho iPad & iPhone",
+      "aipad.meta_desc": "Viết, chạy và quản lý mã nguồn trong hơn 24 ngôn ngữ lập trình trực tiếp trên thiết bị của bạn. AI Pad Code tích hợp local compiler, terminal và Apple Intelligence.",
       "aipad.brand_subtitle": "IDE cho iPad/iPhone",
       "aipad.features_nav": "Tính năng",
       "aipad.hero_title": "Code mọi lúc, mọi nơi. Không giới hạn.",
       "aipad.hero_desc": "Code Editor và IDE chuyên nghiệp dành riêng cho iPad và iPhone. Viết và biên dịch code offline với sự hỗ trợ của Apple Intelligence!",
       "aipad.coming_soon": "Sắp có trên App Store",
+      "aipad.coming_soon_nav": "Sắp ra mắt",
       "aipad.platforms": "Nền tảng",
       "aipad.execution": "Biên dịch",
       "aipad.on_device": "Trên thiết bị",
@@ -88,7 +89,7 @@
     en: {
       // Root Index
       "root.title": "Pham Hung Tien | Products",
-      "root.meta_desc": "Official website of Pham Hung Tien featuring apps for Apple devices, including PHTV, LunarV, and AiPadCode.",
+      "root.meta_desc": "Official website of Pham Hung Tien featuring apps for Apple devices, including PHTV, LunarV, and AI Pad Code.",
       "root.brand_subtitle": "Product Index",
       "root.contact": "Contact",
       "root.developer": "Developer",
@@ -108,13 +109,14 @@
       "root.tag_compiler": "Offline Compiler",
 
       // AiPadCode Index
-      "aipad.title": "AiPadCode - The Ultimate Code Editor for iPad & iPhone",
-      "aipad.meta_desc": "Write, run, and manage code in 24+ languages directly on your device. AiPadCode features a local compiler, integrated terminal, and Apple Intelligence.",
+      "aipad.title": "AI Pad Code - The Ultimate Code Editor for iPad & iPhone",
+      "aipad.meta_desc": "Write, run, and manage code in 24+ languages directly on your device. AI Pad Code features a local compiler, integrated terminal, and Apple Intelligence.",
       "aipad.brand_subtitle": "IDE for iPad/iPhone",
       "aipad.features_nav": "Features",
       "aipad.hero_title": "Code anytime, anywhere. No limits.",
       "aipad.hero_desc": "A professional Code Editor and IDE tailored for iPad and iPhone. Write and compile code offline with Apple Intelligence support!",
       "aipad.coming_soon": "Coming soon to the App Store",
+      "aipad.coming_soon_nav": "Coming Soon",
       "aipad.platforms": "Platforms",
       "aipad.execution": "Execution",
       "aipad.on_device": "On device",

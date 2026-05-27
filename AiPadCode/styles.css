@@ -207,26 +207,31 @@
 
 @media (max-width: 760px) {
   .nav .unavailable {
-    padding: 0 12px;
-    font-size: 12px;
+    padding: 0 10px;
+    font-size: 11px;
+    white-space: nowrap;
   }
 
   .product-hero {
-    min-height: 650px;
+    min-height: 580px;
     align-items: flex-start;
   }
 
   .product-hero::after {
-    background: linear-gradient(180deg, #f5f5f7 0%, #f5f5f7 48%, rgba(245, 245, 247, 0.6) 70%, rgba(245, 245, 247, 0) 100%);
+    background: linear-gradient(180deg, #f5f5f7 0%, #f5f5f7 56%, rgba(245, 245, 247, 0.12) 100%);
   }
 
   .hero-media img {
-    object-position: 62% bottom;
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    height: 45%;
+    object-position: center top;
   }
 
   .hero-content {
     width: 100%;
-    padding-top: 42px;
+    padding: 42px 0 240px;
   }
 
   .hero-content h1 {
