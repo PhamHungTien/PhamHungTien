@@ -13,8 +13,8 @@
       "root.phtv_subtitle": "Bộ gõ tiếng Việt hiện đại cho macOS.",
       "root.lunarv_desc": "LunarV mang lịch âm, widget, thông báo và dịp gia đình lên iPhone, iPad, Mac và Apple Vision Pro.",
       "root.lunarv_subtitle": "Lịch âm Việt Nam trên thiết bị Apple.",
-      "root.aipadcode_desc": "Viết, chạy và quản lý code trên thiết bị di động với Compiler offline và Apple Intelligence tích hợp.",
-      "root.aipadcode_subtitle": "Code Editor & IDE cho iPad/iPhone",
+      "root.padcodeai_desc": "Viết, chạy và quản lý code trên thiết bị di động với Compiler offline và Apple Intelligence tích hợp.",
+      "root.padcodeai_subtitle": "Code Editor & IDE cho iPad/iPhone",
       "root.open_product": "Mở trang sản phẩm",
       "root.tag_lunar": "Lịch âm",
       "root.tag_reminders": "Nhắc nhở",
@@ -22,7 +22,7 @@
       "root.tag_opensource": "Mã nguồn mở",
       "root.tag_compiler": "Biên dịch offline",
 
-      // AiPadCode Index
+      // PadCodeAI Index
       "aipad.title": "AI Pad Code - Trình soạn thảo & Biên dịch code cho iPad & iPhone",
       "aipad.meta_desc": "Viết, chạy và quản lý mã nguồn trong hơn 24 ngôn ngữ lập trình trực tiếp trên thiết bị của bạn. AI Pad Code tích hợp local compiler, terminal và Apple Intelligence.",
       "aipad.brand_subtitle": "IDE cho iPad/iPhone",
@@ -99,8 +99,8 @@
       "root.phtv_subtitle": "Modern Vietnamese input method for macOS.",
       "root.lunarv_desc": "LunarV brings the lunar calendar, widgets, notifications, and family occasions to iPhone, iPad, Mac, and Apple Vision Pro.",
       "root.lunarv_subtitle": "Vietnamese lunar calendar on Apple devices.",
-      "root.aipadcode_desc": "Write, run, and manage code on mobile devices with an offline compiler and integrated Apple Intelligence.",
-      "root.aipadcode_subtitle": "Code Editor & IDE for iPad/iPhone",
+      "root.padcodeai_desc": "Write, run, and manage code on mobile devices with an offline compiler and integrated Apple Intelligence.",
+      "root.padcodeai_subtitle": "Code Editor & IDE for iPad/iPhone",
       "root.open_product": "Open Product Page",
       "root.tag_lunar": "Lunar Calendar",
       "root.tag_reminders": "Reminders",
@@ -108,7 +108,7 @@
       "root.tag_opensource": "Open Source",
       "root.tag_compiler": "Offline Compiler",
 
-      // AiPadCode Index
+      // PadCodeAI Index
       "aipad.title": "AI Pad Code - The Ultimate Code Editor for iPad & iPhone",
       "aipad.meta_desc": "Write, run, and manage code in 24+ languages directly on your device. AI Pad Code features a local compiler, integrated terminal, and Apple Intelligence.",
       "aipad.brand_subtitle": "IDE for iPad/iPhone",
@@ -183,7 +183,7 @@
         // LunarV and PHTV default to Vietnamese
         lang = "vi";
       } else {
-        // Main portfolio page and AiPadCode default to English
+        // Main portfolio page and PadCodeAI default to English
         lang = "en";
       }
     }
@@ -219,7 +219,7 @@
     } else {
       // Fallback: detect page
       let pageTitleKey = "";
-      if (window.location.pathname.includes("AiPadCode")) {
+      if (window.location.pathname.includes("PadCodeAI")) {
         pageTitleKey = "aipad.title";
       } else if (window.location.pathname.includes("LunarV")) {
         pageTitleKey = "lunar.title";
@@ -232,7 +232,7 @@
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) {
       let pageDescKey = "";
-      if (window.location.pathname.includes("AiPadCode")) {
+      if (window.location.pathname.includes("PadCodeAI")) {
         pageDescKey = "aipad.meta_desc";
       } else if (window.location.pathname.includes("LunarV")) {
         pageDescKey = "lunar.meta_desc";
@@ -316,7 +316,7 @@
     // Only check IP geolocation if preferred_lang is not stored in localStorage
     if (localStorage.getItem("preferred_lang")) return;
 
-    // Skip IP language detection on main page and AiPadCode so they default to English
+    // Skip IP language detection on main page and PadCodeAI so they default to English
     const path = window.location.pathname;
     if (!path.includes("LunarV") && !path.includes("PHTV")) return;
 

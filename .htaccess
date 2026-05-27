@@ -5,19 +5,19 @@
   # Redirect the fallback LunarV product path to the canonical URL
   RewriteRule ^products/lunarv/?$ LunarV/ [R=301,L]
   
-  # Redirect lowercase aipadcode and any subpaths to canonical URL
-  RewriteRule ^(?i)aipadcode/(.*)$ AiPadCode/$1 [R=301,L]
-  RewriteRule ^(?i)aipadcode$ AiPadCode/ [R=301,L]
+  # Redirect lowercase padcodeai and any subpaths to canonical URL
+  RewriteRule ^(?i)padcodeai/(.*)$ PadCodeAI/$1 [R=301,L]
+  RewriteRule ^(?i)padcodeai$ PadCodeAI/ [R=301,L]
   
   # Redirect /PHTV to /PHTV/
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^PHTV$ PHTV/ [R=301,L]
 
-  # Redirect /AiPadCode to /AiPadCode/
+  # Redirect /PadCodeAI to /PadCodeAI/
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule ^AiPadCode$ AiPadCode/ [R=301,L]
+  RewriteRule ^PadCodeAI$ PadCodeAI/ [R=301,L]
 
   # SPA routing - redirect all PHTV requests to PHTV/index.html
   RewriteCond %{REQUEST_FILENAME} !-f
