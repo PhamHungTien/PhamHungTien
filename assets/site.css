@@ -320,6 +320,7 @@ img {
   .product-media.lunar img,
   .product-media.aipad img {
     object-fit: contain;
+    object-position: center;
   }
 
   .product-media.phtv-settings {
