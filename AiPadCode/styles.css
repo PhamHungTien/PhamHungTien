@@ -201,6 +201,9 @@
 }
 
 .showcase-inner img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
   border-radius: 8px;
   box-shadow: 0 16px 38px rgba(29, 29, 31, 0.09);
 }
@@ -226,7 +229,8 @@
     top: auto;
     bottom: 0;
     height: 45%;
-    object-position: center top;
+    object-fit: contain;
+    object-position: center bottom;
   }
 
   .hero-content {

@@ -317,6 +317,11 @@ img {
     min-height: 230px;
   }
 
+  .product-media.lunar img,
+  .product-media.aipad img {
+    object-fit: contain;
+  }
+
   .product-media.phtv-settings {
     height: auto;
     min-height: 0;
