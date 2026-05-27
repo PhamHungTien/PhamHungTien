@@ -84,7 +84,40 @@
       "lunar.feat4_title": "Widget",
       "lunar.feat4_desc": "Thông tin ngày hiện tại được trình bày gọn trên iOS, macOS và visionOS.",
       "lunar.support": "Hỗ trợ",
-      "lunar.terms": "Điều khoản sử dụng"
+      "lunar.terms": "Điều khoản sử dụng",
+
+      // LunarBlock Index
+      "root.lunarblock_subtitle": "Xếp hình 3D phong cách tàu vũ trụ.",
+      "root.lunarblock_desc": "Lunar Block kết hợp lối chơi cổ điển với không gian SceneKit 3D động, điều khiển gamepad, phản hồi xúc giác và hiệu ứng vỡ khối Line Fracture.",
+      "lunarblock.title": "Lunar Block | Game xếp hình 3D trên iOS",
+      "lunarblock.meta_desc": "Lunar Block là game xếp hình khối 3D native cho iOS. Trải nghiệm bối cảnh cabin tàu vũ trụ phát sáng được dựng bằng SceneKit và UIKit.",
+      "lunarblock.brand_subtitle": "Game xếp hình 3D cổ điển cho iOS",
+      "lunarblock.features_nav": "Tính năng",
+      "lunarblock.hero_title": "Xếp hình 3D. Góc nhìn Không Gian.",
+      "lunarblock.hero_desc": "Lunar Block biến đổi lưới chơi 14x20 truyền thống thành một bảng điều khiển orbital 3D phát sáng tuyệt đẹp bằng SceneKit và UIKit. Tận hưởng đồ họa mượt mà, phản hồi xúc giác và âm thanh tổng hợp tương tác.",
+      "lunarblock.app_store": "Tải trên App Store",
+      "lunarblock.platforms": "Nền tảng",
+      "lunarblock.genre": "Thể loại",
+      "lunarblock.engine": "Đồ họa",
+      "lunarblock.genre_val": "Giải đố 3D",
+      "lunarblock.features_kicker": "Điểm nhấn nổi bật",
+      "lunarblock.features_title": "Bàn điều khiển orbital 3D.",
+      "lunarblock.features_desc": "Trải nghiệm xếp hình quen thuộc được nâng tầm với đồ họa và hiệu ứng chuyển động ba chiều tuyệt đẹp.",
+      "lunarblock.feat1_title": "Bàn cờ 3D SceneKit",
+      "lunarblock.feat1_desc": "Bàn cờ xếp khối chiều sâu với khung viền phát sáng, các khối pha lê xếp chồng và góc nhìn camera điện ảnh linh hoạt.",
+      "lunarblock.feat2_title": "Cơ chế Line Fracture",
+      "lunarblock.feat2_desc": "Các khối pha lê bị phá vỡ vật lý đồng thời khi dọn hàng, giữ lại các mảnh vỡ ánh sáng tuyệt đẹp.",
+      "lunarblock.feat3_title": "Gamepad Tròn Độc Đáo",
+      "lunarblock.feat3_desc": "Phím D-pad dạng tròn lớn kèm phím DROP trung tâm, hỗ trợ vuốt chạm cử chỉ mượt mà và bàn phím ngoài.",
+      "lunarblock.feat4_title": "Âm Thanh Tổng Hợp",
+      "lunarblock.feat4_desc": "Công nghệ AVAudioEngine tạo ra các hiệu ứng âm thanh va chạm và nhạc nền retro tương tác theo thời gian thực.",
+      "lunarblock.feat5_title": "Hệ Thống Rank & XP",
+      "lunarblock.feat5_desc": "Tích hợp Game Center cho bảng xếp hạng toàn cầu cùng tiến trình XP, cấp độ và hồ sơ lưu trữ nội bộ.",
+      "lunarblock.feat6_title": "Haptic Đa Tầng",
+      "lunarblock.feat6_desc": "Cảm giác phản hồi xúc giác chân thực trên từng cú xoay khối, soft-drop và va chạm rơi tự do.",
+      "lunarblock.showcase_title": "Cơ chế Line Fracture chân thực.",
+      "lunarblock.showcase_desc": "Thay vì chỉ biến mất đơn điệu, các khối pha lê sẽ vỡ vụn sinh động nhờ động cơ mô phỏng vật lý 3D tiên tiến.",
+      "lunarblock.copyright": "&copy; 2026 Pham Hung Tien. Bảo lưu mọi quyền."
     },
     en: {
       // Root Index
@@ -170,7 +203,40 @@
       "lunar.feat4_title": "Widgets",
       "lunar.feat4_desc": "Today's date is presented neatly on iOS, macOS, and visionOS.",
       "lunar.support": "Support",
-      "lunar.terms": "Terms of Use"
+      "lunar.terms": "Terms of Use",
+
+      // LunarBlock Index
+      "root.lunarblock_subtitle": "3D falling-block puzzle in space.",
+      "root.lunarblock_desc": "Lunar Block blends classic stacking with a dynamic 3D SceneKit viewport, tactile gamepad controls, haptic impact, and line fracture clearing physics.",
+      "lunarblock.title": "Lunar Block | Native 3D Falling-Block Puzzle for iOS",
+      "lunarblock.meta_desc": "Lunar Block is a native iOS 3D falling-block puzzle game, turning an expanded playfield into a glowing orbital console built with SceneKit and UIKit.",
+      "lunarblock.brand_subtitle": "Native 3D Puzzle Game for iOS",
+      "lunarblock.features_nav": "Features",
+      "lunarblock.hero_title": "3D Stacking. Spatial Viewport.",
+      "lunarblock.hero_desc": "Lunar Block turns an expanded 14-by-20 playfield into a glowing orbital console built with SceneKit and UIKit. Experience fluid motion, outlines, responsive cameras, synthesized audio, and rich layered haptics.",
+      "lunarblock.app_store": "Download on the App Store",
+      "lunarblock.platforms": "Platforms",
+      "lunarblock.genre": "Genre",
+      "lunarblock.engine": "Graphics",
+      "lunarblock.genre_val": "3D Puzzle Game",
+      "lunarblock.features_kicker": "Key Features",
+      "lunarblock.features_title": "An immersive orbital playfield.",
+      "lunarblock.features_desc": "Classic stacking gameplay re-imagined as a high-fidelity spatial console inside a futuristic viewport.",
+      "lunarblock.feat1_title": "SceneKit 3D Board",
+      "lunarblock.feat1_desc": "A deep 3D stage with glowing rails, crystal blocks, light columns, and a responsive cinematic camera.",
+      "lunarblock.feat2_title": "Line Fracture Physics",
+      "lunarblock.feat2_desc": "Simultaneous physics-driven line fracture effects break cleared blocks into spectacular crystal shards.",
+      "lunarblock.feat3_title": "Circular Gamepad",
+      "lunarblock.feat3_desc": "A large circular D-pad controller with a central DROP button, gesture inputs, and hardware keyboard support.",
+      "lunarblock.feat4_title": "AVAudioEngine Synth",
+      "lunarblock.feat4_desc": "Synthesized gameplay sound effects and retro interactions created in real-time on-device.",
+      "lunarblock.feat5_title": "Rank & XP System",
+      "lunarblock.feat5_desc": "Local score keeping, rank progression, XP tracking, and Game Center support for global leaderboards.",
+      "lunarblock.feat6_title": "Tactile Core Haptics",
+      "lunarblock.feat6_desc": "Layered haptic impacts and localized vibrations on block rotation, drops, and line clears.",
+      "lunarblock.showcase_title": "Spectacular physical clears.",
+      "lunarblock.showcase_desc": "Watch crystal blocks shatter and fracture dynamically on line clears, creating satisfying spatial chain reactions.",
+      "lunarblock.copyright": "&copy; 2026 Pham Hung Tien. All rights reserved."
     }
   };
 
@@ -223,6 +289,8 @@
         pageTitleKey = "aipad.title";
       } else if (window.location.pathname.includes("LunarV")) {
         pageTitleKey = "lunar.title";
+      } else if (window.location.pathname.includes("LunarBlock")) {
+        pageTitleKey = "lunarblock.title";
       } else {
         pageTitleKey = "root.title";
       }
@@ -236,6 +304,8 @@
         pageDescKey = "aipad.meta_desc";
       } else if (window.location.pathname.includes("LunarV")) {
         pageDescKey = "lunar.meta_desc";
+      } else if (window.location.pathname.includes("LunarBlock")) {
+        pageDescKey = "lunarblock.meta_desc";
       } else {
         pageDescKey = "root.meta_desc";
       }

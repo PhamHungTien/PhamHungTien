@@ -1,15 +1,50 @@
-.unavailable {
-  cursor: default;
-  opacity: 0.92;
+/* Premium Dark Mode Design System for Lunar Block */
+body {
+  background: #07070a;
+  color: #f5f5f7;
+  --background: #07070a;
+  --surface: #0f0f16;
+  --soft: #14141e;
+  --text: #f5f5f7;
+  --muted: #8e8e93;
+  --line: rgba(255, 255, 255, 0.08);
+  --blue: #00f0ff; /* Glowing Space Cyan */
+  --blue-hover: #54f5ff;
 }
 
+/* Force dark theme properties on topbar */
+.topbar {
+  background: rgba(7, 7, 10, 0.72) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: saturate(180%) blur(20px) !important;
+  -webkit-backdrop-filter: saturate(180%) blur(20px) !important;
+}
+
+.topbar .brand span {
+  color: #f5f5f7 !important;
+}
+
+.topbar .nav {
+  color: #8e8e93 !important;
+}
+
+.topbar .nav a:hover {
+  color: #f5f5f7 !important;
+}
+
+.unavailable {
+  cursor: default;
+  opacity: 0.85;
+}
+
+/* Hero Section style */
 .product-hero {
   position: relative;
   min-height: 600px;
   display: flex;
   align-items: center;
   overflow: hidden;
-  background: #eef4f8;
+  background: #07070a;
 }
 
 .hero-media {
@@ -24,20 +59,21 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 76% center;
+  object-position: 80% center;
 }
 
 .product-hero::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, #f5f5f7 0%, #f5f5f7 31%, rgba(245, 245, 247, 0.92) 41%, rgba(245, 245, 247, 0) 68%);
+  background: linear-gradient(90deg, #07070a 0%, #07070a 31%, rgba(7, 7, 10, 0.92) 42%, rgba(7, 7, 10, 0) 72%);
+  pointer-events: none;
 }
 
 .hero-content {
   position: relative;
   z-index: 1;
-  width: 420px;
+  width: 460px;
   padding: 58px 0;
 }
 
@@ -52,12 +88,13 @@
   width: 64px;
   height: 64px;
   border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(29, 29, 31, 0.12);
+  box-shadow: 0 8px 25px rgba(0, 240, 255, 0.22);
 }
 
 .app-lockup strong {
   display: block;
   font-size: 20px;
+  color: #f5f5f7;
 }
 
 .app-lockup span {
@@ -69,16 +106,12 @@
 
 .hero-content h1 {
   margin: 0;
-  font-size: 58px;
+  font-size: 56px;
   line-height: 1.06;
-  letter-spacing: 0;
-}
-
-.headline {
-  margin: 13px 0 0;
-  font-size: 28px;
-  line-height: 1.22;
-  font-weight: 600;
+  letter-spacing: -0.01em;
+  background: linear-gradient(135deg, #ffffff 30%, #00f0ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .lede {
@@ -88,6 +121,7 @@
   line-height: 1.6;
 }
 
+/* Quick Facts Section */
 .facts {
   border-bottom: 1px solid var(--line);
   background: var(--surface);
@@ -118,8 +152,10 @@
 .fact-grid strong {
   font-size: 17px;
   font-weight: 600;
+  color: #f5f5f7;
 }
 
+/* Features Section */
 .features-section {
   padding: 72px 0 78px;
 }
@@ -132,14 +168,18 @@
 .section-heading p {
   margin: 0 0 13px;
   color: var(--blue);
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 .section-heading h2 {
   margin: 0;
   font-size: 38px;
   line-height: 1.18;
-  letter-spacing: 0;
+  letter-spacing: -0.01em;
+  color: #f5f5f7;
 }
 
 .section-heading span {
@@ -153,21 +193,29 @@
 .feature-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 13px;
+  gap: 16px;
 }
 
 .feature-grid article {
   min-height: 160px;
-  padding: 25px 23px;
+  padding: 28px 24px;
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: 12px;
   background: var(--surface);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.feature-grid article:hover {
+  border-color: rgba(0, 240, 255, 0.4);
+  box-shadow: 0 8px 30px rgba(0, 240, 255, 0.08);
+  transform: translateY(-2px);
 }
 
 .feature-grid h3 {
   margin: 0 0 12px;
-  font-size: 18px;
-  letter-spacing: 0;
+  font-size: 19px;
+  font-weight: 600;
+  color: #f5f5f7;
 }
 
 .feature-grid p {
@@ -177,70 +225,83 @@
   line-height: 1.6;
 }
 
+/* Showcase Section */
 .editor-showcase {
-  padding: 66px 0;
-  background: var(--surface);
+  padding: 80px 0;
+  background: #09090e;
+  border-top: 1px solid var(--line);
 }
 
 .showcase-inner {
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: 320px 1fr;
   align-items: center;
-  gap: 56px;
+  gap: 64px;
 }
 
 .showcase-inner h2 {
-  margin: 0 0 14px;
-  font-size: 31px;
+  margin: 0 0 16px;
+  font-size: 32px;
+  font-weight: 600;
   line-height: 1.2;
-  letter-spacing: 0;
+  color: #f5f5f7;
+  letter-spacing: -0.01em;
 }
 
 .showcase-inner p {
   margin: 0;
   color: var(--muted);
-  line-height: 1.55;
+  font-size: 15px;
+  line-height: 1.6;
 }
 
 .showcase-inner img {
   width: 100%;
   height: auto;
-  max-width: 100%;
-  border-radius: 8px;
-  box-shadow: 0 16px 38px rgba(29, 29, 31, 0.09);
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(0, 240, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-@media (max-width: 760px) {
-  .nav .unavailable {
-    padding: 0 10px;
-    font-size: 11px;
-    white-space: nowrap;
-  }
+/* Footer border override */
+.site-footer {
+  background: #07070a;
+}
 
+.site-footer .container {
+  border-top: 1px solid var(--line) !important;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 760px) {
   .product-hero {
     display: flex;
     flex-direction: column;
     min-height: unset;
     overflow: hidden;
-    background: #eef4f8;
+    background: #07070a;
   }
 
   .product-hero::after {
-    display: none; /* Hide desktop overlay gradient on mobile */
+    display: none;
   }
 
   .hero-content {
     width: 100%;
     padding: 36px 0 24px;
-    order: 1; /* Content on top */
+    order: 1;
+  }
+
+  .hero-content h1 {
+    font-size: 40px;
   }
 
   .hero-media {
-    position: static; /* Remove absolute positioning */
+    position: static;
     width: 100%;
-    height: 280px;
+    height: 320px;
     overflow: hidden;
-    order: 2; /* Image on bottom */
+    order: 2;
     margin: 0;
   }
 
@@ -250,18 +311,6 @@
     height: 100%;
     object-fit: contain;
     object-position: center bottom;
-  }
-
-  .hero-content h1 {
-    font-size: 40px;
-  }
-
-  .headline {
-    font-size: 23px;
-  }
-
-  .lede {
-    max-width: 345px;
   }
 
   .fact-grid,
@@ -296,7 +345,6 @@
     gap: 28px;
   }
 
-  /* Terminal showcase image — limit height on mobile */
   .showcase-inner img {
     max-height: 300px;
     width: 100%;

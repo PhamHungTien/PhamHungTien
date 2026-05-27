@@ -58,6 +58,8 @@ jobs:
           cp -r assets _site/assets
           # Copy LunarV product page
           cp -r LunarV _site/LunarV
+          # Copy LunarBlock product page
+          cp -r LunarBlock _site/LunarBlock
           # Copy PadCodeAI product page
           cp -r PadCodeAI _site/PadCodeAI
           # Copy PHTV app to its subdirectory
