@@ -247,7 +247,7 @@ img {
   object-position: 52% center;
 }
 
-.product-media.aipad img {
+.product-media.padcodeai img {
   object-position: left top;
 }
 
@@ -324,7 +324,7 @@ img {
   }
 
   .product-media.lunar img,
-  .product-media.aipad img,
+  .product-media.padcodeai img,
   .product-media.lunarblock img {
     object-fit: contain;
     object-position: center;
