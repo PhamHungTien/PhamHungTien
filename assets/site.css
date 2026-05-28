@@ -353,6 +353,67 @@ img {
   color: var(--text);
 }
 
+.support-section {
+  padding: 80px 0;
+}
+
+.support-card {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 48px 40px;
+  text-align: center;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.04);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.support-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  .support-card:hover {
+    box-shadow: 0 16px 40px rgba(255, 255, 255, 0.04);
+  }
+}
+
+.support-card h2 {
+  margin: 0 0 16px;
+  font-size: clamp(26px, 4vw, 34px);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.support-card p {
+  margin: 0 0 32px;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.support-email-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 28px;
+  background: var(--blue);
+  color: #fff !important;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 14px rgba(0, 113, 227, 0.3);
+}
+
+.support-email-btn:hover {
+  background: var(--blue-hover);
+  transform: scale(1.03);
+  box-shadow: 0 6px 20px rgba(0, 113, 227, 0.4);
+}
+
 /* Tablet Responsiveness */
 @media (max-width: 1024px) {
   .product-row {

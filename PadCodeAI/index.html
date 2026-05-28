@@ -96,19 +96,29 @@
       </div>
     </section>
 
-    <section id="support" class="support-section container" style="text-align: center; margin: 4rem auto;">
-      <header class="section-heading">
+    <section id="support" class="support-section container">
+      <div class="support-card">
         <h2 data-i18n="padcodeai.support_title">Hỗ trợ & Liên hệ</h2>
         <p data-i18n="padcodeai.support_desc">Bạn có câu hỏi hoặc cần hỗ trợ kỹ thuật? Vui lòng liên hệ với chúng tôi qua email:</p>
-        <a href="mailto:phamhungtien.contact@gmail.com" style="display: inline-block; margin-top: 1rem; font-weight: 500; color: #0071e3; font-size: 1.25rem;">phamhungtien.contact@gmail.com</a>
-      </header>
+        <a href="mailto:phamhungtien.contact@gmail.com" class="support-email-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          phamhungtien.contact@gmail.com
+        </a>
+      </div>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="container">
-      <span>&copy; 2026 Pham Hung Tien.</span>
-      <nav><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Use</a></nav>
+      <span data-i18n="padcodeai.copyright">&copy; 2026 Pham Hung Tien. Bảo lưu mọi quyền.</span>
+      <nav>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Use</a>
+        <a href="mailto:phamhungtien.contact@gmail.com" data-i18n="padcodeai.support">Hỗ trợ</a>
+      </nav>
     </div>
   </footer>
   <script src="/assets/i18n.js?v=2.0" defer></script>
