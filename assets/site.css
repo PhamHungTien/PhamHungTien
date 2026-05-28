@@ -312,18 +312,15 @@ img {
 }
 
 .product-media.phtv-settings {
-  display: flex;
-  align-items: center;
-  min-height: 0;
-  padding: 22px;
-  background: transparent;
+  background: var(--soft);
 }
 
 .product-media.phtv-settings img {
   width: 100%;
-  height: auto;
-  max-width: 360px;
-  object-fit: contain;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: left center;
 }
 
 .site-footer {
@@ -460,21 +457,7 @@ img {
     object-position: center;
   }
 
-  .product-media.phtv-settings {
-    height: 230px;
-    min-height: 230px;
-    padding: 12px;
-    align-items: center;
-    justify-content: center;
-  }
 
-  .product-media.phtv-settings img {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-  }
 
   .site-footer .container {
     flex-direction: column;
