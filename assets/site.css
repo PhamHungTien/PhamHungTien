@@ -229,39 +229,58 @@ img {
   line-height: 1.45;
 }
 
-.product-list {
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
   padding-top: 42px;
   padding-bottom: 62px;
 }
 
-.product-row {
-  display: grid;
-  grid-template-columns: minmax(265px, 0.88fr) minmax(350px, 1.12fr);
-  min-height: 390px;
-  margin-bottom: 24px;
+.product-card {
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   border: 1px solid var(--line);
-  border-radius: 16px;
+  border-radius: 20px;
   background: var(--surface);
   transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.product-row:hover {
+.product-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
 }
-
 @media (prefers-color-scheme: dark) {
-  .product-row:hover {
-    box-shadow: 0 12px 32px rgba(255, 255, 255, 0.04);
-  }
+  html:not([data-theme="light"]) .product-card:hover { box-shadow: 0 12px 32px rgba(255, 255, 255, 0.04); }
+}
+html[data-theme="dark"] .product-card:hover { box-shadow: 0 12px 32px rgba(255, 255, 255, 0.04); }
+
+.product-media {
+  height: 280px;
+  background: var(--soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  order: -1; /* Always on top */
+}
+.product-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.product-card:hover .product-media img {
+  transform: scale(1.03);
 }
 
 .product-copy {
+  padding: 36px 36px 42px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 42px 42px 42px 46px;
+  flex: 1;
 }
 
 .product-title {
@@ -269,23 +288,21 @@ img {
   align-items: center;
   gap: 15px;
 }
-
 .product-title img {
-  width: 58px;
-  height: 58px;
+  width: 54px;
+  height: 54px;
   object-fit: cover;
-  border-radius: 14px;
+  border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
-
-.product-row:hover .product-title img {
+.product-card:hover .product-title img {
   transform: scale(1.12) rotate(-4deg);
 }
 
 .product-title h2 {
   margin: 0;
-  font-size: 30px;
+  font-size: 26px;
   font-weight: 650;
   letter-spacing: -0.01em;
 }
@@ -297,23 +314,23 @@ img {
 }
 
 .product-copy > p {
-  margin: 22px 0 25px;
+  margin: 20px 0 24px;
   color: var(--muted);
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.55;
+  flex: 1; /* Pushes tags and actions down */
 }
 
 .tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 9px;
-  margin: 0 0 27px;
+  gap: 8px;
+  margin: 0 0 24px;
   padding: 0;
   list-style: none;
 }
-
 .tags li {
-  padding: 7px 11px;
+  padding: 6px 10px;
   border-radius: 8px;
   background: var(--soft);
   color: var(--text);
@@ -321,7 +338,6 @@ img {
   font-weight: 500;
   transition: background-color 0.2s ease;
 }
-
 .tags li:hover {
   background: var(--line);
 }
@@ -332,48 +348,16 @@ img {
   gap: 10px;
 }
 
-.product-media {
-  margin: 0;
-  min-height: 360px;
-  background: var(--soft);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.product-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
-}
-
-.product-row:hover .product-media img {
-  transform: scale(1.03);
-}
-
 .product-media.lunar img {
-  object-position: 52% center;
+  object-position: center 30%;
 }
-
 .product-media.padcodeai img {
   object-position: left top;
 }
-
 .product-media.lunarblock img {
   object-position: center;
 }
-
-.product-media.phtv-settings {
-  background: var(--soft);
-}
-
 .product-media.phtv-settings img {
-  width: 100%;
-  height: 100%;
-  max-width: none;
-  object-fit: cover;
   object-position: left center;
 }
 
@@ -467,11 +451,8 @@ img {
 
 /* Tablet Responsiveness */
 @media (max-width: 1024px) {
-  .product-row {
-    grid-template-columns: 1fr 1fr;
-  }
   .product-copy {
-    padding: 32px;
+    padding: 28px;
   }
 }
 
@@ -489,19 +470,12 @@ img {
     padding: 48px 0 44px;
   }
 
-  .product-row {
-    display: flex;
-    flex-direction: column-reverse;
-    border-radius: 12px;
-  }
-
-  .product-copy {
-    padding: 28px 24px 32px;
+  .product-grid {
+    grid-template-columns: 1fr;
   }
 
   .product-media {
-    height: 250px;
-    min-height: 250px;
+    height: 240px;
   }
 
   .product-media.lunar img,
