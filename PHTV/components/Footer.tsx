@@ -73,8 +73,12 @@ export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
         </div>
 
         <div className="mt-12 flex flex-col gap-3 border-t border-white/6 pt-6 text-sm text-slate-500 md:flex-row md:items-center md:justify-between">
-          <p>© {new Date().getFullYear()} Pham Hung Tien.</p>
-          <p>Designed for a calmer, clearer macOS-first experience.</p>
+          <p>© {new Date().getFullYear()} Pham Hung Tien. PHTV.</p>
+          <div className="flex gap-5">
+            <a href="mailto:phamhungtien.contact@gmail.com" className="transition-colors hover:text-white">{t('footer.support')}</a>
+            <a href="privacy.html" className="transition-colors hover:text-white">Privacy Policy</a>
+            <a href="terms.html" className="transition-colors hover:text-white">Terms of Use</a>
+          </div>
         </div>
       </div>
     </footer>

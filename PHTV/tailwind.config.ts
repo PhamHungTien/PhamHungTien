@@ -26,7 +26,7 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['Be Vietnam Pro', 'Noto Sans', 'Segoe UI', 'Helvetica Neue', 'Arial', 'sans-serif'],
+        sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Text"', '"Helvetica Neue"', 'Arial', 'sans-serif'],
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',

@@ -127,6 +127,12 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center gap-7">
+            <a 
+              href="/" 
+              className="flex items-center gap-2 text-sm font-semibold text-slate-400 transition-colors hover:text-slate-100"
+            >
+              {t('nav.home' as any)}
+            </a>
             {navLinks.map((item) => (
               <a
                 key={item.name}

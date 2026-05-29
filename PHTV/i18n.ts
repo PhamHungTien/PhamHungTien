@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 const DICTIONARY = {
   vi: {
     // Navbar
+    "nav.home": "Trang chính",
     "nav.features": "Tính năng",
     "nav.gallery": "Giao diện",
     "nav.install": "Cài đặt",
@@ -76,6 +77,7 @@ const DICTIONARY = {
   },
   en: {
     // Navbar
+    "nav.home": "Home",
     "nav.features": "Features",
     "nav.gallery": "Interface",
     "nav.install": "Installation",
