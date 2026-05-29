@@ -47,7 +47,23 @@ export const Navbar: React.FC<NavbarProps> = ({
       document.documentElement.classList.remove('dark');
     }
     localStorage.setItem('theme', theme);
+
+    const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+    if (themeColorMeta) {
+      themeColorMeta.setAttribute("content", theme === 'dark' ? "#020617" : "#f5f5f7");
+    }
   }, [theme]);
+
+  // Sync theme across tabs
+  useEffect(() => {
+    const handleStorage = (e: StorageEvent) => {
+      if (e.key === 'theme' && e.newValue) {
+        setTheme(e.newValue);
+      }
+    };
+    window.addEventListener('storage', handleStorage);
+    return () => window.removeEventListener('storage', handleStorage);
+  }, []);
 
   const toggleTheme = () => {
     setTheme(prev => prev === 'dark' ? 'light' : 'dark');
