@@ -23,7 +23,7 @@
       "root.tag_compiler": "Biên dịch offline",
 
       // PadCodeAI Index
-      "padcodeai.title": "Pad Code AI - Trình soạn thảo & Biên dịch code cho iPad & iPhone",
+      "padcodeai.title": "Pad Code AI - Code Editor",
       "padcodeai.meta_desc": "Viết, chạy và quản lý mã nguồn trong hơn 24 ngôn ngữ lập trình trực tiếp trên thiết bị của bạn. Pad Code AI tích hợp local compiler, terminal và Apple Intelligence.",
       "padcodeai.brand_subtitle": "IDE cho iPad/iPhone",
       "padcodeai.features_nav": "Tính năng",
@@ -58,7 +58,7 @@
       "padcodeai.copyright": "&copy; 2026 Pham Hung Tien. Bảo lưu mọi quyền.",
 
       // LunarV Index
-      "lunar.title": "LunarV | Lịch âm Việt Nam trên thiết bị Apple",
+      "lunar.title": "LunarV - Lịch Âm Việt Nam",
       "lunar.meta_desc": "LunarV là ứng dụng lịch âm Việt Nam cho iPhone, iPad, Mac và Apple Vision Pro, với widget, nhắc dịp gia đình và thông báo.",
       "lunar.brand_subtitle": "Lịch âm Việt Nam cho thiết bị Apple",
       "lunar.home": "Trang chính",
@@ -91,7 +91,7 @@
       // LunarBlock Index
       "root.lunarblock_subtitle": "Xếp hình 3D phong cách tàu vũ trụ.",
       "root.lunarblock_desc": "Lunar Block kết hợp lối chơi cổ điển với không gian SceneKit 3D động, điều khiển gamepad, phản hồi xúc giác và hiệu ứng vỡ khối Line Fracture.",
-      "lunarblock.title": "Lunar Block | Game xếp hình 3D trên iOS",
+      "lunarblock.title": "Lunar Block - Teris 3D",
       "lunarblock.meta_desc": "Lunar Block là game xếp hình khối 3D native cho iOS. Trải nghiệm bối cảnh cabin tàu vũ trụ phát sáng được dựng bằng SceneKit và UIKit.",
       "lunarblock.brand_subtitle": "Game xếp hình 3D cổ điển cho iOS",
       "lunarblock.features_nav": "Tính năng",
@@ -144,7 +144,7 @@
       "root.tag_compiler": "Offline Compiler",
 
       // PadCodeAI Index
-      "padcodeai.title": "Pad Code AI - The Ultimate Code Editor for iPad & iPhone",
+      "padcodeai.title": "Pad Code AI - Code Editor",
       "padcodeai.meta_desc": "Write, run, and manage code in 24+ languages directly on your device. Pad Code AI features a local compiler, integrated terminal, and Apple Intelligence.",
       "padcodeai.brand_subtitle": "IDE for iPad/iPhone",
       "padcodeai.features_nav": "Features",
@@ -179,7 +179,7 @@
       "padcodeai.copyright": "&copy; 2026 Pham Hung Tien. All rights reserved.",
 
       // LunarV Index
-      "lunar.title": "LunarV | Vietnamese Lunar Calendar on Apple Devices",
+      "lunar.title": "LunarV - Lịch Âm Việt Nam",
       "lunar.meta_desc": "LunarV is a Vietnamese lunar calendar app for iPhone, iPad, Mac, and Apple Vision Pro, with widgets, family occasion reminders, and notifications.",
       "lunar.brand_subtitle": "Vietnamese Lunar Calendar for Apple Devices",
       "lunar.home": "Home",
@@ -212,7 +212,7 @@
       // LunarBlock Index
       "root.lunarblock_subtitle": "3D falling-block puzzle in space.",
       "root.lunarblock_desc": "Lunar Block blends classic stacking with a dynamic 3D SceneKit viewport, tactile gamepad controls, haptic impact, and line fracture clearing physics.",
-      "lunarblock.title": "Lunar Block | Native 3D Falling-Block Puzzle for iOS",
+      "lunarblock.title": "Lunar Block - Teris 3D",
       "lunarblock.meta_desc": "Lunar Block is a native iOS 3D falling-block puzzle game, turning an expanded playfield into a glowing orbital console built with SceneKit and UIKit.",
       "lunarblock.brand_subtitle": "Native 3D Puzzle Game for iOS",
       "lunarblock.features_nav": "Features",
