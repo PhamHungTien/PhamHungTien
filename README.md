@@ -30,6 +30,9 @@ A modern, native, and blazing-fast Vietnamese input method for macOS 14+. Built 
 ### [📅 LunarV](https://github.com/PhamHungTien/LunarV) - *Vietnamese Lunar Calendar*
 An elegant and powerful Lunar Calendar tailored for macOS 15+. Stay on top of traditional holidays, manage lunar events effortlessly, and enjoy a seamless integration with your Apple ecosystem. 
 
+### [🧱 Lunar Block](https://phamhungtien.com/LunarBlock/) - *3D Space Puzzle*
+A visually stunning 3D falling-block puzzle game set in space. Built with **SceneKit 3D**, featuring tactile gamepad controls, haptic impacts, and line-fracture physics. Available across iPhone, iPad, Mac, and Vision Pro.
+
 ### [👨‍💻 PadCodeAI](https://phamhungtien.com/PadCodeAI/) - *Code Editor & IDE for iPad/iPhone*
 Write, run, and manage code directly on your mobile devices. Featuring an **Offline Compiler** and integrated **Apple Intelligence** for an unparalleled coding experience on the go.
 
