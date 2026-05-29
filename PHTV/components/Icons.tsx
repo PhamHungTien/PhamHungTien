@@ -59,10 +59,13 @@ import {
   Bell,
   BellOff,
   Link2,
-  Mail
+  Mail,
+  Sun
 } from 'lucide-react';
 
 export const Icons = {
+  Sun,
+  Moon,
   Download,
   Github,
   Zap,
@@ -97,7 +100,6 @@ export const Icons = {
   Lock,
   Unlock,
   LogOut,
-  ChevronDown,
   ChevronUp,
   ThumbsUp,
   MessageSquareReply,

@@ -755,19 +755,8 @@ export const QASection: React.FC = () => {
                 </div>
                 <div>
                   <h2 className="text-3xl font-black tracking-tight text-white md:text-[2.15rem]">
-                    Gọn, rõ và tập trung vào việc xử lý vấn đề.
+                    Thảo luận PHTV
                   </h2>
-                </div>
-                <div className="flex flex-wrap gap-2 text-xs">
-                  <span className="rounded-full border border-white/[0.055] bg-white/[0.022] px-3 py-1.5 text-slate-300">
-                    {communityStats.responded} bài đã có phản hồi admin
-                  </span>
-                  <span className="rounded-full border border-white/[0.055] bg-white/[0.022] px-3 py-1.5 text-slate-300">
-                    {communityStats.pending} bài đang chờ
-                  </span>
-                  <span className="rounded-full border border-white/[0.055] bg-white/[0.022] px-3 py-1.5 text-slate-300">
-                    {communityStats.locked} bài đã khóa
-                  </span>
                 </div>
               </div>
 
