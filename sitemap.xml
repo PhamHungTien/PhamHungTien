@@ -6,21 +6,21 @@
   <!-- Homepage -->
   <url>
     <loc>https://phamhungtien.com/</loc>
-    <lastmod>2026-05-26</lastmod>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>1.0</priority>
   </url>
   
   <!-- PHTV Main Page -->
   <url>
     <loc>https://phamhungtien.com/PHTV/</loc>
-    <lastmod>2026-04-01</lastmod>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>daily</changefreq>
-    <priority>1.0</priority>
+    <priority>0.9</priority>
     <image:image>
       <image:loc>https://phamhungtien.com/PHTV/assets/social_preview.webp</image:loc>
       <image:title>PHTV - Bộ gõ tiếng Việt cho macOS</image:title>
-      <image:caption>Bộ gõ tiếng Việt Native Swift & C/C++ cho macOS. Nhanh, nhẹ, riêng tư và hoàn toàn miễn phí.</image:caption>
+      <image:caption>Bộ gõ tiếng Việt Native Swift &amp; C/C++ cho macOS. Nhanh, nhẹ, riêng tư và hoàn toàn miễn phí.</image:caption>
     </image:image>
     <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/PHTV/" />
   </url>
@@ -28,17 +28,17 @@
   <!-- PHTV Community Section -->
   <url>
     <loc>https://phamhungtien.com/PHTV/#community</loc>
-    <lastmod>2026-04-01</lastmod>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>always</changefreq>
-    <priority>0.9</priority>
+    <priority>0.8</priority>
   </url>
 
   <!-- LunarV Main Page -->
   <url>
     <loc>https://phamhungtien.com/LunarV/</loc>
-    <lastmod>2026-04-01</lastmod>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.95</priority>
+    <priority>0.9</priority>
     <image:image>
       <image:loc>https://phamhungtien.com/LunarV/assets/lunarv-ipad.jpg</image:loc>
       <image:title>LunarV - Lịch âm Việt Nam trên thiết bị Apple</image:title>
@@ -47,10 +47,40 @@
     <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/LunarV/" />
   </url>
 
+  <!-- LunarV Privacy Policy -->
+  <url>
+    <loc>https://phamhungtien.com/LunarV/privacy.html</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- LunarV Terms of Use -->
+  <url>
+    <loc>https://phamhungtien.com/LunarV/terms.html</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- PadCodeAI Main Page -->
+  <url>
+    <loc>https://phamhungtien.com/PadCodeAI/</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://phamhungtien.com/PadCodeAI/assets/ipad-editor.png</image:loc>
+      <image:title>Pad Code AI - Native IDE for iPadOS</image:title>
+      <image:caption>A blazing fast, native code editor built from the ground up for iPadOS and macOS with integrated AI.</image:caption>
+    </image:image>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/PadCodeAI/" />
+  </url>
+
   <!-- PadCodeAI Privacy Policy -->
   <url>
     <loc>https://phamhungtien.com/PadCodeAI/privacy.html</loc>
-    <lastmod>2026-05-23</lastmod>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -58,7 +88,37 @@
   <!-- PadCodeAI Terms of Use -->
   <url>
     <loc>https://phamhungtien.com/PadCodeAI/terms.html</loc>
-    <lastmod>2026-05-23</lastmod>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- LunarBlock Main Page -->
+  <url>
+    <loc>https://phamhungtien.com/LunarBlock/</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://phamhungtien.com/LunarBlock/assets/lunarblock-hero.png</image:loc>
+      <image:title>Lunar Block - Spatial Puzzle Game</image:title>
+      <image:caption>A stunning 3D block puzzle experience for iOS, macOS, and visionOS.</image:caption>
+    </image:image>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/LunarBlock/" />
+  </url>
+
+  <!-- LunarBlock Privacy Policy -->
+  <url>
+    <loc>https://phamhungtien.com/LunarBlock/privacy.html</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- LunarBlock Terms of Use -->
+  <url>
+    <loc>https://phamhungtien.com/LunarBlock/terms.html</loc>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
