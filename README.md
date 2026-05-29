@@ -49,8 +49,6 @@ Write, run, and manage code directly on your mobile devices. Featuring an **Offl
 ## 📈 GitHub Stats
 
 <div align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=PhamHungTien&show_icons=true&theme=transparent&hide_border=true&title_color=0071e3&text_color=737373&icon_color=0071e3&bg_color=00000000" alt="GitHub Stats" />
-  <br/>
   <img src="https://github-readme-streak-stats.herokuapp.com/?user=PhamHungTien&theme=transparent&hide_border=true&title_color=0071e3&text_color=737373&icon_color=0071e3&background=00000000" alt="GitHub Streak" />
 </div>
 
