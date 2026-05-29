@@ -385,6 +385,74 @@
     }
   }
 
+  // Inject Dark/Light Mode toggle button
+  function injectThemeToggle() {
+    const nav = document.querySelector(".nav");
+    if (!nav || document.getElementById("theme-toggle-btn")) return;
+    
+    const btn = document.createElement("button");
+    btn.id = "theme-toggle-btn";
+    btn.setAttribute("aria-label", "Toggle Dark Mode");
+    btn.style.cursor = "pointer";
+    btn.style.outline = "none";
+    btn.style.background = "transparent";
+    btn.style.border = "none";
+    btn.style.padding = "0 8px";
+    btn.style.color = "var(--text, #1d1d1f)";
+    btn.style.display = "flex";
+    btn.style.alignItems = "center";
+    btn.style.justifyContent = "center";
+    btn.style.transition = "color 0.2s ease, transform 0.2s ease";
+
+    btn.addEventListener("mouseover", () => {
+      btn.style.transform = "scale(1.1)";
+    });
+    btn.addEventListener("mouseout", () => {
+      btn.style.transform = "scale(1)";
+    });
+    
+    // Check saved theme early
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      document.documentElement.setAttribute("data-theme", savedTheme);
+    }
+
+    const updateIcon = () => {
+      const isDark = document.documentElement.getAttribute("data-theme") === "dark" || 
+                     (!document.documentElement.hasAttribute("data-theme") && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      // Sun icon for dark mode (to switch to light), Moon icon for light mode
+      btn.innerHTML = isDark 
+        ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+        : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+    };
+
+    updateIcon();
+
+    btn.addEventListener("click", () => {
+      let currentTheme = document.documentElement.getAttribute("data-theme");
+      if (!currentTheme) {
+        currentTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      }
+      const newTheme = currentTheme === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", newTheme);
+      localStorage.setItem("theme", newTheme);
+      updateIcon();
+    });
+
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+      if (!localStorage.getItem("theme")) {
+        updateIcon();
+      }
+    });
+
+    const langToggle = document.getElementById("lang-toggle-btn");
+    if (langToggle) {
+      nav.insertBefore(btn, langToggle);
+    } else {
+      nav.appendChild(btn);
+    }
+  }
+
   // Asynchronous IP Country Detection
   async function detectIPLanguage() {
     // Only check IP geolocation if preferred_lang is not stored in localStorage
@@ -448,6 +516,9 @@
 
   // Initialize i18n
   function init() {
+    // Inject Theme Toggle first so it handles early render
+    injectThemeToggle();
+    
     const lang = getLang();
     injectToggleButton(lang);
     applyTranslations(lang);
