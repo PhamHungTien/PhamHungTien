@@ -34,7 +34,6 @@ export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
               {[
                 { icon: Icons.Github, href: 'https://github.com/PhamHungTien/PHTV', label: 'GitHub' },
                 { icon: Icons.Linkedin, href: 'https://www.linkedin.com/in/ph%E1%BA%A1m-h%C3%B9ng-ti%E1%BA%BFn-a1b405327/', label: 'LinkedIn' },
-                { icon: Icons.Video, href: 'https://www.youtube.com/@PhuocRin', label: 'YouTube' },
               ].map((social) => (
                 <a
                   key={social.label}
