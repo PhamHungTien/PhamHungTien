@@ -346,10 +346,10 @@
       btn.style.display = "inline-flex";
       btn.style.alignItems = "center";
       btn.style.justifyContent = "center";
-      btn.style.height = "32px";
+      btn.style.minHeight = "36px";
       btn.style.border = "1px solid var(--line, rgba(29, 29, 31, 0.1))";
       btn.style.backgroundColor = "rgba(0, 113, 227, 0.04)";
-      btn.style.padding = "0 12px";
+      btn.style.padding = "0 14px";
       btn.style.borderRadius = "999px";
       btn.style.color = "var(--text, #1d1d1f)";
       btn.style.fontFamily = "inherit";
@@ -397,6 +397,8 @@
     btn.style.outline = "none";
     btn.style.background = "transparent";
     btn.style.border = "none";
+    btn.style.minHeight = "36px";
+    btn.style.minWidth = "36px";
     btn.style.padding = "0 8px";
     btn.style.color = "var(--text, #1d1d1f)";
     btn.style.display = "flex";
