@@ -414,12 +414,45 @@
     }
   }
 
+  // Scroll Reveal Animation Observer
+  function initScrollReveal() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.15
+    });
+
+    // Auto-apply reveal class to major elements
+    const elementsToReveal = document.querySelectorAll('section:not(.hero):not(.product-hero), .product-row, .feature, article, .showcase-media, .support-card, .release-band, .facts');
+    elementsToReveal.forEach(el => {
+      el.classList.add('reveal');
+      observer.observe(el);
+    });
+    
+    // Animate hero sections immediately
+    const heroElements = document.querySelectorAll('.hero-content, .hero-media, .product-hero img');
+    heroElements.forEach((el, index) => {
+      el.classList.add('reveal');
+      setTimeout(() => {
+        el.classList.add('active');
+      }, 150 + (index * 150));
+    });
+  }
+
   // Initialize i18n
   function init() {
     const lang = getLang();
     injectToggleButton(lang);
     applyTranslations(lang);
     detectIPLanguage();
+    initScrollReveal();
   }
 
   // Run as soon as DOM is ready
