@@ -214,7 +214,7 @@ function App() {
   }, []);
 
   return (
-    <div className="phtv-page min-h-screen overflow-x-hidden bg-[#f5f5f7] text-[#1d1d1f] selection:bg-blue-100 selection:text-[#1d1d1f]">
+    <div className="phtv-page min-h-screen overflow-x-hidden bg-slate-950 text-white selection:bg-rose-500/30 selection:text-white">
       {/* Background Layer */}
       <div className="fixed inset-0 z-0 mesh-gradient pointer-events-none" />
       

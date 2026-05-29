@@ -120,12 +120,12 @@
 
 /* The page keeps PHTV's four-line wordmark while the surrounding UI uses the
    same restrained, light visual language as LunarV. */
-.phtv-page {
+html[data-theme="light"] .phtv-page {
   background: var(--phtv-background) !important;
   color: var(--phtv-text) !important;
 }
 
-.phtv-page nav.fixed {
+html[data-theme="light"] .phtv-page nav.fixed {
   height: 62px;
   padding: 0 !important;
   border-bottom: 1px solid var(--phtv-line);
@@ -134,7 +134,7 @@
   -webkit-backdrop-filter: saturate(180%) blur(20px);
 }
 
-.phtv-page nav.fixed > div {
+html[data-theme="light"] .phtv-page nav.fixed > div {
   height: 62px;
   border: 0 !important;
   border-radius: 0 !important;
@@ -142,97 +142,97 @@
   box-shadow: none !important;
 }
 
-.phtv-page [class*="tracking-"] {
+html[data-theme="light"] .phtv-page [class*="tracking-"] {
   letter-spacing: 0 !important;
 }
 
-.phtv-page [class*="text-white"] {
+html[data-theme="light"] .phtv-page [class*="text-white"] {
   color: var(--phtv-text) !important;
 }
 
-.phtv-page [class*="text-slate-"] {
+html[data-theme="light"] .phtv-page [class*="text-slate-"] {
   color: var(--phtv-muted) !important;
 }
 
-.phtv-page [class*="text-brand-"],
-.phtv-page [class*="text-blue-"],
-.phtv-page [class*="text-amber-"],
-.phtv-page [class*="text-orange-"],
-.phtv-page [class*="text-rose-"],
-.phtv-page [class*="text-red-"] {
+html[data-theme="light"] .phtv-page [class*="text-brand-"],
+html[data-theme="light"] .phtv-page [class*="text-blue-"],
+html[data-theme="light"] .phtv-page [class*="text-amber-"],
+html[data-theme="light"] .phtv-page [class*="text-orange-"],
+html[data-theme="light"] .phtv-page [class*="text-rose-"],
+html[data-theme="light"] .phtv-page [class*="text-red-"] {
   color: var(--phtv-blue) !important;
 }
 
-.phtv-page [class*="border-white"],
-.phtv-page [class*="border-amber"],
-.phtv-page [class*="border-rose"] {
+html[data-theme="light"] .phtv-page [class*="border-white"],
+html[data-theme="light"] .phtv-page [class*="border-amber"],
+html[data-theme="light"] .phtv-page [class*="border-rose"] {
   border-color: var(--phtv-line) !important;
 }
 
-.phtv-page [class*="bg-black"],
-.phtv-page [class*="bg-slate-9"],
-.phtv-page [class*="bg-[#0"],
-.phtv-page [class*="bg-[#1"] {
+html[data-theme="light"] .phtv-page [class*="bg-black"],
+html[data-theme="light"] .phtv-page [class*="bg-slate-9"],
+html[data-theme="light"] .phtv-page [class*="bg-[#0"],
+html[data-theme="light"] .phtv-page [class*="bg-[#1"] {
   background: transparent !important;
 }
 
-.phtv-page [class*="bg-[linear-gradient"],
-.phtv-page [class*="bg-\\[linear-gradient"] {
+html[data-theme="light"] .phtv-page [class*="bg-[linear-gradient"],
+html[data-theme="light"] .phtv-page [class*="bg-\\[linear-gradient"] {
   background: var(--phtv-surface) !important;
 }
 
-.phtv-page [class*="rgba(15,23,42"],
-.phtv-page [class*="rgba(8,11,18"] {
+html[data-theme="light"] .phtv-page [class*="rgba(15,23,42"],
+html[data-theme="light"] .phtv-page [class*="rgba(8,11,18"] {
   background: var(--phtv-surface) !important;
 }
 
-.phtv-page [class*="bg-white/"],
-.phtv-page [class*="bg-white["],
-.phtv-page [class*="bg-white\\/"] {
+html[data-theme="light"] .phtv-page [class*="bg-white/"],
+html[data-theme="light"] .phtv-page [class*="bg-white["],
+html[data-theme="light"] .phtv-page [class*="bg-white\\/"] {
   background: rgba(118, 118, 128, 0.08) !important;
 }
 
-.phtv-page a[class*="bg-white"],
-.phtv-page a[class*="bg-gradient"],
-.phtv-page button[class*="bg-gradient"] {
+html[data-theme="light"] .phtv-page a[class*="bg-white"],
+html[data-theme="light"] .phtv-page a[class*="bg-gradient"],
+html[data-theme="light"] .phtv-page button[class*="bg-gradient"] {
   background: var(--phtv-blue) !important;
   color: #fff !important;
 }
 
-.phtv-page a[class*="bg-white"] *,
-.phtv-page a[class*="bg-gradient"] *,
-.phtv-page button[class*="bg-gradient"] * {
+html[data-theme="light"] .phtv-page a[class*="bg-white"] *,
+html[data-theme="light"] .phtv-page a[class*="bg-gradient"] *,
+html[data-theme="light"] .phtv-page button[class*="bg-gradient"] * {
   color: #fff !important;
 }
 
-.phtv-page section[id="install"],
-.phtv-page footer {
+html[data-theme="light"] .phtv-page section[id="install"],
+html[data-theme="light"] .phtv-page footer {
   border-color: var(--phtv-line) !important;
   background: var(--phtv-surface) !important;
 }
 
-.phtv-page section[class*="rounded-"][class*="border"],
-.phtv-page div[class*="rounded-"][class*="border"] {
+html[data-theme="light"] .phtv-page section[class*="rounded-"][class*="border"],
+html[data-theme="light"] .phtv-page div[class*="rounded-"][class*="border"] {
   border-color: var(--phtv-line) !important;
   box-shadow: none !important;
 }
 
-.phtv-page summary,
-.phtv-page h1,
-.phtv-page h2,
-.phtv-page h3,
-.phtv-page h4,
-.phtv-page strong {
+html[data-theme="light"] .phtv-page summary,
+html[data-theme="light"] .phtv-page h1,
+html[data-theme="light"] .phtv-page h2,
+html[data-theme="light"] .phtv-page h3,
+html[data-theme="light"] .phtv-page h4,
+html[data-theme="light"] .phtv-page strong {
   color: var(--phtv-text);
 }
 
-.phtv-page code,
-.phtv-page pre {
+html[data-theme="light"] .phtv-page code,
+html[data-theme="light"] .phtv-page pre {
   color: var(--phtv-text);
 }
 
 @media (max-width: 760px) {
-  .phtv-page nav.fixed > div {
+  html[data-theme="light"] .phtv-page nav.fixed > div {
     padding-left: 16px;
     padding-right: 16px;
   }
