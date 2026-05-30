@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icons } from './Icons';
+import { Icons, Discord } from "./Icons";
 import { useI18n } from '../i18n';
 
 const iconImg = '/assets/phtv-icon.webp';
@@ -34,6 +34,7 @@ export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
               {[
                 { icon: Icons.Github, href: 'https://github.com/PhamHungTien/PHTV', label: 'GitHub' },
                 { icon: Icons.Linkedin, href: 'https://www.linkedin.com/in/ph%E1%BA%A1m-h%C3%B9ng-ti%E1%BA%BFn-a1b405327/', label: 'LinkedIn' },
+                { icon: Discord, href: 'https://discord.gg/hm2C4tbaDz', label: 'Discord' },
               ].map((social) => (
                 <a
                   key={social.label}
