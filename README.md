@@ -27,7 +27,7 @@
 ### <img src="https://phamhungtien.com/assets/phtv-icon.webp" width="26" align="top"> [PHTV](https://github.com/PhamHungTien/PHTV) - *Precision Hybrid Typing Vietnamese*
 A modern, native, and blazing-fast Vietnamese input method for macOS 14+. Built entirely offline with **Swift** and **C/C++**, respecting your privacy while providing advanced features like Smart Macros, Spell Checking, and a built-in Emoji Picker.
 
-### <img src="https://phamhungtien.com/assets/lunarv-icon.png" width="26" align="top"> [LunarV](https://github.com/PhamHungTien/LunarV) - *Vietnamese Lunar Calendar*
+### <img src="https://phamhungtien.com/assets/lunarv-icon.png" width="26" align="top"> [LunarV](https://phamhungtien.com/LunarV/) - *Vietnamese Lunar Calendar*
 An elegant and powerful Lunar Calendar natively tailored for iOS, iPadOS, macOS, and visionOS. Stay on top of traditional holidays, manage lunar events effortlessly, and enjoy a seamless integration with your Apple ecosystem. 
 
 ### <img src="https://phamhungtien.com/LunarBlock/assets/app-icon.png" width="26" align="top"> [Lunar Block](https://phamhungtien.com/LunarBlock/) - *3D Space Puzzle*
