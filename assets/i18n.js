@@ -119,7 +119,16 @@
       "lunarblock.feat6_desc": "Cảm giác phản hồi xúc giác chân thực trên từng cú xoay khối, soft-drop và va chạm rơi tự do.",
       "lunarblock.showcase_title": "Cơ chế Line Fracture chân thực.",
       "lunarblock.showcase_desc": "Thay vì chỉ biến mất đơn điệu, các khối pha lê sẽ vỡ vụn sinh động nhờ động cơ mô phỏng vật lý 3D tiên tiến.",
-      "lunarblock.copyright": "&copy; 2026 Pham Hung Tien. Bảo lưu mọi quyền."
+      "lunarblock.copyright": "&copy; 2026 Pham Hung Tien. Bảo lưu mọi quyền.",
+
+      // Donate
+      "root.donate": "Ủng hộ",
+      "root.donate_btn": "Ủng hộ dự án",
+      "root.donate_title": "Cảm ơn bạn đã ủng hộ! ❤️",
+      "root.donate_desc": "Mọi đóng góp của bạn đều là động lực to lớn để mình duy trì và phát triển dự án.",
+      "root.donate_qr_note": "Mọi ngân hàng",
+      "root.donate_paypal": "Donate qua PayPal",
+      "root.donate_note": "Dự án luôn miễn phí, donation là tùy tâm và không bắt buộc."
     },
     en: {
       // Root Index
@@ -240,7 +249,16 @@
       "lunarblock.feat6_desc": "Layered haptic impacts and localized vibrations on block rotation, drops, and line clears.",
       "lunarblock.showcase_title": "Spectacular physical clears.",
       "lunarblock.showcase_desc": "Watch crystal blocks shatter and fracture dynamically on line clears, creating satisfying spatial chain reactions.",
-      "lunarblock.copyright": "&copy; 2026 Pham Hung Tien. All rights reserved."
+      "lunarblock.copyright": "&copy; 2026 Pham Hung Tien. All rights reserved.",
+
+      // Donate
+      "root.donate": "Donate",
+      "root.donate_btn": "Donate to the project",
+      "root.donate_title": "Thank you for your support! ❤️",
+      "root.donate_desc": "Your support is a huge motivation for me to maintain and develop the projects.",
+      "root.donate_qr_note": "All banks",
+      "root.donate_paypal": "Donate via PayPal",
+      "root.donate_note": "Projects are always free, donation is optional and voluntary."
     }
   };
 
@@ -521,6 +539,95 @@
     });
   }
 
+  // Inject Donate Modal HTML structure dynamically
+  function injectDonateModal() {
+    if (document.getElementById("donate-modal")) return;
+    
+    const modalHTML = `
+      <div class="donate-modal-overlay" id="donate-modal-overlay"></div>
+      <div class="donate-modal-container">
+        <button class="donate-modal-close" id="donate-modal-close" aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+        <div class="donate-modal-body">
+          <div class="donate-modal-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+          </div>
+          <h3 data-i18n="root.donate_title">Cảm ơn bạn đã ủng hộ! ❤️</h3>
+          <p class="donate-modal-desc" data-i18n="root.donate_desc">Mọi đóng góp của bạn đều là động lực to lớn để mình duy trì và phát triển dự án.</p>
+          
+          <div class="donate-modal-qr-container">
+            <img src="/assets/donate.webp" alt="QR Code Donate" class="donate-modal-qr">
+            <div class="donate-modal-qr-footer">
+              <span class="qr-tag">VietQR</span>
+              <span class="qr-dot"></span>
+              <span class="qr-note" data-i18n="root.donate_qr_note">Mọi ngân hàng</span>
+            </div>
+          </div>
+          
+          <div class="donate-modal-actions">
+            <a href="https://www.paypal.com/paypalme/phamhungtien1404" target="_blank" rel="noopener noreferrer" class="donate-paypal-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>
+              <span data-i18n="root.donate_paypal">Donate qua PayPal</span>
+            </a>
+            <p class="donate-modal-footnote" data-i18n="root.donate_note">Dự án luôn miễn phí, donation là tùy tâm và không bắt buộc.</p>
+          </div>
+        </div>
+      </div>
+    `;
+    
+    const container = document.createElement("div");
+    container.id = "donate-modal";
+    container.className = "donate-modal";
+    container.innerHTML = modalHTML;
+    document.body.appendChild(container);
+  }
+
+  // Setup Donate Modal open/close listeners
+  function setupDonateListeners() {
+    const modal = document.getElementById("donate-modal");
+    if (!modal) return;
+
+    const overlay = document.getElementById("donate-modal-overlay");
+    const closeBtn = document.getElementById("donate-modal-close");
+
+    const openModal = (e) => {
+      if (e) e.preventDefault();
+      modal.classList.add("active");
+      document.body.style.overflow = "hidden";
+    };
+
+    const closeModal = () => {
+      modal.classList.remove("active");
+      document.body.style.overflow = "";
+      if (window.location.hash === "#donate") {
+        history.replaceState(null, null, ' ');
+      }
+    };
+
+    // Global listener for click on any elements triggering donate
+    document.addEventListener("click", (e) => {
+      const trigger = e.target.closest(".donate-trigger") || 
+                      (e.target.closest("a") && e.target.closest("a").getAttribute("href") === "#donate");
+      if (trigger) {
+        openModal(e);
+      }
+    });
+
+    if (overlay) overlay.addEventListener("click", closeModal);
+    if (closeBtn) closeBtn.addEventListener("click", closeModal);
+
+    // Support direct linking via hash change
+    const checkHash = () => {
+      if (window.location.hash === "#donate") {
+        openModal();
+      }
+    };
+
+    window.addEventListener("hashchange", checkHash);
+    checkHash();
+  }
+
   // Initialize i18n
   function init() {
     // Inject Theme Toggle first so it handles early render
@@ -528,7 +635,9 @@
     
     const lang = getLang();
     injectToggleButton(lang);
+    injectDonateModal();
     applyTranslations(lang);
+    setupDonateListeners();
     detectIPLanguage();
     initScrollReveal();
   }
