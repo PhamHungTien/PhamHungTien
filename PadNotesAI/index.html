@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <script>
+    (function () {
+      var preferred = localStorage.getItem("preferred_lang");
+      var browser = navigator.language || navigator.userLanguage || "";
+      document.documentElement.lang = preferred || (browser.toLowerCase().startsWith("vi") ? "vi" : "en");
+    })();
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title data-i18n="padnotesai.title">Pad Notes AI - Smart Note-Taking & Handwriting Analyzer</title>
+  <meta name="apple-itunes-app" content="app-id=6779363432">
+  <meta name="description" content="Vẽ viết tay bằng Pencil, nhận dạng OCR ngoại tuyến và thảo luận cùng trợ lý AI trực tiếp trên iPad.">
+  <meta name="theme-color" content="#f5f5f7">
+  <link rel="canonical" href="https://phamhungtien.com/PadNotesAI/">
+  <link rel="icon" type="image/png" href="assets/app-icon.png">
+  <link rel="apple-touch-icon" href="assets/app-icon.png">
+  <link rel="stylesheet" href="/assets/site.css">
+  <link rel="stylesheet" href="styles.css">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://phamhungtien.com/PadNotesAI/">
+  <meta property="og:title" content="Pad Notes AI - Smart Note-Taking">
+  <meta property="og:description" content="Handwriting OCR, Audio transcription và Trợ lý AI trên thiết bị di động.">
+  <meta property="og:image" content="https://phamhungtien.com/PadNotesAI/assets/ipad-editor.png">
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Pad Notes AI - Smart Note-Taking",
+      "url": "https://phamhungtien.com/PadNotesAI/",
+      "applicationCategory": "ProductivityApplication",
+      "operatingSystem": "iOS, iPadOS",
+      "description": "Ứng dụng viết tay ghi chú, nhận dạng OCR và phân tích tài liệu bằng Apple Intelligence trên iPad."
+    }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container">
+      <a class="brand" href="/PadNotesAI/">
+        <img src="assets/app-icon.png" alt="">
+        <span>Pad Notes AI</span>
+      </a>
+      <nav class="nav" aria-label="Điều hướng">
+        <a class="desktop-link" href="/" data-i18n="padnotesai.home">Trang chính</a>
+        <a class="desktop-link" href="#features" data-i18n="padnotesai.features_nav">Tính năng</a>
+        <a class="desktop-link" href="privacy.html">Privacy</a>
+        <a class="button-primary" href="https://apps.apple.com/us/app/pad-notes-ai/id6779363432" target="_blank" rel="noopener" data-i18n="padnotesai.download_btn">Tải trên App Store</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="product-hero">
+      <figure class="hero-media">
+        <img src="assets/ipad-editor.png" alt="Trình soạn thảo Pad Notes AI trên iPad">
+      </figure>
+      <div class="container">
+        <div class="hero-content">
+          <div class="app-lockup">
+            <img src="assets/app-icon.png" alt="">
+            <div>
+              <strong>Pad Notes AI</strong>
+              <span data-i18n="padnotesai.brand_subtitle">Sổ tay ghi chú thông minh cho iPad</span>
+            </div>
+          </div>
+          <h1>Pad Notes AI</h1>
+          <p class="headline" data-i18n="padnotesai.hero_title">Ghi chép thông minh hơn cùng Trí Tuệ Nhân Tạo.</p>
+          <p class="lede" data-i18n="padnotesai.hero_desc">Ứng dụng ghi chú viết tay chuyên nghiệp dành riêng cho iPad và iPhone. Vẽ viết bằng Apple Pencil, nhận dạng OCR offline và tương tác với tài liệu qua mô hình AI.</p>
+          <a class="button-primary" href="https://apps.apple.com/us/app/pad-notes-ai/id6779363432" target="_blank" rel="noopener" data-i18n="padnotesai.download_btn">Tải trên App Store</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="facts" aria-label="Thông tin ứng dụng">
+      <div class="container fact-grid">
+        <div><span data-i18n="padnotesai.platforms">Nền tảng</span><strong>iPhone, iPad</strong></div>
+        <div><span data-i18n="padnotesai.execution">Biên dịch</span><strong data-i18n="padnotesai.on_device">Nhận dạng offline</strong></div>
+        <div><span data-i18n="padnotesai.support">Hỗ trợ</span><strong>Apple Intelligence & Gemini</strong></div>
+      </div>
+    </section>
+
+    <section id="features" class="features-section container">
+      <header class="section-heading">
+        <p data-i18n="padnotesai.features_kicker">Tính năng</p>
+        <h2 data-i18n="padnotesai.features_title">Sổ tay kỹ thuật số thế hệ mới.</h2>
+        <span data-i18n="padnotesai.features_desc">Viết tay, lưu trữ âm thoại và phân tích tài liệu trực quan từ bất cứ đâu.</span>
+      </header>
+      <div class="feature-grid">
+        <article><h3 data-i18n="padnotesai.feat1_title">Smart Handwritings</h3><p data-i18n="padnotesai.feat1_desc">Hỗ trợ vẽ viết tay chuyên sâu bằng Pencil với đầy đủ cọ vẽ, bảng màu và mẫu giấy.</p></article>
+        <article><h3 data-i18n="padnotesai.feat2_title">Local Handwriting OCR</h3><p data-i18n="padnotesai.feat2_desc">Quét và chuyển đổi các nét vẽ viết tay thành văn bản kỹ thuật số trực tiếp trên máy.</p></article>
+        <article><h3 data-i18n="padnotesai.feat3_title">Apple Intelligence</h3><p data-i18n="padnotesai.feat3_desc">Tóm tắt, lọc ý chính của ghi chú bằng mô hình LLM chạy trực tiếp offline trên thiết bị.</p></article>
+        <article><h3 data-i18n="padnotesai.feat4_title">Voice Recorder</h3><p data-i18n="padnotesai.feat4_desc">Ghi âm các buổi họp, bài giảng trực tiếp và tích hợp văn bản ghi âm vào trang ghi chú.</p></article>
+        <article><h3 data-i18n="padnotesai.feat5_title">iCloud Sync & Apple Sign-In</h3><p data-i18n="padnotesai.feat5_desc">Bảo mật tài khoản với Apple ID và đồng bộ tự động toàn bộ dữ liệu qua CloudKit.</p></article>
+        <article><h3 data-i18n="padnotesai.feat6_title">Gemini Assistant</h3><p data-i18n="padnotesai.feat6_desc">Cấu hình API Key cá nhân để mở khóa trò chuyện chuyên sâu dựa trên toàn bộ nội dung trang.</p></article>
+      </div>
+    </section>
+
+    <section class="editor-showcase">
+      <div class="container showcase-inner">
+        <div>
+          <h2 data-i18n="padnotesai.showcase_title">Giao diện Workspace tối ưu.</h2>
+          <p data-i18n="padnotesai.showcase_desc">Bảng vẽ viết tay PencilKit đặt ngay cạnh cửa sổ AI Assistant để bạn vừa ghi chép vừa thảo luận tiện lợi.</p>
+        </div>
+        <img src="assets/ipad-workspace.png" alt="Workspace trong Pad Notes AI" loading="lazy">
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span data-i18n="padnotesai.copyright">&copy; 2026 Pham Hung Tien. Bảo lưu mọi quyền.</span>
+      <nav>
+        <a href="https://github.com/PhamHungTien" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/ph%E1%BA%A1m-h%C3%B9ng-ti%E1%BA%BFn-a1b405327/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="#donate" class="donate-trigger" data-i18n="root.donate">Ủng hộ</a>
+        <a href="mailto:phamhungtien.contact@gmail.com" data-i18n="padnotesai.support">Hỗ trợ</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Use</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="/assets/i18n.js?v=2.0" defer></script>
+</body>
+</html>

@@ -62,6 +62,8 @@ jobs:
           cp -r LunarBlock _site/LunarBlock
           # Copy PadCodeAI product page
           cp -r PadCodeAI _site/PadCodeAI
+          # Copy PadNotesAI product page
+          cp -r PadNotesAI _site/PadNotesAI
           # Copy PHTV app to its subdirectory
           cp -r PHTV/dist _site/PHTV
 
