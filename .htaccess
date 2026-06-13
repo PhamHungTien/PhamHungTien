@@ -8,6 +8,10 @@
   # Redirect lowercase padcodeai and any subpaths to canonical URL
   RewriteRule ^(?i)padcodeai/(.*)$ PadCodeAI/$1 [R=301,L]
   RewriteRule ^(?i)padcodeai$ PadCodeAI/ [R=301,L]
+
+  # Redirect lowercase padnotesai and any subpaths to canonical URL
+  RewriteRule ^(?i)padnotesai/(.*)$ PadNotesAI/$1 [R=301,L]
+  RewriteRule ^(?i)padnotesai$ PadNotesAI/ [R=301,L]
   
   # Redirect /PHTV to /PHTV/
   RewriteCond %{REQUEST_FILENAME} !-f
@@ -18,6 +22,11 @@
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^PadCodeAI$ PadCodeAI/ [R=301,L]
+
+  # Redirect /PadNotesAI to /PadNotesAI/
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^PadNotesAI$ PadNotesAI/ [R=301,L]
 
   # SPA routing - redirect all PHTV requests to PHTV/index.html
   RewriteCond %{REQUEST_FILENAME} !-f

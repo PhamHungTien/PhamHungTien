@@ -8,6 +8,11 @@
 /padcodeai/ /PadCodeAI/ 301
 /Aipadcode /PadCodeAI/ 301
 /Aipadcode/ /PadCodeAI/ 301
+/PadNotesAI /PadNotesAI/ 301
+/padnotesai /PadNotesAI/ 301
+/padnotesai/ /PadNotesAI/ 301
+/Aipadnotes /PadNotesAI/ 301
+/Aipadnotes/ /PadNotesAI/ 301
 
 # Single Page Application - redirect all non-file requests to index.html
 /PHTV/* /PHTV/index.html 200
