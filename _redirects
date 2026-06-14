@@ -31,11 +31,6 @@
 /lunarblock /LunarBlock/ 301
 /lunarblock/* /LunarBlock/:splat 301
 
-# Redirect rules for legacy structures (e.g. /products/lunarv)
-/products/lunarv /LunarV/ 301
-/products/lunarv/ /LunarV/ 301
-/products/lunarv/* /LunarV/:splat 301
-
 # Clean URLs for Policy and Terms documents
 /LunarV/privacy /LunarV/privacy.html 301
 /LunarV/terms /LunarV/terms.html 301

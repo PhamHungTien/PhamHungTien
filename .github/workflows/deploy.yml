@@ -56,8 +56,6 @@ jobs:
           cp .nojekyll _site/ || true
           # Copy shared assets
           cp -r assets _site/assets
-          # Copy products redirection page
-          cp -r products _site/products || true
           # Copy LunarV product page
           cp -r LunarV _site/LunarV
           # Copy LunarBlock product page

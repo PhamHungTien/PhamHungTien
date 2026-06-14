@@ -248,20 +248,6 @@
         }
       }
 
-      // Các trường hợp chuyển hướng đặc biệt khác (đường dẫn cũ)
-      const specialRedirects = {
-        "/products/lunarv": "/LunarV/",
-        "/products/lunarv/": "/LunarV/",
-        "/products/lunarv/index.html": "/LunarV/"
-      };
-
-      const target = specialRedirects[lowerPath.replace(/\/$/, "")];
-      if (target && path !== target) {
-        showRedirectState();
-        window.location.replace(target);
-        return;
-      }
-
       // Xử lý nút tải lại trang và xóa cache trình duyệt (bằng cách thêm tham số timestamp ngẫu nhiên)
       document.getElementById("btn-reload").addEventListener("click", function() {
         const cacheBustUrl = window.location.origin + window.location.pathname + "?t=" + Date.now() + window.location.hash;
