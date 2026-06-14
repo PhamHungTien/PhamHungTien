@@ -68,8 +68,8 @@
       "mynasmanager.features_nav": "Tính năng",
       "mynasmanager.hero_title": "Quản lý NAS của bạn. Mọi lúc, mọi nơi.",
       "mynasmanager.hero_desc": "Ứng dụng di động chuyên nghiệp giúp giám sát hiệu suất hệ thống Synology DSM, quản lý file, chuyển gói phần mềm và truy cập terminal SSH an toàn.",
-      "mynasmanager.coming_soon": "Sắp có trên App Store",
-      "mynasmanager.coming_soon_nav": "Sắp ra mắt",
+      "mynasmanager.coming_soon": "Đang chờ duyệt trên App Store",
+      "mynasmanager.coming_soon_nav": "Đang chờ duyệt",
       "mynasmanager.platforms": "Nền tảng",
       "mynasmanager.execution": "Kết nối",
       "mynasmanager.on_device": "Trực tiếp & Bảo mật",
@@ -100,7 +100,7 @@
       "padnotesai.title": "Pad Notes AI - Smart Note-Taking & Handwriting Analyzer",
       "padnotesai.home": "Trang chính",
       "padnotesai.features_nav": "Tính năng",
-      "padnotesai.download_btn": "Sắp có trên App Store",
+      "padnotesai.download_btn": "Đang chờ duyệt trên App Store",
       "padnotesai.brand_subtitle": "Sổ tay ghi chú thông minh cho iPad",
       "padnotesai.hero_title": "Ghi chép thông minh hơn cùng Trí Tuệ Nhân Tạo.",
       "padnotesai.hero_desc": "Ứng dụng ghi chú viết tay chuyên nghiệp dành riêng cho iPad và iPhone. Vẽ viết bằng Apple Pencil, nhận dạng OCR offline và tương tác với tài liệu qua mô hình AI.",
@@ -198,7 +198,8 @@
       "root.donate_desc": "Mọi đóng góp của bạn đều là động lực to lớn để mình duy trì và phát triển dự án.",
       "root.donate_qr_note": "Mọi ngân hàng",
       "root.donate_paypal": "Donate qua PayPal",
-      "root.donate_note": "Dự án luôn miễn phí, donation là tùy tâm và không bắt buộc."
+      "root.donate_note": "Dự án luôn miễn phí, donation là tùy tâm và không bắt buộc.",
+      "root.soon_btn": "CHỜ DUYỆT"
     },
     en: {
       // Root Index
@@ -268,8 +269,8 @@
       "mynasmanager.features_nav": "Features",
       "mynasmanager.hero_title": "Manage your NAS. Anywhere, anytime.",
       "mynasmanager.hero_desc": "A professional mobile client to monitor Synology DSM performance, manage files, manage package services, and access secure SSH terminal.",
-      "mynasmanager.coming_soon": "Coming soon to the App Store",
-      "mynasmanager.coming_soon_nav": "Coming Soon",
+      "mynasmanager.coming_soon": "Pending App Store approval",
+      "mynasmanager.coming_soon_nav": "Pending Approval",
       "mynasmanager.platforms": "Platforms",
       "mynasmanager.execution": "Connection",
       "mynasmanager.on_device": "Direct & Secure",
@@ -300,7 +301,7 @@
       "padnotesai.title": "Pad Notes AI - Smart Note-Taking & Handwriting Analyzer",
       "padnotesai.home": "Home",
       "padnotesai.features_nav": "Features",
-      "padnotesai.download_btn": "Coming soon to the App Store",
+      "padnotesai.download_btn": "Pending App Store approval",
       "padnotesai.brand_subtitle": "Smart Handwriting & Note-taking on iPad",
       "padnotesai.hero_title": "Smart Note-Taking powered by AI.",
       "padnotesai.hero_desc": "A professional handwritten note-taking app designed for iPad and iPhone. Draw and write with Apple Pencil, run local OCR, and interact with your documents via AI.",
@@ -398,7 +399,8 @@
       "root.donate_desc": "Your support is a huge motivation for me to maintain and develop the projects.",
       "root.donate_qr_note": "All banks",
       "root.donate_paypal": "Donate via PayPal",
-      "root.donate_note": "Projects are always free, donation is optional and voluntary."
+      "root.donate_note": "Projects are always free, donation is optional and voluntary.",
+      "root.soon_btn": "PENDING"
     }
   };
 
