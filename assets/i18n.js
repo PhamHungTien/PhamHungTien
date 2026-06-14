@@ -6,7 +6,7 @@
       "root.meta_desc": "Trang chính thức của Pham Hung Tien với các ứng dụng cho thiết bị Apple, gồm PHTV, LunarV và Pad Code AI.",
       "root.brand_subtitle": "Danh sách sản phẩm",
       "root.contact": "Liên hệ",
-      "root.developer": "Nhà phát triển",
+      "root.developer": "Tiện ích & Trò chơi",
       "root.apps_products": "Ứng dụng & Sản phẩm",
       "root.hero_desc": "Những công cụ gọn, riêng tư và quen thuộc dành cho thiết bị Apple.",
       "root.phtv_desc": "Precision Hybrid Typing Vietnamese tập trung vào tốc độ, độ chính xác và quyền riêng tư, với trải nghiệm gõ tiếng Việt native, gọn và ổn định.",
@@ -207,7 +207,7 @@
       "root.meta_desc": "Official website of Pham Hung Tien featuring apps for Apple devices, including PHTV, LunarV, and Pad Code AI.",
       "root.brand_subtitle": "Product Index",
       "root.contact": "Contact",
-      "root.developer": "Developer",
+      "root.developer": "Utilities & Games",
       "root.apps_products": "Apps & Products",
       "root.hero_desc": "Focused, private tools designed to feel at home on Apple devices.",
       "root.phtv_desc": "Precision Hybrid Typing Vietnamese focuses on speed, accuracy, and privacy, with a native, lightweight, and stable typing experience.",
@@ -703,6 +703,7 @@
           <p class="donate-modal-desc" data-i18n="root.donate_desc">Mọi đóng góp của bạn đều là động lực to lớn để mình duy trì và phát triển dự án.</p>
           
           <div class="donate-modal-qr-container">
+            <div class="qr-scan-line"></div>
             <img src="/assets/donate.webp" alt="QR Code Donate" class="donate-modal-qr">
             <div class="donate-modal-qr-footer">
               <span class="qr-tag">VietQR</span>
