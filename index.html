@@ -80,152 +80,143 @@
     </div>
   </header>
 
-  <main>
-    <section class="product-grid container" aria-label="Sản phẩm">
-      <article class="product-card">
-        <div class="product-copy">
-          <div class="product-title">
-            <img src="/assets/phtv-icon.webp" alt="PHTV">
-            <div>
-              <h2>PHTV</h2>
-              <p class="subtitle" data-i18n="root.phtv_subtitle">Bộ gõ tiếng Việt hiện đại cho macOS.</p>
-            </div>
-          </div>
-          <p data-i18n="root.phtv_desc">Precision Hybrid Typing Vietnamese tập trung vào tốc độ, độ chính xác và quyền riêng tư, với trải nghiệm gõ tiếng Việt native, gọn và ổn định.</p>
-          <ul class="tags">
-            <li>macOS 14+</li>
-            <li data-i18n="root.tag_offline">Ngoại tuyến</li>
-            <li>Homebrew</li>
-          </ul>
-          <div class="actions">
-            <a class="button-primary" href="/PHTV/" data-i18n="root.open_product">Mở trang sản phẩm</a>
-          </div>
+  <main class="appstore-layout">
+    <!-- Today Header -->
+    <header class="appstore-today-header">
+      <div>
+        <span class="today-date" id="today-date">CHỦ NHẬT, 14 THÁNG 6</span>
+        <h1 class="today-title" data-i18n="root.apps_products">Hôm nay</h1>
+      </div>
+      <a href="#donate" class="donate-trigger appstore-avatar-link" aria-label="Account">
+        <div class="appstore-avatar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         </div>
-        <figure class="product-media phtv-settings">
-          <img src="/PHTV/assets/UI/settings-hero.png" alt="Giao diện cài đặt PHTV trên macOS" loading="lazy">
-        </figure>
-      </article>
+      </a>
+    </header>
 
-      <article class="product-card">
-        <div class="product-copy">
-          <div class="product-title">
-            <img src="/assets/lunarv-icon.png" alt="LunarV">
-            <div>
-              <h2>LunarV</h2>
-              <p class="subtitle" data-i18n="root.lunarv_subtitle">Lịch âm Việt Nam trên thiết bị Apple.</p>
+    <!-- Featured "Today" Card (My NAS Manager) -->
+    <section class="today-card-section">
+      <a href="/MyNASManager/" class="today-card-link">
+        <div class="today-card">
+          <div class="card-bg-container">
+            <img src="/MyNASManager/assets/ipad-hero.png" alt="My NAS Manager" class="card-bg">
+          </div>
+          <div class="card-content">
+            <span class="card-kicker" data-i18n="mynasmanager.brand_subtitle">Synology NAS Client cho iOS</span>
+            <h2 class="card-title">My NAS Manager</h2>
+            <p class="card-description" data-i18n="root.mynasmanager_desc">Quản lý và giám sát ổ cứng mạng Synology NAS của bạn từ xa, trực quan và an toàn ngay trên các thiết bị Apple.</p>
+            
+            <div class="card-app-info">
+              <img src="/MyNASManager/assets/app-icon.png" alt="My NAS Manager Icon" class="card-app-icon">
+              <div class="card-app-meta">
+                <span class="app-name">My NAS Manager</span>
+                <span class="app-subtitle" data-i18n="root.mynasmanager_subtitle">Quản lý Synology NAS trên iOS</span>
+              </div>
+              <div class="app-get-pill">
+                <span class="get-text" data-i18n="root.open_product">MỞ</span>
+              </div>
             </div>
           </div>
-          <p data-i18n="root.lunarv_desc">LunarV mang lịch âm, widget, thông báo và dịp gia đình lên iPhone, iPad, Mac và Apple Vision Pro.</p>
-          <ul class="tags">
-            <li>iPhone, iPad, Mac, Vision Pro</li>
-            <li data-i18n="root.tag_lunar">Lịch âm</li>
-            <li data-i18n="root.tag_reminders">Nhắc nhở</li>
-          </ul>
-          <div class="actions">
-            <a class="button-primary" href="/LunarV/" data-i18n="root.open_product">Mở trang sản phẩm</a>
-            <a class="button-secondary" href="https://apps.apple.com/vn/app/lunarv-l%E1%BB%8ch-%C3%A2m-vi%E1%BB%87t-nam/id6770913893?l=vi" target="_blank" rel="noopener noreferrer">App Store</a>
-          </div>
         </div>
-        <figure class="product-media lunar">
-          <img src="/LunarV/assets/lunarv-ipad.jpg" alt="Giao diện LunarV trên iPad" loading="lazy">
-        </figure>
-      </article>
+      </a>
+    </section>
 
-      <article class="product-card">
-        <div class="product-copy">
-          <div class="product-title">
-            <img src="/LunarBlock/assets/app-icon.png" alt="Lunar Block">
-            <div>
-              <h2>Lunar Block</h2>
-              <p class="subtitle" data-i18n="root.lunarblock_subtitle">3D falling-block puzzle in space.</p>
-            </div>
-          </div>
-          <p data-i18n="root.lunarblock_desc">Lunar Block blends classic stacking with a dynamic 3D SceneKit viewport, tactile gamepad controls, haptic impact, and line fracture clearing physics.</p>
-          <ul class="tags">
-            <li>iPhone, iPad, Mac, Vision Pro</li>
-            <li>SceneKit 3D</li>
-            <li data-i18n="root.tag_offline">Offline</li>
-          </ul>
-          <div class="actions">
-            <a class="button-primary" href="/LunarBlock/" data-i18n="root.open_product">Mở trang sản phẩm</a>
-          </div>
+    <!-- Two Column List of "Top Free Apps" and "Essentials" -->
+    <section class="appstore-sections-grid">
+      <!-- Section: Top Free Apps (Bảng xếp hạng) -->
+      <div class="appstore-section">
+        <div class="section-header">
+          <h2 data-i18n="root.apps_products">Ứng dụng hàng đầu</h2>
+          <span class="see-all-link" data-i18n="mynasmanager.features_nav">Tính năng</span>
         </div>
-        <figure class="product-media lunarblock">
-          <img src="/LunarBlock/assets/lunarblock-hero.png?v=2" alt="Giao diện Lunar Block trên iPad" loading="lazy">
-        </figure>
-      </article>
+        
+        <div class="app-list-rows">
+          <!-- App Row 1: Pad Code AI -->
+          <a href="/PadCodeAI/" class="app-row-link">
+            <div class="app-row">
+              <span class="app-row-rank">1</span>
+              <img src="/PadCodeAI/assets/app-icon.png" alt="Pad Code AI Icon" class="app-row-icon">
+              <div class="app-row-details">
+                <span class="app-row-title">Pad Code AI</span>
+                <span class="app-row-subtitle" data-i18n="root.padcodeai_subtitle">Code Editor & IDE cho iPad/iPhone</span>
+              </div>
+              <div class="app-get-pill">
+                <span class="get-text" data-i18n="root.open_product">MỞ</span>
+              </div>
+            </div>
+          </a>
 
-      <article class="product-card">
-        <div class="product-copy">
-          <div class="product-title">
-            <img src="/PadCodeAI/assets/app-icon.png" alt="Pad Code AI">
-            <div>
-              <h2>Pad Code AI</h2>
-              <p class="subtitle" data-i18n="root.padcodeai_subtitle">Code Editor &amp; IDE cho iPad/iPhone</p>
+          <!-- App Row 2: LunarV -->
+          <a href="/LunarV/" class="app-row-link">
+            <div class="app-row">
+              <span class="app-row-rank">2</span>
+              <img src="/assets/lunarv-icon.png" alt="LunarV Icon" class="app-row-icon">
+              <div class="app-row-details">
+                <span class="app-row-title">LunarV</span>
+                <span class="app-row-subtitle" data-i18n="root.lunarv_subtitle">Lịch âm Việt Nam trên thiết bị Apple.</span>
+              </div>
+              <div class="app-get-pill">
+                <span class="get-text" data-i18n="root.open_product">MỞ</span>
+              </div>
             </div>
-          </div>
-          <p data-i18n="root.padcodeai_desc">Viết, chạy và quản lý code trên thiết bị di động với Compiler offline và Apple Intelligence tích hợp.</p>
-          <ul class="tags">
-            <li>iPhone, iPad</li>
-            <li data-i18n="root.tag_compiler">Biên dịch offline</li>
-            <li>Apple Intelligence</li>
-          </ul>
-          <div class="actions">
-            <a class="button-primary" href="/PadCodeAI/" data-i18n="root.open_product">Mở trang sản phẩm</a>
-          </div>
-        </div>
-        <figure class="product-media padcodeai">
-          <img src="/PadCodeAI/assets/ipad-editor.png" alt="Giao diện PadCodeAI trên iPad" loading="lazy">
-        </figure>
-      </article>
+          </a>
 
-      <article class="product-card">
-        <div class="product-copy">
-          <div class="product-title">
-            <img src="/PadNotesAI/assets/app-icon.png" alt="Pad Notes AI">
-            <div>
-              <h2>Pad Notes AI</h2>
-              <p class="subtitle" data-i18n="root.padnotesai_subtitle">Sổ tay thông minh &amp; Phân tích viết tay</p>
+          <!-- App Row 3: Pad Notes AI -->
+          <a href="/PadNotesAI/" class="app-row-link">
+            <div class="app-row">
+              <span class="app-row-rank">3</span>
+              <img src="/PadNotesAI/assets/app-icon.png" alt="Pad Notes AI Icon" class="app-row-icon">
+              <div class="app-row-details">
+                <span class="app-row-title">Pad Notes AI</span>
+                <span class="app-row-subtitle" data-i18n="root.padnotesai_subtitle">Sổ tay thông minh & Phân tích viết tay</span>
+              </div>
+              <div class="app-get-pill">
+                <span class="get-text" data-i18n="root.open_product">MỞ</span>
+              </div>
             </div>
-          </div>
-          <p data-i18n="root.padnotesai_desc">Vẽ viết tay ghi chú, nhận dạng OCR ngoại tuyến và thảo luận cùng trợ lý AI thông minh trực tiếp trên iPad và iPhone.</p>
-          <ul class="tags">
-            <li>iPhone, iPad</li>
-            <li data-i18n="root.tag_offline">Nhận dạng OCR offline</li>
-            <li>Apple Intelligence</li>
-          </ul>
-          <div class="actions">
-            <a class="button-primary" href="/PadNotesAI/" data-i18n="root.open_product">Mở trang sản phẩm</a>
-          </div>
+          </a>
         </div>
-        <figure class="product-media padnotesai">
-          <img src="/PadNotesAI/assets/ipad-editor.png" alt="Giao diện Pad Notes AI trên iPad" loading="lazy">
-        </figure>
-      </article>
+      </div>
 
-      <article class="product-card">
-        <div class="product-copy">
-          <div class="product-title">
-            <img src="/MyNASManager/assets/app-icon.png" alt="My NAS Manager">
-            <div>
-              <h2>My NAS Manager</h2>
-              <p class="subtitle" data-i18n="root.mynasmanager_subtitle">Quản lý Synology NAS trên iOS</p>
-            </div>
-          </div>
-          <p data-i18n="root.mynasmanager_desc">Quản lý và giám sát ổ cứng mạng Synology NAS của bạn từ xa, trực quan và an toàn ngay trên các thiết bị Apple.</p>
-          <ul class="tags">
-            <li>iPhone, iPad</li>
-            <li data-i18n="root.tag_offline">Trực tiếp &amp; Bảo mật</li>
-            <li>Synology DSM</li>
-          </ul>
-          <div class="actions">
-            <a class="button-primary" href="/MyNASManager/" data-i18n="root.open_product">Mở trang sản phẩm</a>
-          </div>
+      <!-- Section: Essential Tools / Games -->
+      <div class="appstore-section">
+        <div class="section-header">
+          <h2 data-i18n="root.developer">Nhà phát triển</h2>
+          <span class="see-all-link" data-i18n="root.contact">Liên hệ</span>
         </div>
-        <figure class="product-media mynasmanager">
-          <img src="/MyNASManager/assets/ipad-hero.png" alt="Giao diện My NAS Manager" loading="lazy">
-        </figure>
-      </article>
+        
+        <div class="app-list-rows">
+          <!-- App Row 4: PHTV -->
+          <a href="/PHTV/" class="app-row-link">
+            <div class="app-row">
+              <span class="app-row-rank">4</span>
+              <img src="/assets/phtv-icon.webp" alt="PHTV Icon" class="app-row-icon">
+              <div class="app-row-details">
+                <span class="app-row-title">PHTV</span>
+                <span class="app-row-subtitle" data-i18n="root.phtv_subtitle">Bộ gõ tiếng Việt hiện đại cho macOS.</span>
+              </div>
+              <div class="app-get-pill">
+                <span class="get-text" data-i18n="root.open_product">MỞ</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- App Row 5: Lunar Block -->
+          <a href="/LunarBlock/" class="app-row-link">
+            <div class="app-row">
+              <span class="app-row-rank">5</span>
+              <img src="/LunarBlock/assets/app-icon.png" alt="Lunar Block Icon" class="app-row-icon">
+              <div class="app-row-details">
+                <span class="app-row-title">Lunar Block</span>
+                <span class="app-row-subtitle" data-i18n="root.lunarblock_subtitle">3D falling-block puzzle in space.</span>
+              </div>
+              <div class="app-get-pill">
+                <span class="get-text" data-i18n="root.open_product">MỞ</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
     </section>
   </main>
 
@@ -242,5 +233,19 @@
     </div>
   </footer>
   <script src="/assets/i18n.js?v=2.0" defer></script>
+  <script>
+    function updateDate() {
+      const dateOptions = { weekday: 'long', day: 'numeric', month: 'long' };
+      const today = new Date();
+      const currentLang = document.documentElement.lang || "vi";
+      const locale = currentLang === "vi" ? "vi-VN" : "en-US";
+      const el = document.getElementById("today-date");
+      if (el) {
+        el.innerHTML = today.toLocaleDateString(locale, dateOptions).toUpperCase();
+      }
+    }
+    window.addEventListener("langchange", updateDate);
+    document.addEventListener("DOMContentLoaded", updateDate);
+  </script>
 </body>
 </html>

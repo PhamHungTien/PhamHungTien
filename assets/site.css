@@ -1059,4 +1059,387 @@ html[data-theme="dark"] .donate-modal-qr-container {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
+/* ==========================================================================
+   APP STORE HOME PAGE REDESIGN
+   ========================================================================== */
+.appstore-layout {
+  padding-top: 40px;
+  padding-bottom: 80px;
+  width: min(960px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+.appstore-today-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 28px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.today-date {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.today-title {
+  margin: 0;
+  font-size: clamp(34px, 6vw, 44px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.appstore-avatar-link {
+  display: inline-flex;
+}
+
+.appstore-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--soft);
+  color: var(--blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--line);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.appstore-avatar:hover {
+  transform: scale(1.05);
+  background: var(--line);
+}
+
+.appstore-avatar svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Today Featured Card */
+.today-card-section {
+  margin-bottom: 48px;
+}
+
+.today-card-link {
+  display: block;
+  outline: none;
+}
+
+.today-card {
+  position: relative;
+  height: 480px;
+  border-radius: 28px;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .today-card {
+    box-shadow: 0 15px 35px rgba(255, 255, 255, 0.03);
+  }
+}
+html[data-theme="dark"] .today-card {
+  box-shadow: 0 15px 35px rgba(255, 255, 255, 0.03);
+}
+
+.today-card:hover {
+  transform: scale(1.01) translateY(-4px);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
+}
+
+.card-bg-container {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  background: var(--soft);
+}
+
+.card-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+  transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.today-card:hover .card-bg {
+  transform: scale(1.02);
+}
+
+/* Glass card content overlay */
+.card-content {
+  position: relative;
+  z-index: 2;
+  padding: 32px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 40%, rgba(0, 0, 0, 0.1) 85%, transparent 100%);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+}
+
+.card-kicker {
+  font-size: 11px;
+  font-weight: 750;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 6px;
+  display: block;
+}
+
+.card-title {
+  margin: 0 0 8px;
+  font-size: clamp(26px, 4vw, 36px);
+  font-weight: 850;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+  color: #ffffff;
+}
+
+.card-description {
+  margin: 0 0 24px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 480px;
+}
+
+/* Mini App Row inside Card */
+.card-app-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 14px 20px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  max-width: fit-content;
+}
+
+.card-app-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.card-app-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.card-app-meta .app-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.card-app-meta .app-subtitle {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* App Charts Grid */
+.appstore-sections-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 40px;
+}
+
+.appstore-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 18px;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.see-all-link {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--blue);
+  transition: opacity 0.2s ease;
+}
+
+.see-all-link:hover {
+  opacity: 0.8;
+}
+
+/* App List Rows styling */
+.app-list-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.app-row-link {
+  display: block;
+  outline: none;
+}
+
+.app-row {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+  transition: transform 0.2s ease;
+}
+
+.app-row-link:last-child .app-row {
+  border-bottom: none;
+}
+
+.app-row-link:hover .app-row {
+  transform: translateX(4px);
+}
+
+.app-row-rank {
+  font-size: 16px;
+  font-weight: 750;
+  color: var(--text);
+  width: 24px;
+  text-align: left;
+}
+
+.app-row-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 13px;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--line);
+  margin-right: 14px;
+  transition: transform 0.3s ease;
+}
+
+.app-row-link:hover .app-row-icon {
+  transform: scale(1.05) rotate(-2deg);
+}
+
+.app-row-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+  margin-right: 14px;
+}
+
+.app-row-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app-row-subtitle {
+  font-size: 12px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* App Store GET Pill Button */
+.app-get-pill {
+  min-width: 72px;
+  height: 30px;
+  border-radius: 15px;
+  background: var(--soft);
+  color: var(--blue);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 13px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  box-sizing: border-box;
+}
+
+.app-get-pill:hover {
+  background: var(--line);
+  transform: scale(1.04);
+}
+
+/* Today Card mini-GET button style override */
+.card-app-info .app-get-pill {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.card-app-info .app-get-pill:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive Overrides */
+@media (max-width: 760px) {
+  .appstore-layout {
+    padding-top: 24px;
+  }
+  
+  .today-card {
+    height: 400px;
+    border-radius: 20px;
+  }
+  
+  .card-content {
+    padding: 20px;
+  }
+  
+  .card-description {
+    margin-bottom: 18px;
+    font-size: 13px;
+  }
+  
+  .card-app-info {
+    padding: 10px 14px;
+    border-radius: 14px;
+  }
+  
+  .card-app-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+  }
+  
+  .appstore-sections-grid {
+    gap: 32px;
+  }
+}
+
 
