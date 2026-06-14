@@ -32,6 +32,8 @@
 /lunarblock/* /LunarBlock/:splat 301
 
 # Clean URLs for Policy and Terms documents
+/PHTV/privacy /PHTV/privacy.html 301
+/PHTV/terms /PHTV/terms.html 301
 /LunarV/privacy /LunarV/privacy.html 301
 /LunarV/terms /LunarV/terms.html 301
 /PadCodeAI/privacy /PadCodeAI/privacy.html 301
