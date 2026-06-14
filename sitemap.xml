@@ -123,4 +123,64 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- MyNASManager Main Page -->
+  <url>
+    <loc>https://phamhungtien.com/MyNASManager/</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://phamhungtien.com/MyNASManager/assets/ipad-hero.png</image:loc>
+      <image:title>My NAS Manager - Synology DSM Client</image:title>
+      <image:caption>Quản lý và giám sát ổ cứng mạng Synology NAS của bạn từ xa, trực quan và an toàn ngay trên các thiết bị Apple.</image:caption>
+    </image:image>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/MyNASManager/" />
+  </url>
+
+  <!-- MyNASManager Privacy Policy -->
+  <url>
+    <loc>https://phamhungtien.com/MyNASManager/privacy.html</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- MyNASManager Terms of Use -->
+  <url>
+    <loc>https://phamhungtien.com/MyNASManager/terms.html</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- PadNotesAI Main Page -->
+  <url>
+    <loc>https://phamhungtien.com/PadNotesAI/</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://phamhungtien.com/PadNotesAI/assets/app-icon.png</image:loc>
+      <image:title>Pad Notes AI - Smart Note-Taking &amp; Handwriting Analyzer</image:title>
+      <image:caption>Ứng dụng ghi chú viết tay chuyên nghiệp dành riêng cho iPad và iPhone với OCR offline và phân tích viết tay AI.</image:caption>
+    </image:image>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/PadNotesAI/" />
+  </url>
+
+  <!-- PadNotesAI Privacy Policy -->
+  <url>
+    <loc>https://phamhungtien.com/PadNotesAI/privacy.html</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- PadNotesAI Terms of Use -->
+  <url>
+    <loc>https://phamhungtien.com/PadNotesAI/terms.html</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>

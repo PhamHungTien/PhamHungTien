@@ -3,7 +3,7 @@
     vi: {
       // Root Index
       "root.title": "Pham Hung Tien | Sản phẩm",
-      "root.meta_desc": "Trang chính thức của Pham Hung Tien với các ứng dụng cho thiết bị Apple, gồm PHTV, LunarV và Pad Code AI.",
+      "root.meta_desc": "Trang chính thức của Pham Hung Tien với các ứng dụng cho thiết bị Apple, gồm PHTV, LunarV, PadCodeAI, PadNotesAI, My NAS Manager và Lunar Block.",
       "root.brand_subtitle": "Danh sách sản phẩm",
       "root.contact": "Liên hệ",
       "root.developer": "Tiện ích & Trò chơi",
@@ -204,7 +204,7 @@
     en: {
       // Root Index
       "root.title": "Pham Hung Tien | Products",
-      "root.meta_desc": "Official website of Pham Hung Tien featuring apps for Apple devices, including PHTV, LunarV, and Pad Code AI.",
+      "root.meta_desc": "Official website of Pham Hung Tien featuring apps for Apple devices, including PHTV, LunarV, PadCodeAI, PadNotesAI, My NAS Manager, and Lunar Block.",
       "root.brand_subtitle": "Product Index",
       "root.contact": "Contact",
       "root.developer": "Utilities & Games",
