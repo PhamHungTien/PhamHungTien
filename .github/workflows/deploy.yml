@@ -64,6 +64,9 @@ jobs:
           cp -r PadCodeAI _site/PadCodeAI
           # Copy PadNotesAI product page
           cp -r PadNotesAI _site/PadNotesAI
+          # Copy MyNASManager product page (supporting both casings)
+          cp -r MyNASManager _site/MyNASManager
+          cp -r MyNASManager _site/mynasmanager
           # Copy PHTV app to its subdirectory
           cp -r PHTV/dist _site/PHTV
 

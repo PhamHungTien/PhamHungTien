@@ -1,0 +1,21 @@
+/* My NAS Manager Specific Overrides */
+
+.product-hero::after {
+  background: linear-gradient(90deg, var(--soft) 0%, var(--soft) 31%, var(--glass-bg) 42%, transparent 72%);
+}
+
+.hero-content h1 {
+  background: linear-gradient(135deg, var(--text) 30%, var(--blue) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Light/Dark mode specific hover states */
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .feature-grid article:hover {
+    box-shadow: 0 12px 30px rgba(0, 113, 227, 0.15);
+  }
+}
+html[data-theme="dark"] .feature-grid article:hover {
+  box-shadow: 0 12px 30px rgba(0, 113, 227, 0.15);
+}

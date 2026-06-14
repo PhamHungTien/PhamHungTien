@@ -17,6 +17,8 @@
       "root.padcodeai_subtitle": "Code Editor & IDE cho iPad/iPhone",
       "root.padnotesai_desc": "Vẽ viết tay ghi chú, nhận dạng OCR ngoại tuyến và thảo luận cùng trợ lý AI thông minh trực tiếp trên iPad và iPhone.",
       "root.padnotesai_subtitle": "Sổ tay thông minh & Phân tích viết tay",
+      "root.mynasmanager_desc": "Quản lý và giám sát ổ cứng mạng Synology NAS của bạn từ xa, trực quan và an toàn ngay trên các thiết bị Apple.",
+      "root.mynasmanager_subtitle": "Quản lý Synology NAS trên iOS",
       "root.open_product": "Mở trang sản phẩm",
       "root.tag_lunar": "Lịch âm",
       "root.tag_reminders": "Nhắc nhở",
@@ -58,6 +60,41 @@
       "padcodeai.support_title": "Hỗ trợ & Liên hệ",
       "padcodeai.support_desc": "Bạn có câu hỏi hoặc cần hỗ trợ kỹ thuật? Vui lòng liên hệ với chúng tôi qua email:",
       "padcodeai.copyright": "&copy; 2026 Pham Hung Tien. Bảo lưu mọi quyền.",
+
+      // My NAS Manager Index
+      "mynasmanager.title": "My NAS Manager - Synology DSM Client",
+      "mynasmanager.meta_desc": "Giám sát tài nguyên, quản lý tệp tin File Station và kết nối SSH an toàn tới ổ cứng mạng Synology NAS của bạn trực tiếp từ iPhone và iPad.",
+      "mynasmanager.brand_subtitle": "Synology NAS Client cho iOS",
+      "mynasmanager.features_nav": "Tính năng",
+      "mynasmanager.hero_title": "Quản lý NAS của bạn. Mọi lúc, mọi nơi.",
+      "mynasmanager.hero_desc": "Ứng dụng di động chuyên nghiệp giúp giám sát hiệu suất hệ thống Synology DSM, quản lý file, chuyển gói phần mềm và truy cập terminal SSH an toàn.",
+      "mynasmanager.coming_soon": "Sắp có trên App Store",
+      "mynasmanager.coming_soon_nav": "Sắp ra mắt",
+      "mynasmanager.platforms": "Nền tảng",
+      "mynasmanager.execution": "Kết nối",
+      "mynasmanager.on_device": "Trực tiếp & Bảo mật",
+      "mynasmanager.support": "Hỗ trợ",
+      "mynasmanager.download_btn": "Tải trên App Store",
+      "mynasmanager.features_kicker": "Tính năng nổi bật",
+      "mynasmanager.features_title": "Kiểm soát Synology NAS trong tầm tay.",
+      "mynasmanager.features_desc": "Tất cả các công cụ quản trị hệ thống, quản lý tài liệu và giám sát hiệu suất hoạt động được tích hợp gọn gàng trong một ứng dụng duy nhất.",
+      "mynasmanager.feat1_title": "Giám Sát Thời Gian Thực",
+      "mynasmanager.feat1_desc": "Theo dõi biểu đồ sử dụng CPU, RAM, lưu lượng mạng truyền tải, cùng nhiệt độ và tình trạng ổ đĩa cứng S.M.A.R.T.",
+      "mynasmanager.feat2_title": "Quản Lý File Station",
+      "mynasmanager.feat2_desc": "Duyệt thư mục, tải lên/tải xuống tệp tin với tiến trình nền trực quan, tạo link chia sẻ công khai và quản lý file lưu trữ.",
+      "mynasmanager.feat3_title": "Terminal SSH Giả Lập",
+      "mynasmanager.feat3_desc": "Tích hợp dòng lệnh SSH an toàn giúp chạy các lệnh quản trị Linux trên NAS nhanh chóng và trực quan.",
+      "mynasmanager.feat4_title": "Quản Lý Gói Ứng Dụng",
+      "mynasmanager.feat4_desc": "Xem danh sách và quản lý trạng thái hoạt động (bật/tắt) các gói ứng dụng DSM như Download Station dễ dàng.",
+      "mynasmanager.feat5_title": "Bảo Mật HTTPS & 2FA",
+      "mynasmanager.feat5_desc": "Bảo vệ thông tin đăng nhập tối đa với kết nối HTTPS mã hóa và nhập mã OTP xác thực hai yếu tố (2FA) an toàn.",
+      "mynasmanager.feat6_title": "Chế Độ Demo Trực Quan",
+      "mynasmanager.feat6_desc": "Trải nghiệm đầy đủ giao diện và tính năng của ứng dụng thông qua dữ liệu mô phỏng trước khi kết nối với thiết bị NAS thật.",
+      "mynasmanager.showcase_title": "Bảng điều khiển trực quan và sinh động.",
+      "mynasmanager.showcase_desc": "Biểu đồ tròn và thanh tiến trình biểu diễn chi tiết CPU, RAM, dung lượng ổ đĩa, nhiệt độ hệ thống rõ ràng và chuyên nghiệp.",
+      "mynasmanager.support_title": "Hỗ trợ & Liên hệ",
+      "mynasmanager.support_desc": "Bạn có câu hỏi hoặc cần hỗ trợ kỹ thuật cho ứng dụng My NAS Manager? Hãy liên hệ qua email:",
+      "mynasmanager.copyright": "&copy; 2026 Pham Hung Tien. Bảo lưu mọi quyền.",
 
       // PadNotesAI Index
       "padnotesai.title": "Pad Notes AI - Smart Note-Taking & Handwriting Analyzer",
@@ -180,6 +217,8 @@
       "root.padcodeai_subtitle": "Code Editor & IDE for iPad/iPhone",
       "root.padnotesai_desc": "Handwrite notes, run offline OCR recognition, and discuss pages with a smart AI assistant directly on iPad and iPhone.",
       "root.padnotesai_subtitle": "Smart Notebook & Handwriting Analyzer",
+      "root.mynasmanager_desc": "Manage and monitor your Synology NAS servers remotely, visually, and securely right on your Apple devices.",
+      "root.mynasmanager_subtitle": "Synology NAS Manager for iOS",
       "root.open_product": "Open Product Page",
       "root.tag_lunar": "Lunar Calendar",
       "root.tag_reminders": "Reminders",
@@ -221,6 +260,41 @@
       "padcodeai.support_title": "Support & Contact",
       "padcodeai.support_desc": "Have questions or need technical support? Please reach out to us via email:",
       "padcodeai.copyright": "&copy; 2026 Pham Hung Tien. All rights reserved.",
+
+      // My NAS Manager Index
+      "mynasmanager.title": "My NAS Manager - Synology DSM Client",
+      "mynasmanager.meta_desc": "Monitor resources, manage File Station, and connect securely via SSH terminal to your Synology NAS directly from iPhone and iPad.",
+      "mynasmanager.brand_subtitle": "Synology NAS Client for iOS",
+      "mynasmanager.features_nav": "Features",
+      "mynasmanager.hero_title": "Manage your NAS. Anywhere, anytime.",
+      "mynasmanager.hero_desc": "A professional mobile client to monitor Synology DSM performance, manage files, manage package services, and access secure SSH terminal.",
+      "mynasmanager.coming_soon": "Coming soon to the App Store",
+      "mynasmanager.coming_soon_nav": "Coming Soon",
+      "mynasmanager.platforms": "Platforms",
+      "mynasmanager.execution": "Connection",
+      "mynasmanager.on_device": "Direct & Secure",
+      "mynasmanager.support": "Support",
+      "mynasmanager.download_btn": "Download on App Store",
+      "mynasmanager.features_kicker": "Key Features",
+      "mynasmanager.features_title": "Control your Synology NAS in your hand.",
+      "mynasmanager.features_desc": "All the system admin tools, document management, and live resource monitoring packed into a beautiful native interface.",
+      "mynasmanager.feat1_title": "Real-time Monitoring",
+      "mynasmanager.feat1_desc": "Track CPU, memory usage, network throughput, disk volumes, and individual disk S.M.A.R.T. health status.",
+      "mynasmanager.feat2_title": "File Station Management",
+      "mynasmanager.feat2_desc": "Browse folders, upload/download files with progress indicators, manage items, and generate gofile.me links.",
+      "mynasmanager.feat3_title": "SSH Terminal Simulator",
+      "mynasmanager.feat3_desc": "An integrated secure shell simulation console to quickly execute common Linux management commands on your server.",
+      "mynasmanager.feat4_title": "Package Center Control",
+      "mynasmanager.feat4_desc": "View, start, or stop active DSM package applications (e.g. Download Station) remotely with ease.",
+      "mynasmanager.feat5_title": "HTTPS & 2FA Security",
+      "mynasmanager.feat5_desc": "Keep your server credentials safe with HTTPS connection encryption and 2FA OTP verification code entry.",
+      "mynasmanager.feat6_title": "Interactive Demo Mode",
+      "mynasmanager.feat6_desc": "Test-drive the entire application and inspect its metrics with reactive mock data before connecting to your real NAS.",
+      "mynasmanager.showcase_title": "A gorgeous system dashboard.",
+      "mynasmanager.showcase_desc": "Visual ring meters and clean progress bars show detailed CPU, RAM, volume usage, and system temp in real-time.",
+      "mynasmanager.support_title": "Support & Contact",
+      "mynasmanager.support_desc": "Have questions or need technical support for My NAS Manager? Please reach out to us via email:",
+      "mynasmanager.copyright": "&copy; 2026 Pham Hung Tien. All rights reserved.",
 
       // PadNotesAI Index
       "padnotesai.title": "Pad Notes AI - Smart Note-Taking & Handwriting Analyzer",
@@ -375,6 +449,8 @@
       let pageTitleKey = "";
       if (window.location.pathname.includes("PadCodeAI")) {
         pageTitleKey = "padcodeai.title";
+      } else if (window.location.pathname.includes("MyNASManager")) {
+        pageTitleKey = "mynasmanager.title";
       } else if (window.location.pathname.includes("LunarV")) {
         pageTitleKey = "lunar.title";
       } else if (window.location.pathname.includes("LunarBlock")) {
@@ -390,6 +466,8 @@
       let pageDescKey = "";
       if (window.location.pathname.includes("PadCodeAI")) {
         pageDescKey = "padcodeai.meta_desc";
+      } else if (window.location.pathname.includes("MyNASManager")) {
+        pageDescKey = "mynasmanager.meta_desc";
       } else if (window.location.pathname.includes("LunarV")) {
         pageDescKey = "lunar.meta_desc";
       } else if (window.location.pathname.includes("LunarBlock")) {

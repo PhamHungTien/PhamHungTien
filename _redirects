@@ -13,6 +13,10 @@
 /padnotesai/ /PadNotesAI/ 301
 /Aipadnotes /PadNotesAI/ 301
 /Aipadnotes/ /PadNotesAI/ 301
+/MyNASManager /MyNASManager/ 301
+/mynasmanager /MyNASManager/ 301
+/mynasmanager/ /MyNASManager/ 301
+
 
 # Single Page Application - redirect all non-file requests to index.html
 /PHTV/* /PHTV/index.html 200
