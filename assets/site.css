@@ -253,6 +253,9 @@ img {
   border-radius: 20px;
   background: var(--surface);
   transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  isolation: isolate;
+  transform: translateZ(0);
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
 }
 
 .product-card:hover {
@@ -476,7 +479,15 @@ html[data-theme="dark"] .product-card:hover { box-shadow: 0 12px 32px rgba(255, 
 /* Mobile Responsiveness */
 @media (max-width: 760px) {
   .container {
-    width: min(100% - 32px, 1120px);
+    width: min(calc(100% - 32px), 1120px);
+  }
+
+  .brand span {
+    display: none;
+  }
+
+  .nav {
+    gap: 12px;
   }
 
   .nav .desktop-link {
@@ -1185,6 +1196,9 @@ html[data-theme="dark"] .donate-modal-qr-container {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  isolation: isolate;
+  transform: translateZ(0);
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -1223,7 +1237,8 @@ html[data-theme="dark"] .today-card {
 
 /* Glass card content overlay */
 .card-content {
-  position: relative;
+  position: absolute;
+  inset: 0;
   z-index: 2;
   padding: 32px;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 40%, rgba(0, 0, 0, 0.1) 85%, transparent 100%);
@@ -1231,7 +1246,6 @@ html[data-theme="dark"] .today-card {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  height: 100%;
 }
 
 .card-kicker {
@@ -1273,6 +1287,7 @@ html[data-theme="dark"] .today-card {
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.15);
   max-width: fit-content;
+  box-sizing: border-box;
 }
 
 .card-app-icon {
@@ -1281,29 +1296,38 @@ html[data-theme="dark"] .today-card {
   border-radius: 10px;
   object-fit: cover;
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  flex-shrink: 0;
 }
 
 .card-app-meta {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  min-width: 0;
+  flex: 1;
 }
 
 .card-app-meta .app-name {
   font-size: 14px;
   font-weight: 700;
   color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card-app-meta .app-subtitle {
   font-size: 12px;
   color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* App Charts Grid */
 .appstore-sections-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 40px;
 }
 
@@ -1458,6 +1482,7 @@ html[data-theme="dark"] .today-card {
 @media (max-width: 760px) {
   .appstore-layout {
     padding-top: 24px;
+    width: min(960px, calc(100% - 32px));
   }
   
   .today-card {
@@ -1477,6 +1502,8 @@ html[data-theme="dark"] .today-card {
   .card-app-info {
     padding: 10px 14px;
     border-radius: 14px;
+    max-width: 100%;
+    width: 100%;
   }
   
   .card-app-icon {
