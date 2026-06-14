@@ -50,12 +50,14 @@ jobs:
           cp robots.txt _site/ || true
           cp sitemap.xml _site/ || true
           cp ads.txt _site/ || true
-          cp icon.webp _site/ || true
+          cp assets/phtv-icon.webp _site/icon.webp || true
           cp _redirects _site/ || true
           cp .htaccess _site/ || true
           cp .nojekyll _site/ || true
           # Copy shared assets
           cp -r assets _site/assets
+          # Copy products redirection page
+          cp -r products _site/products || true
           # Copy LunarV product page
           cp -r LunarV _site/LunarV
           # Copy LunarBlock product page
