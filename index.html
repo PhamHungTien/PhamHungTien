@@ -11,7 +11,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title data-i18n="root.title">Pham Hung Tien | Sản phẩm</title>
-  <meta name="description" content="Trang chính thức của Pham Hung Tien với các ứng dụng cho thiết bị Apple, gồm PHTV, LunarV và PadCodeAI.">
+  <meta name="description" content="Trang chính thức của Pham Hung Tien với các ứng dụng cho thiết bị Apple, gồm PHTV, LunarV, PadCodeAI, PadNotesAI, My NAS Manager và Lunar Block.">
   <meta name="theme-color" content="#f5f5f7">
   <link rel="canonical" href="https://phamhungtien.com/">
   <link rel="icon" type="image/webp" href="/assets/phtv-icon.webp">
@@ -96,8 +96,8 @@
     <!-- Today Header -->
     <header class="appstore-today-header">
       <div>
-        <span class="today-date" id="today-date">CHỦ NHẬT, 14 THÁNG 6</span>
-        <h1 class="today-title" data-i18n="root.apps_products">Hôm nay</h1>
+        <span class="today-date" id="today-date"></span>
+        <h1 class="today-title" data-i18n="root.today">Hôm nay</h1>
       </div>
       <a href="#donate" class="donate-trigger appstore-avatar-link" aria-label="Account">
         <div class="appstore-avatar">
@@ -124,8 +124,8 @@
                 <span class="app-name">My NAS Manager</span>
                 <span class="app-subtitle" data-i18n="root.mynasmanager_subtitle">Quản lý Synology NAS trên iOS</span>
               </div>
-              <div class="app-get-pill unavailable">
-                <span class="get-text" data-i18n="root.soon_btn">CHỜ DUYỆT</span>
+              <div class="app-get-pill">
+                <span class="get-text" data-i18n="root.open_product">XEM</span>
               </div>
             </div>
           </div>
@@ -138,7 +138,7 @@
       <!-- Section: Top Free Apps (Bảng xếp hạng) -->
       <div class="appstore-section">
         <div class="section-header">
-          <h2 data-i18n="root.apps_products">Ứng dụng hàng đầu</h2>
+          <h2 data-i18n="root.top_apps">Ứng dụng hàng đầu</h2>
         </div>
         
         <div class="app-list-rows">
@@ -225,6 +225,21 @@
               </div>
             </div>
           </a>
+
+          <!-- App Row 6: My NAS Manager -->
+          <a href="/MyNASManager/" class="app-row-link">
+            <div class="app-row">
+              <span class="app-row-rank">6</span>
+              <img src="/MyNASManager/assets/app-icon.png" alt="My NAS Manager Icon" class="app-row-icon">
+              <div class="app-row-details">
+                <span class="app-row-title">My NAS Manager</span>
+                <span class="app-row-subtitle" data-i18n="root.mynasmanager_subtitle">Quản lý Synology NAS trên iOS</span>
+              </div>
+              <div class="app-get-pill">
+                <span class="get-text" data-i18n="root.open_product">XEM</span>
+              </div>
+            </div>
+          </a>
         </div>
       </div>
     </section>
@@ -232,13 +247,12 @@
 
   <footer class="site-footer">
     <div class="container">
-      <span data-i18n="padcodeai.copyright">&copy; 2026 Pham Hung Tien. Bảo lưu mọi quyền.</span>
+      <span data-i18n="root.copyright">&copy; 2026 Pham Hung Tien. Bảo lưu mọi quyền.</span>
       <nav>
         <a href="https://github.com/PhamHungTien" target="_blank" rel="noopener">GitHub</a>
         <a href="https://www.linkedin.com/in/ph%E1%BA%A1m-h%C3%B9ng-ti%E1%BA%BFn-a1b405327/" target="_blank" rel="noopener">LinkedIn</a>
         <a href="#donate" class="donate-trigger" data-i18n="root.donate">Ủng hộ</a>
-        <a href="mailto:phamhungtien.contact@gmail.com" data-i18n="lunar.support">Hỗ trợ</a>
-        <a href="/LunarV/privacy.html">Privacy Policy</a>
+        <a href="mailto:phamhungtien.contact@gmail.com" data-i18n="root.contact">Liên hệ</a>
       </nav>
     </div>
   </footer>

@@ -201,7 +201,10 @@
       "root.donate_qr_note": "Mọi ngân hàng",
       "root.donate_paypal": "Donate qua PayPal",
       "root.donate_note": "Dự án luôn miễn phí, donation là tùy tâm và không bắt buộc.",
-      "root.soon_btn": "CHỜ DUYỆT"
+      "root.soon_btn": "CHỜ DUYỆT",
+      "root.today": "Hôm nay",
+      "root.top_apps": "Ứng dụng hàng đầu",
+      "root.copyright": "© 2026 Pham Hung Tien. Bảo lưu mọi quyền."
     },
     en: {
       // Root Index
@@ -404,7 +407,10 @@
       "root.donate_qr_note": "All banks",
       "root.donate_paypal": "Donate via PayPal",
       "root.donate_note": "Projects are always free, donation is optional and voluntary.",
-      "root.soon_btn": "PENDING"
+      "root.soon_btn": "PENDING",
+      "root.today": "Today",
+      "root.top_apps": "Top Apps",
+      "root.copyright": "© 2026 Pham Hung Tien. All rights reserved."
     }
   };
 
