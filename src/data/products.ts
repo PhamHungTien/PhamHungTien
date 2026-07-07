@@ -133,22 +133,22 @@ export const products: Product[] = [
     ],
     accent: '#3d5afe',
     appStoreUrl: 'https://apps.apple.com/us/app/pad-code-ai-code-editor/id6774398897',
-    category: { vi: 'IDE di động', en: 'Mobile IDE' },
+    category: { vi: 'IDE cho thiết bị Apple', en: 'IDE for Apple devices' },
     title: {
-      vi: 'Viết và chạy code trực tiếp trên iPad, không chờ môi trường bên ngoài.',
-      en: 'Write and run code directly on iPad without waiting for an external setup.'
+      vi: 'Viết và chạy code trực tiếp trên iPhone, iPad và Mac.',
+      en: 'Write and run code directly on iPhone, iPad, and Mac.'
     },
     subtitle: { vi: 'Editor, compiler offline, terminal và hỗ trợ AI.', en: 'Editor, offline compiler, terminal, and AI assistance.' },
     description: {
-      vi: 'Pad Code AI đưa editor, terminal, quản lý workspace và hỗ trợ Apple Intelligence vào một giao diện gọn cho iPad và iPhone.',
-      en: 'Pad Code AI combines an editor, terminal, workspace management, and Apple Intelligence support in a focused iPad and iPhone interface.'
+      vi: 'Pad Code AI đưa editor, terminal, quản lý workspace và hỗ trợ Apple Intelligence vào một giao diện gọn cho iPhone, iPad và Mac.',
+      en: 'Pad Code AI combines an editor, terminal, workspace management, and Apple Intelligence support in a focused interface for iPhone, iPad, and Mac.'
     },
     ctaLabel: { vi: 'Tải trên App Store', en: 'Download on App Store' },
-    platforms: { vi: 'iPhone, iPad', en: 'iPhone, iPad' },
+    platforms: { vi: 'iPhone, iPad, Mac', en: 'iPhone, iPad, Mac' },
     facts: [
+      { label: { vi: 'Nền tảng', en: 'Platforms' }, value: { vi: 'iPhone, iPad, Mac', en: 'iPhone, iPad, Mac' } },
       { label: { vi: 'Ngôn ngữ', en: 'Languages' }, value: { vi: '24+ ngôn ngữ', en: '24+ languages' } },
       { label: { vi: 'Biên dịch', en: 'Execution' }, value: { vi: 'Trên thiết bị', en: 'On device' } },
-      { label: { vi: 'Quy trình', en: 'Workflow' }, value: { vi: 'Editor + Terminal', en: 'Editor + Terminal' } }
     ],
     features: [
       {
@@ -161,7 +161,7 @@ export const products: Product[] = [
       },
       {
         title: { vi: 'Git và workspace', en: 'Git and workspaces' },
-        description: { vi: 'Điều hướng tệp, quản lý dự án và làm việc với mã nguồn gọn hơn trên màn hình cảm ứng.', en: 'Navigate files, manage projects, and work with source code more cleanly on touch screens.' }
+        description: { vi: 'Điều hướng tệp, quản lý dự án và làm việc với mã nguồn gọn hơn trên iPhone, iPad và Mac.', en: 'Navigate files, manage projects, and work with source code more cleanly across iPhone, iPad, and Mac.' }
       }
     ],
     support: { vi: 'Gửi góp ý về compiler, editor hoặc workflow qua email.', en: 'Send feedback about the compiler, editor, or workflow by email.' }
@@ -183,17 +183,17 @@ export const products: Product[] = [
       vi: 'Ghi chú viết tay, OCR offline và AI trong cùng một workspace.',
       en: 'Handwriting, offline OCR, and AI in one focused workspace.'
     },
-    subtitle: { vi: 'Cho iPad, Apple Pencil và những buổi học/làm việc dài.', en: 'For iPad, Apple Pencil, and long study or work sessions.' },
+    subtitle: { vi: 'Cho ghi chú, OCR và làm việc dài trên iPhone, iPad và Mac.', en: 'For notes, OCR, and long work sessions on iPhone, iPad, and Mac.' },
     description: {
-      vi: 'Pad Notes AI kết hợp vẽ viết bằng Pencil, nhận dạng chữ viết, ghi âm và trợ lý AI để biến ghi chú thành tài liệu dễ tìm, dễ hiểu.',
-      en: 'Pad Notes AI combines Pencil handwriting, recognition, audio capture, and an AI assistant so notes become searchable, understandable documents.'
+      vi: 'Pad Notes AI kết hợp viết tay, nhận dạng chữ viết, ghi âm và trợ lý AI để biến ghi chú thành tài liệu dễ tìm, dễ hiểu trên các thiết bị Apple.',
+      en: 'Pad Notes AI combines handwriting, recognition, audio capture, and an AI assistant so notes become searchable, understandable documents across Apple devices.'
     },
     ctaLabel: { vi: 'Tải trên App Store', en: 'Download on App Store' },
-    platforms: { vi: 'iPhone, iPad', en: 'iPhone, iPad' },
+    platforms: { vi: 'iPhone, iPad, Mac', en: 'iPhone, iPad, Mac' },
     facts: [
+      { label: { vi: 'Nền tảng', en: 'Platforms' }, value: { vi: 'iPhone, iPad, Mac', en: 'iPhone, iPad, Mac' } },
       { label: { vi: 'Nhập liệu', en: 'Input' }, value: { vi: 'Apple Pencil', en: 'Apple Pencil' } },
-      { label: { vi: 'Xử lý', en: 'Processing' }, value: { vi: 'OCR offline', en: 'Offline OCR' } },
-      { label: { vi: 'Trợ lý', en: 'Assistant' }, value: { vi: 'Apple Intelligence + Gemini', en: 'Apple Intelligence + Gemini' } }
+      { label: { vi: 'Xử lý', en: 'Processing' }, value: { vi: 'OCR + AI', en: 'OCR + AI' } },
     ],
     features: [
       {
@@ -227,18 +227,18 @@ export const products: Product[] = [
     appStoreUrl: 'https://apps.apple.com/us/app/my-nas-manager/id6780180564',
     category: { vi: 'Synology NAS client', en: 'Synology NAS client' },
     title: {
-      vi: 'Quản lý Synology NAS từ iPhone và iPad rõ ràng hơn.',
-      en: 'Manage Synology NAS from iPhone and iPad with more clarity.'
+      vi: 'Quản lý Synology NAS từ iPhone, iPad và Mac rõ ràng hơn.',
+      en: 'Manage Synology NAS from iPhone, iPad, and Mac with more clarity.'
     },
     subtitle: { vi: 'Giám sát hệ thống, File Station và SSH trong một app.', en: 'System monitoring, File Station, and SSH in one app.' },
     description: {
-      vi: 'My NAS Manager giúp theo dõi tài nguyên, duyệt file, quản lý gói DSM và truy cập terminal an toàn khi bạn không ngồi trước máy tính.',
-      en: 'My NAS Manager helps you monitor resources, browse files, manage DSM packages, and access a secure terminal when you are away from your computer.'
+      vi: 'My NAS Manager giúp theo dõi tài nguyên, duyệt file, quản lý gói DSM và truy cập terminal an toàn trên iPhone, iPad và Mac.',
+      en: 'My NAS Manager helps you monitor resources, browse files, manage DSM packages, and access a secure terminal on iPhone, iPad, and Mac.'
     },
     ctaLabel: { vi: 'Tải về trên App Store', en: 'Download on App Store' },
-    platforms: { vi: 'iPhone, iPad', en: 'iPhone, iPad' },
+    platforms: { vi: 'iPhone, iPad, Mac', en: 'iPhone, iPad, Mac' },
     facts: [
-      { label: { vi: 'Kết nối', en: 'Connection' }, value: { vi: 'HTTPS + 2FA', en: 'HTTPS + 2FA' } },
+      { label: { vi: 'Nền tảng', en: 'Platforms' }, value: { vi: 'iPhone, iPad, Mac', en: 'iPhone, iPad, Mac' } },
       { label: { vi: 'Máy chủ', en: 'Server' }, value: { vi: 'Synology DSM 7+', en: 'Synology DSM 7+' } },
       { label: { vi: 'Công cụ', en: 'Tools' }, value: { vi: 'Files + SSH + Packages', en: 'Files + SSH + Packages' } }
     ],
@@ -249,7 +249,7 @@ export const products: Product[] = [
       },
       {
         title: { vi: 'File Station di động', en: 'Mobile File Station' },
-        description: { vi: 'Duyệt, tải lên, tải xuống và tạo link chia sẻ từ thiết bị iOS.', en: 'Browse, upload, download, and create share links from iOS devices.' }
+        description: { vi: 'Duyệt, tải lên, tải xuống và tạo link chia sẻ từ iPhone, iPad hoặc Mac.', en: 'Browse, upload, download, and create share links from iPhone, iPad, or Mac.' }
       },
       {
         title: { vi: 'Terminal SSH an toàn', en: 'Secure SSH terminal' },
