@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { Suspense, lazy, useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Features } from './components/Features';
 import { TerminalBlock } from './components/TerminalBlock';
@@ -11,7 +11,10 @@ import { useI18n } from './i18n';
 import { CopyBlock } from './components/CopyBlock';
 import { DonateModal } from './components/DonateModal';
 import { AcronymRow } from './components/AcronymRow';
-import { QASection } from './components/QASection';
+
+const QASection = lazy(() =>
+  import('./components/QASection').then((module) => ({ default: module.QASection }))
+);
 
 const faqData = [
   {
@@ -169,6 +172,28 @@ function App() {
   } = useGitHubData();
   const [showDonate, setShowDonate] = useState(false);
   const [activeTab, setActiveTab] = useState<'home' | 'community'>('home');
+  const latestGallery = [
+    {
+      src: '/PHTV/assets/latest/setting-bogo.jpg',
+      title: t('gallery.bogo'),
+    },
+    {
+      src: '/PHTV/assets/latest/menubar.png',
+      title: t('gallery.menubar'),
+    },
+    {
+      src: '/PHTV/assets/latest/picker.jpg',
+      title: t('gallery.picker'),
+    },
+    {
+      src: '/PHTV/assets/latest/setting-clipboard.jpg',
+      title: t('gallery.clipboard'),
+    },
+    {
+      src: '/PHTV/assets/latest/setting-phimtat.jpg',
+      title: t('gallery.shortcuts'),
+    },
+  ];
 
   // Reveal Animation Logic
   useEffect(() => {
@@ -220,7 +245,7 @@ function App() {
       
       {/* Top Loading Bar */}
       <div className={`fixed top-0 left-0 right-0 h-1 z-[110] transition-transform duration-500 origin-left ${loading ? 'scale-x-100' : 'scale-x-0'}`}>
-        <div className="h-full bg-[#0071e3]"></div>
+        <div className="h-full bg-[#d71f2a]"></div>
       </div>
 
       <Navbar
@@ -242,23 +267,7 @@ function App() {
               {/* Left Column: Grouped info and download card */}
               <div className="flex flex-col space-y-6 md:space-y-8 min-w-0">
                 <div className="flex flex-col items-center lg:items-start">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 backdrop-blur-md">
-                    <span className="h-2 w-2 rounded-full bg-emerald-400"></span>
-                    <span className="text-[10px] font-black uppercase text-slate-300">
-                      {t('home.tag_native')}
-                    </span>
-                  </div>
-
-                  <div className="mt-6 flex flex-row items-center justify-center gap-4 lg:justify-start">
-                    <div className="relative h-20 w-20 shrink-0 sm:h-24 sm:w-24">
-                      <img
-                        src="/assets/phtv-icon.webp"
-                        alt="PHTV Icon"
-                        className="h-full w-full rounded-[1.25rem] object-cover"
-                        fetchPriority="high"
-                      />
-                    </div>
-
+                  <div className="flex flex-row items-center justify-center gap-4 lg:justify-start">
                     <div className="flex flex-col justify-center gap-1 text-left">
                       <AcronymRow letter="P" word="recision" />
                       <AcronymRow letter="H" word="ybrid" />
@@ -349,15 +358,12 @@ function App() {
               {/* Right Column: Premium Mockup macOS Settings Window */}
               <div className="w-full flex justify-center items-center lg:justify-end min-w-0">
                 <div className="relative w-full max-w-2xl group">
-                  {/* Dynamic background colorful gradient glow */}
-                  <div className="absolute -inset-2 rounded-2xl bg-gradient-to-tr from-blue-500/10 via-indigo-500/10 to-purple-500/10 opacity-30 blur-2xl group-hover:opacity-50 transition-opacity duration-700 pointer-events-none" />
-                  
                   {/* The Premium macOS Window Mockup container */}
                   <div className="relative w-full overflow-hidden rounded-2xl border border-black/[0.08] dark:border-white/[0.08] bg-slate-900/5 backdrop-blur-xl shadow-[0_30px_80px_rgba(0,0,0,0.16)] dark:shadow-[0_30px_80px_rgba(0,0,0,0.4)] transition-all duration-500 ease-out group-hover:scale-[1.015] group-hover:-translate-y-1">
                     {/* Screenshot Container */}
                     <div className="w-full bg-[#f5f5f7] overflow-hidden">
                       <img
-                        src="/PHTV/assets/UI/settings-hero.png"
+                        src="/PHTV/assets/latest/setting-bogo.jpg"
                         alt={lang === 'vi' ? 'Giao diện thiết lập bộ gõ PHTV trên macOS' : 'PHTV input method settings on macOS'}
                         className="block h-auto w-full max-w-full select-none"
                         fetchPriority="high"
@@ -432,10 +438,46 @@ function App() {
               </div>
             </div>
           </section>
+
+          <section className="reveal py-12 md:py-16">
+            <div className="mx-auto max-w-6xl px-4 md:px-6">
+              <div className="mb-7 max-w-2xl">
+                <h2 className="text-2xl font-semibold text-white md:text-3xl">
+                  {t('gallery.title')}
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-slate-400">
+                  {t('gallery.desc')}
+                </p>
+              </div>
+              <div className="grid grid-flow-col auto-cols-[minmax(260px,360px)] gap-4 overflow-x-auto pb-3">
+                {latestGallery.map((item) => (
+                  <figure key={item.src} className="min-w-0">
+                    <img
+                      src={item.src}
+                      alt={item.title}
+                      loading="lazy"
+                      className="aspect-[4/3] w-full rounded-lg border border-white/10 object-cover"
+                    />
+                    <figcaption className="mt-3 text-sm font-medium text-slate-400">
+                      {item.title}
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            </div>
+          </section>
         </div>
       ) : (
         <div className="relative z-10 pt-24 animate-in slide-in-from-right-4 fade-in duration-1000">
-          <QASection />
+          <Suspense
+            fallback={
+              <div className="mx-auto max-w-5xl px-4 py-16 text-sm text-slate-400 md:px-6">
+                {lang === 'vi' ? 'Đang tải thảo luận...' : 'Loading discussions...'}
+              </div>
+            }
+          >
+            <QASection />
+          </Suspense>
         </div>
       )}
 

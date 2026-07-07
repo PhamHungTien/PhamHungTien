@@ -47,3 +47,8 @@
 
 # React SPA Rewrite - redirect all non-file subroutes to index.html for client-side routing
 /PHTV/* /PHTV/index.html 200
+/LunarV/* /LunarV/index.html 200
+/PadCodeAI/* /PadCodeAI/index.html 200
+/PadNotesAI/* /PadNotesAI/index.html 200
+/MyNASManager/* /MyNASManager/index.html 200
+/LunarBlock/* /LunarBlock/index.html 200

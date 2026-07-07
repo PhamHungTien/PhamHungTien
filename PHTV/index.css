@@ -3,14 +3,14 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
-  --phtv-background: #020617;
-  --phtv-surface: #0f172a;
-  --phtv-soft: #1e293b;
-  --phtv-text: #f8fafc;
-  --phtv-muted: #94a3b8;
-  --phtv-line: rgba(255, 255, 255, 0.1);
-  --phtv-blue: #3b82f6;
+  color-scheme: light;
+  --phtv-background: #ffffff;
+  --phtv-surface: #ffffff;
+  --phtv-soft: #f5f6f8;
+  --phtv-text: #111827;
+  --phtv-muted: #596171;
+  --phtv-line: #dce1e8;
+  --phtv-blue: #d71f2a;
 }
 
 html[data-theme="light"] {
@@ -21,7 +21,18 @@ html[data-theme="light"] {
   --phtv-text: #1d1d1f;
   --phtv-muted: #62626a;
   --phtv-line: rgba(29, 29, 31, 0.1);
-  --phtv-blue: #0071e3;
+  --phtv-blue: #d71f2a;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --phtv-background: #020617;
+  --phtv-surface: #0f172a;
+  --phtv-soft: #1e293b;
+  --phtv-text: #f8fafc;
+  --phtv-muted: #94a3b8;
+  --phtv-line: rgba(255, 255, 255, 0.1);
+  --phtv-blue: #3b82f6;
 }
 
 @layer base {
@@ -157,6 +168,12 @@ html[data-theme="light"] .phtv-page [class*="tracking-"] {
   letter-spacing: 0 !important;
 }
 
+html[data-theme="light"] .phtv-page .rounded-full,
+html[data-theme="light"] .phtv-page .rounded-2xl,
+html[data-theme="light"] .phtv-page .rounded-\[1\.25rem\] {
+  border-radius: 8px !important;
+}
+
 html[data-theme="light"] .phtv-page [class*="text-white"] {
   color: var(--phtv-text) !important;
 }
@@ -220,6 +237,14 @@ html[data-theme="light"] .phtv-page section[id="install"],
 html[data-theme="light"] .phtv-page footer {
   border-color: var(--phtv-line) !important;
   background: var(--phtv-surface) !important;
+}
+
+html[data-theme="light"] .phtv-page img {
+  border-color: var(--phtv-line) !important;
+}
+
+html[data-theme="light"] .phtv-page figure img {
+  background: var(--phtv-soft);
 }
 
 html[data-theme="light"] .phtv-page section[class*="rounded-"][class*="border"],

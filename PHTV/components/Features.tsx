@@ -1,6 +1,7 @@
 import React from 'react';
 import { Icons } from './Icons';
 import { FeatureProps } from '../types';
+import { useI18n } from '../i18n';
 
 const FeatureCard: React.FC<FeatureProps> = ({ icon: Icon, title, description, color = 'text-amber-300' }) => (
   <article className="glass-card min-w-0 h-full p-5 md:p-6">
@@ -13,23 +14,25 @@ const FeatureCard: React.FC<FeatureProps> = ({ icon: Icon, title, description, c
 );
 
 export const Features: React.FC = () => {
+  const { t } = useI18n();
+
   const allFeatures: FeatureProps[] = [
     {
       icon: Icons.Shield,
-      title: 'Offline và riêng tư',
-      description: 'Xử lý hoàn toàn trên máy, không phụ thuộc dịch vụ bên ngoài cho trải nghiệm gõ tiếng Việt hằng ngày.',
+      title: t('features.offline_title'),
+      description: t('features.offline_desc'),
       color: 'text-amber-300'
     },
     {
       icon: Icons.Zap,
-      title: 'Nhanh và native',
-      description: 'Viết bằng Swift và C/C++, tối ưu cho macOS với hiệu năng ổn định và phản hồi rất nhanh.',
+      title: t('features.native_title'),
+      description: t('features.native_desc'),
       color: 'text-rose-300'
     },
     {
       icon: Icons.Sparkles,
-      title: 'Gõ thông minh',
-      description: 'Spell check, quick telex, tự động khôi phục và nhiều tinh chỉnh hữu ích cho người gõ song ngữ.',
+      title: t('features.smart_title'),
+      description: t('features.smart_desc'),
       color: 'text-orange-300'
     },
   ];
@@ -39,10 +42,10 @@ export const Features: React.FC = () => {
       <div className="mx-auto max-w-5xl px-4 md:px-6">
         <div className="mb-7 max-w-2xl">
           <h2 className="text-2xl font-semibold text-white md:text-3xl">
-            Phần cốt lõi của PHTV
+            {t('features.title')}
           </h2>
           <p className="mt-3 text-sm leading-6 text-slate-400">
-            Ba điểm cần biết trước khi cài bộ gõ trên máy Mac.
+            {t('features.desc')}
           </p>
         </div>
 

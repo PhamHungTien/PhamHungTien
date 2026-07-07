@@ -1,14 +1,34 @@
 {
   "name": "phamhungtien-portfolio",
   "version": "1.0.0",
-  "description": "Pham Hung Tien - Portfolio & PHTV Vietnamese Input Method",
+  "description": "Pham Hung Tien - React product portfolio and app landing pages",
+  "type": "module",
   "scripts": {
-    "dev": "cd PHTV && npm run dev",
-    "build": "cd PHTV && npm run build",
-    "preview": "cd PHTV && npm run preview",
-    "type-check": "cd PHTV && npx tsc --noEmit",
+    "dev": "vite",
+    "dev:phtv": "cd PHTV && npm run dev",
+    "build": "vite build",
+    "build:phtv": "cd PHTV && npm run build",
+    "build:all": "npm run build && npm run build:phtv",
+    "preview": "vite preview",
+    "preview:phtv": "cd PHTV && npm run preview",
+    "type-check": "tsc --noEmit",
+    "type-check:phtv": "cd PHTV && npx tsc --noEmit",
+    "type-check:all": "npm run type-check && npm run type-check:phtv",
     "install:deps": "npm install && cd PHTV && npm install",
     "clean": "cd PHTV && rm -rf dist node_modules && npm install"
+  },
+  "dependencies": {
+    "lucide-react": "^0.562.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.0.0",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.0"
   },
   "keywords": [
     "portfolio",

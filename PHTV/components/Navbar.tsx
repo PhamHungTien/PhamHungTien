@@ -27,7 +27,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [desktopDownloadOpen, setDesktopDownloadOpen] = useState(false);
-  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
   const desktopDownloadRef = useRef<HTMLDivElement | null>(null);
   const downloadLabel = hasSplitDownloads ? t('nav.download_label') : t('nav.download_now');
 

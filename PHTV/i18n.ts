@@ -34,6 +34,21 @@ const DICTIONARY = {
     "home.install_btn": "Xem cách cài đặt",
     "home.discuss_btn": "Thảo luận hoặc báo lỗi",
     "home.brew_output": "==> Downloading PHTV...\n==> Installing Cask phtv\n🍺  phtv was successfully installed!",
+    "features.title": "Phần cốt lõi của PHTV",
+    "features.desc": "Ba điểm cần biết trước khi cài bộ gõ trên máy Mac.",
+    "features.offline_title": "Offline và riêng tư",
+    "features.offline_desc": "Xử lý hoàn toàn trên máy, không phụ thuộc dịch vụ bên ngoài cho trải nghiệm gõ tiếng Việt hằng ngày.",
+    "features.native_title": "Nhanh và native",
+    "features.native_desc": "Viết bằng Swift và C/C++, tối ưu cho macOS với hiệu năng ổn định và phản hồi rất nhanh.",
+    "features.smart_title": "Gõ thông minh",
+    "features.smart_desc": "Spell check, quick telex, tự động khôi phục và nhiều tinh chỉnh hữu ích cho người gõ song ngữ.",
+    "gallery.title": "Ảnh chụp mới nhất",
+    "gallery.desc": "Hình ảnh được lấy từ repo GitHub PHTV mới nhất để trang giới thiệu luôn khớp với sản phẩm.",
+    "gallery.bogo": "Thiết lập bộ gõ",
+    "gallery.menubar": "Menu bar",
+    "gallery.picker": "PHTV Picker",
+    "gallery.clipboard": "Lịch sử Clipboard",
+    "gallery.shortcuts": "Phím tắt",
 
     // Installation Section
     "install.kicker": "Cài đặt",
@@ -108,6 +123,21 @@ const DICTIONARY = {
     "home.install_btn": "Installation guide",
     "home.discuss_btn": "Discuss or report bugs",
     "home.brew_output": "==> Downloading PHTV...\n==> Installing Cask phtv\n🍺  phtv was successfully installed!",
+    "features.title": "The core of PHTV",
+    "features.desc": "Three things to know before installing a Vietnamese input method on your Mac.",
+    "features.offline_title": "Offline and private",
+    "features.offline_desc": "Runs fully on device and does not depend on external services for everyday Vietnamese typing.",
+    "features.native_title": "Fast and native",
+    "features.native_desc": "Built with Swift and C/C++, optimized for stable macOS performance and fast response.",
+    "features.smart_title": "Smarter typing",
+    "features.smart_desc": "Spell check, quick Telex, automatic recovery, and useful controls for bilingual typing.",
+    "gallery.title": "Latest screenshots",
+    "gallery.desc": "Images are pulled from the latest PHTV GitHub repository so the product page stays aligned with the app.",
+    "gallery.bogo": "Input settings",
+    "gallery.menubar": "Menu bar",
+    "gallery.picker": "PHTV Picker",
+    "gallery.clipboard": "Clipboard history",
+    "gallery.shortcuts": "Shortcuts",
 
     // Installation Section
     "install.kicker": "Installation",
@@ -172,21 +202,6 @@ export function useI18n() {
     };
 
     window.addEventListener('langchange', handleLangChange);
-
-    // Dynamic IP Geolocation Detection for React app first visit
-    if (!localStorage.getItem('preferred_lang')) {
-      fetch('https://freeipapi.com/api/json')
-        .then((res) => (res.ok ? res.json() : null))
-        .then((data) => {
-          if (data && data.countryCode) {
-            const detected = data.countryCode === 'VN' ? 'vi' : 'en';
-            localStorage.setItem('preferred_lang', detected);
-            setLang(detected);
-            window.dispatchEvent(new CustomEvent('langchange', { detail: detected }));
-          }
-        })
-        .catch((err) => console.warn('PHTV Geo-IP language detection failed:', err));
-    }
 
     return () => {
       window.removeEventListener('langchange', handleLangChange);

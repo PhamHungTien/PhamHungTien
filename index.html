@@ -1,225 +1,30 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-  <script>
-    (function () {
-      var preferred = localStorage.getItem("preferred_lang");
-      var browser = navigator.language || navigator.userLanguage || "";
-      document.documentElement.lang = preferred || (browser.toLowerCase().startsWith("vi") ? "vi" : "en");
-    })();
-  </script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title data-i18n="root.title">Pham Hung Tien | Sản phẩm</title>
-  <meta name="description" content="Trang chính thức của Pham Hung Tien với các ứng dụng cho thiết bị Apple, gồm PHTV, LunarV, PadCodeAI, PadNotesAI, My NAS Manager và Lunar Block.">
-  <meta name="theme-color" content="#f5f5f7">
-  <link rel="canonical" href="https://phamhungtien.com/">
-  <link rel="icon" type="image/webp" href="/assets/phtv-icon.webp">
-  <link rel="apple-touch-icon" href="/assets/phtv-favicon.png">
-  <link rel="stylesheet" href="/assets/site.css?v=3.1">
+  <head>
+    <script>
+      (function () {
+        var preferred = localStorage.getItem("preferred_lang");
+        var browser = navigator.language || navigator.userLanguage || "";
+        document.documentElement.lang = preferred || (browser.toLowerCase().startsWith("vi") ? "vi" : "en");
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Pham Hung Tien | Products</title>
+    <meta name="description" content="Official product home for Pham Hung Tien apps across macOS, iOS, iPadOS, and visionOS." />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="canonical" href="https://phamhungtien.com/" />
+    <link rel="icon" type="image/webp" href="/assets/phtv-icon.webp" />
+    <link rel="apple-touch-icon" href="/assets/phtv-favicon.png" />
 
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://phamhungtien.com/">
-  <meta property="og:title" content="Pham Hung Tien | Ứng dụng cho thiết bị Apple">
-  <meta property="og:description" content="Các ứng dụng cho hệ sinh thái Apple thiết kế bởi Pham Hung Tien, bao gồm PHTV, LunarV, PadCodeAI, PadNotesAI, My NAS Manager và Lunar Block.">
-  <meta property="og:image" content="https://phamhungtien.com/LunarV/assets/lunarv-ipad.jpg">
-
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Pham Hung Tien",
-      "url": "https://phamhungtien.com/",
-      "description": "Trang giới thiệu các ứng dụng cho thiết bị Apple của Pham Hung Tien.",
-      "hasPart": [
-        {
-          "@type": "SoftwareApplication",
-          "name": "PHTV",
-          "url": "https://phamhungtien.com/PHTV/",
-          "sameAs": "https://github.com/PhamHungTien/PHTV",
-          "operatingSystem": "macOS 14+"
-        },
-        {
-          "@type": "SoftwareApplication",
-          "name": "LunarV",
-          "url": "https://phamhungtien.com/LunarV/",
-          "operatingSystem": "iOS, iPadOS, macOS, visionOS"
-        },
-        {
-          "@type": "SoftwareApplication",
-          "name": "PadCodeAI",
-          "url": "https://phamhungtien.com/PadCodeAI/",
-          "operatingSystem": "iOS, iPadOS"
-        },
-        {
-          "@type": "SoftwareApplication",
-          "name": "PadNotesAI",
-          "url": "https://phamhungtien.com/PadNotesAI/",
-          "operatingSystem": "iOS, iPadOS"
-        },
-        {
-          "@type": "SoftwareApplication",
-          "name": "My NAS Manager",
-          "url": "https://phamhungtien.com/MyNASManager/",
-          "operatingSystem": "iOS, iPadOS"
-        },
-        {
-          "@type": "SoftwareApplication",
-          "name": "Lunar Block",
-          "url": "https://phamhungtien.com/LunarBlock/",
-          "operatingSystem": "iOS, iPadOS, macOS, visionOS"
-        }
-      ]
-    }
-  </script>
-</head>
-<body>
-  <header class="topbar">
-    <div class="container">
-      <a class="brand" href="/" aria-label="Pham Hung Tien">
-        <img src="/assets/phtv-icon.webp" alt="">
-        <span>Pham Hung Tien</span>
-      </a>
-      <nav class="nav" aria-label="Điều hướng">
-        <a class="desktop-link" href="#products" data-i18n="root.nav_products">Sản phẩm</a>
-        <a class="desktop-link" href="/LunarV/">LunarV</a>
-        <a class="desktop-link" href="/PHTV/">PHTV</a>
-        <a class="mobile-catalog-link" href="#products" data-i18n="root.nav_products">Sản phẩm</a>
-        <a class="button-primary root-contact" href="mailto:phamhungtien.contact@gmail.com" data-i18n="root.contact">Liên hệ</a>
-      </nav>
-    </div>
-  </header>
-
-  <main class="portfolio-home">
-    <section class="portfolio-hero container" aria-labelledby="portfolio-title">
-      <div class="portfolio-hero-copy">
-        <p class="portfolio-eyebrow" data-i18n="root.hero_eyebrow">PHAM HUNG TIEN · APPLE SOFTWARE</p>
-        <h1 id="portfolio-title" data-i18n="root.hero_title">Những ứng dụng nhỏ, làm nên khác biệt mỗi ngày.</h1>
-        <p class="portfolio-intro" data-i18n="root.hero_desc">Bộ sưu tập phần mềm tinh gọn dành cho macOS, iPhone, iPad và Apple Vision Pro — riêng tư, dễ dùng và được chăm chút đến từng chi tiết.</p>
-        <div class="portfolio-hero-actions">
-          <a class="button-primary" href="#products" data-i18n="root.explore">Khám phá sản phẩm</a>
-          <a class="button-secondary" href="mailto:phamhungtien.contact@gmail.com" data-i18n="root.hero_contact">Nói chuyện cùng mình</a>
-        </div>
-        <ul class="portfolio-stats" aria-label="Portfolio highlights">
-          <li><strong>6</strong><span data-i18n="root.stat_products">sản phẩm</span></li>
-          <li><strong>4</strong><span data-i18n="root.stat_platforms">nền tảng Apple</span></li>
-          <li><strong>∞</strong><span data-i18n="root.stat_care">sự chăm chút</span></li>
-        </ul>
-      </div>
-
-      <a class="portfolio-feature-card" href="/MyNASManager/" aria-label="My NAS Manager">
-        <div class="portfolio-feature-art">
-          <img src="/MyNASManager/assets/ipad-hero.png" alt="Giao diện My NAS Manager trên iPad">
-        </div>
-        <div class="portfolio-feature-scrim"></div>
-        <div class="portfolio-feature-content">
-          <span class="portfolio-card-label" data-i18n="root.featured_label">MỚI & NỔI BẬT</span>
-          <div class="portfolio-feature-title">
-            <img src="/MyNASManager/assets/app-icon.png" alt="">
-            <div>
-              <h2>My NAS Manager</h2>
-              <p data-i18n="root.mynasmanager_subtitle">Quản lý Synology NAS trên iOS</p>
-            </div>
-          </div>
-          <span class="portfolio-card-link" data-i18n="root.view_product">Xem sản phẩm <span aria-hidden="true">↗</span></span>
-        </div>
-      </a>
-    </section>
-
-    <section class="portfolio-products container" id="products" aria-labelledby="products-title">
-      <header class="portfolio-section-heading">
-        <p class="portfolio-eyebrow" data-i18n="root.products_eyebrow">BỘ SƯU TẬP</p>
-        <h2 id="products-title" data-i18n="root.products_title">Chọn công cụ phù hợp với nhịp làm việc của bạn.</h2>
-        <p data-i18n="root.products_desc">Mỗi sản phẩm bắt đầu từ một vấn đề thường gặp — rồi được làm cho đơn giản, nhanh và dễ chịu hơn.</p>
-      </header>
-
-      <div class="portfolio-product-grid">
-        <a class="portfolio-product-card portfolio-product-card--wide product-tone-nas" href="/MyNASManager/">
-          <img class="portfolio-product-media" src="/MyNASManager/assets/ipad-hero.png" alt="Giao diện My NAS Manager" loading="lazy">
-          <div class="portfolio-product-content">
-            <div class="portfolio-product-lockup"><img src="/MyNASManager/assets/app-icon.png" alt=""><span data-i18n="root.category_utility">TIỆN ÍCH</span></div>
-            <h3>My NAS Manager</h3>
-            <p data-i18n="root.mynasmanager_desc">Quản lý và giám sát ổ cứng mạng Synology NAS của bạn từ xa, trực quan và an toàn ngay trên các thiết bị Apple.</p>
-            <span class="portfolio-card-link" data-i18n="root.view_product">Xem sản phẩm <span aria-hidden="true">↗</span></span>
-          </div>
-        </a>
-
-        <a class="portfolio-product-card product-tone-lunarv" href="/LunarV/">
-          <img class="portfolio-product-media" src="/LunarV/assets/lunarv-ipad.jpg" alt="LunarV trên iPad" loading="lazy">
-          <div class="portfolio-product-content">
-            <div class="portfolio-product-lockup"><img src="/assets/lunarv-icon.png" alt=""><span data-i18n="root.category_calendar">LỊCH & TIỆN ÍCH</span></div>
-            <h3>LunarV</h3>
-            <p data-i18n="root.lunarv_desc">Lịch âm, widget và nhắc dịp gia đình trên iPhone, iPad, Mac và Apple Vision Pro.</p>
-            <span class="portfolio-card-link" data-i18n="root.view_product">Xem sản phẩm <span aria-hidden="true">↗</span></span>
-          </div>
-        </a>
-
-        <a class="portfolio-product-card product-tone-phtv" href="/PHTV/">
-          <img class="portfolio-product-media" src="/assets/phtv-social-preview.webp" alt="Giao diện cài đặt PHTV" loading="lazy">
-          <div class="portfolio-product-content">
-            <div class="portfolio-product-lockup"><img src="/assets/phtv-icon.webp" alt=""><span data-i18n="root.category_macos">macOS</span></div>
-            <h3>PHTV</h3>
-            <p data-i18n="root.phtv_desc">Bộ gõ tiếng Việt hiện đại, nhanh và riêng tư cho macOS.</p>
-            <span class="portfolio-card-link" data-i18n="root.view_product">Xem sản phẩm <span aria-hidden="true">↗</span></span>
-          </div>
-        </a>
-
-        <a class="portfolio-product-card product-tone-code" href="/PadCodeAI/">
-          <img class="portfolio-product-media" src="/PadCodeAI/assets/ipad-editor.png" alt="Pad Code AI trên iPad" loading="lazy">
-          <div class="portfolio-product-content">
-            <div class="portfolio-product-lockup"><img src="/PadCodeAI/assets/app-icon.png" alt=""><span data-i18n="root.category_developer">DÀNH CHO LẬP TRÌNH</span></div>
-            <h3>Pad Code AI</h3>
-            <p data-i18n="root.padcodeai_desc">Viết, chạy và quản lý code với compiler offline và Apple Intelligence.</p>
-            <span class="portfolio-card-link" data-i18n="root.view_product">Xem sản phẩm <span aria-hidden="true">↗</span></span>
-          </div>
-        </a>
-
-        <a class="portfolio-product-card product-tone-notes" href="/PadNotesAI/">
-          <img class="portfolio-product-media" src="/PadNotesAI/assets/ipad-workspace.png" alt="Không gian ghi chú của Pad Notes AI" loading="lazy">
-          <div class="portfolio-product-content">
-            <div class="portfolio-product-lockup"><img src="/PadNotesAI/assets/app-icon.png" alt=""><span data-i18n="root.category_productivity">NĂNG SUẤT</span></div>
-            <h3>Pad Notes AI</h3>
-            <p data-i18n="root.padnotesai_desc">Viết tay, nhận dạng OCR ngoại tuyến và khám phá ghi chú cùng AI.</p>
-            <span class="portfolio-card-link" data-i18n="root.view_product">Xem sản phẩm <span aria-hidden="true">↗</span></span>
-          </div>
-        </a>
-
-        <a class="portfolio-product-card product-tone-game" href="/LunarBlock/">
-          <img class="portfolio-product-media" src="/LunarBlock/assets/lunarblock-showcase.png" alt="Lunar Block 3D" loading="lazy">
-          <div class="portfolio-product-content">
-            <div class="portfolio-product-lockup"><img src="/LunarBlock/assets/app-icon.png" alt=""><span data-i18n="root.category_game">TRÒ CHƠI</span></div>
-            <h3>Lunar Block</h3>
-            <p data-i18n="root.lunarblock_desc">Xếp hình 3D với không gian orbital phát sáng, haptic và điều khiển mượt mà.</p>
-            <span class="portfolio-card-link" data-i18n="root.view_product">Xem sản phẩm <span aria-hidden="true">↗</span></span>
-          </div>
-        </a>
-      </div>
-    </section>
-
-    <section class="portfolio-contact container" aria-labelledby="contact-title">
-      <div>
-        <p class="portfolio-eyebrow" data-i18n="root.contact_eyebrow">KẾT NỐI</p>
-        <h2 id="contact-title" data-i18n="root.contact_title">Có một ý tưởng đang cần thành ứng dụng?</h2>
-        <p data-i18n="root.contact_desc">Mình luôn hứng thú với những sản phẩm gọn gàng, hữu ích và được làm tử tế.</p>
-      </div>
-      <div class="portfolio-contact-actions">
-        <a class="button-primary" href="mailto:phamhungtien.contact@gmail.com" data-i18n="root.get_in_touch">Liên hệ</a>
-        <a class="button-secondary" href="https://github.com/PhamHungTien" target="_blank" rel="noopener" data-i18n="root.visit_github">Xem GitHub</a>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <span data-i18n="root.copyright">&copy; 2026 Pham Hung Tien. Bảo lưu mọi quyền.</span>
-      <nav>
-        <a href="https://github.com/PhamHungTien" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://www.linkedin.com/in/ph%E1%BA%A1m-h%C3%B9ng-ti%E1%BA%BFn-a1b405327/" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="#donate" class="donate-trigger" data-i18n="root.donate">Ủng hộ</a>
-        <a href="mailto:phamhungtien.contact@gmail.com" data-i18n="root.contact">Liên hệ</a>
-      </nav>
-    </div>
-  </footer>
-  <script src="/assets/i18n.js?v=3.0" defer></script>
-</body>
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://phamhungtien.com/" />
+    <meta property="og:title" content="Pham Hung Tien | Apple software products" />
+    <meta property="og:description" content="Focused, private, polished apps for Apple devices by Pham Hung Tien." />
+    <meta property="og:image" content="https://phamhungtien.com/assets/phtv-social-preview.webp" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>

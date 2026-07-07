@@ -27,13 +27,21 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: 'PHTV/package-lock.json'
+          cache-dependency-path: |
+            package-lock.json
+            PHTV/package-lock.json
 
-      - name: Install dependencies
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Install PHTV dependencies
         working-directory: ./PHTV
         run: npm ci
 
-      - name: Build
+      - name: Build root React site
+        run: npm run build
+
+      - name: Build PHTV React app
         working-directory: ./PHTV
         run: npm run build
         env:
@@ -43,8 +51,8 @@ jobs:
         run: |
           rm -rf _site
           mkdir -p _site
+          cp -r dist/. _site/
           # Copy root level SEO and configuration files
-          cp index.html _site/
           cp 404.html _site/ || true
           cp CNAME _site/ || true
           cp robots.txt _site/ || true
@@ -54,19 +62,22 @@ jobs:
           cp _redirects _site/ || true
           cp .htaccess _site/ || true
           cp .nojekyll _site/ || true
-          # Copy shared assets
-          cp -r assets _site/assets
-          # Copy LunarV product page
-          cp -r LunarV _site/LunarV
-          # Copy LunarBlock product page
-          cp -r LunarBlock _site/LunarBlock
-          # Copy PadCodeAI product page
-          cp -r PadCodeAI _site/PadCodeAI
-          # Copy PadNotesAI product page
-          cp -r PadNotesAI _site/PadNotesAI
-          # Copy MyNASManager product page (supporting both casings)
-          cp -r MyNASManager _site/MyNASManager
-          cp -r MyNASManager _site/mynasmanager
+          # Copy shared legacy assets used by legal/static pages without overwriting Vite assets
+          mkdir -p _site/assets
+          cp -r assets/. _site/assets/
+          # Copy React route shells plus legal/static assets for product folders
+          for app in LunarV LunarBlock PadCodeAI PadNotesAI MyNASManager; do
+            mkdir -p "_site/$app"
+            cp dist/index.html "_site/$app/index.html"
+            cp "$app/privacy.html" "_site/$app/privacy.html" || true
+            cp "$app/terms.html" "_site/$app/terms.html" || true
+            cp -r "$app/assets" "_site/$app/assets" || true
+          done
+          mkdir -p _site/mynasmanager
+          cp dist/index.html _site/mynasmanager/index.html
+          cp MyNASManager/privacy.html _site/mynasmanager/privacy.html || true
+          cp MyNASManager/terms.html _site/mynasmanager/terms.html || true
+          cp -r MyNASManager/assets _site/mynasmanager/assets || true
           # Copy PHTV app to its subdirectory
           cp -r PHTV/dist _site/PHTV
 
