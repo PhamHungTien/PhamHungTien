@@ -53,7 +53,7 @@ Remotely manage your Synology NAS from iPhone and iPad. Real-time CPU/RAM/disk/S
 ## 🖥️ macOS & Multi-Platform Apps
 
 ### <img src="https://phamhungtien.com/assets/phtv-icon.webp" width="22" align="top"> [PHTV](https://github.com/PhamHungTien/PHTV) — *Precision Hybrid Typing Vietnamese*
-A native, offline Vietnamese input method for **macOS 14+** built with Swift & C/C++. Smart Macro engine, Spell Checker, built-in Emoji Picker, and fully automated CI/CD via GitHub Actions, Sparkle, and Homebrew.
+A native, offline Vietnamese input method for **macOS 14+** built 100% with Swift. Smart Macro engine, Spell Checker, built-in Emoji Picker, and fully automated CI/CD via GitHub Actions, Sparkle, and Homebrew.
 
 ### <img src="https://phamhungtien.com/assets/lunarv-icon.png" width="22" align="top"> [LunarV](https://phamhungtien.com/LunarV/) — *Vietnamese Lunar Calendar*
 [![App Store](https://img.shields.io/badge/App%20Store-Download-0071e3?style=flat-square&logo=apple&logoColor=white)](https://apps.apple.com/app/id6770913893)
