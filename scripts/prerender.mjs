@@ -17,6 +17,13 @@ import { pathToFileURL } from 'node:url';
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const distDir = join(root, 'dist');
 
+/**
+ * Lowercase redirect stubs live outside dist/ on purpose. macOS is case-insensitive,
+ * so writing dist/lunarv/index.html would overwrite dist/LunarV/index.html; the deploy
+ * runs on Linux and merges this tree into the site root, where both can coexist.
+ */
+const aliasDir = join(root, 'dist-aliases');
+
 const server = await import(pathToFileURL(join(root, 'dist-ssr', 'entry-server.js')).href);
 const { render, prerenderRoutes, products, SITE, OG_IMAGE_WIDTH, OG_IMAGE_HEIGHT } = server;
 
@@ -63,11 +70,13 @@ function buildHead(meta, structuredData) {
   return tags.map((tag) => `    ${tag}`).join('\n');
 }
 
-async function emit(relPath, contents) {
-  const outPath = join(distDir, relPath);
+async function emitTo(baseDir, relPath, contents) {
+  const outPath = join(baseDir, relPath);
   await mkdir(dirname(outPath), { recursive: true });
   await writeFile(outPath, contents, 'utf8');
 }
+
+const emit = (relPath, contents) => emitTo(distDir, relPath, contents);
 
 // ---------------------------------------------------------------- HTML routes
 
@@ -152,7 +161,8 @@ const aliases = {
 
 for (const [alias, target] of Object.entries(aliases)) {
   const url = `${SITE.origin}${target}`;
-  await emit(
+  await emitTo(
+    aliasDir,
     join(alias, 'index.html'),
     `<!DOCTYPE html>
 <html lang="vi">
@@ -171,5 +181,25 @@ for (const [alias, target] of Object.entries(aliases)) {
   );
 }
 
-console.log(`  aliases  ${Object.keys(aliases).length} redirect stubs`);
-console.log(`\n✓ prerender complete`);
+console.log(`  aliases  ${Object.keys(aliases).length} redirect stubs -> dist-aliases/`);
+
+// ------------------------------------------------------------------- self-check
+
+/**
+ * Every route must still own its canonical after all writes. This caught the case
+ * where lowercase alias stubs silently clobbered the product pages on macOS.
+ */
+for (const route of prerenderRoutes) {
+  const file = route === '/' ? join(distDir, 'index.html') : join(distDir, route, 'index.html');
+  const html = await readFile(file, 'utf8');
+  const expected = `<link rel="canonical" href="${SITE.origin}${route}" />`;
+
+  if (!html.includes(expected)) {
+    throw new Error(`${file} lost its canonical; expected ${expected}`);
+  }
+  if (html.includes('http-equiv="refresh"')) {
+    throw new Error(`${file} was overwritten by a redirect stub`);
+  }
+}
+
+console.log(`\n✓ prerender complete — ${prerenderRoutes.length} routes verified`);

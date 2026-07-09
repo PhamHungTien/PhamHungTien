@@ -49,37 +49,65 @@ jobs:
 
       - name: Prepare deployment
         run: |
+          set -euo pipefail
           rm -rf _site
           mkdir -p _site
+
+          # dist/ already holds a real, per-route index.html for every product page
+          # (see scripts/prerender.mjs) plus og/ cards and a generated sitemap.xml.
           cp -r dist/. _site/
-          # Copy root level SEO and configuration files
-          cp 404.html _site/ || true
-          cp CNAME _site/ || true
-          cp robots.txt _site/ || true
-          cp sitemap.xml _site/ || true
-          cp ads.txt _site/ || true
-          cp assets/phtv-icon.webp _site/icon.webp || true
-          cp _redirects _site/ || true
-          cp .htaccess _site/ || true
-          cp .nojekyll _site/ || true
-          # Copy shared legacy assets used by legal/static pages without overwriting Vite assets
+
+          # Root-level SEO and hosting files.
+          cp 404.html CNAME robots.txt ads.txt .nojekyll _site/
+          cp assets/phtv-icon.webp _site/icon.webp
+          # GitHub Pages ignores both of these; kept only so a move to Netlify or
+          # Apache would still redirect. The live mechanism is dist-aliases/ below.
+          cp _redirects .htaccess _site/
+
+          # Shared stylesheets and images used by the static legal pages. Vite's
+          # hashed filenames never collide with these source names.
           mkdir -p _site/assets
           cp -r assets/. _site/assets/
-          # Copy React route shells plus legal/static assets for product folders
+
+          # Legal pages and per-app assets. index.html is NOT copied here: the
+          # prerendered one from dist/ must survive.
           for app in LunarV LunarBlock PadCodeAI PadNotesAI MyNASManager; do
-            mkdir -p "_site/$app"
-            cp dist/index.html "_site/$app/index.html"
-            cp "$app/privacy.html" "_site/$app/privacy.html" || true
-            cp "$app/terms.html" "_site/$app/terms.html" || true
-            cp -r "$app/assets" "_site/$app/assets" || true
+            cp "$app/privacy.html" "_site/$app/privacy.html"
+            cp "$app/terms.html" "_site/$app/terms.html"
+            cp -r "$app/assets" "_site/$app/assets"
           done
-          mkdir -p _site/mynasmanager
-          cp dist/index.html _site/mynasmanager/index.html
-          cp MyNASManager/privacy.html _site/mynasmanager/privacy.html || true
-          cp MyNASManager/terms.html _site/mynasmanager/terms.html || true
-          cp -r MyNASManager/assets _site/mynasmanager/assets || true
-          # Copy PHTV app to its subdirectory
+
+          # PHTV is a separate Vite app with its own head and index.html.
           cp -r PHTV/dist _site/PHTV
+
+          # Lowercase redirect stubs. Written last, and only safe on a case-sensitive
+          # filesystem, which is why they live outside dist/.
+          cp -r dist-aliases/. _site/
+
+      - name: Verify deployed SEO invariants
+        run: |
+          set -euo pipefail
+          fail=0
+          check() {
+            local file=$1 expected=$2
+            if ! grep -qF "$expected" "$file"; then
+              echo "::error file=$file::missing $expected"
+              fail=1
+            fi
+          }
+          check _site/index.html '<link rel="canonical" href="https://phamhungtien.com/" />'
+          for app in LunarV LunarBlock PadCodeAI PadNotesAI MyNASManager; do
+            check "_site/$app/index.html" "<link rel=\"canonical\" href=\"https://phamhungtien.com/$app/\" />"
+            check "_site/$app/index.html" 'application/ld+json'
+            if grep -qF 'http-equiv="refresh"' "_site/$app/index.html"; then
+              echo "::error::_site/$app/index.html was overwritten by a redirect stub"
+              fail=1
+            fi
+          done
+          test -f _site/sitemap.xml || { echo "::error::sitemap.xml missing"; fail=1; }
+          test -f _site/og/home.png || { echo "::error::og cards missing"; fail=1; }
+          test -f _site/phtv/index.html || { echo "::error::lowercase alias missing"; fail=1; }
+          exit $fail
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
