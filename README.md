@@ -6,7 +6,7 @@
 
 <p align="center">
   Electronics & Telecommunications student at VNUHCM – University of Science.<br/>
-  Native Apple apps and embedded hardware, built around privacy, offline-first design, and hardware–software co-design.
+  Native apps and embedded hardware, built around privacy, offline-first design, and hardware–software co-design.
 </p>
 
 <p align="center">
