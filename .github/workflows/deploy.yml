@@ -1,5 +1,12 @@
 name: Deploy PHTV Website
 
+# Publishes the built site to the gh-pages branch, which GitHub Pages serves.
+#
+# Pages used to be configured to serve the repository root, so it published the
+# unbuilt index.html and the TypeScript sources while ignoring this workflow's
+# output. Building into a branch keeps exactly one publishing path, and lets
+# scripts/deploy-local.sh push the same tree from a laptop when Actions is down.
+
 on:
   push:
     branches:
@@ -7,16 +14,14 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: "pages"
   cancel-in-progress: true
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -45,81 +50,22 @@ jobs:
         working-directory: ./PHTV
         run: npm run build
 
-      - name: Prepare deployment
+      - name: Assemble _site
+        run: ./scripts/build-site.sh _site
+
+      - name: Verify SEO invariants
+        run: ./scripts/verify-site.sh _site
+
+      - name: Publish to gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          rm -rf _site
-          mkdir -p _site
-
-          # dist/ already holds a real, per-route index.html for every product page
-          # (see scripts/prerender.mjs) plus og/ cards and a generated sitemap.xml.
-          cp -r dist/. _site/
-
-          # Root-level SEO and hosting files.
-          cp 404.html CNAME robots.txt ads.txt .nojekyll _site/
-          cp assets/phtv-icon.webp _site/icon.webp
-          # GitHub Pages ignores both of these; kept only so a move to Netlify or
-          # Apache would still redirect. The live mechanism is dist-aliases/ below.
-          cp _redirects .htaccess _site/
-
-          # Shared stylesheets and images used by the static legal pages. Vite's
-          # hashed filenames never collide with these source names.
-          mkdir -p _site/assets
-          cp -r assets/. _site/assets/
-
-          # Legal pages and per-app assets. index.html is NOT copied here: the
-          # prerendered one from dist/ must survive.
-          for app in LunarV LunarBlock PadCodeAI PadNotesAI MyNASManager; do
-            cp "$app/privacy.html" "_site/$app/privacy.html"
-            cp "$app/terms.html" "_site/$app/terms.html"
-            cp -r "$app/assets" "_site/$app/assets"
-          done
-
-          # PHTV is a separate Vite app with its own head and index.html.
-          cp -r PHTV/dist _site/PHTV
-
-          # Lowercase redirect stubs. Written last, and only safe on a case-sensitive
-          # filesystem, which is why they live outside dist/.
-          cp -r dist-aliases/. _site/
-
-      - name: Verify deployed SEO invariants
-        run: |
-          set -euo pipefail
-          fail=0
-          check() {
-            local file=$1 expected=$2
-            if ! grep -qF "$expected" "$file"; then
-              echo "::error file=$file::missing $expected"
-              fail=1
-            fi
-          }
-          check _site/index.html '<link rel="canonical" href="https://phamhungtien.com/" />'
-          for app in LunarV LunarBlock PadCodeAI PadNotesAI MyNASManager; do
-            check "_site/$app/index.html" "<link rel=\"canonical\" href=\"https://phamhungtien.com/$app/\" />"
-            check "_site/$app/index.html" 'application/ld+json'
-            if grep -qF 'http-equiv="refresh"' "_site/$app/index.html"; then
-              echo "::error::_site/$app/index.html was overwritten by a redirect stub"
-              fail=1
-            fi
-          done
-          test -f _site/sitemap.xml || { echo "::error::sitemap.xml missing"; fail=1; }
-          test -f _site/og/home.png || { echo "::error::og cards missing"; fail=1; }
-          test -f _site/phtv/index.html || { echo "::error::lowercase alias missing"; fail=1; }
-          exit $fail
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './_site'
-          name: github-pages
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          cd _site
+          git init -q
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "deploy: ${GITHUB_SHA::7}"
+          # gh-pages holds generated output only; each deploy replaces it wholesale.
+          git push --force "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:gh-pages
