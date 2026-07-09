@@ -43,6 +43,10 @@ export interface Product {
   ctaLabel: Localized;
   secondaryCtaLabel?: Localized;
   platforms: Localized;
+  /** schema.org SoftwareApplication.operatingSystem */
+  operatingSystem: string;
+  /** schema.org SoftwareApplication.applicationCategory */
+  appCategory: string;
   facts: ProductFact[];
   features: ProductFeature[];
   support: Localized;

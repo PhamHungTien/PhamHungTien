@@ -1,30 +1,18 @@
 <!DOCTYPE html>
 <html lang="vi">
   <head>
-    <script>
-      (function () {
-        var preferred = localStorage.getItem("preferred_lang");
-        var browser = navigator.language || navigator.userLanguage || "";
-        document.documentElement.lang = preferred || (browser.toLowerCase().startsWith("vi") ? "vi" : "en");
-      })();
-    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Pham Hung Tien | Products</title>
-    <meta name="description" content="Official product home for Pham Hung Tien apps across macOS, iOS, iPadOS, and visionOS." />
-    <meta name="theme-color" content="#ffffff" />
-    <link rel="canonical" href="https://phamhungtien.com/" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b0f17" media="(prefers-color-scheme: dark)" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <meta name="author" content="Phạm Hùng Tiến" />
     <link rel="icon" type="image/webp" href="/assets/phtv-icon.webp" />
     <link rel="apple-touch-icon" href="/assets/phtv-favicon.png" />
-
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://phamhungtien.com/" />
-    <meta property="og:title" content="Pham Hung Tien | Apple software products" />
-    <meta property="og:description" content="Focused, private, polished apps for Apple devices by Pham Hung Tien." />
-    <meta property="og:image" content="https://phamhungtien.com/assets/phtv-social-preview.webp" />
+    <!--app-head-->
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root"><!--app-html--></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

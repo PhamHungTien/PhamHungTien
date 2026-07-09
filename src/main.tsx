@@ -1,10 +1,18 @@
 import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import { createRoot, hydrateRoot } from 'react-dom/client';
 import { App } from './App';
 import './styles.css';
 
-createRoot(document.getElementById('root')!).render(
+const container = document.getElementById('root')!;
+const tree = (
   <StrictMode>
     <App />
   </StrictMode>
 );
+
+// Production HTML arrives prerendered; the dev server serves an empty shell.
+if (container.firstElementChild) {
+  hydrateRoot(container, tree);
+} else {
+  createRoot(container).render(tree);
+}

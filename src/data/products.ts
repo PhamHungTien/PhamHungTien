@@ -52,6 +52,8 @@ export const products: Product[] = [
     ctaLabel: { vi: 'Mở PHTV', en: 'Open PHTV' },
     secondaryCtaLabel: { vi: 'GitHub', en: 'GitHub' },
     platforms: { vi: 'macOS 14+', en: 'macOS 14+' },
+    operatingSystem: 'macOS 14.0 or later',
+    appCategory: 'UtilitiesApplication',
     facts: [
       { label: { vi: 'Nền tảng', en: 'Platform' }, value: { vi: 'macOS 14+', en: 'macOS 14+' } },
       { label: { vi: 'Kiến trúc', en: 'Architecture' }, value: { vi: 'Apple Silicon / Intel', en: 'Apple Silicon / Intel' } },
@@ -99,6 +101,8 @@ export const products: Product[] = [
     },
     ctaLabel: { vi: 'Xem trên App Store', en: 'View on App Store' },
     platforms: { vi: 'iPhone, iPad, Mac, Vision Pro', en: 'iPhone, iPad, Mac, Vision Pro' },
+    operatingSystem: 'iOS, iPadOS, macOS, visionOS',
+    appCategory: 'LifestyleApplication',
     facts: [
       { label: { vi: 'Phiên bản', en: 'Version' }, value: { vi: '1.0.1', en: '1.0.1' } },
       { label: { vi: 'Nền tảng', en: 'Platforms' }, value: { vi: 'iOS, iPadOS, macOS, visionOS', en: 'iOS, iPadOS, macOS, visionOS' } },
@@ -145,6 +149,8 @@ export const products: Product[] = [
     },
     ctaLabel: { vi: 'Tải trên App Store', en: 'Download on App Store' },
     platforms: { vi: 'iPhone, iPad, Mac', en: 'iPhone, iPad, Mac' },
+    operatingSystem: 'iOS, iPadOS, macOS',
+    appCategory: 'DeveloperApplication',
     facts: [
       { label: { vi: 'Nền tảng', en: 'Platforms' }, value: { vi: 'iPhone, iPad, Mac', en: 'iPhone, iPad, Mac' } },
       { label: { vi: 'Ngôn ngữ', en: 'Languages' }, value: { vi: '24+ ngôn ngữ', en: '24+ languages' } },
@@ -190,6 +196,8 @@ export const products: Product[] = [
     },
     ctaLabel: { vi: 'Tải trên App Store', en: 'Download on App Store' },
     platforms: { vi: 'iPhone, iPad, Mac', en: 'iPhone, iPad, Mac' },
+    operatingSystem: 'iOS, iPadOS, macOS',
+    appCategory: 'ProductivityApplication',
     facts: [
       { label: { vi: 'Nền tảng', en: 'Platforms' }, value: { vi: 'iPhone, iPad, Mac', en: 'iPhone, iPad, Mac' } },
       { label: { vi: 'Nhập liệu', en: 'Input' }, value: { vi: 'Apple Pencil', en: 'Apple Pencil' } },
@@ -237,6 +245,8 @@ export const products: Product[] = [
     },
     ctaLabel: { vi: 'Tải về trên App Store', en: 'Download on App Store' },
     platforms: { vi: 'iPhone, iPad, Mac', en: 'iPhone, iPad, Mac' },
+    operatingSystem: 'iOS, iPadOS, macOS',
+    appCategory: 'UtilitiesApplication',
     facts: [
       { label: { vi: 'Nền tảng', en: 'Platforms' }, value: { vi: 'iPhone, iPad, Mac', en: 'iPhone, iPad, Mac' } },
       { label: { vi: 'Máy chủ', en: 'Server' }, value: { vi: 'Synology DSM 7+', en: 'Synology DSM 7+' } },
@@ -282,6 +292,8 @@ export const products: Product[] = [
     },
     ctaLabel: { vi: 'Tải trên App Store', en: 'Download on App Store' },
     platforms: { vi: 'iPhone, iPad, Mac, Vision Pro', en: 'iPhone, iPad, Mac, Vision Pro' },
+    operatingSystem: 'iOS, iPadOS, macOS, visionOS',
+    appCategory: 'GameApplication',
     facts: [
       { label: { vi: 'Thể loại', en: 'Genre' }, value: { vi: 'Giải đố 3D', en: '3D puzzle' } },
       { label: { vi: 'Đồ họa', en: 'Graphics' }, value: { vi: 'SceneKit', en: 'SceneKit' } },
@@ -314,3 +326,9 @@ export const productRoutes = new Map<string, Product>(
 );
 
 export const appProductRoutes = products.map((product) => product.route);
+
+/**
+ * Routes this app owns and must emit real HTML for. PHTV is excluded: it is a
+ * separate Vite app deployed into /PHTV/ with its own index.html.
+ */
+export const prerenderRoutes = ['/', ...products.filter((product) => !product.isStandalone).map((product) => product.route)];
