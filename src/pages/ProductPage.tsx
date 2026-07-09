@@ -27,7 +27,7 @@ export function ProductPage({ product, lang, onLanguageChange, t }: ProductPageP
               <PhtvWordmark />
             ) : (
               <div className="detail-lockup">
-                <img src={product.icon} alt="" />
+                <img src={product.icon} alt="" width={42} height={42} decoding="async" />
                 <span>
                   <strong>{product.name}</strong>
                   <small>{product.category[lang]}</small>
@@ -51,7 +51,12 @@ export function ProductPage({ product, lang, onLanguageChange, t }: ProductPageP
           </div>
 
           <figure className="detail-hero__media">
-            <img src={product.heroImage} alt={product.gallery[0]?.alt[lang] ?? product.name} />
+            <img
+              src={product.heroImage}
+              alt={product.gallery[0]?.alt[lang] ?? product.name}
+              fetchPriority="high"
+              decoding="async"
+            />
           </figure>
         </section>
 
@@ -103,7 +108,7 @@ export function ProductPage({ product, lang, onLanguageChange, t }: ProductPageP
           <div className="gallery-strip">
             {product.gallery.map((image) => (
               <figure key={image.src}>
-                <img src={image.src} alt={image.alt[lang]} loading="lazy" />
+                <img src={image.src} alt={image.alt[lang]} loading="lazy" decoding="async" />
                 <figcaption>{image.alt[lang]}</figcaption>
               </figure>
             ))}

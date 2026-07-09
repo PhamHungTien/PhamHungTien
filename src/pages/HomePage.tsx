@@ -40,9 +40,16 @@ export function HomePage({ lang, onLanguageChange, t }: HomePageProps) {
                 key={product.slug}
                 style={{ '--accent': product.accent } as CSSProperties}
               >
-                <img src={product.heroImage} alt={product.gallery[0]?.alt[lang] ?? product.name} />
+                <img
+                  src={product.heroImage}
+                  alt={product.gallery[0]?.alt[lang] ?? product.name}
+                  decoding="async"
+                  {...(index === 0
+                    ? { loading: 'eager' as const, fetchPriority: 'high' as const }
+                    : { loading: 'lazy' as const })}
+                />
                 <span>
-                  <img src={product.icon} alt="" />
+                  <img src={product.icon} alt="" width={22} height={22} decoding="async" />
                   {product.name}
                 </span>
               </a>
@@ -60,7 +67,7 @@ export function HomePage({ lang, onLanguageChange, t }: HomePageProps) {
             {products.map((product) => (
               <a className="product-row" href={product.route} key={product.slug}>
                 <span className="product-row__identity">
-                  <img src={product.icon} alt="" />
+                  <img src={product.icon} alt="" width={42} height={42} loading="lazy" decoding="async" />
                   <span>
                     <strong>{product.name}</strong>
                     <small>{product.category[lang]}</small>

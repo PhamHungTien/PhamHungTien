@@ -6,7 +6,12 @@
   "scripts": {
     "dev": "vite",
     "dev:phtv": "cd PHTV && npm run dev",
-    "build": "vite build",
+    "build": "npm run build:client && npm run build:ssr && npm run prerender",
+    "build:client": "vite build",
+    "build:ssr": "vite build --ssr src/entry-server.tsx",
+    "prerender": "node scripts/prerender.mjs",
+    "og": "./scripts/generate-og.sh",
+    "optimize:images": "./scripts/optimize-images.sh",
     "build:phtv": "cd PHTV && npm run build",
     "build:all": "npm run build && npm run build:phtv",
     "preview": "vite preview",

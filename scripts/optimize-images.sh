@@ -17,6 +17,7 @@ icons=(
   PadNotesAI/assets/app-icon.png
   PadCodeAI/assets/app-icon.png
   LunarBlock/assets/app-icon.png
+  assets/lunarv-icon.png
 )
 
 screenshots=(
@@ -37,17 +38,29 @@ screenshots=(
 
 before=$(du -ck "${icons[@]}" "${screenshots[@]}" | tail -1 | cut -f1)
 
+# `sips -Z` scales in both directions, so an image already under the cap would be
+# upscaled and grow. Only ever shrink.
+shrink_to() {
+  local target=$1 file=$2 w h long
+  [ -f "$file" ] || return 0
+  w=$(sips -g pixelWidth "$file" | tail -1 | awk '{print $2}')
+  h=$(sips -g pixelHeight "$file" | tail -1 | awk '{print $2}')
+  long=$((w > h ? w : h))
+
+  if [ "$long" -le "$target" ]; then
+    printf '  skip    %-42s %sx%s already ≤ %s\n' "$file" "$w" "$h" "$target"
+    return 0
+  fi
+
+  sips -Z "$target" "$file" >/dev/null
+  printf '  resize  %-42s %sx%s -> %s long edge\n' "$file" "$w" "$h" "$target"
+}
+
 # 256px covers a 42px slot at 3x device pixel ratio with headroom to spare.
-for f in "${icons[@]}"; do
-  [ -f "$f" ] || continue
-  sips -Z 256 "$f" >/dev/null
-done
+for f in "${icons[@]}"; do shrink_to 256 "$f"; done
 
 # 1600px on the long edge covers the widest render (~700px CSS) at 2x.
-for f in "${screenshots[@]}"; do
-  [ -f "$f" ] || continue
-  sips -Z 1600 "$f" >/dev/null
-done
+for f in "${screenshots[@]}"; do shrink_to 1600 "$f"; done
 
 after=$(du -ck "${icons[@]}" "${screenshots[@]}" | tail -1 | cut -f1)
 
