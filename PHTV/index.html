@@ -2,35 +2,20 @@
 <html lang="vi" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-    <meta http-equiv="cache-control" content="no-cache, must-revalidate, max-age=0" />
-    <meta http-equiv="expires" content="0" />
-    <meta http-equiv="pragma" content="no-cache" />
-    
+    <!-- Pinch-to-zoom must stay available: WCAG 2.1 SC 1.4.4 (Resize Text). -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
     <!-- Primary Meta Tags -->
     <title>PHTV - Bộ gõ tiếng Việt cho macOS | Miễn phí, Nhanh & Bảo mật</title>
     <meta name="title" content="PHTV - Bộ gõ tiếng Việt cho macOS | Miễn phí, Nhanh & Bảo mật" />
     <meta name="description" content="PHTV (Precision Hybrid Typing Vietnamese): Bộ gõ tiếng Việt 100% Swift tối ưu cho macOS 14+. Hỗ trợ Telex, VNI, gõ tắt Macro, Emoji Picker. Hoàn toàn miễn phí, mã nguồn mở và bảo mật." />
-    <meta name="keywords" content="PHTV, bộ gõ tiếng việt macos, gõ tiếng việt mac, telex mac, vni mac, simple telex, open key mac, evkey mac, gotiengviet mac, macos sonoma, macos sequoia, macos tahoe, bộ gõ tiếng việt open source, swift input method, pham hung tien, gõ tiếng việt nhanh mac, bộ gõ tiếng việt tốt nhất cho mac" />
     <meta name="author" content="Phạm Hùng Tiến" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="theme-color" content="#09090b" />
     <link rel="canonical" href="https://phamhungtien.com/PHTV/" />
     <link rel="manifest" href="manifest.json" />
-    
-    <!-- Geographic & Language -->
-    <meta name="geo.region" content="VN" />
-    <meta name="geo.placename" content="Hồ Chí Minh" />
-    <meta name="language" content="Vietnamese" />
-    <meta http-equiv="content-language" content="vi" />
-    
-    <!-- Last Updated -->
-    <meta name="revised" content="2026-01-08" />
-    <meta name="last-modified" content="Thursday, 08-Jan-2026 00:00:00 GMT" />
-    
+
     <!-- Performance Optimization -->
-    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin />
-    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com" />
     <link rel="dns-prefetch" href="https://github.com" />
     <link rel="dns-prefetch" href="https://api.github.com" />
     <link rel="preload" as="image" href="phtv-icon.webp" />
@@ -47,10 +32,12 @@
     <meta property="og:url" content="https://phamhungtien.com/PHTV/" />
     <meta property="og:title" content="PHTV - Bộ gõ Tiếng Việt cho macOS | Miễn phí & Mã nguồn mở" />
     <meta property="og:description" content="Bộ gõ tiếng Việt 100% Swift. Hoàn toàn miễn phí, offline, không thu thập dữ liệu. Hỗ trợ Telex/VNI, macOS 14+." />
-    <meta property="og:image" content="https://phamhungtien.com/PHTV/assets/social_preview.webp" />
-    <meta property="og:image:secure_url" content="https://phamhungtien.com/PHTV/assets/social_preview.webp" />
-    <meta property="og:image:width" content="1280" />
-    <meta property="og:image:height" content="640" />
+    <!-- PNG, not WebP: X/Twitter does not reliably render WebP card images. -->
+    <meta property="og:image" content="https://phamhungtien.com/og/phtv.png" />
+    <meta property="og:image:secure_url" content="https://phamhungtien.com/og/phtv.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="PHTV - Bộ gõ tiếng Việt cho macOS" />
     <meta property="og:site_name" content="PHTV" />
     <meta property="og:locale" content="vi_VN" />
@@ -60,17 +47,10 @@
     <meta name="twitter:url" content="https://phamhungtien.com/PHTV/" />
     <meta name="twitter:title" content="PHTV - Bộ gõ Tiếng Việt cho macOS" />
     <meta name="twitter:description" content="Bộ gõ tiếng Việt miễn phí, mã nguồn mở. Gõ Telex/VNI, offline, an toàn 100%." />
-    <meta name="twitter:image" content="https://phamhungtien.com/PHTV/assets/social_preview.webp" />
+    <meta name="twitter:image" content="https://phamhungtien.com/og/phtv.png" />
+    <meta name="twitter:site" content="@phamhungtien" />
     <meta name="twitter:creator" content="@phamhungtien" />
-    <meta name="twitter:image:alt" content="PHTV Icon" />
-
-    <!-- LinkedIn -->
-    <meta property="linkedin:url" content="https://phamhungtien.com/PHTV/" />
-    <meta property="linkedin:title" content="PHTV - Bộ gõ tiếng Việt cho macOS" />
-
-    <!-- Pinterest -->
-    <meta property="pinterest:description" content="PHTV - Bộ gõ tiếng Việt hiện đại cho macOS. Nhanh, nhẹ, riêng tư và hoàn toàn miễn phí." />
-    <meta property="pinterest:media" content="https://phamhungtien.com/PHTV/assets/social_preview.webp" />
+    <meta name="twitter:image:alt" content="PHTV - Bộ gõ tiếng Việt cho macOS" />
 
     <!-- Additional SEO Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
