@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:rules": "firebase emulators:exec --only firestore --project demo-phtv \"node firestore.rules.test.mjs\"",
+    "deploy:rules": "firebase deploy --only firestore:rules"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
@@ -16,10 +18,12 @@
     "react-dom": "^19.2.3"
   },
   "devDependencies": {
+    "@firebase/rules-unit-testing": "^5.0.0",
     "@types/node": "^22.14.0",
     "@vitejs/plugin-legacy": "^6.1.1",
     "@vitejs/plugin-react": "^5.0.0",
     "autoprefixer": "^10.4.23",
+    "firebase-tools": "^14.0.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.19",
     "terser": "^5.44.1",

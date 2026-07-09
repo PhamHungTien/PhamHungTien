@@ -1,0 +1,127 @@
+rules_version = '2';
+
+// Security rules for the PHTV community board (project phtv-12f95).
+//
+// The Firebase Web API key is public by design, so these rules — not the key — are
+// the access boundary. Anyone can obtain an account and call the REST API directly,
+// bypassing the UI entirely, so nothing in QASection.tsx counts as a control.
+//
+// Deploy with:  firebase deploy --only firestore:rules
+// Test first in Firebase Console -> Firestore -> Rules -> Rules Playground.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    // Admin identity is taken from the verified ID token, never from a document field.
+    // The client's ADMIN_EMAILS list only decides which buttons to draw; it grants nothing.
+    // 'admin@phtv.com' is deliberately absent: do not grant admin to an address you do
+    // not control.
+    function isAdmin() {
+      return signedIn()
+        && request.auth.token.email_verified == true
+        && request.auth.token.email in [
+          'phamhungtien.contact@gmail.com',
+          'hungtien10a7@gmail.com'
+        ];
+    }
+
+    function touchedOnly(keys) {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(keys);
+    }
+
+    // A like may only add or remove the caller's own uid, never anyone else's.
+    function isSelfLikeToggle() {
+      let before = resource.data.get('likedBy', []).toSet();
+      let after = request.resource.data.get('likedBy', []).toSet();
+      let self = [request.auth.uid].toSet();
+      return (after.difference(before) == self && before.difference(after).size() == 0)
+          || (before.difference(after) == self && after.difference(before).size() == 0);
+    }
+
+    match /questions/{questionId} {
+      // The board renders before sign-in, so reads must stay open.
+      //
+      // WARNING: Firestore has no field-level read rules. Every field of every question
+      // document is world-readable, including `authorEmail`. Stop writing authorEmail:
+      // the `isAdmin` field below is now validated server-side and is enough to render
+      // the admin badge.
+      allow read: if true;
+
+      allow create: if signedIn()
+        && request.resource.data.authorId == request.auth.uid
+        && request.resource.data.isAdmin == isAdmin()
+        && (!('authorEmail' in request.resource.data)
+            || request.resource.data.authorEmail == request.auth.token.email)
+        && request.resource.data.replies.size() == 0
+        && request.resource.data.likedBy.size() == 0
+        && request.resource.data.viewCount == 0
+        && request.resource.data.isPinned == false
+        && request.resource.data.isLocked == false
+        && request.resource.data.isReported == false
+        && request.resource.data.content is string
+        && request.resource.data.content.size() > 0
+        && request.resource.data.content.size() <= 5000;
+
+      // deleteQuestion() has no client-side permission check at all, only a confirm dialog.
+      allow delete: if isAdmin()
+        || (signedIn() && resource.data.authorId == request.auth.uid);
+
+      // Signed-out visitors bump the counter, so this is the one anonymous write allowed.
+      allow update: if touchedOnly(['viewCount'])
+        && request.resource.data.viewCount == resource.data.get('viewCount', 0) + 1;
+
+      allow update: if isAdmin() && touchedOnly(['isPinned', 'isLocked']);
+
+      // The author may edit their own post while the thread is unlocked.
+      allow update: if signedIn()
+        && resource.data.authorId == request.auth.uid
+        && resource.data.get('isLocked', false) == false
+        && touchedOnly(['content'])
+        && request.resource.data.content is string
+        && request.resource.data.content.size() > 0
+        && request.resource.data.content.size() <= 5000;
+
+      allow update: if signedIn() && touchedOnly(['likedBy']) && isSelfLikeToggle();
+
+      // Reporting is one-way; only a moderator can clear the flag.
+      allow update: if signedIn()
+        && touchedOnly(['isReported'])
+        && request.resource.data.isReported == true;
+      allow update: if isAdmin() && touchedOnly(['isReported']);
+
+      // `replies` is an array field on the question, not a subcollection, so one update
+      // rewrites every reply at once and the rules cannot tell which one changed. Any
+      // signed-in user permitted to reply can therefore also edit or delete someone
+      // else's reply. Moving replies to /questions/{id}/replies/{replyId} is the only
+      // way to enforce per-reply ownership.
+      allow update: if signedIn()
+        && resource.data.get('isLocked', false) == false
+        && touchedOnly(['replies']);
+      allow update: if isAdmin() && touchedOnly(['replies']);
+    }
+
+    match /notifications/{notificationId} {
+      // A notification is private to its recipient. The client query filters on
+      // recipientId == uid, which satisfies this rule.
+      allow read: if signedIn() && resource.data.recipientId == request.auth.uid;
+
+      allow create: if signedIn()
+        && request.resource.data.recipientId is string
+        && request.resource.data.recipientId != request.auth.uid
+        && request.resource.data.senderName is string
+        && request.resource.data.isRead == false;
+
+      allow update: if signedIn()
+        && resource.data.recipientId == request.auth.uid
+        && touchedOnly(['isRead']);
+
+      allow delete: if signedIn() && resource.data.recipientId == request.auth.uid;
+    }
+
+    // Everything else stays denied by default.
+  }
+}
