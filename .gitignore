@@ -50,3 +50,7 @@ _site/
 .env
 .env.local
 .env.production
+
+# Firebase emulator
+*-debug.log
+.firebase/
