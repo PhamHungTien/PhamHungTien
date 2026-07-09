@@ -44,8 +44,6 @@ jobs:
       - name: Build PHTV React app
         working-directory: ./PHTV
         run: npm run build
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY || 'PLACEHOLDER_API_KEY' }}
 
       - name: Prepare deployment
         run: |

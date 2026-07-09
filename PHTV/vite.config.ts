@@ -1,5 +1,5 @@
 import path from 'path';
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import legacy from '@vitejs/plugin-legacy';
 import { copyFileSync, existsSync } from 'fs';
@@ -7,8 +7,7 @@ import { copyFileSync, existsSync } from 'fs';
 // Generate build timestamp for cache busting
 const buildTimestamp = Date.now();
 
-export default defineConfig(({ mode }) => {
-    const env = loadEnv(mode, '.', '');
+export default defineConfig(() => {
     return {
       base: '/PHTV/',
       server: {
@@ -31,8 +30,10 @@ export default defineConfig(({ mode }) => {
         }
       ],
       define: {
-        'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
-        'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
+        // Never `define` a server-side secret here. Vite inlines the value verbatim into
+        // the client bundle, which ships to GitHub Pages — so a GEMINI_API_KEY define puts
+        // the real key on a public URL the moment any source file references it. Call such
+        // APIs from a backend instead.
         '__BUILD_TIMESTAMP__': JSON.stringify(buildTimestamp)
       },
       resolve: {
