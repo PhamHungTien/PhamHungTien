@@ -4,8 +4,8 @@ import { FeatureProps } from '../types';
 import { useI18n } from '../i18n';
 
 const FeatureCard: React.FC<FeatureProps> = ({ icon: Icon, title, description, color = 'text-amber-300' }) => (
-  <article className="glass-card min-w-0 h-full p-5 md:p-6">
-    <div className={`mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-slate-100 ${color}`}>
+  <article className="phtv-feature min-w-0 h-full py-5 md:px-6 md:py-6">
+    <div className={`phtv-feature-icon mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-slate-100 ${color}`}>
       <Icon size={22} />
     </div>
     <h3 className="text-base font-semibold text-white">{title}</h3>
@@ -49,7 +49,7 @@ export const Features: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+        <div className="phtv-feature-grid grid grid-cols-1 md:grid-cols-3">
           {allFeatures.map((feature, idx) => (
             <FeatureCard key={idx} {...feature} />
           ))}

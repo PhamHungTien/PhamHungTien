@@ -137,6 +137,16 @@ export function getStructuredData(product: Product | null, lang: Lang) {
           name: product.name,
           url: `${SITE.origin}${product.route}`
         }))
+      },
+      {
+        '@type': 'Service',
+        '@id': `${SITE.origin}/#software-design-development`,
+        name: lang === 'vi' ? 'Thiết kế và phát triển phần mềm Apple cùng website theo nhu cầu' : 'Bespoke Apple software and web design and development',
+        description: translate(lang, 'home.services.description'),
+        provider: { '@id': `${SITE.origin}/#person` },
+        areaServed: 'Worldwide',
+        serviceType: ['Apple platform application design and development', 'Web design and development'],
+        url: `${SITE.origin}/#services`
       }
     );
   }

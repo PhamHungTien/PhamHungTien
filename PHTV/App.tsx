@@ -137,6 +137,7 @@ const DownloadChoiceCard: React.FC<DownloadChoiceCardProps> = ({
   return (
     <a
       href={href}
+      aria-label={`${title}. ${chip}. ${note}`}
       className={`download-choice group flex items-center justify-between gap-4 px-4 py-3.5 ${
         accent ? 'download-choice-primary' : ''
       }`}
@@ -146,11 +147,8 @@ const DownloadChoiceCard: React.FC<DownloadChoiceCardProps> = ({
           <Icons.Download size={18} />
         </div>
         <div className="min-w-0 text-left">
-          <div className="flex flex-wrap items-baseline gap-x-2">
-            <h3 className="text-base font-semibold text-white">{title}</h3>
-            <span className="text-xs text-slate-400">{chip}</span>
-          </div>
-          <p className="truncate text-xs text-slate-400">{note}</p>
+          <h3 className="whitespace-nowrap text-sm font-semibold text-white sm:text-base">{title}</h3>
+          <p className="mt-1 text-xs text-slate-400">{chip}</p>
         </div>
       </div>
       <Icons.ArrowRight size={16} className="shrink-0 text-slate-400" />
@@ -260,7 +258,7 @@ function App() {
 
       {activeTab === 'home' ? (
         <div className="relative z-10 animate-in fade-in duration-1000">
-          <main className="relative overflow-hidden px-4 pb-12 pt-24 md:px-6 md:pb-16 md:pt-28">
+          <main className="phtv-hero relative overflow-hidden px-4 pb-12 pt-24 md:px-6 md:pb-16 md:pt-28">
             <h1 className="sr-only">PHTV - Bộ gõ tiếng Việt Precision Hybrid Typing Vietnamese cho macOS</h1>
 
             <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 text-center lg:grid-cols-[440px_minmax(0,1fr)] lg:gap-16 lg:text-left">
@@ -276,22 +274,17 @@ function App() {
                     </div>
                   </div>
 
-                  <p className="mx-auto mt-6 max-w-md text-base font-medium leading-relaxed text-slate-300 lg:mx-0 lg:max-w-none lg:text-lg">
-                    {lang === 'vi' ? (
-                      <>
-                        Bộ gõ tiếng Việt <span className="font-bold text-white">offline</span>, <span className="font-bold text-white">nhanh</span> và <span className="font-bold text-white">riêng tư</span> cho macOS.
-                      </>
-                    ) : (
-                      <>
-                        An <span className="font-bold text-white">offline</span>, <span className="font-bold text-white">fast</span> and <span className="font-bold text-white">private</span> Vietnamese typing method for macOS.
-                      </>
-                    )}
+                  <h2 className="phtv-hero-title mx-auto mt-7 max-w-lg text-3xl font-semibold leading-tight text-white lg:mx-0 lg:text-4xl">
+                    {t('home.hero_title')}
+                  </h2>
+                  <p className="phtv-hero-description mx-auto mt-4 max-w-md text-base leading-relaxed text-slate-300 lg:mx-0 lg:max-w-none lg:text-lg">
+                    {t('home.hero_desc')}
                   </p>
                 </div>
 
                 <div className="mx-auto w-full max-w-xl px-1 lg:mx-0 min-w-0">
                   {hasSplitDownloads ? (
-                    <div className="glass-panel p-4 md:p-5">
+                    <div className="phtv-download-panel">
                       <div className="mb-4 flex items-center justify-between gap-3 text-left">
                         <div>
                           <h2 className="text-base font-semibold text-white">{t('home.download_title')}</h2>
@@ -300,7 +293,7 @@ function App() {
                         <Icons.Download size={18} className="text-blue-500" />
                       </div>
 
-                      <div className="space-y-2">
+                      <div className="phtv-download-grid">
                         <DownloadChoiceCard
                           href={arm64DownloadUrl ?? releaseUrl}
                           title="Apple Silicon"
@@ -325,6 +318,12 @@ function App() {
                       {t('home.download_universal').replace('{version}', version)}
                     </a>
                   )}
+
+                  <CopyBlock
+                    code="brew install --cask phamhungtien/tap/phtv"
+                    className="phtv-quick-command mt-3"
+                    colorClass="text-slate-300"
+                  />
 
                   <div className="mt-4 flex flex-wrap items-center justify-center lg:justify-start gap-4">
                     <a
@@ -357,7 +356,7 @@ function App() {
 
               {/* Right Column: Premium Mockup macOS Settings Window */}
               <div className="w-full flex justify-center items-center lg:justify-end min-w-0">
-                <div className="relative w-full max-w-2xl group">
+                <div className="phtv-hero-media relative w-full max-w-2xl group">
                   {/* The Premium macOS Window Mockup container */}
                   <div className="relative w-full overflow-hidden rounded-2xl border border-black/[0.08] dark:border-white/[0.08] bg-slate-900/5 backdrop-blur-xl shadow-[0_30px_80px_rgba(0,0,0,0.16)] dark:shadow-[0_30px_80px_rgba(0,0,0,0.4)] transition-all duration-500 ease-out group-hover:scale-[1.015] group-hover:-translate-y-1">
                     {/* Screenshot Container */}
@@ -439,7 +438,7 @@ function App() {
             </div>
           </section>
 
-          <section className="reveal py-12 md:py-16">
+          <section id="gallery" className="reveal scroll-mt-24 py-12 md:py-16">
             <div className="mx-auto max-w-6xl px-4 md:px-6">
               <div className="mb-7 max-w-2xl">
                 <h2 className="text-2xl font-semibold text-white md:text-3xl">

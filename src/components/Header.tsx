@@ -28,7 +28,7 @@ export function Header({ lang, onLanguageChange, t, productName }: HeaderProps) 
           <a href="#products">{t('nav.products')}</a>
         )}
         <a href="/PHTV/">{t('nav.phtv')}</a>
-        <a href={productName ? '#support' : '#contact'}>{t('nav.contact')}</a>
+        <a href={productName ? '#support' : '#services'}>{productName ? t('nav.contact') : t('nav.services')}</a>
       </nav>
 
       <div className="header-actions">

@@ -22,6 +22,8 @@ const DICTIONARY = {
 
     // Home
     "home.tag_native": "Native cho macOS 14+",
+    "home.hero_title": "Gõ tiếng Việt theo cách của bạn.",
+    "home.hero_desc": "Bộ gõ macOS 100% Swift, nhanh, riêng tư và hoạt động hoàn toàn trên máy.",
     "home.desc_bold": "offline, nhanh và riêng tư cho macOS.",
     "home.desc_sub": "Thiết kế tập trung vào phần cốt lõi: thao tác nhanh, bố cục rõ ràng và khả năng hiển thị ổn định trên nhiều kích thước màn hình.",
     "home.version": "Phiên bản",
@@ -111,6 +113,8 @@ const DICTIONARY = {
 
     // Home
     "home.tag_native": "Native for macOS 14+",
+    "home.hero_title": "Type Vietnamese your way.",
+    "home.hero_desc": "A 100% Swift macOS input method that is fast, private, and runs entirely on your Mac.",
     "home.desc_bold": "offline, fast and private for macOS.",
     "home.desc_sub": "Tailored focus on the core values: quick action, clean layout and stable presentation across all screen sizes.",
     "home.version": "Version",

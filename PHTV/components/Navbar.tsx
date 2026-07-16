@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Icons } from './Icons';
 import { useI18n } from '../i18n';
 
-const iconImg = '/assets/phtv-icon.webp';
+const iconImg = '/PHTV/phtv-icon.webp';
 
 interface NavbarProps {
   activeTab?: 'home' | 'community';
@@ -50,7 +50,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
     const themeColorMeta = document.querySelector('meta[name="theme-color"]');
     if (themeColorMeta) {
-      themeColorMeta.setAttribute("content", theme === 'dark' ? "#020617" : "#f5f5f7");
+      themeColorMeta.setAttribute("content", theme === 'dark' ? "#0b0c0f" : "#f5f5f7");
     }
   }, [theme]);
 
@@ -97,7 +97,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const navLinks = [
     { name: t('nav.features'), href: '#features', tab: 'home' },
-    { name: t('nav.install'), href: '#install', tab: 'home' },
+    { name: t('nav.gallery'), href: '#gallery', tab: 'home' },
     { name: t('nav.community'), href: '#community', tab: 'community' },
   ];
 
@@ -135,8 +135,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-[100] px-4 pt-4 md:px-6 md:pt-5">
-        <div className={`mx-auto flex max-w-7xl items-center justify-between rounded-full border px-4 py-3 transition-all duration-300 md:px-6 ${
+      <nav className="phtv-navbar fixed top-0 left-0 right-0 z-[100]">
+        <div className={`phtv-navbar__inner mx-auto flex max-w-7xl items-center justify-between border-b px-4 py-3 transition-all duration-300 md:px-6 ${
           scrolled
             ? 'glass-panel border-white/10 shadow-[0_18px_50px_rgba(0,0,0,0.28)]'
             : 'border-white/6 bg-black/10 backdrop-blur-md'
@@ -170,7 +170,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 href={item.href} 
                 onClick={(e) => handleLinkClick(e, item.tab, item.href)}
                 className={`flex items-center gap-2 text-sm font-semibold transition-colors ${
-                  item.tab === activeTab ? 'text-white' : 'text-slate-400 hover:text-slate-100'
+                  item.tab === 'community' && item.tab === activeTab ? 'text-white' : 'text-slate-400 hover:text-slate-100'
                 }`}
               >
                 {item.name}
@@ -185,7 +185,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             {/* Language Toggle Button */}
             <button
               onClick={() => changeLanguage(lang === 'vi' ? 'en' : 'vi')}
-              className="rounded-full border border-white/8 bg-white/[0.03] px-3.5 py-2 text-sm font-semibold transition-all hover:bg-white/[0.07] outline-none cursor-pointer flex items-center justify-center min-h-[38px]"
+              className="phtv-nav-control rounded-lg border border-white/8 bg-white/[0.03] px-3.5 py-2 text-sm font-semibold transition-all hover:bg-white/[0.07] outline-none cursor-pointer flex items-center justify-center min-h-[38px]"
               title={lang === 'vi' ? 'Switch to English' : 'Chuyển sang Tiếng Việt'}
             >
               {lang === 'vi' ? (
@@ -206,7 +206,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             {/* Theme Toggle Button */}
             <button
               onClick={toggleTheme}
-              className="rounded-full border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition-colors hover:text-white flex items-center justify-center min-h-[38px] min-w-[38px]"
+              className="phtv-nav-control rounded-lg border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition-colors hover:text-white flex items-center justify-center min-h-[38px] min-w-[38px]"
               title={theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
             >
               {theme === 'dark' ? <Icons.Sun size={18} /> : <Icons.Moon size={18} />}
@@ -216,7 +216,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               href="https://github.com/PhamHungTien/PHTV" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="hidden rounded-full border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition-colors hover:text-white sm:flex"
+              className="phtv-nav-control hidden rounded-lg border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition-colors hover:text-white sm:flex"
               title="GitHub Repository"
               aria-label="Xem mã nguồn trên GitHub"
             >
@@ -234,7 +234,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   type="button"
                   onClick={() => setDesktopDownloadOpen((current) => !current)}
                   onFocus={() => setDesktopDownloadOpen(true)}
-                  className="flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-black text-slate-950 transition-all hover:bg-slate-100"
+                  className="phtv-download-button flex items-center gap-2 rounded-lg bg-white px-5 py-2.5 text-sm font-black text-slate-950 transition-all hover:bg-slate-100"
                   aria-label="Tải xuống PHTV"
                   aria-expanded={desktopDownloadOpen}
                   aria-haspopup="menu"
@@ -245,7 +245,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </button>
 
                 <div className={`absolute right-0 top-full pt-3 transition-all duration-200 ${desktopDownloadOpen ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none translate-y-2 opacity-0'}`}>
-                  <div className="w-[270px] rounded-lg border border-white/10 bg-white p-2 shadow-lg">
+                  <div className="phtv-download-menu w-[270px] rounded-lg border border-white/10 bg-white p-2 shadow-lg">
                     <div className="space-y-1">
                       <a
                         href={arm64DownloadUrl ?? releaseUrl}
@@ -299,7 +299,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <a
                 href={downloadUrl}
                 onClick={handleDirectDownloadClick}
-                className="hidden xs:flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-black text-slate-950 transition-all hover:bg-slate-100"
+                className="phtv-download-button hidden xs:flex items-center gap-2 rounded-lg bg-white px-5 py-2.5 text-sm font-black text-slate-950 transition-all hover:bg-slate-100"
                 aria-label="Tải xuống PHTV"
               >
                 <Icons.Download size={18} />
@@ -309,7 +309,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             {/* Mobile Menu Button */}
             <button 
-              className="rounded-full border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition-colors hover:text-white lg:hidden"
+              className="phtv-nav-control rounded-lg border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition-colors hover:text-white lg:hidden"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label={mobileMenuOpen ? t('nav.close_menu') : t('nav.open_menu')}
             >
@@ -322,7 +322,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* Mobile Menu Overlay */}
       <div className={`fixed inset-0 z-[90] lg:hidden transition-all duration-300 ${mobileMenuOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}>
         <div className="absolute inset-0 bg-slate-950/75 backdrop-blur-xl" onClick={() => setMobileMenuOpen(false)}></div>
-        <div className={`absolute right-3 top-3 bottom-3 w-[min(300px,calc(100vw-1.5rem))] rounded-lg border border-white/10 bg-white p-5 flex flex-col transition-transform duration-300 ease-out shadow-xl ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div className={`phtv-mobile-menu absolute right-3 top-3 bottom-3 w-[min(300px,calc(100vw-1.5rem))] rounded-lg border border-white/10 bg-white p-5 flex flex-col transition-transform duration-300 ease-out shadow-xl ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
           <div className="mb-8 flex items-center gap-3">
             <img src={iconImg} alt="PHTV" className="w-10 h-10 object-contain" />
             <div>
