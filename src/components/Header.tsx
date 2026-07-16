@@ -1,4 +1,5 @@
-import { ArrowLeft, Mail } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { ArrowLeft, Mail, Menu, X } from 'lucide-react';
 import type { Lang } from '../types';
 import { products } from '../data/products';
 import { LanguageSwitch } from './LanguageSwitch';
@@ -11,6 +12,21 @@ interface HeaderProps {
 }
 
 export function Header({ lang, onLanguageChange, t, productName }: HeaderProps) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMenuOpen(false);
+    };
+
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [menuOpen]);
+
+  const closeMenu = () => setMenuOpen(false);
+
   return (
     <header className="site-header">
       <a className="brand-link" href="/" aria-label="Pham Hung Tien">
@@ -42,7 +58,36 @@ export function Header({ lang, onLanguageChange, t, productName }: HeaderProps) 
             PHTV
           </a>
         )}
+        <button
+          className="mobile-menu-toggle"
+          type="button"
+          onClick={() => setMenuOpen((current) => !current)}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-navigation"
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+        >
+          {menuOpen ? <X size={21} /> : <Menu size={21} />}
+        </button>
       </div>
+
+      <nav
+        className={`mobile-navigation${menuOpen ? ' is-open' : ''}`}
+        id="mobile-navigation"
+        aria-label="Mobile navigation"
+      >
+        {productName ? (
+          <a href="/" onClick={closeMenu}>
+            <ArrowLeft size={18} />
+            {t('common.backHome')}
+          </a>
+        ) : (
+          <a href="#products" onClick={closeMenu}>{t('nav.products')}</a>
+        )}
+        <a href="/PHTV/" onClick={closeMenu}>{t('nav.phtv')}</a>
+        <a href={productName ? '#support' : '#services'} onClick={closeMenu}>
+          {productName ? t('nav.contact') : t('nav.services')}
+        </a>
+      </nav>
     </header>
   );
 }

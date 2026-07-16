@@ -95,6 +95,7 @@ export function HomePage({ lang, onLanguageChange, t }: HomePageProps) {
                   <span>
                     <strong>{product.name}</strong>
                     <small>{product.category[lang]}</small>
+                    <small className="product-row__platforms-mobile">{product.platforms[lang]}</small>
                   </span>
                 </span>
                 <span className="product-row__summary">{product.description[lang]}</span>

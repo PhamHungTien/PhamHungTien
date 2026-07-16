@@ -677,9 +677,9 @@ export const QASection: React.FC = () => {
   );
 
   return (
-    <div className="mx-auto min-h-screen max-w-6xl px-4 py-6 md:px-6 md:py-10">
-      <div className="grid gap-5 lg:grid-cols-[280px_minmax(0,1fr)] lg:items-start">
-        <aside className="order-2 space-y-4 lg:order-1 lg:sticky lg:top-24">
+    <div className="phtv-community mx-auto min-h-screen max-w-6xl px-4 py-6 md:px-6 md:py-10">
+      <div className="phtv-community-layout grid gap-5 lg:grid-cols-[280px_minmax(0,1fr)] lg:items-start">
+        <aside className="phtv-community-aside order-2 space-y-4 lg:order-1 lg:sticky lg:top-24">
           <section className="rounded-[2rem] border border-white/[0.055] bg-[linear-gradient(180deg,rgba(15,23,42,0.72),rgba(8,11,18,0.66))] p-5 shadow-[0_18px_52px_rgba(2,6,23,0.34)] backdrop-blur">
             <div className="mb-4 flex items-center justify-between">
               <div>
@@ -745,8 +745,8 @@ export const QASection: React.FC = () => {
           </section>
         </aside>
 
-        <main className="order-1 space-y-5 lg:order-2">
-          <section className="rounded-[2rem] border border-white/[0.055] bg-[linear-gradient(180deg,rgba(15,23,42,0.72),rgba(8,11,18,0.66))] p-5 shadow-[0_18px_52px_rgba(2,6,23,0.34)] backdrop-blur md:p-6">
+        <main className="phtv-community-main order-1 space-y-5 lg:order-2">
+          <section className="phtv-community-toolbar rounded-[2rem] border border-white/[0.055] bg-[linear-gradient(180deg,rgba(15,23,42,0.72),rgba(8,11,18,0.66))] p-5 shadow-[0_18px_52px_rgba(2,6,23,0.34)] backdrop-blur md:p-6">
             <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
               <div className="space-y-3">
                 <div className="inline-flex items-center gap-2 rounded-full border border-white/[0.055] bg-white/[0.022] px-3 py-1 text-[10px] font-black uppercase tracking-[0.24em] text-slate-400">
@@ -911,7 +911,7 @@ export const QASection: React.FC = () => {
             </div>
           </section>
 
-          <section className="rounded-[2rem] border border-white/[0.055] bg-[linear-gradient(180deg,rgba(15,23,42,0.72),rgba(8,11,18,0.66))] p-5 shadow-[0_18px_52px_rgba(2,6,23,0.34)] backdrop-blur md:p-6">
+          <section className="phtv-community-composer rounded-[2rem] border border-white/[0.055] bg-[linear-gradient(180deg,rgba(15,23,42,0.72),rgba(8,11,18,0.66))] p-5 shadow-[0_18px_52px_rgba(2,6,23,0.34)] backdrop-blur md:p-6">
             <form onSubmit={handleAskQuestion} className="space-y-4">
               <div className="flex items-start gap-3">
                 <Avatar
@@ -993,7 +993,7 @@ export const QASection: React.FC = () => {
                 return (
                   <article
                     key={question.id}
-                    className={`rounded-[2rem] border bg-[linear-gradient(180deg,rgba(15,23,42,0.72),rgba(8,11,18,0.66))] p-5 shadow-[0_18px_52px_rgba(2,6,23,0.34)] backdrop-blur transition md:p-6 ${
+                    className={`phtv-discussion-card rounded-[2rem] border bg-[linear-gradient(180deg,rgba(15,23,42,0.72),rgba(8,11,18,0.66))] p-5 shadow-[0_18px_52px_rgba(2,6,23,0.34)] backdrop-blur transition md:p-6 ${
                       question.isPinned ? 'border-rose-300/16' : 'border-white/[0.055]'
                     }`}
                     onPointerEnter={() => incrementViewsOnce(question.id)}
@@ -1102,12 +1102,15 @@ export const QASection: React.FC = () => {
                             </div>
                           </div>
                         ) : (
-                          <div className="rounded-[1.5rem] border border-white/[0.055] bg-white/[0.022] p-4">
-                            <SmartContent content={question.content} className="text-sm leading-7 text-slate-200" />
+                          <div className="phtv-discussion-content rounded-[1.5rem] border border-white/[0.055] bg-white/[0.022] p-4">
+                            <SmartContent
+                              content={isExpanded ? question.content : getContentPreview(question.content, 280)}
+                              className="text-sm leading-7 text-slate-200"
+                            />
                           </div>
                         )}
 
-                        <div className={`rounded-[1.5rem] border p-4 ${statusMeta.containerClassName}`}>
+                        <div className={`phtv-discussion-status rounded-[1.5rem] border p-4 ${statusMeta.containerClassName}`}>
                           <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                             <div className="min-w-0 flex-1">
                               <div className="flex flex-wrap items-center gap-2">

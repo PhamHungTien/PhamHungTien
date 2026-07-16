@@ -261,10 +261,10 @@ function App() {
           <main className="phtv-hero relative overflow-hidden px-4 pb-12 pt-24 md:px-6 md:pb-16 md:pt-28">
             <h1 className="sr-only">PHTV - Bộ gõ tiếng Việt Precision Hybrid Typing Vietnamese cho macOS</h1>
 
-            <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 text-center lg:grid-cols-[440px_minmax(0,1fr)] lg:gap-16 lg:text-left">
+            <div className="phtv-hero-grid mx-auto grid max-w-7xl items-center gap-8 px-4 text-center lg:grid-cols-[440px_minmax(0,1fr)] lg:gap-16 lg:text-left">
               {/* Left Column: Grouped info and download card */}
-              <div className="flex flex-col space-y-6 md:space-y-8 min-w-0">
-                <div className="flex flex-col items-center lg:items-start">
+              <div className="phtv-hero-copy flex min-w-0 flex-col space-y-6 md:space-y-8">
+                <div className="phtv-hero-brand flex flex-col items-center lg:items-start">
                   <div className="flex flex-row items-center justify-center gap-4 lg:justify-start">
                     <div className="flex flex-col justify-center gap-1 text-left">
                       <AcronymRow letter="P" word="recision" />
@@ -312,7 +312,7 @@ function App() {
                   ) : (
                     <a
                       href={universalDownloadUrl ?? downloadUrl}
-                      className="inline-flex w-full items-center justify-center gap-3 rounded-full bg-white px-8 py-4 text-base font-black text-slate-950 transition-colors hover:bg-slate-100 md:w-auto md:text-lg"
+                      className="phtv-download-button inline-flex w-full items-center justify-center gap-3 rounded-full bg-white px-8 py-4 text-base font-black text-slate-950 transition-colors hover:bg-slate-100 md:w-auto md:text-lg"
                     >
                       <Icons.Download size={20} />
                       {t('home.download_universal').replace('{version}', version)}
@@ -325,7 +325,7 @@ function App() {
                     colorClass="text-slate-300"
                   />
 
-                  <div className="mt-4 flex flex-wrap items-center justify-center lg:justify-start gap-4">
+                  <div className="phtv-hero-links phtv-hero-links--desktop mt-4 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
                     <a
                       href="#install"
                       className="inline-flex items-center gap-2 text-sm font-medium text-blue-600"
@@ -370,6 +370,30 @@ function App() {
                     </div>
                   </div>
                 </div>
+              </div>
+
+              <div className="phtv-hero-links phtv-hero-links--mobile">
+                <a href="#install" className="inline-flex items-center gap-2 text-sm font-medium text-blue-600">
+                  <Icons.Terminal size={16} />
+                  {t('home.install_btn')}
+                </a>
+                <button
+                  onClick={() => {
+                    setActiveTab('community');
+                    window.location.hash = '#community';
+                  }}
+                  className="inline-flex items-center gap-2 text-sm font-medium text-blue-600"
+                >
+                  <Icons.MessageSquare size={16} />
+                  {t('home.discuss_btn')}
+                </button>
+                <button
+                  onClick={() => setShowDonate(true)}
+                  className="inline-flex items-center gap-2 text-sm font-medium text-blue-600"
+                >
+                  <Icons.Heart size={16} />
+                  {t('home.donate')}
+                </button>
               </div>
             </div>
           </main>

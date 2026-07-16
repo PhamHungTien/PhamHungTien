@@ -8,8 +8,10 @@ const FeatureCard: React.FC<FeatureProps> = ({ icon: Icon, title, description, c
     <div className={`phtv-feature-icon mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-slate-100 ${color}`}>
       <Icon size={22} />
     </div>
-    <h3 className="text-base font-semibold text-white">{title}</h3>
-    <p className="mt-2 text-sm leading-6 text-slate-400">{description}</p>
+    <div className="phtv-feature-copy">
+      <h3 className="text-base font-semibold text-white">{title}</h3>
+      <p className="mt-2 text-sm leading-6 text-slate-400">{description}</p>
+    </div>
   </article>
 );
 

@@ -498,4 +498,339 @@ html[data-theme="light"] .phtv-page pre {
     padding-left: 16px;
     padding-right: 16px;
   }
+
+  .phtv-page {
+    width: 100%;
+  }
+
+  .phtv-navbar__inner {
+    min-height: 64px;
+    padding: 10px 14px !important;
+  }
+
+  .phtv-navbar__inner > button:first-child img {
+    width: 36px;
+    height: 36px;
+  }
+
+  .phtv-navbar__inner > div:last-child {
+    gap: 6px;
+  }
+
+  .phtv-nav-control {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .phtv-navbar__inner .phtv-nav-control:first-child {
+    min-width: 72px;
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+
+  .phtv-hero {
+    padding: 88px 16px 40px !important;
+  }
+
+  .phtv-hero-grid {
+    gap: 30px;
+    padding: 0 !important;
+    text-align: left;
+  }
+
+  .phtv-hero-copy {
+    width: 100%;
+    gap: 0;
+  }
+
+  .phtv-hero-brand {
+    align-items: flex-start !important;
+  }
+
+  .phtv-hero-brand > div:first-child {
+    justify-content: flex-start;
+  }
+
+  .phtv-hero-title,
+  .phtv-hero-description {
+    max-width: 340px;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    text-align: left;
+  }
+
+  .phtv-hero-title {
+    margin-top: 24px !important;
+    font-size: 30px !important;
+    line-height: 1.12 !important;
+  }
+
+  .phtv-hero-description {
+    margin-top: 12px !important;
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+  }
+
+  .phtv-download-panel > div:first-child {
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .phtv-download-panel > div:first-child h2,
+  .phtv-download-panel > div:first-child > svg {
+    display: none;
+  }
+
+  .phtv-download-panel > div:first-child p {
+    margin-top: 0;
+  }
+
+  .phtv-download-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .phtv-download-grid .download-choice {
+    min-height: 72px;
+    padding: 11px 12px;
+  }
+
+  .phtv-download-grid .download-choice-primary {
+    min-height: 76px;
+  }
+
+  .phtv-quick-command {
+    margin-top: 10px !important;
+  }
+
+  .phtv-quick-command > div:first-child {
+    padding: 13px 48px 13px 14px;
+    overflow-x: auto;
+    white-space: nowrap;
+    word-break: normal;
+  }
+
+  .phtv-quick-command button {
+    top: 7px;
+    right: 7px;
+    display: grid;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    padding: 0;
+    opacity: 1;
+  }
+
+  .phtv-hero-links--desktop {
+    display: none !important;
+  }
+
+  .phtv-hero-links--mobile {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0 !important;
+    margin-top: -14px !important;
+    border-top: 1px solid var(--phtv-line);
+    border-bottom: 1px solid var(--phtv-line);
+  }
+
+  .phtv-hero-links--mobile > * {
+    min-width: 0;
+    min-height: 48px;
+    justify-content: center;
+    padding: 8px 4px;
+    border-right: 1px solid var(--phtv-line);
+    font-size: 12px !important;
+    text-align: center;
+  }
+
+  .phtv-hero-links--mobile > *:last-child {
+    border-right: 0;
+  }
+
+  .phtv-hero-media > div {
+    border-radius: 8px !important;
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.34) !important;
+    transform: none !important;
+  }
+
+  .phtv-page #features,
+  .phtv-page #install,
+  .phtv-page #gallery {
+    padding-top: 44px;
+    padding-bottom: 44px;
+  }
+
+  .phtv-page #features > div,
+  .phtv-page #install > div,
+  .phtv-page #gallery > div,
+  .phtv-page footer > div {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .phtv-page #features h2,
+  .phtv-page #install h2,
+  .phtv-page #gallery h2 {
+    font-size: 25px;
+    line-height: 1.15;
+  }
+
+  .phtv-feature {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 14px;
+    padding: 17px 0;
+  }
+
+  .phtv-feature-icon {
+    margin: 0 !important;
+  }
+
+  .phtv-feature-copy p {
+    margin-top: 4px;
+    line-height: 1.55;
+  }
+
+  .phtv-page #install .glass-panel {
+    padding: 18px;
+  }
+
+  .phtv-page #install pre,
+  .phtv-page #install code {
+    font-size: 12px;
+  }
+
+  .phtv-page #gallery [class*="grid-flow-col"] {
+    grid-auto-columns: minmax(270px, 86vw);
+    margin-right: -16px;
+    padding-right: 16px;
+    scroll-snap-type: x mandatory;
+  }
+
+  .phtv-page #gallery figure {
+    scroll-snap-align: start;
+  }
+
+  .phtv-page footer {
+    padding-top: 40px;
+    padding-bottom: max(36px, env(safe-area-inset-bottom));
+  }
+
+  .phtv-page footer [class*="tracking-"] {
+    letter-spacing: 0 !important;
+  }
+
+  .phtv-mobile-menu {
+    top: 64px !important;
+    right: 8px !important;
+    bottom: 8px !important;
+    width: min(320px, calc(100vw - 16px)) !important;
+    padding: 20px !important;
+  }
+
+  .phtv-page details summary {
+    min-height: 48px;
+  }
+
+  .phtv-community {
+    padding-top: 20px;
+    padding-bottom: 40px;
+  }
+
+  .phtv-community-layout {
+    gap: 16px;
+  }
+
+  .phtv-community-aside {
+    display: none;
+  }
+
+  .phtv-community-main {
+    gap: 16px;
+  }
+
+  .phtv-community-toolbar,
+  .phtv-community-composer {
+    padding: 18px 0 !important;
+    border-right: 0 !important;
+    border-left: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+  }
+
+  .phtv-community-toolbar > div:first-child > div:first-child > div:first-child {
+    display: none;
+  }
+
+  .phtv-community-toolbar h2 {
+    font-size: 30px;
+    line-height: 1.1;
+  }
+
+  .phtv-community-toolbar input,
+  .phtv-community-toolbar select,
+  .phtv-community-composer textarea {
+    font-size: 16px !important;
+  }
+
+  .phtv-discussion-card {
+    padding: 16px !important;
+    border-color: var(--phtv-line) !important;
+    border-radius: 8px !important;
+    background: var(--phtv-surface) !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+  }
+
+  .phtv-discussion-card > div:first-child {
+    gap: 10px;
+  }
+
+  .phtv-discussion-content,
+  .phtv-discussion-status {
+    padding: 13px !important;
+    border-radius: 8px !important;
+  }
+
+  .phtv-discussion-content [class*="leading-relaxed"] {
+    line-height: 1.6;
+  }
+
+  .phtv-discussion-card button {
+    min-height: 40px;
+  }
+}
+
+@media (min-width: 761px) {
+  .phtv-hero-links--mobile {
+    display: none;
+  }
+}
+
+@media (max-width: 360px) {
+  .phtv-navbar__inner {
+    padding-right: 10px !important;
+    padding-left: 10px !important;
+  }
+
+  .phtv-navbar__inner > button:first-child img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .phtv-navbar__inner .phtv-nav-control:first-child {
+    min-width: 66px;
+  }
+
+  .phtv-hero {
+    padding-right: 14px !important;
+    padding-left: 14px !important;
+  }
+
+  .phtv-acronym-word {
+    font-size: 21px !important;
+  }
 }
