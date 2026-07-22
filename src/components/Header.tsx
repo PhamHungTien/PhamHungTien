@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ArrowLeft, Mail, Menu, X } from 'lucide-react';
+import { ArrowLeft, Mail, Menu, Moon, Sun, X } from 'lucide-react';
 import type { Lang } from '../types';
 import { products } from '../data/products';
 import { LanguageSwitch } from './LanguageSwitch';
@@ -13,6 +13,21 @@ interface HeaderProps {
 
 export function Header({ lang, onLanguageChange, t, productName }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+
+  useEffect(() => {
+    const currentTheme = document.documentElement.dataset.theme;
+    setTheme(currentTheme === 'dark' ? 'dark' : 'light');
+
+    const syncTheme = (event: StorageEvent) => {
+      if (event.key !== 'theme' || (event.newValue !== 'light' && event.newValue !== 'dark')) return;
+      document.documentElement.dataset.theme = event.newValue;
+      setTheme(event.newValue);
+    };
+
+    window.addEventListener('storage', syncTheme);
+    return () => window.removeEventListener('storage', syncTheme);
+  }, []);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -26,6 +41,21 @@ export function Header({ lang, onLanguageChange, t, productName }: HeaderProps) 
   }, [menuOpen]);
 
   const closeMenu = () => setMenuOpen(false);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = nextTheme;
+    try {
+      localStorage.setItem('theme', nextTheme);
+    } catch {
+      // Theme switching still works when storage is unavailable.
+    }
+    document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')?.setAttribute(
+      'content',
+      nextTheme === 'dark' ? '#0b0c0f' : '#ffffff',
+    );
+    setTheme(nextTheme);
+  };
 
   return (
     <header className="site-header">
@@ -49,6 +79,17 @@ export function Header({ lang, onLanguageChange, t, productName }: HeaderProps) 
 
       <div className="header-actions">
         <LanguageSwitch lang={lang} onChange={onLanguageChange} />
+        <button
+          className="icon-button theme-toggle"
+          type="button"
+          onClick={toggleTheme}
+          aria-label={theme === 'dark'
+            ? (lang === 'vi' ? 'Bật giao diện sáng' : 'Use light mode')
+            : (lang === 'vi' ? 'Bật giao diện tối' : 'Use dark mode')}
+          title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
+        >
+          {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
+        </button>
         {productName ? (
           <a className="icon-button" href="mailto:phamhungtien.contact@gmail.com" aria-label={t('nav.support')}>
             <Mail size={17} />

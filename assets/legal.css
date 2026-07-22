@@ -8,6 +8,16 @@
   --border: rgba(29, 29, 31, 0.1);
 }
 
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0b0c0f;
+  --surface: #17191f;
+  --text: #f4f6f8;
+  --muted: #a7adb8;
+  --accent: #5aa7ff;
+  --border: rgba(255, 255, 255, 0.12);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -147,6 +157,45 @@ ul {
   border-top: 1px solid var(--border);
   color: var(--muted);
   font-size: 13px;
+}
+
+.shared-theme-toggle {
+  position: fixed;
+  right: max(18px, env(safe-area-inset-right));
+  bottom: max(18px, env(safe-area-inset-bottom));
+  z-index: 50;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  color: var(--text);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.16);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  cursor: pointer;
+}
+
+.shared-theme-toggle:hover {
+  transform: translateY(-1px);
+}
+
+.shared-theme-toggle:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  outline-offset: 3px;
+}
+
+.shared-theme-toggle svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .section {

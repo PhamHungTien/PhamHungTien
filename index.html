@@ -3,12 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0b0f17" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
     <meta name="author" content="Phạm Hùng Tiến" />
     <link rel="icon" type="image/webp" href="/assets/phtv-icon.webp" />
     <link rel="apple-touch-icon" href="/assets/phtv-favicon.png" />
+    <script>
+      (function () {
+        var theme = 'light';
+        try {
+          var storedTheme = localStorage.getItem('theme');
+          theme = storedTheme === 'light' || storedTheme === 'dark'
+            ? storedTheme
+            : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        } catch (_) {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+        document.querySelector('meta[name="theme-color"]').setAttribute(
+          'content',
+          theme === 'dark' ? '#0b0c0f' : '#ffffff'
+        );
+      })();
+    </script>
     <!--app-head-->
   </head>
   <body>

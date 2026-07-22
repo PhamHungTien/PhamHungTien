@@ -12,6 +12,25 @@
     <meta name="author" content="Phạm Hùng Tiến" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="theme-color" content="#09090b" />
+    <script>
+      (function () {
+        var theme = 'light';
+        try {
+          var storedTheme = localStorage.getItem('theme');
+          theme = storedTheme === 'light' || storedTheme === 'dark'
+            ? storedTheme
+            : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        } catch (_) {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+        document.querySelector('meta[name="theme-color"]').setAttribute(
+          'content',
+          theme === 'dark' ? '#0b0c0f' : '#f5f5f7'
+        );
+      })();
+    </script>
     <link rel="canonical" href="https://phamhungtien.com/PHTV/" />
     <link rel="manifest" href="manifest.json" />
 

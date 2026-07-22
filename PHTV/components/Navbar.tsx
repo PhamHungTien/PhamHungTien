@@ -27,7 +27,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [desktopDownloadOpen, setDesktopDownloadOpen] = useState(false);
-  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
+  const [theme, setTheme] = useState<'light' | 'dark'>(() =>
+    document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light'
+  );
   const desktopDownloadRef = useRef<HTMLDivElement | null>(null);
   const downloadLabel = hasSplitDownloads ? t('nav.download_label') : t('nav.download_now');
 
@@ -46,7 +48,11 @@ export const Navbar: React.FC<NavbarProps> = ({
     } else {
       document.documentElement.classList.remove('dark');
     }
-    localStorage.setItem('theme', theme);
+    try {
+      localStorage.setItem('theme', theme);
+    } catch {
+      // Theme switching still works when storage is unavailable.
+    }
 
     const themeColorMeta = document.querySelector('meta[name="theme-color"]');
     if (themeColorMeta) {
@@ -57,7 +63,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   // Sync theme across tabs
   useEffect(() => {
     const handleStorage = (e: StorageEvent) => {
-      if (e.key === 'theme' && e.newValue) {
+      if (e.key === 'theme' && (e.newValue === 'light' || e.newValue === 'dark')) {
         setTheme(e.newValue);
       }
     };
