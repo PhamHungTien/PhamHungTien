@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHTV - Terms of Use / Điều Khoản Sử Dụng</title>
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --surface: #1a1a1a;
+            --text: #e8e8e8;
+            --muted: #999;
+            --accent: #fb7185;
+            --border: #2a2a2a;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 0 20px;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 60px 0 80px;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fbbf24, #fb7185);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        .logo a {
+            text-decoration: none;
+            background: inherit;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 48px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            font-size: 14px;
+        }
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            padding: 6px 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+        .lang-toggle {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 40px;
+        }
+        .lang-toggle button {
+            padding: 8px 20px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--surface);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .lang-toggle button:hover { border-color: var(--accent); }
+        .lang-toggle button.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #111;
+        }
+        h1 { font-size: 32px; font-weight: 700; margin-bottom: 12px; }
+        h2 { font-size: 20px; font-weight: 600; margin-top: 36px; margin-bottom: 12px; color: #fda4af; }
+        p, li { color: var(--muted); font-size: 15px; margin-bottom: 12px; }
+        strong { color: var(--text); }
+        ul { padding-left: 24px; }
+        li { margin-bottom: 8px; }
+        .footer {
+            font-size: 13px;
+            color: var(--muted);
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+            margin-top: 48px;
+        }
+        .section { display: none; }
+        .section.active { display: block; }
+    </style>
+    <link rel="stylesheet" href="/assets/legal.css">
+    <script src="/assets/theme.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="logo"><a href="https://phamhungtien.com/PHTV/">PHTV</a></div>
+        <div class="subtitle">Precision Hybrid Typing Vietnamese</div>
+
+        <nav class="nav-links">
+            <a href="https://phamhungtien.com/PHTV/">Home</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html" class="active">Terms of Use</a>
+        </nav>
+
+        <div class="lang-toggle">
+            <button class="active" onclick="switchLang('vi')">Tiếng Việt</button>
+            <button onclick="switchLang('en')">English</button>
+        </div>
+
+        <!-- VIETNAMESE -->
+        <div id="vi" class="section active">
+            <h1>Điều Khoản Sử Dụng</h1>
+            <p>Cập nhật lần cuối: 25 tháng 5, 2026</p>
+
+            <h2>Chấp nhận Điều Khoản</h2>
+            <p>Bằng việc cài đặt và sử dụng bộ gõ PHTV, bạn đồng ý với các Điều khoản Sử dụng này.</p>
+
+            <h2>Giấy phép Phần mềm</h2>
+            <p>PHTV là một dự án nguồn mở. Bạn có quyền sử dụng phần mềm cho cả mục đích cá nhân và thương mại. Mã nguồn của ứng dụng tuân thủ theo giấy phép (License) được công bố tại kho lưu trữ GitHub tương ứng.</p>
+
+            <h2>Từ chối Trách nhiệm</h2>
+            <p>Chúng tôi cung cấp phần mềm "NGUYÊN TRẠNG" (AS IS). Dù bộ gõ PHTV được kiểm thử kỹ lưỡng, chúng tôi không bảo đảm ứng dụng không có lỗi (bug) khi gõ trên tất cả các phần mềm bên thứ ba. Chúng tôi không chịu trách nhiệm cho mọi tổn thất dữ liệu hay hư hỏng phát sinh khi sử dụng bộ gõ này.</p>
+
+            <h2>Liên Hệ</h2>
+            <p>Nếu bạn có bất kỳ câu hỏi nào về điều khoản, vui lòng liên hệ:<br>
+            <strong>phamhungtien.contact@gmail.com</strong></p>
+        </div>
+
+        <!-- ENGLISH -->
+        <div id="en" class="section">
+            <h1>Terms of Use</h1>
+            <p>Last updated: May 25, 2026</p>
+
+            <h2>Acceptance of Terms</h2>
+            <p>By installing and using the PHTV input method, you agree to these Terms of Use.</p>
+
+            <h2>Software License</h2>
+            <p>PHTV is an open-source project. You may use the software for both personal and commercial purposes. The application's source code complies with the license published in its corresponding GitHub repository.</p>
+
+            <h2>Disclaimer of Warranties</h2>
+            <p>We provide the software "AS IS". Although the PHTV input method is thoroughly tested, we do not guarantee the app is free of bugs when typing across all third-party software. We are not liable for any data loss or damage arising from the use of this input method.</p>
+
+            <h2>Contact</h2>
+            <p>If you have any questions about these terms, please contact:<br>
+            <strong>phamhungtien.contact@gmail.com</strong></p>
+        </div>
+
+        <div class="footer">© 2026 Pham Hung Tien. All rights reserved.</div>
+    </div>
+
+    <script>
+        function switchLang(lang) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(lang).classList.add('active');
+            document.querySelectorAll('.lang-toggle button').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

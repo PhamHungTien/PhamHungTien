@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My NAS Manager - Privacy Policy / Chính Sách Quyền Riêng Tư</title>
+    <meta name="description" content="My NAS Manager Privacy Policy - Client application for Synology NAS servers. No data collection, secure connections.">
+    <link rel="canonical" href="https://phamhungtien.com/MyNASManager/privacy.html">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --surface: #1a1a1a;
+            --text: #e8e8e8;
+            --muted: #999;
+            --accent: #0071e3;
+            --border: #2a2a2a;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 0 20px;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 60px 0 80px;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #0071e3, #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        .logo a {
+            text-decoration: none;
+            background: inherit;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 48px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            font-size: 14px;
+        }
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            padding: 6px 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+        .lang-toggle {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 40px;
+        }
+        .lang-toggle button {
+            padding: 8px 20px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--surface);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .lang-toggle button:hover { border-color: var(--accent); }
+        .lang-toggle button.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 36px;
+            margin-bottom: 12px;
+            color: #bae6fd;
+        }
+        p, li {
+            color: var(--muted);
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+        strong { color: var(--text); }
+        ul { padding-left: 24px; }
+        li { margin-bottom: 8px; }
+        .footer {
+            font-size: 13px;
+            color: var(--muted);
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+            margin-top: 48px;
+        }
+        .section { display: none; }
+        .section.active { display: block; }
+    </style>
+    <link rel="stylesheet" href="/assets/legal.css">
+    <script src="/assets/theme.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="logo"><a href="https://phamhungtien.com/MyNASManager/">My NAS Manager</a></div>
+        <div class="subtitle">Secure and Intuitive Synology NAS Client for iOS</div>
+
+        <nav class="nav-links">
+            <a href="https://phamhungtien.com/MyNASManager/">Home</a>
+            <a href="https://phamhungtien.com/MyNASManager/privacy.html" class="active">Privacy Policy</a>
+            <a href="https://phamhungtien.com/MyNASManager/terms.html">Terms of Use</a>
+        </nav>
+
+        <div class="lang-toggle">
+            <button class="active" onclick="switchLang('en')">English</button>
+            <button onclick="switchLang('vi')">Tiếng Việt</button>
+        </div>
+
+        <!-- ENGLISH -->
+        <div id="en" class="section active">
+            <h1>Privacy Policy</h1>
+            <p>Last updated: June 14, 2026</p>
+
+            <h2>Overview</h2>
+            <p>My NAS Manager is a native iOS client for Synology NAS (DiskStation Manager - DSM) servers. Your privacy and the security of your network configuration are our top priorities. This policy explains how My NAS Manager handles your data.</p>
+
+            <h2>Data Collection & Processing</h2>
+            <p><strong>My NAS Manager does not collect, store, or transmit any personal data to our servers.</strong></p>
+            <ul>
+                <li><strong>Direct Connections</strong>: All API requests, file transfers, and SSH terminal commands are routed directly from your iOS device to your own Synology NAS server. There is no middleman, proxy, or developer server involved.</li>
+                <li><strong>Local Credentials Storage</strong>: Your Synology NAS addresses, ports, usernames, passwords, and connection session tokens are stored locally on your device using Apple's secure Keychain or system UserDefaults.</li>
+                <li><strong>No Telemetry</strong>: The application does not contain third-party analytics SDKs, advertising frameworks, or telemetry trackers.</li>
+            </ul>
+
+            <h2>System Permissions</h2>
+            <p>My NAS Manager may ask for the following permissions during operation, only to fulfill features you explicitly trigger:</p>
+            <ul>
+                <li><strong>Local Network Access</strong>: Necessary to scan and connect directly to your Synology NAS if it is located on your local Wi-Fi or LAN subnet.</li>
+                <li><strong>Face ID / Touch ID</strong>: If enabled by you, used strictly locally on-device to lock/unlock access to the application.</li>
+            </ul>
+
+            <h2>Children's Privacy</h2>
+            <p>My NAS Manager does not collect any data from anyone, including children under 13. The app is completely safe for all users as it does not collect or transmit personal information.</p>
+
+            <h2>Changes to This Policy</h2>
+            <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated effective date.</p>
+
+            <h2>Contact</h2>
+            <p>If you have questions about this Privacy Policy, please contact us at:<br>
+            <strong>phamhungtien.contact@gmail.com</strong></p>
+        </div>
+
+        <!-- VIETNAMESE -->
+        <div id="vi" class="section">
+            <h1>Chính Sách Quyền Riêng Tư</h1>
+            <p>Cập nhật lần cuối: 14 tháng 6, 2026</p>
+
+            <h2>Tổng Quan</h2>
+            <p>My NAS Manager là ứng dụng client native chạy trên iOS dành cho các máy chủ Synology NAS (DiskStation Manager - DSM). Quyền riêng tư và độ an toàn cấu hình mạng của bạn là ưu tiên hàng đầu của chúng tôi. Chính sách này giải thích cách My NAS Manager xử lý dữ liệu của bạn.</p>
+
+            <h2>Thu Thập & Xử Lý Dữ Liệu</h2>
+            <p><strong>My NAS Manager không thu thập, lưu trữ hoặc truyền bất kỳ dữ liệu cá nhân nào tới máy chủ của chúng tôi.</strong></p>
+            <ul>
+                <li><strong>Kết Nối Trực Tiếp</strong>: Tất cả các yêu cầu API, truyền tệp tin và lệnh dòng lệnh SSH được định tuyến trực tiếp từ thiết bị iOS của bạn tới chính máy chủ Synology NAS của bạn. Không đi qua bất kỳ bên thứ ba, proxy hoặc máy chủ trung gian nào của nhà phát triển.</li>
+                <li><strong>Lưu Trữ Cấu Hình Nội Bộ</strong>: Địa chỉ máy chủ NAS, cổng, tài khoản, mật khẩu và token phiên làm việc của bạn được mã hóa và lưu trữ cục bộ trên thiết bị của bạn bằng Keychain hoặc hệ thống lưu trữ UserDefaults an toàn của Apple.</li>
+                <li><strong>Không Có Telemetry</strong>: Ứng dụng hoàn toàn không tích hợp các bộ công cụ phân tích (analytics SDK) từ bên thứ ba, không chứa quảng cáo hoặc các trình theo dõi hành vi.</li>
+            </ul>
+
+            <h2>Quyền Hệ Thống Sử Dụng</h2>
+            <p>My NAS Manager có thể yêu cầu các quyền hệ thống sau đây trong quá trình hoạt động, chỉ để phục vụ cho các tính năng do bạn chủ động khởi chạy:</p>
+            <ul>
+                <li><strong>Mạng Cục Bộ (Local Network)</strong>: Cần thiết để dò tìm và kết nối trực tiếp đến máy chủ Synology NAS của bạn nếu thiết bị nằm trong cùng mạng Wi-Fi hoặc mạng LAN gia đình của bạn.</li>
+                <li><strong>Face ID / Touch ID</strong>: Nếu được bạn kích hoạt, quyền này chỉ sử dụng cục bộ trên thiết bị để bảo mật khóa/mở khóa truy cập vào ứng dụng.</li>
+            </ul>
+
+            <h2>Quyền Riêng Tư Trẻ Em</h2>
+            <p>My NAS Manager không thu thập bất kỳ dữ liệu nào từ bất kỳ ai, kể cả trẻ em dưới 13 tuổi. Ứng dụng an toàn tuyệt đối cho người dùng mọi lứa tuổi vì không thu thập hay chia sẻ thông tin cá nhân ra ngoài.</p>
+
+            <h2>Thay Đổi Chính Sách</h2>
+            <p>Chúng tôi có thể cập nhật Chính Sách Quyền Riêng Tư này theo thời gian. Mọi thay đổi sẽ được đăng tải trực tiếp trên trang này kèm ngày cập nhật mới nhất.</p>
+
+            <h2>Liên Hệ</h2>
+            <p>Nếu bạn có bất kỳ câu hỏi nào về Chính Sách Quyền Riêng Tư này, vui lòng liên hệ với chúng tôi qua:<br>
+            <strong>phamhungtien.contact@gmail.com</strong></p>
+        </div>
+
+        <div class="footer">© 2026 Pham Hung Tien. All rights reserved.</div>
+    </div>
+
+    <script>
+        function switchLang(lang) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(lang).classList.add('active');
+            document.querySelectorAll('.lang-toggle button').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

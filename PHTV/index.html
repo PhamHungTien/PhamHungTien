@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Pinch-to-zoom must stay available: WCAG 2.1 SC 1.4.4 (Resize Text). -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+    <!-- Primary Meta Tags -->
+    <title>PHTV - Bộ gõ tiếng Việt cho macOS | Miễn phí, Nhanh & Bảo mật</title>
+    <meta name="title" content="PHTV - Bộ gõ tiếng Việt cho macOS | Miễn phí, Nhanh & Bảo mật" />
+    <meta name="description" content="PHTV (Precision Hybrid Typing Vietnamese): Bộ gõ tiếng Việt 100% Swift tối ưu cho macOS 14+. Hỗ trợ Telex, VNI, gõ tắt Macro, Emoji Picker. Hoàn toàn miễn phí, mã nguồn mở và bảo mật." />
+    <meta name="author" content="Phạm Hùng Tiến" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#09090b" />
+    <script>
+      (function () {
+        var theme = 'light';
+        try {
+          var storedTheme = localStorage.getItem('theme');
+          theme = storedTheme === 'light' || storedTheme === 'dark'
+            ? storedTheme
+            : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        } catch (_) {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+        document.querySelector('meta[name="theme-color"]').setAttribute(
+          'content',
+          theme === 'dark' ? '#0b0c0f' : '#f5f5f7'
+        );
+      })();
+    </script>
+    <link rel="canonical" href="https://phamhungtien.com/PHTV/" />
+    <link rel="manifest" href="manifest.json" />
+
+    <!-- Performance Optimization -->
+    <link rel="dns-prefetch" href="https://github.com" />
+    <link rel="dns-prefetch" href="https://api.github.com" />
+    <link rel="preload" as="image" href="phtv-icon.webp" />
+
+    <!-- Favicon - Optimized for Google Search -->
+    <link rel="icon" type="image/svg+xml" href="phtv-favicon.svg?v=2" sizes="any" />
+    <link rel="icon" type="image/png" href="phtv-favicon.png?v=2" sizes="512x512" />
+    <link rel="apple-touch-icon" href="phtv-favicon.png?v=2" sizes="512x512" />
+    <link rel="mask-icon" href="phtv-favicon.svg?v=2" color="#f43f5e" />
+    <meta name="msapplication-TileImage" content="phtv-favicon.png?v=2" />
+
+    <!-- Open Graph / Facebook / Zalo -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://phamhungtien.com/PHTV/" />
+    <meta property="og:title" content="PHTV - Bộ gõ Tiếng Việt cho macOS | Miễn phí & Mã nguồn mở" />
+    <meta property="og:description" content="Bộ gõ tiếng Việt 100% Swift. Hoàn toàn miễn phí, offline, không thu thập dữ liệu. Hỗ trợ Telex/VNI, macOS 14+." />
+    <!-- PNG, not WebP: X/Twitter does not reliably render WebP card images. -->
+    <meta property="og:image" content="https://phamhungtien.com/og/phtv.png" />
+    <meta property="og:image:secure_url" content="https://phamhungtien.com/og/phtv.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="PHTV - Bộ gõ tiếng Việt cho macOS" />
+    <meta property="og:site_name" content="PHTV" />
+    <meta property="og:locale" content="vi_VN" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://phamhungtien.com/PHTV/" />
+    <meta name="twitter:title" content="PHTV - Bộ gõ Tiếng Việt cho macOS" />
+    <meta name="twitter:description" content="Bộ gõ tiếng Việt miễn phí, mã nguồn mở. Gõ Telex/VNI, offline, an toàn 100%." />
+    <meta name="twitter:image" content="https://phamhungtien.com/og/phtv.png" />
+    <meta name="twitter:site" content="@phamhungtien" />
+    <meta name="twitter:creator" content="@phamhungtien" />
+    <meta name="twitter:image:alt" content="PHTV - Bộ gõ tiếng Việt cho macOS" />
+
+    <!-- Additional SEO Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="PHTV" />
+    <meta name="apple-mobile-web-app-cache" content="no" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-TileColor" content="#f5f5f7" />
+
+    <!-- Structured Data (JSON-LD) for Software Application -->
+    <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "PHTV",
+        "description": "Bộ gõ tiếng Việt 100% Swift cho macOS. Nhanh, nhẹ, riêng tư và hoàn toàn miễn phí.",
+        "headline": "Bộ gõ tiếng Việt hiện đại cho macOS",
+        "alternativeHeadline": "Precision Hybrid Typing Vietnamese",
+        "url": "https://phamhungtien.com/PHTV/",
+        "image": [
+          "https://phamhungtien.com/PHTV/assets/social_preview.webp"
+        ],
+        "screenshot": [
+          "https://phamhungtien.com/PHTV/assets/social_preview.webp"
+        ],
+        "author": {
+          "@type": "Person",
+          "name": "Pham Hung Tien",
+          "url": "https://github.com/PhamHungTien"
+        },
+        "operatingSystem": "macOS 14.0+",
+        "applicationCategory": "UtilityApplication",
+        "downloadUrl": "https://github.com/PhamHungTien/PHTV/releases/latest",
+        "featureList": [
+          "Gõ tiếng Việt Telex/VNI",
+          "Gõ tắt Macro",
+          "Emoji Picker",
+          "Kiểm tra chính tả",
+          "100% Swift",
+          "Hoàn toàn offline",
+          "Không thu thập dữ liệu"
+        ],
+        "fileSize": "50MB",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
+          "url": "https://github.com/PhamHungTien/PHTV/releases/latest"
+        },
+        "isAccessibleForFree": true,
+        "softwareVersion": "1.0.0",
+        "license": "https://opensource.org/licenses/MIT",
+        "repositoryUrl": "https://github.com/PhamHungTien/PHTV",
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "5",
+          "bestRating": "5",
+          "worstRating": "1",
+          "ratingCount": "1250"
+        },
+        "inLanguage": "vi",
+        "contentRating": "Everyone"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": "PHTV Source Code",
+        "description": "Mã nguồn bộ gõ tiếng Việt PHTV cho macOS",
+        "programmingLanguage": {
+          "@type": "ComputerLanguage",
+          "name": "Swift"
+        },
+        "runtimePlatform": "macOS",
+        "codeRepository": "https://github.com/PhamHungTien/PHTV",
+        "license": "https://opensource.org/licenses/MIT",
+        "author": {
+          "@type": "Person",
+          "name": "Pham Hung Tien"
+        }
+      }
+    ]
+    </script>
+
+    <!-- FAQ Schema for Rich Snippets -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "PHTV là gì?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PHTV (Precision Hybrid Typing Vietnamese) là bộ gõ tiếng Việt miễn phí, mã nguồn mở được phát triển 100% bằng Swift dành riêng cho macOS 14 trở lên (Sonoma, Sequoia, Tahoe,...). Ứng dụng hỗ trợ Telex, VNI, gõ tắt thông minh, kiểm tra chính tả và Emoji Picker, hoàn toàn offline và không thu thập dữ liệu người dùng."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "PHTV có miễn phí không?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Có, PHTV hoàn toàn miễn phí 100% và là mã nguồn mở (MIT License). Bạn có thể tải xuống, sử dụng và đóng góp phát triển mà không mất bất kỳ chi phí nào."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "PHTV hỗ trợ phiên bản macOS nào?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PHTV yêu cầu macOS 14.0 (Sonoma) trở lên. Ứng dụng hoạt động tốt trên macOS Sonoma, Sequoia, Tahoe và các phiên bản mới hơn."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "PHTV có an toàn và bảo mật không?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Hoàn toàn an toàn. PHTV hoạt động 100% offline, không kết nối internet, không thu thập dữ liệu cá nhân hay lịch sử gõ của bạn. Mọi dữ liệu được lưu trữ cục bộ trên máy của bạn."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "PHTV hỗ trợ những kiểu gõ nào?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PHTV hỗ trợ Telex và VNI - hai kiểu gõ phổ biến nhất tại Việt Nam. Ngoài ra còn có tính năng gõ tắt Macro thông minh giúp tiết kiệm thời gian."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Làm thế nào để cài đặt PHTV?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tải đúng file .dmg cho Apple Silicon hoặc Intel từ GitHub Releases, mở file và kéo PHTV vào thư mục Applications. Mở ứng dụng lần đầu tiên, vào System Settings > Keyboard > Input Sources để thêm PHTV vào danh sách bộ gõ."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- Organization Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "PHTV - Pham Hung Tien",
+      "url": "https://phamhungtien.com/PHTV/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://phamhungtien.com/PHTV/phtv-favicon.png",
+        "width": 512,
+        "height": 512
+      },
+      "sameAs": [
+        "https://github.com/PhamHungTien",
+        "https://discord.gg/hm2C4tbaDz",
+        "https://www.facebook.com/PHTVInput/",
+        "https://www.linkedin.com/in/ph%E1%BA%A1m-h%C3%B9ng-ti%E1%BA%BFn-a1b405327/"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "phamhungtien.contact@gmail.com",
+        "contactType": "Customer Support"
+      }
+    }
+    </script>
+
+    <!-- BreadcrumbList Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://phamhungtien.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "PHTV",
+          "item": "https://phamhungtien.com/PHTV/"
+        }
+      ]
+    }
+    </script>
+
+    <!-- WebSite Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "PHTV",
+      "url": "https://phamhungtien.com/PHTV/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://github.com/search?q=PHTV&type=repositories",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+  <script type="module" crossorigin src="/PHTV/assets/index-7LFiJrdC.js"></script>
+  <link rel="modulepreload" crossorigin href="/PHTV/assets/vendor-DCBwEEw2.js">
+  <link rel="stylesheet" crossorigin href="/PHTV/assets/index-CeGsbW5o.css">
+  <script type="module">import.meta.url;import("_").catch(()=>1);(async function*(){})().next();if(location.protocol!="file:"){window.__vite_is_modern_browser=true}</script>
+  <script type="module">!function(){if(window.__vite_is_modern_browser)return;console.warn("vite: loading legacy chunks, syntax error above and the same error below should be ignored");var e=document.getElementById("vite-legacy-polyfill"),n=document.createElement("script");n.src=e.src,n.onload=function(){System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))},document.body.appendChild(n)}();</script>
+</head>
+  <body class="antialiased">
+    <div id="root"></div>
+  <script nomodule>!function(){var e=document,t=e.createElement("script");if(!("noModule"in t)&&"onbeforeload"in t){var n=!1;e.addEventListener("beforeload",(function(e){if(e.target===t)n=!0;else if(!e.target.hasAttribute("nomodule")||!n)return;e.preventDefault()}),!0),t.type="module",t.src=".",e.head.appendChild(t),t.remove()}}();</script>
+  <script nomodule crossorigin id="vite-legacy-polyfill" src="/PHTV/assets/polyfills-legacy-DIYjzGuZ.js"></script>
+  <script nomodule crossorigin id="vite-legacy-entry" data-src="/PHTV/assets/index-legacy-fWxlBESm.js">System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))</script>
+</body>
+</html>

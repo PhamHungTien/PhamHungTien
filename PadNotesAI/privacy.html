@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pad Notes AI - Privacy Policy / Chính Sách Quyền Riêng Tư</title>
+    <meta name="description" content="Pad Notes AI Privacy Policy - AI Note-taking & Handwriting Analyzer. No data collection.">
+    <link rel="canonical" href="https://phamhungtien.com/PadNotesAI/privacy.html">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --surface: #1a1a1a;
+            --text: #e8e8e8;
+            --muted: #999;
+            --accent: #ff9500;
+            --border: #2a2a2a;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 0 20px;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 60px 0 80px;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff9500, #ff5e3a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        .logo a {
+            text-decoration: none;
+            background: inherit;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 48px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            font-size: 14px;
+        }
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            padding: 6px 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+        .lang-toggle {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 40px;
+        }
+        .lang-toggle button {
+            padding: 8px 20px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--surface);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .lang-toggle button:hover { border-color: var(--accent); }
+        .lang-toggle button.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 36px;
+            margin-bottom: 12px;
+            color: #ffe0b2;
+        }
+        p, li {
+            color: var(--muted);
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+        strong { color: var(--text); }
+        ul { padding-left: 24px; }
+        li { margin-bottom: 8px; }
+        .footer {
+            font-size: 13px;
+            color: var(--muted);
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+            margin-top: 48px;
+        }
+        .section { display: none; }
+        .section.active { display: block; }
+    </style>
+    <link rel="stylesheet" href="/assets/legal.css">
+    <script src="/assets/theme.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="logo"><a href="https://phamhungtien.com/PadNotesAI/">Pad Notes AI</a></div>
+        <div class="subtitle">Smart Note-Taking & Handwriting Analyzer</div>
+
+        <nav class="nav-links">
+            <a href="https://phamhungtien.com/PadNotesAI/">Home</a>
+            <a href="https://phamhungtien.com/PadNotesAI/privacy.html" class="active">Privacy Policy</a>
+            <a href="https://phamhungtien.com/PadNotesAI/terms.html">Terms of Use</a>
+        </nav>
+
+        <div class="lang-toggle">
+            <button class="active" onclick="switchLang('en')">English</button>
+            <button onclick="switchLang('vi')">Tiếng Việt</button>
+        </div>
+
+        <!-- ENGLISH -->
+        <div id="en" class="section active">
+            <h1>Privacy Policy</h1>
+            <p>Last updated: June 12, 2026</p>
+
+            <h2>Overview</h2>
+            <p>Pad Notes AI is a local-first note-taking application for iOS and iPadOS. Your privacy is our top priority. This policy explains how Pad Notes AI handles your notes, drawings, and voice recordings.</p>
+
+            <h2>Data Collection</h2>
+            <p><strong>Pad Notes AI does not collect, store, or transmit any of your personal data, notes, or recordings.</strong></p>
+            <ul>
+                <li>All notebooks, handwritten canvas drawings, OCR recognized text, and audio recordings are stored locally on your device within the app's sandbox.</li>
+                <li>We do not have access to your data, nor do we run external telemetry or analytical SDKs that track your usage.</li>
+                <li>Your handwriting recognition (OCR) and audio transcriptions are processed entirely on-device.</li>
+            </ul>
+
+            <h2>Apple Intelligence & Local AI</h2>
+            <p>Pad Notes AI utilizes Apple's native on-device Foundation Models (Apple Intelligence) for offline document summaries and analysis. All computation is performed locally on your device. None of your data is sent to external servers for this feature.</p>
+
+            <h2>Network Access & Third-Party APIs</h2>
+            <p>Pad Notes AI only accesses the network under these specific scenarios, driven entirely by your choices:</p>
+            <ul>
+                <li><strong>Gemini Online Assistant</strong>: If you choose to configure a personal Gemini API Key, queries and document excerpts are sent directly to Google's APIs to generate responses. This communication occurs directly between your device and Google.</li>
+                <li><strong>iCloud Synchronization</strong>: If you enable iCloud Sync, your SwiftData notebooks are backed up and synced across your iOS devices using Apple's CloudKit infrastructure. Your data is encrypted in transit and at rest on Apple's servers.</li>
+                <li><strong>In-App Purchase & Subscriptions</strong>: Apple's StoreKit framework handles transaction states, receipt validation, and package activations safely through Apple's servers.</li>
+            </ul>
+
+            <h2>In-App Purchases</h2>
+            <p>Pad Notes AI offers subscription and lifetime premium options ("Pad Notes AI Pro") processed entirely by Apple's StoreKit framework. We do not collect or store credit cards or payment info.</p>
+
+            <h2>Children's Privacy</h2>
+            <p>Since Pad Notes AI does not collect any personal data from anyone, the app is safe for children under 13 and complies fully with privacy regulations.</p>
+
+            <h2>Changes to This Policy</h2>
+            <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated effective date.</p>
+
+            <h2>Contact</h2>
+            <p>If you have questions about this Privacy Policy, please contact us at:<br>
+            <strong>phamhungtien.contact@gmail.com</strong></p>
+        </div>
+
+        <!-- VIETNAMESE -->
+        <div id="vi" class="section">
+            <h1>Chính Sách Quyền Riêng Tư</h1>
+            <p>Cập nhật lần cuối: 12 tháng 6, 2026</p>
+
+            <h2>Tổng Quan</h2>
+            <p>Pad Notes AI là ứng dụng ghi chú ưu tiên nội bộ dành cho iOS và iPadOS. Quyền riêng tư của bạn là ưu tiên hàng đầu. Chính sách này giải thích cách Pad Notes AI xử lý các ghi chú, nét vẽ viết tay và bản ghi âm của bạn.</p>
+
+            <h2>Thu Thập Dữ Liệu</h2>
+            <p><strong>Pad Notes AI không thu thập, lưu trữ hoặc truyền bất kỳ dữ liệu cá nhân, nội dung ghi chú hoặc bản ghi âm nào của bạn.</strong></p>
+            <ul>
+                <li>Tất cả sổ tay ghi chép, hình vẽ viết tay trên canvas, văn bản nhận dạng OCR, và file ghi âm đều được lưu trữ trực tiếp trên thiết bị của bạn trong môi trường sandbox bảo mật của ứng dụng.</li>
+                <li>Chúng tôi hoàn toàn không thể truy cập dữ liệu của bạn, đồng thời không tích hợp SDK quảng cáo hay công cụ theo dõi hành vi người dùng.</li>
+                <li>Quá trình nhận dạng chữ viết tay (OCR) và chuyển âm thanh thành văn bản diễn ra hoàn toàn trên thiết bị.</li>
+            </ul>
+
+            <h2>Apple Intelligence & Trí tuệ nhân tạo Nội bộ</h2>
+            <p>Pad Notes AI sử dụng các Foundation Model nội bộ trên thiết bị của Apple (Apple Intelligence) để tóm tắt và phân tích văn bản offline. Mọi tính toán diễn ra tại chỗ và không gửi dữ liệu ra máy chủ ngoài cho tính năng này.</p>
+
+            <h2>Truy Cập Mạng & API Bên Thứ Ba</h2>
+            <p>Pad Notes AI chỉ sử dụng kết nối mạng trong các kịch bản cụ thể sau, do bạn chủ động thiết lập:</p>
+            <ul>
+                <li>**Trợ lý Trực tuyến Gemini**: Nếu bạn cấu hình Gemini API Key cá nhân, các câu hỏi và đoạn trích tài liệu sẽ được gửi trực tiếp đến API của Google để xử lý phản hồi. Việc kết nối diễn ra trực tiếp giữa thiết bị của bạn và Google.</li>
+                <li>**Đồng Bộ iCloud**: Khi kích hoạt Đồng bộ iCloud, dữ liệu ghi chú của bạn được sao lưu và đồng bộ trên các thiết bị của bạn thông qua hạ tầng CloudKit của Apple. Dữ liệu được mã hóa an toàn.</li>
+                <li>**Mua Hàng Trong Ứng Dụng**: Framework StoreKit của Apple kết nối trực tiếp với máy chủ Apple để xử lý mua hàng và phục hồi giao dịch.</li>
+            </ul>
+
+            <h2>Mua Hàng Trong Ứng Dụng</h2>
+            <p>Pad Notes AI cung cấp các gói đăng ký định kỳ và mua trọn đời một lần ("Pad Notes AI Pro") được xử lý hoàn toàn bởi StoreKit của Apple. Chúng tôi không thu thập hay lưu trữ bất kỳ thông tin thanh toán nào.</p>
+
+            <h2>Quyền Riêng Tư Trẻ Em</h2>
+            <p>Do Pad Notes AI không thu thập bất kỳ thông tin cá nhân nào từ bất kỳ người dùng nào, ứng dụng tuyệt đối an toàn cho trẻ em dưới 13 tuổi và tuân thủ các đạo luật bảo vệ trẻ em.</p>
+
+            <h2>Thay Đổi Chính Sách</h2>
+            <p>Chúng tôi có thể cập nhật Chính Sách Quyền Riêng Tư theo thời gian. Các thay đổi sẽ được cập nhật trên trang này kèm theo ngày có hiệu lực.</p>
+
+            <h2>Liên Hệ</h2>
+            <p>Nếu bạn có bất kỳ câu hỏi nào về chính sách bảo mật, vui lòng liên hệ tại:<br>
+            <strong>phamhungtien.dev@gmail.com</strong></p>
+        </div>
+
+        <div class="footer">© 2026 Pham Hung Tien. All rights reserved.</div>
+    </div>
+
+    <script>
+        function switchLang(lang) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(lang).classList.add('active');
+            document.querySelectorAll('.lang-toggle button').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

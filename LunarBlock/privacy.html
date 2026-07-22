@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lunar Block - Privacy Policy / Chính Sách Quyền Riêng Tư</title>
+    <meta name="description" content="Lunar Block Privacy Policy - Native 3D falling-block puzzle game for iOS. No data collection.">
+    <link rel="canonical" href="https://phamhungtien.com/LunarBlock/privacy.html">
+    <style>
+        :root {
+            --bg: #07070a;
+            --surface: #0f0f16;
+            --text: #f5f5f7;
+            --muted: #8e8e93;
+            --accent: #00f0ff;
+            --border: rgba(255, 255, 255, 0.08);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 0 20px;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 60px 0 80px;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00f0ff, #39ff14);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        .logo a {
+            text-decoration: none;
+            background: inherit;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 48px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            font-size: 14px;
+        }
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            padding: 6px 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+        .lang-toggle {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 40px;
+        }
+        .lang-toggle button {
+            padding: 8px 20px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--surface);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .lang-toggle button:hover { border-color: var(--accent); }
+        .lang-toggle button.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #07070a;
+            font-weight: 600;
+        }
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.015em;
+        }
+        h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 36px;
+            margin-bottom: 12px;
+            color: #00f0ff;
+        }
+        p, li {
+            color: var(--muted);
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+        strong { color: var(--text); }
+        ul { padding-left: 24px; }
+        li { margin-bottom: 8px; }
+        .footer {
+            font-size: 13px;
+            color: var(--muted);
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+            margin-top: 48px;
+        }
+        .section { display: none; }
+        .section.active { display: block; }
+    </style>
+    <link rel="stylesheet" href="/assets/legal.css">
+    <script src="/assets/theme.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="logo"><a href="https://phamhungtien.com/LunarBlock/">Lunar Block</a></div>
+        <div class="subtitle">Native iOS 3D Falling-Block Game</div>
+
+        <nav class="nav-links">
+            <a href="https://phamhungtien.com/LunarBlock/">Home</a>
+            <a href="https://phamhungtien.com/LunarBlock/privacy.html" class="active">Privacy Policy</a>
+            <a href="https://phamhungtien.com/LunarBlock/terms.html">Terms of Use</a>
+        </nav>
+
+        <div class="lang-toggle">
+            <button class="active" onclick="switchLang('en')">English</button>
+            <button onclick="switchLang('vi')">Tiếng Việt</button>
+        </div>
+
+        <!-- ENGLISH -->
+        <div id="en" class="section active">
+            <h1>Privacy Policy</h1>
+            <p>Last updated: May 28, 2026</p>
+
+            <h2>Overview</h2>
+            <p>Lunar Block is a native, offline-first iOS 3D puzzle game. Your privacy is extremely important to us. This policy outlines how Lunar Block handles your data.</p>
+
+            <h2>Data Collection</h2>
+            <p><strong>Lunar Block does not collect, store, track, or transmit any personal data.</strong></p>
+            <ul>
+                <li><strong>Local Storage</strong>: All game data—including your scores, experience points (XP), player ranks, sound settings, and haptic preferences—is stored locally on your device using Apple's standard iOS UserDefaults plist.</li>
+                <li><strong>No Analytics</strong>: The app contains no third-party analytics frameworks, advertising SDKs, or user tracking systems.</li>
+                <li><strong>No Telemetry</strong>: No crash logs or gameplay telemetry are sent to our servers or any third-party databases.</li>
+            </ul>
+
+            <h2>Game Center & GameKit</h2>
+            <p>Lunar Block integrates optional Apple Game Center connectivity via GameKit:</p>
+            <ul>
+                <li>If you sign in to Game Center, your high scores and ranks are submitted securely to Apple's Game Center leaderboards.</li>
+                <li>All Game Center data and authentication are managed strictly by Apple's secure operating system servers. We do not have access to, nor do we store, your Game Center credentials or player profile information.</li>
+            </ul>
+
+            <h2>Children's Privacy</h2>
+            <p>Lunar Block is designed to be safe for players of all ages. Because the application does not collect or request any personal information from any user, it fully complies with children's online privacy protection regulations (including COPPA).</p>
+
+            <h2>Changes to This Policy</h2>
+            <p>We may update this Privacy Policy from time to time. Any changes will be published on this page with an updated effective date.</p>
+
+            <h2>Contact</h2>
+            <p>If you have any questions or feedback regarding this Privacy Policy, please reach out to us at:<br>
+            <strong>phamhungtien.contact@gmail.com</strong></p>
+        </div>
+
+        <!-- VIETNAMESE -->
+        <div id="vi" class="section">
+            <h1>Chính Sách Quyền Riêng Tư</h1>
+            <p>Cập nhật lần cuối: 28 tháng 5, 2026</p>
+
+            <h2>Tổng Quan</h2>
+            <p>Lunar Block là một trò chơi giải đố 3D chạy ngoại tuyến hoàn toàn trên hệ điều hành iOS. Quyền riêng tư của bạn là ưu tiên hàng đầu của chúng tôi. Chính sách này giải thích cách Lunar Block xử lý dữ liệu của bạn.</p>
+
+            <h2>Thu Thập Dữ Liệu</h2>
+            <p><strong>Lunar Block không thu thập, lưu trữ, theo dõi hoặc truyền bất kỳ dữ liệu cá nhân nào của bạn.</strong></p>
+            <ul>
+                <li><strong>Lưu Trữ Nội Bộ</strong>: Mọi dữ liệu trò chơi—bao gồm điểm số cao nhất, điểm kinh nghiệm (XP), cấp bậc người chơi, cài đặt âm thanh và phản hồi xúc giác—được lưu trữ hoàn toàn nội bộ trên thiết bị của bạn thông qua UserDefaults chuẩn của hệ thống iOS.</li>
+                <li><strong>Không Phân Tích</strong>: Trò chơi không tích hợp bất kỳ SDK quảng cáo, thư viện phân tích hành vi hay bộ theo dõi người dùng của bên thứ ba nào.</li>
+                <li><strong>Không Đo Lường Từ Xa</strong>: Không có báo cáo sự cố (crash logs) hay dữ liệu hành vi chơi game nào được gửi về máy chủ của chúng tôi hoặc bất kỳ máy chủ bên thứ ba nào.</li>
+            </ul>
+
+            <h2>Game Center & GameKit</h2>
+            <p>Lunar Block hỗ trợ kết nối tùy chọn với dịch vụ Apple Game Center thông qua framework GameKit:</p>
+            <ul>
+                <li>Nếu bạn đăng nhập Game Center, điểm số kỷ lục và cấp bậc của bạn sẽ được tải lên máy chủ Game Center của Apple một cách an toàn để xếp hạng toàn cầu.</li>
+                <li>Mọi dữ liệu xác thực và bảng xếp hạng Game Center đều do Apple trực tiếp quản lý. Chúng tôi không thể tiếp cận, lưu trữ hoặc chỉnh sửa thông tin đăng nhập hoặc hồ sơ Game Center cá nhân của bạn.</li>
+            </ul>
+
+            <h2>Quyền Riêng Tư Của Trẻ Em</h2>
+            <p>Lunar Block an toàn tuyệt đối cho người chơi ở mọi lứa tuổi. Vì trò chơi không thu thập bất kỳ thông tin cá nhân nào từ bất kỳ ai, ứng dụng tuân thủ đầy đủ các quy định quốc tế về bảo vệ quyền riêng tư của trẻ em trực tuyến (bao gồm COPPA).</p>
+
+            <h2>Thay Đổi Chính Sách</h2>
+            <p>Chúng tôi có thể cập nhật Chính Sách Quyền Riêng Tư này theo thời gian. Mọi thay đổi sẽ được đăng tải trực tiếp trên trang này cùng với ngày cập nhật mới nhất.</p>
+
+            <h2>Liên Hệ</h2>
+            <p>Nếu bạn có bất kỳ câu hỏi hoặc phản hồi nào về chính sách quyền riêng tư này, vui lòng liên hệ với chúng tôi tại:<br>
+            <strong>phamhungtien.contact@gmail.com</strong></p>
+        </div>
+
+        <div class="footer">© 2026 Pham Hung Tien. All rights reserved.</div>
+    </div>
+
+    <script>
+        function switchLang(lang) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(lang).classList.add('active');
+            document.querySelectorAll('.lang-toggle button').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
