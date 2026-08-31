@@ -739,8 +739,7 @@ p {
   padding-top: 52px;
   padding-bottom: 58px;
   border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  background: var(--surface-muted);
+  background: transparent;
 }
 
 .contact-directory__header {
