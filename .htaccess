@@ -1,0 +1,44 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Redirect the fallback LunarV product path to the canonical URL
+  RewriteRule ^products/lunarv/?$ LunarV/ [R=301,L]
+  
+  # Redirect lowercase padcodeai and any subpaths to canonical URL
+  RewriteRule ^(?i)padcodeai/(.*)$ PadCodeAI/$1 [R=301,L]
+  RewriteRule ^(?i)padcodeai$ PadCodeAI/ [R=301,L]
+
+  # Redirect lowercase padnotesai and any subpaths to canonical URL
+  RewriteRule ^(?i)padnotesai/(.*)$ PadNotesAI/$1 [R=301,L]
+  RewriteRule ^(?i)padnotesai$ PadNotesAI/ [R=301,L]
+  
+  # Redirect /PHTV to /PHTV/
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^PHTV$ PHTV/ [R=301,L]
+
+  # Redirect /PadCodeAI to /PadCodeAI/
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^PadCodeAI$ PadCodeAI/ [R=301,L]
+
+  # Redirect /PadNotesAI to /PadNotesAI/
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^PadNotesAI$ PadNotesAI/ [R=301,L]
+
+  # SPA routing - redirect all PHTV requests to PHTV/index.html
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^PHTV/(.*)$ PHTV/index.html [QSA,L]
+</IfModule>
+
+# Security headers
+<FilesMatch "\.(js|css|woff|woff2|ttf|svg|eot)$">
+  Header set Cache-Control "max-age=31536000, immutable"
+</FilesMatch>
+
+<FilesMatch "\.(html|json)$">
+  Header set Cache-Control "no-cache, must-revalidate"
+</FilesMatch>

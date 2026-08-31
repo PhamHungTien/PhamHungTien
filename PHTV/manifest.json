@@ -1,0 +1,25 @@
+{
+  "name": "PHTV - Precision Hybrid Typing Vietnamese",
+  "short_name": "PHTV",
+  "description": "Bộ gõ tiếng Việt hiện đại cho macOS. Swift, Macro, Emoji Picker. Offline, nhanh, bảo mật.",
+  "start_url": "/PHTV/",
+  "scope": "/PHTV/",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#f43f5e",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "phtv-icon.png?v=2",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "phtv-icon.webp?v=2",
+      "sizes": "1024x1024",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    }
+  ]
+}
