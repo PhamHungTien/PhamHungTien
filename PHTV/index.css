@@ -184,6 +184,39 @@ html[data-theme="dark"] {
     line-height: 0;
   }
 
+  .phtv-footer-contact {
+    display: flex;
+    min-width: 0;
+    min-height: 64px;
+    align-items: center;
+    gap: 11px;
+    padding: 10px 12px;
+    border: 1px solid var(--phtv-line);
+    border-radius: 10px;
+    background: var(--phtv-surface);
+    transition: border-color 160ms ease, background-color 160ms ease;
+  }
+
+  a.phtv-footer-contact:hover {
+    border-color: color-mix(in srgb, var(--phtv-blue) 38%, var(--phtv-line));
+    background: color-mix(in srgb, var(--phtv-blue) 5%, var(--phtv-surface));
+  }
+
+  .phtv-footer-contact__icon {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    flex: 0 0 auto;
+    place-items: center;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--phtv-blue) 10%, var(--phtv-surface));
+    color: var(--phtv-blue);
+  }
+
+  .phtv-footer-contact__icon svg {
+    display: block;
+  }
+
   .phtv-community-toolbar,
   .phtv-community-composer,
   .phtv-discussion-card {

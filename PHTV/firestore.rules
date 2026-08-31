@@ -18,8 +18,7 @@ service cloud.firestore {
 
     // Admin identity is taken from the verified ID token, never from a document field.
     // The client's ADMIN_EMAILS list only decides which buttons to draw; it grants nothing.
-    // 'admin@phtv.com' is deliberately absent: do not grant admin to an address you do
-    // not control.
+    // Only the shared contact address is granted administrator access.
     function isAdmin() {
       return signedIn()
         && request.auth.token.email_verified == true

@@ -1,6 +1,7 @@
 import type { Lang, Product } from './types';
 import { products } from './data/products';
 import { translate } from './i18n';
+import { publicProfileUrls } from './data/socials';
 
 export const SITE = {
   origin: 'https://phamhungtien.com',
@@ -63,7 +64,7 @@ const personSchema = {
   alternateName: SITE.name,
   url: `${SITE.origin}/`,
   email: `mailto:${SITE.email}`,
-  sameAs: [SITE.github]
+  sameAs: publicProfileUrls
 };
 
 function softwareApplicationSchema(product: Product, lang: Lang) {

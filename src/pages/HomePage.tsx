@@ -2,6 +2,7 @@ import { ArrowRight } from 'lucide-react';
 import type { Lang } from '../types';
 import { products } from '../data/products';
 import { Header } from '../components/Header';
+import { ContactSection } from '../components/ContactSection';
 
 interface HomePageProps {
   lang: Lang;
@@ -37,12 +38,14 @@ export function HomePage({ lang, onLanguageChange, t }: HomePageProps) {
             ))}
           </div>
         </section>
+
+        <ContactSection t={t} />
       </main>
 
       <footer className="site-footer">
         <span>{t('home.footer.note')}</span>
         <nav aria-label="Footer">
-          <a href="mailto:contact@phamhungtien.com">{t('nav.contact')}</a>
+          <a href="#contact">{t('nav.contact')}</a>
         </nav>
       </footer>
     </div>

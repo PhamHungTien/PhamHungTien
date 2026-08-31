@@ -53,7 +53,37 @@
     applyTheme(theme);
   }
 
+  function mountLegalContactLinks() {
+    var footer = document.querySelector('.container > .footer');
+    if (!footer || document.querySelector('[data-legal-contacts]')) return;
+
+    var contacts = document.createElement('section');
+    contacts.className = 'legal-contact-panel';
+    contacts.setAttribute('data-legal-contacts', '');
+    contacts.setAttribute('aria-label', 'Liên hệ / Contact');
+    contacts.innerHTML = [
+      '<h2 class="legal-contact-panel__title">Liên hệ · Contact</h2>',
+      '<div class="legal-contact-grid">',
+      '<a class="legal-contact-item" href="https://www.facebook.com/phamhungtien1404" target="_blank" rel="noopener noreferrer"><span class="legal-contact-mark">f</span><span><strong>Facebook</strong><small>@phamhungtien1404</small></span></a>',
+      '<a class="legal-contact-item" href="https://www.instagram.com/phamhungtien1404/" target="_blank" rel="noopener noreferrer"><span class="legal-contact-mark">ig</span><span><strong>Instagram</strong><small>@phamhungtien1404</small></span></a>',
+      '<a class="legal-contact-item" href="https://www.threads.net/@phamhungtien1404" target="_blank" rel="noopener noreferrer"><span class="legal-contact-mark">@</span><span><strong>Threads</strong><small>@phamhungtien1404</small></span></a>',
+      '<span class="legal-contact-item legal-contact-item--static"><span class="legal-contact-mark">◉</span><span><strong>Locket</strong><small>@phamhungtien</small></span></span>',
+      '<a class="legal-contact-item" href="https://www.tiktok.com/@phamhungtien14" target="_blank" rel="noopener noreferrer"><span class="legal-contact-mark">♪</span><span><strong>TikTok</strong><small>@phamhungtien14</small></span></a>',
+      '<a class="legal-contact-item" href="https://www.linkedin.com/in/ph%E1%BA%A1m-h%C3%B9ng-ti%E1%BA%BFn-a1b405327/" target="_blank" rel="noopener noreferrer"><span class="legal-contact-mark">in</span><span><strong>LinkedIn</strong><small>Phạm Hùng Tiến</small></span></a>',
+      '<a class="legal-contact-item" href="https://github.com/PhamHungTien" target="_blank" rel="noopener noreferrer"><span class="legal-contact-mark">gh</span><span><strong>GitHub</strong><small>@PhamHungTien</small></span></a>',
+      '<a class="legal-contact-item" href="mailto:contact@phamhungtien.com"><span class="legal-contact-mark">@</span><span><strong>Email</strong><small>contact@phamhungtien.com</small></span></a>',
+      '</div>'
+    ].join('');
+    footer.parentNode.insertBefore(contacts, footer);
+  }
+
   applyTheme(getPreferredTheme());
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', mountLegalContactLinks, { once: true });
+  } else {
+    mountLegalContactLinks();
+  }
 
   if (shouldRenderToggle) {
     var mountToggle = function () {

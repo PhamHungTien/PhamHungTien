@@ -60,7 +60,11 @@ import {
   BellOff,
   Link2,
   Mail,
-  Sun
+  Sun,
+  Facebook,
+  Instagram,
+  Camera,
+  Music2
 } from 'lucide-react';
 
 export const Icons = {
@@ -125,5 +129,9 @@ export const Icons = {
   Bell,
   BellOff,
   Link2,
-  Mail
+  Mail,
+  Facebook,
+  Instagram,
+  Camera,
+  Music2
 };

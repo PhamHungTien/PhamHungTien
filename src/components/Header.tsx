@@ -72,8 +72,9 @@ export function Header({ lang, onLanguageChange, t, productName }: HeaderProps) 
         ) : (
           <a href="#products">{t('nav.products')}</a>
         )}
+        {!productName && <a href="#contact">{t('nav.contact')}</a>}
         {productName && <a href="/PHTV/">{t('nav.phtv')}</a>}
-        {productName && <a href="#support">{t('nav.contact')}</a>}
+        {productName && <a href="#contact">{t('nav.contact')}</a>}
       </nav>
 
       <div className="header-actions">
@@ -119,7 +120,7 @@ export function Header({ lang, onLanguageChange, t, productName }: HeaderProps) 
             {t('common.backHome')}
           </a>
           <a href="/PHTV/" onClick={closeMenu}>{t('nav.phtv')}</a>
-          <a href="#support" onClick={closeMenu}>{t('nav.contact')}</a>
+          <a href="#contact" onClick={closeMenu}>{t('nav.contact')}</a>
         </nav>
       )}
     </header>

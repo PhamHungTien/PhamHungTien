@@ -1,8 +1,9 @@
-import { ArrowRight, ExternalLink, Github, Mail, Store } from 'lucide-react';
+import { ArrowRight, ExternalLink, Github, Store } from 'lucide-react';
 import type { CSSProperties } from 'react';
 import type { Lang, Product } from '../types';
 import { Header } from '../components/Header';
 import { PhtvWordmark } from '../components/PhtvWordmark';
+import { ContactSection } from '../components/ContactSection';
 
 interface ProductPageProps {
   product: Product;
@@ -110,21 +111,12 @@ export function ProductPage({ product, lang, onLanguageChange, t }: ProductPageP
           </div>
         </section>
 
-        <section className="support-section" id="support">
-          <h2>{t('product.support')}</h2>
-          <div className="contact-actions">
-            <a className="button button--primary" href="mailto:contact@phamhungtien.com">
-              <Mail size={18} />
-              {t('product.supportCta')}
-            </a>
-            <a className="button button--secondary" href={`${product.route}privacy.html`}>
-              {t('product.privacy')}
-            </a>
-            <a className="button button--secondary" href={`${product.route}terms.html`}>
-              {t('product.terms')}
-            </a>
-          </div>
-        </section>
+        <ContactSection t={t} />
+
+        <nav className="product-legal" aria-label={t('product.support')}>
+          <a href={`${product.route}privacy.html`}>{t('product.privacy')}</a>
+          <a href={`${product.route}terms.html`}>{t('product.terms')}</a>
+        </nav>
       </main>
     </div>
   );

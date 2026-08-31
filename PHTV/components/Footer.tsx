@@ -1,8 +1,20 @@
 import React from 'react';
 import { Icons } from "./Icons";
 import { useI18n } from '../i18n';
+import { socialProfiles } from '../../src/data/socials';
 
 const iconImg = '/PHTV/phtv-icon.webp';
+
+const socialIcons = {
+  facebook: Icons.Facebook,
+  instagram: Icons.Instagram,
+  threads: Icons.AtSign,
+  locket: Icons.Camera,
+  tiktok: Icons.Music2,
+  linkedin: Icons.Linkedin,
+  github: Icons.Github,
+  email: Icons.Mail
+};
 
 interface FooterProps {
   onDonateClick: () => void;
@@ -26,33 +38,6 @@ export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
               </div>
             </div>
 
-            <div className="mt-6 flex flex-wrap gap-3">
-              {[
-                { icon: Icons.Github, href: 'https://github.com/PhamHungTien/PHTV', label: 'GitHub' },
-                { icon: Icons.Linkedin, href: 'https://www.linkedin.com/in/ph%E1%BA%A1m-h%C3%B9ng-ti%E1%BA%BFn-a1b405327/', label: 'LinkedIn' },
-              ].map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] text-slate-300 transition-colors hover:text-white"
-                  title={social.label}
-                >
-                  <social.icon size={18} />
-                </a>
-              ))}
-
-              <a
-                href="mailto:contact@phamhungtien.com"
-                className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] text-slate-300 transition-colors hover:text-white"
-                title="Email"
-              >
-                <svg className="h-[18px] w-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z" />
-                </svg>
-              </a>
-            </div>
           </div>
 
           <div className="md:text-right">
@@ -65,6 +50,38 @@ export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
               <li><a href="terms.html" className="transition-colors hover:text-white">Terms of Use</a></li>
             </ul>
           </div>
+        </div>
+
+        <div className="phtv-footer-contacts mt-8 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+          {socialProfiles.map((social) => {
+            const Icon = socialIcons[social.id];
+            const content = (
+              <>
+                <span className="phtv-footer-contact__icon"><Icon size={17} /></span>
+                <span className="min-w-0">
+                  <strong className="block text-sm font-semibold text-white">{social.label}</strong>
+                  <small className="block truncate text-xs text-slate-400">{social.handle}</small>
+                </span>
+                {social.href && <Icons.ArrowRight className="ml-auto shrink-0 text-slate-500" size={15} />}
+              </>
+            );
+
+            return social.href ? (
+              <a
+                key={social.id}
+                href={social.href}
+                target={social.href.startsWith('https://') ? '_blank' : undefined}
+                rel={social.href.startsWith('https://') ? 'noopener noreferrer' : undefined}
+                className="phtv-footer-contact"
+              >
+                {content}
+              </a>
+            ) : (
+              <div key={social.id} className="phtv-footer-contact phtv-footer-contact--static">
+                {content}
+              </div>
+            );
+          })}
         </div>
 
         <div className="mt-12 flex flex-col gap-3 border-t border-white/6 pt-6 text-sm text-slate-500 md:flex-row md:items-center md:justify-between">

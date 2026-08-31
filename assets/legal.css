@@ -160,6 +160,88 @@ ul {
   font-size: 13px;
 }
 
+.legal-contact-panel {
+  margin-top: 46px;
+  padding-top: 30px;
+  border-top: 1px solid var(--border);
+}
+
+.legal-contact-panel__title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 650;
+}
+
+.legal-contact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.legal-contact-item {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+  min-height: 58px;
+  padding: 9px 10px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+
+a.legal-contact-item:hover {
+  border-color: color-mix(in srgb, var(--accent) 36%, var(--border));
+  background: color-mix(in srgb, var(--accent) 5%, var(--surface));
+}
+
+.legal-contact-mark {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.legal-contact-item > span:last-child {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.legal-contact-item strong,
+.legal-contact-item small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.legal-contact-item strong {
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.legal-contact-item small {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+@media (max-width: 520px) {
+  .legal-contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .shared-theme-toggle {
   position: fixed;
   right: max(18px, env(safe-area-inset-right));

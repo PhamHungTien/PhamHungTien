@@ -94,7 +94,7 @@ interface AppNotification {
   isRead: boolean;
 }
 
-const ADMIN_EMAILS = ['admin@phtv.com', 'contact@phamhungtien.com'];
+const ADMIN_EMAILS = ['contact@phamhungtien.com'];
 const ADMIN_NAME_KEYS = ['pham hung tien'];
 const POSTS_PER_PAGE = 15;
 
