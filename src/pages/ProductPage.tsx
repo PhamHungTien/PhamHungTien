@@ -37,7 +37,6 @@ export function ProductPage({ product, lang, onLanguageChange, t }: ProductPageP
 
             <h1>{product.title[lang]}</h1>
             <p className="detail-subtitle">{product.subtitle[lang]}</p>
-            <p className="detail-description">{product.description[lang]}</p>
             <div className="hero-actions">
               <a className="button button--primary" href={primaryHref} target={product.appStoreUrl ? '_blank' : undefined} rel={product.appStoreUrl ? 'noopener' : undefined}>
                 {product.appStoreUrl ? <Store size={18} /> : <ArrowRight size={18} />}
@@ -90,10 +89,7 @@ export function ProductPage({ product, lang, onLanguageChange, t }: ProductPageP
               {product.features.map((feature) => (
                 <article key={feature.title.en}>
                   <span className="feature-dot" />
-                  <div>
-                    <h3>{feature.title[lang]}</h3>
-                    <p>{feature.description[lang]}</p>
-                  </div>
+                  <h3>{feature.title[lang]}</h3>
                 </article>
               ))}
             </div>
@@ -103,7 +99,6 @@ export function ProductPage({ product, lang, onLanguageChange, t }: ProductPageP
         <section className="gallery-section" id="gallery">
           <div className="section-copy">
             <h2>{t('product.gallery')}</h2>
-            <p>{product.subtitle[lang]}</p>
           </div>
           <div className="gallery-strip">
             {product.gallery.map((image) => (
@@ -116,10 +111,7 @@ export function ProductPage({ product, lang, onLanguageChange, t }: ProductPageP
         </section>
 
         <section className="support-section" id="support">
-          <div>
-            <h2>{t('product.support')}</h2>
-            <p>{product.support[lang]}</p>
-          </div>
+          <h2>{t('product.support')}</h2>
           <div className="contact-actions">
             <a className="button button--primary" href="mailto:contact@phamhungtien.com">
               <Mail size={18} />

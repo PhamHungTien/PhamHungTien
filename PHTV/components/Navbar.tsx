@@ -222,11 +222,11 @@ export const Navbar: React.FC<NavbarProps> = ({
               href="https://github.com/PhamHungTien/PHTV" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="phtv-nav-control phtv-icon-control hidden rounded-lg border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition-colors hover:text-white sm:flex"
+              className="phtv-nav-control phtv-icon-control hidden items-center justify-center rounded-lg border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition-colors hover:text-white sm:flex"
               title="GitHub Repository"
               aria-label="Xem mã nguồn trên GitHub"
             >
-              <Icons.Github size={22} />
+              <Icons.Github size={18} aria-hidden="true" />
             </a>
             
             {hasSplitDownloads ? (
@@ -405,8 +405,8 @@ export const Navbar: React.FC<NavbarProps> = ({
               </a>
             )}
             <div className="flex justify-center gap-6 border-t border-white/5 pt-4">
-              <a href="https://github.com/PhamHungTien/PHTV" className="text-slate-400 transition-colors hover:text-white"><Icons.Github size={24} /></a>
-              <a href="mailto:contact@phamhungtien.com" className="text-slate-400 transition-colors hover:text-white"><Icons.Coffee size={24} /></a>
+              <a href="https://github.com/PhamHungTien/PHTV" className="phtv-mobile-social" aria-label="GitHub"><Icons.Github size={20} /></a>
+              <a href="mailto:contact@phamhungtien.com" className="phtv-mobile-social" aria-label="Email hỗ trợ"><Icons.Coffee size={20} /></a>
             </div>
           </div>
         </div>

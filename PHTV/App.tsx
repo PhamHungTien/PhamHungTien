@@ -277,9 +277,6 @@ function App() {
                   <h2 className="phtv-hero-title mx-auto mt-7 max-w-lg text-3xl font-semibold leading-tight text-white lg:mx-0 lg:text-4xl">
                     {t('home.hero_title')}
                   </h2>
-                  <p className="phtv-hero-description mx-auto mt-4 max-w-md text-base leading-relaxed text-slate-300 lg:mx-0 lg:max-w-none lg:text-lg">
-                    {t('home.hero_desc')}
-                  </p>
                 </div>
 
                 <div className="mx-auto w-full max-w-xl px-1 lg:mx-0 min-w-0">
@@ -406,9 +403,6 @@ function App() {
                 <h2 className="text-2xl font-semibold text-white md:text-3xl">
                   {t('install.title')}
                 </h2>
-                <p className="mt-3 text-sm leading-6 text-slate-400">
-                  {t('install.desc')}
-                </p>
               </div>
 
               <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1.08fr_0.92fr]">
@@ -468,9 +462,6 @@ function App() {
                 <h2 className="text-2xl font-semibold text-white md:text-3xl">
                   {t('gallery.title')}
                 </h2>
-                <p className="mt-3 text-sm leading-6 text-slate-400">
-                  {t('gallery.desc')}
-                </p>
               </div>
               <div className="grid grid-flow-col auto-cols-[minmax(260px,360px)] gap-4 overflow-x-auto pb-3">
                 {latestGallery.map((item) => (

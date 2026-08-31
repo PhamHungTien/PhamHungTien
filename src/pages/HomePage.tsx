@@ -31,7 +31,6 @@ export function HomePage({ lang, onLanguageChange, t }: HomePageProps) {
                     <small className="product-row__platforms-mobile">{product.platforms[lang]}</small>
                   </span>
                 </span>
-                <span className="product-row__summary">{product.description[lang]}</span>
                 <span className="product-row__platforms">{product.platforms[lang]}</span>
                 <ArrowRight size={18} />
               </a>

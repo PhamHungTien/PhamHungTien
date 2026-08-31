@@ -677,87 +677,18 @@ export const QASection: React.FC = () => {
   );
 
   return (
-    <div className="phtv-community mx-auto min-h-screen max-w-6xl px-4 py-6 md:px-6 md:py-10">
-      <div className="phtv-community-layout grid gap-5 lg:grid-cols-[280px_minmax(0,1fr)] lg:items-start">
-        <aside className="phtv-community-aside order-2 space-y-4 lg:order-1 lg:sticky lg:top-24">
-          <section className="rounded-[2rem] border border-white/[0.055] bg-[linear-gradient(180deg,rgba(15,23,42,0.72),rgba(8,11,18,0.66))] p-5 shadow-[0_18px_52px_rgba(2,6,23,0.34)] backdrop-blur">
-            <div className="mb-4 flex items-center justify-between">
-              <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.24em] text-slate-500">Tổng quan</p>
-                <h3 className="mt-1 text-lg font-black tracking-tight text-white">Tình trạng thảo luận</h3>
-              </div>
-              <span className="rounded-full border border-emerald-400/15 bg-emerald-400/10 px-2.5 py-1 text-[10px] font-bold text-emerald-300">
-                Live
-              </span>
-            </div>
-
-            <div className="grid grid-cols-2 gap-3">
-              <div className="rounded-2xl border border-white/[0.055] bg-white/[0.022] p-3">
-                <p className="text-[10px] font-semibold text-slate-400">Tổng bài</p>
-                <p className="mt-2 text-2xl font-black text-white tabular-nums">{communityStats.total}</p>
-              </div>
-              <div className="rounded-2xl border border-emerald-400/12 bg-emerald-400/[0.045] p-3">
-                <p className="text-[10px] font-semibold text-emerald-200">Đã phản hồi</p>
-                <p className="mt-2 text-2xl font-black text-white tabular-nums">{communityStats.responded}</p>
-              </div>
-              <div className="rounded-2xl border border-white/[0.055] bg-white/[0.022] p-3">
-                <p className="text-[10px] font-semibold text-slate-400">Đang chờ</p>
-                <p className="mt-2 text-2xl font-black text-white tabular-nums">{communityStats.pending}</p>
-              </div>
-              <div className="rounded-2xl border border-white/[0.055] bg-white/[0.022] p-3">
-                <p className="text-[10px] font-semibold text-slate-400">Phản hồi</p>
-                <p className="mt-2 text-2xl font-black text-white tabular-nums">{communityStats.totalReplies}</p>
-              </div>
-            </div>
-
-            <div className="mt-4 rounded-2xl border border-white/[0.055] bg-white/[0.022] p-4">
-              <div className="flex items-center gap-2 text-sm font-semibold text-white">
-                <Icons.ShieldCheck size={15} className="text-rose-400" />
-                Lưu ý ngắn
-              </div>
-              <p className="mt-2 text-sm leading-6 text-slate-400">
-                Ưu tiên mô tả rõ lỗi, bước tái hiện và phiên bản đang dùng để admin phản hồi nhanh hơn.
-              </p>
-            </div>
-          </section>
-
-          <section className="rounded-[2rem] border border-white/[0.055] bg-[linear-gradient(180deg,rgba(15,23,42,0.72),rgba(8,11,18,0.66))] p-5 shadow-[0_18px_52px_rgba(2,6,23,0.34)] backdrop-blur">
-            <div className="flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-rose-500/15 text-rose-300">
-                <Icons.MessageSquare size={18} />
-              </div>
-              <div>
-                <h3 className="text-base font-black tracking-tight text-white">Kênh hỗ trợ</h3>
-                <p className="text-sm text-slate-400">Cần trao đổi nhanh hơn thì vào Discord.</p>
-              </div>
-            </div>
-
-            <a
-              href="https://discord.gg/hm2C4tbaDz"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 flex items-center justify-between rounded-2xl border border-[#5865F2]/25 bg-[#5865F2]/10 px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#5865F2]/15"
-            >
-              <span>Vào Discord hỗ trợ</span>
-              <Icons.ArrowRight size={15} className="text-[#aeb7ff]" />
-            </a>
-
-          </section>
-        </aside>
-
-        <main className="phtv-community-main order-1 space-y-5 lg:order-2">
+    <div className="phtv-community mx-auto min-h-screen max-w-4xl px-4 py-6 md:px-6 md:py-10">
+      <div className="phtv-community-layout">
+        <main className="phtv-community-main space-y-4">
           <section className="phtv-community-toolbar rounded-[2rem] border border-white/[0.055] bg-[linear-gradient(180deg,rgba(15,23,42,0.72),rgba(8,11,18,0.66))] p-5 shadow-[0_18px_52px_rgba(2,6,23,0.34)] backdrop-blur md:p-6">
             <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
-              <div className="space-y-3">
-                <div className="inline-flex items-center gap-2 rounded-full border border-white/[0.055] bg-white/[0.022] px-3 py-1 text-[10px] font-black uppercase tracking-[0.24em] text-slate-400">
-                  <Icons.Info size={12} className="text-rose-400" />
-                  Thảo luận PHTV
-                </div>
-                <div>
-                  <h2 className="text-3xl font-black tracking-tight text-white md:text-[2.15rem]">
-                    Thảo luận PHTV
-                  </h2>
-                </div>
+              <div>
+                <h2 className="text-3xl font-black tracking-tight text-white md:text-[2.15rem]">
+                  Thảo luận
+                </h2>
+                <p className="mt-2 text-sm text-slate-400">
+                  {communityStats.total} bài · {communityStats.pending} đang chờ phản hồi
+                </p>
               </div>
 
               <div className="flex flex-wrap items-center gap-3 lg:justify-end">
@@ -858,40 +789,33 @@ export const QASection: React.FC = () => {
               </div>
             </div>
 
-            <div className="mt-5 grid gap-3 xl:grid-cols-[minmax(0,1fr)_auto_auto]">
+            <div className="mt-5 grid gap-3 md:grid-cols-[minmax(0,1fr)_160px_190px]">
               <label className="relative block">
                 <Icons.Search className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
                 <input
                   id="search-input"
                   name="search"
                   type="text"
-                  placeholder="Tìm nội dung, thành viên hoặc tình trạng xử lý..."
+                  placeholder="Tìm thảo luận..."
                   value={searchQuery}
                   onChange={(e) => setSearchBy(e.target.value)}
                   className="w-full rounded-2xl border border-white/[0.055] bg-white/[0.022] py-3 pl-11 pr-4 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-rose-400/30"
                 />
               </label>
 
-              <div className="grid grid-cols-3 gap-1 rounded-2xl border border-white/[0.055] bg-white/[0.022] p-1">
-                {[
-                  { id: 'newest', label: 'Mới nhất', icon: Icons.RefreshCw },
-                  { id: 'trending', label: 'Xu hướng', icon: Icons.Sparkles },
-                  { id: 'popular', label: 'Yêu thích', icon: Icons.Award }
-                ].map((tab) => (
-                  <button
-                    key={tab.id}
-                    onClick={() => setSortBy(tab.id as typeof sortBy)}
-                    className={`flex items-center justify-center gap-2 rounded-xl px-3 py-2 text-xs font-semibold transition ${
-                      sortBy === tab.id
-                        ? 'bg-white text-slate-950'
-                        : 'text-slate-300 hover:bg-white/[0.04] hover:text-white'
-                    }`}
-                  >
-                    <tab.icon size={14} />
-                    <span>{tab.label}</span>
-                  </button>
-                ))}
-              </div>
+              <label className="flex items-center gap-2 rounded-2xl border border-white/[0.055] bg-white/[0.022] px-4 py-3 text-sm text-slate-300">
+                <Icons.RefreshCw size={14} className="text-rose-400" />
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
+                  className="w-full bg-transparent text-sm text-white outline-none"
+                  aria-label="Sắp xếp"
+                >
+                  <option value="newest" className="bg-slate-900">Mới nhất</option>
+                  <option value="trending" className="bg-slate-900">Nổi bật</option>
+                  <option value="popular" className="bg-slate-900">Yêu thích</option>
+                </select>
+              </label>
 
               <label className="flex items-center gap-2 rounded-2xl border border-white/[0.055] bg-white/[0.022] px-4 py-3 text-sm text-slate-300">
                 <Icons.Filter size={14} className="text-rose-400" />
@@ -904,7 +828,7 @@ export const QASection: React.FC = () => {
                 >
                   <option value="all" className="bg-slate-900">Tất cả</option>
                   <option value="mine" className="bg-slate-900">Bài của tôi</option>
-                  <option value="unanswered" className="bg-slate-900">Chưa có phản hồi admin</option>
+                  <option value="unanswered" className="bg-slate-900">Chưa phản hồi</option>
                   {currentUser?.isAdmin && <option value="reported" className="bg-slate-900">Bài bị báo cáo</option>}
                 </select>
               </label>
@@ -912,53 +836,37 @@ export const QASection: React.FC = () => {
           </section>
 
           <section className="phtv-community-composer rounded-[2rem] border border-white/[0.055] bg-[linear-gradient(180deg,rgba(15,23,42,0.72),rgba(8,11,18,0.66))] p-5 shadow-[0_18px_52px_rgba(2,6,23,0.34)] backdrop-blur md:p-6">
-            <form onSubmit={handleAskQuestion} className="space-y-4">
-              <div className="flex items-start gap-3">
-                <Avatar
-                  user={{ username: currentUser?.username || 'User', photoURL: currentUser?.photoURL, isAdmin: currentUser?.isAdmin }}
-                  size="w-10 h-10"
-                  isAdmin={currentUser?.isAdmin}
-                />
-                <div className="min-w-0 flex-1">
-                  <textarea
-                    id="new-question-input"
-                    name="question"
-                    placeholder={currentUser ? 'Mô tả ngắn gọn vấn đề hoặc câu hỏi của bạn...' : 'Đăng nhập Google để bắt đầu thảo luận...'}
-                    value={newQuestion}
-                    onChange={(e) => setNewQuestion(e.target.value)}
-                    disabled={isSubmitting}
-                    className="min-h-[110px] w-full resize-none rounded-[1.5rem] border border-white/[0.055] bg-white/[0.022] px-4 py-3 text-sm leading-6 text-white outline-none transition placeholder:text-slate-500 focus:border-rose-400/30"
-                    required
-                  />
-                </div>
-              </div>
+            <form onSubmit={handleAskQuestion} className="space-y-3">
+              <textarea
+                id="new-question-input"
+                name="question"
+                placeholder={currentUser ? 'Bạn muốn trao đổi điều gì?' : 'Đăng nhập để bắt đầu thảo luận'}
+                value={newQuestion}
+                onChange={(e) => setNewQuestion(e.target.value)}
+                disabled={isSubmitting}
+                className="min-h-[92px] w-full resize-none rounded-2xl border border-white/[0.055] bg-white/[0.022] px-4 py-3 text-sm leading-6 text-white outline-none transition placeholder:text-slate-500 focus:border-rose-400/30"
+                required
+              />
 
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="mr-1 text-xs font-semibold text-slate-400">Phân loại:</span>
-                {LABELS.map((label) => (
-                  <button
-                    key={label.id}
-                    type="button"
-                    onClick={() => setSelectedLabel(selectedLabel === label.id ? null : label.id)}
-                    className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition ${
-                      selectedLabel === label.id
-                        ? `${label.bg} ${label.color} border-transparent`
-                        : 'border-white/[0.06] bg-white/[0.022] text-slate-300 hover:bg-white/[0.05]'
-                    }`}
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <label className="flex min-h-11 items-center gap-2 rounded-xl border border-white/[0.055] bg-white/[0.022] px-3 text-sm text-slate-300 sm:w-48">
+                  <Icons.Tag size={14} className="text-rose-400" />
+                  <select
+                    value={selectedLabel ?? ''}
+                    onChange={(e) => setSelectedLabel((e.target.value || null) as LabelType)}
+                    className="w-full bg-transparent text-sm text-white outline-none"
+                    aria-label="Phân loại"
                   >
-                    {label.label}
-                  </button>
-                ))}
-              </div>
-
-              <div className="flex flex-col gap-3 border-t border-white/[0.055] pt-4 sm:flex-row sm:items-center sm:justify-between">
-                <p className="text-sm text-slate-400">
-                  Viết rõ lỗi, bước tái hiện hoặc phiên bản để người khác và admin dễ hỗ trợ hơn.
-                </p>
+                    <option value="" className="bg-slate-900">Phân loại</option>
+                    {LABELS.map((label) => (
+                      <option key={label.id} value={label.id ?? ''} className="bg-slate-900">{label.label}</option>
+                    ))}
+                  </select>
+                </label>
                 <button
                   type="submit"
                   disabled={isSubmitting || !newQuestion.trim()}
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-slate-950 transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-white px-4 text-sm font-semibold text-slate-950 transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {isSubmitting ? <Icons.RefreshCw className="animate-spin" size={15} /> : <Icons.Send size={15} />}
                   <span>Đăng thảo luận</span>
@@ -981,7 +889,6 @@ export const QASection: React.FC = () => {
             ) : (
               displayQuestions.map((question) => {
                 const labelInfo = LABELS.find((label) => label.id === question.label);
-                const latestAdminReply = getLatestAdminReply(question);
                 const orderedReplies = getOrderedReplies(question);
                 const statusMeta = getQuestionStatusMeta(question);
                 const StatusIcon = statusMeta.icon;
@@ -1022,6 +929,10 @@ export const QASection: React.FC = () => {
                                   {labelInfo.label}
                                 </span>
                               )}
+                              <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-semibold ${statusMeta.badgeClassName}`}>
+                                <StatusIcon size={12} />
+                                {statusMeta.label}
+                              </span>
                               {question.isPinned && (
                                 <span className="inline-flex items-center gap-1 rounded-full border border-rose-300/16 bg-rose-400/10 px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-rose-200">
                                   <Icons.Paperclip size={11} />
@@ -1032,10 +943,6 @@ export const QASection: React.FC = () => {
 
                             <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-slate-400">
                               <span>{formatRelativeTime(question.timestamp)}</span>
-                              <span className="inline-flex items-center gap-1">
-                                <Icons.Eye size={13} />
-                                {question.viewCount || 0}
-                              </span>
                               <button onClick={() => reportContent(question.id)} className="transition hover:text-white">
                                 Báo cáo
                               </button>
@@ -1102,55 +1009,13 @@ export const QASection: React.FC = () => {
                             </div>
                           </div>
                         ) : (
-                          <div className="phtv-discussion-content rounded-[1.5rem] border border-white/[0.055] bg-white/[0.022] p-4">
+                          <div className="phtv-discussion-content py-1">
                             <SmartContent
                               content={isExpanded ? question.content : getContentPreview(question.content, 280)}
                               className="text-sm leading-7 text-slate-200"
                             />
                           </div>
                         )}
-
-                        <div className={`phtv-discussion-status rounded-[1.5rem] border p-4 ${statusMeta.containerClassName}`}>
-                          <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-                            <div className="min-w-0 flex-1">
-                              <div className="flex flex-wrap items-center gap-2">
-                                <span className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold ${statusMeta.badgeClassName}`}>
-                                  <StatusIcon size={14} />
-                                  {statusMeta.label}
-                                </span>
-                                <span className="text-sm text-slate-300">{statusMeta.note}</span>
-                              </div>
-
-                              <div className="mt-3 space-y-2">
-                                {latestAdminReply ? (
-                                  <>
-                                    <p className="text-sm leading-6 text-slate-200">
-                                      {getContentPreview(latestAdminReply.content)}
-                                    </p>
-                                    <div className="flex flex-wrap items-center gap-3 text-xs text-slate-400">
-                                      <span className="font-semibold text-white">{latestAdminReply.author}</span>
-                                      <span>{formatRelativeTime(latestAdminReply.timestamp)}</span>
-                                    </div>
-                                  </>
-                                ) : (
-                                  <p className="text-sm leading-6 text-slate-400">
-                                    Admin chưa phản hồi trên thảo luận này.
-                                  </p>
-                                )}
-                              </div>
-                            </div>
-
-                            <button
-                              onClick={() => {
-                                if (!isExpanded) toggleQuestionReplies(question);
-                              }}
-                              className="inline-flex items-center gap-2 self-start rounded-xl border border-white/[0.055] bg-white/[0.022] px-3 py-2 text-sm text-slate-300 transition hover:bg-white/[0.04] hover:text-white"
-                            >
-                              <Icons.MessageSquareReply size={14} />
-                              {replyCount > 0 ? 'Mở thảo luận' : 'Phản hồi'}
-                            </button>
-                          </div>
-                        </div>
 
                         <div className="flex flex-wrap items-center gap-3 border-t border-white/[0.055] pt-1">
                           <button
@@ -1374,13 +1239,33 @@ export const QASection: React.FC = () => {
 
       {/* Modals */}
       {showAuthModal && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-6"><div className="absolute inset-0 bg-slate-950/90 backdrop-blur-3xl" onClick={() => setShowAuthModal(false)}></div><div className="relative w-full max-w-sm bg-slate-900 rounded-[3.5rem] p-12 border border-white/[0.06] shadow-2xl animate-in zoom-in-95"><button onClick={() => setShowAuthModal(false)} className="absolute top-10 right-10 text-slate-600 p-2"><Icons.X size={28} /></button><div className="text-center mb-10"><div className="w-20 h-20 bg-gradient-to-br from-rose-500/20 to-pink-500/20 rounded-[2rem] flex items-center justify-center mx-auto mb-10 text-rose-400 shadow-3xl"><Icons.User size={48} /></div><h3 className="text-4xl font-black text-white tracking-tighter leading-none mb-4 uppercase">Chào bạn!</h3><p className="text-slate-500 text-sm font-medium leading-relaxed uppercase tracking-widest text-[9px]">Cộng đồng PHTV Việt Nam</p></div><button onClick={handleGoogleLogin} className="w-full py-6 bg-white text-slate-950 rounded-[1.5rem] font-black text-lg flex items-center justify-center gap-4 transition-all active:scale-95 shadow-2xl"><svg className="w-7 h-7" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Đăng nhập ngay</button></div></div>
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-5">
+          <button className="absolute inset-0 bg-slate-950/85" onClick={() => setShowAuthModal(false)} aria-label="Đóng" />
+          <div className="relative w-full max-w-sm rounded-2xl border border-white/10 bg-slate-900 p-6 shadow-2xl">
+            <button onClick={() => setShowAuthModal(false)} className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-lg text-slate-400 hover:bg-white/5 hover:text-white" aria-label="Đóng">
+              <Icons.X size={18} />
+            </button>
+            <h3 className="text-xl font-bold text-white">Đăng nhập để thảo luận</h3>
+            <button onClick={handleGoogleLogin} className="mt-6 flex min-h-12 w-full items-center justify-center gap-3 rounded-xl bg-white px-4 font-semibold text-slate-950">
+              <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+              Tiếp tục với Google
+            </button>
+          </div>
+        </div>
       )}
       {showNamePrompt && (
-        <div className="fixed inset-0 z-[250] flex items-center justify-center p-6"><div className="absolute inset-0 bg-slate-950/95 backdrop-blur-3xl animate-in fade-in duration-1000"></div><div className="relative w-full max-w-lg bg-slate-900 rounded-[4rem] p-12 md:p-16 border border-white/[0.06] shadow-3xl animate-in zoom-in-95 duration-500"><div className="text-center mb-12 space-y-4"><div className="w-24 h-24 bg-gradient-to-br from-rose-500 to-pink-600 rounded-[2rem] flex items-center justify-center mx-auto shadow-2xl rotate-3"><Icons.UserCheck size={48} className="text-white" /></div><h3 className="text-4xl font-black text-white tracking-tighter uppercase italic leading-none">Bạn là ai?</h3><p className="text-slate-500 text-lg font-medium italic">Chọn một danh xưng thật đẳng cấp cho cộng đồng</p></div><input id="username-input" name="username" type="text" value={tempUsername} onChange={e => setTempUsername(e.target.value)} className="w-full bg-slate-950 border border-white/[0.06] rounded-[2rem] py-6 px-10 text-white font-black mb-10 text-center text-3xl focus:border-brand-500/50 outline-none transition-all shadow-inner placeholder:text-slate-800" placeholder="Nhập tên..." /><button onClick={handleUpdateName} className="w-full py-6 bg-white text-slate-950 rounded-[2rem] font-black text-xl shadow-2xl active:scale-95 transition-all transform hover:scale-[1.02]">Bắt đầu ngay</button></div></div>
+        <div className="fixed inset-0 z-[250] flex items-center justify-center bg-slate-950/90 p-5">
+          <div className="w-full max-w-sm rounded-2xl border border-white/10 bg-slate-900 p-6 shadow-2xl">
+            <h3 className="text-xl font-bold text-white">Tên hiển thị</h3>
+            <input id="username-input" name="username" type="text" value={tempUsername} onChange={e => setTempUsername(e.target.value)} className="mt-5 min-h-12 w-full rounded-xl border border-white/10 bg-slate-950 px-4 text-white outline-none focus:border-rose-400/40" placeholder="Nhập tên" />
+            <button onClick={handleUpdateName} className="mt-3 min-h-12 w-full rounded-xl bg-white px-4 font-semibold text-slate-950">Lưu tên</button>
+          </div>
+        </div>
       )}
       {showToast.show && (
-        <div className="fixed bottom-12 left-1/2 -translate-x-1/2 z-[300] animate-in slide-in-from-bottom-12 fade-in duration-500"><div className="bg-white text-slate-950 px-12 py-6 rounded-[2.5rem] font-black shadow-3xl flex items-center gap-5 border border-white/20"><div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white shadow-xl"><Icons.Check size={22} /></div><span className="tracking-tight text-xl italic">{showToast.message}</span></div></div>
+        <div className="fixed bottom-6 left-1/2 z-[300] -translate-x-1/2 rounded-xl bg-white px-4 py-3 text-sm font-semibold text-slate-950 shadow-2xl">
+          {showToast.message}
+        </div>
       )}
     </div>
   );

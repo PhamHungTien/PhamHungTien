@@ -154,12 +154,55 @@ html[data-theme="dark"] {
   .phtv-nav-control {
     height: 38px;
     min-height: 38px;
+    vertical-align: middle;
   }
 
   .phtv-icon-control {
     width: 38px;
     min-width: 38px;
+    align-items: center;
+    justify-content: center;
     padding: 0 !important;
+    line-height: 0;
+  }
+
+  .phtv-icon-control > svg,
+  .phtv-mobile-social > svg,
+  .phtv-page footer a > svg {
+    display: block;
+    flex: 0 0 auto;
+  }
+
+  .phtv-mobile-social {
+    display: inline-grid;
+    width: 40px;
+    height: 40px;
+    place-items: center;
+    border: 1px solid var(--phtv-line);
+    border-radius: 10px;
+    color: var(--phtv-muted);
+    line-height: 0;
+  }
+
+  .phtv-community-toolbar,
+  .phtv-community-composer,
+  .phtv-discussion-card {
+    border-color: var(--phtv-line) !important;
+    border-radius: 12px !important;
+    background: var(--phtv-surface) !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+  }
+
+  .phtv-community-toolbar input,
+  .phtv-community-toolbar select,
+  .phtv-community-composer textarea,
+  .phtv-community-composer select {
+    color: var(--phtv-text);
+  }
+
+  .phtv-discussion-content {
+    color: var(--phtv-text);
   }
 
   .phtv-download-panel {
@@ -569,8 +612,7 @@ html[data-theme="light"] .phtv-page pre {
     justify-content: flex-start;
   }
 
-  .phtv-hero-title,
-  .phtv-hero-description {
+  .phtv-hero-title {
     max-width: 340px;
     margin-right: 0 !important;
     margin-left: 0 !important;
@@ -581,12 +623,6 @@ html[data-theme="light"] .phtv-page pre {
     margin-top: 24px !important;
     font-size: 30px !important;
     line-height: 1.12 !important;
-  }
-
-  .phtv-hero-description {
-    margin-top: 12px !important;
-    font-size: 16px !important;
-    line-height: 1.6 !important;
   }
 
   .phtv-download-panel > div:first-child {
@@ -807,10 +843,8 @@ html[data-theme="light"] .phtv-page pre {
     gap: 10px;
   }
 
-  .phtv-discussion-content,
-  .phtv-discussion-status {
-    padding: 13px !important;
-    border-radius: 8px !important;
+  .phtv-discussion-content {
+    padding: 4px 0 !important;
   }
 
   .phtv-discussion-content [class*="leading-relaxed"] {

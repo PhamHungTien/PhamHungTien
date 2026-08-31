@@ -3,14 +3,13 @@ import { Icons } from './Icons';
 import { FeatureProps } from '../types';
 import { useI18n } from '../i18n';
 
-const FeatureCard: React.FC<FeatureProps> = ({ icon: Icon, title, description, color = 'text-amber-300' }) => (
+const FeatureCard: React.FC<FeatureProps> = ({ icon: Icon, title, color = 'text-amber-300' }) => (
   <article className="phtv-feature min-w-0 h-full py-5 md:px-6 md:py-6">
     <div className={`phtv-feature-icon mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-slate-100 ${color}`}>
       <Icon size={22} />
     </div>
     <div className="phtv-feature-copy">
       <h3 className="text-base font-semibold text-white">{title}</h3>
-      <p className="mt-2 text-sm leading-6 text-slate-400">{description}</p>
     </div>
   </article>
 );
@@ -46,9 +45,6 @@ export const Features: React.FC = () => {
           <h2 className="text-2xl font-semibold text-white md:text-3xl">
             {t('features.title')}
           </h2>
-          <p className="mt-3 text-sm leading-6 text-slate-400">
-            {t('features.desc')}
-          </p>
         </div>
 
         <div className="phtv-feature-grid grid grid-cols-1 md:grid-cols-3">
