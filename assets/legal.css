@@ -218,7 +218,7 @@ ul {
   padding: 9px 10px;
   overflow: hidden;
   border: 1px solid var(--border);
-  border-radius: 9px;
+  border-radius: 14px;
   background: color-mix(in srgb, var(--surface) 94%, transparent);
   color: var(--text);
   text-decoration: none;
@@ -242,7 +242,7 @@ a.legal-contact-item:focus-visible {
   width: 32px;
   height: 32px;
   place-items: center;
-  border-radius: 8px;
+  border-radius: 10px;
   background: color-mix(in srgb, var(--accent) 10%, var(--surface));
   color: var(--accent);
   font-size: 11px;

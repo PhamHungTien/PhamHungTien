@@ -35,7 +35,6 @@ export function ContactSection({ t }: ContactSectionProps) {
     <section className="contact-directory" id="contact">
       <div className="contact-directory__header">
         <h2>{t('home.contact.title')}</h2>
-        <span className="section-count" aria-hidden="true">{String(socialProfiles.length).padStart(2, '0')}</span>
       </div>
 
       <div className="contact-grid">

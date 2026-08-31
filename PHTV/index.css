@@ -215,7 +215,7 @@ html[data-theme="dark"] {
     padding: 10px 12px;
     overflow: hidden;
     border: 1px solid var(--phtv-line);
-    border-radius: 12px;
+    border-radius: 14px;
     background: var(--phtv-surface);
     transition: border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
   }
@@ -238,7 +238,7 @@ html[data-theme="dark"] {
     height: 34px;
     flex: 0 0 auto;
     place-items: center;
-    border-radius: 8px;
+    border-radius: 10px;
     background: color-mix(in srgb, var(--phtv-blue) 10%, var(--phtv-surface));
     color: var(--phtv-blue);
   }

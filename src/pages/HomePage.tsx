@@ -18,9 +18,8 @@ export function HomePage({ lang, onLanguageChange, t }: HomePageProps) {
 
       <main>
         <section className="product-directory" id="products">
-          <div className="section-copy section-copy--indexed">
+          <div className="section-copy">
             <h1>{t('home.products.title')}</h1>
-            <span className="section-count" aria-hidden="true">{String(products.length).padStart(2, '0')}</span>
           </div>
 
           <div className="product-list">
