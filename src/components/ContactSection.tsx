@@ -1,6 +1,7 @@
 import {
   ArrowUpRight,
   AtSign,
+  Cake,
   Camera,
   Facebook,
   Github,
@@ -22,6 +23,7 @@ const icons: Record<SocialProfileId, LucideIcon> = {
   instagram: Instagram,
   threads: AtSign,
   locket: Camera,
+  cake: Cake,
   tiktok: Music2,
   linkedin: Linkedin,
   github: Github,

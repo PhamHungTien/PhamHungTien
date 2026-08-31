@@ -3,6 +3,7 @@ export type SocialProfileId =
   | 'instagram'
   | 'threads'
   | 'locket'
+  | 'cake'
   | 'tiktok'
   | 'linkedin'
   | 'github'
@@ -42,7 +43,15 @@ export const socialProfiles: SocialProfile[] = [
     id: 'locket',
     label: 'Locket',
     handle: '@phamhungtien',
+    href: 'https://locket.cam/phamhungtien',
     accent: '#d99b00'
+  },
+  {
+    id: 'cake',
+    label: 'Cake',
+    handle: 'cake.me/me/phamhungtien',
+    href: 'https://www.cake.me/me/phamhungtien',
+    accent: '#6c63ff'
   },
   {
     id: 'tiktok',

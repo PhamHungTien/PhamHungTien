@@ -236,6 +236,10 @@ a.legal-contact-item:hover {
   font-size: 11px;
 }
 
+.legal-contact-item:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
 @media (max-width: 520px) {
   .legal-contact-grid {
     grid-template-columns: 1fr;

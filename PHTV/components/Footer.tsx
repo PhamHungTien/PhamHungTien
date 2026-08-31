@@ -10,6 +10,7 @@ const socialIcons = {
   instagram: Icons.Instagram,
   threads: Icons.AtSign,
   locket: Icons.Camera,
+  cake: Icons.Cake,
   tiktok: Icons.Music2,
   linkedin: Icons.Linkedin,
   github: Icons.Github,
@@ -52,7 +53,7 @@ export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
           </div>
         </div>
 
-        <div className="phtv-footer-contacts mt-8 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="phtv-footer-contacts mt-8 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {socialProfiles.map((social) => {
             const Icon = socialIcons[social.id];
             const content = (

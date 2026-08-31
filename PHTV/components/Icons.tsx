@@ -64,7 +64,8 @@ import {
   Facebook,
   Instagram,
   Camera,
-  Music2
+  Music2,
+  Cake
 } from 'lucide-react';
 
 export const Icons = {
@@ -133,5 +134,6 @@ export const Icons = {
   Facebook,
   Instagram,
   Camera,
-  Music2
+  Music2,
+  Cake
 };
