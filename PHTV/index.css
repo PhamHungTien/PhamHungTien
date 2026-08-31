@@ -185,21 +185,39 @@ html[data-theme="dark"] {
   }
 
   .phtv-footer-contact {
+    position: relative;
     display: flex;
     min-width: 0;
     min-height: 64px;
     align-items: center;
     gap: 11px;
     padding: 10px 12px;
+    overflow: hidden;
     border: 1px solid var(--phtv-line);
     border-radius: 10px;
     background: var(--phtv-surface);
-    transition: border-color 160ms ease, background-color 160ms ease;
+    transition: border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+  }
+
+  .phtv-footer-contact::before {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 2px;
+    background: var(--phtv-blue);
+    content: '';
+    opacity: 0.82;
   }
 
   a.phtv-footer-contact:hover {
     border-color: color-mix(in srgb, var(--phtv-blue) 38%, var(--phtv-line));
     background: color-mix(in srgb, var(--phtv-blue) 5%, var(--phtv-surface));
+    box-shadow: 0 8px 22px color-mix(in srgb, var(--phtv-blue) 10%, transparent);
+    transform: translateY(-2px);
+  }
+
+  a.phtv-footer-contact:focus-visible {
+    outline: 2px solid var(--phtv-blue);
+    outline-offset: 3px;
   }
 
   .phtv-footer-contact__icon {
