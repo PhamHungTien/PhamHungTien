@@ -88,16 +88,17 @@ body {
 
 .lang-toggle {
   display: inline-flex;
+  height: 44px;
   gap: 2px;
   margin-bottom: 38px;
   padding: 3px;
   border: 1px solid var(--border);
-  border-radius: 9px;
+  border-radius: 10px;
   background: rgba(118, 118, 128, 0.08);
 }
 
 .lang-toggle button {
-  min-height: 34px;
+  height: 36px;
   padding: 0 17px;
   border: 0;
   border-radius: 7px;
@@ -170,7 +171,7 @@ ul {
   padding: 0;
   place-items: center;
   border: 1px solid var(--border);
-  border-radius: 50%;
+  border-radius: 10px;
   background: color-mix(in srgb, var(--surface) 92%, transparent);
   color: var(--text);
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.16);

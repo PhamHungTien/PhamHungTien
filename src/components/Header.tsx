@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ArrowLeft, Mail, Menu, Moon, Sun, X } from 'lucide-react';
 import type { Lang } from '../types';
-import { products } from '../data/products';
 import { LanguageSwitch } from './LanguageSwitch';
 
 interface HeaderProps {
@@ -73,8 +72,8 @@ export function Header({ lang, onLanguageChange, t, productName }: HeaderProps) 
         ) : (
           <a href="#products">{t('nav.products')}</a>
         )}
-        <a href="/PHTV/">{t('nav.phtv')}</a>
-        <a href={productName ? '#support' : '#services'}>{productName ? t('nav.contact') : t('nav.services')}</a>
+        {productName && <a href="/PHTV/">{t('nav.phtv')}</a>}
+        {productName && <a href="#support">{t('nav.contact')}</a>}
       </nav>
 
       <div className="header-actions">
@@ -91,44 +90,38 @@ export function Header({ lang, onLanguageChange, t, productName }: HeaderProps) 
           {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
         </button>
         {productName ? (
-          <a className="icon-button" href="mailto:phamhungtien.contact@gmail.com" aria-label={t('nav.support')}>
+          <a className="icon-button" href="mailto:contact@phamhungtien.com" aria-label={t('nav.support')}>
             <Mail size={17} />
           </a>
-        ) : (
-          <a className="header-product-link" href={products[0].route}>
-            PHTV
-          </a>
+        ) : null}
+        {productName && (
+          <button
+            className="mobile-menu-toggle"
+            type="button"
+            onClick={() => setMenuOpen((current) => !current)}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          >
+            {menuOpen ? <X size={21} /> : <Menu size={21} />}
+          </button>
         )}
-        <button
-          className="mobile-menu-toggle"
-          type="button"
-          onClick={() => setMenuOpen((current) => !current)}
-          aria-expanded={menuOpen}
-          aria-controls="mobile-navigation"
-          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-        >
-          {menuOpen ? <X size={21} /> : <Menu size={21} />}
-        </button>
       </div>
 
-      <nav
-        className={`mobile-navigation${menuOpen ? ' is-open' : ''}`}
-        id="mobile-navigation"
-        aria-label="Mobile navigation"
-      >
-        {productName ? (
+      {productName && (
+        <nav
+          className={`mobile-navigation${menuOpen ? ' is-open' : ''}`}
+          id="mobile-navigation"
+          aria-label="Mobile navigation"
+        >
           <a href="/" onClick={closeMenu}>
             <ArrowLeft size={18} />
             {t('common.backHome')}
           </a>
-        ) : (
-          <a href="#products" onClick={closeMenu}>{t('nav.products')}</a>
-        )}
-        <a href="/PHTV/" onClick={closeMenu}>{t('nav.phtv')}</a>
-        <a href={productName ? '#support' : '#services'} onClick={closeMenu}>
-          {productName ? t('nav.contact') : t('nav.services')}
-        </a>
-      </nav>
+          <a href="/PHTV/" onClick={closeMenu}>{t('nav.phtv')}</a>
+          <a href="#support" onClick={closeMenu}>{t('nav.contact')}</a>
+        </nav>
+      )}
     </header>
   );
 }

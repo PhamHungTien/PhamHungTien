@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { initializeTestEnvironment, assertSucceeds, assertFails } from '@firebase/rules-unit-testing';
 import { doc, getDoc, setDoc, updateDoc, deleteDoc, collection, getDocs, query, where } from 'firebase/firestore';
 
-const ADMIN_EMAIL = 'phamhungtien.contact@gmail.com';
+const ADMIN_EMAIL = 'contact@phamhungtien.com';
 
 const testEnv = await initializeTestEnvironment({
   projectId: 'demo-phtv',

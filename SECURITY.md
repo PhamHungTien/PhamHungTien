@@ -5,7 +5,7 @@ PHTV là bộ gõ tiếng Việt đặt quyền riêng tư của người dùng 
 
 ## Báo cáo lỗ hổng bảo mật
 Nếu bạn phát hiện bất kỳ vấn đề bảo mật nào liên quan đến ứng dụng hoặc website, vui lòng **KHÔNG** công khai nó qua Issue. Hãy báo cáo trực tiếp cho chúng tôi qua:
-- Email: **hungtien10a7@gmail.com**
+- Email: **contact@phamhungtien.com**
 
 Chúng tôi sẽ phản hồi sớm nhất có thể và làm việc cùng bạn để khắc phục vấn đề trước khi công bố thông tin.
 

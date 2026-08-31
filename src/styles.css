@@ -150,8 +150,8 @@ img {
 
 .language-switch {
   display: inline-flex;
+  height: 36px;
   align-items: center;
-  min-height: 34px;
   padding: 3px;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -160,7 +160,7 @@ img {
 
 .language-switch button {
   min-width: 44px;
-  min-height: 28px;
+  height: 28px;
   border: 0;
   border-radius: 6px;
   background: transparent;
@@ -181,7 +181,7 @@ img {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 36px;
+  height: 36px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--surface);
@@ -206,8 +206,8 @@ img {
 
 .home-hero {
   display: grid;
-  grid-template-columns: minmax(390px, 0.78fr) minmax(0, 1.22fr);
-  gap: 58px;
+  grid-template-columns: minmax(220px, 0.34fr) minmax(0, 1.66fr);
+  gap: 42px;
   align-items: center;
   min-height: 540px;
   padding: 74px var(--gutter) 62px;
@@ -215,7 +215,7 @@ img {
 }
 
 .home-hero__copy {
-  max-width: 560px;
+  max-width: 280px;
 }
 
 h1,
@@ -382,6 +382,7 @@ p {
 }
 
 .product-index,
+.product-directory,
 .services-section,
 .contact-band,
 .detail-hero,
@@ -403,6 +404,35 @@ p {
   border-bottom: 1px solid var(--line);
 }
 
+.product-directory {
+  min-height: calc(100vh - 68px - 78px);
+  padding-top: 72px;
+  padding-bottom: 88px;
+}
+
+.product-directory .section-copy h1 {
+  font-size: clamp(38px, 5vw, 64px);
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.product-directory .product-list {
+  margin-top: 42px;
+}
+
+.product-directory .product-row {
+  min-height: 94px;
+  padding-right: 14px;
+  padding-left: 14px;
+  transition: background-color 160ms ease, padding 160ms ease;
+}
+
+.product-directory .product-row:hover {
+  padding-right: 10px;
+  padding-left: 18px;
+}
+
+.section-copy h1,
 .section-copy h2,
 .services-section h2,
 .contact-band h2,
@@ -978,17 +1008,20 @@ p {
 
   .theme-toggle {
     width: 44px;
-    min-height: 44px;
+    height: 44px;
+    border-radius: 10px;
   }
 
   .language-switch {
-    min-height: 44px;
-    padding: 2px;
+    height: 44px;
+    padding: 3px;
+    border-radius: 10px;
   }
 
   .language-switch button {
     min-width: 36px;
-    min-height: 40px;
+    height: 36px;
+    border-radius: 7px;
   }
 
   .mobile-menu-toggle {
@@ -999,7 +1032,7 @@ p {
     justify-content: center;
     padding: 0;
     border: 1px solid var(--line);
-    border-radius: 8px;
+    border-radius: 10px;
     background: var(--surface);
     color: var(--text);
   }
@@ -1125,11 +1158,28 @@ p {
     padding-bottom: 44px;
   }
 
+  .product-directory {
+    padding-top: 44px;
+    padding-bottom: 56px;
+  }
+
+  .product-directory .product-list {
+    margin-top: 26px;
+  }
+
+  .product-directory .product-row,
+  .product-directory .product-row:hover {
+    min-height: 80px;
+    padding-right: 2px;
+    padding-left: 2px;
+  }
+
   .product-index .section-copy {
     margin-bottom: 22px;
   }
 
   .section-copy h2,
+  .section-copy h1,
   .contact-band h2,
   .support-section h2,
   .install-panel h2,

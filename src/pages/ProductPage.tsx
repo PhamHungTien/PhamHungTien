@@ -121,7 +121,7 @@ export function ProductPage({ product, lang, onLanguageChange, t }: ProductPageP
             <p>{product.support[lang]}</p>
           </div>
           <div className="contact-actions">
-            <a className="button button--primary" href="mailto:phamhungtien.contact@gmail.com">
+            <a className="button button--primary" href="mailto:contact@phamhungtien.com">
               <Mail size={18} />
               {t('product.supportCta')}
             </a>

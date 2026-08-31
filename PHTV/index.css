@@ -151,6 +151,17 @@ html[data-theme="dark"] {
     border-color: transparent;
   }
 
+  .phtv-nav-control {
+    height: 38px;
+    min-height: 38px;
+  }
+
+  .phtv-icon-control {
+    width: 38px;
+    min-width: 38px;
+    padding: 0 !important;
+  }
+
   .phtv-download-panel {
     text-align: left;
   }
@@ -518,8 +529,15 @@ html[data-theme="light"] .phtv-page pre {
   }
 
   .phtv-nav-control {
+    height: 44px;
     min-width: 44px;
     min-height: 44px;
+    border-radius: 10px !important;
+  }
+
+  .phtv-icon-control {
+    width: 44px;
+    min-width: 44px;
   }
 
   .phtv-navbar__inner .phtv-nav-control:first-child {

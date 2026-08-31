@@ -212,7 +212,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             {/* Theme Toggle Button */}
             <button
               onClick={toggleTheme}
-              className="phtv-nav-control rounded-lg border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition-colors hover:text-white flex items-center justify-center min-h-[38px] min-w-[38px]"
+              className="phtv-nav-control phtv-icon-control rounded-lg border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition-colors hover:text-white flex items-center justify-center min-h-[38px] min-w-[38px]"
               title={theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
             >
               {theme === 'dark' ? <Icons.Sun size={18} /> : <Icons.Moon size={18} />}
@@ -222,7 +222,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               href="https://github.com/PhamHungTien/PHTV" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="phtv-nav-control hidden rounded-lg border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition-colors hover:text-white sm:flex"
+              className="phtv-nav-control phtv-icon-control hidden rounded-lg border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition-colors hover:text-white sm:flex"
               title="GitHub Repository"
               aria-label="Xem mã nguồn trên GitHub"
             >
@@ -315,7 +315,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             {/* Mobile Menu Button */}
             <button 
-              className="phtv-nav-control rounded-lg border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition-colors hover:text-white lg:hidden"
+              className="phtv-nav-control phtv-icon-control rounded-lg border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition-colors hover:text-white lg:hidden"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label={mobileMenuOpen ? t('nav.close_menu') : t('nav.open_menu')}
             >
@@ -406,7 +406,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             )}
             <div className="flex justify-center gap-6 border-t border-white/5 pt-4">
               <a href="https://github.com/PhamHungTien/PHTV" className="text-slate-400 transition-colors hover:text-white"><Icons.Github size={24} /></a>
-              <a href="mailto:phamhungtien.contact@gmail.com" className="text-slate-400 transition-colors hover:text-white"><Icons.Coffee size={24} /></a>
+              <a href="mailto:contact@phamhungtien.com" className="text-slate-400 transition-colors hover:text-white"><Icons.Coffee size={24} /></a>
             </div>
           </div>
         </div>

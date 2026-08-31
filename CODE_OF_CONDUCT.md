@@ -25,4 +25,4 @@ Người duy trì dự án có trách nhiệm làm rõ các tiêu chuẩn về h
 Quy tắc ứng xử này áp dụng trong tất cả các không gian của dự án và nó cũng áp dụng khi một cá nhân đại diện cho dự án hoặc cộng đồng của dự án trong các không gian công cộng.
 
 ## Liên hệ
-Nếu có vấn đề cần báo cáo, vui lòng liên hệ với Phạm Hùng Tiến qua email: **hungtien10a7@gmail.com**.
+Nếu có vấn đề cần báo cáo, vui lòng liên hệ với Phạm Hùng Tiến qua email: **contact@phamhungtien.com**.

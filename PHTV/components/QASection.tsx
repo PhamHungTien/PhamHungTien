@@ -94,7 +94,7 @@ interface AppNotification {
   isRead: boolean;
 }
 
-const ADMIN_EMAILS = ['admin@phtv.com', 'phamhungtien.contact@gmail.com', 'hungtien10a7@gmail.com'];
+const ADMIN_EMAILS = ['admin@phtv.com', 'contact@phamhungtien.com'];
 const ADMIN_NAME_KEYS = ['pham hung tien'];
 const POSTS_PER_PAGE = 15;
 
@@ -252,7 +252,7 @@ export const QASection: React.FC = () => {
         const isAdmin = ADMIN_EMAILS.includes(user.email || '');
         setCurrentUser({
           uid: user.uid,
-          username: user.email === 'phamhungtien.contact@gmail.com' ? 'Phạm Hùng Tiến' : (user.displayName || user.email?.split('@')[0] || 'User'),
+          username: user.email === 'contact@phamhungtien.com' ? 'Phạm Hùng Tiến' : (user.displayName || user.email?.split('@')[0] || 'User'),
           email: user.email || '',
           photoURL: user.photoURL || undefined,
           isAdmin: isAdmin
@@ -365,7 +365,7 @@ export const QASection: React.FC = () => {
       const result = await signInWithPopup(auth, googleProvider);
       setShowAuthModal(false);
       requestNotificationPermission();
-      if (result.user.metadata.creationTime === result.user.metadata.lastSignInTime && result.user.email !== 'phamhungtien.contact@gmail.com') {
+      if (result.user.metadata.creationTime === result.user.metadata.lastSignInTime && result.user.email !== 'contact@phamhungtien.com') {
         setTempUsername(result.user.displayName || '');
         setShowNamePrompt(true);
       }
@@ -457,7 +457,7 @@ export const QASection: React.FC = () => {
 
     // EmailJS Notification Logic - Direct (Unlimited until EmailJS quota hits)
     const targetEmail = replyingTo.authorEmail;
-    const fallbackEmail = "phamhungtien.contact@gmail.com";
+    const fallbackEmail = "contact@phamhungtien.com";
     const actualRecipient = targetEmail || fallbackEmail;
     
     if (actualRecipient !== currentUser.email) {

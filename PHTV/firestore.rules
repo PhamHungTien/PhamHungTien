@@ -24,8 +24,7 @@ service cloud.firestore {
       return signedIn()
         && request.auth.token.email_verified == true
         && request.auth.token.email in [
-          'phamhungtien.contact@gmail.com',
-          'hungtien10a7@gmail.com'
+          'contact@phamhungtien.com'
         ];
     }
 

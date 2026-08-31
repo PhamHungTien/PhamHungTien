@@ -49,7 +49,7 @@ export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
               ))}
 
               <a
-                href="mailto:phamhungtien.contact@gmail.com"
+                href="mailto:contact@phamhungtien.com"
                 className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] text-slate-300 transition-colors hover:text-white"
                 title="Email"
               >
@@ -75,7 +75,7 @@ export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
         <div className="mt-12 flex flex-col gap-3 border-t border-white/6 pt-6 text-sm text-slate-500 md:flex-row md:items-center md:justify-between">
           <p>© {new Date().getFullYear()} Pham Hung Tien. PHTV.</p>
           <div className="flex gap-5">
-            <a href="mailto:phamhungtien.contact@gmail.com" className="transition-colors hover:text-white">{t('footer.support')}</a>
+            <a href="mailto:contact@phamhungtien.com" className="transition-colors hover:text-white">{t('footer.support')}</a>
             <a href="privacy.html" className="transition-colors hover:text-white">Privacy Policy</a>
             <a href="terms.html" className="transition-colors hover:text-white">Terms of Use</a>
           </div>
