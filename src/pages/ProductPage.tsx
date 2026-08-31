@@ -102,8 +102,8 @@ export function ProductPage({ product, lang, onLanguageChange, t }: ProductPageP
             <h2>{t('product.gallery')}</h2>
           </div>
           <div className="gallery-strip">
-            {product.gallery.map((image) => (
-              <figure key={image.src}>
+            {product.gallery.map((image, index) => (
+              <figure key={image.src} style={{ '--gallery-delay': `${index * 45}ms` } as CSSProperties}>
                 <img src={image.src} alt={image.alt[lang]} loading="lazy" decoding="async" />
                 <figcaption>{image.alt[lang]}</figcaption>
               </figure>

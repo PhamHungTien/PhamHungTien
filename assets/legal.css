@@ -6,6 +6,9 @@
   --muted: #62626a;
   --accent: #0071e3;
   --border: rgba(29, 29, 31, 0.1);
+  --focus: #0064c8;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05), 0 9px 24px rgba(15, 23, 42, 0.06);
 }
 
 html[data-theme="dark"] {
@@ -16,16 +19,26 @@ html[data-theme="dark"] {
   --muted: #a7adb8;
   --accent: #5aa7ff;
   --border: rgba(255, 255, 255, 0.12);
+  --focus: #75b7ff;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.28), 0 10px 28px rgba(0, 0, 0, 0.22);
 }
 
 * {
   box-sizing: border-box;
 }
 
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
 body {
   margin: 0;
   padding: 0 20px;
-  background: var(--bg);
+  background:
+    radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--accent) 5%, transparent), transparent 32%),
+    var(--bg);
   color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
   line-height: 1.65;
@@ -33,7 +46,7 @@ body {
 }
 
 .container {
-  width: min(720px, 100%);
+  width: min(760px, 100%);
   margin: 0 auto;
   padding: 42px 0 70px;
 }
@@ -52,6 +65,11 @@ body {
   background: none;
   text-decoration: none;
   -webkit-text-fill-color: currentColor;
+  transition: opacity 160ms ease;
+}
+
+.logo a:hover {
+  opacity: 0.72;
 }
 
 .subtitle {
@@ -63,7 +81,7 @@ body {
 .nav-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 22px;
+  gap: 6px;
   margin-bottom: 34px;
   padding-bottom: 13px;
   border-bottom: 1px solid var(--border);
@@ -71,19 +89,28 @@ body {
 }
 
 .nav-links a {
-  padding: 6px 0;
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  padding: 0 12px;
   border: 0;
+  border-radius: 9px;
   color: var(--muted);
   text-decoration: none;
+  transition: background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out);
 }
 
 .nav-links a:hover {
+  background: color-mix(in srgb, var(--accent) 6%, var(--surface));
   color: var(--text);
+  transform: translateY(-1px);
 }
 
 .nav-links a.active {
+  background: var(--surface);
   color: var(--accent);
   border: 0;
+  box-shadow: var(--shadow-sm);
 }
 
 .lang-toggle {
@@ -107,6 +134,7 @@ body {
   cursor: pointer;
   font: inherit;
   font-size: 14px;
+  transition: background-color 160ms ease, color 160ms ease;
 }
 
 .lang-toggle button:hover {
@@ -126,7 +154,7 @@ h1 {
   font-size: 34px;
   line-height: 1.2;
   font-weight: 650;
-  letter-spacing: 0;
+  letter-spacing: -0.025em;
 }
 
 h2 {
@@ -191,25 +219,16 @@ ul {
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: 9px;
-  background: var(--surface);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
   color: var(--text);
   text-decoration: none;
   transition: border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
 
-.legal-contact-item::before {
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 2px;
-  background: var(--accent);
-  content: '';
-  opacity: 0.8;
-}
-
 a.legal-contact-item:hover {
-  border-color: color-mix(in srgb, var(--accent) 36%, var(--border));
-  background: color-mix(in srgb, var(--accent) 5%, var(--surface));
-  box-shadow: 0 7px 18px color-mix(in srgb, var(--accent) 10%, transparent);
+  border-color: color-mix(in srgb, var(--text) 24%, var(--border));
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
   transform: translateY(-1px);
 }
 
@@ -262,6 +281,20 @@ a.legal-contact-item:focus-visible {
   .legal-contact-grid {
     grid-template-columns: 1fr;
   }
+
+  .container {
+    padding-top: 30px;
+    padding-bottom: 54px;
+  }
+
+  .nav-links {
+    margin-right: -6px;
+    margin-left: -6px;
+  }
+
+  .nav-links a {
+    min-height: 44px;
+  }
 }
 
 .shared-theme-toggle {
@@ -282,14 +315,17 @@ a.legal-contact-item:focus-visible {
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   cursor: pointer;
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms var(--ease-out);
 }
 
 .shared-theme-toggle:hover {
-  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--accent) 38%, var(--border));
+  box-shadow: 0 14px 32px color-mix(in srgb, var(--accent) 12%, transparent);
+  transform: translateY(-2px);
 }
 
 .shared-theme-toggle:focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  outline: 2px solid var(--focus);
   outline-offset: 3px;
 }
 
@@ -309,4 +345,24 @@ a.legal-contact-item:focus-visible {
 
 .section.active {
   display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .nav-links a:hover,
+  a.legal-contact-item:hover,
+  .shared-theme-toggle:hover {
+    transform: none !important;
+  }
 }

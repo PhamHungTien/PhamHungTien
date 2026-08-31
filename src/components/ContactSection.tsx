@@ -35,10 +35,11 @@ export function ContactSection({ t }: ContactSectionProps) {
     <section className="contact-directory" id="contact">
       <div className="contact-directory__header">
         <h2>{t('home.contact.title')}</h2>
+        <span className="section-count" aria-hidden="true">{String(socialProfiles.length).padStart(2, '0')}</span>
       </div>
 
       <div className="contact-grid">
-        {socialProfiles.map((profile) => {
+        {socialProfiles.map((profile, index) => {
           const Icon = icons[profile.id];
           const content = (
             <>
@@ -56,7 +57,7 @@ export function ContactSection({ t }: ContactSectionProps) {
               )}
             </>
           );
-          const style = { '--social-accent': profile.accent } as CSSProperties;
+          const style = { '--social-accent': profile.accent, '--contact-delay': `${index * 28}ms` } as CSSProperties;
 
           return profile.href ? (
             <a

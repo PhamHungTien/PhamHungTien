@@ -1,4 +1,5 @@
 import { ArrowRight } from 'lucide-react';
+import type { CSSProperties } from 'react';
 import type { Lang } from '../types';
 import { products } from '../data/products';
 import { Header } from '../components/Header';
@@ -17,13 +18,19 @@ export function HomePage({ lang, onLanguageChange, t }: HomePageProps) {
 
       <main>
         <section className="product-directory" id="products">
-          <div className="section-copy">
+          <div className="section-copy section-copy--indexed">
             <h1>{t('home.products.title')}</h1>
+            <span className="section-count" aria-hidden="true">{String(products.length).padStart(2, '0')}</span>
           </div>
 
           <div className="product-list">
-            {products.map((product) => (
-              <a className="product-row" href={product.route} key={product.slug}>
+            {products.map((product, index) => (
+              <a
+                className="product-row"
+                href={product.route}
+                key={product.slug}
+                style={{ '--row-accent': product.accent, '--row-delay': `${index * 42}ms` } as CSSProperties}
+              >
                 <span className="product-row__identity">
                   <img src={product.icon} alt="" width={42} height={42} loading="lazy" decoding="async" />
                   <span>
@@ -33,7 +40,7 @@ export function HomePage({ lang, onLanguageChange, t }: HomePageProps) {
                   </span>
                 </span>
                 <span className="product-row__platforms">{product.platforms[lang]}</span>
-                <ArrowRight size={18} />
+                <span className="product-row__arrow" aria-hidden="true"><ArrowRight size={17} /></span>
               </a>
             ))}
           </div>
