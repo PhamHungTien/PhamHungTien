@@ -1,4 +1,4 @@
-import { ArrowRight, ExternalLink, Github, Store } from 'lucide-react';
+import { ArrowRight, ExternalLink, Github, Mail, Store } from 'lucide-react';
 import type { CSSProperties } from 'react';
 import type { Lang, Product } from '../types';
 import { Header } from '../components/Header';
@@ -21,7 +21,7 @@ export function ProductPage({ product, lang, onLanguageChange, t }: ProductPageP
     <div className="site-shell product-page" style={{ '--accent': product.accent } as CSSProperties}>
       <Header lang={lang} onLanguageChange={onLanguageChange} t={t} productName={product.name} />
 
-      <main>
+      <main id="main-content">
         <section className="detail-hero">
           <div className="detail-hero__copy">
             {product.slug === 'phtv' ? (
@@ -69,17 +69,18 @@ export function ProductPage({ product, lang, onLanguageChange, t }: ProductPageP
           ))}
         </section>
 
-        <section className="detail-grid">
+        <section className="detail-grid" id="features">
           <div className="install-panel">
-            <h2>{product.slug === 'phtv' ? (lang === 'vi' ? 'Cài đặt nhanh' : 'Quick install') : t('product.open')}</h2>
+            <h2>{product.slug === 'phtv' ? (lang === 'vi' ? 'Cài đặt nhanh' : 'Quick install') : t('product.support')}</h2>
             <p>
               {product.slug === 'phtv'
                 ? (lang === 'vi' ? 'Cài bằng Homebrew hoặc tải đúng bản máy Mac từ trang PHTV.' : 'Install with Homebrew or download the correct Mac build from PHTV.')
                 : product.support[lang]}
             </p>
-            <code>{product.slug === 'phtv' ? 'brew install --cask phamhungtien/tap/phtv' : (product.appStoreUrl ? 'App Store' : product.route)}</code>
-            <a href={primaryHref} target={product.appStoreUrl ? '_blank' : undefined} rel={product.appStoreUrl ? 'noopener' : undefined}>
-              {product.ctaLabel[lang]}
+            {product.slug === 'phtv' && <code>brew install --cask phamhungtien/tap/phtv</code>}
+            <a href={product.slug === 'phtv' ? primaryHref : 'mailto:contact@phamhungtien.com'}>
+              {product.slug !== 'phtv' && <Mail size={16} aria-hidden="true" />}
+              {product.slug === 'phtv' ? product.ctaLabel[lang] : t('product.supportCta')}
               <ArrowRight size={16} />
             </a>
           </div>
@@ -102,9 +103,11 @@ export function ProductPage({ product, lang, onLanguageChange, t }: ProductPageP
             <h2>{t('product.gallery')}</h2>
           </div>
           <div className="gallery-strip">
-            {product.gallery.map((image, index) => (
-              <figure key={image.src} style={{ '--gallery-delay': `${index * 45}ms` } as CSSProperties}>
-                <img src={image.src} alt={image.alt[lang]} loading="lazy" decoding="async" />
+            {product.gallery.map((image) => (
+              <figure key={image.src}>
+                <a className="gallery-preview" href={image.src} target="_blank" rel="noopener noreferrer" aria-label={`${lang === 'vi' ? 'Xem ảnh đầy đủ' : 'View full image'}: ${image.alt[lang]}`}>
+                  <img src={image.src} alt={image.alt[lang]} loading="lazy" decoding="async" />
+                </a>
                 <figcaption>{image.alt[lang]}</figcaption>
               </figure>
             ))}

@@ -1,7 +1,7 @@
 import {
   ArrowUpRight,
   AtSign,
-  Cake,
+  BriefcaseBusiness,
   Camera,
   Facebook,
   Github,
@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import type { CSSProperties } from 'react';
 import { socialProfiles, type SocialProfileId } from '../data/socials';
+import './ContactSection.css';
 
 interface ContactSectionProps {
   t: (key: string) => string;
@@ -23,7 +24,7 @@ const icons: Record<SocialProfileId, LucideIcon> = {
   instagram: Instagram,
   threads: AtSign,
   locket: Camera,
-  cake: Cake,
+  cake: BriefcaseBusiness,
   tiktok: Music2,
   linkedin: Linkedin,
   github: Github,
@@ -38,7 +39,7 @@ export function ContactSection({ t }: ContactSectionProps) {
       </div>
 
       <div className="contact-grid">
-        {socialProfiles.map((profile, index) => {
+        {socialProfiles.map((profile) => {
           const Icon = icons[profile.id];
           const content = (
             <>
@@ -56,7 +57,7 @@ export function ContactSection({ t }: ContactSectionProps) {
               )}
             </>
           );
-          const style = { '--social-accent': profile.accent, '--contact-delay': `${index * 28}ms` } as CSSProperties;
+          const style = { '--social-accent': profile.accent } as CSSProperties;
 
           return profile.href ? (
             <a

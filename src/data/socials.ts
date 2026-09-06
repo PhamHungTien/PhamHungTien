@@ -37,7 +37,7 @@ export const socialProfiles: SocialProfile[] = [
     label: 'Threads',
     handle: '@phamhungtien1404',
     href: 'https://www.threads.net/@phamhungtien1404',
-    accent: 'var(--text)'
+    accent: 'var(--contact-text)'
   },
   {
     id: 'locket',
@@ -72,7 +72,7 @@ export const socialProfiles: SocialProfile[] = [
     label: 'GitHub',
     handle: '@PhamHungTien',
     href: 'https://github.com/PhamHungTien',
-    accent: 'var(--text)'
+    accent: 'var(--contact-text)'
   },
   {
     id: 'email',

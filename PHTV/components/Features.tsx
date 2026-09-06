@@ -40,7 +40,7 @@ export const Features: React.FC = () => {
 
   return (
     <section id="features" className="py-12 md:py-16">
-      <div className="mx-auto max-w-5xl px-4 md:px-6">
+      <div className="mx-auto max-w-6xl px-4 md:px-6">
         <div className="mb-7 max-w-2xl">
           <h2 className="text-2xl font-semibold text-white md:text-3xl">
             {t('features.title')}

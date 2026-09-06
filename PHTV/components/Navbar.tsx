@@ -56,7 +56,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
     const themeColorMeta = document.querySelector('meta[name="theme-color"]');
     if (themeColorMeta) {
-      themeColorMeta.setAttribute("content", theme === 'dark' ? "#0b0c0f" : "#f5f5f7");
+      themeColorMeta.setAttribute("content", theme === 'dark' ? "#0b0c0f" : "#ffffff");
     }
   }, [theme]);
 
@@ -74,6 +74,15 @@ export const Navbar: React.FC<NavbarProps> = ({
   const toggleTheme = () => {
     setTheme(prev => prev === 'dark' ? 'light' : 'dark');
   };
+
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMobileMenuOpen(false);
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [mobileMenuOpen]);
 
   useEffect(() => {
     if (!desktopDownloadOpen) return;
@@ -142,7 +151,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   return (
     <>
       <nav className="phtv-navbar fixed top-0 left-0 right-0 z-[100]">
-        <div className={`phtv-navbar__inner mx-auto flex max-w-7xl items-center justify-between border-b px-4 py-3 transition-all duration-300 md:px-6 ${
+        <div className={`phtv-navbar__inner mx-auto flex max-w-6xl items-center justify-between border-b px-4 py-3 transition-all duration-300 md:px-6 ${
           scrolled
             ? 'glass-panel border-white/10 shadow-[0_18px_50px_rgba(0,0,0,0.28)]'
             : 'border-white/6 bg-black/10 backdrop-blur-md'
@@ -180,9 +189,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                 }`}
               >
                 {item.name}
-                {item.tab === 'community' && (
-                  <span className="flex h-2 w-2 rounded-full bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.45)]"></span>
-                )}
               </a>
             ))}
           </div>
@@ -213,7 +219,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               onClick={toggleTheme}
               className="phtv-nav-control phtv-icon-control rounded-lg border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition-colors hover:text-white flex items-center justify-center min-h-[38px] min-w-[38px]"
-              title={theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+              aria-label={theme === 'dark' ? (lang === 'vi' ? 'Bật giao diện sáng' : 'Use light mode') : (lang === 'vi' ? 'Bật giao diện tối' : 'Use dark mode')}
             >
               {theme === 'dark' ? <Icons.Sun size={18} /> : <Icons.Moon size={18} />}
             </button>
@@ -318,6 +324,8 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="phtv-nav-control phtv-icon-control rounded-lg border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition-colors hover:text-white lg:hidden"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label={mobileMenuOpen ? t('nav.close_menu') : t('nav.open_menu')}
+              aria-expanded={mobileMenuOpen}
+              aria-controls="phtv-mobile-navigation"
             >
               {mobileMenuOpen ? <Icons.X size={28} /> : <Icons.Menu size={28} />}
             </button>
@@ -326,7 +334,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       </nav>
 
       {/* Mobile Menu Overlay */}
-      <div className={`fixed inset-0 z-[90] lg:hidden transition-all duration-300 ${mobileMenuOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}>
+      <div id="phtv-mobile-navigation" inert={!mobileMenuOpen} className={`fixed inset-0 z-[90] lg:hidden transition-all duration-300 ${mobileMenuOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}>
         <div className="absolute inset-0 bg-slate-950/75 backdrop-blur-xl" onClick={() => setMobileMenuOpen(false)}></div>
         <div className={`phtv-mobile-menu absolute right-3 top-3 bottom-3 w-[min(300px,calc(100vw-1.5rem))] rounded-lg border border-white/10 bg-white p-5 flex flex-col transition-transform duration-300 ease-out shadow-xl ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
           <div className="mb-8 flex items-center gap-3">
@@ -349,9 +357,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               >
                 <span className="flex items-center gap-3">
                   {item.name}
-                  {item.tab === 'community' && (
-                    <span className="rounded-md bg-amber-400 px-1.5 py-0.5 text-[8px] font-black uppercase tracking-tighter text-slate-950">New</span>
-                  )}
                 </span>
                 <Icons.ArrowRight size={18} className="text-amber-300 opacity-0 -translate-x-2 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
               </a>
@@ -406,7 +411,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             )}
             <div className="flex justify-center gap-6 border-t border-white/5 pt-4">
               <a href="https://github.com/PhamHungTien/PHTV" className="phtv-mobile-social" aria-label="GitHub"><Icons.Github size={20} /></a>
-              <a href="mailto:contact@phamhungtien.com" className="phtv-mobile-social" aria-label="Email hỗ trợ"><Icons.Coffee size={20} /></a>
+              <a href="mailto:contact@phamhungtien.com" className="phtv-mobile-social" aria-label="Email hỗ trợ"><Icons.Mail size={20} /></a>
             </div>
           </div>
         </div>

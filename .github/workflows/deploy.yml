@@ -53,6 +53,9 @@ jobs:
       - name: Assemble _site
         run: ./scripts/build-site.sh _site
 
+      - name: Verify interface and contact invariants
+        run: npm run verify:ui
+
       - name: Verify SEO invariants
         run: ./scripts/verify-site.sh _site
 

@@ -1,9 +1,9 @@
 :root {
   color-scheme: light;
-  --bg: #f5f5f7;
+  --bg: #ffffff;
   --surface: #ffffff;
-  --text: #1d1d1f;
-  --muted: #62626a;
+  --text: #0b0d12;
+  --muted: #626975;
   --accent: #0071e3;
   --border: rgba(29, 29, 31, 0.1);
   --focus: #0064c8;
@@ -14,7 +14,7 @@
 html[data-theme="dark"] {
   color-scheme: dark;
   --bg: #0b0c0f;
-  --surface: #17191f;
+  --surface: #13151a;
   --text: #f4f6f8;
   --muted: #a7adb8;
   --accent: #5aa7ff;
@@ -36,9 +36,7 @@ button:focus-visible {
 body {
   margin: 0;
   padding: 0 20px;
-  background:
-    radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--accent) 5%, transparent), transparent 32%),
-    var(--bg);
+  background: var(--bg);
   color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
   line-height: 1.65;
@@ -169,7 +167,7 @@ p,
 li {
   margin-bottom: 12px;
   color: var(--muted);
-  font-size: 15px;
+  font-size: 16px;
 }
 
 strong {
@@ -210,12 +208,12 @@ ul {
 .legal-contact-item {
   position: relative;
   display: grid;
-  grid-template-columns: 32px minmax(0, 1fr);
-  gap: 10px;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 12px;
   align-items: center;
   min-width: 0;
-  min-height: 58px;
-  padding: 9px 10px;
+  min-height: 72px;
+  padding: 12px 14px;
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: 14px;
@@ -227,9 +225,7 @@ ul {
 
 a.legal-contact-item:hover {
   border-color: color-mix(in srgb, var(--text) 24%, var(--border));
-  background: var(--surface);
-  box-shadow: var(--shadow-sm);
-  transform: translateY(-1px);
+  background: color-mix(in srgb, var(--text) 3%, var(--surface));
 }
 
 a.legal-contact-item:focus-visible {
@@ -239,12 +235,12 @@ a.legal-contact-item:focus-visible {
 
 .legal-contact-mark {
   display: grid;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   place-items: center;
   border-radius: 10px;
-  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
-  color: var(--accent);
+  background: color-mix(in srgb, var(--text) 5%, var(--surface));
+  color: var(--text);
   font-size: 11px;
   font-weight: 800;
   text-transform: uppercase;
@@ -264,13 +260,13 @@ a.legal-contact-item:focus-visible {
 }
 
 .legal-contact-item strong {
-  font-size: 13px;
-  font-weight: 650;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .legal-contact-item small {
   color: var(--muted);
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .legal-contact-item:last-child:nth-child(odd) {

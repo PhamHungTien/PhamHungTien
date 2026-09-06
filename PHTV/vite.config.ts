@@ -37,6 +37,8 @@ export default defineConfig(() => {
         '__BUILD_TIMESTAMP__': JSON.stringify(buildTimestamp)
       },
       resolve: {
+        // Shared components live in ../src; keep them on this app's React runtime.
+        dedupe: ['react', 'react-dom'],
         alias: {
           '@': path.resolve(__dirname, '.'),
         }

@@ -36,7 +36,7 @@ const DICTIONARY = {
     "home.install_btn": "Xem cách cài đặt",
     "home.discuss_btn": "Thảo luận hoặc báo lỗi",
     "home.brew_output": "==> Downloading PHTV...\n==> Installing Cask phtv\n🍺  phtv was successfully installed!",
-    "features.title": "Phần cốt lõi của PHTV",
+    "features.title": "Tính năng nổi bật",
     "features.desc": "Ba điểm cần biết trước khi cài bộ gõ trên máy Mac.",
     "features.offline_title": "Offline và riêng tư",
     "features.offline_desc": "Xử lý hoàn toàn trên máy, không phụ thuộc dịch vụ bên ngoài cho trải nghiệm gõ tiếng Việt hằng ngày.",
@@ -44,7 +44,7 @@ const DICTIONARY = {
     "features.native_desc": "Viết 100% bằng Swift, tối ưu cho macOS với hiệu năng ổn định và phản hồi rất nhanh.",
     "features.smart_title": "Gõ thông minh",
     "features.smart_desc": "Spell check, quick telex, tự động khôi phục và nhiều tinh chỉnh hữu ích cho người gõ song ngữ.",
-    "gallery.title": "Ảnh chụp mới nhất",
+    "gallery.title": "Giao diện",
     "gallery.desc": "Hình ảnh được lấy từ repo GitHub PHTV mới nhất để trang giới thiệu luôn khớp với sản phẩm.",
     "gallery.bogo": "Thiết lập bộ gõ",
     "gallery.menubar": "Menu bar",
@@ -54,7 +54,7 @@ const DICTIONARY = {
 
     // Installation Section
     "install.kicker": "Cài đặt",
-    "install.title": "Cài nhanh, cấu hình gọn và đúng ngay từ đầu",
+    "install.title": "Cài đặt PHTV",
     "install.desc": "Ba bước quan trọng nhất để cài đúng, mở được app và bắt đầu gõ ngay trên macOS.",
     "install.brew_title": "Homebrew",
     "install.brew_sub": "Nhanh nhất và tự chọn đúng binary.",
@@ -127,7 +127,7 @@ const DICTIONARY = {
     "home.install_btn": "Installation guide",
     "home.discuss_btn": "Discuss or report bugs",
     "home.brew_output": "==> Downloading PHTV...\n==> Installing Cask phtv\n🍺  phtv was successfully installed!",
-    "features.title": "The core of PHTV",
+    "features.title": "Highlights",
     "features.desc": "Three things to know before installing a Vietnamese input method on your Mac.",
     "features.offline_title": "Offline and private",
     "features.offline_desc": "Runs fully on device and does not depend on external services for everyday Vietnamese typing.",
@@ -135,7 +135,7 @@ const DICTIONARY = {
     "features.native_desc": "Built 100% with Swift, optimized for stable macOS performance and fast response.",
     "features.smart_title": "Smarter typing",
     "features.smart_desc": "Spell check, quick Telex, automatic recovery, and useful controls for bilingual typing.",
-    "gallery.title": "Latest screenshots",
+    "gallery.title": "Interface",
     "gallery.desc": "Images are pulled from the latest PHTV GitHub repository so the product page stays aligned with the app.",
     "gallery.bogo": "Input settings",
     "gallery.menubar": "Menu bar",
@@ -145,7 +145,7 @@ const DICTIONARY = {
 
     // Installation Section
     "install.kicker": "Installation",
-    "install.title": "Install quickly, configure cleanly, and work right out of the box",
+    "install.title": "Install PHTV",
     "install.desc": "Three key steps to install properly, open the app, and start typing immediately on macOS.",
     "install.brew_title": "Homebrew",
     "install.brew_sub": "Fastest way, auto-selects the right binary.",

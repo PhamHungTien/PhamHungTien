@@ -57,7 +57,8 @@ export function Header({ lang, onLanguageChange, t, productName }: HeaderProps) 
   };
 
   return (
-    <header className="site-header">
+    <header className={`site-header${productName ? ' site-header--product' : ''}`}>
+      <a className="skip-link" href="#main-content">{lang === 'vi' ? 'Đến nội dung' : 'Skip to content'}</a>
       <a className="brand-link" href="/" aria-label="Pham Hung Tien">
         <span className="brand-mark">P</span>
         <span>Pham Hung Tien</span>
@@ -73,7 +74,8 @@ export function Header({ lang, onLanguageChange, t, productName }: HeaderProps) 
           <a href="#products">{t('nav.products')}</a>
         )}
         {!productName && <a href="#contact">{t('nav.contact')}</a>}
-        {productName && <a href="/PHTV/">{t('nav.phtv')}</a>}
+        {productName && <a href="#features">{t('product.features')}</a>}
+        {productName && <a href="#gallery">{t('product.gallery')}</a>}
         {productName && <a href="#contact">{t('nav.contact')}</a>}
       </nav>
 
@@ -86,7 +88,6 @@ export function Header({ lang, onLanguageChange, t, productName }: HeaderProps) 
           aria-label={theme === 'dark'
             ? (lang === 'vi' ? 'Bật giao diện sáng' : 'Use light mode')
             : (lang === 'vi' ? 'Bật giao diện tối' : 'Use dark mode')}
-          title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
         >
           {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
         </button>
@@ -102,7 +103,7 @@ export function Header({ lang, onLanguageChange, t, productName }: HeaderProps) 
             onClick={() => setMenuOpen((current) => !current)}
             aria-expanded={menuOpen}
             aria-controls="mobile-navigation"
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-label={menuOpen ? (lang === 'vi' ? 'Đóng menu' : 'Close menu') : (lang === 'vi' ? 'Mở menu' : 'Open menu')}
           >
             {menuOpen ? <X size={21} /> : <Menu size={21} />}
           </button>
@@ -114,12 +115,14 @@ export function Header({ lang, onLanguageChange, t, productName }: HeaderProps) 
           className={`mobile-navigation${menuOpen ? ' is-open' : ''}`}
           id="mobile-navigation"
           aria-label="Mobile navigation"
+          inert={!menuOpen}
         >
           <a href="/" onClick={closeMenu}>
             <ArrowLeft size={18} />
             {t('common.backHome')}
           </a>
-          <a href="/PHTV/" onClick={closeMenu}>{t('nav.phtv')}</a>
+          <a href="#features" onClick={closeMenu}>{t('product.features')}</a>
+          <a href="#gallery" onClick={closeMenu}>{t('product.gallery')}</a>
           <a href="#contact" onClick={closeMenu}>{t('nav.contact')}</a>
         </nav>
       )}

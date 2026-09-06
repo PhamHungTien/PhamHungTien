@@ -200,7 +200,7 @@ const SmartContent: React.FC<{ content: string, className?: string }> = ({ conte
           return <code key={i} className="inline max-w-full break-all rounded border border-white/5 bg-white/10 px-1.5 py-0.5 font-mono text-[0.85em] text-rose-300 [overflow-wrap:anywhere]">{part.slice(1, -1)}</code>;
         }
         if (part.startsWith('@')) {
-          return <span key={i} className="break-all font-black text-rose-400 [overflow-wrap:anywhere] hover:underline cursor-pointer">{part}</span>;
+          return <span key={i} className="break-all font-semibold text-rose-400 [overflow-wrap:anywhere] hover:underline cursor-pointer">{part}</span>;
         }
         if (part.startsWith('http')) {
           return <a key={i} href={part} target="_blank" rel="noopener noreferrer" className="inline break-all text-blue-400 underline [overflow-wrap:anywhere] transition-colors hover:text-blue-300">{part.length > 40 ? part.substring(0, 40) + '...' : part} <Icons.ExternalLink size={10} className="ml-1 inline-block align-baseline" /></a>;
@@ -646,7 +646,7 @@ export const QASection: React.FC = () => {
     const showAdminStyle = user.isAdmin ?? isAdmin;
 
     return (
-      <div className={`${size} rounded-2xl flex items-center justify-center text-white font-black overflow-hidden shadow-lg shrink-0 ${
+      <div className={`${size} rounded-2xl flex items-center justify-center text-white font-semibold overflow-hidden shadow-lg shrink-0 ${
         showAdminStyle
           ? 'bg-gradient-to-br from-rose-400 via-rose-500 to-pink-600 ring-1 ring-rose-300/40'
           : 'bg-slate-800 border border-white/5'
@@ -661,7 +661,7 @@ export const QASection: React.FC = () => {
   };
 
   const SkeletonCard = () => (
-    <div className="rounded-[1.5rem] p-6 md:p-8 bg-white/[0.018] border border-white/5 animate-pulse space-y-6">
+    <div className="rounded-2xl p-6 md:p-8 bg-white/[0.018] border border-white/5 animate-pulse space-y-6">
       <div className="flex gap-6">
         <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-white/5 shrink-0" />
         <div className="flex-1 space-y-3 pt-2">
@@ -680,12 +680,12 @@ export const QASection: React.FC = () => {
     <div className="phtv-community mx-auto min-h-screen max-w-4xl px-4 py-6 md:px-6 md:py-10">
       <div className="phtv-community-layout">
         <main className="phtv-community-main space-y-4">
-          <section className="phtv-community-toolbar rounded-[2rem] border border-white/[0.055] bg-[linear-gradient(180deg,rgba(15,23,42,0.72),rgba(8,11,18,0.66))] p-5 shadow-[0_18px_52px_rgba(2,6,23,0.34)] backdrop-blur md:p-6">
+          <section className="phtv-community-toolbar rounded-2xl border border-white/[0.055] bg-[linear-gradient(180deg,rgba(15,23,42,0.72),rgba(8,11,18,0.66))] p-5 shadow-[0_18px_52px_rgba(2,6,23,0.34)] backdrop-blur md:p-6">
             <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
               <div>
-                <h2 className="text-3xl font-black tracking-tight text-white md:text-[2.15rem]">
+                <h1 className="text-3xl font-semibold tracking-tight text-white md:text-[2.15rem]">
                   Thảo luận
-                </h2>
+                </h1>
                 <p className="mt-2 text-sm text-slate-400">
                   {communityStats.total} bài · {communityStats.pending} đang chờ phản hồi
                 </p>
@@ -706,14 +706,14 @@ export const QASection: React.FC = () => {
                       >
                         <Icons.Bell size={16} />
                         {unreadCount > 0 && (
-                          <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-500 px-1 text-[9px] font-black text-white">
+                          <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-500 px-1 text-[9px] font-semibold text-white">
                             {unreadCount}
                           </span>
                         )}
                       </button>
 
                       {showNotifs && (
-                        <div className="fixed inset-x-4 top-24 z-[150] overflow-hidden rounded-[1.5rem] border border-white/[0.06] bg-slate-900 shadow-[0_24px_80px_rgba(0,0,0,0.65)] sm:absolute sm:inset-x-auto sm:right-0 sm:top-14 sm:w-[340px]">
+                        <div className="fixed inset-x-4 top-24 z-[150] overflow-hidden rounded-2xl border border-white/[0.06] bg-slate-900 shadow-[0_24px_80px_rgba(0,0,0,0.65)] sm:absolute sm:inset-x-auto sm:right-0 sm:top-14 sm:w-[340px]">
                           <div className="flex items-center justify-between border-b border-white/5 px-4 py-3">
                             <span className="text-sm font-semibold text-white">Thông báo</span>
                             <button onClick={() => setShowNotifs(false)} className="text-slate-500 transition hover:text-white">
@@ -753,7 +753,7 @@ export const QASection: React.FC = () => {
                       )}
                     </div>
 
-                    <div className="flex items-center gap-3 rounded-[1.4rem] border border-white/[0.055] bg-white/[0.022] px-3 py-2">
+                    <div className="flex items-center gap-3 rounded-xl border border-white/[0.055] bg-white/[0.022] px-3 py-2">
                       <Avatar user={currentUser} size="w-9 h-9" isAdmin={currentUser.isAdmin} />
                       <div className="min-w-0">
                         <div className="flex items-center gap-2">
@@ -789,13 +789,14 @@ export const QASection: React.FC = () => {
               </div>
             </div>
 
-            <div className="mt-5 grid gap-3 md:grid-cols-[minmax(0,1fr)_160px_190px]">
+            <div className="phtv-community-filters mt-5 grid grid-cols-2 gap-3 md:grid-cols-[minmax(0,1fr)_160px_190px]">
               <label className="relative block">
                 <Icons.Search className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
                 <input
                   id="search-input"
                   name="search"
-                  type="text"
+                  type="search"
+                  aria-label="Tìm thảo luận"
                   placeholder="Tìm thảo luận..."
                   value={searchQuery}
                   onChange={(e) => setSearchBy(e.target.value)}
@@ -822,6 +823,7 @@ export const QASection: React.FC = () => {
                 <select
                   id="filter-select"
                   name="filter"
+                  aria-label="Lọc thảo luận"
                   value={filterBy}
                   onChange={(e) => setFilterBy(e.target.value as typeof filterBy)}
                   className="w-full bg-transparent text-sm text-white outline-none"
@@ -835,11 +837,12 @@ export const QASection: React.FC = () => {
             </div>
           </section>
 
-          <section className="phtv-community-composer rounded-[2rem] border border-white/[0.055] bg-[linear-gradient(180deg,rgba(15,23,42,0.72),rgba(8,11,18,0.66))] p-5 shadow-[0_18px_52px_rgba(2,6,23,0.34)] backdrop-blur md:p-6">
+          <section className="phtv-community-composer rounded-2xl border border-white/[0.055] bg-[linear-gradient(180deg,rgba(15,23,42,0.72),rgba(8,11,18,0.66))] p-5 shadow-[0_18px_52px_rgba(2,6,23,0.34)] backdrop-blur md:p-6">
             <form onSubmit={handleAskQuestion} className="space-y-3">
               <textarea
                 id="new-question-input"
                 name="question"
+                aria-label="Nội dung thảo luận mới"
                 placeholder={currentUser ? 'Bạn muốn trao đổi điều gì?' : 'Đăng nhập để bắt đầu thảo luận'}
                 value={newQuestion}
                 onChange={(e) => setNewQuestion(e.target.value)}
@@ -881,7 +884,7 @@ export const QASection: React.FC = () => {
                 {[1, 2, 3].map((index) => <SkeletonCard key={index} />)}
               </div>
             ) : displayQuestions.length === 0 ? (
-              <div className="rounded-[2rem] border border-dashed border-white/[0.06] bg-white/[0.018] px-6 py-20 text-center">
+              <div className="rounded-2xl border border-dashed border-white/[0.06] bg-white/[0.018] px-6 py-20 text-center">
                 <Icons.MessageSquare size={34} className="mx-auto text-slate-600" />
                 <p className="mt-4 text-base font-semibold text-white">Chưa có nội dung phù hợp.</p>
                 <p className="mt-2 text-sm text-slate-400">Thử đổi bộ lọc hoặc đăng câu hỏi mới.</p>
@@ -900,7 +903,7 @@ export const QASection: React.FC = () => {
                 return (
                   <article
                     key={question.id}
-                    className={`phtv-discussion-card rounded-[2rem] border bg-[linear-gradient(180deg,rgba(15,23,42,0.72),rgba(8,11,18,0.66))] p-5 shadow-[0_18px_52px_rgba(2,6,23,0.34)] backdrop-blur transition md:p-6 ${
+                    className={`phtv-discussion-card rounded-2xl border bg-[linear-gradient(180deg,rgba(15,23,42,0.72),rgba(8,11,18,0.66))] p-5 shadow-[0_18px_52px_rgba(2,6,23,0.34)] backdrop-blur transition md:p-6 ${
                       question.isPinned ? 'border-rose-300/16' : 'border-white/[0.055]'
                     }`}
                     onPointerEnter={() => incrementViewsOnce(question.id)}
@@ -916,25 +919,25 @@ export const QASection: React.FC = () => {
                         <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
                           <div className="min-w-0">
                             <div className="flex flex-wrap items-center gap-2">
-                              <h3 className={`text-base font-black tracking-tight ${questionIsAdmin ? 'text-rose-300' : 'text-white'}`}>
+                              <h3 className={`text-base font-semibold tracking-tight ${questionIsAdmin ? 'text-rose-300' : 'text-white'}`}>
                                 {question.author}
                               </h3>
                               {questionIsAdmin && (
-                                <span className="rounded-full border border-rose-300/16 bg-rose-400/10 px-2 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-rose-200">
+                                <span className="rounded-full border border-rose-300/16 bg-rose-400/10 px-2 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-rose-200">
                                   Admin
                                 </span>
                               )}
                               {labelInfo && (
-                                <span className={`rounded-full px-2.5 py-1 text-[10px] font-black uppercase ${labelInfo.bg} ${labelInfo.color}`}>
+                                <span className={`rounded-full px-2.5 py-1 text-xs font-semibold uppercase ${labelInfo.bg} ${labelInfo.color}`}>
                                   {labelInfo.label}
                                 </span>
                               )}
-                              <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-semibold ${statusMeta.badgeClassName}`}>
+                              <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-semibold ${statusMeta.badgeClassName}`}>
                                 <StatusIcon size={12} />
                                 {statusMeta.label}
                               </span>
                               {question.isPinned && (
-                                <span className="inline-flex items-center gap-1 rounded-full border border-rose-300/16 bg-rose-400/10 px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-rose-200">
+                                <span className="inline-flex items-center gap-1 rounded-full border border-rose-300/16 bg-rose-400/10 px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-rose-200">
                                   <Icons.Paperclip size={11} />
                                   Ghim
                                 </span>
@@ -997,7 +1000,7 @@ export const QASection: React.FC = () => {
                             <textarea
                               value={editContent}
                               onChange={(e) => setEditContent(e.target.value)}
-                              className="w-full rounded-[1.5rem] border border-white/[0.055] bg-white/[0.022] px-4 py-3 text-sm leading-6 text-white outline-none focus:border-rose-400/30"
+                              className="w-full rounded-2xl border border-white/[0.055] bg-white/[0.022] px-4 py-3 text-sm leading-6 text-white outline-none focus:border-rose-400/30"
                             />
                             <div className="flex flex-wrap gap-2">
                               <button onClick={() => saveEdit(question.id)} className="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-950">
@@ -1068,14 +1071,14 @@ export const QASection: React.FC = () => {
                                         isAdmin={replyIsAdmin}
                                       />
                                       <div className="min-w-0 flex-1">
-                                        <div className={`rounded-[1.4rem] border p-4 ${replyIsAdmin ? 'border-rose-300/16 bg-rose-400/[0.045]' : 'border-white/[0.055] bg-white/[0.022]'}`}>
+                                        <div className={`rounded-xl border p-4 ${replyIsAdmin ? 'border-rose-300/16 bg-rose-400/[0.045]' : 'border-white/[0.055] bg-white/[0.022]'}`}>
                                           <div className="mb-2 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
                                             <div className="flex flex-wrap items-center gap-2 text-sm">
                                               <span className={`font-semibold ${replyIsAdmin ? 'text-rose-200' : 'text-white'}`}>
                                                 {reply.author}
                                               </span>
                                               {replyIsAdmin && (
-                                                <span className="rounded-full border border-rose-300/16 bg-rose-400/10 px-2 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-rose-200">
+                                                <span className="rounded-full border border-rose-300/16 bg-rose-400/10 px-2 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-rose-200">
                                                   Admin
                                                 </span>
                                               )}
@@ -1117,7 +1120,7 @@ export const QASection: React.FC = () => {
                                                 autoFocus
                                                 value={editContent}
                                                 onChange={(e) => setEditContent(e.target.value)}
-                                                className="w-full rounded-[1.25rem] border border-white/[0.055] bg-slate-950 px-4 py-3 text-sm leading-6 text-white outline-none focus:border-rose-400/30"
+                                                className="w-full rounded-xl border border-white/[0.055] bg-slate-950 px-4 py-3 text-sm leading-6 text-white outline-none focus:border-rose-400/30"
                                               />
                                               <div className="flex flex-wrap gap-2">
                                                 <button onClick={() => saveReplyEdit(question.id, reply.id)} className="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-950">
@@ -1160,7 +1163,7 @@ export const QASection: React.FC = () => {
                             )}
 
                             {replyingTo?.qId === question.id ? (
-                              <div className="rounded-[1.5rem] border border-white/[0.055] bg-white/[0.022] p-4">
+                              <div className="rounded-2xl border border-white/[0.055] bg-white/[0.022] p-4">
                                 <div className="mb-3 flex items-center justify-between gap-3">
                                   <p className="text-sm font-semibold text-white">
                                     Đang phản hồi {replyingTo.name ? `@${replyingTo.name}` : 'thảo luận này'}
@@ -1183,7 +1186,7 @@ export const QASection: React.FC = () => {
                                   value={replyContent}
                                   onChange={(e) => setReplyContent(e.target.value)}
                                   placeholder="Viết phản hồi của bạn..."
-                                  className="min-h-[110px] w-full resize-none rounded-[1.25rem] border border-white/[0.055] bg-slate-950 px-4 py-3 text-sm leading-6 text-white outline-none focus:border-rose-400/30"
+                                  className="min-h-[110px] w-full resize-none rounded-xl border border-white/[0.055] bg-slate-950 px-4 py-3 text-sm leading-6 text-white outline-none focus:border-rose-400/30"
                                 />
 
                                 <div className="mt-3 flex flex-wrap gap-2">

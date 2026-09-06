@@ -14,6 +14,7 @@
     "optimize:images": "./scripts/optimize-images.sh",
     "site": "./scripts/build-site.sh",
     "verify:site": "./scripts/verify-site.sh",
+    "verify:ui": "node scripts/verify-ui.mjs",
     "deploy:local": "./scripts/deploy-local.sh",
     "build:phtv": "cd PHTV && npm run build",
     "build:all": "npm run build && npm run build:phtv",

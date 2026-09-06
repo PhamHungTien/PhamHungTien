@@ -91,8 +91,8 @@ export const products: Product[] = [
     appStoreUrl: 'https://apps.apple.com/vn/app/lunarv-l%E1%BB%8Bch-%C3%A2m-vi%E1%BB%87t-nam/id6770913893?l=vi',
     category: { vi: 'Lịch âm Việt Nam', en: 'Vietnamese lunar calendar' },
     title: {
-      vi: 'Lịch âm Việt Nam, dễ đọc trên mọi thiết bị Apple.',
-      en: 'A Vietnamese lunar calendar that stays readable across Apple devices.'
+      vi: 'Lịch âm Việt Nam trên thiết bị Apple.',
+      en: 'Vietnamese lunar calendar for Apple devices.'
     },
     subtitle: { vi: 'Ngày âm, dịp gia đình, widget và nhắc nhở.', en: 'Lunar dates, family moments, widgets, and reminders.' },
     description: {
@@ -139,8 +139,8 @@ export const products: Product[] = [
     appStoreUrl: 'https://apps.apple.com/us/app/pad-code-ai-code-editor/id6774398897',
     category: { vi: 'IDE cho thiết bị Apple', en: 'IDE for Apple devices' },
     title: {
-      vi: 'Viết và chạy code trực tiếp trên iPhone, iPad và Mac.',
-      en: 'Write and run code directly on iPhone, iPad, and Mac.'
+      vi: 'Viết và chạy code trên thiết bị Apple.',
+      en: 'Write and run code on your Apple devices.'
     },
     subtitle: { vi: 'Editor, compiler offline, terminal và hỗ trợ AI.', en: 'Editor, offline compiler, terminal, and AI assistance.' },
     description: {
@@ -186,8 +186,8 @@ export const products: Product[] = [
     appStoreUrl: 'https://apps.apple.com/us/app/pad-notes-ai/id6779363432',
     category: { vi: 'Ghi chú thông minh', en: 'Smart notes' },
     title: {
-      vi: 'Ghi chú viết tay, OCR offline và AI trong cùng một workspace.',
-      en: 'Handwriting, offline OCR, and AI in one focused workspace.'
+      vi: 'Viết tay, ghi chú và xử lý tài liệu.',
+      en: 'Handwriting, notes, and documents.'
     },
     subtitle: { vi: 'Cho ghi chú, OCR và làm việc dài trên iPhone, iPad và Mac.', en: 'For notes, OCR, and long work sessions on iPhone, iPad, and Mac.' },
     description: {
@@ -235,8 +235,8 @@ export const products: Product[] = [
     appStoreUrl: 'https://apps.apple.com/us/app/my-nas-manager/id6780180564',
     category: { vi: 'Synology NAS client', en: 'Synology NAS client' },
     title: {
-      vi: 'Quản lý Synology NAS từ iPhone, iPad và Mac rõ ràng hơn.',
-      en: 'Manage Synology NAS from iPhone, iPad, and Mac with more clarity.'
+      vi: 'Quản lý Synology NAS trên thiết bị Apple.',
+      en: 'Manage Synology NAS from your Apple devices.'
     },
     subtitle: { vi: 'Giám sát hệ thống, File Station và SSH trong một app.', en: 'System monitoring, File Station, and SSH in one app.' },
     description: {
@@ -282,8 +282,8 @@ export const products: Product[] = [
     appStoreUrl: 'https://apps.apple.com/us/app/lunar-block-teris-3d/id6773545437',
     category: { vi: 'Game xếp hình 3D', en: '3D puzzle game' },
     title: {
-      vi: 'Xếp hình cổ điển trong một bảng điều khiển orbital 3D.',
-      en: 'Classic block stacking inside a 3D orbital console.'
+      vi: 'Xếp hình cổ điển trong không gian 3D.',
+      en: 'Classic block stacking in 3D.'
     },
     subtitle: { vi: 'SceneKit, haptic, âm thanh tổng hợp và hiệu ứng vỡ khối.', en: 'SceneKit, haptics, synthesized audio, and line fracture effects.' },
     description: {
