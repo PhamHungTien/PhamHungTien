@@ -1,0 +1,84 @@
+.phtv-navigation-overlay {
+  position: fixed;
+  inset: 64px 0 0;
+  z-index: 90;
+}
+
+.phtv-navigation-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  border: 0;
+  background: rgb(11 12 15 / 22%);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  cursor: default;
+}
+
+.phtv-navigation-panel {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  width: min(360px, calc(100% - 32px));
+  max-height: calc(100dvh - 88px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 10px;
+  border: 1px solid var(--phtv-line);
+  border-radius: 16px;
+  background: var(--phtv-surface);
+  color: var(--phtv-text);
+  box-shadow: 0 16px 48px rgb(0 0 0 / 16%);
+}
+
+.phtv-navigation-panel a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 46px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-decoration: none;
+  transition: background-color 160ms ease;
+}
+
+.phtv-navigation-panel a:hover,
+.phtv-navigation-panel a[aria-current="page"] {
+  background: var(--phtv-soft);
+}
+
+.phtv-navigation-panel a:focus-visible {
+  outline: 2px solid var(--phtv-focus);
+  outline-offset: -2px;
+}
+
+.phtv-navigation-panel svg {
+  display: block;
+  flex-shrink: 0;
+  color: var(--phtv-muted);
+}
+
+.phtv-navigation-links a > span { flex: 1; }
+.phtv-navigation-back { transform: rotate(180deg); }
+.phtv-navigation-downloads { margin-top: 8px; padding: 14px 2px 8px; border-top: 1px solid var(--phtv-line); }
+.phtv-navigation-label { display: block; margin: 0 10px 10px; color: var(--phtv-muted); font-size: 12px; font-weight: 500; }
+.phtv-navigation-download-grid { display: flex; gap: 8px; }
+.phtv-navigation-download-grid a { flex: 1; justify-content: center; gap: 8px; padding: 10px 8px; border: 1px solid var(--phtv-line); font-size: 13px; }
+.phtv-navigation-downloads a.phtv-navigation-homebrew { justify-content: center; min-height: 44px; margin-top: 4px; color: var(--phtv-muted); }
+.phtv-navigation-footer { display: flex; justify-content: space-between; gap: 12px; padding-top: 8px; border-top: 1px solid var(--phtv-line); }
+.phtv-navigation-footer a { justify-content: center; flex: 1; color: var(--phtv-muted); }
+
+@media (min-width: 1024px) {
+  .phtv-navigation-overlay { display: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .phtv-navigation-panel { animation: phtv-menu-enter 160ms ease-out; }
+  @keyframes phtv-menu-enter {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}

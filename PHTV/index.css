@@ -528,7 +528,7 @@ html[data-theme="light"] .phtv-page {
 }
 
 html[data-theme="light"] .phtv-page nav.fixed {
-  height: 62px;
+  height: 64px;
   padding: 0 !important;
   border-bottom: 1px solid var(--phtv-line);
   background: rgba(255, 255, 255, 0.94);
@@ -537,7 +537,7 @@ html[data-theme="light"] .phtv-page nav.fixed {
 }
 
 html[data-theme="light"] .phtv-page nav.fixed > div {
-  height: 62px;
+  height: 64px;
   border: 0 !important;
   border-radius: 0 !important;
   background: transparent !important;

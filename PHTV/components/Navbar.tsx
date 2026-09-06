@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Icons } from './Icons';
 import { useI18n } from '../i18n';
+import './Navbar.css';
 
 const iconImg = '/PHTV/phtv-icon.webp';
 
@@ -31,6 +32,8 @@ export const Navbar: React.FC<NavbarProps> = ({
     document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light'
   );
   const desktopDownloadRef = useRef<HTMLDivElement | null>(null);
+  const mobileNavigationRef = useRef<HTMLElement | null>(null);
+  const mobileToggleRef = useRef<HTMLButtonElement | null>(null);
   const downloadLabel = hasSplitDownloads ? t('nav.download_label') : t('nav.download_now');
 
   useEffect(() => {
@@ -77,11 +80,36 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   useEffect(() => {
     if (!mobileMenuOpen) return;
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setMobileMenuOpen(false);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    mobileNavigationRef.current?.querySelector<HTMLAnchorElement>('a')?.focus();
+    const handleKeys = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setMobileMenuOpen(false);
+      }
+      if (event.key === 'Tab') {
+        const controls = [mobileToggleRef.current, ...Array.from(mobileNavigationRef.current?.querySelectorAll<HTMLAnchorElement>('a[href]') ?? [])].filter((element): element is HTMLButtonElement | HTMLAnchorElement => element !== null);
+        const index = controls.indexOf(document.activeElement as HTMLAnchorElement);
+        if (event.shiftKey && index <= 0) {
+          event.preventDefault();
+          controls.at(-1)?.focus();
+        } else if (!event.shiftKey && (index === controls.length - 1 || index === -1)) {
+          event.preventDefault();
+          controls[0]?.focus();
+        }
+      }
     };
-    window.addEventListener('keydown', closeOnEscape);
-    return () => window.removeEventListener('keydown', closeOnEscape);
+    const desktop = window.matchMedia('(min-width: 1024px)');
+    const closeOnDesktop = () => { if (desktop.matches) setMobileMenuOpen(false); };
+    window.addEventListener('keydown', handleKeys);
+    desktop.addEventListener('change', closeOnDesktop);
+    return () => {
+      window.removeEventListener('keydown', handleKeys);
+      desktop.removeEventListener('change', closeOnDesktop);
+      document.body.style.overflow = previousOverflow;
+      mobileToggleRef.current?.focus({ preventScroll: true });
+    };
   }, [mobileMenuOpen]);
 
   useEffect(() => {
@@ -321,101 +349,61 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             {/* Mobile Menu Button */}
             <button 
-              className="phtv-nav-control phtv-icon-control rounded-lg border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition-colors hover:text-white lg:hidden"
+              ref={mobileToggleRef}
+              type="button"
+              className="phtv-nav-control phtv-icon-control inline-flex items-center justify-center rounded-lg border border-white/8 bg-white/[0.03] text-slate-300 transition-colors hover:text-white lg:hidden"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label={mobileMenuOpen ? t('nav.close_menu') : t('nav.open_menu')}
               aria-expanded={mobileMenuOpen}
               aria-controls="phtv-mobile-navigation"
             >
-              {mobileMenuOpen ? <Icons.X size={28} /> : <Icons.Menu size={28} />}
+              {mobileMenuOpen ? <Icons.X size={20} aria-hidden="true" /> : <Icons.Menu size={20} aria-hidden="true" />}
             </button>
           </div>
         </div>
       </nav>
 
-      {/* Mobile Menu Overlay */}
-      <div id="phtv-mobile-navigation" inert={!mobileMenuOpen} className={`fixed inset-0 z-[90] lg:hidden transition-all duration-300 ${mobileMenuOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}>
-        <div className="absolute inset-0 bg-slate-950/75 backdrop-blur-xl" onClick={() => setMobileMenuOpen(false)}></div>
-        <div className={`phtv-mobile-menu absolute right-3 top-3 bottom-3 w-[min(300px,calc(100vw-1.5rem))] rounded-lg border border-white/10 bg-white p-5 flex flex-col transition-transform duration-300 ease-out shadow-xl ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-          <div className="mb-8 flex items-center gap-3">
-            <img src={iconImg} alt="PHTV" className="w-10 h-10 object-contain" />
-            <div>
-              <span className="block text-xl font-black text-white">PHTV</span>
-              <span className="block text-[10px] uppercase tracking-[0.24em] text-slate-500">Precision Hybrid Typing</span>
-            </div>
-          </div>
-          
-          <div className="flex flex-col gap-4">
-            {navLinks.map((item) => (
-              <a 
-                key={item.name}
-                href={item.href} 
-                onClick={(e) => handleLinkClick(e, item.tab, item.href)}
-                className={`group flex items-center justify-between text-lg font-semibold ${
-                  item.tab === activeTab ? 'text-brand-400' : 'text-slate-300 hover:text-white'
-                }`}
-              >
-                <span className="flex items-center gap-3">
-                  {item.name}
-                </span>
-                <Icons.ArrowRight size={18} className="text-amber-300 opacity-0 -translate-x-2 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
+      {mobileMenuOpen && (
+        <div className="phtv-navigation-overlay">
+          <button className="phtv-navigation-backdrop" type="button" tabIndex={-1} aria-label={t('nav.close_menu')} onClick={() => setMobileMenuOpen(false)} />
+          <nav id="phtv-mobile-navigation" ref={mobileNavigationRef} className="phtv-navigation-panel" aria-label={lang === 'vi' ? 'Điều hướng PHTV' : 'PHTV navigation'}>
+            <div className="phtv-navigation-links">
+              <a href="/" onClick={() => setMobileMenuOpen(false)}>
+                <Icons.ArrowRight className="phtv-navigation-back" size={18} aria-hidden="true" />
+                <span>{t('nav.home')}</span>
               </a>
-            ))}
-          </div>
-
-          <div className="mt-auto space-y-4">
-            {hasSplitDownloads ? (
-              <>
-                <a
-                  href={arm64DownloadUrl ?? releaseUrl}
-                  onClick={handleDirectDownloadClick}
-                  className="flex items-center justify-between gap-3 w-full rounded-md bg-blue-600 px-4 py-3 font-semibold text-sm text-white"
-                >
-                  <span className="flex items-center gap-3">
-                    <Icons.Download size={20} />
-                    Apple Silicon
-                  </span>
-                  <span className="text-xs text-white/75">{t('nav.apple_silicon_desc')}</span>
-                </a>
-
-                <a
-                  href={intelDownloadUrl ?? releaseUrl}
-                  onClick={handleDirectDownloadClick}
-                  className="flex items-center justify-between gap-3 w-full rounded-md border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-900"
-                >
-                  <span className="flex items-center gap-3">
-                    <Icons.Download size={20} />
-                    Intel
-                  </span>
-                  <span className="text-xs text-slate-500">{t('nav.intel_desc')}</span>
-                </a>
-
-                <a
-                  href="#install"
-                  onClick={handleInstallClick}
-                  className="flex items-center justify-center gap-3 w-full rounded-md py-3 text-sm font-medium text-blue-600"
-                >
-                  <Icons.Terminal size={20} />
-                  Homebrew ({t('nav.homebrew_desc')})
-                </a>
-              </>
-            ) : (
-              <a
-                href={downloadUrl}
-                onClick={handleDirectDownloadClick}
-                className="flex items-center justify-center gap-3 w-full rounded-2xl bg-white py-4 text-lg font-black text-slate-950"
-              >
-                <Icons.Download size={20} />
-                {downloadLabel}
-              </a>
-            )}
-            <div className="flex justify-center gap-6 border-t border-white/5 pt-4">
-              <a href="https://github.com/PhamHungTien/PHTV" className="phtv-mobile-social" aria-label="GitHub"><Icons.Github size={20} /></a>
-              <a href="mailto:contact@phamhungtien.com" className="phtv-mobile-social" aria-label="Email hỗ trợ"><Icons.Mail size={20} /></a>
+              {navLinks.map((item, index) => {
+                const Icon = [Icons.Zap, Icons.Image, Icons.MessageSquare][index];
+                return (
+                  <a key={item.href} href={item.href} onClick={(event) => handleLinkClick(event, item.tab, item.href)} aria-current={item.tab === 'community' && activeTab === 'community' ? 'page' : undefined}>
+                    <Icon size={18} aria-hidden="true" />
+                    <span>{item.name}</span>
+                    <Icons.ArrowRight size={15} aria-hidden="true" />
+                  </a>
+                );
+              })}
             </div>
-          </div>
+            <div className="phtv-navigation-downloads">
+              <span className="phtv-navigation-label">{t('nav.download_label')}</span>
+              <div className="phtv-navigation-download-grid">
+                {hasSplitDownloads ? (
+                  <>
+                    <a href={arm64DownloadUrl ?? releaseUrl} onClick={handleDirectDownloadClick}><Icons.Download size={16} aria-hidden="true" />Apple Silicon</a>
+                    <a href={intelDownloadUrl ?? releaseUrl} onClick={handleDirectDownloadClick}><Icons.Download size={16} aria-hidden="true" />Intel</a>
+                  </>
+                ) : (
+                  <a href={downloadUrl} onClick={handleDirectDownloadClick}><Icons.Download size={16} aria-hidden="true" />{downloadLabel}</a>
+                )}
+              </div>
+              <a className="phtv-navigation-homebrew" href="#install" onClick={handleInstallClick}><Icons.Terminal size={16} aria-hidden="true" />Homebrew</a>
+            </div>
+            <div className="phtv-navigation-footer">
+              <a href="https://github.com/PhamHungTien/PHTV" target="_blank" rel="noopener noreferrer"><Icons.Github size={17} aria-hidden="true" />GitHub</a>
+              <a href="mailto:contact@phamhungtien.com"><Icons.Mail size={17} aria-hidden="true" />Email</a>
+            </div>
+          </nav>
         </div>
-      </div>
+      )}
     </>
   );
 };
