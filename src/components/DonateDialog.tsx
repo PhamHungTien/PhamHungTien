@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { ArrowUpRight, Download, Heart, X } from 'lucide-react';
-import donateQr from '../../PHTV/public/assets/donate.webp';
+import donateQr from '../../PHTV/public/assets/donate.jpg';
 import type { Lang } from '../types';
 import './DonateDialog.css';
 
@@ -82,7 +82,7 @@ export function DonateDialog({ isOpen, onClose, lang }: DonateDialogProps) {
         <img src={donateQr} width={600} height={600} alt="VietQR · Pham Hung Tien" />
         <figcaption>{text.scan}</figcaption>
       </figure>
-      <a className="donate-dialog__save" href={donateQr} download="pham-hung-tien-vietqr.webp">
+      <a className="donate-dialog__save" href={donateQr} download="pham-hung-tien-vietqr.jpg">
         <Download size={16} aria-hidden="true" />{text.save}
       </a>
       <a className="donate-dialog__paypal" href="https://www.paypal.com/paypalme/phamhungtien1404" target="_blank" rel="noopener noreferrer">

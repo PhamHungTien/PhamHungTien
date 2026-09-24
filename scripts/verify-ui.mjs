@@ -38,14 +38,14 @@ for (const route of prerenderRoutes) {
 }
 
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
-const originalQrHash = hash(await readFile(join(root, 'PHTV/public/assets/donate.webp')));
+const originalQrHash = hash(await readFile(join(root, 'PHTV/public/assets/donate.jpg')));
 for (const folder of ['dist/assets', 'PHTV/dist/assets']) {
   const files = await readdir(join(root, folder));
-  const qr = files.find((file) => /^donate-.*\.webp$/.test(file));
+  const qr = files.find((file) => /^donate-.*\.jpg$/.test(file));
   assert.ok(qr, `${folder}: emitted donation QR`);
-  assert.equal(hash(await readFile(join(root, folder, qr))), originalQrHash, `${folder}: unchanged original QR`);
+  assert.equal(hash(await readFile(join(root, folder, qr))), originalQrHash, `${folder}: current donation QR`);
 }
-console.log('✓ Home and PHTV both include the original donation QR');
+console.log('✓ Home and PHTV both include the current donation QR');
 
 const legalContacts = await readFile(join(root, 'assets/theme.js'), 'utf8');
 for (const href of contactUrls) assert.ok(legalContacts.includes(href), `legal pages: ${href}`);
