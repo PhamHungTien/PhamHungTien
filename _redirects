@@ -1,0 +1,54 @@
+# Standard Canonical Trailing Slashes (Capitalized routes)
+/PHTV /PHTV/ 301
+/LunarV /LunarV/ 301
+/PadCodeAI /PadCodeAI/ 301
+/PadNotesAI /PadNotesAI/ 301
+/MyNASManager /MyNASManager/ 301
+/LunarBlock /LunarBlock/ 301
+
+# Case Normalization & Wildcard Splat Redirects for Lowercase Routes
+/phtv /PHTV/ 301
+/phtv/* /PHTV/:splat 301
+
+/lunarv /LunarV/ 301
+/lunarv/* /LunarV/:splat 301
+
+/padcodeai /PadCodeAI/ 301
+/padcodeai/* /PadCodeAI/:splat 301
+
+/padnotesai /PadNotesAI/ 301
+/padnotesai/* /PadNotesAI/:splat 301
+/padnotesAI /PadNotesAI/ 301
+/padnotesAI/ /PadNotesAI/ 301
+/padnotesAI/* /PadNotesAI/:splat 301
+/aipadnotes /PadNotesAI/ 301
+/aipadnotes/ /PadNotesAI/ 301
+/aipadnotes/* /PadNotesAI/:splat 301
+
+/mynasmanager /MyNASManager/ 301
+/mynasmanager/* /MyNASManager/:splat 301
+
+/lunarblock /LunarBlock/ 301
+/lunarblock/* /LunarBlock/:splat 301
+
+# Clean URLs for Policy and Terms documents
+/PHTV/privacy /PHTV/privacy.html 301
+/PHTV/terms /PHTV/terms.html 301
+/LunarV/privacy /LunarV/privacy.html 301
+/LunarV/terms /LunarV/terms.html 301
+/PadCodeAI/privacy /PadCodeAI/privacy.html 301
+/PadCodeAI/terms /PadCodeAI/terms.html 301
+/PadNotesAI/privacy /PadNotesAI/privacy.html 301
+/PadNotesAI/terms /PadNotesAI/terms.html 301
+/MyNASManager/privacy /MyNASManager/privacy.html 301
+/MyNASManager/terms /MyNASManager/terms.html 301
+/LunarBlock/privacy /LunarBlock/privacy.html 301
+/LunarBlock/terms /LunarBlock/terms.html 301
+
+# React SPA Rewrite - redirect all non-file subroutes to index.html for client-side routing
+/PHTV/* /PHTV/index.html 200
+/LunarV/* /LunarV/index.html 200
+/PadCodeAI/* /PadCodeAI/index.html 200
+/PadNotesAI/* /PadNotesAI/index.html 200
+/MyNASManager/* /MyNASManager/index.html 200
+/LunarBlock/* /LunarBlock/index.html 200
