@@ -330,7 +330,6 @@ export const products: Product[] = [
     ],
     accent: '#6366f1',
     appStoreUrl: 'https://apps.apple.com/app/id6817003401',
-    githubUrl: 'https://github.com/PhamHungTien/vTTS',
     category: { vi: 'Giọng đọc AI & Tiện ích', en: 'AI Speech & Utilities' },
     title: {
       vi: 'Chuyển văn bản thành giọng nói tiếng Việt & tiếng Anh ngoại tuyến.',
@@ -345,11 +344,11 @@ export const products: Product[] = [
       en: 'vTTS turns written text into natural-sounding AI speech entirely on-device without internet access. Completely private, with audio file export and local network server.'
     },
     ctaLabel: { vi: 'Xem trên App Store', en: 'View on App Store' },
-    secondaryCtaLabel: { vi: 'Mã nguồn GitHub', en: 'GitHub' },
-    platforms: { vi: 'iPhone, iPad, Mac', en: 'iPhone, iPad, Mac' },
-    operatingSystem: 'iOS 17.0 or later, macOS 14.0 or later',
+    platforms: { vi: 'iOS, iPadOS, macOS', en: 'iOS, iPadOS, macOS' },
+    operatingSystem: 'iOS 17.0 or later, iPadOS 17.0 or later, macOS 14.0 or later',
     appCategory: 'UtilitiesApplication',
     facts: [
+      { label: { vi: 'Nền tảng', en: 'Platforms' }, value: { vi: 'iOS, iPadOS, macOS', en: 'iOS, iPadOS, macOS' } },
       { label: { vi: 'Ngoại tuyến', en: 'Offline' }, value: { vi: '100% On-Device', en: '100% On-Device' } },
       { label: { vi: 'Ngôn ngữ', en: 'Languages' }, value: { vi: 'Tiếng Việt & Tiếng Anh', en: 'Vietnamese & English' } },
       { label: { vi: 'Định dạng xuất', en: 'Export formats' }, value: { vi: 'M4A & WAV', en: 'M4A & WAV' } }
@@ -372,7 +371,7 @@ export const products: Product[] = [
         description: { vi: 'Tùy chọn biến thiết bị thành máy chủ TTS trên Wi-Fi nội bộ để các thiết bị khác gửi yêu cầu qua REST API.', en: 'Optionally host an inbound HTTP TTS server on your local Wi-Fi with token authentication.' }
       }
     ],
-    support: { vi: 'Cần hỗ trợ, góp ý giọng đọc hoặc báo lỗi? Gửi email cho mình hoặc mở Issue trên GitHub.', en: 'Need support, voice suggestions, or found a bug? Email me or open an issue on GitHub.' }
+    support: { vi: 'Cần hỗ trợ, góp ý giọng đọc hoặc báo lỗi? Gửi email cho mình nhé.', en: 'Need support, voice suggestions, or found a bug? Send me an email.' }
   }
 ];
 
