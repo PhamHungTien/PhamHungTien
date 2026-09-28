@@ -57,7 +57,7 @@ cp -r assets/. "$out/assets/"
 
 # Legal pages and per-app assets. index.html is NOT copied here: the prerendered
 # one from dist/ must survive.
-for app in LunarV LunarBlock PadCodeAI PadNotesAI MyNASManager; do
+for app in LunarV LunarBlock PadCodeAI PadNotesAI MyNASManager vTTS; do
   cp "$app/privacy.html" "$out/$app/privacy.html"
   cp "$app/terms.html" "$out/$app/terms.html"
   cp -r "$app/assets" "$out/$app/assets"

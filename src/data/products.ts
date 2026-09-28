@@ -22,6 +22,9 @@ import nasPhoneTwo from '../../MyNASManager/assets/iphone-screenshot2.png';
 import blockIcon from '../../LunarBlock/assets/app-icon.png';
 import blockHero from '../../LunarBlock/assets/lunarblock-hero.png';
 import blockShowcase from '../../LunarBlock/assets/lunarblock-showcase.png';
+import vttsIcon from '../../vTTS/assets/app-icon.png';
+import vttsMacHero from '../../vTTS/assets/mac-main.png';
+import vttsPhoneScreenshot from '../../vTTS/assets/iphone-main.png';
 
 export const products: Product[] = [
   {
@@ -314,6 +317,62 @@ export const products: Product[] = [
       }
     ],
     support: { vi: 'Có góp ý gameplay hoặc điều khiển? Gửi mình qua email.', en: 'Have gameplay or control feedback? Send it by email.' }
+  },
+  {
+    slug: 'vtts',
+    name: 'vTTS',
+    route: '/vTTS/',
+    icon: vttsIcon,
+    heroImage: vttsMacHero,
+    gallery: [
+      { src: vttsMacHero, alt: { vi: 'Giao diện vTTS trên macOS với thanh điều khiển giọng đọc và tốc độ', en: 'vTTS interface on macOS with voice controls and speed slider' } },
+      { src: vttsPhoneScreenshot, alt: { vi: 'Giao diện vTTS trên iPhone hỗ trợ đọc văn bản và xuất tệp âm thanh', en: 'vTTS interface on iPhone with reading controls and audio export' } }
+    ],
+    accent: '#6366f1',
+    appStoreUrl: 'https://apps.apple.com/app/id6817003401',
+    githubUrl: 'https://github.com/PhamHungTien/vTTS',
+    category: { vi: 'Giọng đọc AI & Tiện ích', en: 'AI Speech & Utilities' },
+    title: {
+      vi: 'Chuyển văn bản thành giọng nói tiếng Việt & tiếng Anh ngoại tuyến.',
+      en: 'Natural on-device AI voice synthesis for Vietnamese and English.'
+    },
+    subtitle: {
+      vi: 'vTTS Offline - Đọc văn bản AI',
+      en: 'vTTS: Offline Text to Speech'
+    },
+    description: {
+      vi: 'vTTS chuyển đổi văn bản thành giọng nói AI tự nhiên, chạy 100% trên thiết bị không cần mạng Internet. Bảo mật riêng tư tuyệt đối, hỗ trợ xuất file âm thanh và máy chủ LAN nội bộ.',
+      en: 'vTTS turns written text into natural-sounding AI speech entirely on-device without internet access. Completely private, with audio file export and local network server.'
+    },
+    ctaLabel: { vi: 'Xem trên App Store', en: 'View on App Store' },
+    secondaryCtaLabel: { vi: 'Mã nguồn GitHub', en: 'GitHub' },
+    platforms: { vi: 'iPhone, iPad, Mac', en: 'iPhone, iPad, Mac' },
+    operatingSystem: 'iOS 17.0 or later, macOS 14.0 or later',
+    appCategory: 'UtilitiesApplication',
+    facts: [
+      { label: { vi: 'Ngoại tuyến', en: 'Offline' }, value: { vi: '100% On-Device', en: '100% On-Device' } },
+      { label: { vi: 'Ngôn ngữ', en: 'Languages' }, value: { vi: 'Tiếng Việt & Tiếng Anh', en: 'Vietnamese & English' } },
+      { label: { vi: 'Định dạng xuất', en: 'Export formats' }, value: { vi: 'M4A & WAV', en: 'M4A & WAV' } }
+    ],
+    features: [
+      {
+        title: { vi: 'Giọng đọc AI tự nhiên', en: 'Natural AI speech' },
+        description: { vi: 'Tích hợp sẵn nhiều gói giọng đọc truyền cảm với các âm sắc và vùng miền khác nhau, xử lý hoàn toàn ngoại tuyến.', en: 'Multiple expressive voice packs with different regional accents, synthesized entirely offline.' }
+      },
+      {
+        title: { vi: 'Bảo mật tuyệt đối', en: 'Zero data collection' },
+        description: { vi: 'Văn bản của bạn không bao giờ rời khỏi thiết bị. Không gửi dữ liệu lên đám mây, không theo dõi phân tích.', en: 'Your text never leaves your device. No cloud uploads, no tracking, and no analytics SDKs.' }
+      },
+      {
+        title: { vi: 'Xuất & Chia sẻ âm thanh', en: 'Audio export & sharing' },
+        description: { vi: 'Dễ dàng chuyển đổi tài liệu dài thành tệp âm thanh M4A hoặc WAV chất lượng cao để lưu trữ hoặc chia sẻ.', en: 'Convert long texts into high-quality M4A or WAV audio files to save locally or share.' }
+      },
+      {
+        title: { vi: 'Máy chủ mạng nội bộ (LAN Server)', en: 'Local network server' },
+        description: { vi: 'Tùy chọn biến thiết bị thành máy chủ TTS trên Wi-Fi nội bộ để các thiết bị khác gửi yêu cầu qua REST API.', en: 'Optionally host an inbound HTTP TTS server on your local Wi-Fi with token authentication.' }
+      }
+    ],
+    support: { vi: 'Cần hỗ trợ, góp ý giọng đọc hoặc báo lỗi? Gửi email cho mình hoặc mở Issue trên GitHub.', en: 'Need support, voice suggestions, or found a bug? Email me or open an issue on GitHub.' }
   }
 ];
 

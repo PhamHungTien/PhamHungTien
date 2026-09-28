@@ -22,6 +22,7 @@ entries=(
   "padnotesai|PadNotesAI/assets/ipad-editor.png|7c3aed"
   "mynasmanager|MyNASManager/assets/ipad-hero.png|0071e3"
   "lunarblock|LunarBlock/assets/lunarblock-hero.png|f59e0b"
+  "vtts|vTTS/assets/mac-main.png|4f46e5"
 )
 
 for entry in "${entries[@]}"; do

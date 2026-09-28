@@ -18,7 +18,7 @@ expect_contains() {
 
 expect_contains "$site/index.html" '<link rel="canonical" href="https://phamhungtien.com/" />' "/ canonical"
 
-for app in LunarV LunarBlock PadCodeAI PadNotesAI MyNASManager; do
+for app in LunarV LunarBlock PadCodeAI PadNotesAI MyNASManager vTTS; do
   page="$site/$app/index.html"
   expect_contains "$page" "<link rel=\"canonical\" href=\"https://phamhungtien.com/$app/\" />" "/$app/ canonical"
   expect_contains "$page" 'application/ld+json' "/$app/ structured data"

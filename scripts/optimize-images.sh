@@ -18,6 +18,7 @@ icons=(
   PadCodeAI/assets/app-icon.png
   LunarBlock/assets/app-icon.png
   assets/lunarv-icon.png
+  vTTS/assets/app-icon.png
 )
 
 screenshots=(
@@ -34,6 +35,8 @@ screenshots=(
   LunarBlock/assets/lunarblock-showcase.png
   LunarV/assets/ui-review-1.png
   LunarV/assets/ui-review-2.png
+  vTTS/assets/mac-main.png
+  vTTS/assets/iphone-main.png
 )
 
 before=$(du -ck "${icons[@]}" "${screenshots[@]}" | tail -1 | cut -f1)

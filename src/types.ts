@@ -6,7 +6,8 @@ export type ProductSlug =
   | 'padcodeai'
   | 'padnotesai'
   | 'mynasmanager'
-  | 'lunarblock';
+  | 'lunarblock'
+  | 'vtts';
 
 export type Localized<T = string> = Record<Lang, T>;
 
