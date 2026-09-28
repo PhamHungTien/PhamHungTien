@@ -494,13 +494,15 @@ svg {
 }
 
 .facts-band {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
 }
 
 .fact-item {
+  flex: 1 1 0;
+  min-width: 140px;
   display: grid;
   gap: 8px;
   margin: 20px 0;
