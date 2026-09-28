@@ -332,43 +332,43 @@ export const products: Product[] = [
     appStoreUrl: 'https://apps.apple.com/app/id6817003401',
     category: { vi: 'Giọng đọc AI & Tiện ích', en: 'AI Speech & Utilities' },
     title: {
-      vi: 'Chuyển văn bản thành giọng nói tiếng Việt & tiếng Anh ngoại tuyến.',
-      en: 'Natural on-device AI voice synthesis for Vietnamese and English.'
+      vi: 'Chuyển văn bản thành giọng nói ngoại tuyến trên thiết bị.',
+      en: 'On-device offline text-to-speech for Apple ecosystem.'
     },
     subtitle: {
-      vi: 'vTTS Offline - Đọc văn bản AI',
-      en: 'vTTS: Offline Text to Speech'
+      vi: 'vTTS Offline | Chuyển văn bản thành giọng nói',
+      en: 'vTTS Offline | Text to Speech'
     },
     description: {
-      vi: 'vTTS chuyển đổi văn bản thành giọng nói AI tự nhiên, chạy 100% trên thiết bị không cần mạng Internet. Bảo mật riêng tư tuyệt đối, hỗ trợ xuất file âm thanh và máy chủ LAN nội bộ.',
-      en: 'vTTS turns written text into natural-sounding AI speech entirely on-device without internet access. Completely private, with audio file export and local network server.'
+      vi: 'Ứng dụng đọc văn bản chạy offline hoàn toàn trên máy, miễn phí, không theo dõi, không quảng cáo và không giới hạn từ. Tích hợp mô hình Kokoro Vietnamese, hỗ trợ xuất file âm thanh và làm LAN Server.',
+      en: '100% on-device offline text-to-speech. Free, private, zero tracking, no ads, and unlimited words. Powered by Kokoro Vietnamese, with audio export and local LAN server.'
     },
     ctaLabel: { vi: 'Xem trên App Store', en: 'View on App Store' },
-    platforms: { vi: 'iOS 17.0+, macOS 14.0+', en: 'iOS 17.0+, macOS 14.0+' },
+    platforms: { vi: 'iOS 17+, macOS 14+', en: 'iOS 17+, macOS 14+' },
     operatingSystem: 'iOS 17.0 or later, iPadOS 17.0 or later, macOS 14.0 or later',
     appCategory: 'UtilitiesApplication',
     facts: [
-      { label: { vi: 'Nền tảng', en: 'Platforms' }, value: { vi: 'iOS 17.0+ & macOS 14.0+', en: 'iOS 17.0+ & macOS 14.0+' } },
-      { label: { vi: 'Thiết bị', en: 'Devices' }, value: { vi: 'iPhone, iPad, Mac', en: 'iPhone, iPad, Mac' } },
-      { label: { vi: 'Ngoại tuyến', en: 'Offline' }, value: { vi: '100% On-Device', en: '100% On-Device' } },
-      { label: { vi: 'Định dạng xuất', en: 'Export formats' }, value: { vi: 'M4A & WAV', en: 'M4A & WAV' } }
+      { label: { vi: 'Yêu cầu', en: 'Requirement' }, value: { vi: 'iOS/iPadOS 17+ & macOS 14+', en: 'iOS/iPadOS 17+ & macOS 14+' } },
+      { label: { vi: 'Hoạt động', en: 'Operation' }, value: { vi: '100% Offline On-Device', en: '100% Offline On-Device' } },
+      { label: { vi: 'Dung lượng', en: 'Size' }, value: { vi: '~500 MB (kèm Model)', en: '~500 MB (bundled)' } },
+      { label: { vi: 'Xuất file', en: 'Export' }, value: { vi: 'M4A & WAV', en: 'M4A & WAV' } }
     ],
     features: [
       {
-        title: { vi: 'Giọng đọc AI tự nhiên', en: 'Natural AI speech' },
-        description: { vi: 'Tích hợp sẵn nhiều gói giọng đọc truyền cảm với các âm sắc và vùng miền khác nhau, xử lý hoàn toàn ngoại tuyến.', en: 'Multiple expressive voice packs with different regional accents, synthesized entirely offline.' }
+        title: { vi: '100% Offline & Bảo mật', en: '100% Offline & Private' },
+        description: { vi: 'Chạy hoàn toàn trên phần cứng của thiết bị, không cần Internet. Miễn phí, không quảng cáo, không theo dõi, không giới hạn từ.', en: 'Runs entirely on-device without internet. Free, no ads, no tracking, and no word limits.' }
       },
       {
-        title: { vi: 'Bảo mật tuyệt đối', en: 'Zero data collection' },
-        description: { vi: 'Văn bản của bạn không bao giờ rời khỏi thiết bị. Không gửi dữ liệu lên đám mây, không theo dõi phân tích.', en: 'Your text never leaves your device. No cloud uploads, no tracking, and no analytics SDKs.' }
+        title: { vi: 'Mô hình Kokoro Vietnamese', en: 'Kokoro Vietnamese Model' },
+        description: { vi: 'Sử dụng mô hình Kokoro Vietnamese (iamdinhthuan), giọng đọc tự nhiên, ngắt nghỉ mượt mà và không lỗi thanh âm.', en: 'Powered by Kokoro Vietnamese (iamdinhthuan), providing natural intonation and correct tones.' }
       },
       {
-        title: { vi: 'Xuất & Chia sẻ âm thanh', en: 'Audio export & sharing' },
-        description: { vi: 'Dễ dàng chuyển đổi tài liệu dài thành tệp âm thanh M4A hoặc WAV chất lượng cao để lưu trữ hoặc chia sẻ.', en: 'Convert long texts into high-quality M4A or WAV audio files to save locally or share.' }
+        title: { vi: 'Xuất file M4A & WAV', en: 'M4A & WAV Export' },
+        description: { vi: 'Dễ dàng chuyển đổi đoạn văn hay tài liệu dài thành tệp âm thanh chất lượng cao để nghe lại mọi lúc mọi nơi.', en: 'Easily export text to high-quality M4A or WAV audio files for listening anytime.' }
       },
       {
-        title: { vi: 'Máy chủ mạng nội bộ (LAN Server)', en: 'Local network server' },
-        description: { vi: 'Tùy chọn biến thiết bị thành máy chủ TTS trên Wi-Fi nội bộ để các thiết bị khác gửi yêu cầu qua REST API.', en: 'Optionally host an inbound HTTP TTS server on your local Wi-Fi with token authentication.' }
+        title: { vi: 'LAN Server & Tự động hóa', en: 'LAN Server & Automation' },
+        description: { vi: 'Tích hợp HTTP server nội bộ tương thích OpenAI TTS API. Phù hợp cho Home Assistant hoặc tận dụng thiết bị cũ làm máy chủ giọng đọc.', en: 'Built-in local HTTP server compatible with OpenAI TTS API. Perfect for Home Assistant or repurposing older devices.' }
       }
     ],
     support: { vi: 'Cần hỗ trợ, góp ý giọng đọc hoặc báo lỗi? Gửi email cho mình nhé.', en: 'Need support, voice suggestions, or found a bug? Send me an email.' }
