@@ -25,6 +25,9 @@ export interface PageMeta {
   ogImageAlt: string;
   ogType: 'website' | 'product';
   locale: Lang;
+  favicon: string;
+  faviconType: string;
+  appleTouchIcon: string;
 }
 
 function ogImageFor(slug: string) {
@@ -41,10 +44,15 @@ export function getPageMeta(product: Product | null, lang: Lang): PageMeta {
       ogImage: ogImageFor('home'),
       ogImageAlt: translate(lang, 'meta.home.title'),
       ogType: 'website',
-      locale: lang
+      locale: lang,
+      favicon: '/assets/phtv-icon.webp',
+      faviconType: 'image/webp',
+      appleTouchIcon: '/assets/phtv-favicon.png'
     };
   }
 
+  const icon = product.icon;
+  const isWebp = icon.endsWith('.webp');
   return {
     title: `${product.name} — ${product.category[lang]} | ${SITE.name}`,
     description: product.description[lang],
@@ -53,7 +61,10 @@ export function getPageMeta(product: Product | null, lang: Lang): PageMeta {
     ogImage: ogImageFor(product.slug),
     ogImageAlt: product.gallery[0]?.alt[lang] ?? product.name,
     ogType: 'product',
-    locale: lang
+    locale: lang,
+    favicon: icon,
+    faviconType: isWebp ? 'image/webp' : 'image/png',
+    appleTouchIcon: icon
   };
 }
 

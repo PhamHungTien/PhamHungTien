@@ -45,6 +45,16 @@ export function App({ path: pathProp, initialLang }: AppProps) {
 
     document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]')?.setAttribute('href', meta.canonical);
 
+    const iconLink = document.head.querySelector<HTMLLinkElement>('link[rel="icon"]');
+    if (iconLink) {
+      iconLink.setAttribute('href', meta.favicon);
+      iconLink.setAttribute('type', meta.faviconType);
+    }
+    const appleTouchLink = document.head.querySelector<HTMLLinkElement>('link[rel="apple-touch-icon"]');
+    if (appleTouchLink) {
+      appleTouchLink.setAttribute('href', meta.appleTouchIcon);
+    }
+
     const jsonLd = document.head.querySelector<HTMLScriptElement>('script[type="application/ld+json"]');
     if (jsonLd) jsonLd.textContent = JSON.stringify(getStructuredData(product, lang));
   }, [lang, product]);

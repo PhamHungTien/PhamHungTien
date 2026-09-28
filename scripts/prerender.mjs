@@ -83,9 +83,22 @@ const emit = (relPath, contents) => emitTo(distDir, relPath, contents);
 for (const route of prerenderRoutes) {
   const { html, meta, structuredData } = render(route);
 
-  const page = template
+  let page = template
     .replace('<!--app-head-->', buildHead(meta, structuredData))
     .replace('<!--app-html-->', html);
+
+  if (meta.favicon) {
+    page = page.replace(
+      /<link rel="icon" [^>]+>/,
+      `<link rel="icon" type="${meta.faviconType || "image/png"}" href="${meta.favicon}" />`
+    );
+  }
+  if (meta.appleTouchIcon) {
+    page = page.replace(
+      /<link rel="apple-touch-icon" [^>]+>/,
+      `<link rel="apple-touch-icon" href="${meta.appleTouchIcon}" />`
+    );
+  }
 
   if (page.includes('<!--app-head-->') || page.includes('<!--app-html-->')) {
     throw new Error(`Prerender markers were not replaced for ${route}`);
