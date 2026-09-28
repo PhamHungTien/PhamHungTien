@@ -10,6 +10,7 @@ import { useI18n } from './i18n';
 import { CopyBlock } from './components/CopyBlock';
 import { DonateModal } from './components/DonateModal';
 import { AcronymRow } from './components/AcronymRow';
+import { VideoTutorial } from './components/VideoTutorial';
 
 const QASection = lazy(() =>
   import('./components/QASection').then((module) => ({ default: module.QASection }))
@@ -450,6 +451,8 @@ function App() {
               </div>
             </div>
           </section>
+
+          <VideoTutorial />
 
           <section id="gallery" className="reveal scroll-mt-24 py-12 md:py-16">
             <div className="mx-auto max-w-6xl px-4 md:px-6">
