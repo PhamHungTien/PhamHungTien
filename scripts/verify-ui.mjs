@@ -3,7 +3,7 @@ import { readFile, readdir, access } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
-import { render, prerenderRoutes } from '../dist-ssr/entry-server.js';
+import { render, prerenderRoutes, products } from '../dist-ssr/entry-server.js';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const contactUrls = [
@@ -27,9 +27,9 @@ for (const route of prerenderRoutes) {
     assert.ok(src.startsWith('/assets/'), `${route}: local image path`);
     await access(join(root, 'dist', src));
   }
+  assert.match(html, /donate-trigger[^>]+aria-haspopup="dialog"/, `${route}: donate opens a dialog`);
   if (route === '/') {
-    assert.equal([...html.matchAll(/class="product-row"/g)].length, 6, 'home: six apps');
-    assert.match(html, /donate-trigger[^>]+aria-haspopup="dialog"/, 'home: donate opens a dialog');
+    assert.equal([...html.matchAll(/class="product-row"/g)].length, products.length, 'home: all apps listed');
   } else {
     assert.ok(html.includes('id="features"') && html.includes('id="gallery"'), `${route}: navigation destinations`);
     assert.ok(!html.includes('<code>App Store</code>'), `${route}: no redundant installation block`);

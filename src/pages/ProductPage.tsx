@@ -1,9 +1,11 @@
-import { ArrowRight, ExternalLink, Github, Mail, Store } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowRight, ExternalLink, Github, Heart, Mail, Store } from 'lucide-react';
 import type { CSSProperties } from 'react';
 import type { Lang, Product } from '../types';
 import { Header } from '../components/Header';
 import { PhtvWordmark } from '../components/PhtvWordmark';
 import { ContactSection } from '../components/ContactSection';
+import { DonateDialog } from '../components/DonateDialog';
 
 interface ProductPageProps {
   product: Product;
@@ -13,6 +15,7 @@ interface ProductPageProps {
 }
 
 export function ProductPage({ product, lang, onLanguageChange, t }: ProductPageProps) {
+  const [donateOpen, setDonateOpen] = useState(false);
   const primaryHref = product.appStoreUrl ?? product.route;
   const secondaryHref = product.githubUrl ?? `${product.route}privacy.html`;
   const secondaryLabel = product.secondaryCtaLabel?.[lang] ?? (product.githubUrl ? t('common.github') : t('product.privacy'));
@@ -47,6 +50,15 @@ export function ProductPage({ product, lang, onLanguageChange, t }: ProductPageP
                 {product.githubUrl ? <Github size={18} /> : <ExternalLink size={18} />}
                 {secondaryLabel}
               </a>
+              <button
+                className="button button--secondary donate-trigger"
+                type="button"
+                onClick={() => setDonateOpen(true)}
+                aria-haspopup="dialog"
+              >
+                <Heart size={18} aria-hidden="true" />
+                {t('common.donate')}
+              </button>
             </div>
           </div>
 
@@ -121,6 +133,8 @@ export function ProductPage({ product, lang, onLanguageChange, t }: ProductPageP
           <a href={`${product.route}terms.html`}>{t('product.terms')}</a>
         </nav>
       </main>
+
+      <DonateDialog isOpen={donateOpen} onClose={() => setDonateOpen(false)} lang={lang} />
     </div>
   );
 }
