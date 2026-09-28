@@ -535,6 +535,49 @@ svg {
   line-height: 1.5;
 }
 
+
+.product-video-section {
+  padding-top: 44px;
+  padding-bottom: 44px;
+  border-bottom: 1px solid var(--line);
+}
+
+.product-video-section .section-copy {
+  margin-bottom: 24px;
+}
+
+.product-video-section h2 {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.product-video-section .section-subtitle {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 680px;
+}
+
+.product-video-card {
+  position: relative;
+  width: 100%;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #000;
+  border: 1px solid var(--line);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.product-video-player {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  background: #0d0d0d;
+}
+
 .detail-grid {
   display: grid;
   grid-template-columns: minmax(240px, 0.8fr) minmax(0, 1.2fr);
@@ -853,22 +896,56 @@ svg {
     margin-top: 22px;
   }
   .facts-band {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
   }
   .fact-item, .fact-item:first-child, .fact-item:last-child {
-    grid-template-columns: minmax(80px, 0.7fr) minmax(0, 1.3fr);
+    flex: 0 0 auto;
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
     gap: 16px;
-    align-items: center;
     margin: 0;
     padding: 14px 0;
     border-right: 0;
     border-bottom: 1px solid var(--line);
+    box-sizing: border-box;
   }
   .fact-item:last-child {
     border-bottom: 0;
   }
+  .fact-item span {
+    flex-shrink: 0;
+    color: var(--muted);
+    font-size: 13px;
+  }
   .fact-item strong {
     text-align: right;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+    word-break: break-word;
+  }
+  .product-video-section {
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+  .product-video-section h2 {
+    font-size: 22px;
+  }
+  .product-video-section .section-subtitle {
+    font-size: 14px;
+  }
+  .product-video-card {
+    border-radius: 14px;
   }
   .detail-grid {
     grid-template-columns: 1fr;

@@ -36,6 +36,7 @@ export interface Product {
   accent: string;
   appStoreUrl?: string;
   githubUrl?: string;
+  videoUrl?: string;
   isStandalone?: boolean;
   category: Localized;
   title: Localized;

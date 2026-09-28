@@ -330,6 +330,7 @@ export const products: Product[] = [
     ],
     accent: '#6366f1',
     appStoreUrl: 'https://apps.apple.com/app/id6817003401',
+    videoUrl: '/vTTS/vtts-demo.mp4',
     category: { vi: 'Giọng đọc AI & Tiện ích', en: 'AI Speech & Utilities' },
     title: {
       vi: 'Chuyển văn bản thành giọng nói ngoại tuyến trên thiết bị.',

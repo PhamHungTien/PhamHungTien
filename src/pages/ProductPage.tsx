@@ -103,6 +103,31 @@ export function ProductPage({ product, lang, onLanguageChange, t }: ProductPageP
           ))}
         </section>
 
+        {product.videoUrl && (
+          <section className="product-video-section" id="demo" aria-label={lang === "vi" ? "Video trải nghiệm thực tế" : "Product Demo Video"}>
+            <div className="section-copy">
+              <h2>{lang === "vi" ? "Video trải nghiệm thực tế" : "Experience in Action"}</h2>
+              <p className="section-subtitle">
+                {lang === "vi"
+                  ? "Xem video thực tế quá trình vTTS đọc văn bản tiếng Việt, đổi giọng đọc AI và xuất tệp âm thanh hoàn toàn ngoại tuyến trên máy."
+                  : "Watch vTTS perform text-to-speech synthesis, voice switching, and audio export completely offline on device."}
+              </p>
+            </div>
+            <div className="product-video-card">
+              <video
+                className="product-video-player"
+                src={product.videoUrl}
+                poster={product.heroImage}
+                controls
+                playsInline
+                preload="metadata"
+              >
+                {lang === "vi" ? "Trình duyệt của bạn không hỗ trợ phát video." : "Your browser does not support the video tag."}
+              </video>
+            </div>
+          </section>
+        )}
+
         <section className="detail-grid" id="features">
           <div className="install-panel">
             <h2>{product.slug === "phtv" ? (lang === "vi" ? "Cài đặt nhanh" : "Quick install") : t("product.support")}</h2>
