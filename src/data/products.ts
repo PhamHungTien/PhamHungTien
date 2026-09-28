@@ -344,13 +344,13 @@ export const products: Product[] = [
       en: 'vTTS turns written text into natural-sounding AI speech entirely on-device without internet access. Completely private, with audio file export and local network server.'
     },
     ctaLabel: { vi: 'Xem trên App Store', en: 'View on App Store' },
-    platforms: { vi: 'iOS, iPadOS, macOS', en: 'iOS, iPadOS, macOS' },
+    platforms: { vi: 'iOS 17.0+, macOS 14.0+', en: 'iOS 17.0+, macOS 14.0+' },
     operatingSystem: 'iOS 17.0 or later, iPadOS 17.0 or later, macOS 14.0 or later',
     appCategory: 'UtilitiesApplication',
     facts: [
-      { label: { vi: 'Nền tảng', en: 'Platforms' }, value: { vi: 'iOS, iPadOS, macOS', en: 'iOS, iPadOS, macOS' } },
+      { label: { vi: 'Nền tảng', en: 'Platforms' }, value: { vi: 'iOS 17.0+ & macOS 14.0+', en: 'iOS 17.0+ & macOS 14.0+' } },
+      { label: { vi: 'Thiết bị', en: 'Devices' }, value: { vi: 'iPhone, iPad, Mac', en: 'iPhone, iPad, Mac' } },
       { label: { vi: 'Ngoại tuyến', en: 'Offline' }, value: { vi: '100% On-Device', en: '100% On-Device' } },
-      { label: { vi: 'Ngôn ngữ', en: 'Languages' }, value: { vi: 'Tiếng Việt & Tiếng Anh', en: 'Vietnamese & English' } },
       { label: { vi: 'Định dạng xuất', en: 'Export formats' }, value: { vi: 'M4A & WAV', en: 'M4A & WAV' } }
     ],
     features: [
