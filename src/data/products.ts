@@ -22,9 +22,12 @@ import nasPhoneTwo from '../../MyNASManager/assets/iphone-screenshot2.png';
 import blockIcon from '../../LunarBlock/assets/app-icon.png';
 import blockHero from '../../LunarBlock/assets/lunarblock-hero.png';
 import blockShowcase from '../../LunarBlock/assets/lunarblock-showcase.png';
+import blockModes from '../../LunarBlock/assets/lunarblock-modes.png';
+import blockRank from '../../LunarBlock/assets/lunarblock-rank.png';
 import vttsIcon from '../../vTTS/assets/app-icon.png';
 import vttsMacHero from '../../vTTS/assets/mac-main.png';
 import vttsPhoneScreenshot from '../../vTTS/assets/iphone-main.png';
+import vttsPhoneLibrary from '../../vTTS/assets/iphone-library.png';
 
 export const products: Product[] = [
   {
@@ -278,42 +281,61 @@ export const products: Product[] = [
     icon: blockIcon,
     heroImage: blockHero,
     gallery: [
-      { src: blockHero, alt: { vi: 'Lunar Block gameplay', en: 'Lunar Block gameplay' } },
-      { src: blockShowcase, alt: { vi: 'Hiệu ứng Line Fracture Lunar Block', en: 'Lunar Block Line Fracture effect' } }
+      { src: blockHero, alt: { vi: 'Bàn cờ xếp khối 3D Lunar Block với khối pha lê phát sáng', en: 'Lunar Block 3D falling-block puzzle with glowing crystal blocks' } },
+      { src: blockShowcase, alt: { vi: 'Hiệu ứng vỡ khối Line Fracture và combo thả nhanh', en: 'Lunar Block line fracture effect and fast drop combos' } },
+      { src: blockModes, alt: { vi: 'Đa dạng chế độ chơi: Marathon, Sprint 40 dòng và Ultra 2 phút', en: 'Multiple game modes: Marathon, Sprint 40L, and Ultra 2M' } },
+      { src: blockRank, alt: { vi: 'Hệ thống tích luỹ XP thăng hạng danh hiệu và kỷ lục', en: 'XP ranking system, personal records, and achievements' } }
     ],
+    videoUrl: '/LunarBlock/lunarblock-demo.mp4',
+    videoDescription: {
+      vi: 'Xem video gameplay thực tế trải nghiệm xếp khối 3D trên quỹ đạo không gian với hiệu ứng âm thanh và va chạm sống động.',
+      en: 'Watch gameplay action of 3D orbital block stacking with dynamic lighting and synthesized audio.'
+    },
     accent: '#f59e0b',
     appStoreUrl: 'https://apps.apple.com/us/app/lunar-block-teris-3d/id6773545437',
     category: { vi: 'Game xếp hình 3D', en: '3D puzzle game' },
     title: {
-      vi: 'Xếp hình cổ điển trong không gian 3D.',
-      en: 'Classic block stacking in 3D.'
+      vi: 'Xếp khối không gian 3D trên quỹ đạo ấn tượng.',
+      en: 'Next-gen 3D orbital falling-block puzzle.'
     },
-    subtitle: { vi: 'SceneKit, haptic, âm thanh tổng hợp và hiệu ứng vỡ khối.', en: 'SceneKit, haptics, synthesized audio, and line fracture effects.' },
+    subtitle: {
+      vi: 'SceneKit 3D, khối pha lê, phím D-Pad công thái học, haptic và Line Fracture vật lý.',
+      en: 'SceneKit 3D, crystal blocks, ergonomic D-Pad, haptics & physics line fractures.'
+    },
     description: {
-      vi: 'Lunar Block biến lưới chơi quen thuộc thành một không gian 3D phát sáng, điều khiển mượt và giàu phản hồi xúc giác.',
-      en: 'Lunar Block turns a familiar playfield into a glowing 3D space with smooth controls and layered haptic feedback.'
+      vi: 'Lunar Block nâng tầm trải nghiệm xếp khối kinh điển thành một bàn cờ quỹ đạo 3D phát sáng. Tích hợp phím D-Pad công thái học, bóng chiếu khối trực quan (Ghost Piece), hiệu ứng vỡ khối vật lý Line Fracture, 3 chế độ chơi thử thách, hệ thống thăng hạng XP và bảng xếp hạng Game Center toàn cầu.',
+      en: 'Lunar Block transforms classic falling-block puzzles into a glowing 3D orbital console. Built natively with SceneKit, featuring ergonomic D-Pad controls, instant ghost piece projection, physics-driven line fractures, 3 game modes, XP progression ranks, and global Game Center leaderboards.'
     },
     ctaLabel: { vi: 'Tải trên App Store', en: 'Download on App Store' },
     platforms: { vi: 'iPhone, iPad, Mac, Vision Pro', en: 'iPhone, iPad, Mac, Vision Pro' },
-    operatingSystem: 'iOS, iPadOS, macOS, visionOS',
+    operatingSystem: 'iOS 16+, iPadOS 16+, macOS 13+, visionOS 1+',
     appCategory: 'GameApplication',
     facts: [
-      { label: { vi: 'Thể loại', en: 'Genre' }, value: { vi: 'Giải đố 3D', en: '3D puzzle' } },
-      { label: { vi: 'Đồ họa', en: 'Graphics' }, value: { vi: 'SceneKit', en: 'SceneKit' } },
-      { label: { vi: 'Cảm giác', en: 'Feel' }, value: { vi: 'Haptic + Synth', en: 'Haptic + Synth' } }
+      { label: { vi: 'Thể loại', en: 'Genre' }, value: { vi: 'Giải đố 3D', en: '3D Arcade Puzzle' } },
+      { label: { vi: 'Đồ họa', en: 'Graphics' }, value: { vi: 'SceneKit 60fps', en: 'SceneKit 60fps' } },
+      { label: { vi: 'Chế độ', en: 'Modes' }, value: { vi: 'Marathon, Sprint, Ultra', en: 'Marathon, Sprint, Ultra' } },
+      { label: { vi: 'Xếp hạng', en: 'Ranking' }, value: { vi: 'XP Ranks & Game Center', en: 'XP Ranks & Game Center' } }
     ],
     features: [
       {
-        title: { vi: 'Bàn cờ 3D', en: '3D board' },
-        description: { vi: 'Khối pha lê, khung phát sáng và camera động tạo chiều sâu cho lối chơi.', en: 'Crystal blocks, luminous rails, and camera movement add depth to play.' }
+        title: { vi: 'Bàn cờ 3D Quỹ Đạo', en: '3D Orbital Console' },
+        description: { vi: 'Khối pha lê trong suốt, vách ngăn neon phát sáng và góc quay camera điện ảnh linh hoạt theo từng nhịp rơi.', en: 'Crystal blocks, neon-glowing boundary rails, and dynamic cinematic camera tracking every drop.' }
       },
       {
-        title: { vi: 'Line Fracture', en: 'Line Fracture' },
-        description: { vi: 'Hàng được dọn bằng hiệu ứng vỡ khối vật lý thay vì biến mất đơn điệu.', en: 'Cleared lines fracture with physical shard effects instead of simply disappearing.' }
+        title: { vi: 'Vật lý vỡ khối Line Fracture', en: 'Physics Line Fracture' },
+        description: { vi: 'Khi xóa hàng, từng khối vỡ vụn với hiệu ứng vật lý chân thực thay vì biến mất đơn điệu, hỗ trợ combo và điểm Tetris back-to-back.', en: 'Simultaneous physics-driven line fractures preserve cleared blocks with visceral impact, combos, and back-to-back Tetris scoring.' }
       },
       {
-        title: { vi: 'Điều khiển đa dạng', en: 'Flexible controls' },
-        description: { vi: 'D-pad tròn, vuốt chạm và bàn phím ngoài cho nhiều kiểu chơi.', en: 'Circular D-pad, touch gestures, and keyboard support fit different play styles.' }
+        title: { vi: 'Đa dạng chế độ chơi', en: 'Multiple Game Modes' },
+        description: { vi: 'Thử thách sức bền với Marathon vô tận, bứt phá tốc độ với Sprint 40 dòng, hoặc ghi điểm tối đa trong Ultra 2 phút nghẹt thở.', en: 'Endless survival in Marathon mode, race against time in 40-Line Sprint, or chase high scores in intense 2-minute Ultra.' }
+      },
+      {
+        title: { vi: 'Tiến trình XP & Game Center', en: 'XP Ranks & Leaderboards' },
+        description: { vi: 'Tích lũy điểm kinh nghiệm để thăng hạng danh hiệu từ Novice lên Master, lưu kỷ lục cá nhân và so tài vị trí top 1 Game Center.', en: 'Earn XP to advance through rank tiers, preserve local personal bests, and climb the authenticated global Game Center leaderboard.' }
+      },
+      {
+        title: { vi: 'Điều khiển mượt mà & Tay cầm', en: 'Fluid Controls & Gamepads' },
+        description: { vi: 'Cụm D-Pad tròn cùng phím DROP chuyên biệt, hỗ trợ cử chỉ vuốt chạm, bàn phím ngoài và tay cầm chơi game MFi/PlayStation/Xbox.', en: 'Ergonomic circular D-Pad with dedicated DROP and CCW buttons, plus full touch gestures, external keyboard, and MFi/game controller support.' }
       }
     ],
     support: { vi: 'Có góp ý gameplay hoặc điều khiển? Gửi mình qua email.', en: 'Have gameplay or control feedback? Send it by email.' }
@@ -325,51 +347,60 @@ export const products: Product[] = [
     icon: vttsIcon,
     heroImage: vttsMacHero,
     gallery: [
-      { src: vttsMacHero, alt: { vi: 'Giao diện vTTS trên macOS với thanh điều khiển giọng đọc và tốc độ', en: 'vTTS interface on macOS with voice controls and speed slider' } },
-      { src: vttsPhoneScreenshot, alt: { vi: 'Giao diện vTTS trên iPhone hỗ trợ đọc văn bản và xuất tệp âm thanh', en: 'vTTS interface on iPhone with reading controls and audio export' } }
+      { src: vttsMacHero, alt: { vi: 'Giao diện vTTS trên macOS với tính năng Thư viện sách và quản lý tài liệu', en: 'vTTS interface on macOS with book library and document management' } },
+      { src: vttsPhoneScreenshot, alt: { vi: 'Giao diện vTTS trên iPhone với danh sách 11 giọng đọc AI tiếng Việt tự nhiên', en: 'vTTS interface on iPhone with 11 natural Kokoro Vietnamese AI voices' } },
+      { src: vttsPhoneLibrary, alt: { vi: 'Tính năng Thư viện đọc sách offline trên iPhone', en: 'Offline book library reading feature on iPhone' } }
     ],
     accent: '#6366f1',
     appStoreUrl: 'https://apps.apple.com/app/id6817003401',
     videoUrl: '/vTTS/vtts-demo.mp4',
-    category: { vi: 'Giọng đọc AI & Tiện ích', en: 'AI Speech & Utilities' },
+    videoDescription: {
+      vi: 'Xem video thực tế quá trình vTTS đọc văn bản tiếng Việt, đổi giọng đọc AI và xuất tệp âm thanh hoàn toàn ngoại tuyến trên máy.',
+      en: 'Watch vTTS perform text-to-speech synthesis, voice switching, and audio export completely offline on device.'
+    },
+    category: { vi: 'Giọng đọc AI & Sách nói', en: 'AI Speech & Audiobooks' },
     title: {
-      vi: 'Chuyển văn bản thành giọng nói ngoại tuyến trên thiết bị.',
-      en: 'On-device offline text-to-speech for Apple ecosystem.'
+      vi: 'Đọc văn bản & sách nói bằng AI ngoại tuyến trên thiết bị.',
+      en: 'On-device AI speech synthesis & offline audiobook library.'
     },
     subtitle: {
-      vi: 'vTTS Offline | Chuyển văn bản thành giọng nói',
-      en: 'vTTS Offline | Text to Speech'
+      vi: '11 giọng đọc AI tự nhiên, thư viện sách thông minh, 100% bảo mật ngoại tuyến.',
+      en: '11 natural AI voices, smart book library, 100% private & offline on Apple devices.'
     },
     description: {
-      vi: 'Ứng dụng đọc văn bản chạy offline hoàn toàn trên máy, miễn phí, không theo dõi, không quảng cáo và không giới hạn từ. Tích hợp mô hình Kokoro Vietnamese, hỗ trợ xuất file âm thanh và làm LAN Server.',
-      en: '100% on-device offline text-to-speech. Free, private, zero tracking, no ads, and unlimited words. Powered by Kokoro Vietnamese, with audio export and local LAN server.'
+      vi: 'vTTS là ứng dụng chuyển văn bản thành giọng nói và đọc sách nói AI hoạt động 100% offline trên iPhone, iPad và Mac. Tích hợp 11 giọng đọc tiếng Việt tự nhiên chuẩn Kokoro, tính năng Thư viện sách thông minh hỗ trợ tiểu thuyết hàng ngàn chương, xuất file âm thanh M4A/WAV và máy chủ LAN nội bộ tương thích OpenAI API.',
+      en: 'vTTS is a 100% on-device AI text-to-speech and audiobook reader for iPhone, iPad, and Mac. Features 11 natural Vietnamese voices powered by Kokoro, a smart book library for multi-chapter novels, high-quality M4A/WAV audio export, and an OpenAI-compatible local LAN server.'
     },
     ctaLabel: { vi: 'Xem trên App Store', en: 'View on App Store' },
-    platforms: { vi: 'iOS 17+, macOS 14+', en: 'iOS 17+, macOS 14+' },
+    platforms: { vi: 'iOS 17+, iPadOS 17+, macOS 14+', en: 'iOS 17+, iPadOS 17+, macOS 14+' },
     operatingSystem: 'iOS 17.0 or later, iPadOS 17.0 or later, macOS 14.0 or later',
     appCategory: 'UtilitiesApplication',
     facts: [
-      { label: { vi: 'Yêu cầu', en: 'Requirement' }, value: { vi: 'iOS/iPadOS 17+ & macOS 14+', en: 'iOS/iPadOS 17+ & macOS 14+' } },
+      { label: { vi: 'Giọng đọc', en: 'Voices' }, value: { vi: '11 Giọng AI (Nam & Nữ)', en: '11 AI Voices (M & F)' } },
       { label: { vi: 'Hoạt động', en: 'Operation' }, value: { vi: '100% Offline On-Device', en: '100% Offline On-Device' } },
-      { label: { vi: 'Dung lượng', en: 'Size' }, value: { vi: '~500 MB (kèm Model)', en: '~500 MB (bundled)' } },
-      { label: { vi: 'Xuất file', en: 'Export' }, value: { vi: 'M4A & WAV', en: 'M4A & WAV' } }
+      { label: { vi: 'Tính năng', en: 'Features' }, value: { vi: 'Văn bản & Thư viện sách', en: 'TTS & Book Library' } },
+      { label: { vi: 'Xuất & LAN', en: 'Export & LAN' }, value: { vi: 'M4A, WAV, OpenAI API', en: 'M4A, WAV, OpenAI API' } }
     ],
     features: [
       {
-        title: { vi: '100% Offline & Bảo mật', en: '100% Offline & Private' },
-        description: { vi: 'Chạy hoàn toàn trên phần cứng của thiết bị, không cần Internet. Miễn phí, không quảng cáo, không theo dõi, không giới hạn từ.', en: 'Runs entirely on-device without internet. Free, no ads, no tracking, and no word limits.' }
+        title: { vi: '11 Giọng đọc AI tiếng Việt tự nhiên', en: '11 Natural AI Voices' },
+        description: { vi: 'Hệ thống 11 giọng đọc truyền cảm (Diễm Trinh, Hưng Thịnh, Mai Linh, Mạnh Dũng, Tuấn Ngọc...) với ngữ điệu ngắt nghỉ chuẩn xác, không bị robotic.', en: 'Choose from 11 expressive Vietnamese voices with natural cadence, correct tone marks, and zero robotic artifacts.' }
       },
       {
-        title: { vi: 'Mô hình Kokoro Vietnamese', en: 'Kokoro Vietnamese Model' },
-        description: { vi: 'Sử dụng mô hình Kokoro Vietnamese (iamdinhthuan), giọng đọc tự nhiên, ngắt nghỉ mượt mà và không lỗi thanh âm.', en: 'Powered by Kokoro Vietnamese (iamdinhthuan), providing natural intonation and correct tones.' }
+        title: { vi: 'Thư viện sách & Quản lý chương', en: 'Book Library & Chapters' },
+        description: { vi: 'Tính năng Thư viện mới cho phép nhập sách, tiểu thuyết dài hàng ngàn chương, tìm kiếm theo tác giả, lưu mục yêu thích và tiếp tục nghe tiện lợi.', en: 'New Book Library manages long-form books and multi-chapter novels with author search, favorites, and seamless reading progress.' }
       },
       {
-        title: { vi: 'Xuất file M4A & WAV', en: 'M4A & WAV Export' },
-        description: { vi: 'Dễ dàng chuyển đổi đoạn văn hay tài liệu dài thành tệp âm thanh chất lượng cao để nghe lại mọi lúc mọi nơi.', en: 'Easily export text to high-quality M4A or WAV audio files for listening anytime.' }
+        title: { vi: '100% Ngoại tuyến & Bảo mật riêng tư', en: '100% Offline & Private' },
+        description: { vi: 'Chạy hoàn toàn trên Neural Engine và Core ML của thiết bị. Miễn phí, không quảng cáo, không theo dõi, không gửi dữ liệu ra ngoài và không giới hạn số từ.', en: 'Runs entirely on-device via Apple Neural Engine and Core ML. Free, no ads, zero tracking, no cloud latency, and no word limits.' }
       },
       {
-        title: { vi: 'LAN Server & Tự động hóa', en: 'LAN Server & Automation' },
-        description: { vi: 'Tích hợp HTTP server nội bộ tương thích OpenAI TTS API. Phù hợp cho Home Assistant hoặc tận dụng thiết bị cũ làm máy chủ giọng đọc.', en: 'Built-in local HTTP server compatible with OpenAI TTS API. Perfect for Home Assistant or repurposing older devices.' }
+        title: { vi: 'Xuất file M4A & WAV chất lượng cao', en: 'M4A & WAV Export' },
+        description: { vi: 'Dễ dàng chuyển đổi các đoạn văn hay từng chương sách thành tệp âm thanh M4A hoặc WAV chất lượng cao để nghe lại mọi lúc mọi nơi.', en: 'Easily export text snippets or full chapters to high-quality M4A or WAV audio files for listening anytime.' }
+      },
+      {
+        title: { vi: 'LAN Server tương thích OpenAI API', en: 'LAN Server & Automation' },
+        description: { vi: 'Biến máy Mac hay iPad thành trạm phát giọng đọc cục bộ qua giao thức HTTP tương thích chuẩn OpenAI TTS API, dễ dàng tích hợp Home Assistant và Smart Home.', en: 'Turn your Mac or iPad into an on-premise TTS server supporting the OpenAI audio/speech API format, ideal for Home Assistant and local automations.' }
       }
     ],
     support: { vi: 'Cần hỗ trợ, góp ý giọng đọc hoặc báo lỗi? Gửi email cho mình nhé.', en: 'Need support, voice suggestions, or found a bug? Send me an email.' }

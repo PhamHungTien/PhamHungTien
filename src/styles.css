@@ -656,6 +656,18 @@ svg {
   font-weight: 500;
 }
 
+.feature-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.feature-desc {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
 .gallery-section {
   padding-top: 44px;
   padding-bottom: 44px;

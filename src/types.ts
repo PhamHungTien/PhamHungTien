@@ -37,6 +37,7 @@ export interface Product {
   appStoreUrl?: string;
   githubUrl?: string;
   videoUrl?: string;
+  videoDescription?: Localized;
   isStandalone?: boolean;
   category: Localized;
   title: Localized;

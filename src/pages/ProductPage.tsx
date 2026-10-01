@@ -108,9 +108,11 @@ export function ProductPage({ product, lang, onLanguageChange, t }: ProductPageP
             <div className="section-copy">
               <h2>{lang === "vi" ? "Video trải nghiệm thực tế" : "Experience in Action"}</h2>
               <p className="section-subtitle">
-                {lang === "vi"
-                  ? "Xem video thực tế quá trình vTTS đọc văn bản tiếng Việt, đổi giọng đọc AI và xuất tệp âm thanh hoàn toàn ngoại tuyến trên máy."
-                  : "Watch vTTS perform text-to-speech synthesis, voice switching, and audio export completely offline on device."}
+                {product.videoDescription
+                  ? product.videoDescription[lang]
+                  : lang === "vi"
+                  ? "Xem video thực tế trải nghiệm ứng dụng."
+                  : "Watch demo video in action."}
               </p>
             </div>
             <div className="product-video-card">
@@ -150,7 +152,12 @@ export function ProductPage({ product, lang, onLanguageChange, t }: ProductPageP
               {product.features.map((feature) => (
                 <article key={feature.title.en}>
                   <span className="feature-dot" />
-                  <h3>{feature.title[lang]}</h3>
+                  <div className="feature-content">
+                    <h3>{feature.title[lang]}</h3>
+                    {feature.description && (
+                      <p className="feature-desc">{feature.description[lang]}</p>
+                    )}
+                  </div>
                 </article>
               ))}
             </div>
