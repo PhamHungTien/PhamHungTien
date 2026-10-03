@@ -57,7 +57,7 @@ export const products: Product[] = [
     },
     ctaLabel: { vi: 'Mở PHTV', en: 'Open PHTV' },
     secondaryCtaLabel: { vi: 'GitHub', en: 'GitHub' },
-    platforms: { vi: 'macOS 14+', en: 'macOS 14+' },
+    platforms: { vi: 'macOS', en: 'macOS' },
     operatingSystem: 'macOS 14.0 or later',
     appCategory: 'UtilitiesApplication',
     facts: [
@@ -82,53 +82,69 @@ export const products: Product[] = [
     support: { vi: 'Thảo luận, báo lỗi hoặc gửi góp ý trên GitHub.', en: 'Discuss, report issues, or send feedback on GitHub.' }
   },
   {
-    slug: 'lunarv',
-    name: 'LunarV',
-    route: '/LunarV/',
-    icon: lunarvIcon,
-    heroImage: lunarvHero,
+    slug: 'vtts',
+    name: 'vTTS',
+    route: '/vTTS/',
+    icon: vttsIcon,
+    heroImage: vttsMacHero,
     gallery: [
-      { src: lunarvHero, alt: { vi: 'LunarV trên iPad', en: 'LunarV on iPad' } },
-      { src: lunarvVision, alt: { vi: 'LunarV trên Apple Vision Pro', en: 'LunarV on Apple Vision Pro' } },
-      { src: lunarvReviewOne, alt: { vi: 'Màn hình đánh giá LunarV', en: 'LunarV review screen' } },
-      { src: lunarvReviewTwo, alt: { vi: 'Màn hình lịch LunarV', en: 'LunarV calendar screen' } }
+      { src: vttsMacHero, alt: { vi: 'Giao diện vTTS trên macOS với tính năng Thư viện sách và quản lý tài liệu', en: 'vTTS interface on macOS with book library and document management' } },
+      { src: vttsPhoneScreenshot, alt: { vi: 'Giao diện vTTS trên iPhone với danh sách 11 giọng đọc AI tiếng Việt tự nhiên', en: 'vTTS interface on iPhone with 11 natural Kokoro Vietnamese AI voices' } },
+      { src: vttsPhoneLibrary, alt: { vi: 'Tính năng Thư viện đọc sách offline trên iPhone', en: 'Offline book library reading feature on iPhone' } }
     ],
-    accent: '#6655d9',
-    appStoreUrl: 'https://apps.apple.com/vn/app/lunarv-l%E1%BB%8Bch-%C3%A2m-vi%E1%BB%87t-nam/id6770913893?l=vi',
-    category: { vi: 'Lịch âm Việt Nam', en: 'Vietnamese lunar calendar' },
-    title: {
-      vi: 'Lịch âm Việt Nam trên thiết bị Apple.',
-      en: 'Vietnamese lunar calendar for Apple devices.'
+    accent: '#6366f1',
+    appStoreUrl: 'https://apps.apple.com/app/id6817003401',
+    videoUrl: '/vTTS/vtts-demo.mp4',
+    videoDescription: {
+      vi: 'Xem video thực tế quá trình vTTS đọc văn bản tiếng Việt, đổi giọng đọc AI và xuất tệp âm thanh hoàn toàn ngoại tuyến trên máy.',
+      en: 'Watch vTTS perform text-to-speech synthesis, voice switching, and audio export completely offline on device.'
     },
-    subtitle: { vi: 'Ngày âm, dịp gia đình, widget và nhắc nhở.', en: 'Lunar dates, family moments, widgets, and reminders.' },
+    category: { vi: 'Giọng đọc AI & Sách nói', en: 'AI Speech & Audiobooks' },
+    title: {
+      vi: 'Đọc văn bản & sách nói bằng AI ngoại tuyến trên thiết bị.',
+      en: 'On-device AI speech synthesis & offline audiobook library.'
+    },
+    subtitle: {
+      vi: '11 giọng đọc AI tự nhiên, thư viện sách thông minh, 100% bảo mật ngoại tuyến.',
+      en: '11 natural AI voices, smart book library, 100% private & offline on Apple devices.'
+    },
     description: {
-      vi: 'LunarV gom lịch âm, lịch dương, can chi, tiết khí và nhắc dịp quan trọng vào một trải nghiệm đồng bộ cho iPhone, iPad, Mac và Apple Vision Pro.',
-      en: 'LunarV brings lunar and solar dates, sexagenary cycles, solar terms, and personal reminders into one synced experience for iPhone, iPad, Mac, and Apple Vision Pro.'
+      vi: 'vTTS là ứng dụng chuyển văn bản thành giọng nói và đọc sách nói AI hoạt động 100% offline trên iPhone, iPad, Mac và Apple Vision Pro. Tích hợp 11 giọng đọc tiếng Việt tự nhiên chuẩn Kokoro, tính năng Thư viện sách thông minh hỗ trợ tiểu thuyết hàng ngàn chương, xuất file âm thanh M4A/WAV và máy chủ LAN nội bộ tương thích OpenAI API.',
+      en: 'vTTS is a 100% on-device AI text-to-speech and audiobook reader for iPhone, iPad, Mac, and Apple Vision Pro. Features 11 natural Vietnamese voices powered by Kokoro, a smart book library for multi-chapter novels, high-quality M4A/WAV audio export, and an OpenAI-compatible local LAN server.'
     },
     ctaLabel: { vi: 'Xem trên App Store', en: 'View on App Store' },
-    platforms: { vi: 'iPhone, iPad, Mac, Vision Pro', en: 'iPhone, iPad, Mac, Vision Pro' },
-    operatingSystem: 'iOS, iPadOS, macOS, visionOS',
-    appCategory: 'LifestyleApplication',
+    platforms: { vi: 'iOS, iPadOS, macOS, visionOS', en: 'iOS, iPadOS, macOS, visionOS' },
+    operatingSystem: 'iOS 17+, iPadOS 17+, macOS 14+, visionOS 1+',
+    appCategory: 'UtilitiesApplication',
     facts: [
-      { label: { vi: 'Phiên bản', en: 'Version' }, value: { vi: '1.0.1', en: '1.0.1' } },
-      { label: { vi: 'Nền tảng', en: 'Platforms' }, value: { vi: 'iOS, iPadOS, macOS, visionOS', en: 'iOS, iPadOS, macOS, visionOS' } },
-      { label: { vi: 'Phát hành', en: 'Release' }, value: { vi: 'App Store', en: 'App Store' } }
+      { label: { vi: 'Giọng đọc', en: 'Voices' }, value: { vi: '11 Giọng AI (Nam & Nữ)', en: '11 AI Voices (M & F)' } },
+      { label: { vi: 'Hoạt động', en: 'Operation' }, value: { vi: '100% Offline On-Device', en: '100% Offline On-Device' } },
+      { label: { vi: 'Tính năng', en: 'Features' }, value: { vi: 'Văn bản & Thư viện sách', en: 'TTS & Book Library' } },
+      { label: { vi: 'Xuất & LAN', en: 'Export & LAN' }, value: { vi: 'M4A, WAV, OpenAI API', en: 'M4A, WAV, OpenAI API' } }
     ],
     features: [
       {
-        title: { vi: 'Âm lịch và dương lịch', en: 'Lunar and solar dates' },
-        description: { vi: 'Xem ngày âm, ngày dương, can chi và tiết khí trong cùng một nhịp đọc.', en: 'Read lunar dates, solar dates, cycles, and solar terms in one clear view.' }
+        title: { vi: '11 Giọng đọc AI tiếng Việt tự nhiên', en: '11 Natural AI Voices' },
+        description: { vi: 'Hệ thống 11 giọng đọc truyền cảm (Diễm Trinh, Hưng Thịnh, Mai Linh, Mạnh Dũng, Tuấn Ngọc...) với ngữ điệu ngắt nghỉ chuẩn xác, không bị robotic.', en: 'Choose from 11 expressive Vietnamese voices with natural cadence, correct tone marks, and zero robotic artifacts.' }
       },
       {
-        title: { vi: 'Dịp gia đình', en: 'Family moments' },
-        description: { vi: 'Theo dõi ngày giỗ, sinh nhật và các dịp quan trọng theo âm hoặc dương lịch.', en: 'Track anniversaries, birthdays, and important dates using lunar or solar calendars.' }
+        title: { vi: 'Thư viện sách & Quản lý chương', en: 'Book Library & Chapters' },
+        description: { vi: 'Tính năng Thư viện mới cho phép nhập sách, tiểu thuyết dài hàng ngàn chương, tìm kiếm theo tác giả, lưu mục yêu thích và tiếp tục nghe tiện lợi.', en: 'New Book Library manages long-form books and multi-chapter novels with author search, favorites, and seamless reading progress.' }
       },
       {
-        title: { vi: 'Widget đồng bộ', en: 'Synced widgets' },
-        description: { vi: 'Thông tin ngày hiện tại được trình bày gọn trên màn hình chính và các nền tảng Apple.', en: 'Current-date context stays compact on Home Screen widgets and Apple platforms.' }
+        title: { vi: '100% Ngoại tuyến & Bảo mật riêng tư', en: '100% Offline & Private' },
+        description: { vi: 'Chạy hoàn toàn trên Neural Engine và Core ML của thiết bị. Miễn phí, không quảng cáo, không theo dõi, không gửi dữ liệu ra ngoài và không giới hạn số từ.', en: 'Runs entirely on-device via Apple Neural Engine and Core ML. Free, no ads, zero tracking, no cloud latency, and no word limits.' }
+      },
+      {
+        title: { vi: 'Xuất file M4A & WAV chất lượng cao', en: 'M4A & WAV Export' },
+        description: { vi: 'Dễ dàng chuyển đổi các đoạn văn hay từng chương sách thành tệp âm thanh M4A hoặc WAV chất lượng cao để nghe lại mọi lúc mọi nơi.', en: 'Easily export text snippets or full chapters to high-quality M4A or WAV audio files for listening anytime.' }
+      },
+      {
+        title: { vi: 'LAN Server tương thích OpenAI API', en: 'LAN Server & Automation' },
+        description: { vi: 'Biến máy Mac hay iPad thành trạm phát giọng đọc cục bộ qua giao thức HTTP tương thích chuẩn OpenAI TTS API, dễ dàng tích hợp Home Assistant và Smart Home.', en: 'Turn your Mac or iPad into an on-premise TTS server supporting the OpenAI audio/speech API format, ideal for Home Assistant and local automations.' }
       }
     ],
-    support: { vi: 'Cần hỗ trợ LunarV? Gửi email để mình kiểm tra.', en: 'Need help with LunarV? Send an email and I will take a look.' }
+    support: { vi: 'Cần hỗ trợ, góp ý giọng đọc hoặc báo lỗi? Gửi email cho mình nhé.', en: 'Need support, voice suggestions, or found a bug? Send me an email.' }
   },
   {
     slug: 'padcodeai',
@@ -150,15 +166,15 @@ export const products: Product[] = [
     },
     subtitle: { vi: 'Editor, compiler offline, terminal và hỗ trợ AI.', en: 'Editor, offline compiler, terminal, and AI assistance.' },
     description: {
-      vi: 'Pad Code AI đưa editor, terminal, quản lý workspace và hỗ trợ Apple Intelligence vào một giao diện gọn cho iPhone, iPad và Mac.',
-      en: 'Pad Code AI combines an editor, terminal, workspace management, and Apple Intelligence support in a focused interface for iPhone, iPad, and Mac.'
+      vi: 'Pad Code AI đưa editor, terminal, quản lý workspace và hỗ trợ Apple Intelligence vào một giao diện gọn cho iPhone, iPad, Mac và Apple Vision Pro.',
+      en: 'Pad Code AI combines an editor, terminal, workspace management, and Apple Intelligence support in a focused interface for iPhone, iPad, Mac, and Apple Vision Pro.'
     },
     ctaLabel: { vi: 'Tải trên App Store', en: 'Download on App Store' },
-    platforms: { vi: 'iPhone, iPad, Mac', en: 'iPhone, iPad, Mac' },
-    operatingSystem: 'iOS, iPadOS, macOS',
+    platforms: { vi: 'iOS, iPadOS, macOS, visionOS', en: 'iOS, iPadOS, macOS, visionOS' },
+    operatingSystem: 'iOS, iPadOS, macOS, visionOS',
     appCategory: 'DeveloperApplication',
     facts: [
-      { label: { vi: 'Nền tảng', en: 'Platforms' }, value: { vi: 'iPhone, iPad, Mac', en: 'iPhone, iPad, Mac' } },
+      { label: { vi: 'Nền tảng', en: 'Platforms' }, value: { vi: 'iOS, iPadOS, macOS, visionOS', en: 'iOS, iPadOS, macOS, visionOS' } },
       { label: { vi: 'Ngôn ngữ', en: 'Languages' }, value: { vi: '24+ ngôn ngữ', en: '24+ languages' } },
       { label: { vi: 'Biên dịch', en: 'Execution' }, value: { vi: 'Trên thiết bị', en: 'On device' } },
     ],
@@ -173,7 +189,7 @@ export const products: Product[] = [
       },
       {
         title: { vi: 'Git và workspace', en: 'Git and workspaces' },
-        description: { vi: 'Điều hướng tệp, quản lý dự án và làm việc với mã nguồn gọn hơn trên iPhone, iPad và Mac.', en: 'Navigate files, manage projects, and work with source code more cleanly across iPhone, iPad, and Mac.' }
+        description: { vi: 'Điều hướng tệp, quản lý dự án và làm việc với mã nguồn gọn hơn trên iPhone, iPad, Mac và Apple Vision Pro.', en: 'Navigate files, manage projects, and work with source code more cleanly across iPhone, iPad, Mac, and Apple Vision Pro.' }
       }
     ],
     support: { vi: 'Gửi góp ý về compiler, editor hoặc workflow qua email.', en: 'Send feedback about the compiler, editor, or workflow by email.' }
@@ -195,17 +211,17 @@ export const products: Product[] = [
       vi: 'Viết tay, ghi chú và xử lý tài liệu.',
       en: 'Handwriting, notes, and documents.'
     },
-    subtitle: { vi: 'Cho ghi chú, OCR và làm việc dài trên iPhone, iPad và Mac.', en: 'For notes, OCR, and long work sessions on iPhone, iPad, and Mac.' },
+    subtitle: { vi: 'Cho ghi chú, OCR và làm việc dài trên iPhone, iPad, Mac và Apple Vision Pro.', en: 'For notes, OCR, and long work sessions on iPhone, iPad, Mac, and Apple Vision Pro.' },
     description: {
       vi: 'Pad Notes AI kết hợp viết tay, nhận dạng chữ viết, ghi âm và trợ lý AI để biến ghi chú thành tài liệu dễ tìm, dễ hiểu trên các thiết bị Apple.',
       en: 'Pad Notes AI combines handwriting, recognition, audio capture, and an AI assistant so notes become searchable, understandable documents across Apple devices.'
     },
     ctaLabel: { vi: 'Tải trên App Store', en: 'Download on App Store' },
-    platforms: { vi: 'iPhone, iPad, Mac', en: 'iPhone, iPad, Mac' },
-    operatingSystem: 'iOS, iPadOS, macOS',
+    platforms: { vi: 'iOS, iPadOS, macOS, visionOS', en: 'iOS, iPadOS, macOS, visionOS' },
+    operatingSystem: 'iOS, iPadOS, macOS, visionOS',
     appCategory: 'ProductivityApplication',
     facts: [
-      { label: { vi: 'Nền tảng', en: 'Platforms' }, value: { vi: 'iPhone, iPad, Mac', en: 'iPhone, iPad, Mac' } },
+      { label: { vi: 'Nền tảng', en: 'Platforms' }, value: { vi: 'iOS, iPadOS, macOS, visionOS', en: 'iOS, iPadOS, macOS, visionOS' } },
       { label: { vi: 'Nhập liệu', en: 'Input' }, value: { vi: 'Apple Pencil', en: 'Apple Pencil' } },
       { label: { vi: 'Xử lý', en: 'Processing' }, value: { vi: 'OCR + AI', en: 'OCR + AI' } },
     ],
@@ -246,15 +262,15 @@ export const products: Product[] = [
     },
     subtitle: { vi: 'Giám sát hệ thống, File Station và SSH trong một app.', en: 'System monitoring, File Station, and SSH in one app.' },
     description: {
-      vi: 'My NAS Manager giúp theo dõi tài nguyên, duyệt file, quản lý gói DSM và truy cập terminal an toàn trên iPhone, iPad và Mac.',
-      en: 'My NAS Manager helps you monitor resources, browse files, manage DSM packages, and access a secure terminal on iPhone, iPad, and Mac.'
+      vi: 'My NAS Manager giúp theo dõi tài nguyên, duyệt file, quản lý gói DSM và truy cập terminal an toàn trên iPhone, iPad, Mac và Apple Vision Pro.',
+      en: 'My NAS Manager helps you monitor resources, browse files, manage DSM packages, and access a secure terminal on iPhone, iPad, Mac, and Apple Vision Pro.'
     },
     ctaLabel: { vi: 'Tải về trên App Store', en: 'Download on App Store' },
-    platforms: { vi: 'iPhone, iPad, Mac', en: 'iPhone, iPad, Mac' },
-    operatingSystem: 'iOS, iPadOS, macOS',
+    platforms: { vi: 'iOS, iPadOS, macOS, visionOS', en: 'iOS, iPadOS, macOS, visionOS' },
+    operatingSystem: 'iOS, iPadOS, macOS, visionOS',
     appCategory: 'UtilitiesApplication',
     facts: [
-      { label: { vi: 'Nền tảng', en: 'Platforms' }, value: { vi: 'iPhone, iPad, Mac', en: 'iPhone, iPad, Mac' } },
+      { label: { vi: 'Nền tảng', en: 'Platforms' }, value: { vi: 'iOS, iPadOS, macOS, visionOS', en: 'iOS, iPadOS, macOS, visionOS' } },
       { label: { vi: 'Máy chủ', en: 'Server' }, value: { vi: 'Synology DSM 7+', en: 'Synology DSM 7+' } },
       { label: { vi: 'Công cụ', en: 'Tools' }, value: { vi: 'Files + SSH + Packages', en: 'Files + SSH + Packages' } }
     ],
@@ -265,7 +281,7 @@ export const products: Product[] = [
       },
       {
         title: { vi: 'File Station di động', en: 'Mobile File Station' },
-        description: { vi: 'Duyệt, tải lên, tải xuống và tạo link chia sẻ từ iPhone, iPad hoặc Mac.', en: 'Browse, upload, download, and create share links from iPhone, iPad, or Mac.' }
+        description: { vi: 'Duyệt, tải lên, tải xuống và tạo link chia sẻ từ iPhone, iPad, Mac hoặc Apple Vision Pro.', en: 'Browse, upload, download, and create share links from iPhone, iPad, Mac, or Apple Vision Pro.' }
       },
       {
         title: { vi: 'Terminal SSH an toàn', en: 'Secure SSH terminal' },
@@ -273,6 +289,55 @@ export const products: Product[] = [
       }
     ],
     support: { vi: 'Gửi email nếu bạn cần hỗ trợ kết nối DSM hoặc SSH.', en: 'Email me if you need help with DSM or SSH connections.' }
+  },
+  {
+    slug: 'lunarv',
+    name: 'LunarV',
+    route: '/LunarV/',
+    icon: lunarvIcon,
+    heroImage: lunarvHero,
+    gallery: [
+      { src: lunarvHero, alt: { vi: 'LunarV trên iPad', en: 'LunarV on iPad' } },
+      { src: lunarvVision, alt: { vi: 'LunarV trên Apple Vision Pro', en: 'LunarV on Apple Vision Pro' } },
+      { src: lunarvReviewOne, alt: { vi: 'Màn hình đánh giá LunarV', en: 'LunarV review screen' } },
+      { src: lunarvReviewTwo, alt: { vi: 'Màn hình lịch LunarV', en: 'LunarV calendar screen' } }
+    ],
+    accent: '#6655d9',
+    appStoreUrl: 'https://apps.apple.com/vn/app/lunarv-l%E1%BB%8Bch-%C3%A2m-vi%E1%BB%87t-nam/id6770913893?l=vi',
+    category: { vi: 'Lịch âm Việt Nam', en: 'Vietnamese lunar calendar' },
+    title: {
+      vi: 'Lịch âm Việt Nam trên thiết bị Apple.',
+      en: 'Vietnamese lunar calendar for Apple devices.'
+    },
+    subtitle: { vi: 'Ngày âm, dịp gia đình, widget và nhắc nhở.', en: 'Lunar dates, family moments, widgets, and reminders.' },
+    description: {
+      vi: 'LunarV gom lịch âm, lịch dương, can chi, tiết khí và nhắc dịp quan trọng vào một trải nghiệm đồng bộ cho iPhone, iPad, Mac và Apple Vision Pro.',
+      en: 'LunarV brings lunar and solar dates, sexagenary cycles, solar terms, and personal reminders into one synced experience for iPhone, iPad, Mac, and Apple Vision Pro.'
+    },
+    ctaLabel: { vi: 'Xem trên App Store', en: 'View on App Store' },
+    platforms: { vi: 'iOS, iPadOS, macOS, visionOS', en: 'iOS, iPadOS, macOS, visionOS' },
+    operatingSystem: 'iOS, iPadOS, macOS, visionOS',
+    appCategory: 'LifestyleApplication',
+    facts: [
+      { label: { vi: 'Phiên bản', en: 'Version' }, value: { vi: '1.0.1', en: '1.0.1' } },
+      { label: { vi: 'Nền tảng', en: 'Platforms' }, value: { vi: 'iOS, iPadOS, macOS, visionOS', en: 'iOS, iPadOS, macOS, visionOS' } },
+      { label: { vi: 'Phát hành', en: 'Release' }, value: { vi: 'App Store', en: 'App Store' } }
+    ],
+    features: [
+      {
+        title: { vi: 'Âm lịch và dương lịch', en: 'Lunar and solar dates' },
+        description: { vi: 'Xem ngày âm, ngày dương, can chi và tiết khí trong cùng một nhịp đọc.', en: 'Read lunar dates, solar dates, cycles, and solar terms in one clear view.' }
+      },
+      {
+        title: { vi: 'Dịp gia đình', en: 'Family moments' },
+        description: { vi: 'Theo dõi ngày giỗ, sinh nhật và các dịp quan trọng theo âm hoặc dương lịch.', en: 'Track anniversaries, birthdays, and important dates using lunar or solar calendars.' }
+      },
+      {
+        title: { vi: 'Widget đồng bộ', en: 'Synced widgets' },
+        description: { vi: 'Thông tin ngày hiện tại được trình bày gọn trên màn hình chính và các nền tảng Apple.', en: 'Current-date context stays compact on Home Screen widgets and Apple platforms.' }
+      }
+    ],
+    support: { vi: 'Cần hỗ trợ LunarV? Gửi email để mình kiểm tra.', en: 'Need help with LunarV? Send an email and I will take a look.' }
   },
   {
     slug: 'lunarblock',
@@ -307,7 +372,7 @@ export const products: Product[] = [
       en: 'Lunar Block transforms classic falling-block puzzles into a glowing 3D orbital console. Built natively with SceneKit, featuring ergonomic D-Pad controls, instant ghost piece projection, physics-driven line fractures, 3 game modes, XP progression ranks, and global Game Center leaderboards.'
     },
     ctaLabel: { vi: 'Tải trên App Store', en: 'Download on App Store' },
-    platforms: { vi: 'iPhone, iPad, Mac, Vision Pro', en: 'iPhone, iPad, Mac, Vision Pro' },
+    platforms: { vi: 'iOS, iPadOS, macOS, visionOS', en: 'iOS, iPadOS, macOS, visionOS' },
     operatingSystem: 'iOS 16+, iPadOS 16+, macOS 13+, visionOS 1+',
     appCategory: 'GameApplication',
     facts: [
@@ -339,71 +404,6 @@ export const products: Product[] = [
       }
     ],
     support: { vi: 'Có góp ý gameplay hoặc điều khiển? Gửi mình qua email.', en: 'Have gameplay or control feedback? Send it by email.' }
-  },
-  {
-    slug: 'vtts',
-    name: 'vTTS',
-    route: '/vTTS/',
-    icon: vttsIcon,
-    heroImage: vttsMacHero,
-    gallery: [
-      { src: vttsMacHero, alt: { vi: 'Giao diện vTTS trên macOS với tính năng Thư viện sách và quản lý tài liệu', en: 'vTTS interface on macOS with book library and document management' } },
-      { src: vttsPhoneScreenshot, alt: { vi: 'Giao diện vTTS trên iPhone với danh sách 11 giọng đọc AI tiếng Việt tự nhiên', en: 'vTTS interface on iPhone with 11 natural Kokoro Vietnamese AI voices' } },
-      { src: vttsPhoneLibrary, alt: { vi: 'Tính năng Thư viện đọc sách offline trên iPhone', en: 'Offline book library reading feature on iPhone' } }
-    ],
-    accent: '#6366f1',
-    appStoreUrl: 'https://apps.apple.com/app/id6817003401',
-    videoUrl: '/vTTS/vtts-demo.mp4',
-    videoDescription: {
-      vi: 'Xem video thực tế quá trình vTTS đọc văn bản tiếng Việt, đổi giọng đọc AI và xuất tệp âm thanh hoàn toàn ngoại tuyến trên máy.',
-      en: 'Watch vTTS perform text-to-speech synthesis, voice switching, and audio export completely offline on device.'
-    },
-    category: { vi: 'Giọng đọc AI & Sách nói', en: 'AI Speech & Audiobooks' },
-    title: {
-      vi: 'Đọc văn bản & sách nói bằng AI ngoại tuyến trên thiết bị.',
-      en: 'On-device AI speech synthesis & offline audiobook library.'
-    },
-    subtitle: {
-      vi: '11 giọng đọc AI tự nhiên, thư viện sách thông minh, 100% bảo mật ngoại tuyến.',
-      en: '11 natural AI voices, smart book library, 100% private & offline on Apple devices.'
-    },
-    description: {
-      vi: 'vTTS là ứng dụng chuyển văn bản thành giọng nói và đọc sách nói AI hoạt động 100% offline trên iPhone, iPad và Mac. Tích hợp 11 giọng đọc tiếng Việt tự nhiên chuẩn Kokoro, tính năng Thư viện sách thông minh hỗ trợ tiểu thuyết hàng ngàn chương, xuất file âm thanh M4A/WAV và máy chủ LAN nội bộ tương thích OpenAI API.',
-      en: 'vTTS is a 100% on-device AI text-to-speech and audiobook reader for iPhone, iPad, and Mac. Features 11 natural Vietnamese voices powered by Kokoro, a smart book library for multi-chapter novels, high-quality M4A/WAV audio export, and an OpenAI-compatible local LAN server.'
-    },
-    ctaLabel: { vi: 'Xem trên App Store', en: 'View on App Store' },
-    platforms: { vi: 'iOS 17+, iPadOS 17+, macOS 14+', en: 'iOS 17+, iPadOS 17+, macOS 14+' },
-    operatingSystem: 'iOS 17.0 or later, iPadOS 17.0 or later, macOS 14.0 or later',
-    appCategory: 'UtilitiesApplication',
-    facts: [
-      { label: { vi: 'Giọng đọc', en: 'Voices' }, value: { vi: '11 Giọng AI (Nam & Nữ)', en: '11 AI Voices (M & F)' } },
-      { label: { vi: 'Hoạt động', en: 'Operation' }, value: { vi: '100% Offline On-Device', en: '100% Offline On-Device' } },
-      { label: { vi: 'Tính năng', en: 'Features' }, value: { vi: 'Văn bản & Thư viện sách', en: 'TTS & Book Library' } },
-      { label: { vi: 'Xuất & LAN', en: 'Export & LAN' }, value: { vi: 'M4A, WAV, OpenAI API', en: 'M4A, WAV, OpenAI API' } }
-    ],
-    features: [
-      {
-        title: { vi: '11 Giọng đọc AI tiếng Việt tự nhiên', en: '11 Natural AI Voices' },
-        description: { vi: 'Hệ thống 11 giọng đọc truyền cảm (Diễm Trinh, Hưng Thịnh, Mai Linh, Mạnh Dũng, Tuấn Ngọc...) với ngữ điệu ngắt nghỉ chuẩn xác, không bị robotic.', en: 'Choose from 11 expressive Vietnamese voices with natural cadence, correct tone marks, and zero robotic artifacts.' }
-      },
-      {
-        title: { vi: 'Thư viện sách & Quản lý chương', en: 'Book Library & Chapters' },
-        description: { vi: 'Tính năng Thư viện mới cho phép nhập sách, tiểu thuyết dài hàng ngàn chương, tìm kiếm theo tác giả, lưu mục yêu thích và tiếp tục nghe tiện lợi.', en: 'New Book Library manages long-form books and multi-chapter novels with author search, favorites, and seamless reading progress.' }
-      },
-      {
-        title: { vi: '100% Ngoại tuyến & Bảo mật riêng tư', en: '100% Offline & Private' },
-        description: { vi: 'Chạy hoàn toàn trên Neural Engine và Core ML của thiết bị. Miễn phí, không quảng cáo, không theo dõi, không gửi dữ liệu ra ngoài và không giới hạn số từ.', en: 'Runs entirely on-device via Apple Neural Engine and Core ML. Free, no ads, zero tracking, no cloud latency, and no word limits.' }
-      },
-      {
-        title: { vi: 'Xuất file M4A & WAV chất lượng cao', en: 'M4A & WAV Export' },
-        description: { vi: 'Dễ dàng chuyển đổi các đoạn văn hay từng chương sách thành tệp âm thanh M4A hoặc WAV chất lượng cao để nghe lại mọi lúc mọi nơi.', en: 'Easily export text snippets or full chapters to high-quality M4A or WAV audio files for listening anytime.' }
-      },
-      {
-        title: { vi: 'LAN Server tương thích OpenAI API', en: 'LAN Server & Automation' },
-        description: { vi: 'Biến máy Mac hay iPad thành trạm phát giọng đọc cục bộ qua giao thức HTTP tương thích chuẩn OpenAI TTS API, dễ dàng tích hợp Home Assistant và Smart Home.', en: 'Turn your Mac or iPad into an on-premise TTS server supporting the OpenAI audio/speech API format, ideal for Home Assistant and local automations.' }
-      }
-    ],
-    support: { vi: 'Cần hỗ trợ, góp ý giọng đọc hoặc báo lỗi? Gửi email cho mình nhé.', en: 'Need support, voice suggestions, or found a bug? Send me an email.' }
   }
 ];
 
