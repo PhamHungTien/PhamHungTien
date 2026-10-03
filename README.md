@@ -24,13 +24,13 @@
 
 | App | Platforms | |
 |---|---|---|
+| <img src="https://phamhungtien.com/assets/phtv-icon.webp" width="20" align="top"> **[PHTV](https://phamhungtien.com/PHTV/)**<br/>Vietnamese input method in 100% Swift: Telex/VNI, macro engine, spell checker. Free and open source. | Mac | [![Source][source]](https://github.com/PhamHungTien/PHTV) |
+| <img src="https://phamhungtien.com/vTTS/assets/app-icon.png" width="20" align="top"> **[vTTS](https://phamhungtien.com/vTTS/)**<br/>100% offline on-device Vietnamese & English Text-to-Speech with natural AI voices and local network server. | iPhone · iPad · Mac | [![App Store][store]](https://apps.apple.com/app/id6817003401) |
 | <img src="https://phamhungtien.com/PadCodeAI/assets/app-icon.png" width="20" align="top"> **[Pad Code AI](https://phamhungtien.com/PadCodeAI/)**<br/>Code editor and IDE with an offline compiler, integrated terminal, and Apple Intelligence. | iPhone · iPad · Mac | [![App Store][store]](https://apps.apple.com/us/app/pad-code-ai-code-editor/id6774398897) |
 | <img src="https://phamhungtien.com/PadNotesAI/assets/app-icon.png" width="20" align="top"> **[Pad Notes AI](https://phamhungtien.com/PadNotesAI/)**<br/>Apple Pencil handwriting, on-device OCR, voice memos, CloudKit sync, and an AI assistant. | iPhone · iPad · Mac | [![App Store][store]](https://apps.apple.com/us/app/pad-notes-ai/id6779363432) |
 | <img src="https://phamhungtien.com/MyNASManager/assets/app-icon.png" width="20" align="top"> **[My NAS Manager](https://phamhungtien.com/MyNASManager/)**<br/>Synology DSM client: live CPU/RAM/S.M.A.R.T. monitoring, File Station, SSH terminal, HTTPS + 2FA. | iPhone · iPad · Mac | [![App Store][store]](https://apps.apple.com/us/app/my-nas-manager/id6780180564) |
 | <img src="https://phamhungtien.com/assets/lunarv-icon.png" width="20" align="top"> **[LunarV](https://phamhungtien.com/LunarV/)**<br/>Vietnamese lunar calendar with timezone-aware conversion, widgets, and holiday reminders. | iPhone · iPad · Mac · Vision Pro | [![App Store][store]](https://apps.apple.com/app/id6770913893) |
-| <img src="https://phamhungtien.com/vTTS/assets/app-icon.png" width="20" align="top"> **[vTTS](https://phamhungtien.com/vTTS/)**<br/>100% offline on-device Vietnamese & English Text-to-Speech with natural AI voices and local network server. | iPhone · iPad · Mac | [![App Store][store]](https://apps.apple.com/app/id6817003401) |
 | <img src="https://phamhungtien.com/LunarBlock/assets/app-icon.png" width="20" align="top"> **[Lunar Block](https://phamhungtien.com/LunarBlock/)**<br/>SceneKit 3D block puzzle with physics-driven fracture, synthesized audio, and layered haptics. | iPhone · iPad · Mac · Vision Pro | [![App Store][store]](https://apps.apple.com/us/app/lunar-block-teris-3d/id6773545437) |
-| <img src="https://phamhungtien.com/assets/phtv-icon.webp" width="20" align="top"> **[PHTV](https://phamhungtien.com/PHTV/)**<br/>Vietnamese input method in 100% Swift: Telex/VNI, macro engine, spell checker. Free and open source. | Mac | [![Source][source]](https://github.com/PhamHungTien/PHTV) |
 
 ---
 
