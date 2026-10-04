@@ -11,7 +11,8 @@ const STORAGE_KEY = 'preferred_lang';
 export const SSR_LANG: Lang = 'vi';
 
 export function detectLanguage(): Lang {
-  const stored = localStorage.getItem(STORAGE_KEY);
+  let stored: string | null = null;
+  try { stored = localStorage.getItem(STORAGE_KEY); } catch { /* Storage can be blocked by the browser. */ }
   if (stored === 'vi' || stored === 'en') return stored;
 
   return navigator.language?.toLowerCase().startsWith('vi') ? 'vi' : 'en';
@@ -50,7 +51,7 @@ export function useLanguage(initialLang: Lang = SSR_LANG) {
   }, []);
 
   const setLanguage = useCallback((nextLang: Lang) => {
-    localStorage.setItem(STORAGE_KEY, nextLang);
+    try { localStorage.setItem(STORAGE_KEY, nextLang); } catch { /* Keep language switching usable without storage. */ }
     setLang(nextLang);
     window.dispatchEvent(new CustomEvent('langchange', { detail: nextLang }));
   }, []);

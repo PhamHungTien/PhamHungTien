@@ -25,9 +25,18 @@ import blockShowcase from '../../LunarBlock/assets/lunarblock-showcase.png';
 import blockModes from '../../LunarBlock/assets/lunarblock-modes.png';
 import blockRank from '../../LunarBlock/assets/lunarblock-rank.png';
 import vttsIcon from '../../vTTS/assets/app-icon.png';
-import vttsMacHero from '../../vTTS/assets/mac-main.png';
-import vttsPhoneScreenshot from '../../vTTS/assets/iphone-main.png';
-import vttsPhoneLibrary from '../../vTTS/assets/iphone-library.png';
+import vttsTextVi from '../../vTTS/assets/current/text-vi.webp';
+import vttsTextEn from '../../vTTS/assets/current/text-en.webp';
+import vttsBookVi from '../../vTTS/assets/current/book-vi.webp';
+import vttsBookEn from '../../vTTS/assets/current/book-en.webp';
+import vttsLibraryVi from '../../vTTS/assets/current/library-vi.webp';
+import vttsLibraryEn from '../../vTTS/assets/current/library-en.webp';
+import vttsMusicVi from '../../vTTS/assets/current/music-vi.webp';
+import vttsMusicEn from '../../vTTS/assets/current/music-en.webp';
+import vttsTimerVi from '../../vTTS/assets/current/timer-vi.webp';
+import vttsTimerEn from '../../vTTS/assets/current/timer-en.webp';
+import vttsExportVi from '../../vTTS/assets/current/export-vi.webp';
+import vttsExportEn from '../../vTTS/assets/current/export-en.webp';
 
 export const products: Product[] = [
   {
@@ -82,69 +91,184 @@ export const products: Product[] = [
     support: { vi: 'Thảo luận, báo lỗi hoặc gửi góp ý trên GitHub.', en: 'Discuss, report issues, or send feedback on GitHub.' }
   },
   {
-    slug: 'vtts',
-    name: 'vTTS',
-    route: '/vTTS/',
-    icon: vttsIcon,
-    heroImage: vttsMacHero,
+    "slug": "vtts",
+    "name": "vTTS",
+    "route": "/vTTS/",
+    "icon": vttsIcon,
+    "heroImage": vttsTextVi,
+    localizedHeroImages: { vi: vttsTextVi, en: vttsTextEn },
     gallery: [
-      { src: vttsMacHero, alt: { vi: 'Giao diện vTTS trên macOS với tính năng Thư viện sách và quản lý tài liệu', en: 'vTTS interface on macOS with book library and document management' } },
-      { src: vttsPhoneScreenshot, alt: { vi: 'Giao diện vTTS trên iPhone với danh sách 11 giọng đọc AI tiếng Việt tự nhiên', en: 'vTTS interface on iPhone with 11 natural Kokoro Vietnamese AI voices' } },
-      { src: vttsPhoneLibrary, alt: { vi: 'Tính năng Thư viện đọc sách offline trên iPhone', en: 'Offline book library reading feature on iPhone' } }
+{ src: vttsBookVi, localizedSrc: { vi: vttsBookVi, en: vttsBookEn }, alt: { vi: 'Theo dõi đoạn đang đọc', en: 'Follow the current passage' } },
+{ src: vttsLibraryVi, localizedSrc: { vi: vttsLibraryVi, en: vttsLibraryEn }, alt: { vi: 'Thư viện sách và yêu thích', en: 'Your library and favorites' } },
+{ src: vttsMusicVi, localizedSrc: { vi: vttsMusicVi, en: vttsMusicEn }, alt: { vi: 'Nhạc nền với âm lượng riêng', en: 'Background music and volume' } },
+{ src: vttsTimerVi, localizedSrc: { vi: vttsTimerVi, en: vttsTimerEn }, alt: { vi: 'Hẹn giờ tắt tùy chỉnh', en: 'Flexible sleep timer' } },
+{ src: vttsExportVi, localizedSrc: { vi: vttsExportVi, en: vttsExportEn }, alt: { vi: 'Chọn định dạng và nhạc khi xuất', en: 'Audio format and music options' } }
     ],
-    accent: '#6366f1',
-    appStoreUrl: 'https://apps.apple.com/app/id6817003401',
-    videoUrl: '/vTTS/vtts-demo.mp4',
-    videoDescription: {
-      vi: 'Xem video thực tế quá trình vTTS đọc văn bản tiếng Việt, đổi giọng đọc AI và xuất tệp âm thanh hoàn toàn ngoại tuyến trên máy.',
-      en: 'Watch vTTS perform text-to-speech synthesis, voice switching, and audio export completely offline on device.'
+    "accent": "#9255bd",
+    "appStoreUrl": "https://apps.apple.com/app/id6817003401",
+    videoUrl: '/vTTS/vi/AppPreview.mp4',
+    localizedVideoUrls: { vi: '/vTTS/vi/AppPreview.mp4', en: '/vTTS/en/AppPreview.mp4' },
+    videoPosters: { vi: '/vTTS/vi/Poster.jpg', en: '/vTTS/en/Poster.jpg' },
+    videoPortrait: true,
+    "videoDescription": {
+        "vi": "Theo dõi đoạn đang đọc, khám phá thư viện và điều khiển từ Dynamic Island, màn hình khóa. Cảnh hệ thống được quay trên iPhone thật.",
+        "en": "Follow highlighted passages, explore the library, and use Dynamic Island and Lock Screen controls. Real iPhone system footage retains Vietnamese book content."
     },
-    category: { vi: 'Giọng đọc AI & Sách nói', en: 'AI Speech & Audiobooks' },
-    title: {
-      vi: 'Đọc văn bản & sách nói bằng AI ngoại tuyến trên thiết bị.',
-      en: 'On-device AI speech synthesis & offline audiobook library.'
+    "category": {
+        "vi": "Đọc sách & văn bản",
+        "en": "Books & text to speech"
     },
-    subtitle: {
-      vi: '11 giọng đọc AI tự nhiên, thư viện sách thông minh, 100% bảo mật ngoại tuyến.',
-      en: '11 natural AI voices, smart book library, 100% private & offline on Apple devices.'
+    "title": {
+        "vi": "Để trang sách cất thành lời.",
+        "en": "Let your books speak to you."
     },
-    description: {
-      vi: 'vTTS là ứng dụng chuyển văn bản thành giọng nói và đọc sách nói AI hoạt động 100% offline trên iPhone, iPad, Mac và Apple Vision Pro. Tích hợp 11 giọng đọc tiếng Việt tự nhiên chuẩn Kokoro, tính năng Thư viện sách thông minh hỗ trợ tiểu thuyết hàng ngàn chương, xuất file âm thanh M4A/WAV và máy chủ LAN nội bộ tương thích OpenAI API.',
-      en: 'vTTS is a 100% on-device AI text-to-speech and audiobook reader for iPhone, iPad, Mac, and Apple Vision Pro. Features 11 natural Vietnamese voices powered by Kokoro, a smart book library for multi-chapter novels, high-quality M4A/WAV audio export, and an OpenAI-compatible local LAN server.'
+    "subtitle": {
+        "vi": "Nghe sách và văn bản bằng giọng Việt, Anh ngay trên thiết bị. Theo dõi từng đoạn, thêm nhạc nền và nghe tiếp từ nơi đã dừng.",
+        "en": "Listen to books and text in Vietnamese and English, on your device. Follow each passage, add background music, and pick up where you left off."
     },
-    ctaLabel: { vi: 'Xem trên App Store', en: 'View on App Store' },
-    platforms: { vi: 'iOS, iPadOS, macOS, visionOS', en: 'iOS, iPadOS, macOS, visionOS' },
-    operatingSystem: 'iOS 17+, iPadOS 17+, macOS 14+, visionOS 1+',
-    appCategory: 'UtilitiesApplication',
-    facts: [
-      { label: { vi: 'Giọng đọc', en: 'Voices' }, value: { vi: '11 Giọng AI (Nam & Nữ)', en: '11 AI Voices (M & F)' } },
-      { label: { vi: 'Hoạt động', en: 'Operation' }, value: { vi: '100% Offline On-Device', en: '100% Offline On-Device' } },
-      { label: { vi: 'Tính năng', en: 'Features' }, value: { vi: 'Văn bản & Thư viện sách', en: 'TTS & Book Library' } },
-      { label: { vi: 'Xuất & LAN', en: 'Export & LAN' }, value: { vi: 'M4A, WAV, OpenAI API', en: 'M4A, WAV, OpenAI API' } }
+    "description": {
+        "vi": "vTTS đọc sách EPUB và văn bản ngoại tuyến trên iPhone, iPad và Mac. Giọng Việt và Anh, điều chỉnh tốc độ khi phát, nhạc nền, hẹn giờ và xuất âm thanh.",
+        "en": "vTTS reads EPUB books and text offline on iPhone, iPad, and Mac. Vietnamese and English voices, live speed adjustment, background music, sleep timer, and audio export."
+    },
+    "ctaLabel": {
+        "vi": "Xem trên App Store",
+        "en": "View on App Store"
+    },
+    "platforms": {
+        "vi": "iPhone, iPad, Mac",
+        "en": "iPhone, iPad, Mac"
+    },
+    "operatingSystem": "iOS 17+, iPadOS 17+, macOS 14+",
+    "appCategory": "UtilitiesApplication",
+    "facts": [
+        {
+            "label": {
+                "vi": "Ngôn ngữ đọc",
+                "en": "Speech languages"
+            },
+            "value": {
+                "vi": "Tiếng Việt & Anh",
+                "en": "Vietnamese & English"
+            }
+        },
+        {
+            "label": {
+                "vi": "Xử lý giọng đọc",
+                "en": "Speech processing"
+            },
+            "value": {
+                "vi": "Trên thiết bị",
+                "en": "On device"
+            }
+        },
+        {
+            "label": {
+                "vi": "Thư viện",
+                "en": "Library"
+            },
+            "value": {
+                "vi": "Sách EPUB",
+                "en": "EPUB books"
+            }
+        },
+        {
+            "label": {
+                "vi": "Xuất âm thanh",
+                "en": "Audio export"
+            },
+            "value": {
+                "vi": "WAV · M4A · AAC · MP3",
+                "en": "WAV · M4A · AAC · MP3"
+            }
+        }
     ],
-    features: [
-      {
-        title: { vi: '11 Giọng đọc AI tiếng Việt tự nhiên', en: '11 Natural AI Voices' },
-        description: { vi: 'Hệ thống 11 giọng đọc truyền cảm (Diễm Trinh, Hưng Thịnh, Mai Linh, Mạnh Dũng, Tuấn Ngọc...) với ngữ điệu ngắt nghỉ chuẩn xác, không bị robotic.', en: 'Choose from 11 expressive Vietnamese voices with natural cadence, correct tone marks, and zero robotic artifacts.' }
-      },
-      {
-        title: { vi: 'Thư viện sách & Quản lý chương', en: 'Book Library & Chapters' },
-        description: { vi: 'Tính năng Thư viện mới cho phép nhập sách, tiểu thuyết dài hàng ngàn chương, tìm kiếm theo tác giả, lưu mục yêu thích và tiếp tục nghe tiện lợi.', en: 'New Book Library manages long-form books and multi-chapter novels with author search, favorites, and seamless reading progress.' }
-      },
-      {
-        title: { vi: '100% Ngoại tuyến & Bảo mật riêng tư', en: '100% Offline & Private' },
-        description: { vi: 'Chạy hoàn toàn trên Neural Engine và Core ML của thiết bị. Miễn phí, không quảng cáo, không theo dõi, không gửi dữ liệu ra ngoài và không giới hạn số từ.', en: 'Runs entirely on-device via Apple Neural Engine and Core ML. Free, no ads, zero tracking, no cloud latency, and no word limits.' }
-      },
-      {
-        title: { vi: 'Xuất file M4A & WAV chất lượng cao', en: 'M4A & WAV Export' },
-        description: { vi: 'Dễ dàng chuyển đổi các đoạn văn hay từng chương sách thành tệp âm thanh M4A hoặc WAV chất lượng cao để nghe lại mọi lúc mọi nơi.', en: 'Easily export text snippets or full chapters to high-quality M4A or WAV audio files for listening anytime.' }
-      },
-      {
-        title: { vi: 'LAN Server tương thích OpenAI API', en: 'LAN Server & Automation' },
-        description: { vi: 'Biến máy Mac hay iPad thành trạm phát giọng đọc cục bộ qua giao thức HTTP tương thích chuẩn OpenAI TTS API, dễ dàng tích hợp Home Assistant và Smart Home.', en: 'Turn your Mac or iPad into an on-premise TTS server supporting the OpenAI audio/speech API format, ideal for Home Assistant and local automations.' }
-      }
+    "features": [
+        {
+            "title": {
+                "vi": "Giọng Việt và Anh, ngay trên thiết bị",
+                "en": "Vietnamese and English, on device"
+            },
+            "description": {
+                "vi": "Chọn giọng đọc và kéo thanh tốc độ ngay khi đang nghe. Giọng đọc được tạo từ tài nguyên đi kèm ứng dụng, không cần tải thêm mô hình.",
+                "en": "Choose a voice and adjust speed while listening. Speech uses resources bundled with the app, with no additional model downloads."
+            }
+        },
+        {
+            "title": {
+                "vi": "Thư viện sách của bạn",
+                "en": "Your own book library"
+            },
+            "description": {
+                "vi": "Nhập EPUB, tìm theo tên sách hoặc tác giả, lưu yêu thích và nghe tiếp từ nơi đã dừng. Chạm vào một đoạn để bắt đầu nghe từ đó.",
+                "en": "Import EPUB books, search by title or author, save favorites, and pick up where you left off. Tap a passage to start listening there."
+            }
+        },
+        {
+            "title": {
+                "vi": "Văn bản và tài liệu",
+                "en": "Text and documents"
+            },
+            "description": {
+                "vi": "Dán văn bản hoặc nhập TXT, Markdown, HTML, RTF, PDF, DOCX, ODT và FB2. Xem lại lịch sử đọc. Khả năng nhập phụ thuộc nội dung tệp; tệp được bảo vệ có thể không được hỗ trợ.",
+                "en": "Paste text or import TXT, Markdown, HTML, RTF, PDF, DOCX, ODT, and FB2. Revisit reading history. Import support depends on file content; protected files may not be supported."
+            }
+        },
+        {
+            "title": {
+                "vi": "Nhạc nền và hẹn giờ tắt",
+                "en": "Background music and sleep timer"
+            },
+            "description": {
+                "vi": "Thêm nhạc piano, điều chỉnh âm lượng riêng và chọn thời gian dừng phù hợp với bạn.",
+                "en": "Add piano music, set its volume independently, and choose when listening stops."
+            }
+        },
+        {
+            "title": {
+                "vi": "Xuất âm thanh theo ý bạn",
+                "en": "Export audio your way"
+            },
+            "description": {
+                "vi": "Lưu âm thanh dưới dạng WAV, M4A, AAC hoặc MP3. Chọn xuất kèm nhạc nền hoặc chỉ giữ giọng đọc.",
+                "en": "Save audio as WAV, M4A, AAC, or MP3. Include background music or export speech on its own."
+            }
+        },
+        {
+            "title": {
+                "vi": "Điều khiển từ màn hình khóa",
+                "en": "Lock Screen playback controls"
+            },
+            "description": {
+                "vi": "Tạm dừng và tiếp tục bằng trình phát hệ thống. Hỗ trợ Dynamic Island trên iPhone tương thích.",
+                "en": "Pause and resume with system media controls, including Dynamic Island on compatible iPhones."
+            }
+        },
+        {
+            "title": {
+                "vi": "Xử lý ngoại tuyến",
+                "en": "Offline speech processing"
+            },
+            "description": {
+                "vi": "Không cần internet để tạo giọng đọc. Sách, bản nháp và lịch sử được lưu trên thiết bị; bạn chủ động chọn nội dung muốn xuất hoặc chia sẻ.",
+                "en": "Generate speech without an internet connection. Books, drafts, and history are stored on your device; you choose what to export or share."
+            }
+        },
+        {
+            "title": {
+                "vi": "Máy chủ LAN tùy chọn",
+                "en": "Optional LAN server"
+            },
+            "description": {
+                "vi": "API đọc văn bản trong mạng nội bộ, mặc định tắt và yêu cầu token. Trên iPhone/iPad, cần giữ ứng dụng ở màn hình trước. Chỉ bật trong mạng bạn tin cậy.",
+                "en": "A local-network speech API, off by default and protected by a token. On iPhone/iPad, keep the app in the foreground. Enable it only on a network you trust."
+            }
+        }
     ],
-    support: { vi: 'Cần hỗ trợ, góp ý giọng đọc hoặc báo lỗi? Gửi email cho mình nhé.', en: 'Need support, voice suggestions, or found a bug? Send me an email.' }
+    "support": {
+        "vi": "Cần hỗ trợ hoặc có đoạn đọc chưa tốt? Gửi mô tả và phiên bản ứng dụng; bạn không cần gửi cả cuốn sách hay tài liệu riêng tư.",
+        "en": "Need help or found a passage that sounds wrong? Send a description and your app version; there is no need to send an entire book or private document."
+    },
+    "communityUrl": "https://www.facebook.com/vTTSOffline"
   },
   {
     slug: 'padcodeai',

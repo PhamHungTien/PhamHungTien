@@ -89,11 +89,6 @@ function softwareApplicationSchema(product: Product, lang: Lang) {
     url: `${SITE.origin}${product.route}`,
     image: ogImageFor(product.slug),
     author: { '@id': `${SITE.origin}/#person` },
-    offers: {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'USD'
-    },
     featureList: product.features.map((feature) => feature.title[lang])
   };
 

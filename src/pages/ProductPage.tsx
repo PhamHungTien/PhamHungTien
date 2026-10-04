@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { ArrowRight, ExternalLink, Github, Heart, Mail, Store, X } from "lucide-react";
 import type { CSSProperties } from "react";
@@ -18,21 +18,31 @@ interface ProductPageProps {
 export function ProductPage({ product, lang, onLanguageChange, t }: ProductPageProps) {
   const [donateOpen, setDonateOpen] = useState(false);
   const [zoomImage, setZoomImage] = useState<{ src: string; alt: string } | null>(null);
+  const lightboxRef = useRef<HTMLDialogElement>(null);
+  const heroImage = product.localizedHeroImages?.[lang] ?? product.heroImage;
+  const heroAlt = lang === "vi" ? `${product.name} trên thiết bị` : `${product.name} on device`;
+  const videoUrl = product.localizedVideoUrls?.[lang] ?? product.videoUrl;
   const primaryHref = product.appStoreUrl ?? product.route;
   const secondaryHref = product.githubUrl ?? `${product.route}privacy.html`;
   const secondaryLabel = product.secondaryCtaLabel?.[lang] ?? (product.githubUrl ? t("common.github") : t("product.privacy"));
 
   useEffect(() => {
     if (!zoomImage) return;
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setZoomImage(null);
+    const dialog = lightboxRef.current;
+    if (!dialog) return;
+    const previousFocus = document.activeElement;
+    const overflow = document.body.style.overflow;
+    dialog.showModal();
+    document.body.style.overflow = "hidden";
+    return () => {
+      dialog.close();
+      document.body.style.overflow = overflow;
+      if (previousFocus instanceof HTMLElement && previousFocus.isConnected) previousFocus.focus();
     };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [zoomImage]);
 
   return (
-    <div className="site-shell product-page" style={{ "--accent": product.accent } as CSSProperties}>
+    <div className={`site-shell product-page product-page--${product.slug}`} style={{ "--accent": product.accent } as CSSProperties}>
       <Header lang={lang} onLanguageChange={onLanguageChange} t={t} productName={product.name} />
 
       <main id="main-content">
@@ -73,25 +83,14 @@ export function ProductPage({ product, lang, onLanguageChange, t }: ProductPageP
             </div>
           </div>
 
-          <figure
+          <button
+            type="button"
             className="detail-hero__media"
-            role="button"
-            tabIndex={0}
-            onClick={() => setZoomImage({ src: product.heroImage, alt: product.gallery[0]?.alt[lang] ?? product.name })}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                setZoomImage({ src: product.heroImage, alt: product.gallery[0]?.alt[lang] ?? product.name });
-              }
-            }}
+            onClick={() => setZoomImage({ src: heroImage, alt: heroAlt })}
             aria-label={`${lang === "vi" ? "Phóng to ảnh" : "Zoom image"}: ${product.name}`}
           >
-            <img
-              src={product.heroImage}
-              alt={product.gallery[0]?.alt[lang] ?? product.name}
-              fetchPriority="high"
-              decoding="async"
-            />
-          </figure>
+            <img src={heroImage} alt={heroAlt} fetchPriority="high" decoding="async" />
+          </button>
         </section>
 
         <section className="facts-band" aria-label={t("common.platforms")}>
@@ -103,8 +102,8 @@ export function ProductPage({ product, lang, onLanguageChange, t }: ProductPageP
           ))}
         </section>
 
-        {product.videoUrl && (
-          <section className="product-video-section" id="demo" aria-label={lang === "vi" ? "Video trải nghiệm thực tế" : "Product Demo Video"}>
+        {videoUrl && (
+          <section className={`product-video-section${product.videoPortrait ? " product-video-section--portrait" : ""}`} id="demo" aria-label={lang === "vi" ? "Video trải nghiệm thực tế" : "Product Demo Video"}>
             <div className="section-copy">
               <h2>{lang === "vi" ? "Video trải nghiệm thực tế" : "Experience in Action"}</h2>
               <p className="section-subtitle">
@@ -118,11 +117,12 @@ export function ProductPage({ product, lang, onLanguageChange, t }: ProductPageP
             <div className="product-video-card">
               <video
                 className="product-video-player"
-                src={product.videoUrl}
-                poster={product.heroImage}
+                key={videoUrl}
+                src={videoUrl}
+                poster={product.videoPosters?.[lang] ?? heroImage}
                 controls
                 playsInline
-                preload="metadata"
+                preload="none"
               >
                 {lang === "vi" ? "Trình duyệt của bạn không hỗ trợ phát video." : "Your browser does not support the video tag."}
               </video>
@@ -144,6 +144,9 @@ export function ProductPage({ product, lang, onLanguageChange, t }: ProductPageP
               {product.slug === "phtv" ? product.ctaLabel[lang] : t("product.supportCta")}
               <ArrowRight size={16} />
             </a>
+            {product.communityUrl && <a href={product.communityUrl} target="_blank" rel="noopener noreferrer">
+              {lang === "vi" ? "Fanpage vTTS" : "vTTS on Facebook"}<ExternalLink size={16} />
+            </a>}
           </div>
 
           <div className="feature-panel">
@@ -174,10 +177,10 @@ export function ProductPage({ product, lang, onLanguageChange, t }: ProductPageP
                 <button
                   type="button"
                   className="gallery-preview"
-                  onClick={() => setZoomImage({ src: image.src, alt: image.alt[lang] })}
+                  onClick={() => setZoomImage({ src: image.localizedSrc?.[lang] ?? image.src, alt: image.alt[lang] })}
                   aria-label={`${lang === "vi" ? "Xem ảnh phóng to" : "Zoom image"}: ${image.alt[lang]}`}
                 >
-                  <img src={image.src} alt={image.alt[lang]} loading="lazy" decoding="async" />
+                  <img src={image.localizedSrc?.[lang] ?? image.src} alt={image.alt[lang]} loading="lazy" decoding="async" />
                 </button>
                 <figcaption>{image.alt[lang]}</figcaption>
               </figure>
@@ -196,12 +199,13 @@ export function ProductPage({ product, lang, onLanguageChange, t }: ProductPageP
       <DonateDialog isOpen={donateOpen} onClose={() => setDonateOpen(false)} lang={lang} />
 
       {zoomImage && typeof document !== "undefined" && createPortal(
-        <div
+        <dialog
+          ref={lightboxRef}
           className="image-lightbox"
-          role="dialog"
-          aria-modal="true"
           aria-label={zoomImage.alt}
-          onClick={() => setZoomImage(null)}
+          onCancel={() => setZoomImage(null)}
+          onClose={() => setZoomImage(null)}
+          onClick={(event) => { if (event.target === event.currentTarget) setZoomImage(null); }}
         >
           <button
             type="button"
@@ -222,7 +226,7 @@ export function ProductPage({ product, lang, onLanguageChange, t }: ProductPageP
               <p className="image-lightbox__caption">{zoomImage.alt}</p>
             )}
           </div>
-        </div>,
+        </dialog>,
         document.body
       )}
     </div>

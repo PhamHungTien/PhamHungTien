@@ -203,8 +203,20 @@
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById(lang).classList.add('active');
             document.querySelectorAll('.lang-toggle button').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
+            document.querySelectorAll('.lang-toggle button').forEach(button => {
+                const selected = button.getAttribute('onclick') === "switchLang('" + lang + "')";
+                button.classList.toggle('active', selected);
+                button.setAttribute('aria-pressed', String(selected));
+            });
+            document.documentElement.lang = lang;
+            try { localStorage.setItem('preferred_lang', lang); } catch {}
         }
+        let initialLanguage = document.documentElement.lang === 'vi' ? 'vi' : 'en';
+        try {
+            const saved = localStorage.getItem('preferred_lang');
+            if (saved === 'vi' || saved === 'en') initialLanguage = saved;
+        } catch {}
+        switchLang(initialLanguage);
     </script>
 </body>
 </html>

@@ -46,7 +46,7 @@
 
   function storeAndApply(theme) {
     try {
-      localStorage.setItem('theme', theme);
+      try { localStorage.setItem('theme', theme); } catch (_) { /* Use the selected theme for this page. */ }
     } catch (_) {
       // The selected theme still applies for this page when storage is unavailable.
     }

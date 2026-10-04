@@ -23,6 +23,7 @@ export interface ProductFeature {
 
 export interface ProductGalleryImage {
   src: string;
+  localizedSrc?: Localized;
   alt: Localized;
 }
 
@@ -32,11 +33,16 @@ export interface Product {
   route: string;
   icon: string;
   heroImage: string;
+  localizedHeroImages?: Localized;
   gallery: ProductGalleryImage[];
   accent: string;
   appStoreUrl?: string;
   githubUrl?: string;
   videoUrl?: string;
+  localizedVideoUrls?: Localized;
+  videoPosters?: Localized;
+  videoPortrait?: boolean;
+  communityUrl?: string;
   videoDescription?: Localized;
   isStandalone?: boolean;
   category: Localized;

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>vTTS - Terms of Use / Điều Khoản Sử Dụng</title>
-    <meta name="description" content="vTTS Terms of Use - Offline on-device Vietnamese Text-to-Speech & Audiobook Reader for iOS, iPadOS, and macOS.">
+    <meta name="description" content="vTTS Terms of Use - On-device Vietnamese and English Text-to-Speech & EPUB Reader for iOS, iPadOS, and macOS.">
         <link rel="icon" type="image/png" href="assets/app-icon.png">
     <link rel="apple-touch-icon" href="assets/app-icon.png">
     <link rel="canonical" href="https://phamhungtien.com/vTTS/terms.html">
@@ -110,12 +110,12 @@
 <body>
     <div class="container">
         <div class="logo"><a href="https://phamhungtien.com/vTTS/">vTTS</a></div>
-        <div class="subtitle">Offline Vietnamese & English Text-to-Speech</div>
+        <div class="subtitle" data-vi="Đọc sách và văn bản trên thiết bị" data-en="On-device books and text to speech">Đọc sách và văn bản trên thiết bị</div>
 
         <nav class="nav-links">
-            <a href="https://phamhungtien.com/vTTS/">Home</a>
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="terms.html" class="active">Terms of Use</a>
+            <a href="https://phamhungtien.com/vTTS/" data-vi="Trang chủ" data-en="Home">Trang chủ</a>
+            <a href="privacy.html" data-vi="Quyền riêng tư" data-en="Privacy Policy">Quyền riêng tư</a>
+            <a href="terms.html" class="active" data-vi="Điều khoản" data-en="Terms of Use">Điều khoản</a>
         </nav>
 
         <div class="lang-toggle">
@@ -126,7 +126,7 @@
         <!-- TIẾNG VIỆT -->
         <div class="section active" id="vi">
             <h1>Điều Khoản Sử Dụng</h1>
-            <p><em>Cập nhật lần cuối: 02/10/2026</em></p>
+            <p><em>Cập nhật lần cuối: 04/10/2026</em></p>
 
             <p>Chào mừng bạn đến với <strong>vTTS</strong>. Bằng việc tải về, cài đặt hoặc sử dụng ứng dụng vTTS trên thiết bị iOS, iPadOS hoặc macOS, bạn đồng ý tuân thủ các điều khoản sử dụng dưới đây.</p>
 
@@ -145,6 +145,7 @@
             <h2>3. Trách nhiệm đối với nội dung âm thanh tạo ra</h2>
             <p>Người dùng chịu hoàn toàn trách nhiệm đối với văn bản nhập vào và các tệp âm thanh được xuất ra từ vTTS. Bạn đồng ý không sử dụng giọng đọc được tổng hợp từ vTTS để mạo danh người khác, tuyên truyền thông tin sai lệch hoặc vi phạm quyền của bên thứ ba.</p>
 
+<p>Ứng dụng hỗ trợ đọc văn bản, sách EPUB, nhạc nền và xuất âm thanh. Khả năng nhập phụ thuộc cấu trúc và nội dung tệp; ứng dụng không bảo đảm đọc được mọi tệp hoặc phát âm chính xác trong mọi trường hợp. Máy chủ LAN là tùy chọn, mặc định tắt; trên iPhone/iPad cần giữ ứng dụng ở màn hình trước.</p>
             <h2>4. Từ chối bảo đảm (Disclaimer of Warranty)</h2>
             <p>Ứng dụng được cung cấp trên cơ sở <strong>"nguyên trạng" (AS IS)</strong> và <strong>"theo tình trạng sẵn có" (AS AVAILABLE)</strong>, không đi kèm bất kỳ cam kết hay bảo đảm nào về tính hoàn hảo tuyệt đối hay sự phù hợp cho một mục đích cụ thể.</p>
 
@@ -160,7 +161,7 @@
         <!-- ENGLISH -->
         <div class="section" id="en">
             <h1>Terms of Use</h1>
-            <p><em>Last updated: October 2, 2026</em></p>
+            <p><em>Last updated: October 4, 2026</em></p>
 
             <p>Welcome to <strong>vTTS</strong>. By downloading, installing, or using vTTS on iOS, iPadOS, or macOS, you agree to be bound by these Terms of Use.</p>
 
@@ -179,6 +180,7 @@
             <h2>3. User Responsibility for Generated Audio</h2>
             <p>You are solely responsible for the input text and the synthesized audio files generated using vTTS. You agree not to use generated audio for fraudulent purposes, malicious impersonation, or copyright infringement.</p>
 
+<p>The app supports text reading, EPUB books, background music, and audio export. Import support depends on file structure and content; not every file or pronunciation can be handled correctly. LAN hosting is optional and off by default; on iPhone/iPad the app must remain in the foreground.</p>
             <h2>4. Disclaimer of Warranties</h2>
             <p>vTTS is provided on an <strong>"AS IS"</strong> and <strong>"AS AVAILABLE"</strong> basis, without warranties of any kind, whether express or implied, including merchantability or fitness for a particular purpose.</p>
 
@@ -201,8 +203,21 @@
             document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.lang-toggle button').forEach(el => el.classList.remove('active'));
             document.getElementById(lang).classList.add('active');
-            event.target.classList.add('active');
+            document.querySelectorAll('.lang-toggle button').forEach(button => {
+                const selected = button.getAttribute('onclick') === "switchLang('" + lang + "')";
+                button.classList.toggle('active', selected);
+                button.setAttribute('aria-pressed', String(selected));
+            });
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-vi][data-en]').forEach(el => { el.textContent = el.dataset[lang]; });
+            try { localStorage.setItem('preferred_lang', lang); } catch {}
         }
+        let initialLanguage = document.documentElement.lang === 'vi' ? 'vi' : 'en';
+        try {
+            const saved = localStorage.getItem('preferred_lang');
+            if (saved === 'vi' || saved === 'en') initialLanguage = saved;
+        } catch {}
+        switchLang(initialLanguage);
     </script>
 </body>
 </html>
