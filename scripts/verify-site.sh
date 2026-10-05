@@ -28,7 +28,7 @@ for app in LunarV LunarBlock PadCodeAI PadNotesAI MyNASManager vTTS; do
   fi
 done
 
-for f in sitemap.xml robots.txt CNAME .nojekyll 404.html og/home.png PHTV/index.html phtv/index.html; do
+for f in sitemap.xml robots.txt CNAME .nojekyll 404.html og/home.png PHTV/index.html phtv/index.html vtts/index.html; do
   if [ -f "$site/$f" ]; then note "✓" "$f"; else note "✗" "missing $f"; fail=1; fi
 done
 

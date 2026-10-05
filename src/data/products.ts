@@ -127,18 +127,18 @@ export const products: Product[] = [
         "en": "Listen to books and text in Vietnamese and English, on your device. Follow each passage, add background music, and pick up where you left off."
     },
     "description": {
-        "vi": "vTTS đọc sách EPUB và văn bản ngoại tuyến trên iPhone, iPad và Mac. Giọng Việt và Anh, điều chỉnh tốc độ khi phát, nhạc nền, hẹn giờ và xuất âm thanh.",
-        "en": "vTTS reads EPUB books and text offline on iPhone, iPad, and Mac. Vietnamese and English voices, live speed adjustment, background music, sleep timer, and audio export."
+        "vi": "vTTS đọc sách EPUB và văn bản ngoại tuyến trên iPhone, iPad, Mac và Apple Vision Pro. Giọng Việt và Anh, điều chỉnh tốc độ khi phát, nhạc nền, hẹn giờ và xuất âm thanh.",
+        "en": "vTTS reads EPUB books and text offline on iPhone, iPad, Mac, and Apple Vision Pro. Vietnamese and English voices, live speed adjustment, background music, sleep timer, and audio export."
     },
     "ctaLabel": {
         "vi": "Xem trên App Store",
         "en": "View on App Store"
     },
     "platforms": {
-        "vi": "iPhone, iPad, Mac",
-        "en": "iPhone, iPad, Mac"
+        "vi": "iOS, iPadOS, macOS, visionOS",
+        "en": "iOS, iPadOS, macOS, visionOS"
     },
-    "operatingSystem": "iOS 17+, iPadOS 17+, macOS 14+",
+    "operatingSystem": "iOS 17+, iPadOS 17+, macOS 14+, visionOS 1+",
     "appCategory": "UtilitiesApplication",
     "facts": [
         {

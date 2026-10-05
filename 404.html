@@ -204,25 +204,32 @@
         "padnotesai": "PadNotesAI",
         "aipadnotes": "PadNotesAI",
         "mynasmanager": "MyNASManager",
-        "lunarblock": "LunarBlock"
+        "lunarblock": "LunarBlock",
+        "vtts": "vTTS"
       };
 
       // Tách các phân đoạn của đường dẫn
       const segments = path.split("/");
       // segments[0] luôn rỗng vì path bắt đầu bằng "/"
       if (segments.length > 1) {
-        const firstFolderLower = segments[1].toLowerCase();
+        let firstFolderLower = segments[1].toLowerCase();
+        let restSegments = segments.slice(2);
+
+        // Hỗ trợ trường hợp URL cũ có prefix /products/ (vd: /products/vtts hoặc /products/lunarv)
+        if (firstFolderLower === "products" && segments.length > 2) {
+          firstFolderLower = segments[2].toLowerCase();
+          restSegments = segments.slice(3);
+        }
+
         const canonicalFolder = canonicalFolders[firstFolderLower];
 
         if (canonicalFolder) {
-          let needsRedirect = segments[1] !== canonicalFolder;
+          let needsRedirect = segments[1] !== canonicalFolder || firstFolderLower !== segments[1];
 
           // Nếu chỉ truy cập thư mục chính mà thiếu dấu gạch chéo cuối (/), bắt buộc thêm vào
-          if (segments.length === 2 && !path.endsWith("/")) {
+          if (restSegments.length === 0 && !path.endsWith("/")) {
             needsRedirect = true;
           }
-
-          let restSegments = segments.slice(2);
           
           // Chuẩn hóa tên file cụ thể (như privacy hoặc terms) cho toàn bộ ứng dụng
           if (restSegments.length > 0) {
@@ -243,7 +250,8 @@
             const newPath = "/" + canonicalFolder + "/" + restSegments.join("/");
             const cleanPath = newPath.replace(/\/+/g, "/").replace(/\/$/, "/");
             showRedirectState();
-            window.location.replace(cleanPath);
+            const searchAndHash = window.location.search + window.location.hash;
+            window.location.replace(cleanPath + searchAndHash);
             return;
           }
         }

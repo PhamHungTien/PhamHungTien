@@ -164,6 +164,7 @@ console.log(`\n  sitemap  ${sitemapUrls.length} urls`);
  */
 const aliases = {
   phtv: '/PHTV/',
+  vtts: '/vTTS/',
   lunarv: '/LunarV/',
   padcodeai: '/PadCodeAI/',
   padnotesai: '/PadNotesAI/',

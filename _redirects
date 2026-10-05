@@ -1,5 +1,6 @@
 # Standard Canonical Trailing Slashes (Capitalized routes)
 /PHTV /PHTV/ 301
+/vTTS /vTTS/ 301
 /LunarV /LunarV/ 301
 /PadCodeAI /PadCodeAI/ 301
 /PadNotesAI /PadNotesAI/ 301
@@ -9,6 +10,9 @@
 # Case Normalization & Wildcard Splat Redirects for Lowercase Routes
 /phtv /PHTV/ 301
 /phtv/* /PHTV/:splat 301
+
+/vtts /vTTS/ 301
+/vtts/* /vTTS/:splat 301
 
 /lunarv /LunarV/ 301
 /lunarv/* /LunarV/:splat 301
@@ -34,6 +38,8 @@
 # Clean URLs for Policy and Terms documents
 /PHTV/privacy /PHTV/privacy.html 301
 /PHTV/terms /PHTV/terms.html 301
+/vTTS/privacy /vTTS/privacy.html 301
+/vTTS/terms /vTTS/terms.html 301
 /LunarV/privacy /LunarV/privacy.html 301
 /LunarV/terms /LunarV/terms.html 301
 /PadCodeAI/privacy /PadCodeAI/privacy.html 301
@@ -47,6 +53,7 @@
 
 # React SPA Rewrite - redirect all non-file subroutes to index.html for client-side routing
 /PHTV/* /PHTV/index.html 200
+/vTTS/* /vTTS/index.html 200
 /LunarV/* /LunarV/index.html 200
 /PadCodeAI/* /PadCodeAI/index.html 200
 /PadNotesAI/* /PadNotesAI/index.html 200
