@@ -145,7 +145,7 @@ export function ProductPage({ product, lang, onLanguageChange, t }: ProductPageP
               <ArrowRight size={16} />
             </a>
             {product.communityUrl && <a href={product.communityUrl} target="_blank" rel="noopener noreferrer">
-              {lang === "vi" ? "Fanpage vTTS" : "vTTS on Facebook"}<ExternalLink size={16} />
+              {lang === "vi" ? `Fanpage ${product.name}` : `${product.name} on Facebook`}<ExternalLink size={16} />
             </a>}
           </div>
 

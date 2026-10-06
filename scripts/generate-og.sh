@@ -14,11 +14,11 @@ tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT
 
 # slug|source image|pad colour (the product accent)
+# padcodeai.png is a designed card (Pad Code AI repo, AppStore artwork) and is not regenerated here.
 entries=(
   "home|assets/phtv-social-preview.webp|111827"
   "phtv|assets/phtv-social-preview.webp|d71f2a"
   "lunarv|LunarV/assets/lunarv-ipad.jpg|6655d9"
-  "padcodeai|PadCodeAI/assets/ipad-editor.png|3d5afe"
   "padnotesai|PadNotesAI/assets/ipad-editor.png|7c3aed"
   "mynasmanager|MyNASManager/assets/ipad-hero.png|0071e3"
   "lunarblock|LunarBlock/assets/lunarblock-hero.png|f59e0b"

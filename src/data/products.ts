@@ -8,9 +8,10 @@ import lunarvVision from '../../LunarV/assets/lunarv-vision.jpg';
 import lunarvReviewOne from '../../LunarV/assets/ui-review-1.png';
 import lunarvReviewTwo from '../../LunarV/assets/ui-review-2.png';
 import padCodeIcon from '../../PadCodeAI/assets/app-icon.png';
-import padCodeHero from '../../PadCodeAI/assets/ipad-editor.png';
-import padCodeTerminal from '../../PadCodeAI/assets/ipad-terminal.png';
-import padCodePhone from '../../PadCodeAI/assets/iphone-home.png';
+import padCodeHero from '../../PadCodeAI/assets/current/hero.webp';
+import padCodeIPad from '../../PadCodeAI/assets/current/ipad.webp';
+import padCodePhone from '../../PadCodeAI/assets/current/iphone.webp';
+import padCodeOverview from '../../PadCodeAI/assets/current/overview.webp';
 import padNotesIcon from '../../PadNotesAI/assets/app-icon.png';
 import padNotesHero from '../../PadNotesAI/assets/ipad-editor.png';
 import padNotesWorkspace from '../../PadNotesAI/assets/ipad-workspace.png';
@@ -277,46 +278,84 @@ export const products: Product[] = [
     icon: padCodeIcon,
     heroImage: padCodeHero,
     gallery: [
-      { src: padCodeHero, alt: { vi: 'Editor Pad Code AI trên iPad', en: 'Pad Code AI editor on iPad' } },
-      { src: padCodeTerminal, alt: { vi: 'Terminal trong Pad Code AI', en: 'Pad Code AI terminal' } },
-      { src: padCodePhone, alt: { vi: 'Pad Code AI trên iPhone', en: 'Pad Code AI on iPhone' } }
+      { src: padCodeIPad, alt: { vi: 'Editor, terminal và trợ lý AI trên iPad', en: 'Editor, terminal and AI assistant on iPad' } },
+      { src: padCodePhone, alt: { vi: 'Viết và chạy code trên iPhone', en: 'Write and run code on iPhone' } },
+      { src: padCodeOverview, alt: { vi: 'Chạy C, C++, Python, JavaScript, TypeScript, Ruby, PHP, Lua và SQL ngay trên máy', en: 'Run C, C++, Python, JavaScript, TypeScript, Ruby, PHP, Lua and SQL on device' } }
     ],
-    accent: '#3d5afe',
+    accent: '#a3162b',
     appStoreUrl: 'https://apps.apple.com/us/app/pad-code-ai-code-editor/id6774398897',
-    category: { vi: 'IDE cho thiết bị Apple', en: 'IDE for Apple devices' },
+    communityUrl: 'https://www.facebook.com/PadCodeAI',
+    category: { vi: 'IDE cho iPad và iPhone', en: 'IDE for iPad and iPhone' },
     title: {
-      vi: 'Viết và chạy code trên thiết bị Apple.',
-      en: 'Write and run code on your Apple devices.'
+      vi: 'Viết và chạy code thật trên iPad và iPhone.',
+      en: 'Write and run real code on iPad and iPhone.'
     },
-    subtitle: { vi: 'Editor, compiler offline, terminal và hỗ trợ AI.', en: 'Editor, offline compiler, terminal, and AI assistance.' },
+    subtitle: {
+      vi: 'Trình biên dịch thật chạy offline, terminal tương tác, Git và trợ lý AI.',
+      en: 'Real compilers that run offline, an interactive terminal, Git, and an AI assistant.'
+    },
     description: {
-      vi: 'Pad Code AI đưa editor, terminal, quản lý workspace và hỗ trợ Apple Intelligence vào một giao diện gọn cho iPhone, iPad, Mac và Apple Vision Pro.',
-      en: 'Pad Code AI combines an editor, terminal, workspace management, and Apple Intelligence support in a focused interface for iPhone, iPad, Mac, and Apple Vision Pro.'
+      vi: 'Pad Code AI biên dịch và chạy C, C++, Python, JavaScript, TypeScript, Ruby, PHP, Lua và SQL ngay trên thiết bị, không cần máy chủ hay kết nối mạng. Editor hỗ trợ 43 ngôn ngữ, terminal chờ bạn nhập liệu như trên máy tính, kèm Git và trợ lý AI.',
+      en: 'Pad Code AI compiles and runs C, C++, Python, JavaScript, TypeScript, Ruby, PHP, Lua, and SQL right on your device, with no server or internet connection. The editor supports 43 languages, the terminal waits for your input like a computer does, and Git and an AI assistant are built in.'
     },
     ctaLabel: { vi: 'Tải trên App Store', en: 'Download on App Store' },
-    platforms: { vi: 'iOS, iPadOS, macOS, visionOS', en: 'iOS, iPadOS, macOS, visionOS' },
-    operatingSystem: 'iOS, iPadOS, macOS, visionOS',
+    platforms: { vi: 'iOS, iPadOS', en: 'iOS, iPadOS' },
+    operatingSystem: 'iOS, iPadOS',
     appCategory: 'DeveloperApplication',
     facts: [
-      { label: { vi: 'Nền tảng', en: 'Platforms' }, value: { vi: 'iOS, iPadOS, macOS, visionOS', en: 'iOS, iPadOS, macOS, visionOS' } },
-      { label: { vi: 'Ngôn ngữ', en: 'Languages' }, value: { vi: '24+ ngôn ngữ', en: '24+ languages' } },
-      { label: { vi: 'Biên dịch', en: 'Execution' }, value: { vi: 'Trên thiết bị', en: 'On device' } },
+      { label: { vi: 'Nền tảng', en: 'Platforms' }, value: { vi: 'iPad, iPhone', en: 'iPad, iPhone' } },
+      { label: { vi: 'Chạy trên máy', en: 'Runs on device' }, value: { vi: '9 ngôn ngữ', en: '9 languages' } },
+      { label: { vi: 'Soạn thảo', en: 'Editing' }, value: { vi: '43 ngôn ngữ', en: '43 languages' } },
+      { label: { vi: 'Giao diện', en: 'Interface' }, value: { vi: '12 ngôn ngữ', en: '12 languages' } }
     ],
     features: [
       {
-        title: { vi: 'Local code runner', en: 'Local code runner' },
-        description: { vi: 'Chạy thử thuật toán và đoạn code ngay trên thiết bị khi cần làm nhanh.', en: 'Run algorithms and snippets directly on device when you need to move quickly.' }
+        title: { vi: 'Trình biên dịch thật, chạy offline', en: 'Real compilers, fully offline' },
+        description: {
+          vi: 'Clang cho C/C++, CPython, Ruby, PHP, Lua, TypeScript, runtime JavaScript kiểu Node.js và SQLite được tích hợp sẵn trong ứng dụng. Không máy chủ, không mô phỏng kết quả.',
+          en: 'Clang for C/C++, CPython, Ruby, PHP, Lua, TypeScript, a Node.js-style JavaScript runtime, and SQLite ship inside the app. No server, and no simulated output.'
+        }
       },
       {
-        title: { vi: 'Terminal tích hợp', en: 'Integrated terminal' },
-        description: { vi: 'Đặt kết quả chạy, lệnh và editor trong cùng một workspace.', en: 'Keep command output, terminal work, and the editor in one workspace.' }
+        title: { vi: 'Terminal tương tác', en: 'Interactive terminal' },
+        description: {
+          vi: 'input(), scanf, cin hay io.read đều chờ bạn nhập như trên máy tính; ^D để kết thúc nhập. Truyền tham số, đọc ghi tệp trong dự án và dừng chương trình ngay lập tức.',
+          en: 'input(), scanf, cin, and io.read wait for you just like on a computer, and ^D ends input. Pass arguments, read and write project files, and stop any program instantly.'
+        }
       },
       {
-        title: { vi: 'Git và workspace', en: 'Git and workspaces' },
-        description: { vi: 'Điều hướng tệp, quản lý dự án và làm việc với mã nguồn gọn hơn trên iPhone, iPad, Mac và Apple Vision Pro.', en: 'Navigate files, manage projects, and work with source code more cleanly across iPhone, iPad, Mac, and Apple Vision Pro.' }
+        title: { vi: 'Báo lỗi đúng dòng', en: 'Errors on the exact line' },
+        description: {
+          vi: 'Lỗi biên dịch và exception được đánh dấu ngay tại dòng gây lỗi trong editor.',
+          en: 'Compiler errors and exceptions are marked on the failing line in the editor.'
+        }
+      },
+      {
+        title: { vi: 'Editor cho cảm ứng và bàn phím', en: 'An editor for touch and keyboard' },
+        description: {
+          vi: 'Tô màu 43 ngôn ngữ, thanh phím lập trình, gập code, minimap, outline, tìm và thay trong toàn dự án, chia đôi màn hình, cùng menu bar và phím tắt đầy đủ.',
+          en: 'Highlighting for 43 languages, a coding keyboard bar, folding, a minimap, outlines, project-wide find and replace, split view, and a full menu bar with keyboard shortcuts.'
+        }
+      },
+      {
+        title: { vi: 'Git và dự án', en: 'Git and projects' },
+        description: {
+          vi: 'Mở thư mục từ ứng dụng Tệp, clone từ GitHub, xem thay đổi, commit, push, stash và xuất dự án thành ZIP.',
+          en: 'Open folders from the Files app, clone from GitHub, review changes, commit, push, stash, and export projects as ZIP.'
+        }
+      },
+      {
+        title: { vi: 'Trợ lý AI trong tầm kiểm soát', en: 'An AI assistant you control' },
+        description: {
+          vi: 'Giải thích, refactor, viết test và sửa lỗi bằng một chạm. Thay đổi được hiển thị dạng diff để xem trước khi áp dụng. Dùng model trên máy hoặc API key của riêng bạn; không gửi gì khi bạn chưa đồng ý.',
+          en: 'Explain, refactor, write tests, and fix bugs in one tap. Changes appear as a diff to review before applying. Use the on-device model or your own API key; nothing is sent without your permission.'
+        }
       }
     ],
-    support: { vi: 'Gửi góp ý về compiler, editor hoặc workflow qua email.', en: 'Send feedback about the compiler, editor, or workflow by email.' }
+    support: {
+      vi: 'Gửi góp ý, báo lỗi hoặc đề xuất ngôn ngữ mới qua email hoặc fanpage Pad Code AI.',
+      en: 'Send feedback, bug reports, or language requests by email or on the Pad Code AI Facebook page.'
+    }
   },
   {
     slug: 'padnotesai',
