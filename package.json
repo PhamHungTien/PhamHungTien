@@ -24,7 +24,8 @@
     "type-check:phtv": "cd PHTV && npx tsc --noEmit",
     "type-check:all": "npm run type-check && npm run type-check:phtv",
     "install:deps": "npm install && cd PHTV && npm install",
-    "clean": "cd PHTV && rm -rf dist node_modules && npm install"
+    "clean": "cd PHTV && rm -rf dist node_modules && npm install",
+    "sync:appstore": "node scripts/sync-appstore.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.562.0",

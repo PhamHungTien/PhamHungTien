@@ -32,7 +32,7 @@ const DICTIONARY = {
     "home.download_subtitle": "Chọn theo kiến trúc máy: Apple Silicon cho các Mac dùng chip Apple, Intel cho các máy Mac đời cũ hơn.",
     "home.download_silicon_note": "Phù hợp cho hầu hết máy Mac hiện nay.",
     "home.download_intel_note": "Dành cho các máy Mac chạy Intel.",
-    "home.download_universal": "Tải xuống {version}",
+    "home.download_universal": "Tải xuống",
     "home.install_btn": "Xem cách cài đặt",
     "home.discuss_btn": "Thảo luận hoặc báo lỗi",
     "home.brew_output": "==> Downloading PHTV...\n==> Installing Cask phtv\n🍺  phtv was successfully installed!",
@@ -123,7 +123,7 @@ const DICTIONARY = {
     "home.download_subtitle": "Select by architecture: Apple Silicon for Macs using Apple chips, Intel for older Mac systems.",
     "home.download_silicon_note": "Recommended for most current Macs.",
     "home.download_intel_note": "For Macs running on Intel processors.",
-    "home.download_universal": "Download {version}",
+    "home.download_universal": "Download",
     "home.install_btn": "Installation guide",
     "home.discuss_btn": "Discuss or report bugs",
     "home.brew_output": "==> Downloading PHTV...\n==> Installing Cask phtv\n🍺  phtv was successfully installed!",
@@ -192,8 +192,7 @@ export function useI18n() {
     const cached = localStorage.getItem('preferred_lang');
     if (cached === 'vi' || cached === 'en') return cached as Lang;
     
-    const browserLang = navigator.language || '';
-    return browserLang.toLowerCase().startsWith('vi') ? 'vi' : 'en';
+    return 'vi';
   });
 
   useEffect(() => {

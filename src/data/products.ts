@@ -1,3 +1,4 @@
+import { storeArtwork } from './storeArtwork';
 import type { Product, ProductSlug } from '../types';
 
 import phtvIcon from '../../assets/phtv-icon.webp';
@@ -447,8 +448,8 @@ export const products: Product[] = [
         description: { vi: 'Duyệt, tải lên, tải xuống và tạo link chia sẻ từ iPhone, iPad, Mac hoặc Apple Vision Pro.', en: 'Browse, upload, download, and create share links from iPhone, iPad, Mac, or Apple Vision Pro.' }
       },
       {
-        title: { vi: 'Terminal SSH an toàn', en: 'Secure SSH terminal' },
-        description: { vi: 'Chạy tác vụ quản trị nhanh khi cần xử lý từ xa.', en: 'Run quick administration tasks when you need remote control.' }
+        title: { vi: 'Quản lý SSH & terminal mô phỏng', en: 'SSH management & terminal simulator' },
+        description: { vi: 'Bật/tắt dịch vụ SSH, thay đổi cổng và chạy các lệnh quản trị cơ bản như ls, df, top, uptime qua terminal mô phỏng.', en: 'Toggle SSH services, change ports, and execute basic commands such as ls, df, top, and uptime through the terminal simulator.' }
       }
     ],
     support: { vi: 'Gửi email nếu bạn cần hỗ trợ kết nối DSM hoặc SSH.', en: 'Email me if you need help with DSM or SSH connections.' }
@@ -569,6 +570,26 @@ export const products: Product[] = [
     support: { vi: 'Có góp ý gameplay hoặc điều khiển? Gửi mình qua email.', en: 'Have gameplay or control feedback? Send it by email.' }
   }
 ];
+
+// Highlights checked against Apple's release notes on 10 October 2026.
+const releaseHighlights: Partial<Record<ProductSlug, Product['features'][number]>> = {
+  vtts: { title: { vi: 'Sách nói M4B, widget & Siri', en: 'M4B audiobooks, widgets & Siri' }, description: { vi: 'Xuất cả sách thành M4B có chương, dùng nhạc nền của bạn, điều khiển từ widget và tiếp tục nghe bằng Siri.', en: 'Export a whole book as a chaptered M4B audiobook, add your own background music, and continue listening with widgets and Siri.' } },
+  padnotesai: { title: { vi: 'Khôi phục ghi âm & bảo vệ ghi chú', en: 'Audio recovery & safer notes' }, description: { vi: 'Khôi phục bản ghi bị gián đoạn, lưu khóa Gemini trong Keychain và xuất PDF từng trang với bộ nhớ được tối ưu.', en: 'Recover interrupted recordings, keep Gemini keys in Keychain, and export PDFs page by page with optimized memory use.' } },
+  padcodeai: { title: { vi: 'Cấu hình chạy trực quan', en: 'Visual Run Configuration' }, description: { vi: 'Chọn file khởi chạy, tham số, biến môi trường, thư mục làm việc và thời gian chờ; mở đúng dòng lỗi từ chẩn đoán.', en: 'Choose entry files, arguments, environment variables, working directories, and timeouts; jump to the exact error location from diagnostics.' } },
+  lunarblock: { title: { vi: 'Ba chế độ, một thử thách mới', en: 'Three ways to chase your best' }, description: { vi: 'Marathon sinh tồn, Sprint 40 hàng và Ultra 120 giây. Điều khiển bằng cảm ứng, bàn phím hoặc tay cầm; theo dõi kỷ lục qua Game Center.', en: 'Survive in Marathon, clear 40 lines in Sprint, or chase a score in 120-second Ultra. Play with touch, keyboard, or a controller, with Game Center leaderboards.' } },
+  lunarv: { title: { vi: 'Lịch âm được cập nhật', en: 'Updated lunar calendar' }, description: { vi: 'Tra cứu lịch âm dương, chuyển đổi ngày nhanh chóng và xem widget ngay trên màn hình chính.', en: 'Browse the lunar and solar calendar, convert dates quickly, and check widgets on your Home Screen.' } },
+  mynasmanager: { title: { vi: 'Bảy ngôn ngữ & chế độ demo', en: 'Seven languages & demo mode' }, description: { vi: 'Hỗ trợ Việt, Anh, Đức, Tây Ban Nha, Pháp, Nhật và Trung giản thể. Trải nghiệm giao diện bằng dữ liệu mô phỏng trước khi kết nối NAS.', en: 'Supports Vietnamese, English, German, Spanish, French, Japanese, and Simplified Chinese. Explore the interface with simulated data before connecting a NAS.' } }
+};
+for (const product of products) {
+  const artwork = storeArtwork[product.slug];
+  if (artwork) {
+    product.heroImage = artwork.heroImage;
+    product.gallery = artwork.gallery;
+    delete product.localizedHeroImages;
+  }
+  const highlight = releaseHighlights[product.slug];
+  if (highlight) product.features.unshift(highlight);
+}
 
 export const productBySlug = new Map<ProductSlug, Product>(
   products.map((product) => [product.slug, product])

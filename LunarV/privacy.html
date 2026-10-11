@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -104,6 +104,7 @@
     </style>
     <link rel="stylesheet" href="/assets/legal.css">
     <script src="/assets/theme.js"></script>
+<link rel="stylesheet" href="/assets/liquid-glass.css">
 </head>
 <body>
     <div class="container">
@@ -117,12 +118,12 @@
         </nav>
 
         <div class="lang-toggle">
-            <button class="active" onclick="switchLang('vi')">Tiếng Việt</button>
-            <button onclick="switchLang('en')">English</button>
+            <button onclick="switchLang('vi')">Tiếng Việt</button>
+            <button class="active" onclick="switchLang('en')">English</button>
         </div>
 
         <!-- VIETNAMESE -->
-        <div id="vi" class="section active">
+        <div id="vi" class="section">
             <h1>Chính Sách Quyền Riêng Tư</h1>
             <p>Cập nhật lần cuối: 26 tháng 5, 2026</p>
 
@@ -145,7 +146,7 @@
         </div>
 
         <!-- ENGLISH -->
-        <div id="en" class="section">
+        <div id="en" class="section active">
             <h1>Privacy Policy</h1>
             <p>Last updated: May 26, 2026</p>
 
@@ -181,11 +182,11 @@
                 button.setAttribute('aria-pressed', String(selected));
             });
             document.documentElement.lang = lang;
-            try { localStorage.setItem('preferred_lang', lang); } catch {}
+            try { localStorage.setItem('portfolio_preferred_lang', lang); } catch {}
         }
         let initialLanguage = document.documentElement.lang === 'vi' ? 'vi' : 'en';
         try {
-            const saved = localStorage.getItem('preferred_lang');
+            const saved = localStorage.getItem('portfolio_preferred_lang');
             if (saved === 'vi' || saved === 'en') initialLanguage = saved;
         } catch {}
         switchLang(initialLanguage);

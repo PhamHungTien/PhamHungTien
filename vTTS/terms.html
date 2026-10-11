@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -106,6 +106,7 @@
     </style>
     <link rel="stylesheet" href="/assets/legal.css">
     <script src="/assets/theme.js"></script>
+<link rel="stylesheet" href="/assets/liquid-glass.css">
 </head>
 <body>
     <div class="container">
@@ -119,8 +120,8 @@
         </nav>
 
         <div class="lang-toggle">
-            <button class="active" onclick="switchLang('vi')">Tiếng Việt</button>
-            <button onclick="switchLang('en')">English</button>
+            <button onclick="switchLang('vi')">Tiếng Việt</button>
+            <button class="active" onclick="switchLang('en')">English</button>
         </div>
 
         <!-- TIẾNG VIỆT -->
@@ -210,11 +211,11 @@
             });
             document.documentElement.lang = lang;
             document.querySelectorAll('[data-vi][data-en]').forEach(el => { el.textContent = el.dataset[lang]; });
-            try { localStorage.setItem('preferred_lang', lang); } catch {}
+            try { localStorage.setItem('portfolio_preferred_lang', lang); } catch {}
         }
         let initialLanguage = document.documentElement.lang === 'vi' ? 'vi' : 'en';
         try {
-            const saved = localStorage.getItem('preferred_lang');
+            const saved = localStorage.getItem('portfolio_preferred_lang');
             if (saved === 'vi' || saved === 'en') initialLanguage = saved;
         } catch {}
         switchLang(initialLanguage);

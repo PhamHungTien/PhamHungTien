@@ -2,20 +2,20 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { Lang } from '../types';
 import { translate } from '../i18n';
 
-const STORAGE_KEY = 'preferred_lang';
+const STORAGE_KEY = 'portfolio_preferred_lang';
 
 /**
  * The language the prerenderer emits. The first client render must match it or
  * hydration mismatches; the real preference is applied in an effect afterwards.
  */
-export const SSR_LANG: Lang = 'vi';
+export const SSR_LANG: Lang = 'en';
 
 export function detectLanguage(): Lang {
   let stored: string | null = null;
   try { stored = localStorage.getItem(STORAGE_KEY); } catch { /* Storage can be blocked by the browser. */ }
   if (stored === 'vi' || stored === 'en') return stored;
 
-  return navigator.language?.toLowerCase().startsWith('vi') ? 'vi' : 'en';
+  return 'en';
 }
 
 export function useLanguage(initialLang: Lang = SSR_LANG) {

@@ -1,0 +1,344 @@
+{
+  "source": "Apple App Store, US / en-US",
+  "checkedAt": "2026-10-10",
+  "apps": {
+    "vtts": {
+      "hero": {
+        "path": "vTTS/assets/appstore/header-1.jpg",
+        "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/ECBGLXGv-F5_81Biq2Upfg/1440x617bb.jpg",
+        "width": 1440,
+        "height": 617,
+        "kind": "header"
+      },
+      "gallery": [
+        {
+          "path": "vTTS/assets/appstore/ipad-1.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/01/60/85/01608505-fcce-6158-f2e6-f2984346f092/01-book.png/1080x1440bb.jpg",
+          "width": 1080,
+          "height": 1440,
+          "kind": "ipad"
+        },
+        {
+          "path": "vTTS/assets/appstore/ipad-2.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/a8/df/aa/a8dfaa4d-5e7c-f79f-2074-d3b2a7ec4133/02-library.png/1080x1440bb.jpg",
+          "width": 1080,
+          "height": 1440,
+          "kind": "ipad"
+        },
+        {
+          "path": "vTTS/assets/appstore/ipad-3.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/86/a9/68/86a96825-6452-7573-5c27-cfafca454bd8/03-text.png/1080x1440bb.jpg",
+          "width": 1080,
+          "height": 1440,
+          "kind": "ipad"
+        },
+        {
+          "path": "vTTS/assets/appstore/iphone-1.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/47/c1/32/47c132d9-46fe-b421-66bc-85d76f8d0cf9/01-book.png/666x1440bb.jpg",
+          "width": 666,
+          "height": 1440,
+          "kind": "iphone"
+        },
+        {
+          "path": "vTTS/assets/appstore/iphone-2.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/fb/94/92/fb949200-f863-ba04-8f9d-679d79d354bc/02-library.png/666x1440bb.jpg",
+          "width": 666,
+          "height": 1440,
+          "kind": "iphone"
+        },
+        {
+          "path": "vTTS/assets/appstore/iphone-3.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/1f/24/cd/1f24cd1d-7524-5b98-e702-edefe21886ef/03-text.png/666x1440bb.jpg",
+          "width": 666,
+          "height": 1440,
+          "kind": "iphone"
+        },
+        {
+          "path": "vTTS/assets/appstore/mac-1.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/ac/5b/82/ac5b82b0-cd93-1b83-449e-038a23e26648/01-book.png/1440x900bb.jpg",
+          "width": 1440,
+          "height": 900,
+          "kind": "mac"
+        }
+      ],
+      "headerAvailable": true
+    },
+    "padcodeai": {
+      "hero": {
+        "path": "PadCodeAI/assets/appstore/ipad-1.jpg",
+        "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/82/89/1f/82891f17-1605-e399-3cef-58304cac1284/Simulator_Screenshot_-_iPad_Pro_13-inch__U0028M5_U0029_-_2026-05-29_at_07.58.23.png/1440x1080bb.jpg",
+        "width": 1440,
+        "height": 1080,
+        "kind": "ipad"
+      },
+      "gallery": [
+        {
+          "path": "PadCodeAI/assets/appstore/ipad-1.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/82/89/1f/82891f17-1605-e399-3cef-58304cac1284/Simulator_Screenshot_-_iPad_Pro_13-inch__U0028M5_U0029_-_2026-05-29_at_07.58.23.png/1440x1080bb.jpg",
+          "width": 1440,
+          "height": 1080,
+          "kind": "ipad"
+        },
+        {
+          "path": "PadCodeAI/assets/appstore/ipad-2.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/61/5c/39/615c394b-03d3-0c02-75e4-ef5380e95dcd/Simulator_Screenshot_-_iPad_Pro_13-inch__U0028M5_U0029_-_2026-05-29_at_07.57.38.png/1440x1080bb.jpg",
+          "width": 1440,
+          "height": 1080,
+          "kind": "ipad"
+        },
+        {
+          "path": "PadCodeAI/assets/appstore/iphone-1.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/c7/48/db/c748dbb4-6904-63b1-461a-ca7f86582294/Simulator_Screenshot_-_iPhone_14_Plus_-_2026-05-29_at_07.56.07.png/666x1440bb.jpg",
+          "width": 666,
+          "height": 1440,
+          "kind": "iphone"
+        },
+        {
+          "path": "PadCodeAI/assets/appstore/iphone-2.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/8a/98/0f/8a980fda-5403-0203-ba50-6aa0e4737331/Simulator_Screenshot_-_iPhone_14_Plus_-_2026-05-29_at_07.56.04.png/666x1440bb.jpg",
+          "width": 666,
+          "height": 1440,
+          "kind": "iphone"
+        },
+        {
+          "path": "PadCodeAI/assets/appstore/iphone-3.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/60/dc/36/60dc3608-2807-acd2-2323-13ba74989353/Simulator_Screenshot_-_iPhone_14_Plus_-_2026-05-29_at_07.56.26.png/666x1440bb.jpg",
+          "width": 666,
+          "height": 1440,
+          "kind": "iphone"
+        }
+      ],
+      "headerAvailable": false
+    },
+    "padnotesai": {
+      "hero": {
+        "path": "PadNotesAI/assets/appstore/ipad-1.jpg",
+        "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/ec/d0/9e/ecd09e9f-d95d-39ec-54b9-eaff010d8b2d/01-device-bottom.png/1080x1440bb.jpg",
+        "width": 1080,
+        "height": 1440,
+        "kind": "ipad"
+      },
+      "gallery": [
+        {
+          "path": "PadNotesAI/assets/appstore/ipad-1.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/ec/d0/9e/ecd09e9f-d95d-39ec-54b9-eaff010d8b2d/01-device-bottom.png/1080x1440bb.jpg",
+          "width": 1080,
+          "height": 1440,
+          "kind": "ipad"
+        },
+        {
+          "path": "PadNotesAI/assets/appstore/ipad-2.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/a6/07/3a/a6073a89-f894-1690-8cb7-d25e5872e193/02-hero.png/1080x1440bb.jpg",
+          "width": 1080,
+          "height": 1440,
+          "kind": "ipad"
+        },
+        {
+          "path": "PadNotesAI/assets/appstore/iphone-1.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/de/aa/03/deaa03d8-2e00-193e-aea5-fda80a382948/02-hero.png/666x1440bb.jpg",
+          "width": 666,
+          "height": 1440,
+          "kind": "iphone"
+        },
+        {
+          "path": "PadNotesAI/assets/appstore/iphone-2.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/78/1b/88/781b881e-269e-4ae7-431e-0ff39d7f73b5/03-device-top.png/666x1440bb.jpg",
+          "width": 666,
+          "height": 1440,
+          "kind": "iphone"
+        },
+        {
+          "path": "PadNotesAI/assets/appstore/iphone-3.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/17/55/eb/1755ebfb-d855-82ed-b0ec-2a2bec6eb40c/01-device-bottom.png/666x1440bb.jpg",
+          "width": 666,
+          "height": 1440,
+          "kind": "iphone"
+        },
+        {
+          "path": "PadNotesAI/assets/appstore/mac-1.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/93/ba/55/93ba557c-c67b-f0d6-a1bd-630e04280844/CleanShot_2026-07-06_at_21.39.40@2x.png/1280x800bb.jpg",
+          "width": 1280,
+          "height": 800,
+          "kind": "mac"
+        }
+      ],
+      "headerAvailable": false
+    },
+    "mynasmanager": {
+      "hero": {
+        "path": "MyNASManager/assets/appstore/ipad-1.jpg",
+        "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/79/1c/57/791c57fa-ab89-3c14-43b1-d4dc3c9c097d/01-device-bottom.png/1080x1440bb.jpg",
+        "width": 1080,
+        "height": 1440,
+        "kind": "ipad"
+      },
+      "gallery": [
+        {
+          "path": "MyNASManager/assets/appstore/ipad-1.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/79/1c/57/791c57fa-ab89-3c14-43b1-d4dc3c9c097d/01-device-bottom.png/1080x1440bb.jpg",
+          "width": 1080,
+          "height": 1440,
+          "kind": "ipad"
+        },
+        {
+          "path": "MyNASManager/assets/appstore/ipad-2.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/4e/95/f5/4e95f518-9299-3b20-48d1-bb1f8067f9cb/05-hero.png/1080x1440bb.jpg",
+          "width": 1080,
+          "height": 1440,
+          "kind": "ipad"
+        },
+        {
+          "path": "MyNASManager/assets/appstore/ipad-3.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/88/50/2a/88502a70-2186-0184-2853-ee9d038b1d69/02-hero.png/1080x1440bb.jpg",
+          "width": 1080,
+          "height": 1440,
+          "kind": "ipad"
+        },
+        {
+          "path": "MyNASManager/assets/appstore/iphone-1.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/71/f6/25/71f62597-4bef-6bd1-760a-3bee00275d9f/01-device-bottom.png/666x1440bb.jpg",
+          "width": 666,
+          "height": 1440,
+          "kind": "iphone"
+        },
+        {
+          "path": "MyNASManager/assets/appstore/iphone-2.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/71/41/97/71419761-a2dc-9b53-dbd0-891f081e066e/02-hero.png/666x1440bb.jpg",
+          "width": 666,
+          "height": 1440,
+          "kind": "iphone"
+        },
+        {
+          "path": "MyNASManager/assets/appstore/iphone-3.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/09/cd/61/09cd6134-df1f-43cc-5bfd-deb6629d1287/03-device-top.png/666x1440bb.jpg",
+          "width": 666,
+          "height": 1440,
+          "kind": "iphone"
+        }
+      ],
+      "headerAvailable": false
+    },
+    "lunarv": {
+      "hero": {
+        "path": "LunarV/assets/appstore/ipad-1.jpg",
+        "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/69/a2/3a/69a23a2d-9cab-5cf0-ef65-4a5dfb9b0ca9/Simulator_Screenshot_-_iPad_Pro_13-inch__U0028M5_U0029_-_2026-05-26_at_15.26.46.png/1440x1080bb.jpg",
+        "width": 1440,
+        "height": 1080,
+        "kind": "ipad"
+      },
+      "gallery": [
+        {
+          "path": "LunarV/assets/appstore/ipad-1.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/69/a2/3a/69a23a2d-9cab-5cf0-ef65-4a5dfb9b0ca9/Simulator_Screenshot_-_iPad_Pro_13-inch__U0028M5_U0029_-_2026-05-26_at_15.26.46.png/1440x1080bb.jpg",
+          "width": 1440,
+          "height": 1080,
+          "kind": "ipad"
+        },
+        {
+          "path": "LunarV/assets/appstore/ipad-2.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/22/97/6d/22976d50-ca95-eea5-88e7-4a7729c4ae25/Simulator_Screenshot_-_iPad_Pro_13-inch__U0028M5_U0029_-_2026-05-27_at_21.28.37.png/1440x1080bb.jpg",
+          "width": 1440,
+          "height": 1080,
+          "kind": "ipad"
+        },
+        {
+          "path": "LunarV/assets/appstore/ipad-3.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/4b/cc/ed/4bcced95-31d0-a7e7-ef32-5bf195b6143f/Simulator_Screenshot_-_iPad_Pro_13-inch__U0028M5_U0029_-_2026-05-27_at_21.28.42.png/1440x1080bb.jpg",
+          "width": 1440,
+          "height": 1080,
+          "kind": "ipad"
+        },
+        {
+          "path": "LunarV/assets/appstore/iphone-1.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/87/b1/d7/87b1d7c9-3354-bf63-df9c-a39aad76fa39/ios_1_1.png/665x1440bb.jpg",
+          "width": 665,
+          "height": 1440,
+          "kind": "iphone"
+        },
+        {
+          "path": "LunarV/assets/appstore/iphone-2.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/c8/10/7e/c8107e7f-b79d-edf9-dd2e-b17ca9969dc7/ios_1_2.png/665x1440bb.jpg",
+          "width": 665,
+          "height": 1440,
+          "kind": "iphone"
+        },
+        {
+          "path": "LunarV/assets/appstore/iphone-3.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/6f/ec/31/6fec3131-856b-7ce8-2729-b2828467847c/ios_1_3.png/665x1440bb.jpg",
+          "width": 665,
+          "height": 1440,
+          "kind": "iphone"
+        },
+        {
+          "path": "LunarV/assets/appstore/mac-1.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/a0/1f/0f/a01f0fd8-287a-ad98-8441-e23130bc2b10/CleanShot_2026-05-26_at_15.36.15@2x.png/1440x900bb.jpg",
+          "width": 1440,
+          "height": 900,
+          "kind": "mac"
+        }
+      ],
+      "headerAvailable": false
+    },
+    "lunarblock": {
+      "hero": {
+        "path": "LunarBlock/assets/appstore/ipad-1.jpg",
+        "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/ab/9a/c2/ab9ac25f-c5fe-658f-7cac-22dfe7c1310c/Screenshot_1.png/1080x1440bb.jpg",
+        "width": 1080,
+        "height": 1440,
+        "kind": "ipad"
+      },
+      "gallery": [
+        {
+          "path": "LunarBlock/assets/appstore/ipad-1.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/ab/9a/c2/ab9ac25f-c5fe-658f-7cac-22dfe7c1310c/Screenshot_1.png/1080x1440bb.jpg",
+          "width": 1080,
+          "height": 1440,
+          "kind": "ipad"
+        },
+        {
+          "path": "LunarBlock/assets/appstore/ipad-2.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/ec/4c/00/ec4c000c-29e3-6fc5-6350-61895efdf724/Screenshot_2.png/1080x1440bb.jpg",
+          "width": 1080,
+          "height": 1440,
+          "kind": "ipad"
+        },
+        {
+          "path": "LunarBlock/assets/appstore/ipad-3.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/a9/8c/43/a98c4300-4c6a-bdad-f39a-2606d51fa3a8/Screenshot_3.png/1080x1440bb.jpg",
+          "width": 1080,
+          "height": 1440,
+          "kind": "ipad"
+        },
+        {
+          "path": "LunarBlock/assets/appstore/iphone-1.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/a1/38/83/a1388355-1d7b-715b-6092-cd52ac601e07/Screenshot_1.png/665x1440bb.jpg",
+          "width": 665,
+          "height": 1440,
+          "kind": "iphone"
+        },
+        {
+          "path": "LunarBlock/assets/appstore/iphone-2.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/7d/e7/5a/7de75a99-561b-6bf7-473d-028b2fd930d4/Screenshot_2.png/665x1440bb.jpg",
+          "width": 665,
+          "height": 1440,
+          "kind": "iphone"
+        },
+        {
+          "path": "LunarBlock/assets/appstore/iphone-3.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/97/35/8f/97358f36-c839-88a5-5087-7f63a0c5fb93/Screenshot_3.png/665x1440bb.jpg",
+          "width": 665,
+          "height": 1440,
+          "kind": "iphone"
+        },
+        {
+          "path": "LunarBlock/assets/appstore/mac-1.jpg",
+          "sourceUrl": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/ba/d1/e1/bad1e15c-80a5-62dd-2bf7-275967b63800/Screenshot_1.png/1440x900bb.jpg",
+          "width": 1440,
+          "height": 900,
+          "kind": "mac"
+        }
+      ],
+      "headerAvailable": false
+    }
+  }
+}

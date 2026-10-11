@@ -1,0 +1,132 @@
+/* One shared web interpretation of Apple's Liquid Glass control layer.
+   Content surfaces stay quiet; blur is reserved for floating controls. */
+:root {
+  --glass-page: #f5f7fa;
+  --glass-ink: #15202c;
+  --glass-muted: #586675;
+  --glass-tint: rgba(255,255,255,.76);
+  --glass-solid: #f8fafc;
+  --glass-content: rgba(255,255,255,.9);
+  --glass-edge: rgba(255,255,255,.94);
+  --glass-line: rgba(67,89,111,.16);
+  --glass-highlight: rgba(255,255,255,.82);
+  --glass-shadow: 0 10px 34px rgba(31,54,78,.09), inset 0 1px 0 var(--glass-edge), inset 0 -1px 0 rgba(62,88,115,.06);
+  --glass-radius: 24px;
+  --glass-pill: 999px;
+  --glass-ease: cubic-bezier(.22,1,.36,1);
+  --glass-ambient-a: rgba(111,179,235,.16);
+  --glass-ambient-b: rgba(115,209,177,.13);
+}
+html[data-theme="dark"] {
+  --glass-page: #0c1118;
+  --glass-ink: #edf3fa;
+  --glass-muted: #a9b7c7;
+  --glass-tint: rgba(28,38,51,.8);
+  --glass-solid: #1a2533;
+  --glass-content: rgba(22,31,43,.94);
+  --glass-edge: rgba(231,244,255,.22);
+  --glass-line: rgba(200,222,247,.17);
+  --glass-highlight: rgba(207,232,255,.1);
+  --glass-shadow: 0 12px 40px rgba(0,0,0,.22), inset 0 1px 0 var(--glass-edge), inset 0 -1px 0 rgba(0,0,0,.22);
+  --glass-ambient-a: rgba(58,118,190,.17);
+  --glass-ambient-b: rgba(38,130,112,.12);
+}
+html body {
+  background: radial-gradient(ellipse at 10% 0%,var(--glass-ambient-a),transparent 48%), radial-gradient(ellipse at 95% 25%,var(--glass-ambient-b),transparent 48%),var(--glass-page);
+  color: var(--glass-ink);
+}
+html[data-theme] body { background-color: var(--glass-page); }
+html .site-shell, html[data-theme] .phtv-page {
+  --bg: var(--glass-page); --text: var(--glass-ink); --muted: var(--glass-muted);
+  --surface: var(--glass-solid); --surface-muted: var(--glass-content); --line: var(--glass-line);
+  --phtv-background: var(--glass-page); --phtv-text: var(--glass-ink); --phtv-muted: var(--glass-muted);
+  --phtv-surface: var(--glass-solid); --phtv-soft: var(--glass-content); --phtv-line: var(--glass-line);
+  background: transparent !important;
+}
+html .collection-hero { background: transparent; }
+html .site-header {
+  top: 12px; margin: 12px 20px 0; min-height: 68px;
+  padding-inline: max(16px,calc(var(--gutter) - 20px));
+  border: 1px solid var(--glass-edge); border-radius: var(--glass-radius);
+}
+html .site-header, html .mobile-navigation, html .donate-dialog,
+html .app-search, html .language-switch, html .platform-filters,
+html .nav-links, html .lang-toggle {
+  background: linear-gradient(140deg,var(--glass-highlight),transparent 45%),var(--glass-tint);
+  border-color: var(--glass-line); box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(22px) saturate(145%); -webkit-backdrop-filter: blur(22px) saturate(145%);
+}
+html .language-switch, html .lang-toggle, html .platform-filters { border-radius: var(--glass-pill); }
+html .platform-filters { padding: 5px; border: 1px solid var(--glass-line); gap: 3px; }
+html .platform-filters button { background: transparent; border-radius: var(--glass-pill); padding-inline: 14px; }
+html .platform-filters button[aria-pressed="true"], html .language-switch button.is-active, html .lang-toggle button.active {
+  background: var(--glass-ink); color: var(--glass-page); box-shadow: 0 2px 8px #0002;
+}
+html .language-switch button { border-radius: var(--glass-pill); }
+html .app-search { border-radius: var(--glass-pill); padding-inline: 18px; }
+html .button, html .btn, html .icon-button, html .mobile-menu-toggle,
+html .shared-theme-toggle, html .donate-dialog__close { border-radius: var(--glass-pill); }
+html .button--secondary, html .icon-button, html .mobile-menu-toggle, html .btn-secondary,
+html .shared-theme-toggle {
+  background: linear-gradient(135deg,var(--glass-highlight),transparent 55%),var(--glass-tint);
+  border: 1px solid var(--glass-line); box-shadow: var(--glass-shadow); color: var(--glass-ink);
+}
+html .button--primary, html .btn-primary {
+  background: linear-gradient(160deg,rgba(255,255,255,.14),transparent),var(--glass-ink);
+  color: var(--glass-page); border-color: transparent; box-shadow: 0 5px 18px #0002,inset 0 1px 0 #ffffff38;
+}
+html .product-row, html .mosaic-tile, html .contact-card, html .legal-contact-item,
+html .card, html .install-panel {
+  background: var(--glass-content); border: 1px solid var(--glass-line);
+  border-radius: var(--glass-radius); box-shadow: 0 3px 16px #00000005,inset 0 1px 0 var(--glass-edge);
+}
+html .install-panel { padding: 26px; }
+html .mosaic-tile { border-radius: 26px; }
+html .contact-card, html .legal-contact-item { border-radius: 18px; }
+html .detail-hero__media, html .product-video-card { border-radius: var(--glass-radius); border-color: var(--glass-line); box-shadow: var(--glass-shadow); }
+html .detail-hero__media { background: var(--glass-content); }
+html .donate-dialog { border-radius: 30px; color: var(--glass-ink); --donate-text: var(--glass-ink); --donate-muted: var(--glass-muted); }
+html .mobile-navigation { border-radius: 20px; }
+html .nav-links { border: 1px solid var(--glass-line); padding: 6px; border-radius: var(--glass-pill); }
+html .nav-links a { border-radius: var(--glass-pill); }
+html .legal-contact-panel { padding-top: 28px; border-color: var(--glass-line); }
+html .container > .section { padding: clamp(20px,4vw,36px); background: var(--glass-content); border: 1px solid var(--glass-line); border-radius: var(--glass-radius); }
+/* PHTV has its own Tailwind UI; these adapters use the same material tokens. */
+html[data-theme] .phtv-page nav.phtv-navbar.fixed { background: transparent; border: 0; padding: 12px 20px !important; backdrop-filter: none; -webkit-backdrop-filter: none; }
+html[data-theme] .phtv-page nav.phtv-navbar.fixed > .phtv-navbar__inner {
+  border: 1px solid var(--glass-line) !important; border-radius: var(--glass-radius) !important;
+  background: linear-gradient(140deg,var(--glass-highlight),transparent 45%),var(--glass-tint) !important;
+  box-shadow: var(--glass-shadow) !important; backdrop-filter: blur(22px) saturate(145%); -webkit-backdrop-filter: blur(22px) saturate(145%);
+}
+html[data-theme] .phtv-page .glass-card, html[data-theme] .phtv-page .glass-panel,
+html[data-theme] .phtv-page .download-choice {
+  background: var(--glass-content) !important; border: 1px solid var(--glass-line) !important;
+  border-radius: var(--glass-radius); box-shadow: inset 0 1px 0 var(--glass-edge); backdrop-filter: none; -webkit-backdrop-filter: none;
+}
+html[data-theme] .phtv-page .phtv-nav-control, html[data-theme] .phtv-page .phtv-download-button {
+  border-radius: var(--glass-pill); box-shadow: var(--glass-shadow);
+}
+html[data-theme] .phtv-page .mesh-gradient { background: transparent !important; }
+@media (hover:hover) and (prefers-reduced-motion:no-preference) {
+  html :is(.button,.btn,.icon-button,.mobile-menu-toggle,.shared-theme-toggle):hover { transform: translateY(-2px); box-shadow: var(--glass-shadow); }
+  html :is(.button,.btn,.icon-button,.mobile-menu-toggle):active { transform: scale(.97); }
+  html .product-row:hover { background: var(--glass-content); box-shadow: var(--glass-shadow); }
+}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))) {
+  :root { --glass-tint: var(--glass-solid); }
+}
+@media (prefers-reduced-transparency:reduce), (prefers-contrast:more) {
+  :root, html[data-theme="dark"] { --glass-tint: var(--glass-solid); --glass-content: var(--glass-solid); --glass-highlight: transparent; }
+  html :is(.site-header,.mobile-navigation,.donate-dialog,.language-switch,.app-search,.platform-filters,.nav-links,.lang-toggle),
+  html[data-theme] .phtv-page nav.phtv-navbar.fixed > .phtv-navbar__inner { backdrop-filter: none; -webkit-backdrop-filter: none; }
+}
+@media (prefers-contrast:more) {
+  :root, html[data-theme="dark"] { --glass-line: var(--glass-ink); }
+}
+@media (max-width:700px) {
+  html .site-header { top: 8px; margin: 8px 12px 0; padding-inline: 14px; border-radius: 22px; }
+  html .platform-filters { width: 100%; justify-content: flex-start; }
+  html .platform-filters button { flex: 1; padding-inline: 8px; font-size: 12px; }
+  html[data-theme] .phtv-page nav.phtv-navbar.fixed { padding: 8px 12px !important; }
+  html .nav-links { border-radius: 20px; }
+}

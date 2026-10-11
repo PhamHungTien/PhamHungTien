@@ -44,8 +44,8 @@ function buildHead(meta, structuredData) {
 
     `<meta property="og:type" content="${meta.ogType}" />`,
     `<meta property="og:site_name" content="${escapeAttr(SITE.name)}" />`,
-    `<meta property="og:locale" content="vi_VN" />`,
-    `<meta property="og:locale:alternate" content="en_US" />`,
+    `<meta property="og:locale" content="en_US" />`,
+    `<meta property="og:locale:alternate" content="vi_VN" />`,
     `<meta property="og:url" content="${escapeAttr(meta.canonical)}" />`,
     `<meta property="og:title" content="${escapeAttr(meta.ogTitle)}" />`,
     `<meta property="og:description" content="${escapeAttr(meta.description)}" />`,
@@ -179,7 +179,7 @@ for (const [alias, target] of Object.entries(aliases)) {
     aliasDir,
     join(alias, 'index.html'),
     `<!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="refresh" content="0; url=${target}" />

@@ -165,7 +165,6 @@ function App() {
     intelDownloadUrl,
     universalDownloadUrl,
     hasSplitDownloads,
-    version,
     loading
   } = useGitHubData();
   const [showDonate, setShowDonate] = useState(false);
@@ -285,7 +284,7 @@ function App() {
                       <div className="mb-4 flex items-center justify-between gap-3 text-left">
                         <div>
                           <h2 className="text-base font-semibold text-white">{t('home.download_title')}</h2>
-                          <p className="mt-1 text-xs text-slate-400">{version} / macOS 14+</p>
+                          <p className="mt-1 text-xs text-slate-400">macOS 14+</p>
                         </div>
                         <Icons.Download size={18} className="text-blue-500" />
                       </div>
@@ -312,7 +311,7 @@ function App() {
                       className="phtv-download-button inline-flex w-full items-center justify-center gap-3 rounded-full bg-white px-8 py-4 text-base font-black text-slate-950 transition-colors hover:bg-slate-100 md:w-auto md:text-lg"
                     >
                       <Icons.Download size={20} />
-                      {t('home.download_universal').replace('{version}', version)}
+                      {t('home.download_universal')}
                     </a>
                   )}
 

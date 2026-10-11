@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -120,6 +120,7 @@
     </style>
     <link rel="stylesheet" href="/assets/legal.css">
     <script src="/assets/theme.js"></script>
+<link rel="stylesheet" href="/assets/liquid-glass.css">
 </head>
 <body>
     <div class="container">
@@ -233,11 +234,11 @@
                 button.setAttribute('aria-pressed', String(selected));
             });
             document.documentElement.lang = lang;
-            try { localStorage.setItem('preferred_lang', lang); } catch {}
+            try { localStorage.setItem('portfolio_preferred_lang', lang); } catch {}
         }
         let initialLanguage = document.documentElement.lang === 'vi' ? 'vi' : 'en';
         try {
-            const saved = localStorage.getItem('preferred_lang');
+            const saved = localStorage.getItem('portfolio_preferred_lang');
             if (saved === 'vi' || saved === 'en') initialLanguage = saved;
         } catch {}
         switchLang(initialLanguage);
