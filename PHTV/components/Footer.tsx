@@ -20,8 +20,7 @@ export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
             <span className="text-lg font-semibold text-white">PHTV</span>
           </a>
           <nav aria-label={t('footer.links')} className="flex flex-wrap gap-x-5 text-sm text-slate-400">
-            <a href="#features" className="inline-flex min-h-11 items-center hover:text-white">{t('nav.features')}</a>
-            <a href="#install" className="inline-flex min-h-11 items-center hover:text-white">{t('nav.install')}</a>
+            <a href="#tutorial" className="inline-flex min-h-11 items-center hover:text-white">{t('nav.install')}</a>
             <a href="https://github.com/PhamHungTien/PHTV/releases" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center hover:text-white">GitHub Releases</a>
           </nav>
         </div>

@@ -34,8 +34,8 @@ export function HomePage({ lang, onLanguageChange, t }: HomePageProps) {
             <h1>{vi ? 'Ý tưởng nhỏ.' : 'Small ideas.'}<br /><span>{vi ? 'Trải nghiệm lớn.' : 'Thoughtfully built.'}</span></h1>
             <a className="button button--primary" href="#products">{vi ? 'Khám phá ứng dụng' : 'Explore the collection'}<ArrowRight size={17} /></a>
           </div>
-          <div className="app-mosaic" aria-hidden="true">
-            {products.slice(0,6).map((product, index) => <div className="mosaic-tile" key={product.slug} style={{ '--tile': index, '--tile-accent': product.accent } as CSSProperties}><img src={product.icon} alt="" width={92} height={92} /><span>{product.name}</span></div>)}
+          <div className="app-mosaic">
+            {products.slice(0,6).map((product, index) => <a className="mosaic-tile" href={product.route} key={product.slug} style={{ '--tile': index, '--tile-accent': product.accent } as CSSProperties}><img src={product.icon} alt="" width={92} height={92} /><span>{product.name}</span></a>)}
           </div>
         </section>
         <section className="product-directory" id="products">

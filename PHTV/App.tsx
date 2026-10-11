@@ -1,6 +1,5 @@
 import React, { Suspense, lazy, useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
-import { Features } from './components/Features';
 import { Footer } from './components/Footer';
 import { Icons } from './components/Icons';
 import { useGitHubData } from './hooks/useGitHubData';
@@ -259,7 +258,7 @@ function App() {
               <div className="phtv-hero-copy flex min-w-0 flex-col space-y-6 md:space-y-8">
                 <div className="phtv-hero-brand flex flex-col items-start">
                   <div className="flex flex-row items-center justify-center gap-4 lg:justify-start">
-                    <div className="flex flex-col justify-center gap-1 text-left">
+                    <div className="phtv-acronym-grid">
                       <AcronymRow letter="P" word="recision" />
                       <AcronymRow letter="H" word="ybrid" />
                       <AcronymRow letter="T" word="yping" />
@@ -317,7 +316,7 @@ function App() {
 
                   <div className="phtv-hero-links phtv-hero-links--desktop mt-4 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
                     <a
-                      href="#install"
+                      href="#tutorial"
                       className="inline-flex items-center gap-2 text-sm font-medium text-blue-600"
                     >
                       <Icons.Terminal size={16} />
@@ -363,7 +362,7 @@ function App() {
               </div>
 
               <div className="phtv-hero-links phtv-hero-links--mobile">
-                <a href="#install" className="inline-flex items-center gap-2 text-sm font-medium text-blue-600">
+                <a href="#tutorial" className="inline-flex items-center gap-2 text-sm font-medium text-blue-600">
                   <Icons.Terminal size={16} />
                   {t('home.install_btn')}
                 </a>
@@ -388,62 +387,6 @@ function App() {
             </div>
           </main>
 
-          <div className="reveal"><Features /></div>
-
-          <section id="install" className="reveal scroll-mt-24 py-14 md:py-16">
-            <div className="mx-auto max-w-6xl px-4 md:px-6">
-              <div className="mb-8 max-w-2xl">
-                <h2 className="text-2xl font-semibold text-white md:text-3xl">
-                  {t('install.title')}
-                </h2>
-              </div>
-
-              <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1.08fr_0.92fr]">
-                <div className="glass-panel p-5 md:p-6">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-slate-100 text-blue-600">
-                      <Icons.Terminal size={20} />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-white">{t('install.brew_title')}</h3>
-                      <p className="text-sm text-slate-400">{t('install.brew_sub')}</p>
-                    </div>
-                  </div>
-
-                  <div className="mt-5">
-                    <CopyBlock code="brew install --cask phamhungtien/tap/phtv" />
-                  </div>
-
-                  <div className="mt-5 border-t border-slate-200 pt-4">
-                      <ul className="space-y-2 text-sm leading-6 text-slate-300">
-                        <li className="flex gap-3"><Icons.ShieldCheck size={16} className="mt-1 shrink-0 text-emerald-300" />{t('install.before_rule2')}</li>
-                        <li className="flex gap-3"><Icons.Keyboard size={16} className="mt-1 shrink-0 text-amber-300" />{t('install.before_rule3')}</li>
-                      </ul>
-                  </div>
-                </div>
-
-                <div className="glass-panel p-5 md:p-6">
-                    <h3 className="text-lg font-semibold text-white">{t('install.sys_req')}</h3>
-                    <div className="mt-4 space-y-3">
-                      {[
-                        [t('install.os'), 'macOS 14.0+'],
-                        [t('install.arch'), 'Apple Silicon / Intel'],
-                        [t('install.permissions'), 'Accessibility'],
-                      ].map(([label, value]) => (
-                        <div key={label} className="flex items-start justify-between gap-4 border-b border-white/6 pb-4 last:border-b-0 last:pb-0">
-                          <span className="text-sm text-slate-500">{label}</span>
-                          <span className="text-right text-sm font-medium text-white">{value}</span>
-                        </div>
-                      ))}
-                    <a href={releaseUrl} className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-blue-600">
-                      {lang === 'vi' ? 'Bản phát hành và ghi chú' : 'Releases and notes'}
-                      <Icons.ArrowRight size={15} />
-                    </a>
-                </div>
-                </div>
-              </div>
-            </div>
-          </section>
 
           <VideoTutorial />
 
@@ -454,7 +397,7 @@ function App() {
                   {t('gallery.title')}
                 </h2>
               </div>
-              <div className="grid grid-flow-col auto-cols-[minmax(260px,360px)] gap-4 overflow-x-auto pb-3">
+              <div className="phtv-gallery-track">
                 {latestGallery.map((item) => (
                   <figure key={item.src} className="min-w-0">
                     <a className="phtv-gallery-preview" href={item.src} target="_blank" rel="noopener noreferrer" aria-label={`${lang === 'vi' ? 'Xem ảnh đầy đủ' : 'View full image'}: ${item.title}`}>
@@ -463,7 +406,7 @@ function App() {
                         alt={item.title}
                         loading="lazy"
                         decoding="async"
-                        className="aspect-[4/3] w-full rounded-lg border border-white/10 object-contain"
+                        className="block h-auto w-full"
                       />
                     </a>
                     <figcaption className="mt-3 text-sm font-medium text-slate-400">

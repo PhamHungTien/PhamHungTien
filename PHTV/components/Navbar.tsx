@@ -3,7 +3,7 @@ import { Icons } from './Icons';
 import { useI18n } from '../i18n';
 import './Navbar.css';
 
-const iconImg = '/PHTV/phtv-icon.webp';
+import { Home } from 'lucide-react';
 
 interface NavbarProps {
   activeTab?: 'home' | 'community';
@@ -139,7 +139,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   }, [desktopDownloadOpen]);
 
   const navLinks = [
-    { name: t('nav.features'), href: '#features', tab: 'home' },
     { name: t('nav.gallery'), href: '#gallery', tab: 'home' },
     { name: t('nav.community'), href: '#community', tab: 'community' },
   ];
@@ -164,7 +163,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     if (activeTab === 'community') {
       e.preventDefault();
       onTabChange?.('home');
-      window.location.hash = '#install';
+      window.location.hash = '#tutorial';
     }
 
     setMobileMenuOpen(false);
@@ -184,20 +183,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             ? 'glass-panel border-white/10 shadow-[0_18px_50px_rgba(0,0,0,0.28)]'
             : 'border-white/6 bg-black/10 backdrop-blur-md'
         }`}>
-          <button 
-            onClick={() => { onTabChange?.('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-            className="group flex items-center gap-3"
-          >
-            <img 
-              src={iconImg} 
-              alt="PHTV Logo" 
-              className="h-10 w-10 object-contain transition-transform duration-300 group-hover:scale-105" 
-            />
-            <div className="hidden text-left sm:block">
-              <span className="block text-lg font-black tracking-[0.04em] text-white">PHTV</span>
-              <span className="block text-[10px] font-bold uppercase tracking-[0.28em] text-amber-300/80">macOS Vietnamese Input</span>
-            </div>
-          </button>
+          <a href="/" className="phtv-home-control" aria-label={lang === 'vi' ? 'Trang chủ' : 'Home'}>
+            <Home size={21} strokeWidth={1.7} aria-hidden="true" />
+          </a>
 
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center gap-7">
@@ -318,7 +306,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       </a>
 
                       <a
-                        href="#install"
+                        href="#tutorial"
                         onClick={handleInstallClick}
                         className="flex items-center justify-between gap-3 rounded-md px-3 py-2.5 text-left text-slate-900 hover:bg-slate-100"
                       >
@@ -395,7 +383,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <a href={downloadUrl} onClick={handleDirectDownloadClick}><Icons.Download size={16} aria-hidden="true" />{downloadLabel}</a>
                 )}
               </div>
-              <a className="phtv-navigation-homebrew" href="#install" onClick={handleInstallClick}><Icons.Terminal size={16} aria-hidden="true" />Homebrew</a>
+              <a className="phtv-navigation-homebrew" href="#tutorial" onClick={handleInstallClick}><Icons.Terminal size={16} aria-hidden="true" />Homebrew</a>
             </div>
             <div className="phtv-navigation-footer">
               <a href="https://github.com/PhamHungTien/PHTV" target="_blank" rel="noopener noreferrer"><Icons.Github size={17} aria-hidden="true" />GitHub</a>
