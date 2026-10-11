@@ -379,3 +379,11 @@ html .nav-links, html .lang-toggle, html .language-switch,
 html .platform-filters, html .app-search { border-radius: var(--glass-pill); }
 html .detail-hero__media, html .gallery-preview, html .phtv-gallery-preview,
 html .product-video-card { overflow: hidden; }
+
+/* Navigation has fully rounded ends at every viewport width. */
+html .site-header,
+html[data-theme] .phtv-page nav.phtv-navbar.fixed > .phtv-navbar__inner {
+  border-radius: var(--glass-pill) !important;
+}
+html .glass-optics { border-radius: inherit; }
+html .brand-link { width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; border-radius: var(--glass-pill); }

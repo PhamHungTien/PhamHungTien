@@ -21,7 +21,7 @@ export function GlassOptics() {
     const observer = new ResizeObserver(entries => {
       const { width, height } = entries[0].contentRect;
       const radius = parseFloat(getComputedStyle(entries[0].target).borderTopLeftRadius) || 24;
-      setSize({ width, height, radius });
+      setSize({ width, height, radius: Math.min(radius, height / 2, width / 2) });
     });
     if (ref.current) observer.observe(ref.current);
     return () => { alive = false; observer.disconnect(); transparency.removeEventListener('change', update); motion.removeEventListener('change', update); };

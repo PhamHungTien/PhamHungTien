@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ArrowLeft, Mail, Menu, Moon, Sun, X } from 'lucide-react';
+import { ArrowLeft, Home, Mail, Menu, Moon, Sun, X } from 'lucide-react';
 import type { Lang } from '../types';
 import { GlassOptics } from './GlassOptics';
 import { LanguageSwitch } from './LanguageSwitch';
@@ -61,8 +61,8 @@ export function Header({ lang, onLanguageChange, t, productName }: HeaderProps) 
     <header className={`site-header${productName ? ' site-header--product' : ''}`}>
       <GlassOptics />
       <a className="skip-link" href="#main-content">{lang === 'vi' ? 'Đến nội dung' : 'Skip to content'}</a>
-      <a className="brand-link" href="/" aria-label="Pham Hung Tien">
-        <span>Pham Hung Tien</span>
+      <a className="brand-link" href="/" aria-label={lang === 'vi' ? 'Trang chủ' : 'Home'}>
+        <Home size={18} aria-hidden="true" />
       </a>
 
       <nav className="site-nav" aria-label="Main navigation">
