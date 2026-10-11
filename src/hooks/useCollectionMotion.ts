@@ -19,15 +19,36 @@ export function useCollectionMotion(identity: string) {
       const bounds = next.get(key)!;
       const old = previous.current.get(key);
       if (reduce || !previous.current.size) return;
-      card.getAnimations().filter(animation => animation.id === 'collection-layout').forEach(animation => animation.cancel());
-      const animation = card.animate(old
-        ? [{ translate: `${old.left - bounds.left}px ${old.top - bounds.top}px` }, { translate: '0px 0px' }]
-        : [{ opacity: 0, translate: '0px 12px' }, { opacity: 1, translate: '0px 0px' }],
-      { duration: 380, delay: old ? 0 : Math.min(index * 35, 140), easing: 'cubic-bezier(.22,1,.36,1)' });
+      card
+        .getAnimations()
+        .filter((animation) => animation.id === 'collection-layout')
+        .forEach((animation) => animation.cancel());
+      const animation = card.animate(
+        old
+          ? [
+              { translate: `${old.left - bounds.left}px ${old.top - bounds.top}px` },
+              { translate: '0px 0px' },
+            ]
+          : [
+              { opacity: 0, translate: '0px 12px' },
+              { opacity: 1, translate: '0px 0px' },
+            ],
+        {
+          duration: 380,
+          delay: old ? 0 : Math.min(index * 35, 140),
+          easing: 'cubic-bezier(.22,1,.36,1)',
+        },
+      );
       animation.id = 'collection-layout';
     });
     previous.current = next;
-    return () => cards.forEach(card => card.getAnimations().filter(animation => animation.id === 'collection-layout').forEach(animation => animation.cancel()));
+    return () =>
+      cards.forEach((card) =>
+        card
+          .getAnimations()
+          .filter((animation) => animation.id === 'collection-layout')
+          .forEach((animation) => animation.cancel()),
+      );
   }, [identity]);
   return ref;
 }

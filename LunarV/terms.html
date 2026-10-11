@@ -105,12 +105,14 @@
     <link rel="stylesheet" href="/assets/legal.css">
     <script src="/assets/theme.js"></script>
 <link rel="stylesheet" href="/assets/liquid-glass.css">
+<link rel="canonical" href="https://phamhungtien.com/LunarV/terms.html" />
+<meta name="description" content="Điều khoản sử dụng của LunarV. Xem thông tin về dữ liệu và quyền sử dụng ứng dụng." />
 
 <!-- social-preview:start -->
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Pham Hung Tien" />
 <meta property="og:title" content="LunarV — Terms of Use" />
-<meta property="og:description" content="LunarV — Terms of Use" />
+<meta property="og:description" content="Điều khoản sử dụng của LunarV. Xem thông tin về dữ liệu và quyền sử dụng ứng dụng." />
 <meta property="og:url" content="https://phamhungtien.com/LunarV/terms.html" />
 <meta property="og:image" content="https://phamhungtien.com/og/lunarv-terms.png?v=earth-1" />
 <meta property="og:image:secure_url" content="https://phamhungtien.com/og/lunarv-terms.png?v=earth-1" />
@@ -120,7 +122,7 @@
 <meta property="og:image:alt" content="LunarV — Terms of Use" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="LunarV — Terms of Use" />
-<meta name="twitter:description" content="LunarV — Terms of Use" />
+<meta name="twitter:description" content="Điều khoản sử dụng của LunarV. Xem thông tin về dữ liệu và quyền sử dụng ứng dụng." />
 <meta name="twitter:image" content="https://phamhungtien.com/og/lunarv-terms.png?v=earth-1" />
 <meta name="twitter:image:alt" content="LunarV — Terms of Use" />
 <!-- social-preview:end -->
@@ -136,32 +138,10 @@
             <a href="terms.html" class="active">Terms of Use</a>
         </nav>
 
-        <div class="lang-toggle">
-            <button data-language="vi">VI</button>
-            <button class="active" data-language="en">EN</button>
-        </div>
+
 
         <!-- VIETNAMESE -->
-        <div id="vi" class="section">
-            <h1>Điều Khoản Sử Dụng</h1>
-            <p>Cập nhật lần cuối: 26 tháng 5, 2026</p>
 
-            <h2>Chấp nhận Điều Khoản</h2>
-            <p>Bằng việc tải xuống, cài đặt hoặc sử dụng LunarV, bạn đồng ý bị ràng buộc bởi các Điều khoản Sử dụng này.</p>
-
-            <h2>Phân phối ứng dụng</h2>
-            <p>LunarV được phân phối cho iPhone, iPad, Mac và Apple Vision Pro qua App Store theo các điều khoản áp dụng của Apple và của ứng dụng.</p>
-
-            <h2>Từ chối Trách nhiệm</h2>
-            <p>Phần mềm LunarV được cung cấp "NGUYÊN TRẠNG" (AS IS) mà không có bất kỳ hình thức bảo hành nào, dù rõ ràng hay ngụ ý. Chúng tôi không đảm bảo tính chính xác tuyệt đối của lịch âm vì việc tính toán ngày tháng có thể bị sai lệch. Bạn sử dụng ứng dụng này và tự chịu mọi rủi ro.</p>
-
-            <h2>Sửa đổi phần mềm</h2>
-            <p>Chúng tôi có quyền sửa đổi hoặc ngừng cung cấp ứng dụng (hoặc bất kỳ phần nào) bất cứ lúc nào mà không cần thông báo trước.</p>
-
-            <h2>Liên Hệ</h2>
-            <p>Nếu bạn có bất kỳ câu hỏi nào về điều khoản, vui lòng liên hệ:<br>
-            <strong>contact@phamhungtien.com</strong></p>
-        </div>
 
         <!-- ENGLISH -->
         <div id="en" class="section active">
@@ -188,26 +168,6 @@
         <div class="footer">© 2026 Pham Hung Tien. All rights reserved.</div>
     </div>
 
-    <script>
-        document.querySelectorAll('[data-language]').forEach(button => button.addEventListener('click', () => switchLang(button.dataset.language)));
-        function switchLang(lang) {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.getElementById(lang).classList.add('active');
-            document.querySelectorAll('.lang-toggle button').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.lang-toggle button').forEach(button => {
-                const selected = button.dataset.language === lang;
-                button.classList.toggle('active', selected);
-                button.setAttribute('aria-pressed', String(selected));
-            });
-            document.documentElement.lang = lang;
-            try { localStorage.setItem('portfolio_preferred_lang_v2', lang); } catch {}
-        }
-        let initialLanguage = document.documentElement.lang === 'vi' ? 'vi' : 'en';
-        try {
-            const saved = localStorage.getItem('portfolio_preferred_lang_v2');
-            if (saved === 'vi' || saved === 'en') initialLanguage = saved;
-        } catch {}
-        switchLang(initialLanguage);
-    </script>
+
 </body>
 </html>

@@ -152,10 +152,7 @@
             <a href="https://phamhungtien.com/PadNotesAI/terms.html">Terms of Use</a>
         </nav>
 
-        <div class="lang-toggle">
-            <button data-language="vi">VI</button>
-            <button class="active" data-language="en">EN</button>
-        </div>
+
 
         <!-- ENGLISH -->
         <div id="en" class="section active">
@@ -199,69 +196,11 @@
         </div>
 
         <!-- VIETNAMESE -->
-        <div id="vi" class="section">
-            <h1>Chính Sách Quyền Riêng Tư</h1>
-            <p>Cập nhật lần cuối: 12 tháng 6, 2026</p>
 
-            <h2>Tổng Quan</h2>
-            <p>Pad Notes AI là ứng dụng ghi chú ưu tiên nội bộ dành cho iOS và iPadOS. Quyền riêng tư của bạn là ưu tiên hàng đầu. Chính sách này giải thích cách Pad Notes AI xử lý các ghi chú, nét vẽ viết tay và bản ghi âm của bạn.</p>
-
-            <h2>Thu Thập Dữ Liệu</h2>
-            <p><strong>Pad Notes AI không thu thập, lưu trữ hoặc truyền bất kỳ dữ liệu cá nhân, nội dung ghi chú hoặc bản ghi âm nào của bạn.</strong></p>
-            <ul>
-                <li>Tất cả sổ tay ghi chép, hình vẽ viết tay trên canvas, văn bản nhận dạng OCR, và file ghi âm đều được lưu trữ trực tiếp trên thiết bị của bạn trong môi trường sandbox bảo mật của ứng dụng.</li>
-                <li>Chúng tôi hoàn toàn không thể truy cập dữ liệu của bạn, đồng thời không tích hợp SDK quảng cáo hay công cụ theo dõi hành vi người dùng.</li>
-                <li>Quá trình nhận dạng chữ viết tay (OCR) và chuyển âm thanh thành văn bản diễn ra hoàn toàn trên thiết bị.</li>
-            </ul>
-
-            <h2>Apple Intelligence & Trí tuệ nhân tạo Nội bộ</h2>
-            <p>Pad Notes AI sử dụng các Foundation Model nội bộ trên thiết bị của Apple (Apple Intelligence) để tóm tắt và phân tích văn bản offline. Mọi tính toán diễn ra tại chỗ và không gửi dữ liệu ra máy chủ ngoài cho tính năng này.</p>
-
-            <h2>Truy Cập Mạng & API Bên Thứ Ba</h2>
-            <p>Pad Notes AI chỉ sử dụng kết nối mạng trong các kịch bản cụ thể sau, do bạn chủ động thiết lập:</p>
-            <ul>
-                <li>**Trợ lý Trực tuyến Gemini**: Nếu bạn cấu hình Gemini API Key cá nhân, các câu hỏi và đoạn trích tài liệu sẽ được gửi trực tiếp đến API của Google để xử lý phản hồi. Việc kết nối diễn ra trực tiếp giữa thiết bị của bạn và Google.</li>
-                <li>**Đồng Bộ iCloud**: Khi kích hoạt Đồng bộ iCloud, dữ liệu ghi chú của bạn được sao lưu và đồng bộ trên các thiết bị của bạn thông qua hạ tầng CloudKit của Apple. Dữ liệu được mã hóa an toàn.</li>
-                <li>**Mua Hàng Trong Ứng Dụng**: Framework StoreKit của Apple kết nối trực tiếp với máy chủ Apple để xử lý mua hàng và phục hồi giao dịch.</li>
-            </ul>
-
-            <h2>Mua Hàng Trong Ứng Dụng</h2>
-            <p>Pad Notes AI cung cấp các gói đăng ký định kỳ và mua trọn đời một lần ("Pad Notes AI Pro") được xử lý hoàn toàn bởi StoreKit của Apple. Chúng tôi không thu thập hay lưu trữ bất kỳ thông tin thanh toán nào.</p>
-
-            <h2>Quyền Riêng Tư Trẻ Em</h2>
-            <p>Do Pad Notes AI không thu thập bất kỳ thông tin cá nhân nào từ bất kỳ người dùng nào, ứng dụng tuyệt đối an toàn cho trẻ em dưới 13 tuổi và tuân thủ các đạo luật bảo vệ trẻ em.</p>
-
-            <h2>Thay Đổi Chính Sách</h2>
-            <p>Chúng tôi có thể cập nhật Chính Sách Quyền Riêng Tư theo thời gian. Các thay đổi sẽ được cập nhật trên trang này kèm theo ngày có hiệu lực.</p>
-
-            <h2>Liên Hệ</h2>
-            <p>Nếu bạn có bất kỳ câu hỏi nào về chính sách bảo mật, vui lòng liên hệ tại:<br>
-            <strong>contact@phamhungtien.com</strong></p>
-        </div>
 
         <div class="footer">© 2026 Pham Hung Tien. All rights reserved.</div>
     </div>
 
-    <script>
-        document.querySelectorAll('[data-language]').forEach(button => button.addEventListener('click', () => switchLang(button.dataset.language)));
-        function switchLang(lang) {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.getElementById(lang).classList.add('active');
-            document.querySelectorAll('.lang-toggle button').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.lang-toggle button').forEach(button => {
-                const selected = button.dataset.language === lang;
-                button.classList.toggle('active', selected);
-                button.setAttribute('aria-pressed', String(selected));
-            });
-            document.documentElement.lang = lang;
-            try { localStorage.setItem('portfolio_preferred_lang_v2', lang); } catch {}
-        }
-        let initialLanguage = document.documentElement.lang === 'vi' ? 'vi' : 'en';
-        try {
-            const saved = localStorage.getItem('portfolio_preferred_lang_v2');
-            if (saved === 'vi' || saved === 'en') initialLanguage = saved;
-        } catch {}
-        switchLang(initialLanguage);
-    </script>
+
 </body>
 </html>

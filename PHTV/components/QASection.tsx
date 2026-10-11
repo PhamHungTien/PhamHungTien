@@ -1,26 +1,21 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Icons } from './Icons';
 import { auth, db, requestNotificationPermission, googleProvider } from '../src/firebase';
-import { 
-  onAuthStateChanged, 
-  signOut,
-  updateProfile,
-  signInWithPopup
-} from 'firebase/auth';
-import { 
-  collection, 
-  addDoc, 
-  query, 
-  orderBy, 
-  onSnapshot, 
-  doc, 
-  updateDoc, 
+import { onAuthStateChanged, signOut, updateProfile, signInWithPopup } from 'firebase/auth';
+import {
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  onSnapshot,
+  doc,
+  updateDoc,
   deleteDoc,
   arrayUnion,
   arrayRemove,
   getDoc,
   limit,
-  where
+  where,
 } from 'firebase/firestore';
 
 interface User {
@@ -42,10 +37,30 @@ interface LabelInfo {
 
 const LABELS: LabelInfo[] = [
   { id: 'bug', label: 'Bug', color: 'text-white', bg: 'bg-red-600 shadow-lg shadow-red-900/40' },
-  { id: 'enhancement', label: 'Enhancement', color: 'text-white', bg: 'bg-rose-500 shadow-lg shadow-rose-900/40' },
-  { id: 'feature', label: 'Feature', color: 'text-white', bg: 'bg-blue-600 shadow-lg shadow-blue-900/40' },
-  { id: 'question', label: 'Question', color: 'text-white', bg: 'bg-emerald-600 shadow-lg shadow-emerald-900/40' },
-  { id: 'help', label: 'Help Wanted', color: 'text-white', bg: 'bg-orange-600 shadow-lg shadow-orange-900/40' },
+  {
+    id: 'enhancement',
+    label: 'Enhancement',
+    color: 'text-white',
+    bg: 'bg-rose-500 shadow-lg shadow-rose-900/40',
+  },
+  {
+    id: 'feature',
+    label: 'Feature',
+    color: 'text-white',
+    bg: 'bg-blue-600 shadow-lg shadow-blue-900/40',
+  },
+  {
+    id: 'question',
+    label: 'Question',
+    color: 'text-white',
+    bg: 'bg-emerald-600 shadow-lg shadow-emerald-900/40',
+  },
+  {
+    id: 'help',
+    label: 'Help Wanted',
+    color: 'text-white',
+    bg: 'bg-orange-600 shadow-lg shadow-orange-900/40',
+  },
 ];
 
 interface Reply {
@@ -99,7 +114,12 @@ const isAdminIdentity = (_author?: string, _email?: string, isAdmin?: boolean) =
 
 const getInitials = (name: string) => {
   if (!name) return '??';
-  return name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+  return name
+    .split(' ')
+    .map((n) => n[0])
+    .join('')
+    .toUpperCase()
+    .substring(0, 2);
 };
 
 const formatRelativeTime = (timestamp: any) => {
@@ -140,7 +160,7 @@ const getQuestionStatusMeta = (question: Question) => {
       note: 'Thảo luận đã khóa',
       icon: Icons.Lock,
       containerClassName: 'border-white/[0.06] bg-white/[0.022]',
-      badgeClassName: 'border-white/[0.06] bg-white/[0.04] text-slate-300'
+      badgeClassName: 'border-white/[0.06] bg-white/[0.04] text-slate-300',
     };
   }
 
@@ -150,17 +170,21 @@ const getQuestionStatusMeta = (question: Question) => {
       note: 'Đang chờ admin xem',
       icon: Icons.MessageSquareReply,
       containerClassName: 'border-white/[0.055] bg-white/[0.022]',
-      badgeClassName: 'border-white/[0.06] bg-white/[0.04] text-slate-300'
+      badgeClassName: 'border-white/[0.06] bg-white/[0.04] text-slate-300',
     };
   }
 
-  if (/(đã fix|đã sửa|fixed|resolved|đã xử lý|đã khắc phục|đã cập nhật|đã release|đã ra bản)/i.test(latestAdminReply.content)) {
+  if (
+    /(đã fix|đã sửa|fixed|resolved|đã xử lý|đã khắc phục|đã cập nhật|đã release|đã ra bản)/i.test(
+      latestAdminReply.content,
+    )
+  ) {
     return {
       label: 'Đã xử lý',
       note: 'Admin xác nhận đã xử lý',
       icon: Icons.CheckCircle2,
       containerClassName: 'border-emerald-300/16 bg-emerald-400/[0.055]',
-      badgeClassName: 'border-emerald-300/16 bg-emerald-400/[0.12] text-emerald-200'
+      badgeClassName: 'border-emerald-300/16 bg-emerald-400/[0.12] text-emerald-200',
     };
   }
 
@@ -169,25 +193,59 @@ const getQuestionStatusMeta = (question: Question) => {
     note: 'Admin đã có cập nhật',
     icon: Icons.ShieldCheck,
     containerClassName: 'border-rose-300/16 bg-rose-400/[0.055]',
-    badgeClassName: 'border-rose-300/16 bg-rose-400/[0.12] text-rose-200'
+    badgeClassName: 'border-rose-300/16 bg-rose-400/[0.12] text-rose-200',
   };
 };
 
-const SmartContent: React.FC<{ content: string, className?: string }> = ({ content, className }) => {
+const SmartContent: React.FC<{ content: string; className?: string }> = ({
+  content,
+  className,
+}) => {
   const parts = content.split(/(`[^`]+`|@[a-zA-Z0-9_]+|https?:\/\/[^\s]+)/g);
   return (
-    <div className={`min-w-0 max-w-full whitespace-pre-wrap break-words [overflow-wrap:anywhere] leading-relaxed ${className}`}>
+    <div
+      className={`min-w-0 max-w-full whitespace-pre-wrap break-words [overflow-wrap:anywhere] leading-relaxed ${className}`}
+    >
       {parts.map((part, i) => {
         if (part.startsWith('`') && part.endsWith('`')) {
-          return <code key={i} className="inline max-w-full break-all rounded border border-white/5 bg-white/10 px-1.5 py-0.5 font-mono text-[0.85em] text-rose-300 [overflow-wrap:anywhere]">{part.slice(1, -1)}</code>;
+          return (
+            <code
+              key={i}
+              className="inline max-w-full break-all rounded border border-white/5 bg-white/10 px-1.5 py-0.5 font-mono text-[0.85em] text-rose-300 [overflow-wrap:anywhere]"
+            >
+              {part.slice(1, -1)}
+            </code>
+          );
         }
         if (part.startsWith('@')) {
-          return <span key={i} className="break-all font-semibold text-rose-400 [overflow-wrap:anywhere] hover:underline cursor-pointer">{part}</span>;
+          return (
+            <span
+              key={i}
+              className="break-all font-semibold text-rose-400 [overflow-wrap:anywhere] hover:underline cursor-pointer"
+            >
+              {part}
+            </span>
+          );
         }
         if (part.startsWith('http')) {
-          return <a key={i} href={part} target="_blank" rel="noopener noreferrer" className="inline break-all text-blue-400 underline [overflow-wrap:anywhere] transition-colors hover:text-blue-300">{part.length > 40 ? part.substring(0, 40) + '...' : part} <Icons.ExternalLink size={10} className="ml-1 inline-block align-baseline" /></a>;
+          return (
+            <a
+              key={i}
+              href={part}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline break-all text-blue-400 underline [overflow-wrap:anywhere] transition-colors hover:text-blue-300"
+            >
+              {part.length > 40 ? part.substring(0, 40) + '...' : part}{' '}
+              <Icons.ExternalLink size={10} className="ml-1 inline-block align-baseline" />
+            </a>
+          );
         }
-        return <span key={i} className="text-slate-200 [overflow-wrap:anywhere]">{part}</span>;
+        return (
+          <span key={i} className="text-slate-200 [overflow-wrap:anywhere]">
+            {part}
+          </span>
+        );
       })}
     </div>
   );
@@ -203,7 +261,7 @@ export const QASection: React.FC = () => {
   const [filterBy, setFilterBy] = useState<'all' | 'mine' | 'reported' | 'unanswered'>('all');
   const [searchQuery, setSearchBy] = useState('');
   const [visibleQuestions, setVisibleQuestions] = useState<Set<string>>(new Set());
-  
+
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showNamePrompt, setShowNamePrompt] = useState(false);
   const [showNotifs, setShowNotifs] = useState(false);
@@ -214,8 +272,14 @@ export const QASection: React.FC = () => {
   const [postsLimit, setPostsLimit] = useState(POSTS_PER_PAGE);
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-  
-  const [replyingTo, setReplyingTo] = useState<{qId: string, rId?: string, name?: string, authorId?: string, authorEmail?: string} | null>(null);
+
+  const [replyingTo, setReplyingTo] = useState<{
+    qId: string;
+    rId?: string;
+    name?: string;
+    authorId?: string;
+    authorEmail?: string;
+  } | null>(null);
   const [replyContent, setReplyContent] = useState('');
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingReplyId, setEditingReplyId] = useState<string | null>(null);
@@ -228,10 +292,13 @@ export const QASection: React.FC = () => {
         const isAdmin = ADMIN_EMAILS.includes(user.email || '');
         setCurrentUser({
           uid: user.uid,
-          username: user.email === 'contact@phamhungtien.com' ? 'Phạm Hùng Tiến' : (user.displayName || user.email?.split('@')[0] || 'User'),
+          username:
+            user.email === 'contact@phamhungtien.com'
+              ? 'Phạm Hùng Tiến'
+              : user.displayName || user.email?.split('@')[0] || 'User',
           email: user.email || '',
           photoURL: user.photoURL || undefined,
-          isAdmin: isAdmin
+          isAdmin: isAdmin,
         });
       } else {
         setCurrentUser(null);
@@ -244,38 +311,42 @@ export const QASection: React.FC = () => {
   useEffect(() => {
     if (!currentUser) return;
     const q = query(
-      collection(db, "notifications"), 
-      where("recipientId", "==", currentUser.uid),
-      orderBy("timestamp", "desc"),
-      limit(20)
+      collection(db, 'notifications'),
+      where('recipientId', '==', currentUser.uid),
+      orderBy('timestamp', 'desc'),
+      limit(20),
     );
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      setNotifications(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as AppNotification[]);
+      setNotifications(
+        snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as AppNotification[],
+      );
     });
     return () => unsubscribe();
   }, [currentUser]);
 
   // Firestore Real-time Listener for Questions
   useEffect(() => {
-    const q = query(collection(db, "questions"), orderBy("timestamp", "desc"), limit(postsLimit));
+    const q = query(collection(db, 'questions'), orderBy('timestamp', 'desc'), limit(postsLimit));
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      let qList = snapshot.docs.map(doc => ({
+      let qList = snapshot.docs.map((doc) => ({
         id: doc.id,
-        ...doc.data()
+        ...doc.data(),
       })) as Question[];
 
       if (sortBy === 'popular') {
         qList = qList.sort((a, b) => (b.likedBy?.length || 0) - (a.likedBy?.length || 0));
       } else if (sortBy === 'trending') {
         qList = qList.sort((a, b) => {
-          const scoreA = (a.likedBy?.length || 0) + (a.replies?.length || 0) * 2 + (a.viewCount || 0) * 0.5;
-          const scoreB = (b.likedBy?.length || 0) + (b.replies?.length || 0) * 2 + (b.viewCount || 0) * 0.5;
+          const scoreA =
+            (a.likedBy?.length || 0) + (a.replies?.length || 0) * 2 + (a.viewCount || 0) * 0.5;
+          const scoreB =
+            (b.likedBy?.length || 0) + (b.replies?.length || 0) * 2 + (b.viewCount || 0) * 0.5;
           return scoreB - scoreA;
         });
       }
-      
-      const pinned = qList.filter(q => q.isPinned);
-      const others = qList.filter(q => !q.isPinned);
+
+      const pinned = qList.filter((q) => q.isPinned);
+      const others = qList.filter((q) => !q.isPinned);
       setQuestions([...pinned, ...others]);
       setHasMore(snapshot.docs.length >= postsLimit);
       setIsLoading(false);
@@ -283,37 +354,50 @@ export const QASection: React.FC = () => {
     return () => unsubscribe();
   }, [sortBy, postsLimit]);
 
-  const unreadCount = useMemo(() => notifications.filter(n => !n.isRead).length, [notifications]);
+  const unreadCount = useMemo(() => notifications.filter((n) => !n.isRead).length, [notifications]);
 
   const displayQuestions = useMemo(() => {
     let result = questions;
-    if (filterBy === 'mine' && currentUser) result = result.filter(q => q.authorId === currentUser.uid);
-    else if (filterBy === 'reported' && currentUser?.isAdmin) result = result.filter(q => q.isReported);
-    else if (filterBy === 'unanswered') result = result.filter(q => !q.replies.some(r => isAdminIdentity(r.author, r.authorEmail, r.isAdmin)));
+    if (filterBy === 'mine' && currentUser)
+      result = result.filter((q) => q.authorId === currentUser.uid);
+    else if (filterBy === 'reported' && currentUser?.isAdmin)
+      result = result.filter((q) => q.isReported);
+    else if (filterBy === 'unanswered')
+      result = result.filter(
+        (q) => !q.replies.some((r) => isAdminIdentity(r.author, r.authorEmail, r.isAdmin)),
+      );
 
     if (searchQuery.trim()) {
       const lowSearch = searchQuery.toLowerCase();
-      result = result.filter(q => 
-        q.content.toLowerCase().includes(lowSearch) || 
-        q.author.toLowerCase().includes(lowSearch) ||
-        q.replies.some(r => r.content.toLowerCase().includes(lowSearch))
+      result = result.filter(
+        (q) =>
+          q.content.toLowerCase().includes(lowSearch) ||
+          q.author.toLowerCase().includes(lowSearch) ||
+          q.replies.some((r) => r.content.toLowerCase().includes(lowSearch)),
       );
     }
     return result;
   }, [questions, filterBy, searchQuery, currentUser]);
 
   const communityStats = useMemo(() => {
-    const responded = questions.filter((question) => question.replies.some((reply) => isAdminIdentity(reply.author, reply.authorEmail, reply.isAdmin))).length;
+    const responded = questions.filter((question) =>
+      question.replies.some((reply) =>
+        isAdminIdentity(reply.author, reply.authorEmail, reply.isAdmin),
+      ),
+    ).length;
     const locked = questions.filter((question) => question.isLocked).length;
     const pending = Math.max(questions.length - responded, 0);
-    const totalReplies = questions.reduce((sum, question) => sum + (question.replies?.length || 0), 0);
+    const totalReplies = questions.reduce(
+      (sum, question) => sum + (question.replies?.length || 0),
+      0,
+    );
 
     return {
       total: questions.length,
       responded,
       pending,
       locked,
-      totalReplies
+      totalReplies,
     };
   }, [questions]);
 
@@ -322,9 +406,14 @@ export const QASection: React.FC = () => {
     setTimeout(() => setShowToast({ show: false, message: '' }), 3000);
   };
 
-  const createNotification = async (recipientId: string, type: 'reply' | 'like', questionId: string, content: string) => {
+  const createNotification = async (
+    recipientId: string,
+    type: 'reply' | 'like',
+    questionId: string,
+    content: string,
+  ) => {
     if (!currentUser || recipientId === currentUser.uid) return;
-    await addDoc(collection(db, "notifications"), {
+    await addDoc(collection(db, 'notifications'), {
       recipientId,
       senderName: currentUser.username,
       senderPhoto: currentUser.photoURL || null,
@@ -332,7 +421,7 @@ export const QASection: React.FC = () => {
       questionId,
       content,
       timestamp: Date.now(),
-      isRead: false
+      isRead: false,
     });
   };
 
@@ -341,7 +430,10 @@ export const QASection: React.FC = () => {
       const result = await signInWithPopup(auth, googleProvider);
       setShowAuthModal(false);
       requestNotificationPermission();
-      if (result.user.metadata.creationTime === result.user.metadata.lastSignInTime && result.user.email !== 'contact@phamhungtien.com') {
+      if (
+        result.user.metadata.creationTime === result.user.metadata.lastSignInTime &&
+        result.user.email !== 'contact@phamhungtien.com'
+      ) {
         setTempUsername(result.user.displayName || '');
         setShowNamePrompt(true);
       }
@@ -354,7 +446,7 @@ export const QASection: React.FC = () => {
     if (!tempUsername.trim()) return;
     if (auth.currentUser) {
       await updateProfile(auth.currentUser, { displayName: tempUsername });
-      setCurrentUser(prev => prev ? { ...prev, username: tempUsername } : null);
+      setCurrentUser((prev) => (prev ? { ...prev, username: tempUsername } : null));
       setShowNamePrompt(false);
       triggerToast('Đã cập nhật danh tính!');
     }
@@ -362,7 +454,10 @@ export const QASection: React.FC = () => {
 
   const handleAskQuestion = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!currentUser) { setShowAuthModal(true); return; }
+    if (!currentUser) {
+      setShowAuthModal(true);
+      return;
+    }
     if (!newQuestion.trim() || isSubmitting) return;
 
     const now = Date.now();
@@ -373,7 +468,7 @@ export const QASection: React.FC = () => {
 
     setIsSubmitting(true);
     try {
-      await addDoc(collection(db, "questions"), {
+      await addDoc(collection(db, 'questions'), {
         authorId: currentUser.uid,
         author: currentUser.username,
         authorPhoto: currentUser.photoURL || null,
@@ -386,7 +481,7 @@ export const QASection: React.FC = () => {
         isLocked: false,
         viewCount: 0,
         isAdmin: currentUser.isAdmin,
-        label: selectedLabel
+        label: selectedLabel,
       });
       setNewQuestion('');
       setSelectedLabel(null);
@@ -400,10 +495,13 @@ export const QASection: React.FC = () => {
   };
 
   const handleReply = async (qId: string) => {
-    if (!currentUser || !replyingTo) { setShowAuthModal(true); return; }
+    if (!currentUser || !replyingTo) {
+      setShowAuthModal(true);
+      return;
+    }
     if (!replyContent.trim()) return;
 
-    const questionRef = doc(db, "questions", qId);
+    const questionRef = doc(db, 'questions', qId);
     const snap = await getDoc(questionRef);
     if (snap.exists() && snap.data().isLocked && !currentUser.isAdmin) {
       alert('Thảo luận này đã bị khóa!');
@@ -420,11 +518,11 @@ export const QASection: React.FC = () => {
       content: replyContent,
       timestamp: Date.now(),
       isAdmin: currentUser.isAdmin,
-      likedBy: []
+      likedBy: [],
     };
 
     await updateDoc(questionRef, { replies: arrayUnion(newReply) });
-    
+
     // Notification logic
     const recipientId = replyingTo.authorId || snap.data()?.authorId;
     if (recipientId) createNotification(recipientId, 'reply', qId, replyContent.substring(0, 50));
@@ -433,28 +531,39 @@ export const QASection: React.FC = () => {
   };
 
   const toggleLikeQuestion = async (q: Question) => {
-    if (!currentUser) { setShowAuthModal(true); return; }
-    const questionRef = doc(db, "questions", q.id);
+    if (!currentUser) {
+      setShowAuthModal(true);
+      return;
+    }
+    const questionRef = doc(db, 'questions', q.id);
     const hasLiked = q.likedBy?.includes(currentUser.uid);
     await updateDoc(questionRef, {
-      likedBy: hasLiked ? arrayRemove(currentUser.uid) : arrayUnion(currentUser.uid)
+      likedBy: hasLiked ? arrayRemove(currentUser.uid) : arrayUnion(currentUser.uid),
     });
     if (!hasLiked) createNotification(q.authorId, 'like', q.id, q.content.substring(0, 50));
   };
 
   const toggleLikeReply = async (qId: string, rId: string) => {
-    if (!currentUser) { setShowAuthModal(true); return; }
-    const questionRef = doc(db, "questions", qId);
+    if (!currentUser) {
+      setShowAuthModal(true);
+      return;
+    }
+    const questionRef = doc(db, 'questions', qId);
     const snap = await getDoc(questionRef);
     if (!snap.exists()) return;
     const data = snap.data() as Question;
     let targetReply: Reply | undefined;
-    const updatedReplies = data.replies.map(r => {
+    const updatedReplies = data.replies.map((r) => {
       if (r.id === rId) {
         targetReply = r;
         const likedBy = r.likedBy || [];
         const hasLiked = likedBy.includes(currentUser.uid);
-        return { ...r, likedBy: hasLiked ? likedBy.filter(id => id !== currentUser.uid) : [...likedBy, currentUser.uid] };
+        return {
+          ...r,
+          likedBy: hasLiked
+            ? likedBy.filter((id) => id !== currentUser.uid)
+            : [...likedBy, currentUser.uid],
+        };
       }
       return r;
     });
@@ -466,33 +575,35 @@ export const QASection: React.FC = () => {
 
   const deleteQuestion = async (id: string) => {
     if (!window.confirm('Xóa thảo luận này?')) return;
-    await deleteDoc(doc(db, "questions", id));
+    await deleteDoc(doc(db, 'questions', id));
     triggerToast('Đã xóa bài.');
   };
 
   const deleteReply = async (qId: string, rId: string) => {
     if (!window.confirm('Xóa phản hồi này?')) return;
-    const questionRef = doc(db, "questions", qId);
+    const questionRef = doc(db, 'questions', qId);
     const snap = await getDoc(questionRef);
     if (!snap.exists()) return;
-    const updatedReplies = (snap.data() as Question).replies.filter(r => r.id !== rId);
+    const updatedReplies = (snap.data() as Question).replies.filter((r) => r.id !== rId);
     await updateDoc(questionRef, { replies: updatedReplies });
     triggerToast('Đã xóa phản hồi.');
   };
 
   const saveEdit = async (id: string) => {
     if (!editContent.trim()) return;
-    await updateDoc(doc(db, "questions", id), { content: editContent });
+    await updateDoc(doc(db, 'questions', id), { content: editContent });
     setEditingId(null);
     triggerToast('Đã lưu.');
   };
 
   const saveReplyEdit = async (qId: string, rId: string) => {
     if (!editContent.trim()) return;
-    const questionRef = doc(db, "questions", qId);
+    const questionRef = doc(db, 'questions', qId);
     const snap = await getDoc(questionRef);
     if (!snap.exists()) return;
-    const updatedReplies = (snap.data() as Question).replies.map(r => r.id === rId ? { ...r, content: editContent } : r);
+    const updatedReplies = (snap.data() as Question).replies.map((r) =>
+      r.id === rId ? { ...r, content: editContent } : r,
+    );
     await updateDoc(questionRef, { replies: updatedReplies });
     setEditingReplyId(null);
     triggerToast('Đã lưu.');
@@ -500,18 +611,18 @@ export const QASection: React.FC = () => {
 
   const reportContent = async (qId: string) => {
     if (!window.confirm('Báo cáo nội dung này?')) return;
-    await updateDoc(doc(db, "questions", qId), { isReported: true });
+    await updateDoc(doc(db, 'questions', qId), { isReported: true });
     triggerToast('Đã gửi báo cáo!');
   };
 
   const toggleLock = async (q: Question) => {
     if (!currentUser?.isAdmin) return;
-    await updateDoc(doc(db, "questions", q.id), { isLocked: !q.isLocked });
+    await updateDoc(doc(db, 'questions', q.id), { isLocked: !q.isLocked });
     triggerToast(q.isLocked ? 'Đã mở khóa' : 'Đã khóa');
   };
 
   const markNotifRead = async (notifId: string) => {
-    await updateDoc(doc(db, "notifications", notifId), { isRead: true });
+    await updateDoc(doc(db, 'notifications', notifId), { isRead: true });
   };
 
   const openReplyComposer = (question: Question, reply?: Reply) => {
@@ -536,7 +647,7 @@ export const QASection: React.FC = () => {
       rId: reply?.id,
       name: reply?.author || question.author,
       authorId: reply?.authorId || question.authorId,
-      authorEmail: reply?.authorEmail || question.authorEmail
+      authorEmail: reply?.authorEmail || question.authorEmail,
     };
 
     if (replyingTo?.qId !== nextReplyTarget.qId || replyingTo?.rId !== nextReplyTarget.rId) {
@@ -569,7 +680,7 @@ export const QASection: React.FC = () => {
 
   const togglePin = async (question: Question) => {
     if (!currentUser?.isAdmin) return;
-    await updateDoc(doc(db, "questions", question.id), { isPinned: !question.isPinned });
+    await updateDoc(doc(db, 'questions', question.id), { isPinned: !question.isPinned });
     triggerToast(question.isPinned ? 'Đã bỏ ghim.' : 'Đã ghim thảo luận.');
   };
 
@@ -577,19 +688,23 @@ export const QASection: React.FC = () => {
     user: { username: string; photoURL?: string; isAdmin?: boolean };
     size?: string;
     isAdmin?: boolean;
-  }> = ({ user, size = "w-10 h-10", isAdmin }) => {
+  }> = ({ user, size = 'w-10 h-10', isAdmin }) => {
     const showAdminStyle = user.isAdmin ?? isAdmin;
 
     return (
-      <div className={`${size} rounded-2xl flex items-center justify-center text-white font-semibold overflow-hidden shadow-lg shrink-0 ${
-        showAdminStyle
-          ? 'bg-gradient-to-br from-rose-400 via-rose-500 to-pink-600 ring-1 ring-rose-300/40'
-          : 'bg-slate-800 border border-white/5'
-      }`}>
+      <div
+        className={`${size} rounded-2xl flex items-center justify-center text-white font-semibold overflow-hidden shadow-lg shrink-0 ${
+          showAdminStyle
+            ? 'bg-gradient-to-br from-rose-400 via-rose-500 to-pink-600 ring-1 ring-rose-300/40'
+            : 'bg-slate-800 border border-white/5'
+        }`}
+      >
         {user.photoURL ? (
           <img src={user.photoURL} alt={user.username} className="w-full h-full object-cover" />
         ) : (
-          <span className={size.includes('w-8') ? 'text-[9px]' : 'text-sm'}>{getInitials(user.username)}</span>
+          <span className={size.includes('w-8') ? 'text-[9px]' : 'text-sm'}>
+            {getInitials(user.username)}
+          </span>
         )}
       </div>
     );
@@ -651,13 +766,18 @@ export const QASection: React.FC = () => {
                         <div className="fixed inset-x-4 top-24 z-[150] overflow-hidden rounded-2xl border border-white/[0.06] bg-slate-900 shadow-[0_24px_80px_rgba(0,0,0,0.65)] sm:absolute sm:inset-x-auto sm:right-0 sm:top-14 sm:w-[340px]">
                           <div className="flex items-center justify-between border-b border-white/5 px-4 py-3">
                             <span className="text-sm font-semibold text-white">Thông báo</span>
-                            <button onClick={() => setShowNotifs(false)} className="text-slate-500 transition hover:text-white">
+                            <button
+                              onClick={() => setShowNotifs(false)}
+                              className="text-slate-500 transition hover:text-white"
+                            >
                               <Icons.X size={16} />
                             </button>
                           </div>
                           <div className="max-h-[360px] overflow-y-auto custom-scrollbar">
                             {notifications.length === 0 ? (
-                              <div className="p-8 text-center text-sm text-slate-500">Chưa có thông báo nào.</div>
+                              <div className="p-8 text-center text-sm text-slate-500">
+                                Chưa có thông báo nào.
+                              </div>
                             ) : (
                               notifications.map((notification) => (
                                 <button
@@ -672,13 +792,25 @@ export const QASection: React.FC = () => {
                                       : 'bg-rose-500/[0.04] hover:bg-rose-500/[0.08]'
                                   }`}
                                 >
-                                  <Avatar user={{ username: notification.senderName, photoURL: notification.senderPhoto }} size="w-8 h-8" />
+                                  <Avatar
+                                    user={{
+                                      username: notification.senderName,
+                                      photoURL: notification.senderPhoto,
+                                    }}
+                                    size="w-8 h-8"
+                                  />
                                   <div className="min-w-0 flex-1">
                                     <p className="text-sm leading-5 text-white">
-                                      <span className="font-semibold">{notification.senderName}</span>{' '}
-                                      {notification.type === 'reply' ? 'đã phản hồi bạn.' : 'đã tương tác với bài viết.'}
+                                      <span className="font-semibold">
+                                        {notification.senderName}
+                                      </span>{' '}
+                                      {notification.type === 'reply'
+                                        ? 'đã phản hồi bạn.'
+                                        : 'đã tương tác với bài viết.'}
                                     </p>
-                                    <p className="mt-1 text-xs text-slate-400">{formatRelativeTime(notification.timestamp)}</p>
+                                    <p className="mt-1 text-xs text-slate-400">
+                                      {formatRelativeTime(notification.timestamp)}
+                                    </p>
                                   </div>
                                 </button>
                               ))
@@ -692,8 +824,12 @@ export const QASection: React.FC = () => {
                       <Avatar user={currentUser} size="w-9 h-9" isAdmin={currentUser.isAdmin} />
                       <div className="min-w-0">
                         <div className="flex items-center gap-2">
-                          <p className="truncate text-sm font-semibold text-white">{currentUser.username}</p>
-                          {currentUser.isAdmin && <Icons.CheckCircle2 size={14} className="text-rose-400" />}
+                          <p className="truncate text-sm font-semibold text-white">
+                            {currentUser.username}
+                          </p>
+                          {currentUser.isAdmin && (
+                            <Icons.CheckCircle2 size={14} className="text-rose-400" />
+                          )}
                         </div>
                         <div className="mt-1 flex items-center gap-3 text-xs text-slate-400">
                           <button
@@ -705,7 +841,10 @@ export const QASection: React.FC = () => {
                           >
                             Sửa tên
                           </button>
-                          <button onClick={() => signOut(auth)} className="transition hover:text-white">
+                          <button
+                            onClick={() => signOut(auth)}
+                            className="transition hover:text-white"
+                          >
                             Đăng xuất
                           </button>
                         </div>
@@ -726,7 +865,10 @@ export const QASection: React.FC = () => {
 
             <div className="phtv-community-filters mt-5 grid grid-cols-2 gap-3 md:grid-cols-[minmax(0,1fr)_160px_190px]">
               <label className="relative block">
-                <Icons.Search className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
+                <Icons.Search
+                  className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"
+                  size={16}
+                />
                 <input
                   id="search-input"
                   name="search"
@@ -747,9 +889,15 @@ export const QASection: React.FC = () => {
                   className="w-full bg-transparent text-sm text-white outline-none"
                   aria-label="Sắp xếp"
                 >
-                  <option value="newest" className="bg-slate-900">Mới nhất</option>
-                  <option value="trending" className="bg-slate-900">Nổi bật</option>
-                  <option value="popular" className="bg-slate-900">Yêu thích</option>
+                  <option value="newest" className="bg-slate-900">
+                    Mới nhất
+                  </option>
+                  <option value="trending" className="bg-slate-900">
+                    Nổi bật
+                  </option>
+                  <option value="popular" className="bg-slate-900">
+                    Yêu thích
+                  </option>
                 </select>
               </label>
 
@@ -763,10 +911,20 @@ export const QASection: React.FC = () => {
                   onChange={(e) => setFilterBy(e.target.value as typeof filterBy)}
                   className="w-full bg-transparent text-sm text-white outline-none"
                 >
-                  <option value="all" className="bg-slate-900">Tất cả</option>
-                  <option value="mine" className="bg-slate-900">Bài của tôi</option>
-                  <option value="unanswered" className="bg-slate-900">Chưa phản hồi</option>
-                  {currentUser?.isAdmin && <option value="reported" className="bg-slate-900">Bài bị báo cáo</option>}
+                  <option value="all" className="bg-slate-900">
+                    Tất cả
+                  </option>
+                  <option value="mine" className="bg-slate-900">
+                    Bài của tôi
+                  </option>
+                  <option value="unanswered" className="bg-slate-900">
+                    Chưa phản hồi
+                  </option>
+                  {currentUser?.isAdmin && (
+                    <option value="reported" className="bg-slate-900">
+                      Bài bị báo cáo
+                    </option>
+                  )}
                 </select>
               </label>
             </div>
@@ -778,7 +936,9 @@ export const QASection: React.FC = () => {
                 id="new-question-input"
                 name="question"
                 aria-label="Nội dung thảo luận mới"
-                placeholder={currentUser ? 'Bạn muốn trao đổi điều gì?' : 'Đăng nhập để bắt đầu thảo luận'}
+                placeholder={
+                  currentUser ? 'Bạn muốn trao đổi điều gì?' : 'Đăng nhập để bắt đầu thảo luận'
+                }
                 value={newQuestion}
                 onChange={(e) => setNewQuestion(e.target.value)}
                 disabled={isSubmitting}
@@ -795,9 +955,13 @@ export const QASection: React.FC = () => {
                     className="w-full bg-transparent text-sm text-white outline-none"
                     aria-label="Phân loại"
                   >
-                    <option value="" className="bg-slate-900">Phân loại</option>
+                    <option value="" className="bg-slate-900">
+                      Phân loại
+                    </option>
                     {LABELS.map((label) => (
-                      <option key={label.id} value={label.id ?? ''} className="bg-slate-900">{label.label}</option>
+                      <option key={label.id} value={label.id ?? ''} className="bg-slate-900">
+                        {label.label}
+                      </option>
                     ))}
                   </select>
                 </label>
@@ -806,7 +970,11 @@ export const QASection: React.FC = () => {
                   disabled={isSubmitting || !newQuestion.trim()}
                   className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-white px-4 text-sm font-semibold text-slate-950 transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  {isSubmitting ? <Icons.RefreshCw className="animate-spin" size={15} /> : <Icons.Send size={15} />}
+                  {isSubmitting ? (
+                    <Icons.RefreshCw className="animate-spin" size={15} />
+                  ) : (
+                    <Icons.Send size={15} />
+                  )}
                   <span>Đăng thảo luận</span>
                 </button>
               </div>
@@ -816,7 +984,9 @@ export const QASection: React.FC = () => {
           <section className="space-y-4 pb-20">
             {isLoading ? (
               <div className="space-y-4">
-                {[1, 2, 3].map((index) => <SkeletonCard key={index} />)}
+                {[1, 2, 3].map((index) => (
+                  <SkeletonCard key={index} />
+                ))}
               </div>
             ) : displayQuestions.length === 0 ? (
               <div className="rounded-2xl border border-dashed border-white/[0.06] bg-white/[0.018] px-6 py-20 text-center">
@@ -832,8 +1002,14 @@ export const QASection: React.FC = () => {
                 const StatusIcon = statusMeta.icon;
                 const replyCount = question.replies?.length || 0;
                 const isExpanded = visibleQuestions.has(question.id);
-                const hasManagePermission = Boolean(currentUser?.isAdmin || currentUser?.uid === question.authorId);
-                const questionIsAdmin = isAdminIdentity(question.author, question.authorEmail, question.isAdmin);
+                const hasManagePermission = Boolean(
+                  currentUser?.isAdmin || currentUser?.uid === question.authorId,
+                );
+                const questionIsAdmin = isAdminIdentity(
+                  question.author,
+                  question.authorEmail,
+                  question.isAdmin,
+                );
 
                 return (
                   <article
@@ -844,7 +1020,11 @@ export const QASection: React.FC = () => {
                   >
                     <div className="flex gap-4">
                       <Avatar
-                        user={{ username: question.author, photoURL: question.authorPhoto, isAdmin: questionIsAdmin }}
+                        user={{
+                          username: question.author,
+                          photoURL: question.authorPhoto,
+                          isAdmin: questionIsAdmin,
+                        }}
                         size="w-11 h-11"
                         isAdmin={questionIsAdmin}
                       />
@@ -853,7 +1033,9 @@ export const QASection: React.FC = () => {
                         <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
                           <div className="min-w-0">
                             <div className="flex flex-wrap items-center gap-2">
-                              <h3 className={`text-base font-semibold tracking-tight ${questionIsAdmin ? 'text-rose-300' : 'text-white'}`}>
+                              <h3
+                                className={`text-base font-semibold tracking-tight ${questionIsAdmin ? 'text-rose-300' : 'text-white'}`}
+                              >
                                 {question.author}
                               </h3>
                               {questionIsAdmin && (
@@ -862,11 +1044,15 @@ export const QASection: React.FC = () => {
                                 </span>
                               )}
                               {labelInfo && (
-                                <span className={`rounded-full px-2.5 py-1 text-xs font-semibold uppercase ${labelInfo.bg} ${labelInfo.color}`}>
+                                <span
+                                  className={`rounded-full px-2.5 py-1 text-xs font-semibold uppercase ${labelInfo.bg} ${labelInfo.color}`}
+                                >
                                   {labelInfo.label}
                                 </span>
                               )}
-                              <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-semibold ${statusMeta.badgeClassName}`}>
+                              <span
+                                className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-semibold ${statusMeta.badgeClassName}`}
+                              >
                                 <StatusIcon size={12} />
                                 {statusMeta.label}
                               </span>
@@ -880,7 +1066,10 @@ export const QASection: React.FC = () => {
 
                             <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-slate-400">
                               <span>{formatRelativeTime(question.timestamp)}</span>
-                              <button onClick={() => reportContent(question.id)} className="transition hover:text-white">
+                              <button
+                                onClick={() => reportContent(question.id)}
+                                className="transition hover:text-white"
+                              >
                                 Báo cáo
                               </button>
                             </div>
@@ -894,7 +1083,11 @@ export const QASection: React.FC = () => {
                                   className="rounded-xl border border-white/[0.055] bg-white/[0.022] p-2 text-slate-300 transition hover:bg-white/[0.04] hover:text-white"
                                   aria-label={question.isLocked ? 'Mở khóa' : 'Khóa'}
                                 >
-                                  {question.isLocked ? <Icons.Lock size={14} /> : <Icons.Unlock size={14} />}
+                                  {question.isLocked ? (
+                                    <Icons.Lock size={14} />
+                                  ) : (
+                                    <Icons.Unlock size={14} />
+                                  )}
                                 </button>
                                 <button
                                   onClick={() => togglePin(question)}
@@ -937,10 +1130,16 @@ export const QASection: React.FC = () => {
                               className="w-full rounded-2xl border border-white/[0.055] bg-white/[0.022] px-4 py-3 text-sm leading-6 text-white outline-none focus:border-rose-400/30"
                             />
                             <div className="flex flex-wrap gap-2">
-                              <button onClick={() => saveEdit(question.id)} className="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-950">
+                              <button
+                                onClick={() => saveEdit(question.id)}
+                                className="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-950"
+                              >
                                 Lưu
                               </button>
-                              <button onClick={() => setEditingId(null)} className="rounded-xl border border-white/[0.055] bg-white/[0.022] px-4 py-2 text-sm text-slate-300">
+                              <button
+                                onClick={() => setEditingId(null)}
+                                className="rounded-xl border border-white/[0.055] bg-white/[0.022] px-4 py-2 text-sm text-slate-300"
+                              >
                                 Hủy
                               </button>
                             </div>
@@ -948,7 +1147,11 @@ export const QASection: React.FC = () => {
                         ) : (
                           <div className="phtv-discussion-content py-1">
                             <SmartContent
-                              content={isExpanded ? question.content : getContentPreview(question.content, 280)}
+                              content={
+                                isExpanded
+                                  ? question.content
+                                  : getContentPreview(question.content, 280)
+                              }
                               className="text-sm leading-7 text-slate-200"
                             />
                           </div>
@@ -965,7 +1168,11 @@ export const QASection: React.FC = () => {
                           >
                             <Icons.ThumbsUp
                               size={15}
-                              fill={question.likedBy?.includes(currentUser?.uid || '') ? 'currentColor' : 'none'}
+                              fill={
+                                question.likedBy?.includes(currentUser?.uid || '')
+                                  ? 'currentColor'
+                                  : 'none'
+                              }
                             />
                             <span>{question.likedBy?.length || 0}</span>
                           </button>
@@ -987,7 +1194,6 @@ export const QASection: React.FC = () => {
                                 : 'Phản hồi'}
                             </span>
                           </button>
-
                         </div>
 
                         {(isExpanded || replyingTo?.qId === question.id) && (
@@ -995,20 +1201,32 @@ export const QASection: React.FC = () => {
                             {orderedReplies.length > 0 && (
                               <div className="space-y-3">
                                 {orderedReplies.map((reply) => {
-                                  const replyIsAdmin = isAdminIdentity(reply.author, reply.authorEmail, reply.isAdmin);
+                                  const replyIsAdmin = isAdminIdentity(
+                                    reply.author,
+                                    reply.authorEmail,
+                                    reply.isAdmin,
+                                  );
 
                                   return (
                                     <div key={reply.id} className="flex gap-3">
                                       <Avatar
-                                        user={{ username: reply.author, photoURL: reply.authorPhoto, isAdmin: replyIsAdmin }}
+                                        user={{
+                                          username: reply.author,
+                                          photoURL: reply.authorPhoto,
+                                          isAdmin: replyIsAdmin,
+                                        }}
                                         size="w-9 h-9"
                                         isAdmin={replyIsAdmin}
                                       />
                                       <div className="min-w-0 flex-1">
-                                        <div className={`rounded-xl border p-4 ${replyIsAdmin ? 'border-rose-300/16 bg-rose-400/[0.045]' : 'border-white/[0.055] bg-white/[0.022]'}`}>
+                                        <div
+                                          className={`rounded-xl border p-4 ${replyIsAdmin ? 'border-rose-300/16 bg-rose-400/[0.045]' : 'border-white/[0.055] bg-white/[0.022]'}`}
+                                        >
                                           <div className="mb-2 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
                                             <div className="flex flex-wrap items-center gap-2 text-sm">
-                                              <span className={`font-semibold ${replyIsAdmin ? 'text-rose-200' : 'text-white'}`}>
+                                              <span
+                                                className={`font-semibold ${replyIsAdmin ? 'text-rose-200' : 'text-white'}`}
+                                              >
                                                 {reply.author}
                                               </span>
                                               {replyIsAdmin && (
@@ -1022,10 +1240,13 @@ export const QASection: React.FC = () => {
                                                   {reply.replyToName}
                                                 </span>
                                               )}
-                                              <span className="text-xs text-slate-500">{formatRelativeTime(reply.timestamp)}</span>
+                                              <span className="text-xs text-slate-500">
+                                                {formatRelativeTime(reply.timestamp)}
+                                              </span>
                                             </div>
 
-                                            {(currentUser?.isAdmin || currentUser?.uid === reply.authorId) && (
+                                            {(currentUser?.isAdmin ||
+                                              currentUser?.uid === reply.authorId) && (
                                               <div className="flex items-center gap-2">
                                                 <button
                                                   onClick={() => {
@@ -1057,16 +1278,27 @@ export const QASection: React.FC = () => {
                                                 className="w-full rounded-xl border border-white/[0.055] bg-slate-950 px-4 py-3 text-sm leading-6 text-white outline-none focus:border-rose-400/30"
                                               />
                                               <div className="flex flex-wrap gap-2">
-                                                <button onClick={() => saveReplyEdit(question.id, reply.id)} className="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-950">
+                                                <button
+                                                  onClick={() =>
+                                                    saveReplyEdit(question.id, reply.id)
+                                                  }
+                                                  className="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-950"
+                                                >
                                                   Lưu
                                                 </button>
-                                                <button onClick={() => setEditingReplyId(null)} className="rounded-xl border border-white/[0.055] bg-white/[0.022] px-4 py-2 text-sm text-slate-300">
+                                                <button
+                                                  onClick={() => setEditingReplyId(null)}
+                                                  className="rounded-xl border border-white/[0.055] bg-white/[0.022] px-4 py-2 text-sm text-slate-300"
+                                                >
                                                   Hủy
                                                 </button>
                                               </div>
                                             </div>
                                           ) : (
-                                            <SmartContent content={reply.content} className="text-sm leading-6 text-slate-200" />
+                                            <SmartContent
+                                              content={reply.content}
+                                              className="text-sm leading-6 text-slate-200"
+                                            />
                                           )}
                                         </div>
 
@@ -1081,11 +1313,18 @@ export const QASection: React.FC = () => {
                                           >
                                             <Icons.ThumbsUp
                                               size={13}
-                                              fill={reply.likedBy?.includes(currentUser?.uid || '') ? 'currentColor' : 'none'}
+                                              fill={
+                                                reply.likedBy?.includes(currentUser?.uid || '')
+                                                  ? 'currentColor'
+                                                  : 'none'
+                                              }
                                             />
                                             <span>{reply.likedBy?.length || 0}</span>
                                           </button>
-                                          <button onClick={() => openReplyComposer(question, reply)} className="text-xs font-semibold text-slate-400 transition hover:text-white">
+                                          <button
+                                            onClick={() => openReplyComposer(question, reply)}
+                                            className="text-xs font-semibold text-slate-400 transition hover:text-white"
+                                          >
                                             Trả lời
                                           </button>
                                         </div>
@@ -1100,7 +1339,8 @@ export const QASection: React.FC = () => {
                               <div className="rounded-2xl border border-white/[0.055] bg-white/[0.022] p-4">
                                 <div className="mb-3 flex items-center justify-between gap-3">
                                   <p className="text-sm font-semibold text-white">
-                                    Đang phản hồi {replyingTo.name ? `@${replyingTo.name}` : 'thảo luận này'}
+                                    Đang phản hồi{' '}
+                                    {replyingTo.name ? `@${replyingTo.name}` : 'thảo luận này'}
                                   </p>
                                   <button
                                     onClick={() => {
@@ -1177,14 +1417,42 @@ export const QASection: React.FC = () => {
       {/* Modals */}
       {showAuthModal && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-5">
-          <button className="absolute inset-0 bg-slate-950/85" onClick={() => setShowAuthModal(false)} aria-label="Đóng" />
+          <button
+            className="absolute inset-0 bg-slate-950/85"
+            onClick={() => setShowAuthModal(false)}
+            aria-label="Đóng"
+          />
           <div className="relative w-full max-w-sm rounded-2xl border border-white/10 bg-slate-900 p-6 shadow-2xl">
-            <button onClick={() => setShowAuthModal(false)} className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-lg text-slate-400 hover:bg-white/5 hover:text-white" aria-label="Đóng">
+            <button
+              onClick={() => setShowAuthModal(false)}
+              className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-lg text-slate-400 hover:bg-white/5 hover:text-white"
+              aria-label="Đóng"
+            >
               <Icons.X size={18} />
             </button>
             <h3 className="text-xl font-bold text-white">Đăng nhập để thảo luận</h3>
-            <button onClick={handleGoogleLogin} className="mt-6 flex min-h-12 w-full items-center justify-center gap-3 rounded-xl bg-white px-4 font-semibold text-slate-950">
-              <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            <button
+              onClick={handleGoogleLogin}
+              className="mt-6 flex min-h-12 w-full items-center justify-center gap-3 rounded-xl bg-white px-4 font-semibold text-slate-950"
+            >
+              <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  fill="#4285F4"
+                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                />
+                <path
+                  fill="#34A853"
+                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                />
+                <path
+                  fill="#FBBC05"
+                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"
+                />
+                <path
+                  fill="#EA4335"
+                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                />
+              </svg>
               Tiếp tục với Google
             </button>
           </div>
@@ -1194,8 +1462,21 @@ export const QASection: React.FC = () => {
         <div className="fixed inset-0 z-[250] flex items-center justify-center bg-slate-950/90 p-5">
           <div className="w-full max-w-sm rounded-2xl border border-white/10 bg-slate-900 p-6 shadow-2xl">
             <h3 className="text-xl font-bold text-white">Tên hiển thị</h3>
-            <input id="username-input" name="username" type="text" value={tempUsername} onChange={e => setTempUsername(e.target.value)} className="mt-5 min-h-12 w-full rounded-xl border border-white/10 bg-slate-950 px-4 text-white outline-none focus:border-rose-400/40" placeholder="Nhập tên" />
-            <button onClick={handleUpdateName} className="mt-3 min-h-12 w-full rounded-xl bg-white px-4 font-semibold text-slate-950">Lưu tên</button>
+            <input
+              id="username-input"
+              name="username"
+              type="text"
+              value={tempUsername}
+              onChange={(e) => setTempUsername(e.target.value)}
+              className="mt-5 min-h-12 w-full rounded-xl border border-white/10 bg-slate-950 px-4 text-white outline-none focus:border-rose-400/40"
+              placeholder="Nhập tên"
+            />
+            <button
+              onClick={handleUpdateName}
+              className="mt-3 min-h-12 w-full rounded-xl bg-white px-4 font-semibold text-slate-950"
+            >
+              Lưu tên
+            </button>
           </div>
         </div>
       )}

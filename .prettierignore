@@ -1,0 +1,16 @@
+node_modules
+PHTV/node_modules
+dist
+dist-ssr
+dist-aliases
+PHTV/dist
+_site
+public
+PHTV/public
+**/assets
+assets
+package-lock.json
+PHTV/package-lock.json
+src/data/responsiveImages.generated.ts
+
+PHTV/dist-ssr

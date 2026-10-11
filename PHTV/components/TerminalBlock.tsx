@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { Icons } from './Icons';
 import { TerminalCommandProps } from '../types';
 
-export const TerminalBlock: React.FC<TerminalCommandProps> = ({ command, label = "Terminal", output }) => {
+export const TerminalBlock: React.FC<TerminalCommandProps> = ({
+  command,
+  label = 'Terminal',
+  output,
+}) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -25,7 +29,7 @@ export const TerminalBlock: React.FC<TerminalCommandProps> = ({ command, label =
             {label}
           </span>
         </div>
-        <button 
+        <button
           onClick={handleCopy}
           className="text-slate-500 transition-colors hover:text-blue-600 focus:outline-none"
           title="Copy command"
@@ -39,9 +43,7 @@ export const TerminalBlock: React.FC<TerminalCommandProps> = ({ command, label =
           <span className="break-all">{command}</span>
         </div>
         {output && (
-          <div className="mt-2 select-none whitespace-pre-line text-slate-500">
-            {output}
-          </div>
+          <div className="mt-2 select-none whitespace-pre-line text-slate-500">{output}</div>
         )}
       </div>
     </div>

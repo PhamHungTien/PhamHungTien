@@ -68,3 +68,9 @@ Face-recognition smart lock on an **STM32F411 + ESP32-S3/OV3660** dual-MCU archi
 <div align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&color=timeGradient&height=100&section=footer" alt="Footer" />
 </div>
+
+## Website development
+
+This website uses React, Vite and strict TypeScript in an npm workspace. See the
+[architecture](docs/ARCHITECTURE.md) and [contributing guide](CONTRIBUTING.md) for setup,
+shared components, image optimization and deployment checks.

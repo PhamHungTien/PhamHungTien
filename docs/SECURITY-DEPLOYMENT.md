@@ -13,13 +13,13 @@ Use proxied DNS (orange cloud), Full (strict) TLS, and Always Use HTTPS. Keep
 GitHub Pages Enforce HTTPS enabled. In Rules → Transform Rules → Modify Response
 Header, scope to hostname `phamhungtien.com` and `www.phamhungtien.com` and set:
 
-| Header | Value |
-|---|---|
-| X-Content-Type-Options | nosniff |
-| X-Frame-Options | DENY |
-| Referrer-Policy | strict-origin-when-cross-origin |
-| Permissions-Policy | camera=(), microphone=(), geolocation=() |
-| Strict-Transport-Security | max-age=31536000 |
+| Header                    | Value                                    |
+| ------------------------- | ---------------------------------------- |
+| X-Content-Type-Options    | nosniff                                  |
+| X-Frame-Options           | DENY                                     |
+| Referrer-Policy           | strict-origin-when-cross-origin          |
+| Permissions-Policy        | camera=(), microphone=(), geolocation=() |
+| Strict-Transport-Security | max-age=31536000                         |
 
 Do not add includeSubDomains/preload without checking every subdomain first.
 A header CSP must preserve the generated script hashes, so do not replace it
@@ -65,7 +65,6 @@ Production dependencies audit clean after the Firebase/gRPC updates. Build-only
 Firebase CLI dependencies still have advisories requiring a major CLI upgrade
 and Java 21; nonbreaking fixes were applied. Avoid `audit fix --force` without
 checking emulator/deploy behavior. CI uses Java 21 for rules tests.
-
 
 ## Shared product discussions
 

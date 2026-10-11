@@ -19,20 +19,42 @@ export const Footer: React.FC<FooterProps> = ({ onDonateClick }) => {
             <img src="/PHTV/phtv-icon.webp" alt="" width={36} height={36} />
             <span className="text-lg font-semibold text-white">PHTV</span>
           </a>
-          <nav aria-label={t('footer.links')} className="flex flex-wrap gap-x-5 text-sm text-slate-400">
-            <a href="#tutorial" className="inline-flex min-h-11 items-center hover:text-white">{t('nav.install')}</a>
-            <a href="https://github.com/PhamHungTien/PHTV/releases" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center hover:text-white">GitHub Releases</a>
+          <nav
+            aria-label={t('footer.links')}
+            className="flex flex-wrap gap-x-5 text-sm text-slate-400"
+          >
+            <a href="#tutorial" className="inline-flex min-h-11 items-center hover:text-white">
+              {t('nav.install')}
+            </a>
+            <a
+              href="https://github.com/PhamHungTien/PHTV/releases"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center hover:text-white"
+            >
+              GitHub Releases
+            </a>
           </nav>
         </div>
         <ContactSection t={(key) => translate(lang, key)} />
         <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 pt-2 text-sm text-slate-500">
           <p>© {new Date().getFullYear()} Pham Hung Tien</p>
           <div className="flex flex-wrap items-center gap-x-5">
-            <button type="button" onClick={onDonateClick} aria-haspopup="dialog" className="inline-flex min-h-11 items-center gap-2 hover:text-white">
-              <Icons.Heart size={16} aria-hidden="true" />{translate(lang, 'common.donate')}
+            <button
+              type="button"
+              onClick={onDonateClick}
+              aria-haspopup="dialog"
+              className="inline-flex min-h-11 items-center gap-2 hover:text-white"
+            >
+              <Icons.Heart size={16} aria-hidden="true" />
+              {translate(lang, 'common.donate')}
             </button>
-            <a href="privacy.html" className="inline-flex min-h-11 items-center hover:text-white">{translate(lang, 'product.privacy')}</a>
-            <a href="terms.html" className="inline-flex min-h-11 items-center hover:text-white">{translate(lang, 'product.terms')}</a>
+            <a href="privacy.html" className="inline-flex min-h-11 items-center hover:text-white">
+              {translate(lang, 'product.privacy')}
+            </a>
+            <a href="terms.html" className="inline-flex min-h-11 items-center hover:text-white">
+              {translate(lang, 'product.terms')}
+            </a>
           </div>
         </div>
       </div>

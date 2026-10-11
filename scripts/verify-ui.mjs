@@ -18,21 +18,42 @@ const contactUrls = [
 ];
 
 for (const route of prerenderRoutes) {
-  const { html } = render(route);
-  assert.equal([...html.matchAll(/class="contact-card"/g)].length, 9, `${route}: nine contact links`);
+  const { html } = await render(route);
+  assert.equal(
+    [...html.matchAll(/class="contact-card"/g)].length,
+    9,
+    `${route}: nine contact links`,
+  );
   assert.equal([...html.matchAll(/<h1[\s>]/g)].length, 1, `${route}: one page heading`);
   assert.ok(html.includes('id="main-content"'), `${route}: skip-link destination`);
   for (const href of contactUrls) assert.ok(html.includes(`href="${href}"`), `${route}: ${href}`);
   for (const [, src] of html.matchAll(/<img[^>]+src="([^"]+)"/g)) {
-    assert.ok(src.startsWith('/assets/'), `${route}: local image path`);
+    assert.ok(
+      src.startsWith('/assets/') || src.startsWith('/media/'),
+      `${route}: local image path`,
+    );
     await access(join(root, 'dist', src));
   }
-  assert.match(html, /donate-trigger[^>]+aria-haspopup="dialog"/, `${route}: donate opens a dialog`);
+  assert.match(
+    html,
+    /donate-trigger[^>]+aria-haspopup="dialog"/,
+    `${route}: donate opens a dialog`,
+  );
   if (route === '/') {
-    assert.equal([...html.matchAll(/class="product-row"/g)].length, products.length, 'home: all apps listed');
+    assert.equal(
+      [...html.matchAll(/class="product-row"/g)].length,
+      products.length,
+      'home: all apps listed',
+    );
   } else {
-    assert.ok(html.includes('id="features"') && html.includes('id="gallery"'), `${route}: navigation destinations`);
-    assert.ok(!html.includes('<code>App Store</code>'), `${route}: no redundant installation block`);
+    assert.ok(
+      html.includes('id="features"') && html.includes('id="gallery"'),
+      `${route}: navigation destinations`,
+    );
+    assert.ok(
+      !html.includes('<code>App Store</code>'),
+      `${route}: no redundant installation block`,
+    );
   }
   console.log(`✓ ${route} — content, contacts, navigation, and image files`);
 }
@@ -43,7 +64,11 @@ for (const folder of ['dist/assets', 'PHTV/dist/assets']) {
   const files = await readdir(join(root, folder));
   const qr = files.find((file) => /^donate-.*\.jpg$/.test(file));
   assert.ok(qr, `${folder}: emitted donation QR`);
-  assert.equal(hash(await readFile(join(root, folder, qr))), originalQrHash, `${folder}: current donation QR`);
+  assert.equal(
+    hash(await readFile(join(root, folder, qr))),
+    originalQrHash,
+    `${folder}: current donation QR`,
+  );
 }
 console.log('✓ Home and PHTV both include the current donation QR');
 

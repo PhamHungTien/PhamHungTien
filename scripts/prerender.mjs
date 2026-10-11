@@ -31,7 +31,11 @@ const template = await readFile(join(distDir, 'index.html'), 'utf8');
 const buildDate = new Date().toISOString().slice(0, 10);
 
 const escapeAttr = (value) =>
-  String(value).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
 
 /** A literal `</script>` inside the JSON-LD payload would close the tag early. */
 const escapeJsonLd = (value) => JSON.stringify(value).replace(/</g, '\\u003c');
@@ -45,7 +49,6 @@ function buildHead(meta, structuredData) {
     `<meta property="og:type" content="${meta.ogType}" />`,
     `<meta property="og:site_name" content="${escapeAttr(SITE.name)}" />`,
     `<meta property="og:locale" content="en_US" />`,
-    `<meta property="og:locale:alternate" content="vi_VN" />`,
     `<meta property="og:url" content="${escapeAttr(meta.canonical)}" />`,
     `<meta property="og:title" content="${escapeAttr(meta.ogTitle)}" />`,
     `<meta property="og:description" content="${escapeAttr(meta.description)}" />`,
@@ -64,7 +67,7 @@ function buildHead(meta, structuredData) {
     `<meta name="twitter:image" content="${escapeAttr(meta.ogImage)}" />`,
     `<meta name="twitter:image:alt" content="${escapeAttr(meta.ogImageAlt)}" />`,
 
-    `<script type="application/ld+json">${escapeJsonLd(structuredData)}</script>`
+    `<script type="application/ld+json">${escapeJsonLd(structuredData)}</script>`,
   ];
 
   return tags.map((tag) => `    ${tag}`).join('\n');
@@ -81,7 +84,7 @@ const emit = (relPath, contents) => emitTo(distDir, relPath, contents);
 // ---------------------------------------------------------------- HTML routes
 
 for (const route of prerenderRoutes) {
-  const { html, meta, structuredData } = render(route);
+  const { html, meta, structuredData } = await render(route);
 
   let page = template
     .replace('<!--app-head-->', buildHead(meta, structuredData))
@@ -90,13 +93,13 @@ for (const route of prerenderRoutes) {
   if (meta.favicon) {
     page = page.replace(
       /<link rel="icon" [^>]+>/,
-      `<link rel="icon" type="${meta.faviconType || "image/png"}" href="${meta.favicon}" />`
+      `<link rel="icon" type="${meta.faviconType || 'image/png'}" href="${meta.favicon}" />`,
     );
   }
   if (meta.appleTouchIcon) {
     page = page.replace(
       /<link rel="apple-touch-icon" [^>]+>/,
-      `<link rel="apple-touch-icon" href="${meta.appleTouchIcon}" />`
+      `<link rel="apple-touch-icon" href="${meta.appleTouchIcon}" />`,
     );
   }
 
@@ -117,15 +120,23 @@ const sitemapUrls = [
       loc: `${SITE.origin}${product.route}`,
       priority: '0.9',
       changefreq: 'weekly',
-      image: { loc: `${SITE.origin}/og/${product.slug}.png`, title: product.name, caption: product.description.vi }
+      image: {
+        loc: `${SITE.origin}/og/${product.slug}.png`,
+        title: product.name,
+        caption: product.description.vi,
+      },
     },
     { loc: `${SITE.origin}${product.route}privacy.html`, priority: '0.4', changefreq: 'yearly' },
-    { loc: `${SITE.origin}${product.route}terms.html`, priority: '0.4', changefreq: 'yearly' }
-  ])
+    { loc: `${SITE.origin}${product.route}terms.html`, priority: '0.4', changefreq: 'yearly' },
+  ]),
 ];
 
 const escapeXml = (value) =>
-  String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
@@ -170,7 +181,7 @@ const aliases = {
   padnotesai: '/PadNotesAI/',
   aipadnotes: '/PadNotesAI/',
   mynasmanager: '/MyNASManager/',
-  lunarblock: '/LunarBlock/'
+  lunarblock: '/LunarBlock/',
 };
 
 for (const [alias, target] of Object.entries(aliases)) {
@@ -191,7 +202,7 @@ for (const [alias, target] of Object.entries(aliases)) {
     <script>window.location.replace(${JSON.stringify(target)});</script>
   </body>
 </html>
-`
+`,
   );
 }
 

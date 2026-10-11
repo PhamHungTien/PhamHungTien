@@ -23,15 +23,18 @@ export const Navbar: React.FC<NavbarProps> = ({
   releaseUrl,
   arm64DownloadUrl,
   intelDownloadUrl,
-  hasSplitDownloads
+  hasSplitDownloads,
 }) => {
   const { lang, changeLanguage, t } = useI18n();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [desktopDownloadOpen, setDesktopDownloadOpen] = useState(false);
-  const [theme, setTheme] = useState<'light' | 'dark'>(() =>
-    document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light'
-  );
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [themeReady, setThemeReady] = useState(false);
+  useEffect(() => {
+    setTheme(document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
+    setThemeReady(true);
+  }, []);
   const desktopDownloadRef = useRef<HTMLDivElement | null>(null);
   const mobileNavigationRef = useRef<HTMLElement | null>(null);
   const mobileToggleRef = useRef<HTMLButtonElement | null>(null);
@@ -46,6 +49,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   }, []);
 
   useEffect(() => {
+    if (!themeReady) return;
     document.documentElement.setAttribute('data-theme', theme);
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
@@ -60,9 +64,12 @@ export const Navbar: React.FC<NavbarProps> = ({
 
     const themeColorMeta = document.querySelector('meta[name="theme-color"]');
     if (themeColorMeta) {
-      themeColorMeta.setAttribute('content', getComputedStyle(document.documentElement).getPropertyValue('--glass-page').trim());
+      themeColorMeta.setAttribute(
+        'content',
+        getComputedStyle(document.documentElement).getPropertyValue('--glass-page').trim(),
+      );
     }
-  }, [theme]);
+  }, [theme, themeReady]);
 
   // Sync theme across tabs
   useEffect(() => {
@@ -76,7 +83,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   }, []);
 
   const toggleTheme = () => {
-    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
   };
 
   useEffect(() => {
@@ -90,7 +97,12 @@ export const Navbar: React.FC<NavbarProps> = ({
         setMobileMenuOpen(false);
       }
       if (event.key === 'Tab') {
-        const controls = [mobileToggleRef.current, ...Array.from(mobileNavigationRef.current?.querySelectorAll<HTMLAnchorElement>('a[href]') ?? [])].filter((element): element is HTMLButtonElement | HTMLAnchorElement => element !== null);
+        const controls = [
+          mobileToggleRef.current,
+          ...Array.from(
+            mobileNavigationRef.current?.querySelectorAll<HTMLAnchorElement>('a[href]') ?? [],
+          ),
+        ].filter((element): element is HTMLButtonElement | HTMLAnchorElement => element !== null);
         const index = controls.indexOf(document.activeElement as HTMLAnchorElement);
         if (event.shiftKey && index <= 0) {
           event.preventDefault();
@@ -101,8 +113,10 @@ export const Navbar: React.FC<NavbarProps> = ({
         }
       }
     };
-    const desktop = window.matchMedia('(min-width: 1024px)');
-    const closeOnDesktop = () => { if (desktop.matches) setMobileMenuOpen(false); };
+    const desktop = window.matchMedia('(min-width: 1081px)');
+    const closeOnDesktop = () => {
+      if (desktop.matches) setMobileMenuOpen(false);
+    };
     window.addEventListener('keydown', handleKeys);
     desktop.addEventListener('change', closeOnDesktop);
     return () => {
@@ -180,19 +194,25 @@ export const Navbar: React.FC<NavbarProps> = ({
   return (
     <>
       <nav className="phtv-navbar fixed top-0 left-0 right-0 z-[100]">
-        <div className={`phtv-navbar__inner mx-auto flex max-w-6xl items-center justify-between border-b px-4 py-3 transition-colors duration-300 md:px-6 ${
-          scrolled
-            ? 'glass-panel border-white/10 shadow-[0_18px_50px_rgba(0,0,0,0.28)]'
-            : 'border-white/6 bg-black/10 backdrop-blur-md'
-        }`}>
-          <a href="/" className="phtv-home-control" aria-label={lang === 'vi' ? 'Trang chủ' : 'Home'}>
+        <div
+          className={`phtv-navbar__inner mx-auto flex max-w-6xl items-center justify-between border-b px-4 py-3 transition-colors duration-300 md:px-6 ${
+            scrolled
+              ? 'glass-panel border-white/10 shadow-[0_18px_50px_rgba(0,0,0,0.28)]'
+              : 'border-white/6 bg-black/10 backdrop-blur-md'
+          }`}
+        >
+          <a
+            href="/"
+            className="phtv-home-control"
+            aria-label={lang === 'vi' ? 'Trang chủ' : 'Home'}
+          >
             <Home size={18} aria-hidden="true" />
           </a>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-7">
-            <a 
-              href="/" 
+          <div className="phtv-desktop-navigation hidden lg:flex items-center gap-7">
+            <a
+              href="/"
               className="flex items-center gap-2 text-sm font-semibold text-slate-400 transition-colors hover:text-slate-100"
             >
               {t('nav.home' as any)}
@@ -200,10 +220,12 @@ export const Navbar: React.FC<NavbarProps> = ({
             {navLinks.map((item) => (
               <a
                 key={item.name}
-                href={item.href} 
+                href={item.href}
                 onClick={(e) => handleLinkClick(e, item.tab, item.href)}
                 className={`flex items-center gap-2 text-sm font-semibold transition-colors ${
-                  item.tab === 'community' && item.tab === activeTab ? 'text-white' : 'text-slate-400 hover:text-slate-100'
+                  item.tab === 'community' && item.tab === activeTab
+                    ? 'text-white'
+                    : 'text-slate-400 hover:text-slate-100'
                 }`}
               >
                 {item.name}
@@ -219,22 +241,19 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               onClick={toggleTheme}
               className="phtv-nav-control phtv-icon-control rounded-lg border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition-colors hover:text-white flex items-center justify-center min-h-[38px] min-w-[38px]"
-              aria-label={theme === 'dark' ? (lang === 'vi' ? 'Bật giao diện sáng' : 'Use light mode') : (lang === 'vi' ? 'Bật giao diện tối' : 'Use dark mode')}
+              aria-label={
+                theme === 'dark'
+                  ? lang === 'vi'
+                    ? 'Bật giao diện sáng'
+                    : 'Use light mode'
+                  : lang === 'vi'
+                    ? 'Bật giao diện tối'
+                    : 'Use dark mode'
+              }
             >
               {theme === 'dark' ? <Icons.Sun size={18} /> : <Icons.Moon size={18} />}
             </button>
 
-            <a 
-              href="https://github.com/PhamHungTien/PHTV" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="phtv-nav-control phtv-icon-control hidden items-center justify-center rounded-lg border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition-colors hover:text-white sm:flex"
-              title="GitHub Repository"
-              aria-label="Xem mã nguồn trên GitHub"
-            >
-              <Icons.Github size={18} aria-hidden="true" />
-            </a>
-            
             {hasSplitDownloads ? (
               <div
                 ref={desktopDownloadRef}
@@ -253,10 +272,17 @@ export const Navbar: React.FC<NavbarProps> = ({
                 >
                   <Icons.Download size={18} />
                   <span>{downloadLabel}</span>
-                  <Icons.ChevronDown size={16} className={`transition-transform ${desktopDownloadOpen ? 'rotate-180' : ''}`} />
+                  <Icons.ChevronDown
+                    size={16}
+                    className={`transition-transform ${desktopDownloadOpen ? 'rotate-180' : ''}`}
+                  />
                 </button>
 
-                <div id="phtv-download-options" inert={!desktopDownloadOpen} className={`absolute right-0 top-full pt-3 transition-[opacity,transform] duration-200 ${desktopDownloadOpen ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none translate-y-2 opacity-0'}`}>
+                <div
+                  id="phtv-download-options"
+                  inert={!desktopDownloadOpen}
+                  className={`absolute right-0 top-full pt-3 transition-[opacity,transform] duration-200 ${desktopDownloadOpen ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none translate-y-2 opacity-0'}`}
+                >
                   <div className="phtv-download-menu w-[270px] rounded-lg border border-white/10 bg-white p-2 shadow-lg">
                     <div className="space-y-1">
                       <a
@@ -268,7 +294,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                           <Icons.Download size={18} />
                           <span>
                             <span className="block text-sm font-black">Apple Silicon</span>
-                            <span className="block text-xs text-white/75">{t('nav.apple_silicon_desc')}</span>
+                            <span className="block text-xs text-white/75">
+                              {t('nav.apple_silicon_desc')}
+                            </span>
                           </span>
                         </span>
                         <Icons.ArrowRight size={18} className="shrink-0" />
@@ -283,7 +311,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                           <Icons.Download size={18} />
                           <span>
                             <span className="block text-sm font-black">Intel</span>
-                          <span className="block text-xs text-slate-500">{t('nav.intel_desc')}</span>
+                            <span className="block text-xs text-slate-500">
+                              {t('nav.intel_desc')}
+                            </span>
                           </span>
                         </span>
                         <Icons.ArrowRight size={18} className="shrink-0 text-slate-400" />
@@ -298,7 +328,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                           <Icons.Terminal size={18} />
                           <span>
                             <span className="block text-sm font-black">Homebrew</span>
-                            <span className="block text-xs text-slate-500">{t('nav.homebrew_desc')}</span>
+                            <span className="block text-xs text-slate-500">
+                              {t('nav.homebrew_desc')}
+                            </span>
                           </span>
                         </span>
                         <Icons.ArrowRight size={18} className="shrink-0" />
@@ -320,16 +352,20 @@ export const Navbar: React.FC<NavbarProps> = ({
             )}
 
             {/* Mobile Menu Button */}
-            <button 
+            <button
               ref={mobileToggleRef}
               type="button"
-              className="phtv-nav-control phtv-icon-control inline-flex items-center justify-center rounded-lg border border-white/8 bg-white/[0.03] text-slate-300 transition-colors hover:text-white lg:hidden"
+              className="phtv-menu-toggle phtv-nav-control phtv-icon-control inline-flex items-center justify-center rounded-lg border border-white/8 bg-white/[0.03] text-slate-300 transition-colors hover:text-white lg:hidden"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label={mobileMenuOpen ? t('nav.close_menu') : t('nav.open_menu')}
               aria-expanded={mobileMenuOpen}
               aria-controls="phtv-mobile-navigation"
             >
-              {mobileMenuOpen ? <Icons.X size={20} aria-hidden="true" /> : <Icons.Menu size={20} aria-hidden="true" />}
+              {mobileMenuOpen ? (
+                <Icons.X size={20} aria-hidden="true" />
+              ) : (
+                <Icons.Menu size={20} aria-hidden="true" />
+              )}
             </button>
           </div>
         </div>
@@ -337,8 +373,19 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {mobileMenuOpen && (
         <div className="phtv-navigation-overlay">
-          <button className="phtv-navigation-backdrop" type="button" tabIndex={-1} aria-label={t('nav.close_menu')} onClick={() => setMobileMenuOpen(false)} />
-          <nav id="phtv-mobile-navigation" ref={mobileNavigationRef} className="phtv-navigation-panel" aria-label={lang === 'vi' ? 'Điều hướng PHTV' : 'PHTV navigation'}>
+          <button
+            className="phtv-navigation-backdrop"
+            type="button"
+            tabIndex={-1}
+            aria-label={t('nav.close_menu')}
+            onClick={() => setMobileMenuOpen(false)}
+          />
+          <nav
+            id="phtv-mobile-navigation"
+            ref={mobileNavigationRef}
+            className="phtv-navigation-panel"
+            aria-label={lang === 'vi' ? 'Điều hướng PHTV' : 'PHTV navigation'}
+          >
             <div className="phtv-navigation-links">
               <a href="/" onClick={() => setMobileMenuOpen(false)}>
                 <Icons.ArrowRight className="phtv-navigation-back" size={18} aria-hidden="true" />
@@ -347,7 +394,14 @@ export const Navbar: React.FC<NavbarProps> = ({
               {navLinks.map((item, index) => {
                 const Icon = [Icons.Image, Icons.MessageSquare][index];
                 return (
-                  <a key={item.href} href={item.href} onClick={(event) => handleLinkClick(event, item.tab, item.href)} aria-current={item.tab === 'community' && activeTab === 'community' ? 'page' : undefined}>
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    onClick={(event) => handleLinkClick(event, item.tab, item.href)}
+                    aria-current={
+                      item.tab === 'community' && activeTab === 'community' ? 'page' : undefined
+                    }
+                  >
                     <Icon size={18} aria-hidden="true" />
                     <span>{item.name}</span>
                     <Icons.ArrowRight size={15} aria-hidden="true" />
@@ -360,18 +414,40 @@ export const Navbar: React.FC<NavbarProps> = ({
               <div className="phtv-navigation-download-grid">
                 {hasSplitDownloads ? (
                   <>
-                    <a href={arm64DownloadUrl ?? releaseUrl} onClick={handleDirectDownloadClick}><Icons.Download size={16} aria-hidden="true" />Apple Silicon</a>
-                    <a href={intelDownloadUrl ?? releaseUrl} onClick={handleDirectDownloadClick}><Icons.Download size={16} aria-hidden="true" />Intel</a>
+                    <a href={arm64DownloadUrl ?? releaseUrl} onClick={handleDirectDownloadClick}>
+                      <Icons.Download size={16} aria-hidden="true" />
+                      Apple Silicon
+                    </a>
+                    <a href={intelDownloadUrl ?? releaseUrl} onClick={handleDirectDownloadClick}>
+                      <Icons.Download size={16} aria-hidden="true" />
+                      Intel
+                    </a>
                   </>
                 ) : (
-                  <a href={downloadUrl} onClick={handleDirectDownloadClick}><Icons.Download size={16} aria-hidden="true" />{downloadLabel}</a>
+                  <a href={downloadUrl} onClick={handleDirectDownloadClick}>
+                    <Icons.Download size={16} aria-hidden="true" />
+                    {downloadLabel}
+                  </a>
                 )}
               </div>
-              <a className="phtv-navigation-homebrew" href="#tutorial" onClick={handleInstallClick}><Icons.Terminal size={16} aria-hidden="true" />Homebrew</a>
+              <a className="phtv-navigation-homebrew" href="#tutorial" onClick={handleInstallClick}>
+                <Icons.Terminal size={16} aria-hidden="true" />
+                Homebrew
+              </a>
             </div>
             <div className="phtv-navigation-footer">
-              <a href="https://github.com/PhamHungTien/PHTV" target="_blank" rel="noopener noreferrer"><Icons.Github size={17} aria-hidden="true" />GitHub</a>
-              <a href="mailto:contact@phamhungtien.com"><Icons.Mail size={17} aria-hidden="true" />Email</a>
+              <a
+                href="https://github.com/PhamHungTien/PHTV"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Icons.Github size={17} aria-hidden="true" />
+                GitHub
+              </a>
+              <a href="mailto:contact@phamhungtien.com">
+                <Icons.Mail size={17} aria-hidden="true" />
+                Email
+              </a>
             </div>
           </nav>
         </div>

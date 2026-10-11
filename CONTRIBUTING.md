@@ -1,32 +1,46 @@
-# Hướng dẫn đóng góp cho PHTV
+# Contributing to the website
 
-Chào mừng bạn đã quan tâm đến việc đóng góp cho dự án PHTV! Chúng tôi trân trọng mọi sự hỗ trợ từ cộng đồng để làm cho bộ gõ tiếng Việt trên macOS trở nên tốt hơn.
+This repository contains the portfolio website and application landing pages. The native
+PHTV application is maintained in [PhamHungTien/PHTV](https://github.com/PhamHungTien/PHTV).
 
-## Cách thức đóng góp
+## Development
 
-### 1. Báo lỗi (Bug Reports)
-Nếu bạn phát hiện lỗi, vui lòng tạo một **Issue** trên GitHub với các thông tin sau:
-- Mô tả chi tiết về lỗi.
-- Các bước để tái hiện lỗi.
-- Phiên bản macOS bạn đang sử dụng.
-- Hình ảnh hoặc video minh họa (nếu có).
+Use Node.js 24 LTS (`nvm use`), then run `npm ci` at the repository root. npm workspaces
+install both web applications using one lockfile.
 
-### 2. Đề xuất tính năng (Feature Requests)
-Chúng tôi luôn lắng nghe các ý tưởng mới. Bạn có thể mở một Issue mới và gắn nhãn `enhancement` để đề xuất.
+- `npm run dev`: portfolio and six application landing pages.
+- `npm run dev:phtv`: the PHTV website at `/PHTV/`.
+- `npm run images`: regenerate responsive images without changing source artwork.
+- `npm run og`: regenerate social previews and legal-page social metadata.
+- `npm run format`: apply the shared source formatting rules.
+- `npm run type-check:all`: check both applications with strict TypeScript.
+- `npm run build:all`: build both applications and prerender public pages.
+- `npm run verify:ui` and `npm run verify:social`: validate built output.
 
-### 3. Đóng góp mã nguồn (Pull Requests)
-1. Fork dự án này.
-2. Tạo một nhánh mới (`git checkout -b feature/AmazingFeature`).
-3. Commit các thay đổi của bạn (`git commit -m 'Add some AmazingFeature'`).
-4. Push lên nhánh vừa tạo (`git push origin feature/AmazingFeature`).
-5. Mở một Pull Request.
+Run `npm run format:check`, type checking, builds and output verification before opening
+a pull request. Firestore changes also require `npm run test:rules --workspace
+@phamhungtien/phtv-web` (Java 21 is needed for the emulator).
 
-## Quy tắc lập trình
-- Tuân thủ phong cách lập trình Swift/SwiftUI của dự án.
-- Viết mã nguồn sạch, dễ hiểu và có ghi chú cho các logic phức tạp.
-- Đảm bảo các thay đổi không làm ảnh hưởng đến hiệu năng và quyền riêng tư của người dùng.
+## Project conventions
 
-## Giấy phép
-Bằng cách đóng góp, bạn đồng ý rằng các thay đổi của bạn sẽ được phát hành dưới giấy phép **GNU GPL v3.0**.
+Shared React components belong in `src/components`; application data belongs in `src/data`.
+Shared build settings belong in `config`. Both applications use `tsconfig.base.json`.
+Navigation dimensions and material/color tokens belong in `assets/liquid-glass.css`.
+Avoid adding page-specific overrides for shared control sizes.
 
-Cảm ơn bạn đã đồng hành cùng PHTV! 🚀
+The portfolio, non-PHTV applications and their legal pages use English only. PHTV
+defaults to Vietnamese and supports English. Preserve existing translations and use the
+shared language switch component when adding controls.
+
+Use native links for navigation, accessible names for controls, explicit image dimensions,
+and reduced-motion fallbacks. Keep original screenshots available for enlarged views.
+Generated image files are committed so deployment does not need image processing.
+
+## Security and licensing
+
+Never put private keys, service-account credentials or email API secrets in browser code,
+Vite `define`, committed environment files or logs. Use GitHub Secrets for notification
+workflows. Firebase authorization is enforced by Firestore rules, not by hiding buttons.
+
+Follow the repository's [GPL-3.0 license](LICENSE). Report defects with reproduction steps
+and expected behavior; keep pull requests focused and explain their validation.

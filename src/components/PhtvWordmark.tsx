@@ -2,7 +2,7 @@ const rows = [
   ['P', 'RECISION'],
   ['H', 'YBRID'],
   ['T', 'YPING'],
-  ['V', 'IETNAMESE']
+  ['V', 'IETNAMESE'],
 ] as const;
 
 export function PhtvWordmark() {

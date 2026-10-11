@@ -21,12 +21,17 @@ async function secure(directory) {
         "img-src 'self' data: blob: https:",
         "font-src 'self' data:",
         "connect-src 'self' https://api.github.com https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.firebaseapp.com https://cloudflareinsights.com",
-        "frame-src https://www.youtube.com https://www.youtube-nocookie.com https://*.firebaseapp.com https://accounts.google.com",
+        'frame-src https://www.youtube.com https://www.youtube-nocookie.com https://*.firebaseapp.com https://accounts.google.com',
         "worker-src 'self' blob:",
-        "object-src 'none'", "base-uri 'self'", "form-action 'self'"
+        "object-src 'none'",
+        "base-uri 'self'",
+        "form-action 'self'",
       ].join('; ');
       const escaped = policy.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
-      html = html.replace(/<meta\b[^>]*charset[^>]*>/i, `$&\n<meta data-site-security http-equiv="Content-Security-Policy" content="${escaped}">\n<meta data-site-security name="referrer" content="strict-origin-when-cross-origin">`);
+      html = html.replace(
+        /<meta\b[^>]*charset[^>]*>/i,
+        `$&\n<meta data-site-security http-equiv="Content-Security-Policy" content="${escaped}">\n<meta data-site-security name="referrer" content="strict-origin-when-cross-origin">`,
+      );
       await writeFile(path, html);
     }
   }

@@ -138,33 +138,13 @@
             <a href="terms.html" data-vi="Điều khoản" data-en="Terms of Use">Điều khoản</a>
         </nav>
 
-        <div class="lang-toggle">
-            <button data-language="vi">VI</button>
-            <button class="active" data-language="en">EN</button>
-        </div>
+
 
         <!-- TIẾNG VIỆT -->
-        <div class="section active" id="vi">
-<h1>Chính sách quyền riêng tư</h1>
-<p><em>Cập nhật lần cuối: 04/10/2026</em></p>
-<p>vTTS tạo giọng đọc ngay trên thiết bị bằng tài nguyên đi kèm ứng dụng. Bạn không cần tài khoản hoặc gửi sách, văn bản lên máy chủ của nhà phát triển để nghe.</p>
-<h2>1. Xử lý trên thiết bị</h2>
-<p>Việc xử lý văn bản và tạo âm thanh diễn ra trên thiết bị, không cần internet và không tải mô hình giọng đọc trong lúc sử dụng. Ứng dụng không tích hợp SDK quảng cáo hoặc công cụ phân tích hành vi của bên thứ ba.</p>
-<h2>2. Dữ liệu được lưu cục bộ</h2>
-<p>Ứng dụng lưu sách đã nhập, vị trí đọc, mục yêu thích, cài đặt và lịch sử đọc trên thiết bị. Bản nháp văn bản được lưu khi bạn bật tùy chọn ghi nhớ bản nháp. Âm thanh tạm được tạo để phát hoặc xuất tệp.</p>
-<p>Bạn có thể xóa sách trong thư viện, dọn lịch sử đọc hoặc tắt ghi nhớ bản nháp trong ứng dụng. Tệp âm thanh bạn đã xuất ra vị trí khác được quản lý tại vị trí đó. Dữ liệu có thể được hệ điều hành sao lưu theo cài đặt sao lưu của bạn.</p>
-<h2>3. Nhập, xuất và chia sẻ</h2>
-<p>Bạn chủ động chọn tệp để nhập, nơi lưu âm thanh và ứng dụng nhận nội dung chia sẻ. Nếu chọn dịch vụ lưu trữ đám mây hoặc ứng dụng khác, dịch vụ đó xử lý nội dung theo chính sách riêng của họ. vTTS không tự gửi nội dung tới dịch vụ đám mây để tổng hợp giọng nói.</p>
-<h2>4. Máy chủ mạng nội bộ tùy chọn</h2>
-<p>Máy chủ HTTP mặc định tắt. Khi bạn bật, thiết bị khác có địa chỉ máy chủ và token hợp lệ có thể gửi văn bản và nhận âm thanh qua mạng. Văn bản được xử lý trên thiết bị đang chạy vTTS.</p>
-<ul><li>Token được tạo khi khởi động máy chủ. Giữ kín token và chỉ dùng trong mạng tin cậy.</li><li>HTTP không mã hóa lưu lượng bằng TLS. Không công khai cổng máy chủ ra internet; khả năng truy cập còn phụ thuộc cấu hình mạng và tường lửa của bạn.</li><li>Trên iPhone/iPad, máy chủ chỉ hoạt động khi ứng dụng ở màn hình trước. Khi chuyển ứng dụng hoặc khóa màn hình, máy chủ dừng.</li></ul>
-<h2>5. Quyền truy cập và liên hệ</h2>
-<p>Ứng dụng truy cập các tệp bạn chọn để nhập hoặc xuất và dùng quyền mạng cục bộ cho máy chủ LAN. Khi mở liên kết Facebook, website hoặc gửi email hỗ trợ, bạn sử dụng dịch vụ bên ngoài. Nội dung bạn chủ động gửi khi liên hệ được dùng để trả lời và hỗ trợ yêu cầu của bạn.</p>
-<p>Email: <a href="mailto:contact@phamhungtien.com">contact@phamhungtien.com</a><br>Fanpage: <a href="https://www.facebook.com/vTTSOffline" rel="noopener noreferrer">vTTS trên Facebook</a></p>
-        </div>
+
 
         <!-- ENGLISH -->
-        <div class="section" id="en">
+        <div class="section active" id="en">
 <h1>Privacy Policy</h1>
 <p><em>Last updated: October 4, 2026</em></p>
 <p>vTTS generates speech on your device using resources bundled with the app. You can listen without an account and without sending books or text to a developer-operated server.</p>
@@ -188,27 +168,6 @@
         </div>
     </div>
 
-    <script>
-        document.querySelectorAll('[data-language]').forEach(button => button.addEventListener('click', () => switchLang(button.dataset.language)));
-        function switchLang(lang) {
-            document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.lang-toggle button').forEach(el => el.classList.remove('active'));
-            document.getElementById(lang).classList.add('active');
-            document.querySelectorAll('.lang-toggle button').forEach(button => {
-                const selected = button.dataset.language === lang;
-                button.classList.toggle('active', selected);
-                button.setAttribute('aria-pressed', String(selected));
-            });
-            document.documentElement.lang = lang;
-            document.querySelectorAll('[data-vi][data-en]').forEach(el => { el.textContent = el.dataset[lang]; });
-            try { localStorage.setItem('portfolio_preferred_lang_v2', lang); } catch {}
-        }
-        let initialLanguage = document.documentElement.lang === 'vi' ? 'vi' : 'en';
-        try {
-            const saved = localStorage.getItem('portfolio_preferred_lang_v2');
-            if (saved === 'vi' || saved === 'en') initialLanguage = saved;
-        } catch {}
-        switchLang(initialLanguage);
-    </script>
+
 </body>
 </html>

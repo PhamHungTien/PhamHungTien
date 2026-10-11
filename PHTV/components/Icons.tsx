@@ -1,10 +1,10 @@
-import { 
-  Download, 
-  Github, 
-  Zap, 
-  Shield, 
-  Globe, 
-  Keyboard, 
+import {
+  Download,
+  Github,
+  Zap,
+  Shield,
+  Globe,
+  Keyboard,
   RefreshCw,
   Terminal,
   CheckCircle2,
@@ -65,7 +65,7 @@ import {
   Instagram,
   Camera,
   Music2,
-  Cake
+  Cake,
 } from 'lucide-react';
 
 export const Icons = {
@@ -135,5 +135,5 @@ export const Icons = {
   Instagram,
   Camera,
   Music2,
-  Cake
+  Cake,
 };

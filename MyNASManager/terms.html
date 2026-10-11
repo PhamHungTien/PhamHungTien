@@ -152,10 +152,7 @@
             <a href="https://phamhungtien.com/MyNASManager/terms.html" class="active">Terms of Use</a>
         </nav>
 
-        <div class="lang-toggle">
-            <button data-language="vi">VI</button>
-            <button class="active" data-language="en">EN</button>
-        </div>
+
 
         <!-- ENGLISH -->
         <div id="en" class="section active">
@@ -189,59 +186,11 @@
         </div>
 
         <!-- VIETNAMESE -->
-        <div id="vi" class="section">
-            <h1>Điều Khoản Sử Dụng</h1>
-            <p>Cập nhật lần cuối: 14 tháng 6, 2026</p>
 
-            <h2>1. Chấp Nhận Điều Khoản</h2>
-            <p>Bằng việc tải xuống, cài đặt hoặc sử dụng My NAS Manager ("Ứng dụng"), bạn đồng ý tuân thủ các Điều Khoản Sử Dụng này. Nếu bạn không đồng ý, vui lòng ngừng sử dụng Ứng dụng.</p>
-
-            <h2>2. Mô Tả Dịch Vụ</h2>
-            <p>My NAS Manager là ứng dụng client trên hệ điều hành iOS giúp kết nối, giám sát và quản lý các thiết bị lưu trữ mạng Synology NAS (DSM). Ứng dụng cung cấp các biểu đồ giám sát tài nguyên, duyệt và quản lý tệp tin (File Station), quản lý gói phần mềm dịch vụ và giả lập terminal SSH.</p>
-
-            <h2>3. Bảo Mật Tài Khoản & Cấu Hình</h2>
-            <p>Bạn tự chịu trách nhiệm hoàn toàn đối với việc bảo mật thông tin đăng nhập và kết nối của mình (địa chỉ host, cổng, tài khoản, mật khẩu, mã xác thực 2FA, cổng SSH). Chúng tôi không lưu trữ các thông tin này trên máy chủ của mình. Bạn đồng ý rằng tất cả các hành động được thực hiện qua ứng dụng trên máy chủ NAS của bạn đều do bạn ủy quyền.</p>
-
-            <h2>4. Kết Nối Mạng & Chi Phí</h2>
-            <p>Ứng dụng yêu cầu kết nối mạng hoạt động (Wi-Fi hoặc Dữ liệu di động) để giao tiếp với máy chủ NAS của bạn. Bạn tự chịu trách nhiệm đối với bất kỳ chi phí phát sinh từ nhà mạng nào khi sử dụng ứng dụng để truyền tải dữ liệu hoặc kiểm soát từ xa.</p>
-
-            <h2>5. Dòng Lệnh SSH & Lệnh Hệ Thống</h2>
-            <p>Công cụ giả lập SSH Terminal cho phép bạn truy vấn và gửi các câu lệnh quản trị hệ thống trực tiếp đến máy chủ NAS của bạn. Bạn nên cực kỳ cẩn trọng khi thực hiện các sửa đổi, chạy tập lệnh hoặc thay đổi hệ thống. Nhà phát triển ứng dụng không chịu trách nhiệm với bất kỳ hiện tượng mất dữ liệu, hỏng ứng dụng hoặc lỗi hệ điều hành DSM nào trên thiết bị của bạn.</p>
-
-            <h2>6. Giới Hạn Trách Nhiệm</h2>
-            <p>My NAS Manager được cung cấp trên cơ sở "nguyên trạng" và "sẵn có" không kèm theo bất kỳ sự đảm bảo nào. Trong phạm vi tối đa do pháp luật cho phép, nhà phát triển không chịu trách nhiệm đối với bất kỳ hư hỏng hệ thống, lỗi dữ liệu, rò rỉ bảo mật hệ thống mạng hoặc lỗi vận hành máy chủ Synology NAS phát sinh từ việc sử dụng ứng dụng.</p>
-
-            <h2>7. Thay Đổi Điều Khoản</h2>
-            <p>Chúng tôi có thể cập nhật các Điều Khoản Sử Dụng này theo thời gian. Việc tiếp tục sử dụng ứng dụng sau khi các thay đổi được công bố đồng nghĩa với việc bạn đồng ý với các điều khoản cập nhật.</p>
-
-            <h2>8. Liên Hệ</h2>
-            <p>Mọi câu hỏi hoặc thắc mắc về Điều Khoản Sử Dụng này, vui lòng liên hệ:<br>
-            <strong>contact@phamhungtien.com</strong></p>
-        </div>
 
         <div class="footer">© 2026 Pham Hung Tien. All rights reserved.</div>
     </div>
 
-    <script>
-        document.querySelectorAll('[data-language]').forEach(button => button.addEventListener('click', () => switchLang(button.dataset.language)));
-        function switchLang(lang) {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.getElementById(lang).classList.add('active');
-            document.querySelectorAll('.lang-toggle button').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.lang-toggle button').forEach(button => {
-                const selected = button.dataset.language === lang;
-                button.classList.toggle('active', selected);
-                button.setAttribute('aria-pressed', String(selected));
-            });
-            document.documentElement.lang = lang;
-            try { localStorage.setItem('portfolio_preferred_lang_v2', lang); } catch {}
-        }
-        let initialLanguage = document.documentElement.lang === 'vi' ? 'vi' : 'en';
-        try {
-            const saved = localStorage.getItem('portfolio_preferred_lang_v2');
-            if (saved === 'vi' || saved === 'en') initialLanguage = saved;
-        } catch {}
-        switchLang(initialLanguage);
-    </script>
+
 </body>
 </html>

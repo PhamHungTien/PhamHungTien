@@ -1,6 +1,7 @@
 # Shared Liquid Glass web design
 
 References reviewed on 10 October 2026:
+
 - https://developer.apple.com/design/human-interface-guidelines/materials
 - https://developer.apple.com/videos/play/wwdc2025/219/
 

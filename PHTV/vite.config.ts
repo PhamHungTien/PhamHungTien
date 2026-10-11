@@ -1,62 +1,33 @@
-import path from 'path';
+import path from 'node:path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import legacy from '@vitejs/plugin-legacy';
-import { copyFileSync, existsSync } from 'fs';
+import tailwindcss from '@tailwindcss/vite';
+import { copyFileSync, existsSync } from 'node:fs';
+import { clientBuild, sharedResolve } from '../config/build.ts';
 
-// Generate build timestamp for cache busting
-const buildTimestamp = Date.now();
-
-export default defineConfig(() => {
-    return {
-      base: '/PHTV/',
-      server: {
-        port: 3000,
-        host: '0.0.0.0',
+export default defineConfig(({ isSsrBuild }) => ({
+  base: '/PHTV/',
+  server: { port: 3000, host: '127.0.0.1' },
+  plugins: [
+    react(),
+    ...(!isSsrBuild ? [tailwindcss()] : []),
+    {
+      name: 'copy-headers',
+      writeBundle() {
+        if (!isSsrBuild && existsSync('_headers')) copyFileSync('_headers', 'dist/_headers');
       },
-      plugins: [
-        react(),
-        legacy({
-          targets: ['defaults', 'not IE 11'],
-        }),
-        {
-          name: 'copy-headers',
-          writeBundle() {
-            // Copy _headers file to dist for Cloudflare Pages/Netlify
-            if (existsSync('_headers')) {
-              copyFileSync('_headers', 'dist/_headers');
-            }
-          }
-        }
-      ],
-      define: {
-        // Never `define` a server-side secret here. Vite inlines the value verbatim into
-        // the client bundle, which ships to GitHub Pages — so a GEMINI_API_KEY define puts
-        // the real key on a public URL the moment any source file references it. Call such
-        // APIs from a backend instead.
-        '__BUILD_TIMESTAMP__': JSON.stringify(buildTimestamp)
-      },
-      resolve: {
-        // Shared components live in ../src; keep them on this app's React runtime.
-        dedupe: ['react', 'react-dom'],
-        alias: {
-          '@': path.resolve(__dirname, '.'),
-        }
-      },
-      build: {
-        outDir: 'dist',
-        sourcemap: false,
-        minify: 'terser',
-        rollupOptions: {
-          output: {
-            entryFileNames: `assets/[name]-[hash].js`,
-            chunkFileNames: `assets/[name]-[hash].js`,
-            assetFileNames: `assets/[name]-[hash].[ext]`,
-            manualChunks: {
-              'vendor': ['react', 'react-dom', 'lucide-react']
-            }
-          }
-        }
-      }
-    };
-});
+    },
+  ],
+  // Only public build metadata belongs in the client bundle.
+  define: { __BUILD_TIMESTAMP__: JSON.stringify(Date.now()) },
+  resolve: { ...sharedResolve, alias: { '@': path.resolve(import.meta.dirname, '.') } },
+  build: {
+    ...clientBuild,
+    outDir: isSsrBuild ? 'dist-ssr' : 'dist',
+    copyPublicDir: !isSsrBuild,
+    ssrEmitAssets: false,
+    rolldownOptions: isSsrBuild
+      ? { output: { entryFileNames: 'entry-server.js' } }
+      : clientBuild.rolldownOptions,
+  },
+}));

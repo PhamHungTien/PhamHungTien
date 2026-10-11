@@ -9,7 +9,7 @@ import {
   Linkedin,
   Mail,
   Music2,
-  type LucideIcon
+  type LucideIcon,
 } from 'lucide-react';
 import type { CSSProperties } from 'react';
 import { socialProfiles, type SocialProfileId } from '../data/socials';
@@ -28,7 +28,7 @@ const icons: Record<SocialProfileId, LucideIcon> = {
   tiktok: Music2,
   linkedin: Linkedin,
   github: Github,
-  email: Mail
+  email: Mail,
 };
 
 export function ContactSection({ t }: ContactSectionProps) {

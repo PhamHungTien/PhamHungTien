@@ -1,13 +1,7 @@
 export type Lang = 'vi' | 'en';
 
 export type ProductSlug =
-  | 'phtv'
-  | 'lunarv'
-  | 'padcodeai'
-  | 'padnotesai'
-  | 'mynasmanager'
-  | 'lunarblock'
-  | 'vtts';
+  'phtv' | 'lunarv' | 'padcodeai' | 'padnotesai' | 'mynasmanager' | 'lunarblock' | 'vtts';
 
 export type Localized<T = string> = Record<Lang, T>;
 

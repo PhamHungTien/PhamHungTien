@@ -1,12 +1,12 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from 'tailwindcss';
 
 export default {
   content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
-    "./App.tsx",
-    "./index.tsx",
+    './index.html',
+    './src/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
+    './App.tsx',
+    './index.tsx',
   ],
   darkMode: 'class',
   theme: {
@@ -24,14 +24,21 @@ export default {
           800: '#9f1239',
           900: '#881337',
           950: '#4c0519',
-        }
+        },
       },
       fontFamily: {
-        sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Text"', '"Helvetica Neue"', 'Arial', 'sans-serif'],
+        sans: [
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"SF Pro Text"',
+          '"Helvetica Neue"',
+          'Arial',
+          'sans-serif',
+        ],
       },
       animation: {
-        'float': 'float 6s ease-in-out infinite',
-        'shimmer': 'shimmer 2.5s linear infinite',
+        float: 'float 6s ease-in-out infinite',
+        shimmer: 'shimmer 2.5s linear infinite',
         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'gradient-x': 'gradient-x 15s ease infinite',
         'gradient-flow': 'gradient-flow 8s ease infinite',
@@ -53,9 +60,9 @@ export default {
           '0%': { 'background-position': '0% 50%' },
           '50%': { 'background-position': '100% 50%' },
           '100%': { 'background-position': '0% 50%' },
-        }
-      }
+        },
+      },
     },
   },
   plugins: [],
-} satisfies Config
+} satisfies Config;

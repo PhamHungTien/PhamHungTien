@@ -1,25 +1,57 @@
 import { readFileSync } from 'node:fs';
-import { initializeTestEnvironment, assertSucceeds, assertFails } from '@firebase/rules-unit-testing';
-import { doc, getDoc, setDoc, updateDoc, deleteDoc, collection, getDocs, query, where } from 'firebase/firestore';
+import {
+  initializeTestEnvironment,
+  assertSucceeds,
+  assertFails,
+} from '@firebase/rules-unit-testing';
+import {
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+  deleteDoc,
+  collection,
+  getDocs,
+  query,
+  where,
+} from 'firebase/firestore';
 
 const ADMIN_EMAIL = 'contact@phamhungtien.com';
 
 const testEnv = await initializeTestEnvironment({
   projectId: 'demo-phtv',
-  firestore: { rules: readFileSync('firestore.rules', 'utf8'), host: '127.0.0.1', port: 8080 }
+  firestore: { rules: readFileSync('firestore.rules', 'utf8'), host: '127.0.0.1', port: 8080 },
 });
 
 const anon = testEnv.unauthenticatedContext().firestore();
-const alice = testEnv.authenticatedContext('alice', { email: 'alice@example.com', email_verified: true }).firestore();
-const mallory = testEnv.authenticatedContext('mallory', { email: 'mallory@example.com', email_verified: true }).firestore();
-const admin = testEnv.authenticatedContext('adm', { email: ADMIN_EMAIL, email_verified: true }).firestore();
+const alice = testEnv
+  .authenticatedContext('alice', { email: 'alice@example.com', email_verified: true })
+  .firestore();
+const mallory = testEnv
+  .authenticatedContext('mallory', { email: 'mallory@example.com', email_verified: true })
+  .firestore();
+const admin = testEnv
+  .authenticatedContext('adm', { email: ADMIN_EMAIL, email_verified: true })
+  .firestore();
 // Same admin address, but the token says the address was never verified.
-const fakeAdmin = testEnv.authenticatedContext('fake', { email: ADMIN_EMAIL, email_verified: false }).firestore();
+const fakeAdmin = testEnv
+  .authenticatedContext('fake', { email: ADMIN_EMAIL, email_verified: false })
+  .firestore();
 
 const baseQuestion = (over = {}) => ({
-  authorId: 'alice', author: 'Alice', content: 'xin chào', timestamp: Date.now(),
-  replies: [], likedBy: [], isPinned: false, isReported: false, isLocked: false,
-  viewCount: 0, isAdmin: false, label: 'general', ...over
+  authorId: 'alice',
+  author: 'Alice',
+  content: 'xin chào',
+  timestamp: Date.now(),
+  replies: [],
+  likedBy: [],
+  isPinned: false,
+  isReported: false,
+  isLocked: false,
+  viewCount: 0,
+  isAdmin: false,
+  label: 'general',
+  ...over,
 });
 
 async function seed(id, data) {
@@ -30,21 +62,36 @@ async function seed(id, data) {
 async function seedNotif(id, data) {
   await testEnv.withSecurityRulesDisabled(async (ctx) => {
     await setDoc(doc(ctx.firestore(), 'notifications', id), {
-      recipientId: 'alice', senderName: 'Bob', type: 'like', questionId: 'q1',
-      content: 'x', timestamp: Date.now(), isRead: false, ...data
+      recipientId: 'alice',
+      senderName: 'Bob',
+      type: 'like',
+      questionId: 'q1',
+      content: 'x',
+      timestamp: Date.now(),
+      isRead: false,
+      ...data,
     });
   });
 }
 
-let pass = 0, fail = 0;
+let pass = 0,
+  fail = 0;
 async function check(name, fn) {
   await testEnv.clearFirestore();
-  try { await fn(); console.log(`  ✓ ${name}`); pass++; }
-  catch (e) { console.log(`  ✗ ${name}\n      ${String(e.message).slice(0, 130)}`); fail++; }
+  try {
+    await fn();
+    console.log(`  ✓ ${name}`);
+    pass++;
+  } catch (e) {
+    console.log(`  ✗ ${name}\n      ${String(e.message).slice(0, 130)}`);
+    fail++;
+  }
 }
 
 await check('quản trị viên hiện tại giữ quyền khi email đã xác thực', async () => {
-  const owner = testEnv.authenticatedContext('owner', { email: 'hungtien10a7@gmail.com', email_verified: true }).firestore();
+  const owner = testEnv
+    .authenticatedContext('owner', { email: 'hungtien10a7@gmail.com', email_verified: true })
+    .firestore();
   await seed('q1', {});
   await assertSucceeds(updateDoc(doc(owner, 'questions', 'q1'), { isPinned: true }));
 });
@@ -57,19 +104,28 @@ await check('ai cũng đọc được questions', async () => {
 
 console.log('\n── Tạo bài ──');
 await check('khách không tạo được bài', async () =>
-  assertFails(setDoc(doc(anon, 'questions', 'q1'), baseQuestion())));
+  assertFails(setDoc(doc(anon, 'questions', 'q1'), baseQuestion())),
+);
 
 await check('user tạo được bài của chính mình', async () =>
-  assertSucceeds(setDoc(doc(alice, 'questions', 'q1'), baseQuestion({ authorId: 'alice' }))));
+  assertSucceeds(setDoc(doc(alice, 'questions', 'q1'), baseQuestion({ authorId: 'alice' }))),
+);
 
 await check('KHÔNG mạo danh authorId người khác', async () =>
-  assertFails(setDoc(doc(mallory, 'questions', 'q1'), baseQuestion({ authorId: 'alice' }))));
+  assertFails(setDoc(doc(mallory, 'questions', 'q1'), baseQuestion({ authorId: 'alice' }))),
+);
 
 await check('KHÔNG tự phong isAdmin: true', async () =>
-  assertFails(setDoc(doc(mallory, 'questions', 'q1'), baseQuestion({ authorId: 'mallory', isAdmin: true }))));
+  assertFails(
+    setDoc(doc(mallory, 'questions', 'q1'), baseQuestion({ authorId: 'mallory', isAdmin: true })),
+  ),
+);
 
 await check('KHÔNG tạo bài đã ghim sẵn', async () =>
-  assertFails(setDoc(doc(mallory, 'questions', 'q1'), baseQuestion({ authorId: 'mallory', isPinned: true }))));
+  assertFails(
+    setDoc(doc(mallory, 'questions', 'q1'), baseQuestion({ authorId: 'mallory', isPinned: true })),
+  ),
+);
 
 console.log('\n── Xoá (client không hề guard) ──');
 await check('người lạ KHÔNG xoá được bài người khác', async () => {
@@ -155,10 +211,13 @@ await check('user KHÔNG đọc được thông báo người khác', async () =
   await assertFails(getDoc(doc(mallory, 'notifications', 'n1')));
 });
 await check('KHÔNG liệt kê toàn bộ notifications', async () =>
-  assertFails(getDocs(collection(mallory, 'notifications'))));
+  assertFails(getDocs(collection(mallory, 'notifications'))),
+);
 await check('query lọc theo recipientId của mình thì được', async () => {
   await seedNotif('n1', { recipientId: 'mallory' });
-  await assertSucceeds(getDocs(query(collection(mallory, 'notifications'), where('recipientId', '==', 'mallory'))));
+  await assertSucceeds(
+    getDocs(query(collection(mallory, 'notifications'), where('recipientId', '==', 'mallory'))),
+  );
 });
 await check('user đánh dấu đã đọc thông báo của mình', async () => {
   await seedNotif('n1', { recipientId: 'alice' });
@@ -166,15 +225,31 @@ await check('user đánh dấu đã đọc thông báo của mình', async () =>
 });
 await check('user KHÔNG sửa nội dung thông báo', async () => {
   await seedNotif('n1', { recipientId: 'alice', content: 'gốc' });
-  await assertFails(updateDoc(doc(alice, 'notifications', 'n1'), { content: 'đã đổi', isRead: true }));
+  await assertFails(
+    updateDoc(doc(alice, 'notifications', 'n1'), { content: 'đã đổi', isRead: true }),
+  );
 });
 
-const replyFixture = (over = {}) => ({ id: 'r1', authorId: 'alice', author: 'Alice', content: 'hello', timestamp: 1, isAdmin: false, likedBy: [], ...over });
+const replyFixture = (over = {}) => ({
+  id: 'r1',
+  authorId: 'alice',
+  author: 'Alice',
+  content: 'hello',
+  timestamp: 1,
+  isAdmin: false,
+  likedBy: [],
+  ...over,
+});
 await check('không ghi email công khai vào bài mới', async () =>
-  assertFails(setDoc(doc(alice, 'questions', 'q1'), baseQuestion({ authorEmail: 'alice@example.com' }))));
+  assertFails(
+    setDoc(doc(alice, 'questions', 'q1'), baseQuestion({ authorEmail: 'alice@example.com' })),
+  ),
+);
 await check('không sửa phản hồi của người khác', async () => {
   await seed('q1', { replies: [replyFixture()] });
-  await assertFails(updateDoc(doc(mallory, 'questions', 'q1'), { replies: [replyFixture({ content: 'hacked' })] }));
+  await assertFails(
+    updateDoc(doc(mallory, 'questions', 'q1'), { replies: [replyFixture({ content: 'hacked' })] }),
+  );
 });
 await check('không xoá phản hồi của người khác', async () => {
   await seed('q1', { replies: [replyFixture()] });
@@ -186,11 +261,17 @@ await check('không giả mạo tác giả khi thêm phản hồi', async () => 
 });
 await check('không tự phong admin qua phản hồi', async () => {
   await seed('q1', { replies: [] });
-  await assertFails(updateDoc(doc(mallory, 'questions', 'q1'), { replies: [replyFixture({ authorId: 'mallory', isAdmin: true })] }));
+  await assertFails(
+    updateDoc(doc(mallory, 'questions', 'q1'), {
+      replies: [replyFixture({ authorId: 'mallory', isAdmin: true })],
+    }),
+  );
 });
 await check('tác giả sửa được nội dung phản hồi', async () => {
   await seed('q1', { replies: [replyFixture()] });
-  await assertSucceeds(updateDoc(doc(alice, 'questions', 'q1'), { replies: [replyFixture({ content: 'updated' })] }));
+  await assertSucceeds(
+    updateDoc(doc(alice, 'questions', 'q1'), { replies: [replyFixture({ content: 'updated' })] }),
+  );
 });
 await check('tác giả xoá được phản hồi của mình', async () => {
   await seed('q1', { replies: [replyFixture()] });
@@ -198,33 +279,87 @@ await check('tác giả xoá được phản hồi của mình', async () => {
 });
 await check('chỉ thêm được lượt thích của chính mình vào phản hồi', async () => {
   await seed('q1', { replies: [replyFixture()] });
-  await assertSucceeds(updateDoc(doc(mallory, 'questions', 'q1'), { replies: [replyFixture({ likedBy: ['mallory'] })] }));
-  await assertFails(updateDoc(doc(mallory, 'questions', 'q1'), { replies: [replyFixture({ likedBy: ['mallory','alice'] })] }));
+  await assertSucceeds(
+    updateDoc(doc(mallory, 'questions', 'q1'), {
+      replies: [replyFixture({ likedBy: ['mallory'] })],
+    }),
+  );
+  await assertFails(
+    updateDoc(doc(mallory, 'questions', 'q1'), {
+      replies: [replyFixture({ likedBy: ['mallory', 'alice'] })],
+    }),
+  );
 });
 
 console.log('\n── Trả lời (replies là mảng lồng) ──');
 await check('user đăng nhập thêm được reply', async () => {
   await seed('q1', { replies: [] });
-  await assertSucceeds(updateDoc(doc(mallory, 'questions', 'q1'), {
-    replies: [{ id: '1', authorId: 'mallory', author: 'M', content: 'hi', timestamp: 1, isAdmin: false, likedBy: [] }]
-  }));
+  await assertSucceeds(
+    updateDoc(doc(mallory, 'questions', 'q1'), {
+      replies: [
+        {
+          id: '1',
+          authorId: 'mallory',
+          author: 'M',
+          content: 'hi',
+          timestamp: 1,
+          isAdmin: false,
+          likedBy: [],
+        },
+      ],
+    }),
+  );
 });
 await check('khách KHÔNG thêm được reply', async () => {
   await seed('q1', { replies: [] });
-  await assertFails(updateDoc(doc(anon, 'questions', 'q1'), {
-    replies: [{ id: '1', authorId: 'x', author: 'X', content: 'spam', timestamp: 1, isAdmin: false, likedBy: [] }]
-  }));
+  await assertFails(
+    updateDoc(doc(anon, 'questions', 'q1'), {
+      replies: [
+        {
+          id: '1',
+          authorId: 'x',
+          author: 'X',
+          content: 'spam',
+          timestamp: 1,
+          isAdmin: false,
+          likedBy: [],
+        },
+      ],
+    }),
+  );
 });
 await check('bài bị khoá thì user thường KHÔNG reply được', async () => {
   await seed('q1', { replies: [], isLocked: true });
-  await assertFails(updateDoc(doc(mallory, 'questions', 'q1'), {
-    replies: [{ id: '1', authorId: 'mallory', author: 'M', content: 'hi', timestamp: 1, isAdmin: false, likedBy: [] }]
-  }));
+  await assertFails(
+    updateDoc(doc(mallory, 'questions', 'q1'), {
+      replies: [
+        {
+          id: '1',
+          authorId: 'mallory',
+          author: 'M',
+          content: 'hi',
+          timestamp: 1,
+          isAdmin: false,
+          likedBy: [],
+        },
+      ],
+    }),
+  );
 });
 await check('admin vẫn xoá được reply trên bài đã khoá', async () => {
   await seed('q1', {
     isLocked: true,
-    replies: [{ id: '1', authorId: 'mallory', author: 'M', content: 'spam', timestamp: 1, isAdmin: false, likedBy: [] }]
+    replies: [
+      {
+        id: '1',
+        authorId: 'mallory',
+        author: 'M',
+        content: 'spam',
+        timestamp: 1,
+        isAdmin: false,
+        likedBy: [],
+      },
+    ],
   });
   await assertSucceeds(updateDoc(doc(admin, 'questions', 'q1'), { replies: [] }));
 });
@@ -237,21 +372,46 @@ await check('khách KHÔNG báo cáo được bài', async () => {
   await assertFails(updateDoc(doc(anon, 'questions', 'q1'), { isReported: true }));
 });
 
-
-const productPost = (over = {}) => ({ authorId: 'alice', author: 'Alice', content: 'A question', category: 'question', createdAt: Date.now() - 1000, ...over });
+const productPost = (over = {}) => ({
+  authorId: 'alice',
+  author: 'Alice',
+  content: 'A question',
+  category: 'question',
+  createdAt: Date.now() - 1000,
+  ...over,
+});
 const productPath = 'appDiscussions/vtts/posts/p1';
 await check('public can read every known product board', async () => {
-  for (const app of ['vtts','padcodeai','padnotesai','mynasmanager','lunarv','lunarblock']) {
+  for (const app of ['vtts', 'padcodeai', 'padnotesai', 'mynasmanager', 'lunarv', 'lunarblock']) {
     await assertSucceeds(getDocs(collection(anon, `appDiscussions/${app}/posts`)));
   }
 });
-await check('anonymous cannot post to a product board', async () => assertFails(setDoc(doc(anon, productPath), productPost())));
-await check('member can post to a product board', async () => assertSucceeds(setDoc(doc(alice, productPath), productPost())));
-await check('unknown app is denied', async () => assertFails(setDoc(doc(alice, 'appDiscussions/unknown/posts/p1'), productPost())));
-await check('product author spoofing is denied', async () => assertFails(setDoc(doc(mallory, productPath), productPost())));
-await check('product email and admin fields are denied', async () => assertFails(setDoc(doc(alice, productPath), productPost({ authorEmail: 'private@example.com', isAdmin: true }))));
-await check('oversized product content is denied', async () => assertFails(setDoc(doc(alice, productPath), productPost({ content: 'x'.repeat(5001) }))));
-await check('future product timestamp is denied', async () => assertFails(setDoc(doc(alice, productPath), productPost({ createdAt: Date.now() + 600000 }))));
+await check('anonymous cannot post to a product board', async () =>
+  assertFails(setDoc(doc(anon, productPath), productPost())),
+);
+await check('member can post to a product board', async () =>
+  assertSucceeds(setDoc(doc(alice, productPath), productPost())),
+);
+await check('unknown app is denied', async () =>
+  assertFails(setDoc(doc(alice, 'appDiscussions/unknown/posts/p1'), productPost())),
+);
+await check('product author spoofing is denied', async () =>
+  assertFails(setDoc(doc(mallory, productPath), productPost())),
+);
+await check('product email and admin fields are denied', async () =>
+  assertFails(
+    setDoc(
+      doc(alice, productPath),
+      productPost({ authorEmail: 'private@example.com', isAdmin: true }),
+    ),
+  ),
+);
+await check('oversized product content is denied', async () =>
+  assertFails(setDoc(doc(alice, productPath), productPost({ content: 'x'.repeat(5001) }))),
+);
+await check('future product timestamp is denied', async () =>
+  assertFails(setDoc(doc(alice, productPath), productPost({ createdAt: Date.now() + 600000 }))),
+);
 await check('members cannot delete another product post', async () => {
   await assertSucceeds(setDoc(doc(alice, productPath), productPost()));
   await assertFails(deleteDoc(doc(mallory, productPath)));

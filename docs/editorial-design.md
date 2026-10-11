@@ -1,6 +1,7 @@
 # Editorial collection direction
 
 References reviewed on 2026-10-11:
+
 - https://paco.me/ — concise personal portfolio, direct descriptions and a clear project index.
 - https://culturedcode.com/things/ — product presentation grounded in real interface imagery.
 - https://developer.apple.com/videos/play/wwdc2025/219/ — Liquid Glass as a floating control layer.

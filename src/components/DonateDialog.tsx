@@ -69,13 +69,27 @@ export function DonateDialog({ isOpen, onClose, lang }: DonateDialogProps) {
       onClick={(event) => {
         if (event.target !== event.currentTarget) return;
         const rect = event.currentTarget.getBoundingClientRect();
-        if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) onClose();
+        if (
+          event.clientX < rect.left ||
+          event.clientX > rect.right ||
+          event.clientY < rect.top ||
+          event.clientY > rect.bottom
+        )
+          onClose();
       }}
     >
-      <button className="donate-dialog__close" type="button" onClick={onClose} aria-label={text.close} autoFocus>
+      <button
+        className="donate-dialog__close"
+        type="button"
+        onClick={onClose}
+        aria-label={text.close}
+        autoFocus
+      >
         <X size={20} aria-hidden="true" />
       </button>
-      <span className="donate-dialog__symbol" aria-hidden="true"><Heart size={24} /></span>
+      <span className="donate-dialog__symbol" aria-hidden="true">
+        <Heart size={24} />
+      </span>
       <h2 id={titleId}>{text.title}</h2>
       <p id={descriptionId}>{text.description}</p>
       <figure className="donate-dialog__qr">
@@ -83,10 +97,17 @@ export function DonateDialog({ isOpen, onClose, lang }: DonateDialogProps) {
         <figcaption>{text.scan}</figcaption>
       </figure>
       <a className="donate-dialog__save" href={donateQr} download="pham-hung-tien-vietqr.jpg">
-        <Download size={16} aria-hidden="true" />{text.save}
+        <Download size={16} aria-hidden="true" />
+        {text.save}
       </a>
-      <a className="donate-dialog__paypal" href="https://www.paypal.com/paypalme/phamhungtien1404" target="_blank" rel="noopener noreferrer">
-        {text.paypal}<ArrowUpRight size={18} aria-hidden="true" />
+      <a
+        className="donate-dialog__paypal"
+        href="https://www.paypal.com/paypalme/phamhungtien1404"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {text.paypal}
+        <ArrowUpRight size={18} aria-hidden="true" />
       </a>
       <p className="donate-dialog__note">{text.note}</p>
     </dialog>,

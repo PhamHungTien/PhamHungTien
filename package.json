@@ -5,44 +5,48 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:phtv": "cd PHTV && npm run dev",
+    "dev:phtv": "npm run dev --workspace @phamhungtien/phtv-web",
     "build": "npm run build:client && npm run build:ssr && npm run prerender && node scripts/security-html.mjs dist dist-aliases",
     "build:client": "vite build",
     "build:ssr": "vite build --ssr src/entry-server.tsx",
     "prerender": "node scripts/prerender.mjs",
     "og": "./scripts/generate-og.sh",
-    "optimize:images": "./scripts/optimize-images.sh",
+    "optimize:images": "npm run images",
     "site": "./scripts/build-site.sh",
     "verify:site": "./scripts/verify-site.sh",
     "verify:ui": "node scripts/verify-ui.mjs",
     "deploy:local": "./scripts/deploy-local.sh",
-    "build:phtv": "cd PHTV && npm run build",
+    "build:phtv": "npm run build --workspace @phamhungtien/phtv-web",
     "build:all": "npm run build && npm run build:phtv",
     "preview": "vite preview",
     "preview:phtv": "cd PHTV && npm run preview",
     "type-check": "tsc --noEmit",
-    "type-check:phtv": "cd PHTV && npx tsc --noEmit",
+    "type-check:phtv": "npm run type-check --workspace @phamhungtien/phtv-web",
     "type-check:all": "npm run type-check && npm run type-check:phtv",
-    "install:deps": "npm install && cd PHTV && npm install",
-    "clean": "cd PHTV && rm -rf dist node_modules && npm install",
+    "install:deps": "npm install",
     "sync:appstore": "node scripts/sync-appstore.mjs",
-    "verify:social": "node scripts/verify-social.mjs"
+    "verify:social": "node scripts/verify-social.mjs",
+    "images": "node scripts/generate-responsive-images.mjs",
+    "format": "prettier --write src PHTV config scripts *.json *.ts CONTRIBUTING.md docs/*.md",
+    "format:check": "prettier --check src PHTV config scripts *.json *.ts CONTRIBUTING.md docs/*.md",
+    "verify:seo": "node scripts/verify-seo.mjs"
   },
   "dependencies": {
     "firebase": "^12.19.0",
     "liquid-glass-react": "^1.1.1",
     "lucide-react": "^0.562.0",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3"
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.0.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "prettier": "^3.9.10",
     "sharp": "^0.35.5",
-    "typescript": "~5.8.2",
-    "vite": "^6.2.0"
+    "typescript": "^7.0.2",
+    "vite": "^8.3.4"
   },
   "keywords": [
     "portfolio",
@@ -53,7 +57,7 @@
     "typescript"
   ],
   "author": "Pham Hung Tien",
-  "license": "MIT",
+  "license": "GPL-3.0-only",
   "repository": {
     "type": "git",
     "url": "https://github.com/PhamHungTien/PhamHungTien"
@@ -61,5 +65,11 @@
   "homepage": "https://phamhungtien.com",
   "overrides": {
     "@grpc/grpc-js": "1.14.6"
+  },
+  "workspaces": [
+    "PHTV"
+  ],
+  "engines": {
+    "node": ">=24"
   }
 }

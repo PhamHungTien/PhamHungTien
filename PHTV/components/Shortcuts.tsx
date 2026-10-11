@@ -19,8 +19,12 @@ export const Shortcuts: React.FC = () => {
       <div className="mx-auto max-w-6xl px-4 md:px-6">
         <div className="mb-10 flex flex-col gap-4 md:mb-12 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
-            <p className="text-[11px] font-black uppercase tracking-[0.28em] text-amber-300/80">Thao tác nhanh</p>
-            <h2 className="mt-3 text-3xl font-black tracking-tight text-white md:text-4xl">Những phím tắt chính để bắt đầu</h2>
+            <p className="text-[11px] font-black uppercase tracking-[0.28em] text-amber-300/80">
+              Thao tác nhanh
+            </p>
+            <h2 className="mt-3 text-3xl font-black tracking-tight text-white md:text-4xl">
+              Những phím tắt chính để bắt đầu
+            </h2>
           </div>
           <p className="max-w-xl text-sm leading-7 text-slate-400 md:text-base">
             Những thao tác cơ bản nhất để bắt đầu nhanh và không bị gián đoạn khi đang gõ.

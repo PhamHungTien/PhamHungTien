@@ -4,7 +4,6 @@ import { useLanguage } from './hooks/useLanguage';
 import { HomePage } from './pages/HomePage';
 import { ProductPage } from './pages/ProductPage';
 import { getPageMeta, getStructuredData } from './seo';
-import type { Lang } from './types';
 
 function normalizePath(pathname: string) {
   if (pathname === '/') return '/';
@@ -18,11 +17,10 @@ function setMeta(selector: string, content: string) {
 interface AppProps {
   /** Supplied by the prerenderer; the browser reads it from the address bar. */
   path?: string;
-  initialLang?: Lang;
 }
 
-export function App({ path: pathProp, initialLang }: AppProps) {
-  const { lang, setLanguage, t } = useLanguage(initialLang);
+export function App({ path: pathProp }: AppProps) {
+  const { lang, t } = useLanguage();
   const path = normalizePath(pathProp ?? window.location.pathname);
 
   const product = useMemo(() => productRoutes.get(path.toLowerCase()) ?? null, [path]);
@@ -43,25 +41,31 @@ export function App({ path: pathProp, initialLang }: AppProps) {
     setMeta('meta[name="twitter:description"]', meta.description);
     setMeta('meta[name="twitter:image"]', meta.ogImage);
 
-    document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]')?.setAttribute('href', meta.canonical);
+    document.head
+      .querySelector<HTMLLinkElement>('link[rel="canonical"]')
+      ?.setAttribute('href', meta.canonical);
 
     const iconLink = document.head.querySelector<HTMLLinkElement>('link[rel="icon"]');
     if (iconLink) {
       iconLink.setAttribute('href', meta.favicon);
       iconLink.setAttribute('type', meta.faviconType);
     }
-    const appleTouchLink = document.head.querySelector<HTMLLinkElement>('link[rel="apple-touch-icon"]');
+    const appleTouchLink = document.head.querySelector<HTMLLinkElement>(
+      'link[rel="apple-touch-icon"]',
+    );
     if (appleTouchLink) {
       appleTouchLink.setAttribute('href', meta.appleTouchIcon);
     }
 
-    const jsonLd = document.head.querySelector<HTMLScriptElement>('script[type="application/ld+json"]');
+    const jsonLd = document.head.querySelector<HTMLScriptElement>(
+      'script[type="application/ld+json"]',
+    );
     if (jsonLd) jsonLd.textContent = JSON.stringify(getStructuredData(product, lang));
   }, [lang, product]);
 
   if (product) {
-    return <ProductPage product={product} lang={lang} onLanguageChange={setLanguage} t={t} />;
+    return <ProductPage product={product} lang={lang} t={t} />;
   }
 
-  return <HomePage lang={lang} onLanguageChange={setLanguage} t={t} />;
+  return <HomePage lang={lang} t={t} />;
 }

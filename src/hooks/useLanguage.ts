@@ -1,62 +1,13 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import type { Lang } from '../types';
+import { useCallback, useEffect } from 'react';
 import { translate } from '../i18n';
 
-const STORAGE_KEY = 'portfolio_preferred_lang_v2';
+/** The portfolio and non-PHTV applications are published in English. */
+export const SSR_LANG = 'en' as const;
 
-/**
- * The language the prerenderer emits. The first client render must match it or
- * hydration mismatches; the real preference is applied in an effect afterwards.
- */
-export const SSR_LANG: Lang = 'en';
-
-export function detectLanguage(): Lang {
-  let stored: string | null = null;
-  try { stored = localStorage.getItem(STORAGE_KEY); } catch { /* Storage can be blocked by the browser. */ }
-  if (stored === 'vi' || stored === 'en') return stored;
-
-  return 'en';
-}
-
-export function useLanguage(initialLang: Lang = SSR_LANG) {
-  const [lang, setLang] = useState<Lang>(initialLang);
-
+export function useLanguage() {
   useEffect(() => {
-    setLang(detectLanguage());
+    document.documentElement.lang = SSR_LANG;
   }, []);
-
-  useEffect(() => {
-    document.documentElement.lang = lang;
-  }, [lang]);
-
-  useEffect(() => {
-    const handleStorage = (event: StorageEvent) => {
-      if (event.key === STORAGE_KEY && (event.newValue === 'vi' || event.newValue === 'en')) {
-        setLang(event.newValue);
-      }
-    };
-
-    const handleLangChange = (event: Event) => {
-      const nextLang = (event as CustomEvent).detail;
-      if (nextLang === 'vi' || nextLang === 'en') setLang(nextLang);
-    };
-
-    window.addEventListener('storage', handleStorage);
-    window.addEventListener('langchange', handleLangChange);
-
-    return () => {
-      window.removeEventListener('storage', handleStorage);
-      window.removeEventListener('langchange', handleLangChange);
-    };
-  }, []);
-
-  const setLanguage = useCallback((nextLang: Lang) => {
-    try { localStorage.setItem(STORAGE_KEY, nextLang); } catch { /* Keep language switching usable without storage. */ }
-    setLang(nextLang);
-    window.dispatchEvent(new CustomEvent('langchange', { detail: nextLang }));
-  }, []);
-
-  const t = useCallback((key: string) => translate(lang, key), [lang]);
-
-  return useMemo(() => ({ lang, setLanguage, t }), [lang, setLanguage, t]);
+  const t = useCallback((key: string) => translate(SSR_LANG, key), []);
+  return { lang: SSR_LANG, t };
 }

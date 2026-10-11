@@ -40,7 +40,9 @@
   background: var(--contact-surface);
   color: var(--contact-text);
   text-decoration: none;
-  transition: background-color 180ms ease, border-color 180ms ease;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease;
 }
 
 a.contact-card:hover {
@@ -92,7 +94,9 @@ a.contact-card:focus-visible {
 
 .contact-card__arrow {
   color: var(--contact-muted);
-  transition: color 160ms ease, transform 160ms ease;
+  transition:
+    color 160ms ease,
+    transform 160ms ease;
 }
 
 a.contact-card:hover .contact-card__arrow {
@@ -126,7 +130,8 @@ a.contact-card:hover .contact-card__arrow {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .contact-card, .contact-card__arrow {
+  .contact-card,
+  .contact-card__arrow {
     transition: none;
   }
   a.contact-card:hover .contact-card__arrow {

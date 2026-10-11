@@ -1,7 +1,17 @@
 import React, { useState } from 'react';
 import { Icons } from './Icons';
 
-export const CommandRow = ({ icon: Icon, label, code, color }: { icon: any, label: string, code: string, color: string }) => {
+export const CommandRow = ({
+  icon: Icon,
+  label,
+  code,
+  color,
+}: {
+  icon: any;
+  label: string;
+  code: string;
+  color: string;
+}) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -18,12 +28,12 @@ export const CommandRow = ({ icon: Icon, label, code, color }: { icon: any, labe
         </div>
         <span className="text-sm font-medium text-slate-300">{label}</span>
       </div>
-      
+
       <div className="relative flex-1 min-w-0 w-full">
         <code className="block w-full px-3 py-2 pr-9 bg-black/40 border border-slate-800 rounded text-xs font-mono text-slate-400 break-all">
           {code}
         </code>
-        <button 
+        <button
           onClick={handleCopy}
           className="absolute right-1 top-1/2 -translate-y-1/2 p-1.5 text-slate-500 hover:text-white hover:bg-slate-700 rounded transition-colors z-10"
           title="Sao chép lệnh"

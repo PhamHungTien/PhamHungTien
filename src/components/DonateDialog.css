@@ -18,10 +18,11 @@
   color: var(--donate-text);
   box-shadow: 0 24px 80px #0003;
   text-align: center;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
 }
 
-html[data-theme="dark"] .donate-dialog {
+html[data-theme='dark'] .donate-dialog {
   --donate-bg: #171a20;
   --donate-text: #f4f6f8;
   --donate-muted: #a7adb8;
@@ -175,13 +176,55 @@ html[data-theme="dark"] .donate-dialog {
 }
 
 /* A centered payment card with a generous, untouched QR quiet zone. */
-.donate-dialog { width: min(440px,calc(100% - 32px)); padding: 32px 28px 24px; }
-.donate-dialog__symbol { width: 40px; height: 40px; margin-bottom: 14px; border-radius: 50%; }
-.donate-dialog p { max-width: 32ch; margin-inline: auto; }
-.donate-dialog__qr { margin: 24px auto 12px; width: min(280px,100%); }
-.donate-dialog__qr img { width: 100%; padding: 12px; box-sizing: border-box; border-radius: 20px; box-shadow: 0 4px 18px #0000000d; }
-.donate-dialog__qr figcaption { margin-top: 14px; }
-.donate-dialog a.donate-dialog__save { justify-content: center; width: 100%; min-height: 44px; border: 1px solid var(--donate-line); border-radius: 999px; }
-.donate-dialog a.donate-dialog__paypal { margin-top: 10px; border-radius: 999px; }
-.donate-dialog p.donate-dialog__note { margin-top: 18px; max-width: 38ch; }
-@media (max-width:480px) { .donate-dialog { padding: 28px 22px 22px; } .donate-dialog__qr { width: min(252px,100%); margin-top: 20px; } }
+.donate-dialog {
+  width: min(440px, calc(100% - 32px));
+  padding: 32px 28px 24px;
+}
+.donate-dialog__symbol {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 14px;
+  border-radius: 50%;
+}
+.donate-dialog p {
+  max-width: 32ch;
+  margin-inline: auto;
+}
+.donate-dialog__qr {
+  margin: 24px auto 12px;
+  width: min(280px, 100%);
+}
+.donate-dialog__qr img {
+  width: 100%;
+  padding: 12px;
+  box-sizing: border-box;
+  border-radius: 20px;
+  box-shadow: 0 4px 18px #0000000d;
+}
+.donate-dialog__qr figcaption {
+  margin-top: 14px;
+}
+.donate-dialog a.donate-dialog__save {
+  justify-content: center;
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid var(--donate-line);
+  border-radius: 999px;
+}
+.donate-dialog a.donate-dialog__paypal {
+  margin-top: 10px;
+  border-radius: 999px;
+}
+.donate-dialog p.donate-dialog__note {
+  margin-top: 18px;
+  max-width: 38ch;
+}
+@media (max-width: 480px) {
+  .donate-dialog {
+    padding: 28px 22px 22px;
+  }
+  .donate-dialog__qr {
+    width: min(252px, 100%);
+    margin-top: 20px;
+  }
+}

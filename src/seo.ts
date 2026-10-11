@@ -9,7 +9,7 @@ export const SITE = {
   author: 'Phạm Hùng Tiến',
   email: 'contact@phamhungtien.com',
   github: 'https://github.com/PhamHungTien',
-  twitter: '@phamhungtien'
+  twitter: '@phamhungtien',
 } as const;
 
 /** Social crawlers do not run JavaScript, so every card image must be a stable, unhashed path. */
@@ -47,7 +47,7 @@ export function getPageMeta(product: Product | null, lang: Lang): PageMeta {
       locale: lang,
       favicon: '/assets/phtv-icon.webp',
       faviconType: 'image/webp',
-      appleTouchIcon: '/assets/phtv-favicon.png'
+      appleTouchIcon: '/assets/phtv-favicon.png',
     };
   }
 
@@ -60,11 +60,11 @@ export function getPageMeta(product: Product | null, lang: Lang): PageMeta {
     ogTitle: `${product.name} — ${product.title[lang]}`,
     ogImage: ogImageFor(product.slug),
     ogImageAlt: `${product.name} — ${product.title[lang]}`,
-    ogType: 'product',
+    ogType: 'website',
     locale: lang,
     favicon: icon,
     faviconType: isWebp ? 'image/webp' : 'image/png',
-    appleTouchIcon: icon
+    appleTouchIcon: icon,
   };
 }
 
@@ -75,7 +75,7 @@ const personSchema = {
   alternateName: SITE.name,
   url: `${SITE.origin}/`,
   email: `mailto:${SITE.email}`,
-  sameAs: publicProfileUrls
+  sameAs: publicProfileUrls,
 };
 
 function softwareApplicationSchema(product: Product, lang: Lang) {
@@ -89,7 +89,7 @@ function softwareApplicationSchema(product: Product, lang: Lang) {
     url: `${SITE.origin}${product.route}`,
     image: ogImageFor(product.slug),
     author: { '@id': `${SITE.origin}/#person` },
-    featureList: product.features.map((feature) => feature.title[lang])
+    featureList: product.features.map((feature) => feature.title[lang]),
   };
 
   if (product.appStoreUrl) schema.downloadUrl = product.appStoreUrl;
@@ -106,15 +106,15 @@ function breadcrumbSchema(product: Product, lang: Lang) {
         '@type': 'ListItem',
         position: 1,
         name: translate(lang, 'nav.home'),
-        item: `${SITE.origin}/`
+        item: `${SITE.origin}/`,
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: product.name,
-        item: `${SITE.origin}${product.route}`
-      }
-    ]
+        item: `${SITE.origin}${product.route}`,
+      },
+    ],
   };
 }
 
@@ -133,7 +133,7 @@ export function getStructuredData(product: Product | null, lang: Lang) {
         name: SITE.name,
         description: translate(lang, 'meta.home.description'),
         publisher: { '@id': `${SITE.origin}/#person` },
-        inLanguage: ['vi', 'en']
+        inLanguage: 'en',
       },
       {
         '@type': 'ItemList',
@@ -142,9 +142,9 @@ export function getStructuredData(product: Product | null, lang: Lang) {
           '@type': 'ListItem',
           position: index + 1,
           name: product.name,
-          url: `${SITE.origin}${product.route}`
-        }))
-      }
+          url: `${SITE.origin}${product.route}`,
+        })),
+      },
     );
   }
 
