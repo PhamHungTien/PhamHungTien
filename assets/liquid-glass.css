@@ -347,3 +347,11 @@ html[data-theme] .phtv-page nav.phtv-navbar.fixed > .phtv-navbar__inner {
     background: var(--glass-solid); backdrop-filter: none; -webkit-backdrop-filter: none;
   }
 }
+
+/* Library refraction is decorative and never captures navigation input. */
+html .site-header { isolation: isolate; }
+.glass-optics { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: -1; overflow: hidden; }
+.glass-optics > :not(.glass-optics__surface) { display: none; }
+.glass-optics__surface .glass { box-shadow: none !important; }
+.glass-optics__surface svg { position: absolute; width: 0; height: 0; }
+@media (max-width:700px) { .glass-optics { border-radius: 22px; } }
