@@ -434,3 +434,24 @@ html .gallery-strip figcaption { font-size: 12px; margin-top: 10px; }
 @media (max-width:620px) {
   html .gallery-strip { grid-auto-columns: minmax(220px,78vw); gap: 14px; }
 }
+
+/* Support is a compact sidebar, independent of the highlights column height. */
+html .detail-grid { align-items: start; }
+html .install-panel { align-self: start; height: auto; padding: 24px; }
+html .install-panel p { font-size: 14px; line-height: 1.65; margin-top: 12px; }
+html .install-panel > a { display: flex; width: fit-content; min-height: 40px; margin-top: 14px; font-size: 13px; }
+html .install-panel > a + a { margin-top: 4px; }
+html .install-panel { padding: 28px; }
+html .install-panel h2 { font-size: 25px; }
+html .install-panel p { font-size: 15px; line-height: 1.7; margin-top: 16px; }
+html .install-panel > a {
+  width: 100%; padding: 11px 14px; min-height: 46px; box-sizing: border-box;
+  border: 1px solid var(--glass-line); border-radius: var(--glass-pill);
+  font-weight: 500; font-size: 13px; gap: 8px;
+}
+html .install-panel > a:first-of-type { margin-top: 24px; background: var(--glass-ink); color: var(--glass-page); border-color: transparent; }
+html .install-panel > a + a { margin-top: 10px; }
+html .install-panel > a svg:last-child { margin-left: auto; flex-shrink: 0; }
+@media (min-width:1000px) and (min-height:750px) {
+  html .install-panel { position: sticky; top: 112px; }
+}
