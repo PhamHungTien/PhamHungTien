@@ -54,3 +54,6 @@ _site/
 # Firebase emulator
 *-debug.log
 .firebase/
+
+# Email digest cursor (hashes only; never commit credentials or local state)
+.notification-state/
