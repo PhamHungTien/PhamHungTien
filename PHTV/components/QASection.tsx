@@ -693,7 +693,7 @@ export const QASection: React.FC = () => {
 
     return (
       <div
-        className={`${size} rounded-2xl flex items-center justify-center text-white font-semibold overflow-hidden shadow-lg shrink-0 ${
+        className={`${size} phtv-avatar rounded-full flex items-center justify-center text-white font-semibold overflow-hidden shadow-lg shrink-0 ${
           showAdminStyle
             ? 'bg-gradient-to-br from-rose-400 via-rose-500 to-pink-600 ring-1 ring-rose-300/40'
             : 'bg-slate-800 border border-white/5'

@@ -12,7 +12,7 @@
   --phtv-line: #dce1e8;
   --phtv-blue: #d71f2a;
   --phtv-focus: #b71922;
-  --phtv-radius: 14px;
+  --phtv-radius: var(--glass-radius, 24px);
   --phtv-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --phtv-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06), 0 10px 28px rgba(15, 23, 42, 0.08);
 }
@@ -266,7 +266,7 @@ html[data-theme='dark'] {
   .phtv-community-composer,
   .phtv-discussion-card {
     border-color: var(--phtv-line) !important;
-    border-radius: 14px !important;
+    border-radius: var(--glass-radius, 24px) !important;
     background: var(--phtv-surface) !important;
     box-shadow: 0 1px 0 color-mix(in srgb, var(--phtv-text) 4%, transparent) !important;
     backdrop-filter: none !important;
@@ -936,17 +936,6 @@ html[data-theme='light'] .phtv-page pre {
     gap: 16px;
   }
 
-  .phtv-community-toolbar,
-  .phtv-community-composer {
-    padding: 18px 0 !important;
-    border-right: 0 !important;
-    border-left: 0 !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    backdrop-filter: none !important;
-  }
-
   .phtv-community-toolbar > div:first-child > div:first-child > div:first-child {
     display: none;
   }
@@ -965,7 +954,7 @@ html[data-theme='light'] .phtv-page pre {
   .phtv-discussion-card {
     padding: 16px !important;
     border-color: var(--phtv-line) !important;
-    border-radius: 12px !important;
+    border-radius: var(--glass-radius, 24px) !important;
     background: var(--phtv-surface) !important;
     box-shadow: none !important;
     backdrop-filter: none !important;

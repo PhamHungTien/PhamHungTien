@@ -598,7 +598,7 @@ html[data-theme] .phtv-page .phtv-acronym-grid { justify-content: center; column
 html[data-theme] .phtv-page .phtv-community :is(button,input),
 html[data-theme] .phtv-page .phtv-community-filters > label,
 html[data-theme] .phtv-page .phtv-community-composer label { border-radius: var(--glass-pill) !important; }
-html[data-theme] .phtv-page .phtv-community textarea { border-radius: 18px !important; }
+html[data-theme] .phtv-page .phtv-community textarea { border-radius: var(--glass-inset-radius) !important; }
 html[data-theme] .phtv-page .phtv-nav-control {
  background: var(--glass-line) !important; color: var(--glass-ink) !important;
 }
@@ -779,4 +779,18 @@ html[data-theme] body .phtv-page .phtv-community select {
   background-repeat: no-repeat;
   background-position: right 18px center;
   background-size: 16px 16px;
+}
+
+/* Discussion surfaces share the same geometry in both applications. */
+html body .discussion-post,
+html body .discussion-composer,
+html[data-theme] body .phtv-page :is(.phtv-community-toolbar,.phtv-community-composer,.phtv-discussion-card) {
+  border-radius: var(--glass-radius) !important;
+}
+html body .discussion-section textarea,
+html[data-theme] body .phtv-page .phtv-community textarea {
+  border-radius: var(--glass-inset-radius) !important;
+}
+html[data-theme] body .phtv-page .phtv-avatar {
+  border-radius: 50% !important;
 }
