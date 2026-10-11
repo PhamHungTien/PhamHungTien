@@ -1,7 +1,6 @@
 import path from 'node:path';
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import tailwindcss from '@tailwindcss/vite';
+import { webPlugins } from '../config/plugins.ts';
 import { copyFileSync, existsSync } from 'node:fs';
 import { clientBuild, sharedResolve } from '../config/build.ts';
 
@@ -9,8 +8,7 @@ export default defineConfig(({ isSsrBuild }) => ({
   base: '/PHTV/',
   server: { port: 3000, host: '127.0.0.1' },
   plugins: [
-    react(),
-    ...(!isSsrBuild ? [tailwindcss()] : []),
+    ...webPlugins(Boolean(isSsrBuild)),
     {
       name: 'copy-headers',
       writeBundle() {

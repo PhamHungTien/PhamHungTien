@@ -5,10 +5,12 @@
 The repository is an npm workspace with a single root lockfile and Node.js 24 LTS.
 Both web applications use React 19, Vite 8, TypeScript 7, Firebase 12 and Lucide icons.
 The portfolio owns `/` and six App Store landing pages. The PHTV workspace owns `/PHTV/`
-and its discussion interface. Tailwind 4 with its Vite plugin remains confined to PHTV; shared controls use CSS
-and React components so portfolio content does not inherit Tailwind resets.
+and its discussion interface. Every React page uses Tailwind 4 through the same Vite plugin pipeline.
+`assets/framework.css` and `config/tailwind.ts` provide one shared foundation;
+page-specific CSS supplies layouts while shared React components own controls.
 
-`config/build.ts` contains client build defaults and React deduplication. Both TypeScript
+`config/build.ts` contains client build defaults and React deduplication.
+`config/plugins.ts` supplies the same React and Tailwind compiler plugins to both entry points. Both TypeScript
 projects extend a strict base configuration. Application-specific routing remains explicit in each Vite configuration. Both builds
 target modern browsers: Chrome/Edge 111+, Firefox 128+, and Safari 16.4+.
 

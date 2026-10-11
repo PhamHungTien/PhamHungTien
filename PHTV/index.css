@@ -1,6 +1,5 @@
 @import '../assets/experience.css';
-@import 'tailwindcss';
-@config "./tailwind.config.ts";
+@import '../assets/framework.css';
 
 :root {
   --phtv-background: var(--glass-page);

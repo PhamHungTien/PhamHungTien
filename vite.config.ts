@@ -1,10 +1,10 @@
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { webPlugins } from './config/plugins.ts';
 import { clientBuild, sharedResolve } from './config/build.ts';
 
 export default defineConfig(({ isSsrBuild }) => ({
   base: '/',
-  plugins: [react()],
+  plugins: webPlugins(Boolean(isSsrBuild)),
   server: {
     port: 4174,
     host: '127.0.0.1',

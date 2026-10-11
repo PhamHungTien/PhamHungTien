@@ -1,0 +1,5 @@
+/* Shared Tailwind 4 foundation for every React page. */
+@import "tailwindcss";
+@config "../config/tailwind.ts";
+@source "../src";
+@source "../PHTV";
