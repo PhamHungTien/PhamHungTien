@@ -768,3 +768,15 @@ html :is(.site-header, .discussion-section, .phtv-navbar, .phtv-navigation-panel
 :root { --glass-accent: #9c4b31; --glass-focus: #7b4b19; }
 html[data-theme="dark"] { --glass-accent: #e9b578; --glass-focus: #e6b976; }
 html .site-shell, html[data-theme] .phtv-page, html body { --focus: var(--glass-focus); --phtv-focus: var(--glass-focus); --accent: var(--glass-accent); --bg: var(--glass-page); --text: var(--glass-ink); --muted: var(--glass-muted); --surface: var(--glass-solid); --border: var(--glass-line); }
+
+/* Keep native select indicators inset from the rounded control edge. */
+html body .discussion-section select,
+html[data-theme] body .phtv-page .phtv-community select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 44px !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239c8b73' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 18px center;
+  background-size: 16px 16px;
+}

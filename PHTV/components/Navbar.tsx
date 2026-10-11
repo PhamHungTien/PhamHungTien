@@ -26,7 +26,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   hasSplitDownloads,
 }) => {
   const { lang, changeLanguage, t } = useI18n();
-  const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [desktopDownloadOpen, setDesktopDownloadOpen] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
@@ -39,14 +38,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   const mobileNavigationRef = useRef<HTMLElement | null>(null);
   const mobileToggleRef = useRef<HTMLButtonElement | null>(null);
   const downloadLabel = hasSplitDownloads ? t('nav.download_label') : t('nav.download_now');
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   useEffect(() => {
     if (!themeReady) return;
@@ -194,13 +185,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   return (
     <>
       <nav className="phtv-navbar fixed top-0 left-0 right-0 z-[100]">
-        <div
-          className={`phtv-navbar__inner mx-auto flex max-w-6xl items-center justify-between border-b px-4 py-3 transition-colors duration-300 md:px-6 ${
-            scrolled
-              ? 'glass-panel border-white/10 shadow-[0_18px_50px_rgba(0,0,0,0.28)]'
-              : 'border-white/6 bg-black/10 backdrop-blur-md'
-          }`}
-        >
+        <div className="phtv-navbar__inner mx-auto flex max-w-6xl items-center justify-between border-b border-white/6 bg-black/10 px-4 py-3 backdrop-blur-md transition-colors duration-300 md:px-6">
           <a
             href="/"
             className="phtv-home-control"
