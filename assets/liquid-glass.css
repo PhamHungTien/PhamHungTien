@@ -288,3 +288,23 @@ html .collection-hero__copy > .button svg { flex-shrink: 0; }
   html .site-header--product .language-switch button { min-width: 28px; padding-inline: 5px; }
   html .site-header--product .icon-button, html .site-header--product .mobile-menu-toggle { width: 34px; height: 34px; }
 }
+
+/* Segmented selections follow the same capsule geometry as their container. */
+html .lang-toggle, html .language-switch, html .platform-filters {
+  display: inline-flex; align-items: center; padding: 4px; gap: 3px;
+  border: 1px solid var(--glass-line); border-radius: var(--glass-pill);
+  height: auto; box-sizing: border-box;
+}
+html .lang-toggle { width: fit-content; max-width: 100%; }
+html .lang-toggle button, html .language-switch button, html .platform-filters button {
+  border: 0; border-radius: var(--glass-pill); margin: 0;
+  background: transparent; color: var(--glass-muted); box-sizing: border-box;
+}
+html .lang-toggle button { min-height: 36px; height: auto; padding: 8px 17px; }
+html .lang-toggle button.active, html .language-switch button.is-active,
+html .platform-filters button[aria-pressed="true"] {
+  border: 0; background: var(--glass-ink); color: var(--glass-page);
+  border-radius: var(--glass-pill);
+}
+html .nav-links a { border-radius: var(--glass-pill); }
+html[data-theme] .phtv-page .phtv-nav-control { border-radius: var(--glass-pill) !important; }
