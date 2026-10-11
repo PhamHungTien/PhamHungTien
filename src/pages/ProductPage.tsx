@@ -172,11 +172,11 @@ export function ProductPage({ product, lang, t }: ProductPageProps) {
             <p>
               {product.slug === 'phtv'
                 ? lang === 'vi'
-                  ? 'Cài bằng Homebrew hoặc tải đúng bản máy Mac từ trang PHTV.'
-                  : 'Install with Homebrew or download the correct Mac build from PHTV.'
+                  ? 'Cài từ Homebrew Cask chính thức hoặc tải đúng bản máy Mac từ trang PHTV.'
+                  : 'Install from official Homebrew Cask or download the correct Mac build from PHTV.'
                 : product.support[lang]}
             </p>
-            {product.slug === 'phtv' && <code>brew install --cask phamhungtien/tap/phtv</code>}
+            {product.slug === 'phtv' && <code>brew install --cask phtv</code>}
             <a href={product.slug === 'phtv' ? primaryHref : 'mailto:contact@phamhungtien.com'}>
               {product.slug !== 'phtv' && <Mail size={16} aria-hidden="true" />}
               {product.slug === 'phtv' ? product.ctaLabel[lang] : t('product.supportCta')}

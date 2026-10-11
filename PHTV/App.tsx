@@ -32,9 +32,9 @@ const faqData = [
         qEn: 'What is the easiest way to install PHTV?',
         a: (
           <div>
-            <p className="mb-2">Dùng Homebrew (khuyến khích):</p>
+            <p className="mb-2">Cài từ Homebrew Cask chính thức (khuyến khích):</p>
             <CopyBlock
-              code="brew install --cask phamhungtien/tap/phtv"
+              code="brew install --cask phtv"
               className="mb-3"
               colorClass="text-brand-300"
             />
@@ -43,7 +43,7 @@ const faqData = [
             <div className="space-y-2 mb-3">
               <div className="flex flex-col gap-1">
                 <span className="text-xs text-slate-500">Cập nhật:</span>
-                <CopyBlock code="brew upgrade --cask phtv" />
+                <CopyBlock code="brew upgrade --cask --greedy phtv" />
               </div>
               <div className="flex flex-col gap-1">
                 <span className="text-xs text-slate-500">Gỡ cài đặt:</span>
@@ -70,9 +70,9 @@ const faqData = [
         ),
         aEn: (
           <div>
-            <p className="mb-2">Using Homebrew (recommended):</p>
+            <p className="mb-2">Install from official Homebrew Cask (recommended):</p>
             <CopyBlock
-              code="brew install --cask phamhungtien/tap/phtv"
+              code="brew install --cask phtv"
               className="mb-3"
               colorClass="text-brand-300"
             />
@@ -81,7 +81,7 @@ const faqData = [
             <div className="space-y-2 mb-3">
               <div className="flex flex-col gap-1">
                 <span className="text-xs text-slate-500">Upgrade:</span>
-                <CopyBlock code="brew upgrade --cask phtv" />
+                <CopyBlock code="brew upgrade --cask --greedy phtv" />
               </div>
               <div className="flex flex-col gap-1">
                 <span className="text-xs text-slate-500">Uninstall:</span>
@@ -374,7 +374,7 @@ function App() {
                   )}
 
                   <CopyBlock
-                    code="brew install --cask phamhungtien/tap/phtv"
+                    code="brew install --cask phtv"
                     className="phtv-quick-command mt-3"
                     colorClass="text-slate-300"
                   />
