@@ -34,9 +34,10 @@ export function HomePage({ lang, onLanguageChange, t }: HomePageProps) {
             <a className="button button--primary" href="#products">{vi ? 'Khám phá ứng dụng' : 'Explore the collection'}<ArrowRight size={17} /></a>
             <div className="collection-signature"><span className="status-dot" />{vi ? 'Thiết kế & phát triển bởi Phạm Hùng Tiến' : 'Designed & developed by Pham Hung Tien'}</div>
           </div>
-          <div className="app-mosaic" aria-hidden="true">
-            {products.slice(0,6).map((product, index) => <div className="mosaic-tile" key={product.slug} style={{ '--tile': index, '--tile-accent': product.accent } as CSSProperties}><img src={product.icon} alt="" width={92} height={92} /><span>{product.name}</span></div>)}
-          </div>
+          <a className="hero-study" href={products.find(product => product.slug === 'vtts')!.route}>
+            <div className="hero-study__image"><img src={products.find(product => product.slug === 'vtts')!.heroImage} alt={vi ? 'Giao diện vTTS' : 'A closer look at vTTS'} fetchPriority="high" /></div>
+            <div className="hero-study__caption"><span>IN FOCUS / vTTS</span><span>{vi ? 'Xem ứng dụng' : 'Take a closer look'} <ArrowUpRight size={15} /></span></div>
+          </a>
         </section>
         <section className="product-directory" id="products">
           <div className="section-copy directory-heading">
@@ -52,10 +53,11 @@ export function HomePage({ lang, onLanguageChange, t }: HomePageProps) {
             </div>
             <label className="app-search"><Search size={17} aria-hidden="true" /><input type="search" value={query} onChange={e => setQuery(e.target.value)} placeholder={vi ? 'Tìm ứng dụng…' : 'Find an app…'} aria-label={vi ? 'Tìm ứng dụng' : 'Find an app'} /></label>
           </div>
-          <p className="collection-count" role="status">{filtered.length} {vi ? 'ứng dụng' : 'apps'}</p>
+          <p className="collection-count" role="status">{filtered.length} {vi ? 'ứng dụng' : filtered.length === 1 ? 'app' : 'apps'}</p>
           <div className="product-list">
             {filtered.map((product) => {
               return <a className="product-row" href={product.route} key={product.slug} style={{ '--card-accent': product.accent } as CSSProperties}>
+                <div className="app-card-artwork"><img src={product.localizedHeroImages?.[lang] ?? product.heroImage} alt="" loading="lazy" decoding="async" /><span className="app-card-index">{String(products.indexOf(product) + 1).padStart(2, '0')}</span></div>
                 <div className="app-card-top"><img src={product.icon} alt="" width={64} height={64} loading="lazy" decoding="async" /><ArrowUpRight size={22} aria-hidden="true" /></div>
                 <div className="app-card-copy"><small>{product.category[lang]}</small><h3>{product.name}</h3><p>{product.subtitle[lang]}</p></div>
                 <div className="app-card-bottom"><span>{product.platforms[lang]}</span><strong>{product.githubUrl ? (vi ? 'Mã nguồn mở' : 'Open source') : 'App Store'}</strong></div>

@@ -182,3 +182,53 @@ html .app-mosaic::after { inset: -15%; opacity: .45; transform: rotate(28deg) sc
   html .app-mosaic::before, html .app-mosaic::after { display: none; }
   html *, html *::before, html *::after { animation: none !important; transition: none !important; }
 }
+
+/* Editorial product collection: real work, quiet surfaces, deliberate hierarchy. */
+:root { --glass-tint: rgba(250,249,246,.82); --glass-page: #f5f3ef; --glass-ink: #252723; --glass-muted: #656860; --glass-solid: #faf9f6; --glass-content: #fcfbf8; --glass-ambient-a: transparent; --glass-ambient-b: transparent; }
+html[data-theme="dark"] { --glass-tint: rgba(35,39,33,.82); --glass-page: #141614; --glass-ink: #f0f0e9; --glass-muted: #a6aaa0; --glass-solid: #1c1f1b; --glass-content: #20241e; --glass-ambient-a: transparent; --glass-ambient-b: transparent; }
+html .collection-hero { grid-template-columns: 1fr 1fr; gap: 7%; padding-block: 96px 88px; }
+html .collection-hero h1 { font-size: clamp(44px,5.2vw,74px); line-height: 1.06; letter-spacing: -.055em; }
+html .collection-hero h1 span { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; font-style: italic; letter-spacing: -.055em; color: var(--glass-ink); }
+html .eyebrow { letter-spacing: .14em; line-height: 1.8; }
+.hero-study { display: block; color: inherit; min-width: 0; text-decoration: none; }
+.hero-study__image { aspect-ratio: 1.22; display: grid; place-items: center; background: var(--glass-solid); border-radius: 4px; overflow: hidden; }
+.hero-study__image img { width: 100%; height: 100%; object-fit: contain; }
+.hero-study__caption { display: flex; justify-content: space-between; gap: 16px; padding-top: 16px; font-size: 12px; color: var(--glass-muted); }
+.hero-study__caption > span:last-child { display: flex; align-items: center; gap: 8px; }
+html .product-list { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 54px 32px; }
+html .product-row, html .product-row:last-child { padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; gap: 18px; }
+.app-card-artwork { aspect-ratio: 1.6; position: relative; overflow: hidden; background: var(--glass-solid); border-radius: 4px; }
+.app-card-artwork > img { width: 100%; height: 100%; object-fit: contain; }
+.app-card-index { position: absolute; left: 14px; top: 14px; font-family: ui-monospace, monospace; font-size: 11px; color: var(--glass-muted); background: var(--glass-solid); padding: 5px 7px; border-radius: 3px; }
+html .app-card-top { align-items: center; }
+html .app-card-top img { width: 38px; height: 38px; box-shadow: none; }
+html .app-card-copy h3 { font-size: 28px; margin-block: 5px 10px; font-weight: 550; }
+html .app-card-copy p { max-width: 54ch; }
+html .app-card-bottom { padding-top: 14px; }
+html .app-card-bottom strong { background: transparent; padding: 0; }
+html .detail-hero__media, html .product-video-card { border-radius: 8px; box-shadow: none; }
+html .detail-hero h1 { letter-spacing: -.05em; text-wrap: balance; }
+html .contact-card, html .legal-contact-item { box-shadow: none; border-radius: 10px; }
+html .section-copy h2 { letter-spacing: -.045em; }
+@media (hover:hover) {
+  html .product-row:hover { transform: none; background: transparent; box-shadow: none; }
+}
+@media (prefers-reduced-motion:no-preference) {
+  .hero-study__image img, .app-card-artwork > img { transition: transform 650ms var(--glass-ease); }
+  .hero-study__caption svg { transition: transform 300ms var(--glass-ease); }
+  .hero-study { animation: media-materialize 900ms var(--glass-ease) both; }
+  @media (hover:hover) {
+    .hero-study:hover .hero-study__image img, .product-row:hover .app-card-artwork > img { transform: scale(1.025); }
+    .hero-study:hover .hero-study__caption svg { transform: translate(2px,-2px); }
+  }
+}
+@media (max-width:700px) {
+  html .collection-hero { grid-template-columns: 1fr; gap: 44px; padding-block: 56px 48px; }
+  html .collection-hero h1 { font-size: clamp(42px,9.5vw,60px); }
+  html .product-list { grid-template-columns: 1fr; gap: 38px; }
+  .hero-study__image { aspect-ratio: 1.35; }
+  html .app-card-copy h3 { font-size: 25px; }
+}
+
+.hero-study__image { aspect-ratio: auto; background: transparent; }
+.hero-study__image img { height: auto; display: block; }
