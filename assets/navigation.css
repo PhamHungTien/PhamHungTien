@@ -28,3 +28,25 @@ html[data-theme] body .phtv-page .phtv-menu-toggle { display: none; }
 html body .site-nav, html[data-theme] body .phtv-page .phtv-desktop-navigation { gap: 24px; font-size: 14px; font-weight: 500; }
 html[data-theme] body .phtv-page .phtv-desktop-navigation a { font: inherit; color: var(--glass-muted); }
 html body .header-actions, html[data-theme] body .phtv-page .phtv-navbar__inner > div:last-child { gap: 8px; }
+
+/* Header controls have identical alignment in both application builds. */
+html body :is(.site-header,.phtv-navbar) .shared-theme-toggle {
+  position: static;
+  display: grid;
+  place-items: center;
+  width: var(--control-size);
+  height: var(--control-size);
+  min-width: var(--control-size);
+  min-height: var(--control-size);
+  padding: 0 !important;
+  flex: 0 0 auto;
+  line-height: 0;
+  border-radius: 50% !important;
+}
+html body :is(.site-header,.phtv-navbar) .shared-theme-toggle > svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  flex: none;
+}
