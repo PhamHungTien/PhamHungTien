@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowLeft, Home, Mail, Menu, Moon, Sun, X } from 'lucide-react';
+import { ArrowLeft, Home, Mail, Menu, X } from 'lucide-react';
 import type { Lang } from '../types';
 import { GlassOptics } from './GlassOptics';
+import { ThemeToggle } from './ThemeToggle';
 
 interface HeaderProps {
   lang: Lang;
@@ -11,24 +12,8 @@ interface HeaderProps {
 
 export function Header({ lang, t, productName }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const headerRef = useRef<HTMLElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    const currentTheme = document.documentElement.dataset.theme;
-    setTheme(currentTheme === 'dark' ? 'dark' : 'light');
-
-    const syncTheme = (event: StorageEvent) => {
-      if (event.key !== 'theme' || (event.newValue !== 'light' && event.newValue !== 'dark'))
-        return;
-      document.documentElement.dataset.theme = event.newValue;
-      setTheme(event.newValue);
-    };
-
-    window.addEventListener('storage', syncTheme);
-    return () => window.removeEventListener('storage', syncTheme);
-  }, []);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -57,23 +42,6 @@ export function Header({ lang, t, productName }: HeaderProps) {
 
   const closeMenu = () => setMenuOpen(false);
 
-  const toggleTheme = () => {
-    const nextTheme = theme === 'dark' ? 'light' : 'dark';
-    document.documentElement.dataset.theme = nextTheme;
-    try {
-      localStorage.setItem('theme', nextTheme);
-    } catch {
-      // Theme switching still works when storage is unavailable.
-    }
-    document
-      .querySelector<HTMLMetaElement>('meta[name="theme-color"]')
-      ?.setAttribute(
-        'content',
-        getComputedStyle(document.documentElement).getPropertyValue('--glass-page').trim(),
-      );
-    setTheme(nextTheme);
-  };
-
   return (
     <header ref={headerRef} className={`site-header${productName ? ' site-header--product' : ''}`}>
       <GlassOptics />
@@ -101,22 +69,7 @@ export function Header({ lang, t, productName }: HeaderProps) {
       </nav>
 
       <div className="header-actions">
-        <button
-          className="icon-button theme-toggle"
-          type="button"
-          onClick={toggleTheme}
-          aria-label={
-            theme === 'dark'
-              ? lang === 'vi'
-                ? 'Bật giao diện sáng'
-                : 'Use light mode'
-              : lang === 'vi'
-                ? 'Bật giao diện tối'
-                : 'Use dark mode'
-          }
-        >
-          {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
-        </button>
+        <ThemeToggle lang={lang} />
         {productName ? (
           <a
             className="icon-button"

@@ -1,44 +1,8 @@
+@import "./design-tokens.css";
 @import "./navigation.css";
 
 /* One shared web interpretation of Apple's Liquid Glass control layer.
    Content surfaces stay quiet; blur is reserved for floating controls. */
-:root {
-  --glass-page: #f5f7fa;
-  --glass-ink: #15202c;
-  --glass-muted: #586675;
-  --glass-tint: rgba(255,255,255,.76);
-  --glass-solid: #f8fafc;
-  --glass-content: rgba(255,255,255,.9);
-  --glass-edge: rgba(255,255,255,.94);
-  --glass-line: rgba(112,76,44,.22);
-  --glass-highlight: rgba(255,255,255,.82);
-  --glass-shadow: 0 10px 34px rgba(71,42,20,.09), inset 0 1px 0 var(--glass-edge), inset 0 -1px 0 rgba(62,88,115,.06);
-  --glass-radius: 24px;
-  --glass-pill: 999px;
-  --control-size: 46px;
-  --control-inset: 4px;
-  --segment-size: 36px;
-  --segment-gap: 4px;
-  --navigation-top: max(18px, env(safe-area-inset-top));
-  --navigation-gap: 12px;
-  --glass-ease: cubic-bezier(.22,1,.36,1);
-  --glass-ambient-a: rgba(111,179,235,.16);
-  --glass-ambient-b: rgba(115,209,177,.13);
-}
-html[data-theme="dark"] {
-  --glass-page: #0c1118;
-  --glass-ink: #edf3fa;
-  --glass-muted: #a9b7c7;
-  --glass-tint: rgba(28,38,51,.8);
-  --glass-solid: #1a2533;
-  --glass-content: rgba(22,31,43,.94);
-  --glass-edge: rgba(255,228,192,.22);
-  --glass-line: rgba(228,191,145,.22);
-  --glass-highlight: rgba(255,214,158,.1);
-  --glass-shadow: 0 12px 40px rgba(0,0,0,.22), inset 0 1px 0 var(--glass-edge), inset 0 -1px 0 rgba(0,0,0,.22);
-  --glass-ambient-a: rgba(58,118,190,.17);
-  --glass-ambient-b: rgba(38,130,112,.12);
-}
 html body {
   background: radial-gradient(ellipse at 10% 0%,var(--glass-ambient-a),transparent 48%), radial-gradient(ellipse at 95% 25%,var(--glass-ambient-b),transparent 48%),var(--glass-page);
   color: var(--glass-ink);
@@ -192,8 +156,6 @@ html .app-mosaic::after { inset: -15%; opacity: .45; transform: rotate(28deg) sc
 }
 
 /* Editorial product collection: real work, quiet surfaces, deliberate hierarchy. */
-:root { --glass-tint: rgba(255,250,242,.82); --glass-page: #f7f1e7; --glass-ink: #36271f; --glass-muted: #756354; --glass-solid: #fffaf2; --glass-content: #fffdf8; --glass-ambient-a: transparent; --glass-ambient-b: transparent; }
-html[data-theme="dark"] { --glass-tint: rgba(44,35,28,.82); --glass-page: #201914; --glass-ink: #f5eadb; --glass-muted: #c7b39e; --glass-solid: #2c231c; --glass-content: #30261e; --glass-ambient-a: transparent; --glass-ambient-b: transparent; }
 html .collection-hero { grid-template-columns: 1fr 1fr; gap: 7%; padding-block: 96px 88px; }
 html .collection-hero h1 { font-size: clamp(44px,5.2vw,74px); line-height: 1.06; letter-spacing: -.055em; }
 html .collection-hero h1 span { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; font-style: italic; letter-spacing: -.055em; color: var(--glass-ink); }
@@ -370,7 +332,6 @@ html .site-header:has(.glass-optics__surface) {
 }
 
 /* Shared geometry: one surface radius, capsules for compact controls. */
-:root { --glass-radius: 24px; --glass-inset-radius: 16px; }
 html .site-header, html .mobile-navigation, html .donate-dialog,
 html .product-row, html .product-row:last-child, html .mosaic-tile,
 html .detail-hero__media, html .product-video-card,
@@ -765,8 +726,6 @@ html :is(.site-header, .discussion-section, .phtv-navbar, .phtv-navigation-panel
 }
 
 /* Earth and fire palette: one shared accent for every page. */
-:root { --glass-accent: #9c4b31; --glass-focus: #7b4b19; }
-html[data-theme="dark"] { --glass-accent: #e9b578; --glass-focus: #e6b976; }
 html .site-shell, html[data-theme] .phtv-page, html body { --focus: var(--glass-focus); --phtv-focus: var(--glass-focus); --accent: var(--glass-accent); --bg: var(--glass-page); --text: var(--glass-ink); --muted: var(--glass-muted); --surface: var(--glass-solid); --border: var(--glass-line); }
 
 /* Keep native select indicators inset from the rounded control edge. */

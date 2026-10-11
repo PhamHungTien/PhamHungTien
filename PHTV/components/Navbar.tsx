@@ -5,6 +5,7 @@ import './Navbar.css';
 
 import { Home } from 'lucide-react';
 import { LanguageSwitch } from '../../src/components/LanguageSwitch';
+import { ThemeToggle } from '../../src/components/ThemeToggle';
 
 interface NavbarProps {
   activeTab?: 'home' | 'community';
@@ -28,54 +29,10 @@ export const Navbar: React.FC<NavbarProps> = ({
   const { lang, changeLanguage, t } = useI18n();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [desktopDownloadOpen, setDesktopDownloadOpen] = useState(false);
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
-  const [themeReady, setThemeReady] = useState(false);
-  useEffect(() => {
-    setTheme(document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
-    setThemeReady(true);
-  }, []);
   const desktopDownloadRef = useRef<HTMLDivElement | null>(null);
   const mobileNavigationRef = useRef<HTMLElement | null>(null);
   const mobileToggleRef = useRef<HTMLButtonElement | null>(null);
   const downloadLabel = hasSplitDownloads ? t('nav.download_label') : t('nav.download_now');
-
-  useEffect(() => {
-    if (!themeReady) return;
-    document.documentElement.setAttribute('data-theme', theme);
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-    try {
-      localStorage.setItem('theme', theme);
-    } catch {
-      // Theme switching still works when storage is unavailable.
-    }
-
-    const themeColorMeta = document.querySelector('meta[name="theme-color"]');
-    if (themeColorMeta) {
-      themeColorMeta.setAttribute(
-        'content',
-        getComputedStyle(document.documentElement).getPropertyValue('--glass-page').trim(),
-      );
-    }
-  }, [theme, themeReady]);
-
-  // Sync theme across tabs
-  useEffect(() => {
-    const handleStorage = (e: StorageEvent) => {
-      if (e.key === 'theme' && (e.newValue === 'light' || e.newValue === 'dark')) {
-        setTheme(e.newValue);
-      }
-    };
-    window.addEventListener('storage', handleStorage);
-    return () => window.removeEventListener('storage', handleStorage);
-  }, []);
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
-  };
 
   useEffect(() => {
     if (!mobileMenuOpen) return;
@@ -223,21 +180,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <LanguageSwitch lang={lang} onChange={changeLanguage} />
 
             {/* Theme Toggle Button */}
-            <button
-              onClick={toggleTheme}
-              className="phtv-nav-control phtv-icon-control rounded-lg border border-white/8 bg-white/[0.03] p-2 text-slate-300 transition-colors hover:text-white flex items-center justify-center min-h-[38px] min-w-[38px]"
-              aria-label={
-                theme === 'dark'
-                  ? lang === 'vi'
-                    ? 'Bật giao diện sáng'
-                    : 'Use light mode'
-                  : lang === 'vi'
-                    ? 'Bật giao diện tối'
-                    : 'Use dark mode'
-              }
-            >
-              {theme === 'dark' ? <Icons.Sun size={18} /> : <Icons.Moon size={18} />}
-            </button>
+            <ThemeToggle lang={lang} className="phtv-nav-control phtv-icon-control" />
 
             {hasSplitDownloads ? (
               <div

@@ -14,9 +14,12 @@ target modern browsers: Chrome/Edge 111+, Firefox 128+, and Safari 16.4+.
 
 ## Shared design and language
 
-`assets/liquid-glass.css` owns palette, geometry and focus states.
+`assets/design-tokens.css` is the single source for palette, geometry and motion.
+`assets/liquid-glass.css` applies those tokens to shared controls and content surfaces.
+PHTV compatibility variables resolve to these tokens rather than a separate palette.
 `assets/navigation.css` owns the shared navigation frame and breakpoints.
-`src/components/LanguageSwitch.tsx` and `ResponsiveImage.tsx` are shared by both apps.
+`src/components/LanguageSwitch.tsx`, `ThemeToggle.tsx` and `ResponsiveImage.tsx` are shared by both apps.
+`src/hooks/useTheme.ts` owns theme persistence, cross-tab synchronization and browser chrome.
 The portfolio and non-PHTV pages are English-only; PHTV defaults to Vietnamese with an
 English option. Translation dictionaries contain product copy, not duplicated markup.
 

@@ -1,0 +1,43 @@
+/* Canonical palette, geometry and motion for every website page. */
+:root {
+  --glass-page: #f7f1e7;
+  --glass-ink: #36271f;
+  --glass-muted: #756354;
+  --glass-tint: rgba(255,250,242,.82);
+  --glass-solid: #fffaf2;
+  --glass-content: #fffdf8;
+  --glass-edge: rgba(255,255,255,.94);
+  --glass-line: rgba(112,76,44,.22);
+  --glass-highlight: rgba(255,255,255,.82);
+  --glass-shadow: 0 10px 34px rgba(71,42,20,.09), inset 0 1px 0 var(--glass-edge), inset 0 -1px 0 rgba(62,88,115,.06);
+  --glass-radius: 24px;
+  --glass-inset-radius: 16px;
+  --glass-accent: #9c4b31;
+  --glass-focus: #7b4b19;
+  --glass-pill: 999px;
+  --control-size: 46px;
+  --control-inset: 4px;
+  --segment-size: 36px;
+  --segment-gap: 4px;
+  --navigation-top: max(18px, env(safe-area-inset-top));
+  --navigation-gap: 12px;
+  --glass-ease: cubic-bezier(.22,1,.36,1);
+  --glass-ambient-a: transparent;
+  --glass-ambient-b: transparent;
+}
+html[data-theme="dark"] {
+  --glass-accent: #e9b578;
+  --glass-focus: #e6b976;
+  --glass-page: #201914;
+  --glass-ink: #f5eadb;
+  --glass-muted: #c7b39e;
+  --glass-tint: rgba(44,35,28,.82);
+  --glass-solid: #2c231c;
+  --glass-content: #30261e;
+  --glass-edge: rgba(255,228,192,.22);
+  --glass-line: rgba(228,191,145,.22);
+  --glass-highlight: rgba(255,214,158,.1);
+  --glass-shadow: 0 12px 40px rgba(0,0,0,.22), inset 0 1px 0 var(--glass-edge), inset 0 -1px 0 rgba(0,0,0,.22);
+  --glass-ambient-a: transparent;
+  --glass-ambient-b: transparent;
+}
