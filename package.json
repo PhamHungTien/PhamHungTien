@@ -25,7 +25,8 @@
     "type-check:all": "npm run type-check && npm run type-check:phtv",
     "install:deps": "npm install && cd PHTV && npm install",
     "clean": "cd PHTV && rm -rf dist node_modules && npm install",
-    "sync:appstore": "node scripts/sync-appstore.mjs"
+    "sync:appstore": "node scripts/sync-appstore.mjs",
+    "verify:social": "node scripts/verify-social.mjs"
   },
   "dependencies": {
     "firebase": "^12.19.0",
@@ -39,6 +40,7 @@
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.0.0",
+    "sharp": "^0.35.5",
     "typescript": "~5.8.2",
     "vite": "^6.2.0"
   },

@@ -1,7 +1,7 @@
 /* Shared interaction language for the portfolio, PHTV, and legal pages. */
 :root { --motion-ease: cubic-bezier(.22,1,.36,1); --motion-duration: 240ms; }
-::selection { background: #bce9db; color: #102c24; }
-:where(a, button, summary, input):focus-visible { outline: 3px solid #08785f; outline-offset: 4px; }
+::selection { background: #ead0a5; color: #36271f; }
+:where(a, button, summary, input):focus-visible { outline: 3px solid var(--glass-focus, #7b4b19); outline-offset: 4px; }
 :where(button, .button, .contact-card, .phtv-download-button) { transition: transform var(--motion-duration) var(--motion-ease), background-color var(--motion-duration) ease, box-shadow var(--motion-duration) ease; }
 @media (hover:hover) {
   :where(.button, .contact-card, .phtv-download-button):hover { transform: translateY(-3px); }

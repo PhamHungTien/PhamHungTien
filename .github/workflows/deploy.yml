@@ -71,6 +71,9 @@ jobs:
       - name: Verify interface and contact invariants
         run: npm run verify:ui
 
+      - name: Verify social previews
+        run: npm run verify:social
+
       - name: Verify SEO invariants
         run: ./scripts/verify-site.sh _site
 

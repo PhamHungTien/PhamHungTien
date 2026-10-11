@@ -8,9 +8,9 @@
   --glass-solid: #f8fafc;
   --glass-content: rgba(255,255,255,.9);
   --glass-edge: rgba(255,255,255,.94);
-  --glass-line: rgba(67,89,111,.16);
+  --glass-line: rgba(112,76,44,.22);
   --glass-highlight: rgba(255,255,255,.82);
-  --glass-shadow: 0 10px 34px rgba(31,54,78,.09), inset 0 1px 0 var(--glass-edge), inset 0 -1px 0 rgba(62,88,115,.06);
+  --glass-shadow: 0 10px 34px rgba(71,42,20,.09), inset 0 1px 0 var(--glass-edge), inset 0 -1px 0 rgba(62,88,115,.06);
   --glass-radius: 24px;
   --glass-pill: 999px;
   --control-size: 46px;
@@ -30,9 +30,9 @@ html[data-theme="dark"] {
   --glass-tint: rgba(28,38,51,.8);
   --glass-solid: #1a2533;
   --glass-content: rgba(22,31,43,.94);
-  --glass-edge: rgba(231,244,255,.22);
-  --glass-line: rgba(200,222,247,.17);
-  --glass-highlight: rgba(207,232,255,.1);
+  --glass-edge: rgba(255,228,192,.22);
+  --glass-line: rgba(228,191,145,.22);
+  --glass-highlight: rgba(255,214,158,.1);
   --glass-shadow: 0 12px 40px rgba(0,0,0,.22), inset 0 1px 0 var(--glass-edge), inset 0 -1px 0 rgba(0,0,0,.22);
   --glass-ambient-a: rgba(58,118,190,.17);
   --glass-ambient-b: rgba(38,130,112,.12);
@@ -190,8 +190,8 @@ html .app-mosaic::after { inset: -15%; opacity: .45; transform: rotate(28deg) sc
 }
 
 /* Editorial product collection: real work, quiet surfaces, deliberate hierarchy. */
-:root { --glass-tint: rgba(250,249,246,.82); --glass-page: #f5f3ef; --glass-ink: #252723; --glass-muted: #656860; --glass-solid: #faf9f6; --glass-content: #fcfbf8; --glass-ambient-a: transparent; --glass-ambient-b: transparent; }
-html[data-theme="dark"] { --glass-tint: rgba(35,39,33,.82); --glass-page: #141614; --glass-ink: #f0f0e9; --glass-muted: #a6aaa0; --glass-solid: #1c1f1b; --glass-content: #20241e; --glass-ambient-a: transparent; --glass-ambient-b: transparent; }
+:root { --glass-tint: rgba(255,250,242,.82); --glass-page: #f7f1e7; --glass-ink: #36271f; --glass-muted: #756354; --glass-solid: #fffaf2; --glass-content: #fffdf8; --glass-ambient-a: transparent; --glass-ambient-b: transparent; }
+html[data-theme="dark"] { --glass-tint: rgba(44,35,28,.82); --glass-page: #201914; --glass-ink: #f5eadb; --glass-muted: #c7b39e; --glass-solid: #2c231c; --glass-content: #30261e; --glass-ambient-a: transparent; --glass-ambient-b: transparent; }
 html .collection-hero { grid-template-columns: 1fr 1fr; gap: 7%; padding-block: 96px 88px; }
 html .collection-hero h1 { font-size: clamp(44px,5.2vw,74px); line-height: 1.06; letter-spacing: -.055em; }
 html .collection-hero h1 span { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; font-style: italic; letter-spacing: -.055em; color: var(--glass-ink); }
@@ -444,10 +444,10 @@ html .install-panel > a svg:last-child { margin-left: auto; flex-shrink: 0; }
 
 /* Ambient light field shared by every page, behind all readable content. */
 :root {
-  --ambient-teal: #719b8930; --ambient-violet: #aca0bd26; --ambient-gold: #cab89324;
+  --ambient-clay: #b9774930; --ambient-copper: #b85c4526; --ambient-gold: #d8ae662c;
 }
 html[data-theme="dark"] {
-  --ambient-teal: #3c8e7636; --ambient-violet: #7b679b30; --ambient-gold: #947e4c24;
+  --ambient-clay: #ad714936; --ambient-copper: #a9534130; --ambient-gold: #c99c4c28;
 }
 html body { position: relative; isolation: isolate; }
 html body::before, html body::after {
@@ -455,11 +455,11 @@ html body::before, html body::after {
   inset: 0; background-repeat: no-repeat;
 }
 html body::before {
-  background: radial-gradient(ellipse at 16% 12%,var(--ambient-teal),transparent 52%),radial-gradient(ellipse at 84% 28%,var(--ambient-violet),transparent 48%),radial-gradient(ellipse at 55% 94%,var(--ambient-gold),transparent 50%);
+  background: radial-gradient(ellipse at 16% 12%,var(--ambient-clay),transparent 52%),radial-gradient(ellipse at 84% 28%,var(--ambient-copper),transparent 48%),radial-gradient(ellipse at 55% 94%,var(--ambient-gold),transparent 50%);
 }
 html body::after {
   inset: 10% -10% -10%; opacity: .65;
-  background: radial-gradient(ellipse at 68% 52%,var(--ambient-teal),transparent 43%),radial-gradient(ellipse at 15% 85%,var(--ambient-violet),transparent 40%);
+  background: radial-gradient(ellipse at 68% 52%,var(--ambient-clay),transparent 43%),radial-gradient(ellipse at 15% 85%,var(--ambient-copper),transparent 40%);
 }
 @keyframes ambient-light-drift {
   0%,100% { transform: translate3d(0,0,0) scale(1); }
@@ -761,3 +761,8 @@ html :is(.site-header, .discussion-section, .phtv-navbar, .phtv-navigation-panel
     transition: translate 250ms var(--glass-ease);
   }
 }
+
+/* Earth and fire palette: one shared accent for every page. */
+:root { --glass-accent: #9c4b31; --glass-focus: #7b4b19; }
+html[data-theme="dark"] { --glass-accent: #e9b578; --glass-focus: #e6b976; }
+html .site-shell, html[data-theme] .phtv-page, html body { --focus: var(--glass-focus); --phtv-focus: var(--glass-focus); --accent: var(--glass-accent); --bg: var(--glass-page); --text: var(--glass-ink); --muted: var(--glass-muted); --surface: var(--glass-solid); --border: var(--glass-line); }

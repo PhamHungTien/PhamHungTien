@@ -31,7 +31,7 @@ export interface PageMeta {
 }
 
 function ogImageFor(slug: string) {
-  return `${SITE.origin}/og/${slug}.png`;
+  return `${SITE.origin}/og/${slug}.png?v=earth-1`;
 }
 
 export function getPageMeta(product: Product | null, lang: Lang): PageMeta {
@@ -59,7 +59,7 @@ export function getPageMeta(product: Product | null, lang: Lang): PageMeta {
     canonical: `${SITE.origin}${product.route}`,
     ogTitle: `${product.name} — ${product.title[lang]}`,
     ogImage: ogImageFor(product.slug),
-    ogImageAlt: product.gallery[0]?.alt[lang] ?? product.name,
+    ogImageAlt: `${product.name} — ${product.title[lang]}`,
     ogType: 'product',
     locale: lang,
     favicon: icon,

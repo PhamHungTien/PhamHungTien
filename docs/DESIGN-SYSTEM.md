@@ -52,3 +52,19 @@ Check root and all six product headers at 320px, PHTV navigation at 320px, legal
 language controls, desktop navigation and light/dark presentation. Run the existing
 type checks, production builds and `verify:ui` when changing shared components.
 This is a focused consistency pass, not a full accessibility certification.
+
+## Shared earth palette
+
+All pages use the shared Liquid Glass color tokens. Light mode uses cream
+`#f7f1e7`, dark brown text `#36271f`, and muted brown `#756354`. Dark mode
+uses `#201914`, warm ivory text `#f5eadb`, and muted sand `#c7b39e`.
+Ambient motion uses clay, copper and gold; product icons retain their original colors.
+Focus rings use brown in light mode and gold in dark mode.
+
+## Social previews
+
+Run `npm run og` to regenerate the 22 PNG cards and legal-page metadata.
+The generator uses real application icons, selectable source text in SVG, and
+Sharp to export 1200 × 630 cards. Run `npm run build:all` followed by
+`npm run verify:social` to validate generated metadata and image dimensions.
+Increment the image URL version in the generator and SEO metadata when refreshing cards.
