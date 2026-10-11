@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Icons } from './Icons';
 import { auth, db, requestNotificationPermission, googleProvider } from '../src/firebase';
-import emailjs from '@emailjs/browser';
 import { 
   onAuthStateChanged, 
   signOut,
@@ -21,7 +20,6 @@ import {
   arrayRemove,
   getDoc,
   limit,
-  increment,
   where
 } from 'firebase/firestore';
 
@@ -94,26 +92,10 @@ interface AppNotification {
   isRead: boolean;
 }
 
-const ADMIN_EMAILS = ['contact@phamhungtien.com'];
-const ADMIN_NAME_KEYS = ['pham hung tien'];
+const ADMIN_EMAILS = ['contact@phamhungtien.com', 'hungtien10a7@gmail.com'];
 const POSTS_PER_PAGE = 15;
-
-const normalizeIdentity = (value?: string) =>
-  (value || '')
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .trim();
-
-const isAdminIdentity = (author?: string, email?: string, isAdmin?: boolean) => {
-  if (isAdmin) return true;
-
-  const normalizedEmail = (email || '').toLowerCase().trim();
-  if (normalizedEmail && ADMIN_EMAILS.includes(normalizedEmail)) return true;
-
-  const normalizedAuthor = normalizeIdentity(author);
-  return normalizedAuthor ? ADMIN_NAME_KEYS.includes(normalizedAuthor) : false;
-};
+// Badges follow the server-validated flag, never a display name or email supplied by a client.
+const isAdminIdentity = (_author?: string, _email?: string, isAdmin?: boolean) => isAdmin === true;
 
 const getInitials = (name: string) => {
   if (!name) return '??';
@@ -238,12 +220,6 @@ export const QASection: React.FC = () => {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingReplyId, setEditingReplyId] = useState<string | null>(null);
   const [editContent, setEditContent] = useState('');
-  const viewedQuestionsRef = useRef<Set<string>>(new Set());
-
-  // Initialize EmailJS
-  useEffect(() => {
-    emailjs.init("BaMMIrujdXkrbCwLH");
-  }, []);
 
   // Authentication Listener
   useEffect(() => {
@@ -399,7 +375,6 @@ export const QASection: React.FC = () => {
     try {
       await addDoc(collection(db, "questions"), {
         authorId: currentUser.uid,
-        authorEmail: currentUser.email,
         author: currentUser.username,
         authorPhoto: currentUser.photoURL || null,
         content: newQuestion,
@@ -440,7 +415,6 @@ export const QASection: React.FC = () => {
       parentId: replyingTo.rId || qId,
       replyToName: replyingTo.name,
       authorId: currentUser.uid,
-      authorEmail: currentUser.email,
       author: currentUser.isAdmin ? 'Phạm Hùng Tiến' : currentUser.username,
       authorPhoto: currentUser.photoURL || undefined,
       content: replyContent,
@@ -454,33 +428,6 @@ export const QASection: React.FC = () => {
     // Notification logic
     const recipientId = replyingTo.authorId || snap.data()?.authorId;
     if (recipientId) createNotification(recipientId, 'reply', qId, replyContent.substring(0, 50));
-
-    // EmailJS Notification Logic - Direct (Unlimited until EmailJS quota hits)
-    const targetEmail = replyingTo.authorEmail;
-    const fallbackEmail = "contact@phamhungtien.com";
-    const actualRecipient = targetEmail || fallbackEmail;
-    
-    if (actualRecipient !== currentUser.email) {
-      console.log(`✉️ Attempting to send email to ${actualRecipient}`);
-      
-      emailjs.send(
-        "PHTV Community", 
-        "template_qd4vozb", 
-        {
-          to_email: actualRecipient,
-          recipient_name: replyingTo.name || "Thành viên PHTV",
-          recipient_email: actualRecipient, 
-          sender_name: currentUser.username,
-          message: replyContent,
-          link: window.location.href
-        }
-      ).then(
-        () => console.log("✅ Email sent successfully to:", actualRecipient),
-        (err) => console.error("❌ Email failed to send:", err)
-      );
-    } else {
-      console.log("⏭️ Skipping email (Self-reply or current user)");
-    }
 
     setReplyContent('');
   };
@@ -565,18 +512,6 @@ export const QASection: React.FC = () => {
 
   const markNotifRead = async (notifId: string) => {
     await updateDoc(doc(db, "notifications", notifId), { isRead: true });
-  };
-
-  const incrementViewsOnce = async (id: string) => {
-    if (viewedQuestionsRef.current.has(id)) return;
-    viewedQuestionsRef.current.add(id);
-
-    try {
-      await updateDoc(doc(db, "questions", id), { viewCount: increment(1) });
-    } catch (error) {
-      viewedQuestionsRef.current.delete(id);
-      console.error('Failed to increment question views', error);
-    }
   };
 
   const openReplyComposer = (question: Question, reply?: Reply) => {
@@ -906,7 +841,6 @@ export const QASection: React.FC = () => {
                     className={`phtv-discussion-card rounded-2xl border bg-[linear-gradient(180deg,rgba(15,23,42,0.72),rgba(8,11,18,0.66))] p-5 shadow-[0_18px_52px_rgba(2,6,23,0.34)] backdrop-blur transition md:p-6 ${
                       question.isPinned ? 'border-rose-300/16' : 'border-white/[0.055]'
                     }`}
-                    onPointerEnter={() => incrementViewsOnce(question.id)}
                   >
                     <div className="flex gap-4">
                       <Avatar

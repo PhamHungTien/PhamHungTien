@@ -43,6 +43,12 @@ async function check(name, fn) {
   catch (e) { console.log(`  ✗ ${name}\n      ${String(e.message).slice(0, 130)}`); fail++; }
 }
 
+await check('quản trị viên hiện tại giữ quyền khi email đã xác thực', async () => {
+  const owner = testEnv.authenticatedContext('owner', { email: 'hungtien10a7@gmail.com', email_verified: true }).firestore();
+  await seed('q1', {});
+  await assertSucceeds(updateDoc(doc(owner, 'questions', 'q1'), { isPinned: true }));
+});
+
 console.log('\n── Đọc ──');
 await check('ai cũng đọc được questions', async () => {
   await seed('q1', {});
@@ -98,9 +104,9 @@ await check('admin ghim được', async () => {
 });
 
 console.log('\n── viewCount ──');
-await check('khách tăng được viewCount đúng +1', async () => {
+await check('khách KHÔNG ghi viewCount', async () => {
   await seed('q1', { viewCount: 0 });
-  await assertSucceeds(updateDoc(doc(anon, 'questions', 'q1'), { viewCount: 1 }));
+  await assertFails(updateDoc(doc(anon, 'questions', 'q1'), { viewCount: 1 }));
 });
 await check('khách KHÔNG bơm viewCount lên 9999', async () => {
   await seed('q1', { viewCount: 0 });
@@ -161,6 +167,39 @@ await check('user đánh dấu đã đọc thông báo của mình', async () =>
 await check('user KHÔNG sửa nội dung thông báo', async () => {
   await seedNotif('n1', { recipientId: 'alice', content: 'gốc' });
   await assertFails(updateDoc(doc(alice, 'notifications', 'n1'), { content: 'đã đổi', isRead: true }));
+});
+
+const replyFixture = (over = {}) => ({ id: 'r1', authorId: 'alice', author: 'Alice', content: 'hello', timestamp: 1, isAdmin: false, likedBy: [], ...over });
+await check('không ghi email công khai vào bài mới', async () =>
+  assertFails(setDoc(doc(alice, 'questions', 'q1'), baseQuestion({ authorEmail: 'alice@example.com' }))));
+await check('không sửa phản hồi của người khác', async () => {
+  await seed('q1', { replies: [replyFixture()] });
+  await assertFails(updateDoc(doc(mallory, 'questions', 'q1'), { replies: [replyFixture({ content: 'hacked' })] }));
+});
+await check('không xoá phản hồi của người khác', async () => {
+  await seed('q1', { replies: [replyFixture()] });
+  await assertFails(updateDoc(doc(mallory, 'questions', 'q1'), { replies: [] }));
+});
+await check('không giả mạo tác giả khi thêm phản hồi', async () => {
+  await seed('q1', { replies: [] });
+  await assertFails(updateDoc(doc(mallory, 'questions', 'q1'), { replies: [replyFixture()] }));
+});
+await check('không tự phong admin qua phản hồi', async () => {
+  await seed('q1', { replies: [] });
+  await assertFails(updateDoc(doc(mallory, 'questions', 'q1'), { replies: [replyFixture({ authorId: 'mallory', isAdmin: true })] }));
+});
+await check('tác giả sửa được nội dung phản hồi', async () => {
+  await seed('q1', { replies: [replyFixture()] });
+  await assertSucceeds(updateDoc(doc(alice, 'questions', 'q1'), { replies: [replyFixture({ content: 'updated' })] }));
+});
+await check('tác giả xoá được phản hồi của mình', async () => {
+  await seed('q1', { replies: [replyFixture()] });
+  await assertSucceeds(updateDoc(doc(alice, 'questions', 'q1'), { replies: [] }));
+});
+await check('chỉ thêm được lượt thích của chính mình vào phản hồi', async () => {
+  await seed('q1', { replies: [replyFixture()] });
+  await assertSucceeds(updateDoc(doc(mallory, 'questions', 'q1'), { replies: [replyFixture({ likedBy: ['mallory'] })] }));
+  await assertFails(updateDoc(doc(mallory, 'questions', 'q1'), { replies: [replyFixture({ likedBy: ['mallory','alice'] })] }));
 });
 
 console.log('\n── Trả lời (replies là mảng lồng) ──');

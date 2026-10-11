@@ -5,13 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node ../scripts/security-html.mjs dist",
     "preview": "vite preview",
     "test:rules": "firebase emulators:exec --only firestore --project demo-phtv \"node firestore.rules.test.mjs\"",
     "deploy:rules": "firebase deploy --only firestore:rules"
   },
   "dependencies": {
-    "@emailjs/browser": "^4.4.1",
     "firebase": "^12.7.0",
     "lucide-react": "^0.562.0",
     "react": "^19.2.3",
@@ -35,5 +34,8 @@
     "not dead",
     "not op_mini all",
     "ios_saf >= 12"
-  ]
+  ],
+  "overrides": {
+    "@grpc/grpc-js": "1.14.6"
+  }
 }

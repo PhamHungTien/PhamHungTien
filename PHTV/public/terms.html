@@ -110,14 +110,14 @@
         <div class="subtitle">Precision Hybrid Typing Vietnamese</div>
 
         <nav class="nav-links">
-            <a href="https://phamhungtien.com/PHTV/">Home</a>
+            <a href="/">Home</a>
             <a href="privacy.html">Privacy Policy</a>
             <a href="terms.html" class="active">Terms of Use</a>
         </nav>
 
         <div class="lang-toggle">
-            <button class="active" onclick="switchLang('vi')">Tiếng Việt</button>
-            <button onclick="switchLang('en')">English</button>
+            <button class="active" data-language="vi">VI</button>
+            <button data-language="en">EN</button>
         </div>
 
         <!-- VIETNAMESE -->
@@ -162,11 +162,12 @@
     </div>
 
     <script>
+        document.querySelectorAll('[data-language]').forEach(button => button.addEventListener('click', () => switchLang(button.dataset.language)));
         function switchLang(lang) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById(lang).classList.add('active');
             document.querySelectorAll('.lang-toggle button').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
+            document.querySelectorAll('.lang-toggle button').forEach(button => { const selected = button.dataset.language === lang; button.classList.toggle('active', selected); button.setAttribute('aria-pressed', String(selected)); });
         }
     </script>
 </body>

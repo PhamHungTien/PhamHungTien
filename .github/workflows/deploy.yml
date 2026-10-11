@@ -26,6 +26,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -42,6 +44,19 @@ jobs:
       - name: Install PHTV dependencies
         working-directory: ./PHTV
         run: npm ci
+
+      - name: Check TypeScript
+        run: npm run type-check:all
+
+      - name: Setup Java for Firestore emulator
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Test Firestore authorization boundaries
+        working-directory: ./PHTV
+        run: npm run test:rules
 
       - name: Build root React site
         run: npm run build

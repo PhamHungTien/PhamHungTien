@@ -18,12 +18,13 @@ service cloud.firestore {
 
     // Admin identity is taken from the verified ID token, never from a document field.
     // The client's ADMIN_EMAILS list only decides which buttons to draw; it grants nothing.
-    // Only the shared contact address is granted administrator access.
+    // Keep the existing owner and shared contact addresses; both must be verified.
     function isAdmin() {
       return signedIn()
         && request.auth.token.email_verified == true
         && request.auth.token.email in [
-          'contact@phamhungtien.com'
+          'contact@phamhungtien.com',
+          'hungtien10a7@gmail.com'
         ];
     }
 
@@ -52,8 +53,7 @@ service cloud.firestore {
       allow create: if signedIn()
         && request.resource.data.authorId == request.auth.uid
         && request.resource.data.isAdmin == isAdmin()
-        && (!('authorEmail' in request.resource.data)
-            || request.resource.data.authorEmail == request.auth.token.email)
+        && !('authorEmail' in request.resource.data)
         && request.resource.data.replies.size() == 0
         && request.resource.data.likedBy.size() == 0
         && request.resource.data.viewCount == 0
@@ -68,10 +68,7 @@ service cloud.firestore {
       allow delete: if isAdmin()
         || (signedIn() && resource.data.authorId == request.auth.uid);
 
-      // Signed-out visitors bump the counter, so this is the one anonymous write allowed.
-      allow update: if touchedOnly(['viewCount'])
-        && request.resource.data.viewCount == resource.data.get('viewCount', 0) + 1;
-
+      // View metrics are not writable by visitors.
       allow update: if isAdmin() && touchedOnly(['isPinned', 'isLocked']);
 
       // The author may edit their own post while the thread is unlocked.
@@ -91,14 +88,40 @@ service cloud.firestore {
         && request.resource.data.isReported == true;
       allow update: if isAdmin() && touchedOnly(['isReported']);
 
-      // `replies` is an array field on the question, not a subcollection, so one update
-      // rewrites every reply at once and the rules cannot tell which one changed. Any
-      // signed-in user permitted to reply can therefore also edit or delete someone
-      // else's reply. Moving replies to /questions/{id}/replies/{replyId} is the only
-      // way to enforce per-reply ownership.
-      allow update: if signedIn()
-        && resource.data.get('isLocked', false) == false
-        && touchedOnly(['replies']);
+      // Only the changed reply is examined. Unchanged replies must be preserved.
+      function validNewReply(reply) {
+        return reply.keys().hasOnly(['id', 'parentId', 'replyToName', 'authorId', 'author', 'authorPhoto', 'content', 'timestamp', 'isAdmin', 'likedBy'])
+          && reply.authorId == request.auth.uid
+          && reply.isAdmin == isAdmin()
+          && reply.content is string && reply.content.size() > 0 && reply.content.size() <= 5000
+          && reply.likedBy.size() == 0;
+      }
+      function ownReplyChange(before, after) {
+        let removed = before.removeAll(after);
+        let added = after.removeAll(before);
+        return (removed.size() == 0 && added.size() == 1
+            && after == before.concat(added) && validNewReply(added[0]))
+          || (removed.size() == 1 && added.size() == 0
+            && removed[0].authorId == request.auth.uid && after == before.removeAll(removed))
+          || (removed.size() == 1 && added.size() == 1
+            && before.size() == after.size()
+            && added[0].diff(removed[0]).affectedKeys().hasOnly(['content'])
+            && removed[0].authorId == request.auth.uid
+            && added[0].content is string && added[0].content.size() > 0 && added[0].content.size() <= 5000)
+          || (removed.size() == 1 && added.size() == 1
+            && before.size() == after.size()
+            && added[0].diff(removed[0]).affectedKeys().hasOnly(['likedBy'])
+            && selfReplyLike(removed[0], added[0]));
+      }
+      function selfReplyLike(before, after) {
+        let oldLikes = before.likedBy.toSet();
+        let newLikes = after.likedBy.toSet();
+        let self = [request.auth.uid].toSet();
+        return (newLikes.difference(oldLikes) == self && oldLikes.difference(newLikes).size() == 0)
+          || (oldLikes.difference(newLikes) == self && newLikes.difference(oldLikes).size() == 0);
+      }
+      allow update: if signedIn() && resource.data.get('isLocked', false) == false
+        && touchedOnly(['replies']) && ownReplyChange(resource.data.replies, request.resource.data.replies);
       allow update: if isAdmin() && touchedOnly(['replies']);
     }
 

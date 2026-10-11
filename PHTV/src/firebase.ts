@@ -36,7 +36,6 @@ export const requestNotificationPermission = async () => {
       const token = await getToken(messaging, { 
         vapidKey: 'BBRYtxAxyPFsNig0j0PfS9j9PPkK5mKkUr6dZ3QcMYgYNYnD1RGDVBdbt6TlxAbt_FnDbPv6MKOnBMlTtN1Jjqo' 
       });
-      console.log('FCM Token:', token);
       return token;
     }
   } catch (error) {

@@ -69,4 +69,6 @@ cp -r PHTV/dist "$out/PHTV"
 # Lowercase redirect stubs, written last.
 cp -r dist-aliases/. "$out/"
 
+node scripts/security-html.mjs "$out"
+
 echo "✓ assembled $out ($(find "$out" -type f | wc -l | tr -d ' ') files)"

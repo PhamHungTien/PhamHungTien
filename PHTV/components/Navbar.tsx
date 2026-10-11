@@ -4,6 +4,7 @@ import { useI18n } from '../i18n';
 import './Navbar.css';
 
 import { Home } from 'lucide-react';
+import { LanguageSwitch } from '../../src/components/LanguageSwitch';
 
 interface NavbarProps {
   activeTab?: 'home' | 'community';
@@ -184,7 +185,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             : 'border-white/6 bg-black/10 backdrop-blur-md'
         }`}>
           <a href="/" className="phtv-home-control" aria-label={lang === 'vi' ? 'Trang chủ' : 'Home'}>
-            <Home size={21} strokeWidth={1.7} aria-hidden="true" />
+            <Home size={18} aria-hidden="true" />
           </a>
 
           {/* Desktop Nav */}
@@ -211,25 +212,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <div className="flex items-center gap-2 sm:gap-4">
             {/* Language Toggle Button */}
-            <button
-              onClick={() => changeLanguage(lang === 'vi' ? 'en' : 'vi')}
-              className="phtv-nav-control rounded-lg border border-white/8 bg-white/[0.03] px-3.5 py-2 text-sm font-semibold transition-all hover:bg-white/[0.07] outline-none cursor-pointer flex items-center justify-center min-h-[38px]"
-              title={lang === 'vi' ? 'Switch to English' : 'Chuyển sang Tiếng Việt'}
-            >
-              {lang === 'vi' ? (
-                <>
-                  <span className="font-extrabold text-white">VI</span>
-                  <span className="mx-1.5 opacity-30">|</span>
-                  <span className="opacity-55 font-medium text-slate-300">EN</span>
-                </>
-              ) : (
-                <>
-                  <span className="opacity-55 font-medium text-slate-300">VI</span>
-                  <span className="mx-1.5 opacity-30">|</span>
-                  <span className="font-extrabold text-white">EN</span>
-                </>
-              )}
-            </button>
+            <LanguageSwitch lang={lang} onChange={changeLanguage} />
 
             {/* Theme Toggle Button */}
             <button

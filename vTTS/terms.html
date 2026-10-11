@@ -114,14 +114,14 @@
         <div class="subtitle" data-vi="Đọc sách và văn bản trên thiết bị" data-en="On-device books and text to speech">Đọc sách và văn bản trên thiết bị</div>
 
         <nav class="nav-links">
-            <a href="https://phamhungtien.com/vTTS/" data-vi="Trang chủ" data-en="Home">Trang chủ</a>
+            <a href="/" data-vi="Trang chủ" data-en="Home">Trang chủ</a>
             <a href="privacy.html" data-vi="Quyền riêng tư" data-en="Privacy Policy">Quyền riêng tư</a>
             <a href="terms.html" class="active" data-vi="Điều khoản" data-en="Terms of Use">Điều khoản</a>
         </nav>
 
         <div class="lang-toggle">
-            <button onclick="switchLang('vi')">Tiếng Việt</button>
-            <button class="active" onclick="switchLang('en')">English</button>
+            <button data-language="vi">VI</button>
+            <button class="active" data-language="en">EN</button>
         </div>
 
         <!-- TIẾNG VIỆT -->
@@ -200,12 +200,13 @@
     </div>
 
     <script>
+        document.querySelectorAll('[data-language]').forEach(button => button.addEventListener('click', () => switchLang(button.dataset.language)));
         function switchLang(lang) {
             document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.lang-toggle button').forEach(el => el.classList.remove('active'));
             document.getElementById(lang).classList.add('active');
             document.querySelectorAll('.lang-toggle button').forEach(button => {
-                const selected = button.getAttribute('onclick') === "switchLang('" + lang + "')";
+                const selected = button.dataset.language === lang;
                 button.classList.toggle('active', selected);
                 button.setAttribute('aria-pressed', String(selected));
             });

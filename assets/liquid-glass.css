@@ -614,3 +614,63 @@ html[data-theme] .phtv-page .phtv-community textarea { border-radius: 18px !impo
 html[data-theme] .phtv-page .phtv-nav-control {
  background: var(--glass-line) !important; color: var(--glass-ink) !important;
 }
+html[data-theme] .phtv-page .phtv-download-grid .download-choice {
+ min-height: 64px !important; padding: 10px 14px !important; gap: 8px;
+}
+html[data-theme] .phtv-page .download-choice-icon { width: 32px; height: 32px; }
+html[data-theme] .phtv-page .download-choice h3 { font-size: 13px !important; }
+html[data-theme] .phtv-page .download-choice p { font-size: 11px; line-height: 1.35; }
+html[data-theme] .phtv-page .phtv-quick-command > div:first-child {
+ padding: 15px 54px 15px 16px; font-size: 11px; white-space: normal;
+ overflow-wrap: anywhere; overflow: visible;
+}
+html[data-theme] .phtv-page .phtv-quick-command button { width: 36px; height: 36px; top: 5px; }
+html[data-theme] .phtv-page .language-switch {
+ position: relative; display: grid; grid-template-columns: 36px 36px; gap: 4px;
+ padding: 4px; width: 86px; height: 46px; border: 1px solid var(--glass-line);
+ border-radius: var(--glass-pill); background: var(--glass-line); isolation: isolate;
+}
+html[data-theme] .phtv-page .language-switch button {
+ display: grid; place-items: center; padding: 0; width: 36px; height: 36px;
+ border: 0; border-radius: 50%; background: transparent; color: var(--glass-muted);
+ font-size: 13px; font-weight: 600; z-index: 1;
+}
+html[data-theme] .phtv-page .language-switch button.is-active { color: var(--glass-page); }
+html[data-theme] .phtv-page .language-switch::before {
+ content: ''; position: absolute; top: 4px; left: 4px; width: 36px; height: 36px;
+ border-radius: 50%; background: var(--glass-ink); transition: transform 250ms var(--glass-ease);
+}
+html[data-theme] .phtv-page .language-switch:has(button:last-child.is-active)::before { transform: translateX(40px); }
+html .site-header { min-height: 64px; padding: 8px !important; }
+html .brand-link, html[data-theme] .phtv-page .phtv-home-control {
+ width: 44px; height: 44px; border-radius: 50%; background: transparent; color: var(--glass-ink);
+}
+html[data-theme] .phtv-page .phtv-navbar__inner { min-height: 64px; padding: 8px !important; }
+html[data-theme] .phtv-page .phtv-navbar__inner > div:last-child { gap: 8px; }
+html[data-theme] .phtv-page .phtv-hero-links { justify-content: center; }
+html[data-theme] .phtv-page .phtv-product-icon { width: 72px; height: 72px; object-fit: contain; align-self: center; margin-bottom: 20px; }
+html[data-theme] .phtv-page .phtv-gallery-preview--menu { aspect-ratio: 646 / 842; }
+html[data-theme] .phtv-page #gallery .phtv-gallery-preview--menu img {
+ width: 117.65%; max-width: none; margin-left: -8.825%; height: auto;
+}
+html[data-theme] .phtv-page .phtv-product-lockup {
+ display: flex; align-items: center; justify-content: center; gap: 22px; width: 100%;
+}
+html[data-theme] .phtv-page .phtv-product-lockup > div { width: auto; }
+html[data-theme] .phtv-page .phtv-product-lockup .phtv-product-icon { width: 88px; height: 88px; margin: 0; flex: 0 0 auto; }
+html[data-theme] .phtv-page .phtv-product-lockup .phtv-acronym-grid { grid-template-columns: 1fr; gap: 0; }
+html[data-theme] .phtv-page .phtv-product-lockup .phtv-acronym-item { font-size: 19px; line-height: 1.4; }
+html[data-theme] .phtv-page .phtv-copy-block button { top: 50%; right: 6px; transform: translateY(-50%); }
+html .lang-toggle {
+ width: 86px; height: 46px; padding: 4px; gap: 4px;
+ grid-template-columns: 36px 36px; border-radius: var(--glass-pill);
+}
+html .lang-toggle button { width: 36px; height: 36px; min-height: 36px; padding: 0; border-radius: 50%; font-size: 13px; }
+html .lang-toggle::before { width: 36px; height: 36px; bottom: auto; border-radius: 50%; }
+html .lang-toggle:has(button:nth-child(2).active)::before { translate: 40px 0; }
+html[data-theme] .phtv-page .language-switch::before { transform: none; translate: 0 0; transition: translate 250ms var(--glass-ease); }
+html[data-theme] .phtv-page .language-switch:has(button:last-child.is-active)::before { transform: none; translate: 40px 0; }
+html .site-header :is(.icon-button,.mobile-menu-toggle,.brand-link),
+html[data-theme] .phtv-page :is(.phtv-icon-control,.phtv-home-control) {
+ width: 46px !important; height: 46px !important; min-width: 46px !important; min-height: 46px !important;
+}

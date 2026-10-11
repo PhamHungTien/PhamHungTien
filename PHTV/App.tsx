@@ -257,6 +257,8 @@ function App() {
               {/* Left Column: Grouped info and download card */}
               <div className="phtv-hero-copy flex min-w-0 flex-col space-y-6 md:space-y-8">
                 <div className="phtv-hero-brand flex flex-col items-start">
+                  <div className="phtv-product-lockup">
+                  <img className="phtv-product-icon" src="/PHTV/phtv-icon.webp" alt="PHTV" width={72} height={72} />
                   <div className="flex flex-row items-center justify-center gap-4 lg:justify-start">
                     <div className="phtv-acronym-grid">
                       <AcronymRow letter="P" word="recision" />
@@ -266,6 +268,7 @@ function App() {
                     </div>
                   </div>
 
+                  </div>
                   <h2 className="phtv-hero-title mt-7 max-w-lg text-3xl font-semibold leading-tight text-white lg:text-4xl">
                     {t('home.hero_title')}
                   </h2>
@@ -400,7 +403,7 @@ function App() {
               <div className="phtv-gallery-track">
                 {latestGallery.map((item) => (
                   <figure key={item.src} className="min-w-0">
-                    <a className="phtv-gallery-preview" href={item.src} target="_blank" rel="noopener noreferrer" aria-label={`${lang === 'vi' ? 'Xem ảnh đầy đủ' : 'View full image'}: ${item.title}`}>
+                    <a className={`phtv-gallery-preview${item.src.endsWith('/menubar.png') ? ' phtv-gallery-preview--menu' : ''}`} href={item.src} target="_blank" rel="noopener noreferrer" aria-label={`${lang === 'vi' ? 'Xem ảnh đầy đủ' : 'View full image'}: ${item.title}`}>
                       <img
                         src={item.src}
                         alt={item.title}
