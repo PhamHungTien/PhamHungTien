@@ -46,13 +46,17 @@ export const CopyBlock = ({
 
   return (
     <div
-      className={`phtv-copy-block relative group bg-black/50 rounded-lg border border-white/5 ${className}`}
+      className={`phtv-copy-block relative group flex items-center gap-2 p-1 bg-black/50 rounded-lg border border-white/5 ${className}`}
     >
-      <div className={`p-3 pr-14 font-mono text-sm break-all ${colorClass}`}>{code}</div>
+      <div
+        className={`min-w-0 flex-1 px-3 py-2 font-mono text-sm leading-6 break-all ${colorClass}`}
+      >
+        {code}
+      </div>
       <button
         type="button"
         onClick={handleCopy}
-        className="absolute top-1 right-1 grid h-11 w-11 place-items-center text-slate-400 hover:text-white rounded-lg transition-colors"
+        className="grid h-11 w-11 shrink-0 place-items-center text-slate-400 hover:text-white rounded-lg transition-colors"
         title={label}
         aria-label={label}
       >

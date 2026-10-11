@@ -457,14 +457,18 @@ html[data-theme] .phtv-page .download-choice-icon {
   border-radius: 50% !important; background: var(--glass-line) !important; color: var(--glass-ink) !important;
 }
 html[data-theme] .phtv-page .phtv-copy-block {
-  border-radius: var(--glass-radius) !important; overflow: hidden;
+  display: flex; align-items: center; gap: 8px; padding: 8px;
+  border-radius: var(--glass-pill) !important; overflow: hidden;
   border: 1px solid var(--glass-line); background: var(--glass-content) !important;
 }
 html[data-theme] .phtv-page .phtv-copy-block > div:first-child {
-  color: var(--glass-ink); padding: 17px 60px 17px 18px; font-size: 12px;
+  flex: 1; min-width: 0; color: var(--glass-ink);
+  padding: 8px 12px; font-size: 12px; line-height: 20px;
 }
 html[data-theme] .phtv-page .phtv-copy-block button {
-  top: 5px; right: 5px; border-radius: 50%; background: var(--glass-line); color: var(--glass-ink);
+  position: static; flex: 0 0 44px; width: 44px; height: 44px; padding: 0;
+  display: grid; place-items: center; border-radius: 50%;
+  background: var(--glass-line); color: var(--glass-ink);
 }
 html[data-theme] .phtv-page .phtv-hero-links { justify-content: flex-start; flex-wrap: wrap; gap: 8px !important; }
 html[data-theme] .phtv-page .phtv-hero-links > * {
@@ -570,10 +574,10 @@ html[data-theme] .phtv-page .download-choice-icon { width: 32px; height: 32px; }
 html[data-theme] .phtv-page .download-choice h3 { font-size: 13px !important; }
 html[data-theme] .phtv-page .download-choice p { font-size: 11px; line-height: 1.35; }
 html[data-theme] .phtv-page .phtv-quick-command > div:first-child {
- padding: 15px 54px 15px 16px; font-size: 11px; white-space: normal;
+ padding: 8px 12px; font-size: 12px; white-space: normal;
  overflow-wrap: anywhere; overflow: visible;
 }
-html[data-theme] .phtv-page .phtv-quick-command button { width: 36px; height: 36px; top: 5px; }
+
 html .site-header { min-height: 64px; padding: 8px !important; }
 html .brand-link, html[data-theme] .phtv-page .phtv-home-control {
  width: 44px; height: 44px; border-radius: 50%; background: transparent; color: var(--glass-ink);
@@ -593,7 +597,6 @@ html[data-theme] .phtv-page .phtv-product-lockup > div { width: auto; }
 html[data-theme] .phtv-page .phtv-product-lockup .phtv-product-icon { width: 88px; height: 88px; margin: 0; flex: 0 0 auto; }
 html[data-theme] .phtv-page .phtv-product-lockup .phtv-acronym-grid { grid-template-columns: 1fr; gap: 0; }
 html[data-theme] .phtv-page .phtv-product-lockup .phtv-acronym-item { font-size: 19px; line-height: 1.4; }
-html[data-theme] .phtv-page .phtv-copy-block button { top: 50%; right: 6px; transform: translateY(-50%); }
 /* Discussion controls share one height; account corners follow the pill system. */
 html[data-theme] .phtv-page .phtv-community-account {
   min-height: 56px; padding: 7px 16px 7px 8px; border-radius: var(--glass-pill) !important;

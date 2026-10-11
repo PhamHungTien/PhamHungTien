@@ -771,15 +771,13 @@ html[data-theme='light'] .phtv-page pre {
   }
 
   .phtv-quick-command > div:first-child {
-    padding: 13px 48px 13px 14px;
+    padding: 8px 12px;
     overflow-x: auto;
     white-space: nowrap;
     word-break: normal;
   }
 
   .phtv-quick-command button {
-    top: 3px;
-    right: 3px;
     display: grid;
     width: 44px;
     height: 44px;
@@ -995,8 +993,8 @@ html[data-theme='light'] .phtv-page pre {
   cursor: zoom-in;
 }
 
-.phtv-copy-block > div:first-child {
-  min-height: 52px;
+.phtv-copy-block {
+  min-height: 54px;
 }
 
 html[data-theme] .phtv-page button.bg-white {
