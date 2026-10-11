@@ -355,3 +355,8 @@ html .site-header { isolation: isolate; }
 .glass-optics__surface .glass { box-shadow: none !important; }
 .glass-optics__surface svg { position: absolute; width: 0; height: 0; }
 @media (max-width:700px) { .glass-optics { border-radius: 22px; } }
+/* Avoid blurring the same navbar twice when the optical layer is active. */
+html .site-header:has(.glass-optics__surface) {
+  backdrop-filter: none; -webkit-backdrop-filter: none;
+  background: linear-gradient(120deg,var(--glass-highlight),transparent 36%),color-mix(in srgb,var(--glass-tint) 82%,transparent);
+}
