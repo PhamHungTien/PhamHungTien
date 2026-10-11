@@ -77,6 +77,7 @@ export function Header({ lang, onLanguageChange, t, productName }: HeaderProps) 
         {!productName && <a href="#contact">{t('nav.contact')}</a>}
         {productName && <a href="#features">{t('product.features')}</a>}
         {productName && <a href="#gallery">{t('product.gallery')}</a>}
+        {productName && <a href="#community">{lang === 'vi' ? 'Thảo luận' : 'Discussions'}</a>}
         {productName && <a href="#contact">{t('nav.contact')}</a>}
       </nav>
 
@@ -124,6 +125,7 @@ export function Header({ lang, onLanguageChange, t, productName }: HeaderProps) 
           </a>
           <a href="#features" onClick={closeMenu}>{t('product.features')}</a>
           <a href="#gallery" onClick={closeMenu}>{t('product.gallery')}</a>
+          <a href="#community" onClick={closeMenu}>{lang === 'vi' ? 'Thảo luận' : 'Discussions'}</a>
           <a href="#contact" onClick={closeMenu}>{t('nav.contact')}</a>
         </nav>
       )}

@@ -674,3 +674,47 @@ html .site-header :is(.icon-button,.mobile-menu-toggle,.brand-link),
 html[data-theme] .phtv-page :is(.phtv-icon-control,.phtv-home-control) {
  width: 46px !important; height: 46px !important; min-width: 46px !important; min-height: 46px !important;
 }
+
+/* Discussion controls share one height; account corners follow the pill system. */
+html[data-theme] .phtv-page .phtv-community-account {
+  min-height: 56px; padding: 7px 16px 7px 8px; border-radius: var(--glass-pill) !important;
+}
+html[data-theme] .phtv-page .phtv-community-notifications {
+  width: 56px; height: 56px; border-radius: 50% !important;
+}
+html[data-theme] .phtv-page .phtv-community-filters { align-items: stretch; }
+html[data-theme] .phtv-page .phtv-community-filters > label {
+  height: 46px; min-height: 46px; padding-top: 0 !important; padding-bottom: 0 !important;
+}
+html[data-theme] .phtv-page .phtv-community-filters input {
+  height: 46px; min-height: 46px; padding-top: 0 !important; padding-bottom: 0 !important;
+}
+html[data-theme] .phtv-page .phtv-community-filters select { height: 100%; min-height: 0 !important; padding: 0 !important; border: 0 !important; }
+.discussion-section { scroll-margin-top: 110px; }
+.discussion-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; margin-bottom: 24px; }
+.discussion-heading h2 { margin: 0 0 8px; }
+.discussion-heading p,.discussion-muted { color: var(--glass-muted); }
+.discussion-account { display:flex; align-items:center; gap:14px; padding:4px 6px 4px 18px; min-height:46px; border:1px solid var(--glass-line); border-radius:var(--glass-pill); background:var(--glass-tint); }
+.discussion-filters { display:grid; grid-template-columns:minmax(0,1fr) 180px; gap:12px; margin-bottom:20px; }
+.discussion-filters label { display:flex; align-items:center; gap:12px; padding:0 16px; height:46px; border:1px solid var(--glass-line); border-radius:var(--glass-pill); background:var(--glass-tint); }
+.discussion-filters input { width:100%; min-width:0; border:0; background:transparent; color:inherit; font:inherit; outline:none; }
+.discussion-section select { height:46px; padding:0 16px; border:1px solid var(--glass-line); border-radius:var(--glass-pill); background:var(--glass-solid); color:var(--glass-ink); font:inherit; }
+.discussion-post,.discussion-composer { padding:24px; margin-bottom:16px; border:1px solid var(--glass-line); border-radius:var(--glass-radius); background:var(--glass-tint); }
+.discussion-post header { display:flex; align-items:center; gap:12px; justify-content:space-between; }
+.discussion-post header div { display:grid; gap:6px; }
+.discussion-post header span,.discussion-composer small { font-size:12px; color:var(--glass-muted); }
+.discussion-post p { white-space:pre-wrap; overflow-wrap:anywhere; line-height:1.7; }
+.discussion-section button { cursor:pointer; font:inherit; }
+.discussion-primary { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:46px; padding:0 18px; background:var(--glass-ink); color:var(--glass-solid); border:0; border-radius:var(--glass-pill); }
+.discussion-primary:disabled { opacity:.5; cursor:default; }
+.discussion-icon { display:grid; place-items:center; width:38px; height:38px; border:0; background:transparent; color:inherit; border-radius:50%; flex-shrink:0; }
+.discussion-icon:hover { background:var(--glass-line); }
+.discussion-reply-toggle { display:inline-flex; align-items:center; gap:8px; padding:10px 0; background:transparent; border:0; color:var(--glass-muted); }
+.discussion-section textarea { display:block; box-sizing:border-box; width:100%; min-height:100px; padding:16px; resize:vertical; border:1px solid var(--glass-line); border-radius:24px; background:var(--glass-tint); color:var(--glass-ink); font:inherit; }
+.discussion-composer > div { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin:12px 0; }
+.discussion-replies { margin-top:16px; border-top:1px solid var(--glass-line); padding-top:16px; }
+.discussion-reply { margin-bottom:14px; padding:16px; border-radius:24px; background:var(--glass-tint); }
+.discussion-replies form button { margin-top:12px; }
+.discussion-empty { padding:32px; border:1px dashed var(--glass-line); border-radius:var(--glass-radius); text-align:center; color:var(--glass-muted); }
+.discussion-section :is(button,input,textarea,select):focus-visible { outline:2px solid var(--glass-ink); outline-offset:3px; }
+@media(max-width:600px) { .discussion-filters { grid-template-columns:1fr; } .discussion-post,.discussion-composer { padding:18px; } }

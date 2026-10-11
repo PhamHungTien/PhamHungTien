@@ -143,6 +143,34 @@ service cloud.firestore {
       allow delete: if signedIn() && resource.data.recipientId == request.auth.uid;
     }
 
+    // Product boards are isolated by an allowlisted app path.
+    match /appDiscussions/{app}/posts/{postId} {
+      function knownApp() {
+        return app in ['vtts', 'padcodeai', 'padnotesai', 'mynasmanager', 'lunarv', 'lunarblock'];
+      }
+      function validMessage(data) {
+        return data.authorId == request.auth.uid
+          && data.author is string && data.author.size() > 0 && data.author.size() <= 200
+          && data.content is string && data.content.size() > 0 && data.content.size() <= 5000
+          && data.createdAt is number && data.createdAt <= request.time.toMillis()
+          && data.createdAt >= request.time.toMillis() - 300000;
+      }
+      allow read: if knownApp();
+      allow create: if knownApp() && signedIn()
+        && request.resource.data.keys().hasOnly(['authorId', 'author', 'content', 'category', 'createdAt'])
+        && request.resource.data.category in ['question', 'bug', 'idea']
+        && validMessage(request.resource.data);
+      allow delete: if knownApp() && (isAdmin() || (signedIn() && resource.data.authorId == request.auth.uid));
+      match /replies/{replyId} {
+        allow read: if knownApp();
+        allow create: if knownApp() && signedIn()
+          && exists(/databases/$(database)/documents/appDiscussions/$(app)/posts/$(postId))
+          && request.resource.data.keys().hasOnly(['authorId', 'author', 'content', 'createdAt'])
+          && validMessage(request.resource.data);
+        allow delete: if knownApp() && (isAdmin() || (signedIn() && resource.data.authorId == request.auth.uid));
+      }
+    }
+
     // Everything else stays denied by default.
   }
 }

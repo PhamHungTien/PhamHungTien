@@ -65,3 +65,25 @@ Production dependencies audit clean after the Firebase/gRPC updates. Build-only
 Firebase CLI dependencies still have advisories requiring a major CLI upgrade
 and Java 21; nonbreaking fixes were applied. Avoid `audit fix --force` without
 checking emulator/deploy behavior. CI uses Java 21 for rules tests.
+
+
+## Shared product discussions
+
+The six App Store products use `appDiscussions/{app}/posts` and nested replies.
+PHTV keeps its existing `questions` collection, preserving its discussion history.
+Only allowlisted product slugs are readable. Posting requires authentication;
+creation is limited to known public fields, content length, author UID and a recent
+creation time. Clients cannot overwrite posts, impersonate another UID or add email
+or admin fields. Authors and verified moderators may delete their own/managed posts.
+Replies require an existing parent post. Messages are rendered as text, never HTML.
+
+EmailJS template `template_qd4vozb` was changed to Website Community, with a fixed
+recipient `contact@phamhungtien.com`, no dynamic Reply To, a fixed website link,
+and “Do not save private data” enabled. It is prepared for administrator notifications.
+The static frontend does not send automated email. A trusted server-side trigger with
+rate limiting and private credentials is needed before enabling email delivery; never
+put such credentials into this repository. No test email was sent.
+
+The portfolio uses `portfolio_preferred_lang_v2`, starting in English even when an
+older shared Vietnamese preference exists. Explicit language choices are retained.
+PHTV retains its separate language preference and Vietnamese default.

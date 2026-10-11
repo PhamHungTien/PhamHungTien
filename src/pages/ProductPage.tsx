@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { createPortal } from "react-dom";
 import { ArrowRight, ExternalLink, Github, Heart, Mail, Store, X } from "lucide-react";
 import type { CSSProperties } from "react";
@@ -7,6 +7,8 @@ import { Header } from "../components/Header";
 import { PhtvWordmark } from "../components/PhtvWordmark";
 import { ContactSection } from "../components/ContactSection";
 import { DonateDialog } from "../components/DonateDialog";
+
+const DiscussionSection = lazy(() => import('../components/DiscussionSection'));
 
 interface ProductPageProps {
   product: Product;
@@ -187,6 +189,10 @@ export function ProductPage({ product, lang, onLanguageChange, t }: ProductPageP
             ))}
           </div>
         </section>
+
+        <Suspense fallback={<section id="community" className="product-section">Loading discussions…</section>}>
+          <DiscussionSection app={product.slug} name={product.name} lang={lang} />
+        </Suspense>
 
         <ContactSection t={t} />
 

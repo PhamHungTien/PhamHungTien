@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { Lang } from '../types';
 import { translate } from '../i18n';
 
-const STORAGE_KEY = 'portfolio_preferred_lang';
+const STORAGE_KEY = 'portfolio_preferred_lang_v2';
 
 /**
  * The language the prerenderer emits. The first client render must match it or

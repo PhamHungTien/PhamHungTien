@@ -237,6 +237,41 @@ await check('khách KHÔNG báo cáo được bài', async () => {
   await assertFails(updateDoc(doc(anon, 'questions', 'q1'), { isReported: true }));
 });
 
+
+const productPost = (over = {}) => ({ authorId: 'alice', author: 'Alice', content: 'A question', category: 'question', createdAt: Date.now() - 1000, ...over });
+const productPath = 'appDiscussions/vtts/posts/p1';
+await check('public can read every known product board', async () => {
+  for (const app of ['vtts','padcodeai','padnotesai','mynasmanager','lunarv','lunarblock']) {
+    await assertSucceeds(getDocs(collection(anon, `appDiscussions/${app}/posts`)));
+  }
+});
+await check('anonymous cannot post to a product board', async () => assertFails(setDoc(doc(anon, productPath), productPost())));
+await check('member can post to a product board', async () => assertSucceeds(setDoc(doc(alice, productPath), productPost())));
+await check('unknown app is denied', async () => assertFails(setDoc(doc(alice, 'appDiscussions/unknown/posts/p1'), productPost())));
+await check('product author spoofing is denied', async () => assertFails(setDoc(doc(mallory, productPath), productPost())));
+await check('product email and admin fields are denied', async () => assertFails(setDoc(doc(alice, productPath), productPost({ authorEmail: 'private@example.com', isAdmin: true }))));
+await check('oversized product content is denied', async () => assertFails(setDoc(doc(alice, productPath), productPost({ content: 'x'.repeat(5001) }))));
+await check('future product timestamp is denied', async () => assertFails(setDoc(doc(alice, productPath), productPost({ createdAt: Date.now() + 600000 }))));
+await check('members cannot delete another product post', async () => {
+  await assertSucceeds(setDoc(doc(alice, productPath), productPost()));
+  await assertFails(deleteDoc(doc(mallory, productPath)));
+});
+await check('owner can delete own product post', async () => {
+  await assertSucceeds(setDoc(doc(alice, productPath), productPost()));
+  await assertSucceeds(deleteDoc(doc(alice, productPath)));
+});
+await check('reply requires an existing product post', async () => {
+  const { category, ...reply } = productPost();
+  await assertFails(setDoc(doc(alice, `${productPath}/replies/r1`), reply));
+  await assertSucceeds(setDoc(doc(alice, productPath), productPost()));
+  await assertSucceeds(setDoc(doc(alice, `${productPath}/replies/r1`), reply));
+  await assertFails(deleteDoc(doc(mallory, `${productPath}/replies/r1`)));
+});
+await check('product content cannot be overwritten', async () => {
+  await assertSucceeds(setDoc(doc(alice, productPath), productPost()));
+  await assertFails(updateDoc(doc(mallory, productPath), { content: 'Overwrite' }));
+});
+
 await testEnv.cleanup();
 console.log(`\n${fail === 0 ? '✅' : '❌'}  ${pass} đạt, ${fail} hỏng`);
 process.exit(fail ? 1 : 0);

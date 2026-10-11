@@ -211,11 +211,11 @@
                 button.setAttribute('aria-pressed', String(selected));
             });
             document.documentElement.lang = lang;
-            try { localStorage.setItem('portfolio_preferred_lang', lang); } catch {}
+            try { localStorage.setItem('portfolio_preferred_lang_v2', lang); } catch {}
         }
         let initialLanguage = document.documentElement.lang === 'vi' ? 'vi' : 'en';
         try {
-            const saved = localStorage.getItem('portfolio_preferred_lang');
+            const saved = localStorage.getItem('portfolio_preferred_lang_v2');
             if (saved === 'vi' || saved === 'en') initialLanguage = saved;
         } catch {}
         switchLang(initialLanguage);

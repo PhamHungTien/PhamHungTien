@@ -28,6 +28,7 @@
     "sync:appstore": "node scripts/sync-appstore.mjs"
   },
   "dependencies": {
+    "firebase": "^12.19.0",
     "liquid-glass-react": "^1.1.1",
     "lucide-react": "^0.562.0",
     "react": "^19.2.3",
@@ -55,5 +56,8 @@
     "type": "git",
     "url": "https://github.com/PhamHungTien/PhamHungTien"
   },
-  "homepage": "https://phamhungtien.com"
+  "homepage": "https://phamhungtien.com",
+  "overrides": {
+    "@grpc/grpc-js": "1.14.6"
+  }
 }

@@ -632,7 +632,7 @@ export const QASection: React.FC = () => {
                     <div className="relative">
                       <button
                         onClick={() => setShowNotifs(!showNotifs)}
-                        className={`relative flex h-11 w-11 items-center justify-center rounded-2xl border transition ${
+                        className={`phtv-community-notifications relative flex h-11 w-11 items-center justify-center rounded-2xl border transition ${
                           showNotifs
                             ? 'border-white bg-white text-slate-950'
                             : 'border-white/[0.055] bg-white/[0.022] text-slate-300 hover:bg-white/[0.04] hover:text-white'
@@ -688,7 +688,7 @@ export const QASection: React.FC = () => {
                       )}
                     </div>
 
-                    <div className="flex items-center gap-3 rounded-xl border border-white/[0.055] bg-white/[0.022] px-3 py-2">
+                    <div className="phtv-community-account flex items-center gap-3 rounded-xl border border-white/[0.055] bg-white/[0.022] px-3 py-2">
                       <Avatar user={currentUser} size="w-9 h-9" isAdmin={currentUser.isAdmin} />
                       <div className="min-w-0">
                         <div className="flex items-center gap-2">
