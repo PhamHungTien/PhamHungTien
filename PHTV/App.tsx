@@ -164,8 +164,7 @@ function App() {
     arm64DownloadUrl,
     intelDownloadUrl,
     universalDownloadUrl,
-    hasSplitDownloads,
-    loading
+    hasSplitDownloads
   } = useGitHubData();
   const [showDonate, setShowDonate] = useState(false);
   const [activeTab, setActiveTab] = useState<'home' | 'community'>('home');
@@ -240,11 +239,6 @@ function App() {
       {/* Background Layer */}
       <div className="fixed inset-0 z-0 mesh-gradient pointer-events-none" />
       
-      {/* Top Loading Bar */}
-      <div className={`fixed top-0 left-0 right-0 h-1 z-[110] transition-transform duration-500 origin-left ${loading ? 'scale-x-100' : 'scale-x-0'}`}>
-        <div className="h-full bg-[#d71f2a]"></div>
-      </div>
-
       <Navbar
         activeTab={activeTab}
         onTabChange={setActiveTab}

@@ -130,3 +130,55 @@ html[data-theme] .phtv-page .mesh-gradient { background: transparent !important;
   html[data-theme] .phtv-page nav.phtv-navbar.fixed { padding: 8px 12px !important; }
   html .nav-links { border-radius: 20px; }
 }
+
+/* Keep the viewport and page canvas continuous, including collapsed margins
+   and overscroll, while leaving a real gap above the floating navigation. */
+html, html[data-theme] { background: var(--glass-page); }
+html body, html[data-theme] body {
+  background: radial-gradient(ellipse at 10% 0%,var(--glass-ambient-a),transparent 48%),radial-gradient(ellipse at 95% 25%,var(--glass-ambient-b),transparent 48%),var(--glass-page);
+}
+html .site-shell { padding-top: max(18px,env(safe-area-inset-top)); }
+html .site-header { top: max(18px,env(safe-area-inset-top)); margin-top: 0; }
+html[data-theme] .phtv-page nav.phtv-navbar.fixed {
+  top: max(18px,env(safe-area-inset-top)); padding-top: 0 !important; padding-bottom: 0 !important;
+}
+@media (max-width:700px) {
+  html .site-shell { padding-top: max(14px,env(safe-area-inset-top)); }
+  html .site-header { top: max(14px,env(safe-area-inset-top)); margin-top: 0; }
+  html[data-theme] .phtv-page nav.phtv-navbar.fixed { top: max(14px,env(safe-area-inset-top)); }
+}
+
+/* Decorative orbital graphic: it never captures input or obscures artwork. */
+html .collection-hero { overflow: clip; }
+html .app-mosaic { position: relative; isolation: isolate; }
+html .app-mosaic::before, html .app-mosaic::after {
+  content: ''; position: absolute; inset: -8%; z-index: -1; pointer-events: none;
+  border: 1px solid var(--glass-line); border-radius: 50%; transform: rotate(-22deg) scaleY(.8);
+}
+html .app-mosaic::after { inset: -15%; opacity: .45; transform: rotate(28deg) scaleY(.7); }
+@keyframes glass-orbit { from { transform: rotate(-22deg) scaleY(.8); } to { transform: rotate(338deg) scaleY(.8); } }
+@keyframes artwork-drift { 0%,100% { translate: 0 var(--rest-y,0px); } 50% { translate: 0 calc(var(--rest-y,0px) - 8px); } }
+@keyframes media-materialize { from { opacity: 0; scale: .97; } to { opacity: 1; scale: 1; } }
+@media (prefers-reduced-motion:no-preference) {
+  html .app-mosaic::before { animation: glass-orbit 36s linear 2; }
+  html .mosaic-tile { animation: mosaic-arrive 850ms var(--glass-ease) both,artwork-drift 7s ease-in-out 3; animation-delay: calc(var(--tile) * 70ms),calc(1s + var(--tile) * 150ms); }
+  html .mosaic-tile:nth-child(3n + 2) { --rest-y: -18px; }
+  html .detail-hero__media, html .phtv-hero-media { animation: media-materialize 900ms var(--glass-ease) both; }
+  html .gallery-preview img, html .phtv-gallery-preview img { transition: scale 550ms var(--glass-ease); }
+  html .feature-dot { transition: scale 300ms var(--glass-ease),background-color 300ms ease; }
+  html .feature-list article:hover .feature-dot { scale: 1.8; background: var(--accent); }
+  html .mobile-navigation.is-open { animation: media-materialize 240ms var(--glass-ease) both; }
+  @supports (animation-timeline:view()) {
+    html .phtv-feature, html .phtv-page .glass-card, html .legal-contact-item {
+      animation: content-arrive linear both; animation-timeline: view(); animation-range: entry 0% entry 18%;
+    }
+  }
+}
+@media (hover:hover) and (prefers-reduced-motion:no-preference) {
+  html .gallery-preview:hover img, html .phtv-gallery-preview:hover img { scale: 1.025; }
+  html .mosaic-tile:hover { box-shadow: var(--glass-shadow); }
+}
+@media (prefers-reduced-motion:reduce) {
+  html .app-mosaic::before, html .app-mosaic::after { display: none; }
+  html *, html *::before, html *::after { animation: none !important; transition: none !important; }
+}
