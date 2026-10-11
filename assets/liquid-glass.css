@@ -232,3 +232,13 @@ html .section-copy h2 { letter-spacing: -.045em; }
 
 .hero-study__image { aspect-ratio: auto; background: transparent; }
 .hero-study__image img { height: auto; display: block; }
+
+/* A simple nameplate replaces the placeholder monogram. */
+html .brand-link { font-weight: 550; white-space: nowrap; letter-spacing: -.035em; }
+html .site-nav a { text-underline-offset: 6px; }
+@media (hover:hover) { html .site-nav a:hover { text-decoration: underline; text-decoration-thickness: 1px; } }
+@media (max-width:480px) {
+  html .site-header--product .brand-link { font-size: 13px; }
+  html .site-header--product { padding-inline: 12px; gap: 8px; }
+  html .site-header--product .header-actions { gap: 5px; }
+}

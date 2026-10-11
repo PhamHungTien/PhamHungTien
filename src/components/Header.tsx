@@ -60,7 +60,6 @@ export function Header({ lang, onLanguageChange, t, productName }: HeaderProps) 
     <header className={`site-header${productName ? ' site-header--product' : ''}`}>
       <a className="skip-link" href="#main-content">{lang === 'vi' ? 'Đến nội dung' : 'Skip to content'}</a>
       <a className="brand-link" href="/" aria-label="Pham Hung Tien">
-        <span className="brand-mark">P</span>
         <span>Pham Hung Tien</span>
       </a>
 

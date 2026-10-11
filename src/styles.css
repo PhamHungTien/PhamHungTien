@@ -993,12 +993,6 @@ svg {
   }
 }
 
-@media (max-width: 480px) {
-  .site-header--product .brand-link > span:last-child {
-    display: none;
-  }
-}
-
 @media (max-width: 360px) {
   :root {
     --gutter: 16px;
