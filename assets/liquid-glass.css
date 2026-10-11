@@ -265,3 +265,26 @@ html .app-card-bottom { padding-top: 18px; }
   html .product-list { grid-template-columns: 1fr; }
   html .product-row, html .product-row:last-child { padding: 24px; gap: 20px; }
 }
+
+/* One motion rhythm: short responses, soft settling, legible content. */
+html .product-row { position: relative; overflow: hidden; }
+html .product-row::before { content: ''; position: absolute; inset: 0; pointer-events: none; border-radius: inherit; background: linear-gradient(135deg,color-mix(in srgb,var(--card-accent) 8%,transparent),transparent 60%); opacity: 0; }
+html .app-card-top img { transform-origin: 50% 70%; }
+html .collection-hero__copy > .button svg { flex-shrink: 0; }
+@media (prefers-reduced-motion:no-preference) {
+  html .product-row::before { transition: opacity 400ms ease; }
+  html .app-card-top img, html .mosaic-tile img { transition: transform 450ms var(--glass-ease); }
+  html .collection-hero__copy > .button svg { transition: transform 300ms var(--glass-ease); }
+  html .platform-filters button { transition: background-color 220ms ease,color 220ms ease,box-shadow 220ms ease; }
+  @media (hover:hover) {
+    html .product-row:hover::before { opacity: 1; }
+    html .product-row:hover .app-card-top img { transform: rotate(-4deg) translateY(-2px); }
+    html .mosaic-tile:hover img { transform: translateY(-5px) rotate(4deg); }
+    html .collection-hero__copy > .button:hover svg { transform: translateX(4px); }
+  }
+}
+@media (max-width:360px) {
+  html .site-header--product .brand-link { font-size: 12px; }
+  html .site-header--product .language-switch button { min-width: 28px; padding-inline: 5px; }
+  html .site-header--product .icon-button, html .site-header--product .mobile-menu-toggle { width: 34px; height: 34px; }
+}

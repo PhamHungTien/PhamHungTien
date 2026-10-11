@@ -1,5 +1,6 @@
 import { ArrowRight, Heart, Search, ArrowUpRight } from 'lucide-react';
 import { useState } from 'react';
+import { useCollectionMotion } from '../hooks/useCollectionMotion';
 import type { CSSProperties } from 'react';
 import type { Lang } from '../types';
 import { products } from '../data/products';
@@ -22,6 +23,7 @@ export function HomePage({ lang, onLanguageChange, t }: HomePageProps) {
     const text = `${product.name} ${product.category[lang]} ${product.description[lang]}`.toLocaleLowerCase();
     return text.includes(query.toLocaleLowerCase().trim()) && (platform === 'All' || product.operatingSystem.toLowerCase().includes(platform.toLowerCase()));
   });
+  const collectionRef = useCollectionMotion(filtered.map(product => product.slug).join(','));
   return (
     <div className="site-shell">
       <Header lang={lang} onLanguageChange={onLanguageChange} t={t} />
@@ -52,9 +54,9 @@ export function HomePage({ lang, onLanguageChange, t }: HomePageProps) {
             <label className="app-search"><Search size={17} aria-hidden="true" /><input type="search" value={query} onChange={e => setQuery(e.target.value)} placeholder={vi ? 'Tìm ứng dụng…' : 'Find an app…'} aria-label={vi ? 'Tìm ứng dụng' : 'Find an app'} /></label>
           </div>
           <p className="collection-count" role="status">{filtered.length} {vi ? 'ứng dụng' : filtered.length === 1 ? 'app' : 'apps'}</p>
-          <div className="product-list">
+          <div className="product-list" ref={collectionRef}>
             {filtered.map((product) => {
-              return <a className="product-row" href={product.route} key={product.slug} style={{ '--card-accent': product.accent } as CSSProperties}>
+              return <a className="product-row" href={product.route} data-product={product.slug} key={product.slug} style={{ '--card-accent': product.accent } as CSSProperties}>
                 <div className="app-card-top"><img src={product.icon} alt="" width={64} height={64} loading="lazy" decoding="async" /><ArrowUpRight size={22} aria-hidden="true" /></div>
                 <div className="app-card-copy"><small>{product.category[lang]}</small><h3>{product.name}</h3><p>{product.subtitle[lang]}</p></div>
                 <div className="app-card-bottom"><span>{product.platforms[lang]}</span><strong>{product.githubUrl ? (vi ? 'Mã nguồn mở' : 'Open source') : 'App Store'}</strong></div>
