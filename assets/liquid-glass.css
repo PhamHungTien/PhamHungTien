@@ -419,3 +419,18 @@ html .contact-card__icon svg { width: 18px; height: 18px; }
 html .contact-card__copy strong { font-size: 13px; }
 html .contact-card__copy small { font-size: 11px; }
 html .contact-grid { gap: 8px; }
+
+/* Screenshot frames follow the source proportions, without letterbox bands. */
+html .gallery-strip { align-items: start; gap: 20px; }
+html .gallery-strip .gallery-preview {
+  height: auto; display: block; background: transparent; border-radius: 18px;
+  border: 1px solid var(--glass-line);
+}
+html .gallery-strip .gallery-preview img {
+  display: block; width: 100%; height: auto; aspect-ratio: auto;
+  border: 0; border-radius: 0; background: transparent;
+}
+html .gallery-strip figcaption { font-size: 12px; margin-top: 10px; }
+@media (max-width:620px) {
+  html .gallery-strip { grid-auto-columns: minmax(220px,78vw); gap: 14px; }
+}
