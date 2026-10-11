@@ -407,3 +407,15 @@ html .language-switch button.is-active { border-radius: 50%; }
 @media (max-width:360px) {
   html .site-header--product .language-switch button { min-width: 36px; padding: 0; }
 }
+
+/* Contact links are compact capsules rather than large content panels. */
+html .contact-card, html .legal-contact-item {
+  border-radius: var(--glass-pill); min-height: 60px; padding: 9px 16px;
+  gap: 10px;
+}
+html .contact-card { grid-template-columns: 30px minmax(0,1fr) 16px; }
+html .contact-card__icon { width: 30px; height: 30px; border-radius: 50%; }
+html .contact-card__icon svg { width: 18px; height: 18px; }
+html .contact-card__copy strong { font-size: 13px; }
+html .contact-card__copy small { font-size: 11px; }
+html .contact-grid { gap: 8px; }
