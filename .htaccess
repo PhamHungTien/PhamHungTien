@@ -1,0 +1,84 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Redirect legacy /products/<slug> paths to canonical URLs
+  RewriteRule ^(?i)products/phtv/?$ PHTV/ [R=301,L]
+  RewriteRule ^(?i)products/vtts/?$ vTTS/ [R=301,L]
+  RewriteRule ^(?i)products/lunarv/?$ LunarV/ [R=301,L]
+  RewriteRule ^(?i)products/padcodeai/?$ PadCodeAI/ [R=301,L]
+  RewriteRule ^(?i)products/padnotesai/?$ PadNotesAI/ [R=301,L]
+  RewriteRule ^(?i)products/mynasmanager/?$ MyNASManager/ [R=301,L]
+  RewriteRule ^(?i)products/lunarblock/?$ LunarBlock/ [R=301,L]
+
+  # Case normalization for lowercase or mixed case routes
+  RewriteRule ^(?i)phtv/(.*)$ PHTV/$1 [R=301,L]
+  RewriteRule ^(?i)phtv$ PHTV/ [R=301,L]
+
+  RewriteRule ^(?i)vtts/(.*)$ vTTS/$1 [R=301,L]
+  RewriteRule ^(?i)vtts$ vTTS/ [R=301,L]
+
+  RewriteRule ^(?i)lunarv/(.*)$ LunarV/$1 [R=301,L]
+  RewriteRule ^(?i)lunarv$ LunarV/ [R=301,L]
+
+  RewriteRule ^(?i)padcodeai/(.*)$ PadCodeAI/$1 [R=301,L]
+  RewriteRule ^(?i)padcodeai$ PadCodeAI/ [R=301,L]
+
+  RewriteRule ^(?i)padnotesai/(.*)$ PadNotesAI/$1 [R=301,L]
+  RewriteRule ^(?i)padnotesai$ PadNotesAI/ [R=301,L]
+  RewriteRule ^(?i)aipadnotes/(.*)$ PadNotesAI/$1 [R=301,L]
+  RewriteRule ^(?i)aipadnotes$ PadNotesAI/ [R=301,L]
+
+  RewriteRule ^(?i)mynasmanager/(.*)$ MyNASManager/$1 [R=301,L]
+  RewriteRule ^(?i)mynasmanager$ MyNASManager/ [R=301,L]
+
+  RewriteRule ^(?i)lunarblock/(.*)$ LunarBlock/$1 [R=301,L]
+  RewriteRule ^(?i)lunarblock$ LunarBlock/ [R=301,L]
+
+  # Canonical trailing slash for exact capital routes
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(PHTV|vTTS|LunarV|PadCodeAI|PadNotesAI|MyNASManager|LunarBlock)$ $1/ [R=301,L]
+
+  # Clean URLs for privacy and terms
+  RewriteRule ^(PHTV|vTTS|LunarV|PadCodeAI|PadNotesAI|MyNASManager|LunarBlock)/privacy/?$ $1/privacy.html [R=301,L]
+  RewriteRule ^(PHTV|vTTS|LunarV|PadCodeAI|PadNotesAI|MyNASManager|LunarBlock)/terms/?$ $1/terms.html [R=301,L]
+
+  # SPA routing - fallback to app index.html for non-existent subpaths
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^PHTV/(.*)$ PHTV/index.html [QSA,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^vTTS/(.*)$ vTTS/index.html [QSA,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^LunarV/(.*)$ LunarV/index.html [QSA,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^PadCodeAI/(.*)$ PadCodeAI/index.html [QSA,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^PadNotesAI/(.*)$ PadNotesAI/index.html [QSA,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^MyNASManager/(.*)$ MyNASManager/index.html [QSA,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^LunarBlock/(.*)$ LunarBlock/index.html [QSA,L]
+</IfModule>
+
+# Security headers
+<FilesMatch "\.(js|css|woff|woff2|ttf|svg|eot)$">
+  Header set Cache-Control "max-age=31536000, immutable"
+</FilesMatch>
+
+<FilesMatch "\.(html|json)$">
+  Header set Cache-Control "no-cache, must-revalidate"
+</FilesMatch>
