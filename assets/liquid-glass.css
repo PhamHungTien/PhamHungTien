@@ -360,3 +360,22 @@ html .site-header:has(.glass-optics__surface) {
   backdrop-filter: none; -webkit-backdrop-filter: none;
   background: linear-gradient(120deg,var(--glass-highlight),transparent 36%),color-mix(in srgb,var(--glass-tint) 82%,transparent);
 }
+
+/* Shared geometry: one surface radius, capsules for compact controls. */
+:root { --glass-radius: 24px; --glass-inset-radius: 16px; }
+html .site-header, html .mobile-navigation, html .donate-dialog,
+html .product-row, html .product-row:last-child, html .mosaic-tile,
+html .detail-hero__media, html .product-video-card,
+html .install-panel, html .feature-panel, html .contact-card,
+html .legal-contact-item, html .container > .section,
+html .gallery-preview, html .phtv-gallery-preview,
+html[data-theme] .phtv-page .glass-card,
+html[data-theme] .phtv-page .glass-panel,
+html[data-theme] .phtv-page .download-choice,
+html[data-theme] .phtv-page .phtv-navigation-panel,
+html[data-theme] .phtv-page .phtv-download-menu { border-radius: var(--glass-radius); }
+html .glass-optics { border-radius: inherit; }
+html .nav-links, html .lang-toggle, html .language-switch,
+html .platform-filters, html .app-search { border-radius: var(--glass-pill); }
+html .detail-hero__media, html .gallery-preview, html .phtv-gallery-preview,
+html .product-video-card { overflow: hidden; }
