@@ -242,3 +242,26 @@ html .site-nav a { text-underline-offset: 6px; }
   html .site-header--product { padding-inline: 12px; gap: 8px; }
   html .site-header--product .header-actions { gap: 5px; }
 }
+
+/* Compact home collection with the original floating icon composition. */
+html .collection-hero { grid-template-columns: 1.2fr 1fr; gap: 64px; padding-block: 88px; }
+html .product-list { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 18px; }
+html .product-row, html .product-row:last-child { padding: 26px; border: 1px solid var(--glass-line); border-radius: 22px; background: var(--glass-solid); gap: 24px; }
+html .app-card-top { align-items: flex-start; }
+html .app-card-top img { width: 64px; height: 64px; }
+html .app-card-copy h3 { font-size: 23px; margin: 7px 0 12px; }
+html .app-card-bottom { padding-top: 18px; }
+@media (hover:hover) and (prefers-reduced-motion:no-preference) {
+  html .product-row:hover { transform: translateY(-5px); background: var(--glass-solid); box-shadow: var(--glass-shadow); }
+}
+@media (max-width:1000px) {
+  html .collection-hero { gap: 28px; padding-block: 64px; }
+  html .product-list { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width:700px) {
+  html .collection-hero { grid-template-columns: 1fr; padding-block: 48px; }
+}
+@media (max-width:520px) {
+  html .product-list { grid-template-columns: 1fr; }
+  html .product-row, html .product-row:last-child { padding: 24px; gap: 20px; }
+}
