@@ -455,3 +455,39 @@ html .install-panel > a svg:last-child { margin-left: auto; flex-shrink: 0; }
 @media (min-width:1000px) and (min-height:750px) {
   html .install-panel { position: sticky; top: 112px; }
 }
+
+/* Ambient light field shared by every page, behind all readable content. */
+:root {
+  --ambient-teal: #719b8930; --ambient-violet: #aca0bd26; --ambient-gold: #cab89324;
+}
+html[data-theme="dark"] {
+  --ambient-teal: #3c8e7636; --ambient-violet: #7b679b30; --ambient-gold: #947e4c24;
+}
+html body { position: relative; isolation: isolate; }
+html body::before, html body::after {
+  content: ''; position: fixed; pointer-events: none; z-index: -1;
+  inset: 0; background-repeat: no-repeat;
+}
+html body::before {
+  background: radial-gradient(ellipse at 16% 12%,var(--ambient-teal),transparent 52%),radial-gradient(ellipse at 84% 28%,var(--ambient-violet),transparent 48%),radial-gradient(ellipse at 55% 94%,var(--ambient-gold),transparent 50%);
+}
+html body::after {
+  inset: 10% -10% -10%; opacity: .65;
+  background: radial-gradient(ellipse at 68% 52%,var(--ambient-teal),transparent 43%),radial-gradient(ellipse at 15% 85%,var(--ambient-violet),transparent 40%);
+}
+@keyframes ambient-light-drift {
+  0%,100% { transform: translate3d(0,0,0) scale(1); }
+  35% { transform: translate3d(3%,-2%,0) scale(1.06); }
+  70% { transform: translate3d(-2%,3%,0) scale(1.03); }
+}
+@media (prefers-reduced-motion:no-preference) {
+  html body::before { animation: ambient-light-drift 32s ease-in-out 3; }
+  html body::after { animation: ambient-light-drift 40s ease-in-out 3 reverse; }
+}
+@media (max-width:700px) {
+  html body::after { display: none; }
+  html body::before { opacity: .8; }
+}
+@media (prefers-reduced-transparency:reduce), (prefers-contrast:more) {
+  html body::before, html body::after { display: none; }
+}
