@@ -13,6 +13,12 @@
   --glass-shadow: 0 10px 34px rgba(31,54,78,.09), inset 0 1px 0 var(--glass-edge), inset 0 -1px 0 rgba(62,88,115,.06);
   --glass-radius: 24px;
   --glass-pill: 999px;
+  --control-size: 46px;
+  --control-inset: 4px;
+  --segment-size: 36px;
+  --segment-gap: 4px;
+  --navigation-top: max(18px, env(safe-area-inset-top));
+  --navigation-gap: 12px;
   --glass-ease: cubic-bezier(.22,1,.36,1);
   --glass-ambient-a: rgba(111,179,235,.16);
   --glass-ambient-b: rgba(115,209,177,.13);
@@ -388,26 +394,6 @@ html[data-theme] .phtv-page nav.phtv-navbar.fixed > .phtv-navbar__inner {
 html .glass-optics { border-radius: inherit; }
 html .brand-link { width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; border-radius: var(--glass-pill); }
 
-/* Compact VI/EN switch: equal square cells produce a truly circular selection. */
-html .language-switch {
-  display: grid; grid-template-columns: repeat(2,36px); gap: 4px;
-  padding: 4px; width: 86px; height: 46px; flex: 0 0 auto;
-}
-html .language-switch button {
-  width: 36px; height: 36px; min-width: 36px; min-height: 36px;
-  padding: 0; display: grid; place-items: center;
-  border-radius: 50%; line-height: 1; font-size: 12px;
-}
-html .language-switch::before {
-  width: 36px; height: 36px; top: 4px; left: 4px; bottom: auto;
-  border-radius: 50%;
-}
-html .language-switch:has(button:nth-child(2).is-active)::before { translate: 40px 0; }
-html .language-switch button.is-active { border-radius: 50%; }
-@media (max-width:360px) {
-  html .site-header--product .language-switch button { min-width: 36px; padding: 0; }
-}
-
 /* Contact links are compact capsules rather than large content panels. */
 html .contact-card, html .legal-contact-item {
   border-radius: var(--glass-pill); min-height: 60px; padding: 9px 16px;
@@ -625,22 +611,6 @@ html[data-theme] .phtv-page .phtv-quick-command > div:first-child {
  overflow-wrap: anywhere; overflow: visible;
 }
 html[data-theme] .phtv-page .phtv-quick-command button { width: 36px; height: 36px; top: 5px; }
-html[data-theme] .phtv-page .language-switch {
- position: relative; display: grid; grid-template-columns: 36px 36px; gap: 4px;
- padding: 4px; width: 86px; height: 46px; border: 1px solid var(--glass-line);
- border-radius: var(--glass-pill); background: var(--glass-line); isolation: isolate;
-}
-html[data-theme] .phtv-page .language-switch button {
- display: grid; place-items: center; padding: 0; width: 36px; height: 36px;
- border: 0; border-radius: 50%; background: transparent; color: var(--glass-muted);
- font-size: 13px; font-weight: 600; z-index: 1;
-}
-html[data-theme] .phtv-page .language-switch button.is-active { color: var(--glass-page); }
-html[data-theme] .phtv-page .language-switch::before {
- content: ''; position: absolute; top: 4px; left: 4px; width: 36px; height: 36px;
- border-radius: 50%; background: var(--glass-ink); transition: transform 250ms var(--glass-ease);
-}
-html[data-theme] .phtv-page .language-switch:has(button:last-child.is-active)::before { transform: translateX(40px); }
 html .site-header { min-height: 64px; padding: 8px !important; }
 html .brand-link, html[data-theme] .phtv-page .phtv-home-control {
  width: 44px; height: 44px; border-radius: 50%; background: transparent; color: var(--glass-ink);
@@ -661,20 +631,6 @@ html[data-theme] .phtv-page .phtv-product-lockup .phtv-product-icon { width: 88p
 html[data-theme] .phtv-page .phtv-product-lockup .phtv-acronym-grid { grid-template-columns: 1fr; gap: 0; }
 html[data-theme] .phtv-page .phtv-product-lockup .phtv-acronym-item { font-size: 19px; line-height: 1.4; }
 html[data-theme] .phtv-page .phtv-copy-block button { top: 50%; right: 6px; transform: translateY(-50%); }
-html .lang-toggle {
- width: 86px; height: 46px; padding: 4px; gap: 4px;
- grid-template-columns: 36px 36px; border-radius: var(--glass-pill);
-}
-html .lang-toggle button { width: 36px; height: 36px; min-height: 36px; padding: 0; border-radius: 50%; font-size: 13px; }
-html .lang-toggle::before { width: 36px; height: 36px; bottom: auto; border-radius: 50%; }
-html .lang-toggle:has(button:nth-child(2).active)::before { translate: 40px 0; }
-html[data-theme] .phtv-page .language-switch::before { transform: none; translate: 0 0; transition: translate 250ms var(--glass-ease); }
-html[data-theme] .phtv-page .language-switch:has(button:last-child.is-active)::before { transform: none; translate: 40px 0; }
-html .site-header :is(.icon-button,.mobile-menu-toggle,.brand-link),
-html[data-theme] .phtv-page :is(.phtv-icon-control,.phtv-home-control) {
- width: 46px !important; height: 46px !important; min-width: 46px !important; min-height: 46px !important;
-}
-
 /* Discussion controls share one height; account corners follow the pill system. */
 html[data-theme] .phtv-page .phtv-community-account {
   min-height: 56px; padding: 7px 16px 7px 8px; border-radius: var(--glass-pill) !important;
@@ -718,3 +674,90 @@ html[data-theme] .phtv-page .phtv-community-filters select { height: 100%; min-h
 .discussion-empty { padding:32px; border:1px dashed var(--glass-line); border-radius:var(--glass-radius); text-align:center; color:var(--glass-muted); }
 .discussion-section :is(button,input,textarea,select):focus-visible { outline:2px solid var(--glass-ink); outline-offset:3px; }
 @media(max-width:600px) { .discussion-filters { grid-template-columns:1fr; } .discussion-post,.discussion-composer { padding:18px; } }
+
+/* Canonical controls: portfolio, product pages, PHTV and legal pages. */
+html :is(.language-switch, .lang-toggle),
+html[data-theme] .phtv-page .language-switch {
+  display: grid; position: relative; isolation: isolate; box-sizing: border-box;
+  grid-template-columns: repeat(2, var(--segment-size)); gap: var(--segment-gap);
+  width: calc(2 * var(--segment-size) + var(--segment-gap) + 2 * var(--control-inset) + 2px);
+  height: var(--control-size); padding: var(--control-inset); flex: 0 0 auto;
+  border-radius: var(--glass-pill); align-items: center;
+}
+html :is(.language-switch, .lang-toggle) button,
+html[data-theme] .phtv-page .language-switch button {
+  display: grid; place-items: center; box-sizing: border-box; margin: 0; padding: 0;
+  width: var(--segment-size); height: var(--segment-size);
+  min-width: var(--segment-size); min-height: var(--segment-size);
+  border: 0; border-radius: 50%; font-size: 13px; font-weight: 600; line-height: 1;
+}
+html :is(.language-switch, .lang-toggle)::before,
+html[data-theme] .phtv-page .language-switch::before {
+  top: var(--control-inset); left: var(--control-inset); bottom: auto;
+  width: var(--segment-size); height: var(--segment-size); border-radius: 50%;
+  transform: none; translate: 0 0;
+}
+html .language-switch:has(button:last-child.is-active)::before,
+html .lang-toggle:has(button:last-child.active)::before,
+html[data-theme] .phtv-page .language-switch:has(button:last-child.is-active)::before {
+  transform: none; translate: calc(var(--segment-size) + var(--segment-gap)) 0;
+}
+html .language-switch button.is-active, html .lang-toggle button.active,
+html[data-theme] .phtv-page .language-switch button.is-active { border-radius: 50%; }
+html .site-header :is(.icon-button, .mobile-menu-toggle, .brand-link),
+html[data-theme] .phtv-page :is(.phtv-icon-control, .phtv-home-control) {
+  width: var(--control-size) !important; height: var(--control-size) !important;
+  min-width: var(--control-size) !important; min-height: var(--control-size) !important;
+  border-radius: 50%; flex-shrink: 0;
+}
+html[data-theme] .phtv-page .phtv-download-button {
+  min-height: var(--control-size); border-radius: var(--glass-pill) !important;
+}
+html :is(.app-search, .discussion-filters label):focus-within,
+html[data-theme] .phtv-page .phtv-community-filters > label:focus-within {
+  outline: 2px solid var(--glass-ink); outline-offset: 3px;
+}
+html :is(.app-search, .discussion-filters label) input:focus-visible,
+html[data-theme] .phtv-page .phtv-community-filters > label :is(input, select):focus-visible {
+  outline: none;
+}
+html :is(button, a, input, select, textarea) { touch-action: manipulation; }
+html :is(h1, h2, h3) { text-wrap: balance; }
+html :is(.discussion-account, .discussion-post header, .discussion-heading) strong {
+  min-width: 0; overflow-wrap: anywhere;
+}
+html .discussion-filters input { background: transparent; }
+html .mobile-navigation {
+  top: calc(100% + var(--navigation-gap)); left: auto; right: 0; width: min(360px, 100%);
+  max-height: calc(100dvh - 114px); overflow-y: auto; overscroll-behavior: contain;
+  padding: 10px; border: 1px solid var(--glass-line); border-radius: var(--glass-radius);
+}
+html .mobile-navigation a {
+  padding: 10px 14px; border: 0; border-radius: var(--glass-pill);
+}
+html .mobile-navigation a:hover { background: var(--glass-line); }
+html[data-theme] .phtv-page .phtv-navigation-panel {
+  top: calc(var(--navigation-top) + 64px + var(--navigation-gap));
+  right: 20px; width: min(360px, calc(100% - 40px));
+  max-height: calc(100dvh - var(--navigation-top) - 88px);
+}
+html :is(.site-header, .discussion-section, .phtv-navbar, .phtv-navigation-panel) :is(a, button, input, select, textarea):focus-visible {
+  outline-color: var(--glass-ink);
+}
+@media (max-width: 700px) {
+  :root { --navigation-top: max(14px, env(safe-area-inset-top)); }
+  html[data-theme] .phtv-page .phtv-navigation-panel {
+    right: 12px; width: min(360px, calc(100% - 24px));
+  }
+}
+@media (max-width: 760px) {
+  html :is(.app-search, .discussion-filters) input { font-size: 16px; }
+}
+@media (max-width: 480px) {
+  html .site-header--product .header-actions > a.icon-button { display: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html :is(.language-switch, .lang-toggle)::before {
+    transition: translate 250ms var(--glass-ease);
+  }
+}

@@ -26,7 +26,7 @@
       meta.setAttribute('name', 'theme-color');
       document.head.appendChild(meta);
     }
-    meta.setAttribute('content', theme === 'dark' ? '#0b0c0f' : '#ffffff');
+    meta.setAttribute('content', getComputedStyle(root).getPropertyValue('--glass-page').trim() || (theme === 'dark' ? '#0b0c0f' : '#ffffff'));
   }
 
   function applyTheme(theme) {
@@ -37,7 +37,7 @@
     if (!toggle) return;
 
     var isDark = theme === 'dark';
-    toggle.setAttribute('aria-label', isDark ? 'Bật giao diện sáng' : 'Bật giao diện tối');
+    toggle.setAttribute('aria-label', isDark ? 'Use light mode' : 'Use dark mode');
     toggle.setAttribute('title', isDark ? 'Light mode' : 'Dark mode');
     toggle.innerHTML = isDark
       ? '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"></path></svg>'

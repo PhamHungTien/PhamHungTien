@@ -12,10 +12,11 @@ export function useCollectionMotion(identity: string) {
     const cards = Array.from(root.querySelectorAll<HTMLElement>('[data-product]'));
     const next = new Map<string, DOMRect>();
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Finish layout reads before starting animations that write presentation state.
+    for (const card of cards) next.set(card.dataset.product!, card.getBoundingClientRect());
     cards.forEach((card, index) => {
       const key = card.dataset.product!;
-      const bounds = card.getBoundingClientRect();
-      next.set(key, bounds);
+      const bounds = next.get(key)!;
       const old = previous.current.get(key);
       if (reduce || !previous.current.size) return;
       card.getAnimations().filter(animation => animation.id === 'collection-layout').forEach(animation => animation.cancel());

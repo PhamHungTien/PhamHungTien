@@ -60,7 +60,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
     const themeColorMeta = document.querySelector('meta[name="theme-color"]');
     if (themeColorMeta) {
-      themeColorMeta.setAttribute("content", theme === 'dark' ? "#0b0c0f" : "#ffffff");
+      themeColorMeta.setAttribute('content', getComputedStyle(document.documentElement).getPropertyValue('--glass-page').trim());
     }
   }, [theme]);
 
@@ -145,6 +145,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   ];
 
   const handleLinkClick = (e: React.MouseEvent, tab: string, href: string) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     if (tab === 'community') {
       e.preventDefault();
       onTabChange?.('community');
@@ -179,7 +180,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   return (
     <>
       <nav className="phtv-navbar fixed top-0 left-0 right-0 z-[100]">
-        <div className={`phtv-navbar__inner mx-auto flex max-w-6xl items-center justify-between border-b px-4 py-3 transition-all duration-300 md:px-6 ${
+        <div className={`phtv-navbar__inner mx-auto flex max-w-6xl items-center justify-between border-b px-4 py-3 transition-colors duration-300 md:px-6 ${
           scrolled
             ? 'glass-panel border-white/10 shadow-[0_18px_50px_rgba(0,0,0,0.28)]'
             : 'border-white/6 bg-black/10 backdrop-blur-md'
@@ -248,14 +249,14 @@ export const Navbar: React.FC<NavbarProps> = ({
                   className="phtv-download-button flex items-center gap-2 rounded-lg bg-white px-5 py-2.5 text-sm font-black text-slate-950 transition-all hover:bg-slate-100"
                   aria-label="Tải xuống PHTV"
                   aria-expanded={desktopDownloadOpen}
-                  aria-haspopup="menu"
+                  aria-controls="phtv-download-options"
                 >
                   <Icons.Download size={18} />
                   <span>{downloadLabel}</span>
                   <Icons.ChevronDown size={16} className={`transition-transform ${desktopDownloadOpen ? 'rotate-180' : ''}`} />
                 </button>
 
-                <div className={`absolute right-0 top-full pt-3 transition-all duration-200 ${desktopDownloadOpen ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none translate-y-2 opacity-0'}`}>
+                <div id="phtv-download-options" inert={!desktopDownloadOpen} className={`absolute right-0 top-full pt-3 transition-[opacity,transform] duration-200 ${desktopDownloadOpen ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none translate-y-2 opacity-0'}`}>
                   <div className="phtv-download-menu w-[270px] rounded-lg border border-white/10 bg-white p-2 shadow-lg">
                     <div className="space-y-1">
                       <a
@@ -344,7 +345,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <span>{t('nav.home')}</span>
               </a>
               {navLinks.map((item, index) => {
-                const Icon = [Icons.Zap, Icons.Image, Icons.MessageSquare][index];
+                const Icon = [Icons.Image, Icons.MessageSquare][index];
                 return (
                   <a key={item.href} href={item.href} onClick={(event) => handleLinkClick(event, item.tab, item.href)} aria-current={item.tab === 'community' && activeTab === 'community' ? 'page' : undefined}>
                     <Icon size={18} aria-hidden="true" />
