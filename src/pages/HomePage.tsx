@@ -29,10 +29,9 @@ export function HomePage({ lang, onLanguageChange, t }: HomePageProps) {
       <main id="main-content">
         <section className="collection-hero">
           <div className="collection-hero__copy">
-            <p className="eyebrow">PHAM HUNG TIEN / INDEPENDENT DEVELOPER</p>
+            <p className="eyebrow">PHAM HUNG TIEN</p>
             <h1>{vi ? 'Ý tưởng nhỏ.' : 'Small ideas.'}<br /><span>{vi ? 'Trải nghiệm lớn.' : 'Thoughtfully built.'}</span></h1>
             <a className="button button--primary" href="#products">{vi ? 'Khám phá ứng dụng' : 'Explore the collection'}<ArrowRight size={17} /></a>
-            <div className="collection-signature"><span className="status-dot" />{vi ? 'Thiết kế & phát triển bởi Phạm Hùng Tiến' : 'Designed & developed by Pham Hung Tien'}</div>
           </div>
           <a className="hero-study" href={products.find(product => product.slug === 'vtts')!.route}>
             <div className="hero-study__image"><img src={products.find(product => product.slug === 'vtts')!.heroImage} alt={vi ? 'Giao diện vTTS' : 'A closer look at vTTS'} fetchPriority="high" /></div>
