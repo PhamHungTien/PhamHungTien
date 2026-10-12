@@ -767,3 +767,25 @@ html body .discussion-empty {
 }
 html body .site-nav a[aria-current="page"],
 html body .mobile-navigation a[aria-current="page"] { color: var(--glass-ink); font-weight: 650; }
+
+/* Nested tab panels retain the same gutters as top-level page sections. */
+html body .product-page #overview > section,
+html body .product-page .product-discussions-tab > section {
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+@media (max-width: 700px) {
+  html body .site-shell {
+    --gutter: clamp(16px, 5vw, 24px);
+  }
+  html[data-theme] body .phtv-page .phtv-community {
+    padding-left: max(16px, env(safe-area-inset-left)) !important;
+    padding-right: max(16px, env(safe-area-inset-right)) !important;
+  }
+  html body .product-page #overview > section,
+  html body .product-page .product-discussions-tab > section,
+  html body .site-shell main > section {
+    padding-left: max(var(--gutter), env(safe-area-inset-left));
+    padding-right: max(var(--gutter), env(safe-area-inset-right));
+  }
+}
