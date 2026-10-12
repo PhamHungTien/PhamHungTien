@@ -1,4 +1,4 @@
-// Artwork downloaded from Apple; see docs/appstore-artwork.json for provenance.
+// App Store artwork and owner-provided captures; see docs/appstore-artwork.json and docs/padnotesai-artwork.json.
 import type { Product, ProductSlug } from '../types';
 import storeImage0 from '../../vTTS/assets/appstore/header-1.jpg';
 import storeImage1 from '../../vTTS/assets/appstore/ipad-1.jpg';
@@ -13,12 +13,12 @@ import storeImage9 from '../../PadCodeAI/assets/appstore/ipad-2.jpg';
 import storeImage10 from '../../PadCodeAI/assets/appstore/iphone-1.jpg';
 import storeImage11 from '../../PadCodeAI/assets/appstore/iphone-2.jpg';
 import storeImage12 from '../../PadCodeAI/assets/appstore/iphone-3.jpg';
-import storeImage13 from '../../PadNotesAI/assets/appstore/ipad-1.jpg';
-import storeImage14 from '../../PadNotesAI/assets/appstore/ipad-2.jpg';
-import storeImage15 from '../../PadNotesAI/assets/appstore/iphone-1.jpg';
-import storeImage16 from '../../PadNotesAI/assets/appstore/iphone-2.jpg';
-import storeImage17 from '../../PadNotesAI/assets/appstore/iphone-3.jpg';
-import storeImage18 from '../../PadNotesAI/assets/appstore/mac-1.jpg';
+import storeImage13 from '../../PadNotesAI/assets/current/en/ipad-editor.webp';
+import storeImage14 from '../../PadNotesAI/assets/current/en/ipad-library.webp';
+import storeImage15 from '../../PadNotesAI/assets/current/en/iphone-69-editor.webp';
+import storeImage16 from '../../PadNotesAI/assets/current/en/iphone-69-library.webp';
+import storeImage17 from '../../PadNotesAI/assets/current/en/mac-editor.webp';
+import storeImage18 from '../../PadNotesAI/assets/current/en/mac-ai.webp';
 import storeImage19 from '../../MyNASManager/assets/appstore/ipad-1.jpg';
 import storeImage20 from '../../MyNASManager/assets/appstore/ipad-2.jpg';
 import storeImage21 from '../../MyNASManager/assets/appstore/ipad-3.jpg';
@@ -39,6 +39,13 @@ import storeImage35 from '../../LunarBlock/assets/appstore/iphone-1.jpg';
 import storeImage36 from '../../LunarBlock/assets/appstore/iphone-2.jpg';
 import storeImage37 from '../../LunarBlock/assets/appstore/iphone-3.jpg';
 import storeImage38 from '../../LunarBlock/assets/appstore/mac-1.jpg';
+import padNotesCurrentHero from '../../PadNotesAI/assets/current/hero-ai.webp';
+import padNotesVi0 from '../../PadNotesAI/assets/current/vi/ipad-editor.webp';
+import padNotesVi1 from '../../PadNotesAI/assets/current/vi/ipad-library.webp';
+import padNotesVi2 from '../../PadNotesAI/assets/current/vi/iphone-69-editor.webp';
+import padNotesVi3 from '../../PadNotesAI/assets/current/vi/iphone-69-library.webp';
+import padNotesVi4 from '../../PadNotesAI/assets/current/vi/mac-editor.webp';
+import padNotesVi5 from '../../PadNotesAI/assets/current/vi/mac-ai.webp';
 export const storeArtwork: Partial<Record<ProductSlug, Pick<Product, 'heroImage' | 'gallery'>>> = {
   vtts: {
     heroImage: storeImage0,
@@ -63,14 +70,38 @@ export const storeArtwork: Partial<Record<ProductSlug, Pick<Product, 'heroImage'
     ],
   },
   padnotesai: {
-    heroImage: storeImage13,
+    heroImage: padNotesCurrentHero,
     gallery: [
-      { src: storeImage13, alt: { vi: 'Giao diện iPad · 1', en: 'iPad experience · 1' } },
-      { src: storeImage14, alt: { vi: 'Giao diện iPad · 2', en: 'iPad experience · 2' } },
-      { src: storeImage15, alt: { vi: 'Giao diện iPhone · 1', en: 'iPhone experience · 1' } },
-      { src: storeImage16, alt: { vi: 'Giao diện iPhone · 2', en: 'iPhone experience · 2' } },
-      { src: storeImage17, alt: { vi: 'Giao diện iPhone · 3', en: 'iPhone experience · 3' } },
-      { src: storeImage18, alt: { vi: 'Giao diện Mac · 1', en: 'Mac experience · 1' } },
+      {
+        src: storeImage13,
+        localizedSrc: { vi: padNotesVi0, en: storeImage13 },
+        alt: { vi: 'Ghi chú và viết tay trên iPad', en: 'Handwriting and notes on iPad' },
+      },
+      {
+        src: storeImage14,
+        localizedSrc: { vi: padNotesVi1, en: storeImage14 },
+        alt: { vi: 'Thư viện sổ tay trên iPad', en: 'Notebook library on iPad' },
+      },
+      {
+        src: storeImage15,
+        localizedSrc: { vi: padNotesVi2, en: storeImage15 },
+        alt: { vi: 'Ghi chú trên iPhone', en: 'Notes on iPhone' },
+      },
+      {
+        src: storeImage16,
+        localizedSrc: { vi: padNotesVi3, en: storeImage16 },
+        alt: { vi: 'Thư viện sổ tay trên iPhone', en: 'Notebook library on iPhone' },
+      },
+      {
+        src: storeImage17,
+        localizedSrc: { vi: padNotesVi4, en: storeImage17 },
+        alt: { vi: 'Không gian ghi chú trên Mac', en: 'Notebook workspace on Mac' },
+      },
+      {
+        src: storeImage18,
+        localizedSrc: { vi: padNotesVi5, en: storeImage18 },
+        alt: { vi: 'Tóm tắt ghi chú bằng AI trên Mac', en: 'AI note summaries on Mac' },
+      },
     ],
   },
   mynasmanager: {

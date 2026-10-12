@@ -3,862 +3,522 @@
     "source": "assets/phtv-icon.webp",
     "originalBytes": 23562,
     "optimizedBytes": 3022,
-    "widths": [
-      64,
-      128,
-      256
-    ]
+    "widths": [64, 128, 256]
   },
   {
     "source": "assets/phtv-social-preview.webp",
     "originalBytes": 17220,
     "optimizedBytes": 13868,
-    "widths": [
-      320,
-      640,
-      960,
-      1280
-    ]
+    "widths": [320, 640, 960, 1280]
   },
   {
     "source": "assets/lunarv-icon.png",
     "originalBytes": 65235,
     "optimizedBytes": 4326,
-    "widths": [
-      64,
-      128,
-      256
-    ]
+    "widths": [64, 128, 256]
   },
   {
     "source": "LunarV/assets/lunarv-ipad.jpg",
     "originalBytes": 203416,
     "optimizedBytes": 24428,
-    "widths": [
-      320,
-      640,
-      960,
-      1440
-    ]
+    "widths": [320, 640, 960, 1440]
   },
   {
     "source": "LunarV/assets/lunarv-vision.jpg",
     "originalBytes": 164474,
     "optimizedBytes": 19914,
-    "widths": [
-      320,
-      640,
-      960,
-      1440
-    ]
+    "widths": [320, 640, 960, 1440]
   },
   {
     "source": "LunarV/assets/ui-review-1.png",
     "originalBytes": 911424,
     "optimizedBytes": 60106,
-    "widths": [
-      320,
-      640,
-      679
-    ]
+    "widths": [320, 640, 679]
   },
   {
     "source": "LunarV/assets/ui-review-2.png",
     "originalBytes": 853885,
     "optimizedBytes": 43222,
-    "widths": [
-      320,
-      640,
-      665
-    ]
+    "widths": [320, 640, 665]
   },
   {
     "source": "PadCodeAI/assets/app-icon.png",
     "originalBytes": 48154,
     "optimizedBytes": 3114,
-    "widths": [
-      64,
-      128,
-      256
-    ]
+    "widths": [64, 128, 256]
   },
   {
     "source": "PadCodeAI/assets/current/hero.webp",
     "originalBytes": 116928,
     "optimizedBytes": 51038,
-    "widths": [
-      320,
-      640,
-      960,
-      1440
-    ]
+    "widths": [320, 640, 960, 1440]
   },
   {
     "source": "PadCodeAI/assets/current/ipad.webp",
     "originalBytes": 111322,
     "optimizedBytes": 48494,
-    "widths": [
-      320,
-      640,
-      960,
-      1440
-    ]
+    "widths": [320, 640, 960, 1440]
   },
   {
     "source": "PadCodeAI/assets/current/iphone.webp",
     "originalBytes": 86148,
     "optimizedBytes": 40750,
-    "widths": [
-      320,
-      640,
-      960,
-      1440
-    ]
+    "widths": [320, 640, 960, 1440]
   },
   {
     "source": "PadCodeAI/assets/current/overview.webp",
     "originalBytes": 147420,
     "optimizedBytes": 53312,
-    "widths": [
-      320,
-      640,
-      960,
-      1440
-    ]
+    "widths": [320, 640, 960, 1440]
   },
   {
     "source": "PadNotesAI/assets/app-icon.png",
     "originalBytes": 57968,
     "optimizedBytes": 4250,
-    "widths": [
-      64,
-      128,
-      256
-    ]
+    "widths": [64, 128, 256]
   },
   {
-    "source": "PadNotesAI/assets/ipad-editor.png",
-    "originalBytes": 235010,
-    "optimizedBytes": 16030,
-    "widths": [
-      320,
-      640,
-      960,
-      1440
-    ]
+    "source": "PadNotesAI/assets/current/hero-ai.webp",
+    "originalBytes": 118512,
+    "optimizedBytes": 31720,
+    "widths": [320, 640, 960, 1440]
   },
   {
-    "source": "PadNotesAI/assets/ipad-workspace.png",
-    "originalBytes": 438526,
-    "optimizedBytes": 20556,
-    "widths": [
-      320,
-      640,
-      960,
-      1440
-    ]
+    "source": "PadNotesAI/assets/current/en/ipad-library.webp",
+    "originalBytes": 92362,
+    "optimizedBytes": 31324,
+    "widths": [320, 640, 960, 1440]
   },
   {
     "source": "MyNASManager/assets/app-icon.png",
     "originalBytes": 62051,
     "optimizedBytes": 4592,
-    "widths": [
-      64,
-      128,
-      256
-    ]
+    "widths": [64, 128, 256]
   },
   {
     "source": "MyNASManager/assets/ipad-hero.png",
     "originalBytes": 563474,
     "optimizedBytes": 32294,
-    "widths": [
-      320,
-      640,
-      960,
-      1440
-    ]
+    "widths": [320, 640, 960, 1440]
   },
   {
     "source": "MyNASManager/assets/ipad-screenshot3.png",
     "originalBytes": 127487,
     "optimizedBytes": 9894,
-    "widths": [
-      320,
-      640,
-      960,
-      1440
-    ]
+    "widths": [320, 640, 960, 1440]
   },
   {
     "source": "MyNASManager/assets/iphone-screenshot1.png",
     "originalBytes": 339911,
     "optimizedBytes": 45294,
-    "widths": [
-      320,
-      640,
-      739
-    ]
+    "widths": [320, 640, 739]
   },
   {
     "source": "MyNASManager/assets/iphone-screenshot2.png",
     "originalBytes": 138624,
     "optimizedBytes": 22472,
-    "widths": [
-      320,
-      640,
-      739
-    ]
+    "widths": [320, 640, 739]
   },
   {
     "source": "LunarBlock/assets/app-icon.png",
     "originalBytes": 45860,
     "optimizedBytes": 2820,
-    "widths": [
-      64,
-      128,
-      256
-    ]
+    "widths": [64, 128, 256]
   },
   {
     "source": "LunarBlock/assets/lunarblock-hero.png",
     "originalBytes": 1286110,
     "optimizedBytes": 15104,
-    "widths": [
-      320,
-      640,
-      960,
-      1440
-    ]
+    "widths": [320, 640, 960, 1440]
   },
   {
     "source": "LunarBlock/assets/lunarblock-showcase.png",
     "originalBytes": 1277040,
     "optimizedBytes": 15440,
-    "widths": [
-      320,
-      640,
-      960,
-      1440
-    ]
+    "widths": [320, 640, 960, 1440]
   },
   {
     "source": "LunarBlock/assets/lunarblock-modes.png",
     "originalBytes": 795412,
     "optimizedBytes": 11998,
-    "widths": [
-      320,
-      640,
-      960,
-      1440
-    ]
+    "widths": [320, 640, 960, 1440]
   },
   {
     "source": "LunarBlock/assets/lunarblock-rank.png",
     "originalBytes": 694641,
     "optimizedBytes": 12642,
-    "widths": [
-      320,
-      640,
-      960,
-      1440
-    ]
+    "widths": [320, 640, 960, 1440]
   },
   {
     "source": "vTTS/assets/app-icon.png",
     "originalBytes": 64481,
     "optimizedBytes": 3826,
-    "widths": [
-      64,
-      128,
-      256
-    ]
+    "widths": [64, 128, 256]
   },
   {
     "source": "vTTS/assets/current/text-vi.webp",
     "originalBytes": 39332,
     "optimizedBytes": 20824,
-    "widths": [
-      320,
-      640,
-      960,
-      1440
-    ]
+    "widths": [320, 640, 960, 1440]
   },
   {
     "source": "vTTS/assets/current/text-en.webp",
     "originalBytes": 34340,
     "optimizedBytes": 17840,
-    "widths": [
-      320,
-      640,
-      960,
-      1440
-    ]
+    "widths": [320, 640, 960, 1440]
   },
   {
     "source": "vTTS/assets/current/book-vi.webp",
     "originalBytes": 61320,
     "optimizedBytes": 60798,
-    "widths": [
-      320,
-      640,
-      828
-    ]
+    "widths": [320, 640, 828]
   },
   {
     "source": "vTTS/assets/current/book-en.webp",
     "originalBytes": 54526,
     "optimizedBytes": 54110,
-    "widths": [
-      320,
-      640,
-      828
-    ]
+    "widths": [320, 640, 828]
   },
   {
     "source": "vTTS/assets/current/library-vi.webp",
     "originalBytes": 69366,
     "optimizedBytes": 67706,
-    "widths": [
-      320,
-      640,
-      828
-    ]
+    "widths": [320, 640, 828]
   },
   {
     "source": "vTTS/assets/current/library-en.webp",
     "originalBytes": 67070,
     "optimizedBytes": 65274,
-    "widths": [
-      320,
-      640,
-      828
-    ]
+    "widths": [320, 640, 828]
   },
   {
     "source": "vTTS/assets/current/music-vi.webp",
     "originalBytes": 43220,
     "optimizedBytes": 42370,
-    "widths": [
-      320,
-      640,
-      828
-    ]
+    "widths": [320, 640, 828]
   },
   {
     "source": "vTTS/assets/current/music-en.webp",
     "originalBytes": 41026,
     "optimizedBytes": 40354,
-    "widths": [
-      320,
-      640,
-      828
-    ]
+    "widths": [320, 640, 828]
   },
   {
     "source": "vTTS/assets/current/timer-vi.webp",
     "originalBytes": 56644,
     "optimizedBytes": 55962,
-    "widths": [
-      320,
-      640,
-      828
-    ]
+    "widths": [320, 640, 828]
   },
   {
     "source": "vTTS/assets/current/timer-en.webp",
     "originalBytes": 51370,
     "optimizedBytes": 50426,
-    "widths": [
-      320,
-      640,
-      828
-    ]
+    "widths": [320, 640, 828]
   },
   {
     "source": "vTTS/assets/current/export-vi.webp",
     "originalBytes": 47958,
     "optimizedBytes": 47378,
-    "widths": [
-      320,
-      640,
-      828
-    ]
+    "widths": [320, 640, 828]
   },
   {
     "source": "vTTS/assets/current/export-en.webp",
     "originalBytes": 43706,
     "optimizedBytes": 42974,
-    "widths": [
-      320,
-      640,
-      828
-    ]
+    "widths": [320, 640, 828]
   },
   {
     "source": "vTTS/assets/appstore/header-1.jpg",
     "originalBytes": 126433,
     "optimizedBytes": 27258,
-    "widths": [
-      320,
-      640,
-      960,
-      1439
-    ]
+    "widths": [320, 640, 960, 1439]
   },
   {
     "source": "vTTS/assets/appstore/ipad-1.jpg",
     "originalBytes": 136250,
     "optimizedBytes": 40966,
-    "widths": [
-      320,
-      640,
-      960,
-      1080
-    ]
+    "widths": [320, 640, 960, 1080]
   },
   {
     "source": "vTTS/assets/appstore/ipad-2.jpg",
     "originalBytes": 126954,
     "optimizedBytes": 37296,
-    "widths": [
-      320,
-      640,
-      960,
-      1080
-    ]
+    "widths": [320, 640, 960, 1080]
   },
   {
     "source": "vTTS/assets/appstore/ipad-3.jpg",
     "originalBytes": 134455,
     "optimizedBytes": 40348,
-    "widths": [
-      320,
-      640,
-      960,
-      1080
-    ]
+    "widths": [320, 640, 960, 1080]
   },
   {
     "source": "vTTS/assets/appstore/iphone-1.jpg",
     "originalBytes": 113914,
     "optimizedBytes": 41406,
-    "widths": [
-      320,
-      640,
-      666
-    ]
+    "widths": [320, 640, 666]
   },
   {
     "source": "vTTS/assets/appstore/iphone-2.jpg",
     "originalBytes": 132911,
     "optimizedBytes": 49046,
-    "widths": [
-      320,
-      640,
-      666
-    ]
+    "widths": [320, 640, 666]
   },
   {
     "source": "vTTS/assets/appstore/iphone-3.jpg",
     "originalBytes": 134898,
     "optimizedBytes": 51692,
-    "widths": [
-      320,
-      640,
-      666
-    ]
+    "widths": [320, 640, 666]
   },
   {
     "source": "vTTS/assets/appstore/mac-1.jpg",
     "originalBytes": 104967,
     "optimizedBytes": 20458,
-    "widths": [
-      320,
-      640,
-      960,
-      1440
-    ]
+    "widths": [320, 640, 960, 1440]
   },
   {
     "source": "PadCodeAI/assets/appstore/ipad-1.jpg",
     "originalBytes": 183526,
     "optimizedBytes": 40630,
-    "widths": [
-      320,
-      640,
-      960,
-      1440
-    ]
+    "widths": [320, 640, 960, 1440]
   },
   {
     "source": "PadCodeAI/assets/appstore/ipad-2.jpg",
     "originalBytes": 95784,
     "optimizedBytes": 17692,
-    "widths": [
-      320,
-      640,
-      960,
-      1440
-    ]
+    "widths": [320, 640, 960, 1440]
   },
   {
     "source": "PadCodeAI/assets/appstore/iphone-1.jpg",
     "originalBytes": 174758,
     "optimizedBytes": 68976,
-    "widths": [
-      320,
-      640,
-      666
-    ]
+    "widths": [320, 640, 666]
   },
   {
     "source": "PadCodeAI/assets/appstore/iphone-2.jpg",
     "originalBytes": 167170,
     "optimizedBytes": 65268,
-    "widths": [
-      320,
-      640,
-      666
-    ]
+    "widths": [320, 640, 666]
   },
   {
     "source": "PadCodeAI/assets/appstore/iphone-3.jpg",
     "originalBytes": 110406,
     "optimizedBytes": 39610,
-    "widths": [
-      320,
-      640,
-      666
-    ]
+    "widths": [320, 640, 666]
   },
   {
-    "source": "PadNotesAI/assets/appstore/ipad-1.jpg",
-    "originalBytes": 152870,
-    "optimizedBytes": 33248,
-    "widths": [
-      320,
-      640,
-      960,
-      1080
-    ]
+    "source": "PadNotesAI/assets/current/en/ipad-editor.webp",
+    "originalBytes": 124492,
+    "optimizedBytes": 47824,
+    "widths": [320, 640, 960, 1440]
   },
   {
-    "source": "PadNotesAI/assets/appstore/ipad-2.jpg",
-    "originalBytes": 147321,
-    "optimizedBytes": 35372,
-    "widths": [
-      320,
-      640,
-      960,
-      1080
-    ]
+    "source": "PadNotesAI/assets/current/en/iphone-69-editor.webp",
+    "originalBytes": 162196,
+    "optimizedBytes": 72772,
+    "widths": [320, 640, 960, 1320]
   },
   {
-    "source": "PadNotesAI/assets/appstore/iphone-1.jpg",
-    "originalBytes": 106761,
-    "optimizedBytes": 24292,
-    "widths": [
-      320,
-      640,
-      666
-    ]
+    "source": "PadNotesAI/assets/current/en/iphone-69-library.webp",
+    "originalBytes": 162794,
+    "optimizedBytes": 64480,
+    "widths": [320, 640, 960, 1320]
   },
   {
-    "source": "PadNotesAI/assets/appstore/iphone-2.jpg",
-    "originalBytes": 93663,
-    "optimizedBytes": 26572,
-    "widths": [
-      320,
-      640,
-      666
-    ]
+    "source": "PadNotesAI/assets/current/en/mac-editor.webp",
+    "originalBytes": 55300,
+    "optimizedBytes": 21322,
+    "widths": [320, 640, 960, 1440]
   },
   {
-    "source": "PadNotesAI/assets/appstore/iphone-3.jpg",
-    "originalBytes": 118267,
-    "optimizedBytes": 33622,
-    "widths": [
-      320,
-      640,
-      666
-    ]
-  },
-  {
-    "source": "PadNotesAI/assets/appstore/mac-1.jpg",
-    "originalBytes": 89749,
-    "optimizedBytes": 17820,
-    "widths": [
-      320,
-      640,
-      960,
-      1280
-    ]
+    "source": "PadNotesAI/assets/current/en/mac-ai.webp",
+    "originalBytes": 58376,
+    "optimizedBytes": 21500,
+    "widths": [320, 640, 960, 1440]
   },
   {
     "source": "MyNASManager/assets/appstore/ipad-1.jpg",
     "originalBytes": 172292,
     "optimizedBytes": 44314,
-    "widths": [
-      320,
-      640,
-      960,
-      1080
-    ]
+    "widths": [320, 640, 960, 1080]
   },
   {
     "source": "MyNASManager/assets/appstore/ipad-2.jpg",
     "originalBytes": 139777,
     "optimizedBytes": 35088,
-    "widths": [
-      320,
-      640,
-      960,
-      1080
-    ]
+    "widths": [320, 640, 960, 1080]
   },
   {
     "source": "MyNASManager/assets/appstore/ipad-3.jpg",
     "originalBytes": 120679,
     "optimizedBytes": 26244,
-    "widths": [
-      320,
-      640,
-      960,
-      1080
-    ]
+    "widths": [320, 640, 960, 1080]
   },
   {
     "source": "MyNASManager/assets/appstore/iphone-1.jpg",
     "originalBytes": 133123,
     "optimizedBytes": 42746,
-    "widths": [
-      320,
-      640,
-      666
-    ]
+    "widths": [320, 640, 666]
   },
   {
     "source": "MyNASManager/assets/appstore/iphone-2.jpg",
     "originalBytes": 93328,
     "optimizedBytes": 26812,
-    "widths": [
-      320,
-      640,
-      666
-    ]
+    "widths": [320, 640, 666]
   },
   {
     "source": "MyNASManager/assets/appstore/iphone-3.jpg",
     "originalBytes": 93663,
     "optimizedBytes": 26810,
-    "widths": [
-      320,
-      640,
-      666
-    ]
+    "widths": [320, 640, 666]
   },
   {
     "source": "LunarV/assets/appstore/ipad-1.jpg",
     "originalBytes": 262681,
     "optimizedBytes": 51000,
-    "widths": [
-      320,
-      640,
-      960,
-      1440
-    ]
+    "widths": [320, 640, 960, 1440]
   },
   {
     "source": "LunarV/assets/appstore/ipad-2.jpg",
     "originalBytes": 123969,
     "optimizedBytes": 24200,
-    "widths": [
-      320,
-      640,
-      960,
-      1440
-    ]
+    "widths": [320, 640, 960, 1440]
   },
   {
     "source": "LunarV/assets/appstore/ipad-3.jpg",
     "originalBytes": 106522,
     "optimizedBytes": 19980,
-    "widths": [
-      320,
-      640,
-      960,
-      1440
-    ]
+    "widths": [320, 640, 960, 1440]
   },
   {
     "source": "LunarV/assets/appstore/iphone-1.jpg",
     "originalBytes": 189765,
     "optimizedBytes": 79816,
-    "widths": [
-      320,
-      640,
-      665
-    ]
+    "widths": [320, 640, 665]
   },
   {
     "source": "LunarV/assets/appstore/iphone-2.jpg",
     "originalBytes": 165515,
     "optimizedBytes": 71122,
-    "widths": [
-      320,
-      640,
-      665
-    ]
+    "widths": [320, 640, 665]
   },
   {
     "source": "LunarV/assets/appstore/iphone-3.jpg",
     "originalBytes": 100833,
     "optimizedBytes": 25762,
-    "widths": [
-      320,
-      640,
-      665
-    ]
+    "widths": [320, 640, 665]
   },
   {
     "source": "LunarV/assets/appstore/mac-1.jpg",
     "originalBytes": 158236,
     "optimizedBytes": 34846,
-    "widths": [
-      320,
-      640,
-      960,
-      1440
-    ]
+    "widths": [320, 640, 960, 1440]
   },
   {
     "source": "LunarBlock/assets/appstore/ipad-1.jpg",
     "originalBytes": 162618,
     "optimizedBytes": 39632,
-    "widths": [
-      320,
-      640,
-      960,
-      1080
-    ]
+    "widths": [320, 640, 960, 1080]
   },
   {
     "source": "LunarBlock/assets/appstore/ipad-2.jpg",
     "originalBytes": 167596,
     "optimizedBytes": 41080,
-    "widths": [
-      320,
-      640,
-      960,
-      1080
-    ]
+    "widths": [320, 640, 960, 1080]
   },
   {
     "source": "LunarBlock/assets/appstore/ipad-3.jpg",
     "originalBytes": 144352,
     "optimizedBytes": 36386,
-    "widths": [
-      320,
-      640,
-      960,
-      1080
-    ]
+    "widths": [320, 640, 960, 1080]
   },
   {
     "source": "LunarBlock/assets/appstore/iphone-1.jpg",
     "originalBytes": 95840,
     "optimizedBytes": 29570,
-    "widths": [
-      320,
-      640,
-      665
-    ]
+    "widths": [320, 640, 665]
   },
   {
     "source": "LunarBlock/assets/appstore/iphone-2.jpg",
     "originalBytes": 98273,
     "optimizedBytes": 30346,
-    "widths": [
-      320,
-      640,
-      665
-    ]
+    "widths": [320, 640, 665]
   },
   {
     "source": "LunarBlock/assets/appstore/iphone-3.jpg",
     "originalBytes": 88521,
     "optimizedBytes": 26658,
-    "widths": [
-      320,
-      640,
-      665
-    ]
+    "widths": [320, 640, 665]
   },
   {
     "source": "LunarBlock/assets/appstore/mac-1.jpg",
     "originalBytes": 99933,
     "optimizedBytes": 17580,
-    "widths": [
-      320,
-      640,
-      960,
-      1440
-    ]
+    "widths": [320, 640, 960, 1440]
+  },
+  {
+    "source": "PadNotesAI/assets/current/vi/ipad-editor.webp",
+    "originalBytes": 123780,
+    "optimizedBytes": 47178,
+    "widths": [320, 640, 960, 1440]
+  },
+  {
+    "source": "PadNotesAI/assets/current/vi/ipad-library.webp",
+    "originalBytes": 93766,
+    "optimizedBytes": 32048,
+    "widths": [320, 640, 960, 1440]
+  },
+  {
+    "source": "PadNotesAI/assets/current/vi/iphone-69-editor.webp",
+    "originalBytes": 159368,
+    "optimizedBytes": 71466,
+    "widths": [320, 640, 960, 1320]
+  },
+  {
+    "source": "PadNotesAI/assets/current/vi/iphone-69-library.webp",
+    "originalBytes": 164218,
+    "optimizedBytes": 64896,
+    "widths": [320, 640, 960, 1320]
+  },
+  {
+    "source": "PadNotesAI/assets/current/vi/mac-editor.webp",
+    "originalBytes": 53968,
+    "optimizedBytes": 20484,
+    "widths": [320, 640, 960, 1440]
+  },
+  {
+    "source": "PadNotesAI/assets/current/vi/mac-ai.webp",
+    "originalBytes": 55360,
+    "optimizedBytes": 20046,
+    "widths": [320, 640, 960, 1440]
   },
   {
     "source": "PHTV/public/assets/latest/setting-bogo.jpg",
     "originalBytes": 125023,
     "optimizedBytes": 25484,
-    "widths": [
-      320,
-      640,
-      960,
-      1440
-    ]
+    "widths": [320, 640, 960, 1440]
   },
   {
     "source": "PHTV/public/assets/latest/menubar.png",
     "originalBytes": 203728,
     "optimizedBytes": 29784,
-    "widths": [
-      320,
-      640,
-      760
-    ]
+    "widths": [320, 640, 760]
   },
   {
     "source": "PHTV/public/assets/latest/picker.jpg",
     "originalBytes": 103028,
     "optimizedBytes": 25366,
-    "widths": [
-      320,
-      640,
-      960,
-      1440
-    ]
+    "widths": [320, 640, 960, 1440]
   },
   {
     "source": "PHTV/public/assets/latest/setting-clipboard.jpg",
     "originalBytes": 119282,
     "optimizedBytes": 27476,
-    "widths": [
-      320,
-      640,
-      960,
-      1440
-    ]
+    "widths": [320, 640, 960, 1440]
   },
   {
     "source": "PHTV/public/assets/latest/setting-phimtat.jpg",
     "originalBytes": 124212,
     "optimizedBytes": 26208,
-    "widths": [
-      320,
-      640,
-      960,
-      1440
-    ]
+    "widths": [320, 640, 960, 1440]
   }
 ]

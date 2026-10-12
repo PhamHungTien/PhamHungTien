@@ -1,0 +1,16 @@
+{
+  "updatedAt": "2026-10-12",
+  "source": "Owner-provided real app captures and the new localized App Store artwork",
+  "hero": "PadNotesAI/assets/current/hero-ai.webp",
+  "heroNotes": "Complete real app capture including the AI panel; no device or callout obscures the interface.",
+  "gallery": [
+    "ipad-editor",
+    "ipad-library",
+    "iphone-69-editor",
+    "iphone-69-library",
+    "mac-editor",
+    "mac-ai"
+  ],
+  "languages": ["vi", "en"],
+  "preservesAspectRatio": true
+}
