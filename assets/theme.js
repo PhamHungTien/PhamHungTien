@@ -60,9 +60,9 @@
     var contacts = document.createElement('section');
     contacts.className = 'legal-contact-panel';
     contacts.setAttribute('data-legal-contacts', '');
-    contacts.setAttribute('aria-label', 'Liên hệ / Contact');
+    contacts.setAttribute('aria-label', document.documentElement.lang === 'vi' ? 'Liên hệ' : 'Contact');
     contacts.innerHTML = [
-      '<h2 class="legal-contact-panel__title">Liên hệ · Contact</h2>',
+      '<h2 class="legal-contact-panel__title" data-vi="Liên hệ" data-en="Contact">' + (document.documentElement.lang === 'vi' ? 'Liên hệ' : 'Contact') + '</h2>',
       '<div class="legal-contact-grid">',
       '<a class="legal-contact-item" href="https://www.facebook.com/phamhungtien1404" target="_blank" rel="noopener noreferrer"><span class="legal-contact-mark" aria-hidden="true">f</span><span><strong>Facebook</strong><small>@phamhungtien1404</small></span></a>',
       '<a class="legal-contact-item" href="https://www.instagram.com/phamhungtien1404/" target="_blank" rel="noopener noreferrer"><span class="legal-contact-mark" aria-hidden="true">ig</span><span><strong>Instagram</strong><small>@phamhungtien1404</small></span></a>',

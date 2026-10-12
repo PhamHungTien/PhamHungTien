@@ -131,9 +131,9 @@
         <div class="subtitle">Precision Hybrid Typing Vietnamese</div>
 
         <nav class="nav-links">
-            <a href="/">Home</a>
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="terms.html" class="active">Terms of Use</a>
+            <a href="/" data-vi="Trang chủ" data-en="Home">Trang chủ</a>
+            <a href="privacy.html" data-vi="Quyền riêng tư" data-en="Privacy Policy">Quyền riêng tư</a>
+            <a href="terms.html" class="active" data-vi="Điều khoản" data-en="Terms of Use">Điều khoản</a>
         </nav>
 
         <div class="lang-toggle">
@@ -182,14 +182,6 @@
         <div class="footer">© 2026 Pham Hung Tien. All rights reserved.</div>
     </div>
 
-    <script>
-        document.querySelectorAll('[data-language]').forEach(button => button.addEventListener('click', () => switchLang(button.dataset.language)));
-        function switchLang(lang) {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.getElementById(lang).classList.add('active');
-            document.querySelectorAll('.lang-toggle button').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.lang-toggle button').forEach(button => { const selected = button.dataset.language === lang; button.classList.toggle('active', selected); button.setAttribute('aria-pressed', String(selected)); });
-        }
-    </script>
+    <script src="/assets/legal-language.js" defer></script>
 </body>
 </html>

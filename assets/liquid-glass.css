@@ -789,3 +789,38 @@ html body .product-page .product-discussions-tab > section {
     padding-right: max(var(--gutter), env(safe-area-inset-right));
   }
 }
+
+/* Legal navigation capsules wrap their controls, never the entire row. */
+html body .container > .nav-links {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  margin-bottom: 20px;
+}
+html body .container > .nav-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 12px;
+}
+html body .container > .lang-toggle {
+  display: flex;
+  width: fit-content;
+  height: var(--control-size);
+  gap: var(--segment-gap);
+  padding: var(--control-inset);
+  box-sizing: border-box;
+}
+html body .lang-toggle button {
+  width: var(--segment-size);
+  height: var(--segment-size);
+  padding: 0;
+  border-radius: 50%;
+  line-height: 1;
+}
