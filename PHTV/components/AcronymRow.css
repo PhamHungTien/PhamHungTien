@@ -1,6 +1,15 @@
-/* Four words form one typographic signature beside the product icon. */
+/* One height governs the icon and its four-line signature. */
+html[data-theme] body .phtv-page .phtv-product-lockup {
+  --phtv-lockup-height: 88px;
+}
+html[data-theme] body .phtv-page .phtv-product-lockup .phtv-product-icon {
+  width: var(--phtv-lockup-height);
+  height: var(--phtv-lockup-height);
+}
 html[data-theme] body .phtv-page .phtv-product-lockup .phtv-acronym-grid {
-  gap: 2px;
+  height: var(--phtv-lockup-height);
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  gap: 0;
   font-family:
     ui-rounded,
     'SF Pro Rounded',
@@ -13,10 +22,13 @@ html[data-theme] body .phtv-page .phtv-product-lockup .phtv-acronym-grid {
 html[data-theme] body .phtv-page .phtv-product-lockup .phtv-acronym-item {
   position: relative;
   width: max-content;
-  font-size: clamp(20px, 2.1vw, 26px);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 20px;
   font-weight: 550;
   letter-spacing: -0.04em;
-  line-height: 1.25;
+  line-height: 1;
   color: var(--glass-ink);
   transform-origin: left center;
 }
