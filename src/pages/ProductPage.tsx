@@ -18,6 +18,20 @@ interface ProductPageProps {
 }
 
 export function ProductPage({ product, lang, t }: ProductPageProps) {
+  const [activeTab, setActiveTab] = useState<'overview' | 'community'>('overview');
+  useEffect(() => {
+    const syncTab = () => {
+      const hash = window.location.hash;
+      setActiveTab(hash === '#community' ? 'community' : 'overview');
+      requestAnimationFrame(() => {
+        if (hash === '#community' || hash === '#overview') window.scrollTo({ top: 0 });
+        else if (hash) document.getElementById(hash.slice(1))?.scrollIntoView();
+      });
+    };
+    syncTab();
+    window.addEventListener('hashchange', syncTab);
+    return () => window.removeEventListener('hashchange', syncTab);
+  }, []);
   const [donateOpen, setDonateOpen] = useState(false);
   const [zoomImage, setZoomImage] = useState<{ src: string; alt: string } | null>(null);
   const lightboxRef = useRef<HTMLDialogElement>(null);
@@ -50,205 +64,213 @@ export function ProductPage({ product, lang, t }: ProductPageProps) {
       className={`site-shell product-page product-page--${product.slug}`}
       style={{ '--accent': product.accent } as CSSProperties}
     >
-      <Header lang={lang} t={t} productName={product.name} />
+      <Header lang={lang} t={t} productName={product.name} activeTab={activeTab} />
 
       <main id="main-content">
-        <section className="detail-hero">
-          <div className="detail-hero__copy">
-            {product.slug === 'phtv' ? (
-              <PhtvWordmark />
-            ) : (
-              <div className="detail-lockup">
-                <ResponsiveImage
-                  sizes="42px"
-                  src={product.icon}
-                  alt=""
-                  width={42}
-                  height={42}
-                  decoding="async"
-                />
-                <span>
-                  <strong>{product.name}</strong>
-                  <small>{product.category[lang]}</small>
-                </span>
-              </div>
-            )}
-
-            <h1>{product.title[lang]}</h1>
-            <p className="detail-subtitle">{product.subtitle[lang]}</p>
-            <div className="hero-actions">
-              <a
-                className="button button--primary"
-                href={primaryHref}
-                target={product.appStoreUrl ? '_blank' : undefined}
-                rel={product.appStoreUrl ? 'noopener' : undefined}
-              >
-                {product.appStoreUrl ? <Store size={18} /> : <ArrowRight size={18} />}
-                {product.ctaLabel[lang]}
-              </a>
-              <a
-                className="button button--secondary"
-                href={secondaryHref}
-                target={product.githubUrl ? '_blank' : undefined}
-                rel={product.githubUrl ? 'noopener' : undefined}
-              >
-                {product.githubUrl ? <Github size={18} /> : <ExternalLink size={18} />}
-                {secondaryLabel}
-              </a>
-              <button
-                className="button button--secondary donate-trigger"
-                type="button"
-                onClick={() => setDonateOpen(true)}
-                aria-haspopup="dialog"
-              >
-                <Heart size={18} aria-hidden="true" />
-                {t('common.donate')}
-              </button>
-            </div>
-          </div>
-
-          <button
-            type="button"
-            className="detail-hero__media"
-            onClick={() => setZoomImage({ src: heroImage, alt: heroAlt })}
-            aria-label={`${lang === 'vi' ? 'Phóng to ảnh' : 'Zoom image'}: ${product.name}`}
-          >
-            <ResponsiveImage src={heroImage} alt={heroAlt} fetchPriority="high" decoding="async" />
-          </button>
-        </section>
-
-        <section className="facts-band" aria-label={t('common.platforms')}>
-          {product.facts.map((fact) => (
-            <div className="fact-item" key={fact.label.en}>
-              <span>{fact.label[lang]}</span>
-              <strong>{fact.value[lang]}</strong>
-            </div>
-          ))}
-        </section>
-
-        {videoUrl && (
-          <section
-            className={`product-video-section${product.videoPortrait ? ' product-video-section--portrait' : ''}`}
-            id="demo"
-            aria-label={lang === 'vi' ? 'Video trải nghiệm thực tế' : 'Product Demo Video'}
-          >
-            <div className="section-copy">
-              <h2>{lang === 'vi' ? 'Video trải nghiệm thực tế' : 'Experience in Action'}</h2>
-              <p className="section-subtitle">
-                {product.videoDescription
-                  ? product.videoDescription[lang]
-                  : lang === 'vi'
-                    ? 'Xem video thực tế trải nghiệm ứng dụng.'
-                    : 'Watch demo video in action.'}
-              </p>
-            </div>
-            <div className="product-video-card">
-              <video
-                className="product-video-player"
-                key={videoUrl}
-                src={videoUrl}
-                poster={product.videoPosters?.[lang] ?? heroImage}
-                controls
-                playsInline
-                preload="none"
-              >
-                {lang === 'vi'
-                  ? 'Trình duyệt của bạn không hỗ trợ phát video.'
-                  : 'Your browser does not support the video tag.'}
-              </video>
-            </div>
-          </section>
-        )}
-
-        <section className="detail-grid" id="features">
-          <div className="install-panel">
-            <h2>
-              {product.slug === 'phtv'
-                ? lang === 'vi'
-                  ? 'Cài đặt nhanh'
-                  : 'Quick install'
-                : t('product.support')}
-            </h2>
-            <p>
-              {product.slug === 'phtv'
-                ? lang === 'vi'
-                  ? 'Cài từ Homebrew Cask chính thức hoặc tải đúng bản máy Mac từ trang PHTV.'
-                  : 'Install from official Homebrew Cask or download the correct Mac build from PHTV.'
-                : product.support[lang]}
-            </p>
-            {product.slug === 'phtv' && <code>brew install --cask phtv</code>}
-            <a href={product.slug === 'phtv' ? primaryHref : 'mailto:contact@phamhungtien.com'}>
-              {product.slug !== 'phtv' && <Mail size={16} aria-hidden="true" />}
-              {product.slug === 'phtv' ? product.ctaLabel[lang] : t('product.supportCta')}
-              <ArrowRight size={16} />
-            </a>
-            {product.communityUrl && (
-              <a href={product.communityUrl} target="_blank" rel="noopener noreferrer">
-                {lang === 'vi' ? `Fanpage ${product.name}` : `${product.name} on Facebook`}
-                <ExternalLink size={16} />
-              </a>
-            )}
-          </div>
-
-          <div className="feature-panel">
-            <h2>{t('product.features')}</h2>
-            <div className="feature-list">
-              {product.features.map((feature) => (
-                <article key={feature.title.en}>
-                  <span className="feature-dot" />
-                  <div className="feature-content">
-                    <h3>{feature.title[lang]}</h3>
-                    {feature.description && (
-                      <p className="feature-desc">{feature.description[lang]}</p>
-                    )}
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="gallery-section" id="gallery">
-          <div className="section-copy">
-            <h2>{t('product.gallery')}</h2>
-          </div>
-          <div className="gallery-strip">
-            {product.gallery.map((image) => (
-              <figure key={image.src}>
-                <button
-                  type="button"
-                  className="gallery-preview"
-                  onClick={() =>
-                    setZoomImage({
-                      src: image.localizedSrc?.[lang] ?? image.src,
-                      alt: image.alt[lang],
-                    })
-                  }
-                  aria-label={`${lang === 'vi' ? 'Xem ảnh phóng to' : 'Zoom image'}: ${image.alt[lang]}`}
-                >
+        <div id="overview" hidden={activeTab !== 'overview'}>
+          <section className="detail-hero">
+            <div className="detail-hero__copy">
+              {product.slug === 'phtv' ? (
+                <PhtvWordmark />
+              ) : (
+                <div className="detail-lockup">
                   <ResponsiveImage
-                    sizes="(max-width: 700px) 75vw, 360px"
-                    src={image.localizedSrc?.[lang] ?? image.src}
-                    alt={image.alt[lang]}
-                    loading="lazy"
+                    sizes="42px"
+                    src={product.icon}
+                    alt=""
+                    width={42}
+                    height={42}
                     decoding="async"
                   />
-                </button>
-                <figcaption>{image.alt[lang]}</figcaption>
-              </figure>
-            ))}
-          </div>
-        </section>
+                  <span>
+                    <strong>{product.name}</strong>
+                    <small>{product.category[lang]}</small>
+                  </span>
+                </div>
+              )}
 
-        <Suspense
-          fallback={
-            <section id="community" className="product-section">
-              Loading discussions…
+              <h1>{product.title[lang]}</h1>
+              <p className="detail-subtitle">{product.subtitle[lang]}</p>
+              <div className="hero-actions">
+                <a
+                  className="button button--primary"
+                  href={primaryHref}
+                  target={product.appStoreUrl ? '_blank' : undefined}
+                  rel={product.appStoreUrl ? 'noopener' : undefined}
+                >
+                  {product.appStoreUrl ? <Store size={18} /> : <ArrowRight size={18} />}
+                  {product.ctaLabel[lang]}
+                </a>
+                <a
+                  className="button button--secondary"
+                  href={secondaryHref}
+                  target={product.githubUrl ? '_blank' : undefined}
+                  rel={product.githubUrl ? 'noopener' : undefined}
+                >
+                  {product.githubUrl ? <Github size={18} /> : <ExternalLink size={18} />}
+                  {secondaryLabel}
+                </a>
+                <button
+                  className="button button--secondary donate-trigger"
+                  type="button"
+                  onClick={() => setDonateOpen(true)}
+                  aria-haspopup="dialog"
+                >
+                  <Heart size={18} aria-hidden="true" />
+                  {t('common.donate')}
+                </button>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              className="detail-hero__media"
+              onClick={() => setZoomImage({ src: heroImage, alt: heroAlt })}
+              aria-label={`${lang === 'vi' ? 'Phóng to ảnh' : 'Zoom image'}: ${product.name}`}
+            >
+              <ResponsiveImage
+                src={heroImage}
+                alt={heroAlt}
+                fetchPriority="high"
+                decoding="async"
+              />
+            </button>
+          </section>
+
+          <section className="facts-band" aria-label={t('common.platforms')}>
+            {product.facts.map((fact) => (
+              <div className="fact-item" key={fact.label.en}>
+                <span>{fact.label[lang]}</span>
+                <strong>{fact.value[lang]}</strong>
+              </div>
+            ))}
+          </section>
+
+          {videoUrl && (
+            <section
+              className={`product-video-section${product.videoPortrait ? ' product-video-section--portrait' : ''}`}
+              id="demo"
+              aria-label={lang === 'vi' ? 'Video trải nghiệm thực tế' : 'Product Demo Video'}
+            >
+              <div className="section-copy">
+                <h2>{lang === 'vi' ? 'Video trải nghiệm thực tế' : 'Experience in Action'}</h2>
+                <p className="section-subtitle">
+                  {product.videoDescription
+                    ? product.videoDescription[lang]
+                    : lang === 'vi'
+                      ? 'Xem video thực tế trải nghiệm ứng dụng.'
+                      : 'Watch demo video in action.'}
+                </p>
+              </div>
+              <div className="product-video-card">
+                <video
+                  className="product-video-player"
+                  key={videoUrl}
+                  src={videoUrl}
+                  poster={product.videoPosters?.[lang] ?? heroImage}
+                  controls
+                  playsInline
+                  preload="none"
+                >
+                  {lang === 'vi'
+                    ? 'Trình duyệt của bạn không hỗ trợ phát video.'
+                    : 'Your browser does not support the video tag.'}
+                </video>
+              </div>
             </section>
-          }
-        >
-          <DiscussionSection app={product.slug} name={product.name} lang={lang} />
-        </Suspense>
+          )}
+
+          <section className="detail-grid" id="features">
+            <div className="install-panel">
+              <h2>
+                {product.slug === 'phtv'
+                  ? lang === 'vi'
+                    ? 'Cài đặt nhanh'
+                    : 'Quick install'
+                  : t('product.support')}
+              </h2>
+              <p>
+                {product.slug === 'phtv'
+                  ? lang === 'vi'
+                    ? 'Cài từ Homebrew Cask chính thức hoặc tải đúng bản máy Mac từ trang PHTV.'
+                    : 'Install from official Homebrew Cask or download the correct Mac build from PHTV.'
+                  : product.support[lang]}
+              </p>
+              {product.slug === 'phtv' && <code>brew install --cask phtv</code>}
+              <a href={product.slug === 'phtv' ? primaryHref : 'mailto:contact@phamhungtien.com'}>
+                {product.slug !== 'phtv' && <Mail size={16} aria-hidden="true" />}
+                {product.slug === 'phtv' ? product.ctaLabel[lang] : t('product.supportCta')}
+                <ArrowRight size={16} />
+              </a>
+              {product.communityUrl && (
+                <a href={product.communityUrl} target="_blank" rel="noopener noreferrer">
+                  {lang === 'vi' ? `Fanpage ${product.name}` : `${product.name} on Facebook`}
+                  <ExternalLink size={16} />
+                </a>
+              )}
+            </div>
+
+            <div className="feature-panel">
+              <h2>{t('product.features')}</h2>
+              <div className="feature-list">
+                {product.features.map((feature) => (
+                  <article key={feature.title.en}>
+                    <span className="feature-dot" />
+                    <div className="feature-content">
+                      <h3>{feature.title[lang]}</h3>
+                      {feature.description && (
+                        <p className="feature-desc">{feature.description[lang]}</p>
+                      )}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="gallery-section" id="gallery">
+            <div className="section-copy">
+              <h2>{t('product.gallery')}</h2>
+            </div>
+            <div className="gallery-strip">
+              {product.gallery.map((image) => (
+                <figure key={image.src}>
+                  <button
+                    type="button"
+                    className="gallery-preview"
+                    onClick={() =>
+                      setZoomImage({
+                        src: image.localizedSrc?.[lang] ?? image.src,
+                        alt: image.alt[lang],
+                      })
+                    }
+                    aria-label={`${lang === 'vi' ? 'Xem ảnh phóng to' : 'Zoom image'}: ${image.alt[lang]}`}
+                  >
+                    <ResponsiveImage
+                      sizes="(max-width: 700px) 75vw, 360px"
+                      src={image.localizedSrc?.[lang] ?? image.src}
+                      alt={image.alt[lang]}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </button>
+                  <figcaption>{image.alt[lang]}</figcaption>
+                </figure>
+              ))}
+            </div>
+          </section>
+        </div>
+        <div className="product-discussions-tab" hidden={activeTab !== 'community'}>
+          <Suspense
+            fallback={
+              <section id="community" className="product-section">
+                Loading discussions…
+              </section>
+            }
+          >
+            <DiscussionSection app={product.slug} name={product.name} lang={lang} />
+          </Suspense>
+        </div>
 
         <ContactSection t={t} />
 

@@ -8,9 +8,10 @@ interface HeaderProps {
   lang: Lang;
   t: (key: string) => string;
   productName?: string;
+  activeTab?: 'overview' | 'community';
 }
 
-export function Header({ lang, t, productName }: HeaderProps) {
+export function Header({ lang, t, productName, activeTab = 'overview' }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
@@ -62,9 +63,18 @@ export function Header({ lang, t, productName }: HeaderProps) {
           <a href="#products">{t('nav.products')}</a>
         )}
         {!productName && <a href="#contact">{t('nav.contact')}</a>}
+        {productName && (
+          <a href="#overview" aria-current={activeTab === 'overview' ? 'page' : undefined}>
+            {lang === 'vi' ? 'Tổng quan' : 'Overview'}
+          </a>
+        )}
         {productName && <a href="#features">{t('product.features')}</a>}
         {productName && <a href="#gallery">{t('product.gallery')}</a>}
-        {productName && <a href="#community">{lang === 'vi' ? 'Thảo luận' : 'Discussions'}</a>}
+        {productName && (
+          <a href="#community" aria-current={activeTab === 'community' ? 'page' : undefined}>
+            {lang === 'vi' ? 'Thảo luận' : 'Discussions'}
+          </a>
+        )}
         {productName && <a href="#contact">{t('nav.contact')}</a>}
       </nav>
 
@@ -114,13 +124,24 @@ export function Header({ lang, t, productName }: HeaderProps) {
         )}
         {productName ? (
           <>
+            <a
+              href="#overview"
+              onClick={closeMenu}
+              aria-current={activeTab === 'overview' ? 'page' : undefined}
+            >
+              {lang === 'vi' ? 'Tổng quan' : 'Overview'}
+            </a>
             <a href="#features" onClick={closeMenu}>
               {t('product.features')}
             </a>
             <a href="#gallery" onClick={closeMenu}>
               {t('product.gallery')}
             </a>
-            <a href="#community" onClick={closeMenu}>
+            <a
+              href="#community"
+              onClick={closeMenu}
+              aria-current={activeTab === 'community' ? 'page' : undefined}
+            >
               {lang === 'vi' ? 'Thảo luận' : 'Discussions'}
             </a>
           </>

@@ -756,3 +756,14 @@ html[data-theme] body .phtv-page .phtv-community textarea {
 html[data-theme] body .phtv-page .phtv-avatar {
   border-radius: 50% !important;
 }
+
+/* A separate discussion view with comfortable empty-state space at any width. */
+html body .product-discussions-tab { padding: clamp(24px, 4vw, 48px) 0; min-height: 50vh; }
+html body .product-page [hidden] { display: none !important; }
+html body .discussion-empty {
+  display: grid; place-items: center; box-sizing: border-box;
+  min-height: 120px; padding: 28px 20px; margin: 24px 0 32px;
+  line-height: 1.6; overflow-wrap: anywhere;
+}
+html body .site-nav a[aria-current="page"],
+html body .mobile-navigation a[aria-current="page"] { color: var(--glass-ink); font-weight: 650; }
