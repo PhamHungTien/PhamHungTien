@@ -144,13 +144,12 @@ export const products: Product[] = [
     ],
     accent: '#9255bd',
     appStoreUrl: 'https://apps.apple.com/app/id6817003401',
-    videoUrl: '/vTTS/vi/AppPreview.mp4',
-    localizedVideoUrls: { vi: '/vTTS/vi/AppPreview.mp4', en: '/vTTS/en/AppPreview.mp4' },
-    videoPosters: { vi: '/vTTS/vi/Poster.jpg', en: '/vTTS/en/Poster.jpg' },
-    videoPortrait: true,
+    videoUrl: '/media/vtts/promo-16x9.mp4',
+    videoPosters: { vi: '/media/vtts/promo-poster.webp', en: '/media/vtts/promo-poster.webp' },
+    videoPortrait: false,
     videoDescription: {
       vi: 'Theo dõi đoạn đang đọc, khám phá thư viện và điều khiển từ Dynamic Island, màn hình khóa. Cảnh hệ thống được quay trên iPhone thật.',
-      en: 'Follow highlighted passages, explore the library, and use Dynamic Island and Lock Screen controls. Real iPhone system footage retains Vietnamese book content.',
+      en: 'Meet vTTS in 30 seconds. Turn your books and words into a listening experience.',
     },
     category: {
       vi: 'Đọc sách & văn bản',
