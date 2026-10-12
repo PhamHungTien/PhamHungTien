@@ -144,8 +144,8 @@ export const products: Product[] = [
     ],
     accent: '#9255bd',
     appStoreUrl: 'https://apps.apple.com/app/id6817003401',
-    videoUrl: '/media/vtts/promo-16x9.mp4',
-    videoPosters: { vi: '/media/vtts/promo-poster.webp', en: '/media/vtts/promo-poster.webp' },
+    videoUrl: '/media/vtts/promo-real-16x9.mp4',
+    videoPosters: { vi: '/media/vtts/promo-real-poster.webp', en: '/media/vtts/promo-real-poster.webp' },
     videoPortrait: false,
     videoDescription: {
       vi: 'Theo dõi đoạn đang đọc, khám phá thư viện và điều khiển từ Dynamic Island, màn hình khóa. Cảnh hệ thống được quay trên iPhone thật.',
