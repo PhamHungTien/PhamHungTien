@@ -9,27 +9,16 @@ async function device(name, width) {
   const meta = await sharp(input).metadata();
   const height = Math.round((width * meta.height) / meta.width),
     pad = Math.round(width * 0.024),
-    radius = Math.round(width * 0.07);
-  const screen = await sharp(input)
-    .resize(width, height)
-    .composite([
-      {
-        input: svg(
-          width,
-          height,
-          `<rect width="${width}" height="${height}" rx="${radius}" fill="white"/>`,
-        ),
-        blend: 'dest-in',
-      },
-    ])
-    .png()
-    .toBuffer();
+    radius = pad;
+  // Preserve every source pixel, including status-bar and corner controls.
+  // Round only the outer frame; never mask the screenshot itself.
+  const screen = await sharp(input).resize(width, height).png().toBuffer();
   const w = width + pad * 2,
     h = height + pad * 2;
   const frame = svg(
     w,
     h,
-    `<rect x="1" y="1" width="${w - 2}" height="${h - 2}" rx="${radius + pad}" fill="#202327" stroke="#737a82" stroke-width="2"/>`,
+    `<rect x="1" y="1" width="${w - 2}" height="${h - 2}" rx="${radius}" fill="#202327" stroke="#737a82" stroke-width="2"/>`,
   );
   return {
     input: await sharp(frame)
