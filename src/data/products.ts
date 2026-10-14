@@ -371,10 +371,24 @@ export const products: Product[] = [
       },
       {
         label: { vi: 'Giao diện', en: 'Interface' },
-        value: { vi: '12 ngôn ngữ', en: '12 languages' },
+        value: { vi: '20 ngôn ngữ (2.0)', en: '20 languages (2.0)' },
       },
     ],
     features: [
+      {
+        title: { vi: 'Xem trước web trong 2.0', en: 'Web preview in 2.0' },
+        description: {
+          vi: 'Xem trước HTML, CSS và JavaScript trình duyệt bằng WebKit. Swift/SwiftUI, Metal và OpenGL native chưa hỗ trợ xem trước đồ họa.',
+          en: 'Preview HTML, CSS and browser JavaScript with WebKit. Swift/SwiftUI, Metal and native OpenGL graphical previews are not supported.',
+        },
+      },
+      {
+        title: { vi: 'Premium mua một lần từ 2.0', en: 'One-time Premium from 2.0' },
+        description: {
+          vi: 'Premium mở khóa chia đôi trình soạn thảo và thay thế hàng loạt trong dự án, không đăng ký định kỳ. Soạn thảo, chạy mã được hỗ trợ, xem trước web, Git và xuất tệp vẫn miễn phí. Giá địa phương hiển thị trên App Store trước khi xác nhận.',
+          en: 'Premium unlocks split editing and bulk workspace replacement without a subscription. Editing, supported runners, web preview, Git and export stay free. The App Store shows your local price before confirmation.',
+        },
+      },
       {
         title: { vi: 'Trình biên dịch thật, chạy offline', en: 'Real compilers, fully offline' },
         description: {
@@ -399,8 +413,8 @@ export const products: Product[] = [
       {
         title: { vi: 'Editor cho cảm ứng và bàn phím', en: 'An editor for touch and keyboard' },
         description: {
-          vi: 'Tô màu 43 ngôn ngữ, thanh phím lập trình, gập code, minimap, outline, tìm và thay trong toàn dự án, chia đôi màn hình, cùng menu bar và phím tắt đầy đủ.',
-          en: 'Highlighting for 43 languages, a coding keyboard bar, folding, a minimap, outlines, project-wide find and replace, split view, and a full menu bar with keyboard shortcuts.',
+          vi: 'Tô màu 43 ngôn ngữ, thanh phím lập trình, gập code, minimap, outline, tìm kiếm trong dự án, thay thế trong tệp, cùng menu bar và phím tắt đầy đủ.',
+          en: 'Highlighting for 43 languages, a coding keyboard bar, folding, a minimap, outlines, workspace search, in-file replacement, and a full menu bar with keyboard shortcuts.',
         },
       },
       {
