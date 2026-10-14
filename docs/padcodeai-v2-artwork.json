@@ -1,0 +1,14 @@
+{
+  "version": "2.0.0",
+  "build": 29,
+  "sourceCommit": "8766ebe",
+  "captured": "2026-10-14",
+  "notes": "Actual simulator screenshots; editor uses built-in sample workspace. Premium price is Xcode StoreKit USA test price. App version is awaiting Apple review.",
+  "files": {
+    "ipad-editor": "/tmp/padcode-site-editor-ipad.png",
+    "iphone-editor": "/tmp/padcode-site-editor-iphone.png",
+    "ipad-premium": "/tmp/padcode-site-ipad/B15A655B-A767-4AAA-BB8B-EF8E39EDD007.png",
+    "iphone-premium": "/tmp/padcode-site-iphone/CB5C28DF-4D06-49D4-8B94-989619BFBF2C.png",
+    "onboarding": "/tmp/padcode-site-ipad/D115F773-8261-413E-8773-A18DE99A1E36.png"
+  }
+}

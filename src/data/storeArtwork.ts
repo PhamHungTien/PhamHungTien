@@ -8,11 +8,11 @@ import storeImage4 from '../../vTTS/assets/appstore/iphone-1.jpg';
 import storeImage5 from '../../vTTS/assets/appstore/iphone-2.jpg';
 import storeImage6 from '../../vTTS/assets/appstore/iphone-3.jpg';
 import storeImage7 from '../../vTTS/assets/appstore/mac-1.jpg';
-import storeImage8 from '../../PadCodeAI/assets/appstore/ipad-1.jpg';
-import storeImage9 from '../../PadCodeAI/assets/appstore/ipad-2.jpg';
-import storeImage10 from '../../PadCodeAI/assets/appstore/iphone-1.jpg';
-import storeImage11 from '../../PadCodeAI/assets/appstore/iphone-2.jpg';
-import storeImage12 from '../../PadCodeAI/assets/appstore/iphone-3.jpg';
+import storeImage8 from '../../PadCodeAI/assets/current/v2/ipad-editor-mockup.webp';
+import storeImage9 from '../../PadCodeAI/assets/current/v2/ipad-premium-mockup.webp';
+import storeImage10 from '../../PadCodeAI/assets/current/v2/iphone-editor-mockup.webp';
+import storeImage11 from '../../PadCodeAI/assets/current/v2/iphone-premium-mockup.webp';
+import storeImage12 from '../../PadCodeAI/assets/current/v2/onboarding-mockup.webp';
 import storeImage13 from '../../PadNotesAI/assets/current/en/ipad-editor.webp';
 import storeImage14 from '../../PadNotesAI/assets/current/en/ipad-library.webp';
 import storeImage15 from '../../PadNotesAI/assets/current/en/iphone-69-editor.webp';
@@ -46,6 +46,7 @@ import padNotesVi2 from '../../PadNotesAI/assets/current/vi/iphone-69-editor.web
 import padNotesVi3 from '../../PadNotesAI/assets/current/vi/iphone-69-library.webp';
 import padNotesVi4 from '../../PadNotesAI/assets/current/vi/mac-editor.webp';
 import padNotesVi5 from '../../PadNotesAI/assets/current/vi/mac-ai.webp';
+import padCodeCurrentHero from '../../PadCodeAI/assets/current/v2/hero-devices.webp';
 export const storeArtwork: Partial<Record<ProductSlug, Pick<Product, 'heroImage' | 'gallery'>>> = {
   vtts: {
     heroImage: storeImage0,
@@ -60,13 +61,43 @@ export const storeArtwork: Partial<Record<ProductSlug, Pick<Product, 'heroImage'
     ],
   },
   padcodeai: {
-    heroImage: storeImage8,
+    heroImage: padCodeCurrentHero,
     gallery: [
-      { src: storeImage8, alt: { vi: 'Giao diện iPad · 1', en: 'iPad experience · 1' } },
-      { src: storeImage9, alt: { vi: 'Giao diện iPad · 2', en: 'iPad experience · 2' } },
-      { src: storeImage10, alt: { vi: 'Giao diện iPhone · 1', en: 'iPhone experience · 1' } },
-      { src: storeImage11, alt: { vi: 'Giao diện iPhone · 2', en: 'iPhone experience · 2' } },
-      { src: storeImage12, alt: { vi: 'Giao diện iPhone · 3', en: 'iPhone experience · 3' } },
+      {
+        src: storeImage8,
+        alt: {
+          vi: 'Editor C++ và terminal native trên iPad — bản 2.0',
+          en: 'C++ editor and native terminal on iPad — version 2.0',
+        },
+      },
+      {
+        src: storeImage10,
+        alt: {
+          vi: 'Không gian soạn thảo trên iPhone — bản 2.0',
+          en: 'iPhone coding workspace — version 2.0',
+        },
+      },
+      {
+        src: storeImage9,
+        alt: {
+          vi: 'Premium mua một lần trên iPad — bản 2.0',
+          en: 'One-time Premium on iPad — version 2.0',
+        },
+      },
+      {
+        src: storeImage11,
+        alt: {
+          vi: 'Premium và khôi phục giao dịch trên iPhone',
+          en: 'Premium and Restore Purchases on iPhone',
+        },
+      },
+      {
+        src: storeImage12,
+        alt: {
+          vi: 'Màn hình chào mừng và chọn ngôn ngữ native',
+          en: 'Native welcome and language selection',
+        },
+      },
     ],
   },
   padnotesai: {

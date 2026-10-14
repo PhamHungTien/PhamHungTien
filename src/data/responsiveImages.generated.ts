@@ -45,11 +45,11 @@ import image42 from "../../vTTS/assets/appstore/iphone-1.jpg";
 import image43 from "../../vTTS/assets/appstore/iphone-2.jpg";
 import image44 from "../../vTTS/assets/appstore/iphone-3.jpg";
 import image45 from "../../vTTS/assets/appstore/mac-1.jpg";
-import image46 from "../../PadCodeAI/assets/appstore/ipad-1.jpg";
-import image47 from "../../PadCodeAI/assets/appstore/ipad-2.jpg";
-import image48 from "../../PadCodeAI/assets/appstore/iphone-1.jpg";
-import image49 from "../../PadCodeAI/assets/appstore/iphone-2.jpg";
-import image50 from "../../PadCodeAI/assets/appstore/iphone-3.jpg";
+import image46 from "../../PadCodeAI/assets/current/v2/ipad-editor-mockup.webp";
+import image47 from "../../PadCodeAI/assets/current/v2/ipad-premium-mockup.webp";
+import image48 from "../../PadCodeAI/assets/current/v2/iphone-editor-mockup.webp";
+import image49 from "../../PadCodeAI/assets/current/v2/iphone-premium-mockup.webp";
+import image50 from "../../PadCodeAI/assets/current/v2/onboarding-mockup.webp";
 import image51 from "../../PadNotesAI/assets/current/en/ipad-editor.webp";
 import image52 from "../../PadNotesAI/assets/current/en/iphone-69-editor.webp";
 import image53 from "../../PadNotesAI/assets/current/en/iphone-69-library.webp";
@@ -81,6 +81,7 @@ import image78 from "../../PadNotesAI/assets/current/vi/iphone-69-editor.webp";
 import image79 from "../../PadNotesAI/assets/current/vi/iphone-69-library.webp";
 import image80 from "../../PadNotesAI/assets/current/vi/mac-editor.webp";
 import image81 from "../../PadNotesAI/assets/current/vi/mac-ai.webp";
+import image82 from "../../PadCodeAI/assets/current/v2/hero-devices.webp";
 export const responsiveImages: Record<string, { width:number; height:number; src:string; srcSet:string }> = {
 [image0]: {"width":1024,"height":1024,"src":"/media/c7a470e2102fb75a-128.webp","srcSet":"/media/c7a470e2102fb75a-64.webp 64w, /media/c7a470e2102fb75a-128.webp 128w, /media/c7a470e2102fb75a-256.webp 256w"},
 [image1]: {"width":1280,"height":640,"src":"/media/3d0577936e175c13-960.webp","srcSet":"/media/3d0577936e175c13-320.webp 320w, /media/3d0577936e175c13-640.webp 640w, /media/3d0577936e175c13-960.webp 960w, /media/3d0577936e175c13-1280.webp 1280w"},
@@ -128,11 +129,11 @@ export const responsiveImages: Record<string, { width:number; height:number; src
 [image43]: {"width":666,"height":1440,"src":"/media/f06bd4140a771c7a-666.webp","srcSet":"/media/f06bd4140a771c7a-320.webp 320w, /media/f06bd4140a771c7a-640.webp 640w, /media/f06bd4140a771c7a-666.webp 666w"},
 [image44]: {"width":666,"height":1440,"src":"/media/31378f124204aa0f-666.webp","srcSet":"/media/31378f124204aa0f-320.webp 320w, /media/31378f124204aa0f-640.webp 640w, /media/31378f124204aa0f-666.webp 666w"},
 [image45]: {"width":1440,"height":900,"src":"/media/3a4c21e695de8add-960.webp","srcSet":"/media/3a4c21e695de8add-320.webp 320w, /media/3a4c21e695de8add-640.webp 640w, /media/3a4c21e695de8add-960.webp 960w, /media/3a4c21e695de8add-1440.webp 1440w"},
-[image46]: {"width":1440,"height":1080,"src":"/media/b8254d114785c75a-960.webp","srcSet":"/media/b8254d114785c75a-320.webp 320w, /media/b8254d114785c75a-640.webp 640w, /media/b8254d114785c75a-960.webp 960w, /media/b8254d114785c75a-1440.webp 1440w"},
-[image47]: {"width":1440,"height":1080,"src":"/media/22493802c40490a6-960.webp","srcSet":"/media/22493802c40490a6-320.webp 320w, /media/22493802c40490a6-640.webp 640w, /media/22493802c40490a6-960.webp 960w, /media/22493802c40490a6-1440.webp 1440w"},
-[image48]: {"width":666,"height":1440,"src":"/media/cf3d5e27169516ef-666.webp","srcSet":"/media/cf3d5e27169516ef-320.webp 320w, /media/cf3d5e27169516ef-640.webp 640w, /media/cf3d5e27169516ef-666.webp 666w"},
-[image49]: {"width":666,"height":1440,"src":"/media/5fda9fe7ee09a308-666.webp","srcSet":"/media/5fda9fe7ee09a308-320.webp 320w, /media/5fda9fe7ee09a308-640.webp 640w, /media/5fda9fe7ee09a308-666.webp 666w"},
-[image50]: {"width":666,"height":1440,"src":"/media/af5c167301042c52-666.webp","srcSet":"/media/af5c167301042c52-320.webp 320w, /media/af5c167301042c52-640.webp 640w, /media/af5c167301042c52-666.webp 666w"},
+[image46]: {"width":1010,"height":1388,"src":"/media/ed46502b16e84082-960.webp","srcSet":"/media/ed46502b16e84082-320.webp 320w, /media/ed46502b16e84082-640.webp 640w, /media/ed46502b16e84082-960.webp 960w, /media/ed46502b16e84082-1010.webp 1010w"},
+[image47]: {"width":1010,"height":1388,"src":"/media/0cdd15540561b4d6-960.webp","srcSet":"/media/0cdd15540561b4d6-320.webp 320w, /media/0cdd15540561b4d6-640.webp 640w, /media/0cdd15540561b4d6-960.webp 960w, /media/0cdd15540561b4d6-1010.webp 1010w"},
+[image48]: {"width":652,"height":1263,"src":"/media/96fd9e0dd748904c-652.webp","srcSet":"/media/96fd9e0dd748904c-320.webp 320w, /media/96fd9e0dd748904c-640.webp 640w, /media/96fd9e0dd748904c-652.webp 652w"},
+[image49]: {"width":652,"height":1263,"src":"/media/a05038c6d4a25cff-652.webp","srcSet":"/media/a05038c6d4a25cff-320.webp 320w, /media/a05038c6d4a25cff-640.webp 640w, /media/a05038c6d4a25cff-652.webp 652w"},
+[image50]: {"width":1010,"height":1388,"src":"/media/ec3bd1744e56164f-960.webp","srcSet":"/media/ec3bd1744e56164f-320.webp 320w, /media/ec3bd1744e56164f-640.webp 640w, /media/ec3bd1744e56164f-960.webp 960w, /media/ec3bd1744e56164f-1010.webp 1010w"},
 [image51]: {"width":1440,"height":1920,"src":"/media/c290affa8edaa732-960.webp","srcSet":"/media/c290affa8edaa732-320.webp 320w, /media/c290affa8edaa732-640.webp 640w, /media/c290affa8edaa732-960.webp 960w, /media/c290affa8edaa732-1440.webp 1440w"},
 [image52]: {"width":1320,"height":2868,"src":"/media/2f6bad4ecb6900ae-960.webp","srcSet":"/media/2f6bad4ecb6900ae-320.webp 320w, /media/2f6bad4ecb6900ae-640.webp 640w, /media/2f6bad4ecb6900ae-960.webp 960w, /media/2f6bad4ecb6900ae-1320.webp 1320w"},
 [image53]: {"width":1320,"height":2868,"src":"/media/5d3c20975e42c7a5-960.webp","srcSet":"/media/5d3c20975e42c7a5-320.webp 320w, /media/5d3c20975e42c7a5-640.webp 640w, /media/5d3c20975e42c7a5-960.webp 960w, /media/5d3c20975e42c7a5-1320.webp 1320w"},
@@ -164,6 +165,7 @@ export const responsiveImages: Record<string, { width:number; height:number; src
 [image79]: {"width":1320,"height":2868,"src":"/media/280162e189e9a1f1-960.webp","srcSet":"/media/280162e189e9a1f1-320.webp 320w, /media/280162e189e9a1f1-640.webp 640w, /media/280162e189e9a1f1-960.webp 960w, /media/280162e189e9a1f1-1320.webp 1320w"},
 [image80]: {"width":1440,"height":900,"src":"/media/329a0c6ea8be0507-960.webp","srcSet":"/media/329a0c6ea8be0507-320.webp 320w, /media/329a0c6ea8be0507-640.webp 640w, /media/329a0c6ea8be0507-960.webp 960w, /media/329a0c6ea8be0507-1440.webp 1440w"},
 [image81]: {"width":1440,"height":900,"src":"/media/1adc10dc12d32897-960.webp","srcSet":"/media/1adc10dc12d32897-320.webp 320w, /media/1adc10dc12d32897-640.webp 640w, /media/1adc10dc12d32897-960.webp 960w, /media/1adc10dc12d32897-1440.webp 1440w"},
+[image82]: {"width":1600,"height":1400,"src":"/media/51c9d467d64792d4-960.webp","srcSet":"/media/51c9d467d64792d4-320.webp 320w, /media/51c9d467d64792d4-640.webp 640w, /media/51c9d467d64792d4-960.webp 960w, /media/51c9d467d64792d4-1440.webp 1440w"},
 "/PHTV/assets/latest/setting-bogo.jpg": {"width":2048,"height":1384,"src":"/PHTV/assets/optimized/de1fe47e3b4f663a-960.webp","srcSet":"/PHTV/assets/optimized/de1fe47e3b4f663a-320.webp 320w, /PHTV/assets/optimized/de1fe47e3b4f663a-640.webp 640w, /PHTV/assets/optimized/de1fe47e3b4f663a-960.webp 960w, /PHTV/assets/optimized/de1fe47e3b4f663a-1440.webp 1440w"},
 "/PHTV/assets/latest/menubar.png": {"width":760,"height":842,"src":"/PHTV/assets/optimized/cafcd36bc32c1bbb-760.webp","srcSet":"/PHTV/assets/optimized/cafcd36bc32c1bbb-320.webp 320w, /PHTV/assets/optimized/cafcd36bc32c1bbb-640.webp 640w, /PHTV/assets/optimized/cafcd36bc32c1bbb-760.webp 760w"},
 "/PHTV/assets/latest/picker.jpg": {"width":2048,"height":1064,"src":"/PHTV/assets/optimized/0d3acf03768e7887-960.webp","srcSet":"/PHTV/assets/optimized/0d3acf03768e7887-320.webp 320w, /PHTV/assets/optimized/0d3acf03768e7887-640.webp 640w, /PHTV/assets/optimized/0d3acf03768e7887-960.webp 960w, /PHTV/assets/optimized/0d3acf03768e7887-1440.webp 1440w"},
