@@ -2,7 +2,6 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Hero from './Hero.astro';
 import AppDirectory from './AppDirectory.astro';
-import About from './About.astro';
 import Contact from '../layout/Contact.astro';
 import type { Lang } from '../../data/types';
 import { LANGS } from '../../data/types';
@@ -27,12 +26,10 @@ const { lang } = Astro.props;
   jsonLd={homeJsonLd(lang)}
   nav={[
     { href: '#apps', label: t(lang, 'nav.apps') },
-    { href: '#about', label: t(lang, 'nav.about') },
     { href: '#contact', label: t(lang, 'nav.contact') },
   ]}
 >
   <Hero lang={lang} />
   <AppDirectory lang={lang} />
-  <About lang={lang} />
   <Contact lang={lang} />
 </BaseLayout>

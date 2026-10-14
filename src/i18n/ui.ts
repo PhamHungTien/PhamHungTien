@@ -12,7 +12,6 @@ const en = {
   'nav.skip': 'Skip to content',
   'nav.home': 'Home',
   'nav.apps': 'Apps',
-  'nav.about': 'About',
   'nav.contact': 'Contact',
   'nav.overview': 'Overview',
   'nav.features': 'Features',
@@ -31,11 +30,11 @@ const en = {
 
   'home.role': 'Independent app developer',
   'home.lead':
-    'Apps that work offline, process your data on your own device and keep it private. Built natively for each platform, starting with iPhone, iPad, Mac and Vision Pro.',
+    'Native apps with offline features and on-device data processing.',
   'home.cta': 'Browse the apps',
   'home.dock': 'App shortcuts',
   'home.apps.title': 'Apps',
-  'home.apps.lead': 'Each app does one job and does it well.',
+  'home.apps.lead': 'Tools for everyday tasks.',
   'home.apps.filter': 'Filter by platform',
   'home.apps.all': 'All',
   'home.apps.search': 'Search apps',
@@ -44,13 +43,10 @@ const en = {
   'home.apps.empty': 'No app matches these filters.',
   'home.apps.clear': 'Clear filters',
   'home.apps.openSource': 'Open source',
-  'home.about.title': 'About',
-  'home.about.intro':
-    'I study Electronics and Telecommunications at VNUHCM University of Science and build apps independently. I design, code and publish every app on this page myself, starting with Apple platforms and expanding to more. The website itself is open source.',
 
   'contact.title': 'Get in touch',
   'contact.body':
-    'Feedback, bug reports or a project in mind: send an email and I will get back to you.',
+    'Email me for feedback, support or collaboration.',
 
   'footer.tagline': 'Offline-first apps that keep your data private.',
   'footer.apps': 'Apps',
@@ -123,7 +119,6 @@ const vi: Record<UiKey, string> = {
   'nav.skip': 'Đến nội dung chính',
   'nav.home': 'Trang chủ',
   'nav.apps': 'Ứng dụng',
-  'nav.about': 'Giới thiệu',
   'nav.contact': 'Liên hệ',
   'nav.overview': 'Tổng quan',
   'nav.features': 'Tính năng',
@@ -142,11 +137,11 @@ const vi: Record<UiKey, string> = {
 
   'home.role': 'Nhà phát triển ứng dụng độc lập',
   'home.lead':
-    'Ứng dụng chạy offline, xử lý dữ liệu ngay trên thiết bị của bạn và tôn trọng quyền riêng tư. Viết native cho từng nền tảng, bắt đầu với iPhone, iPad, Mac và Vision Pro.',
+    'Ứng dụng native với tính năng offline và xử lý dữ liệu trên thiết bị.',
   'home.cta': 'Xem các ứng dụng',
   'home.dock': 'Lối tắt ứng dụng',
   'home.apps.title': 'Ứng dụng',
-  'home.apps.lead': 'Mỗi ứng dụng giải quyết một việc cụ thể và làm thật tốt việc đó.',
+  'home.apps.lead': 'Công cụ cho công việc hằng ngày.',
   'home.apps.filter': 'Lọc theo nền tảng',
   'home.apps.all': 'Tất cả',
   'home.apps.search': 'Tìm ứng dụng',
@@ -155,12 +150,9 @@ const vi: Record<UiKey, string> = {
   'home.apps.empty': 'Không có ứng dụng nào khớp với bộ lọc.',
   'home.apps.clear': 'Xoá bộ lọc',
   'home.apps.openSource': 'Mã nguồn mở',
-  'home.about.title': 'Giới thiệu',
-  'home.about.intro':
-    'Tôi là sinh viên Điện tử – Viễn thông tại Trường Đại học Khoa học Tự nhiên, ĐHQG-HCM, và là nhà phát triển ứng dụng độc lập. Tôi tự thiết kế, lập trình và phát hành mọi ứng dụng trên trang này, bắt đầu từ các nền tảng Apple và đang mở rộng sang những nền tảng khác. Mã nguồn của chính website này cũng được công khai.',
 
   'contact.title': 'Liên hệ',
-  'contact.body': 'Góp ý, báo lỗi hay hợp tác: gửi email và tôi sẽ phản hồi sớm nhất có thể.',
+  'contact.body': 'Gửi email để góp ý, báo lỗi hoặc hợp tác.',
 
   'footer.tagline': 'Ứng dụng offline, tôn trọng quyền riêng tư.',
   'footer.apps': 'Ứng dụng',
@@ -222,35 +214,3 @@ const vi: Record<UiKey, string> = {
 };
 
 export const ui = { en, vi } as const;
-
-/** Areas of work shown in the About section. */
-export const focusAreas = {
-  en: [
-    {
-      title: 'Native on every platform',
-      body: 'Apps written for each system’s own frameworks: SwiftUI, WidgetKit, SceneKit and CloudKit on Apple platforms today, with more platforms to come.',
-    },
-    {
-      title: 'On-device intelligence',
-      body: 'Speech, OCR and AI features that run locally, so documents and code never leave the device.',
-    },
-    {
-      title: 'Embedded systems',
-      body: 'STM32 and ESP32-S3 firmware, including a dual-MCU face-recognition smart lock.',
-    },
-  ],
-  vi: [
-    {
-      title: 'Native trên từng nền tảng',
-      body: 'Viết bằng công nghệ gốc của từng hệ điều hành: SwiftUI, WidgetKit, SceneKit và CloudKit trên các nền tảng Apple, và sắp tới là các nền tảng khác.',
-    },
-    {
-      title: 'AI trên thiết bị',
-      body: 'Giọng nói, OCR và AI chạy cục bộ, tài liệu và mã nguồn không rời khỏi thiết bị.',
-    },
-    {
-      title: 'Hệ thống nhúng',
-      body: 'Firmware STM32 và ESP32-S3, trong đó có khoá thông minh nhận diện khuôn mặt hai vi điều khiển.',
-    },
-  ],
-} as const;
