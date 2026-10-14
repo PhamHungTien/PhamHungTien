@@ -29,8 +29,7 @@ const en = {
   'theme.toLight': 'Use light mode',
 
   'home.role': 'Independent app developer',
-  'home.lead':
-    'Native apps with offline features and on-device data processing.',
+  'home.lead': 'Native apps with offline features and on-device data processing.',
   'home.cta': 'Browse the apps',
   'home.dock': 'App shortcuts',
   'home.apps.title': 'Apps',
@@ -45,8 +44,7 @@ const en = {
   'home.apps.openSource': 'Open source',
 
   'contact.title': 'Get in touch',
-  'contact.body':
-    'Email me for feedback, support or collaboration.',
+  'contact.body': 'Email me for feedback, support or collaboration.',
 
   'footer.tagline': 'Offline-first apps that keep your data private.',
   'footer.apps': 'Apps',
@@ -136,8 +134,7 @@ const vi: Record<UiKey, string> = {
   'theme.toLight': 'Bật giao diện sáng',
 
   'home.role': 'Nhà phát triển ứng dụng độc lập',
-  'home.lead':
-    'Ứng dụng native với tính năng offline và xử lý dữ liệu trên thiết bị.',
+  'home.lead': 'Ứng dụng native với tính năng offline và xử lý dữ liệu trên thiết bị.',
   'home.cta': 'Xem các ứng dụng',
   'home.dock': 'Lối tắt ứng dụng',
   'home.apps.title': 'Ứng dụng',
