@@ -1,0 +1,16 @@
+---
+import type { GetStaticPaths } from 'astro';
+import AppPage from '../../components/app/AppPage.astro';
+import { apps, appSegment, defaultLangOf } from '../../data/apps';
+
+/** Each app in its default language, at its historical URL (e.g. /vTTS/, /PHTV/). */
+export const getStaticPaths = (() =>
+  apps.map((app) => ({
+    params: { app: appSegment(app) },
+    props: { app, lang: defaultLangOf(app) },
+  }))) satisfies GetStaticPaths;
+
+const { app, lang } = Astro.props;
+---
+
+<AppPage app={app} lang={lang} />

@@ -1,0 +1,141 @@
+---
+import type { Lang } from '../../data/types';
+import { apps } from '../../data/apps';
+import { socialProfiles } from '../../data/socials';
+import { SITE } from '../../data/site';
+import { t } from '../../lib/i18n';
+import { appPath, homePath } from '../../lib/routes';
+
+interface Props {
+  lang: Lang;
+  compact?: boolean;
+}
+
+const { lang, compact = false } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<footer class:list={['site-footer container', { 'site-footer--compact': compact }]}>
+  <div class="site-footer__brand">
+    <a href={homePath(lang)} class="site-footer__name">
+      {SITE.name}
+    </a>
+    <p>{t(lang, 'footer.tagline')}</p>
+  </div>
+
+  {!compact && (
+    <nav aria-labelledby="footer-apps">
+      <h2 id="footer-apps">{t(lang, 'footer.apps')}</h2>
+      <ul role="list">
+        {apps.map((app) => (
+          <li>
+            <a href={appPath(app, lang)}>{app.name}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )}
+
+  <nav aria-labelledby="footer-connect">
+    <h2 id="footer-connect">{t(lang, 'footer.connect')}</h2>
+    <ul role="list">
+      {socialProfiles.map((profile) => (
+        <li>
+          <a
+            href={profile.href}
+            target={profile.href.startsWith('https://') ? '_blank' : undefined}
+            rel={profile.href.startsWith('https://') ? 'noopener noreferrer me' : undefined}
+          >
+            {profile.label}
+          </a>
+        </li>
+      ))}
+      <li>
+        <a href={SITE.repository} target="_blank" rel="noopener noreferrer">
+          {t(lang, 'footer.source')}
+        </a>
+      </li>
+      <li>
+        <button type="button" class="link-button" data-donate aria-haspopup="dialog">
+          {t(lang, 'donate.open')}
+        </button>
+      </li>
+    </ul>
+  </nav>
+
+  <p class="site-footer__legal">
+    © {year} {SITE.name}. {t(lang, 'footer.copyright')}
+  </p>
+</footer>
+
+<style>
+  .site-footer {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
+    gap: 32px;
+    padding: 64px 0 40px;
+  }
+
+  .site-footer--compact {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  }
+
+  .site-footer__name {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .site-footer__brand p {
+    margin-top: 6px;
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  h2 {
+    margin-bottom: 12px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  ul {
+    display: grid;
+    gap: 8px;
+  }
+
+  nav a,
+  .link-button {
+    color: var(--muted);
+    font-size: 15px;
+    font-weight: 400;
+  }
+
+  nav a:hover {
+    color: var(--ink);
+  }
+
+  .site-footer__legal {
+    grid-column: 1 / -1;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  @media (max-width: 900px) {
+    .site-footer {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .site-footer__brand {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .site-footer,
+    .site-footer--compact {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

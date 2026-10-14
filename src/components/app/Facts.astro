@@ -1,0 +1,70 @@
+---
+import type { App, Lang } from '../../data/types';
+
+interface Props {
+  app: App;
+  lang: Lang;
+}
+
+const { app, lang } = Astro.props;
+---
+
+<dl class="facts container">
+  {app.facts.map((fact) => (
+    <div>
+      <dt>{fact.label[lang]}</dt>
+      <dd>{fact.value[lang]}</dd>
+    </div>
+  ))}
+</dl>
+
+<style>
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    margin-top: clamp(48px, 7vw, 88px);
+    border-block: 1px solid var(--line);
+  }
+
+  div {
+    padding: 22px 24px;
+  }
+
+  div + div {
+    border-left: 1px solid var(--line);
+  }
+
+  dt {
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  dd {
+    margin-top: 4px;
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  @media (max-width: 720px) {
+    .facts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    div {
+      padding: 18px 0;
+    }
+
+    div + div {
+      border-left: 0;
+    }
+
+    div:nth-child(even) {
+      padding-left: 20px;
+      border-left: 1px solid var(--line);
+    }
+
+    div:nth-child(n + 3) {
+      border-top: 1px solid var(--line);
+    }
+  }
+</style>

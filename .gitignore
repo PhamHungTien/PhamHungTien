@@ -41,9 +41,8 @@ lerna-debug.log*
 # Node
 node_modules/
 dist/
-dist-ssr/
-dist-aliases/
 _site/
+.astro/
 *.local
 
 # Environment variables
@@ -58,4 +57,3 @@ _site/
 # Email digest cursor (hashes only; never commit credentials or local state)
 .notification-state/
 
-/PHTV/dist-ssr/

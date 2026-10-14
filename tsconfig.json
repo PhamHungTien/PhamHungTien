@@ -1,5 +1,14 @@
 {
-  "extends": "./tsconfig.base.json",
-  "compilerOptions": { "types": ["vite/client"] },
-  "include": ["src", "config", "vite.config.ts"]
+  "extends": "astro/tsconfigs/strict",
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist", "_site", "node_modules", "design-concepts"],
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  }
 }

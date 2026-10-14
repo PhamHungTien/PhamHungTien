@@ -1,0 +1,256 @@
+/**
+ * Interface strings. App content (names, features, screenshots) lives in
+ * src/data/apps; legal documents live in src/content/legal.
+ */
+const en = {
+  'meta.home.title': 'Phạm Hùng Tiến — App Developer',
+  'meta.home.description':
+    'Offline-first, private apps by Phạm Hùng Tiến: PHTV, vTTS, Pad Code AI, Pad Notes AI, My NAS Manager, LunarV and Lunar Block.',
+  'meta.notFound.title': 'Page not found',
+
+  'nav.main': 'Main navigation',
+  'nav.skip': 'Skip to content',
+  'nav.home': 'Home',
+  'nav.apps': 'Apps',
+  'nav.about': 'About',
+  'nav.contact': 'Contact',
+  'nav.overview': 'Overview',
+  'nav.features': 'Features',
+  'nav.screenshots': 'Screenshots',
+  'nav.install': 'Install',
+  'nav.faq': 'FAQ',
+  'nav.discussions': 'Discussions',
+  'nav.allApps': 'All apps',
+  'nav.support': 'Email support',
+  'nav.openMenu': 'Open menu',
+  'nav.closeMenu': 'Close menu',
+  'nav.language': 'Language',
+  'nav.switchTo': 'Tiếng Việt',
+  'theme.toDark': 'Use dark mode',
+  'theme.toLight': 'Use light mode',
+
+  'home.role': 'Independent app developer',
+  'home.lead':
+    'Apps that work offline, process your data on your own device and keep it private. Built natively for each platform, starting with iPhone, iPad, Mac and Vision Pro.',
+  'home.cta': 'Browse the apps',
+  'home.dock': 'App shortcuts',
+  'home.apps.title': 'Apps',
+  'home.apps.lead': 'Each app does one job and does it well.',
+  'home.apps.filter': 'Filter by platform',
+  'home.apps.all': 'All',
+  'home.apps.search': 'Search apps',
+  'home.apps.count.one': 'app',
+  'home.apps.count.other': 'apps',
+  'home.apps.empty': 'No app matches these filters.',
+  'home.apps.clear': 'Clear filters',
+  'home.apps.openSource': 'Open source',
+  'home.about.title': 'About',
+  'home.about.intro':
+    'I study Electronics and Telecommunications at VNUHCM University of Science and build apps independently. I design, code and publish every app on this page myself, starting with Apple platforms and expanding to more. The website itself is open source.',
+
+  'contact.title': 'Get in touch',
+  'contact.body':
+    'Feedback, bug reports or a project in mind: send an email and I will get back to you.',
+
+  'footer.tagline': 'Offline-first apps that keep your data private.',
+  'footer.apps': 'Apps',
+  'footer.connect': 'Connect',
+  'footer.source': 'Website source',
+  'footer.copyright': 'All rights reserved.',
+
+  'app.features': 'Features',
+  'app.screenshots': 'Screenshots',
+  'app.video': 'See it in action',
+  'app.videoFallback': 'Recorded directly from the app.',
+  'app.videoUnsupported': 'Your browser does not support video playback.',
+  'app.support': 'Support',
+  'app.supportCta': 'Email support',
+  'app.community': 'Community page',
+  'app.privacy': 'Privacy',
+  'app.terms': 'Terms',
+  'app.more': 'More apps',
+  'app.enlarge': 'Enlarge',
+  'app.close': 'Close',
+  'app.icon': 'icon',
+  'app.onDevice': 'on device',
+  'app.download': 'Download',
+  'app.source': 'Source on GitHub',
+  'app.install.title': 'Install',
+  'app.install.choose': 'Choose the build for your Mac',
+  'app.install.silicon': 'Apple Silicon',
+  'app.install.siliconNote': 'Macs with an Apple chip',
+  'app.install.intel': 'Intel',
+  'app.install.intelNote': 'Macs with an Intel processor',
+  'app.install.homebrew': 'Or install with Homebrew',
+  'app.install.copy': 'Copy command',
+  'app.install.copied': 'Copied',
+  'app.install.before': 'Before you start',
+  'app.install.release': 'All releases on GitHub',
+  'app.tutorial.play': 'Play video',
+  'app.tutorial.youtube': 'Open on YouTube',
+  'app.faq': 'Questions and answers',
+  'app.discussions.loading': 'Loading discussions…',
+
+  'donate.open': 'Donate',
+  'donate.title': 'Support my work',
+  'donate.description': 'Thank you for supporting me and the apps I build.',
+  'donate.scan': 'Scan with your banking app or MoMo',
+  'donate.save': 'Save QR code',
+  'donate.paypal': 'Support via PayPal',
+  'donate.note': 'Always optional. Choose any amount you like.',
+
+  'legal.updated': 'Last updated',
+  'legal.privacy': 'Privacy Policy',
+  'legal.terms': 'Terms of Use',
+  'legal.backToApp': 'Back to',
+
+  'notFound.title': 'This page does not exist',
+  'notFound.body':
+    'The link may be mistyped or the page may have moved. These are good places to continue:',
+  'notFound.home': 'Go to the home page',
+  'notFound.redirecting': 'Taking you to the right address…',
+} as const;
+
+export type UiKey = keyof typeof en;
+
+const vi: Record<UiKey, string> = {
+  'meta.home.title': 'Phạm Hùng Tiến — Nhà phát triển ứng dụng',
+  'meta.home.description':
+    'Ứng dụng offline, tôn trọng quyền riêng tư của Phạm Hùng Tiến: PHTV, vTTS, Pad Code AI, Pad Notes AI, My NAS Manager, LunarV và Lunar Block.',
+  'meta.notFound.title': 'Không tìm thấy trang',
+
+  'nav.main': 'Điều hướng chính',
+  'nav.skip': 'Đến nội dung chính',
+  'nav.home': 'Trang chủ',
+  'nav.apps': 'Ứng dụng',
+  'nav.about': 'Giới thiệu',
+  'nav.contact': 'Liên hệ',
+  'nav.overview': 'Tổng quan',
+  'nav.features': 'Tính năng',
+  'nav.screenshots': 'Ảnh màn hình',
+  'nav.install': 'Cài đặt',
+  'nav.faq': 'Hỏi đáp',
+  'nav.discussions': 'Thảo luận',
+  'nav.allApps': 'Tất cả ứng dụng',
+  'nav.support': 'Email hỗ trợ',
+  'nav.openMenu': 'Mở menu',
+  'nav.closeMenu': 'Đóng menu',
+  'nav.language': 'Ngôn ngữ',
+  'nav.switchTo': 'English',
+  'theme.toDark': 'Bật giao diện tối',
+  'theme.toLight': 'Bật giao diện sáng',
+
+  'home.role': 'Nhà phát triển ứng dụng độc lập',
+  'home.lead':
+    'Ứng dụng chạy offline, xử lý dữ liệu ngay trên thiết bị của bạn và tôn trọng quyền riêng tư. Viết native cho từng nền tảng, bắt đầu với iPhone, iPad, Mac và Vision Pro.',
+  'home.cta': 'Xem các ứng dụng',
+  'home.dock': 'Lối tắt ứng dụng',
+  'home.apps.title': 'Ứng dụng',
+  'home.apps.lead': 'Mỗi ứng dụng giải quyết một việc cụ thể và làm thật tốt việc đó.',
+  'home.apps.filter': 'Lọc theo nền tảng',
+  'home.apps.all': 'Tất cả',
+  'home.apps.search': 'Tìm ứng dụng',
+  'home.apps.count.one': 'ứng dụng',
+  'home.apps.count.other': 'ứng dụng',
+  'home.apps.empty': 'Không có ứng dụng nào khớp với bộ lọc.',
+  'home.apps.clear': 'Xoá bộ lọc',
+  'home.apps.openSource': 'Mã nguồn mở',
+  'home.about.title': 'Giới thiệu',
+  'home.about.intro':
+    'Tôi là sinh viên Điện tử – Viễn thông tại Trường Đại học Khoa học Tự nhiên, ĐHQG-HCM, và là nhà phát triển ứng dụng độc lập. Tôi tự thiết kế, lập trình và phát hành mọi ứng dụng trên trang này, bắt đầu từ các nền tảng Apple và đang mở rộng sang những nền tảng khác. Mã nguồn của chính website này cũng được công khai.',
+
+  'contact.title': 'Liên hệ',
+  'contact.body': 'Góp ý, báo lỗi hay hợp tác: gửi email và tôi sẽ phản hồi sớm nhất có thể.',
+
+  'footer.tagline': 'Ứng dụng offline, tôn trọng quyền riêng tư.',
+  'footer.apps': 'Ứng dụng',
+  'footer.connect': 'Kết nối',
+  'footer.source': 'Mã nguồn website',
+  'footer.copyright': 'Bảo lưu mọi quyền.',
+
+  'app.features': 'Tính năng',
+  'app.screenshots': 'Ảnh màn hình',
+  'app.video': 'Xem cách hoạt động',
+  'app.videoFallback': 'Video quay trực tiếp từ ứng dụng.',
+  'app.videoUnsupported': 'Trình duyệt của bạn không hỗ trợ phát video.',
+  'app.support': 'Hỗ trợ',
+  'app.supportCta': 'Gửi email hỗ trợ',
+  'app.community': 'Trang cộng đồng',
+  'app.privacy': 'Quyền riêng tư',
+  'app.terms': 'Điều khoản',
+  'app.more': 'Ứng dụng khác',
+  'app.enlarge': 'Phóng to',
+  'app.close': 'Đóng',
+  'app.icon': 'biểu tượng',
+  'app.onDevice': 'trên thiết bị',
+  'app.download': 'Tải về',
+  'app.source': 'Mã nguồn trên GitHub',
+  'app.install.title': 'Cài đặt',
+  'app.install.choose': 'Chọn đúng bản cho máy Mac của bạn',
+  'app.install.silicon': 'Apple Silicon',
+  'app.install.siliconNote': 'Mac dùng chip Apple',
+  'app.install.intel': 'Intel',
+  'app.install.intelNote': 'Mac dùng chip Intel',
+  'app.install.homebrew': 'Hoặc cài bằng Homebrew',
+  'app.install.copy': 'Sao chép lệnh',
+  'app.install.copied': 'Đã sao chép',
+  'app.install.before': 'Trước khi dùng',
+  'app.install.release': 'Tất cả phiên bản trên GitHub',
+  'app.tutorial.play': 'Phát video',
+  'app.tutorial.youtube': 'Mở trên YouTube',
+  'app.faq': 'Hỏi đáp',
+  'app.discussions.loading': 'Đang tải thảo luận…',
+
+  'donate.open': 'Ủng hộ',
+  'donate.title': 'Ủng hộ tác giả',
+  'donate.description': 'Cảm ơn bạn đã đồng hành cùng các ứng dụng của mình.',
+  'donate.scan': 'Quét bằng ứng dụng ngân hàng hoặc MoMo',
+  'donate.save': 'Lưu mã QR',
+  'donate.paypal': 'Ủng hộ qua PayPal',
+  'donate.note': 'Hoàn toàn tự nguyện. Bạn tự chọn số tiền đóng góp.',
+
+  'legal.updated': 'Cập nhật lần cuối',
+  'legal.privacy': 'Chính sách quyền riêng tư',
+  'legal.terms': 'Điều khoản sử dụng',
+  'legal.backToApp': 'Quay lại',
+
+  'notFound.title': 'Trang này không tồn tại',
+  'notFound.body':
+    'Có thể đường dẫn bị gõ sai hoặc trang đã được chuyển. Bạn có thể tiếp tục từ đây:',
+  'notFound.home': 'Về trang chủ',
+  'notFound.redirecting': 'Đang chuyển đến đúng địa chỉ…',
+};
+
+export const ui = { en, vi } as const;
+
+/** Areas of work shown in the About section. */
+export const focusAreas = {
+  en: [
+    {
+      title: 'Native on every platform',
+      body: 'Apps written for each system’s own frameworks: SwiftUI, WidgetKit, SceneKit and CloudKit on Apple platforms today, with more platforms to come.',
+    },
+    {
+      title: 'On-device intelligence',
+      body: 'Speech, OCR and AI features that run locally, so documents and code never leave the device.',
+    },
+    {
+      title: 'Embedded systems',
+      body: 'STM32 and ESP32-S3 firmware, including a dual-MCU face-recognition smart lock.',
+    },
+  ],
+  vi: [
+    {
+      title: 'Native trên từng nền tảng',
+      body: 'Viết bằng công nghệ gốc của từng hệ điều hành: SwiftUI, WidgetKit, SceneKit và CloudKit trên các nền tảng Apple, và sắp tới là các nền tảng khác.',
+    },
+    {
+      title: 'AI trên thiết bị',
+      body: 'Giọng nói, OCR và AI chạy cục bộ, tài liệu và mã nguồn không rời khỏi thiết bị.',
+    },
+    {
+      title: 'Hệ thống nhúng',
+      body: 'Firmware STM32 và ESP32-S3, trong đó có khoá thông minh nhận diện khuôn mặt hai vi điều khiển.',
+    },
+  ],
+} as const;

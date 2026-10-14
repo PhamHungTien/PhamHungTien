@@ -1,0 +1,153 @@
+---
+/**
+ * GitHub Pages serves this file for every unknown path. Before showing the error it
+ * fixes the common mistakes that used to break links: wrong letter case (/vtts/),
+ * missing trailing slash, legacy /products/ prefix and privacy/terms without .html.
+ */
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { apps, appSegment, defaultLangOf } from '../data/apps';
+import { t } from '../lib/i18n';
+import { appPath } from '../lib/routes';
+import { ogImage } from '../lib/seo';
+
+const lang = 'en';
+const folders = Object.fromEntries(
+  apps.map((app) => [appSegment(app).toLowerCase(), appSegment(app)]),
+);
+folders.aipadnotes = 'PadNotesAI';
+const defaults = Object.fromEntries(apps.map((app) => [appSegment(app), defaultLangOf(app)]));
+---
+
+<BaseLayout
+  lang={lang}
+  title={`${t(lang, 'meta.notFound.title')} — Phạm Hùng Tiến`}
+  description={t(lang, 'notFound.body')}
+  path="/404.html"
+  ogImage={ogImage('home')}
+  nav={[{ href: '/#apps', label: t(lang, 'nav.apps') }]}
+  noindex
+  compactFooter
+>
+  <script is:inline define:vars={{ folders, defaults }}>
+    (() => {
+      const { pathname, search, hash } = location;
+      const parts = pathname.split('/').filter(Boolean);
+      let lang = '';
+      if (parts[0] === 'vi' || parts[0] === 'en') lang = parts.shift();
+      if (parts[0]?.toLowerCase() === 'products') parts.shift();
+      const folder = folders[(parts[0] ?? '').toLowerCase()];
+      if (!folder) return;
+      if (lang === defaults[folder]) lang = '';
+      let file = (parts[1] ?? '').toLowerCase().replace(/\.html$/, '');
+      file = file === 'privacy' || file === 'terms' ? `${file}.html` : '';
+      const target = `${lang ? `/${lang}` : ''}/${folder}/${file}`;
+      if (target !== pathname) {
+        document.documentElement.dataset.redirecting = '';
+        location.replace(target + search + hash);
+      }
+    })();
+  </script>
+  <section class="not-found container">
+    <p class="not-found__code" aria-hidden="true">
+      404
+    </p>
+    <h1>{t(lang, 'notFound.title')}</h1>
+    <p class="not-found__redirect">{t(lang, 'notFound.redirecting')}</p>
+    <p class="not-found__body">
+      {t(lang, 'notFound.body')}
+      <span lang="vi">Trang này không tồn tại. Bạn có thể tiếp tục từ các liên kết dưới đây.</span>
+    </p>
+    <a class="button button--primary" href="/">
+      {t(lang, 'notFound.home')}
+    </a>
+    <ul role="list">
+      {apps.map((app) => (
+        <li>
+          <a href={appPath(app, lang)}>
+            <Image src={app.icon} alt="" width={40} height={40} densities={[1, 2]} />
+            {app.name}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    display: grid;
+    justify-items: start;
+    gap: 16px;
+    max-width: 760px;
+    padding-top: clamp(48px, 9vw, 120px);
+  }
+
+  .not-found__code {
+    color: var(--brand);
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  h1 {
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+  }
+
+  .not-found__body {
+    max-width: 36em;
+    color: var(--muted);
+    font-size: 18px;
+  }
+
+  .not-found__body span {
+    display: block;
+    margin-top: 6px;
+  }
+
+  .not-found__redirect {
+    display: none;
+    color: var(--muted);
+  }
+
+  :global(html[data-redirecting]) .not-found__redirect {
+    display: block;
+  }
+
+  :global(html[data-redirecting]) .not-found__body,
+  :global(html[data-redirecting]) .not-found ul,
+  :global(html[data-redirecting]) .not-found .button {
+    display: none;
+  }
+
+  ul {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin-top: 24px;
+  }
+
+  ul a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--surface);
+    font-weight: 600;
+  }
+
+  ul a:hover {
+    border-color: var(--line-strong);
+  }
+
+  ul :global(img) {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--r-icon);
+  }
+</style>

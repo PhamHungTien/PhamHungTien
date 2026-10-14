@@ -1,48 +1,127 @@
-# Website architecture
+# Architecture
 
-## Runtime and ownership
+phamhungtien.com is **one [Astro](https://astro.build) project** that builds every page
+of the site: the portfolio, each app's landing page, their privacy policies and terms,
+and the 404 page. All pages share one layout, one design system, one set of interface
+strings and one Firebase module, so a change made once applies everywhere.
 
-The repository is an npm workspace with a single root lockfile and Node.js 24 LTS.
-Both web applications use React 19, Vite 8, TypeScript 7, Firebase 12 and Lucide icons.
-The portfolio owns `/` and six App Store landing pages. The PHTV workspace owns `/PHTV/`
-and its discussion interface. Every React page uses Tailwind 4 through the same Vite plugin pipeline.
-`assets/framework.css` and `config/tailwind.ts` provide one shared foundation;
-page-specific CSS supplies layouts while shared React components own controls.
+## Stack
 
-`config/build.ts` contains client build defaults and React deduplication.
-`config/plugins.ts` supplies the same React and Tailwind compiler plugins to both entry points. Both TypeScript
-projects extend a strict base configuration. Application-specific routing remains explicit in each Vite configuration. Both builds
-target modern browsers: Chrome/Edge 111+, Firefox 128+, and Safari 16.4+.
+| Concern       | Choice                                                        |
+| ------------- | ------------------------------------------------------------- |
+| Framework     | Astro 7, static output (`output: 'static'`)                   |
+| Interactivity | Small TypeScript modules; React 19 only for discussion boards |
+| Styling       | Plain CSS with design tokens; component styles are scoped     |
+| Content       | Typed TypeScript data (apps) and Markdown (legal documents)   |
+| Images        | `astro:assets` (AVIF + WebP, responsive `srcset`)             |
+| Fonts         | Be Vietnam Pro, self-hosted via Fontsource                    |
+| Backend       | Firebase Auth + Firestore (discussions only)                  |
+| Hosting       | GitHub Pages behind Cloudflare, deployed by GitHub Actions    |
 
-## Shared design and language
+Pages ship as HTML and CSS. A typical page loads about 3 KB of JavaScript (theme
+toggle, menu, filters). React and the Firebase SDK are downloaded only when a
+visitor opens **Discussions**, because the boards are islands with `client:visible`
+inside a panel that stays hidden until then.
 
-`assets/design-tokens.css` is the single source for palette, geometry and motion.
-`assets/liquid-glass.css` applies those tokens to shared controls and content surfaces.
-PHTV compatibility variables resolve to these tokens rather than a separate palette.
-`assets/navigation.css` owns the shared navigation frame and breakpoints.
-`src/components/LanguageSwitch.tsx`, `ThemeToggle.tsx` and `ResponsiveImage.tsx` are shared by both apps.
-`src/hooks/useTheme.ts` owns theme persistence, cross-tab synchronization and browser chrome.
-The portfolio and non-PHTV pages are English-only; PHTV defaults to Vietnamese with an
-English option. Translation dictionaries contain product copy, not duplicated markup.
+## Repository layout
 
-## Images and SEO
+```
+src/
+  assets/apps/<slug>/     Screenshots and icons, processed at build time
+  assets/brand/logo.svg   The brand mark (source for favicons and social cards)
+  components/
+    layout/               Header, footer, contact block
+    home/                 Home page sections
+    app/                  App page sections (hero, install, features, gallery…)
+    legal/                Privacy/terms template
+    community/            Discussion boards (React islands) and their styles
+    ui/                   Shared widgets: logo, donate dialog, lightbox, brand icons
+  content/legal/<slug>/   privacy.md, terms.md (or privacy.<lang>.md when translated)
+  data/
+    apps/<slug>.ts        One file per app: everything its page shows
+    apps/index.ts         Display order and lookups
+    platforms.ts          Platform and store names (iOS, Android, Windows, Google Play…)
+    site.ts, socials.ts   Identity and public contact channels
+    appstore.json         App Store snapshot (npm run sync:appstore)
+  i18n/ui.ts              Interface strings in English and Vietnamese
+  layouts/BaseLayout.astro  The one HTML document shell
+  lib/                    Routing, SEO/JSON-LD, Firebase, GitHub releases, legal loader
+  pages/                  Routes (see below)
+  scripts/                Browser modules for header, filters, tabs, dialogs, installs
+  styles/global.css       Tokens, reset and shared primitives
+public/                   Copied as is: CNAME, robots.txt, icons, Open Graph cards, videos
+firebase/                 Firestore security rules and their emulator tests
+scripts/                  Build, verification and content tools (Node)
+```
 
-The responsive-image generator reads source artwork, emits content-hashed WebP variants,
-and writes an image manifest. Browsers choose a suitable width with `srcset` and `sizes`.
-Original images remain available for zoom. `docs/image-optimization.json` records source
-and preview byte sizes. Regenerate images when changing artwork.
+## Routes and languages
 
-Root landing pages and PHTV are prerendered from the same React components used by the browser.
-Metadata is present in built HTML for crawlers. Legal pages are static HTML with explicit
-canonical URLs. Social cards are 1200 × 630 PNGs generated from real app icons.
-Schema markup must describe real, visible information; do not add unverified ratings or
-invented prices just to satisfy a rich-result validator.
+Each page exists in English and Vietnamese. A page's **default language** lives at its
+historical URL; the other language is served under a `/<lang>/` prefix.
 
-## Deployment
+| URL                         | Page                                   |
+| --------------------------- | -------------------------------------- |
+| `/`, `/vi/`                 | Home                                   |
+| `/vTTS/`, `/vi/vTTS/`       | App page (English default)             |
+| `/PHTV/`, `/en/PHTV/`       | App page (PHTV defaults to Vietnamese) |
+| `/vTTS/privacy.html`        | Legal document (`terms.html` likewise) |
+| `/en/PHTV/privacy.html`     | Translated legal document              |
+| `/sitemap.xml`, `/404.html` | Sitemap with hreflang, error page      |
 
-GitHub Actions installs the workspace, checks formatting and TypeScript, tests Firestore
-rules, builds both apps, assembles a case-sensitive site tree, and checks UI, SEO and
-social metadata before publishing to GitHub Pages. Cloudflare supplies DNS; Pages does
-not enforce Cloudflare Pages `_headers` files. HTML security metadata is generated by
-`scripts/security-html.mjs`. Scheduled notifications run with GitHub Secrets, not client
-credentials.
+`src/lib/routes.ts` is the only place that builds these paths. Every page declares its
+alternates with `hreflang`, and the language switch in the header links to them. App
+Store listings link to the `privacy.html` URLs, so their shape must not change
+(`build.format: 'preserve'`).
+
+## Adding or changing an app
+
+1. Put images in `src/assets/apps/<slug>/`.
+2. Create `src/data/apps/<slug>.ts` (copy an existing app) and add it to
+   `src/data/apps/index.ts`. Add the slug to `AppSlug` in `src/data/types.ts`.
+3. List its `platforms` (e.g. `['android', 'windows']`) and `links.stores`
+   (`appStore`, `googlePlay`, `microsoftStore`, `flathub`, `snapcraft`, `web`). Download
+   buttons, platform filters and structured data are derived from these.
+4. Write `src/content/legal/<slug>/privacy.md` and `terms.md`.
+5. Run `npm run og` for its social cards, then `npm run build`.
+
+A new platform or store only needs a name in `src/data/platforms.ts` and its id in the
+`Platform` or `Store` type.
+
+## Build pipeline
+
+`npm run build` runs `astro build` and then `scripts/postbuild.mjs`, which:
+
+- injects a Content-Security-Policy `<meta>` with hashes of each page's inline scripts
+  (GitHub Pages cannot send headers);
+- copies app icons to legacy URLs that external pages link to;
+- writes lowercase redirect pages (`/vtts/` → `/vTTS/`) when the disk is case
+  sensitive. CI builds on Linux, so the deployed site always has them; on macOS they are
+  skipped, and `scripts/deploy-local.sh` adds them on a case-sensitive volume.
+
+`npm run verify` then checks every built page: one title and `<h1>`, description
+length, canonical, reciprocal hreflang, Open Graph image, valid JSON-LD, CSP, internal
+links and images, and that the sitemap lists exactly the indexable pages.
+
+## SEO
+
+- Real HTML for every page and language; no client-side rendering of content.
+- `Person`, `WebSite`, `ProfilePage`, `SoftwareApplication`, `BreadcrumbList` and
+  `FAQPage` structured data, built only from facts that are visible on the page or in
+  the App Store snapshot. Never add unverified ratings or prices.
+- Sitemap with `hreflang` alternates and App Store release dates as `lastmod`.
+- Speculation rules prerender a same-site page when a visitor shows intent to open it,
+  and cross-document view transitions animate app icons between pages.
+
+## Discussions
+
+Two boards share `src/lib/firebase.ts` and `src/components/community/board.css`:
+
+- `PhtvBoard.tsx` reads `questions` and `notifications` (labels, likes, pinning,
+  locking, notifications).
+- `AppBoard.tsx` reads `appDiscussions/{app}/posts` and their `replies`.
+
+Their data models differ for historical reasons and are protected by
+`firebase/firestore.rules`; changing either requires a rules update, the emulator tests
+(`npm run test:rules`) and a data migration. See [DISCUSSION-EMAIL.md](DISCUSSION-EMAIL.md)
+for the email digest and [SECURITY-DEPLOYMENT.md](SECURITY-DEPLOYMENT.md) for headers and
+Firebase rollout.

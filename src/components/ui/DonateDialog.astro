@@ -1,0 +1,186 @@
+---
+import { Image } from 'astro:assets';
+import { ArrowUpRight, Download, Heart, X } from '@lucide/astro';
+import qr from '../../assets/donate-qr.jpg';
+import type { Lang } from '../../data/types';
+import { SITE } from '../../data/site';
+import { t } from '../../lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<dialog
+  class="donate"
+  aria-labelledby="donate-title"
+  aria-describedby="donate-description"
+  data-donate-dialog
+>
+  <form method="dialog">
+    <button class="donate__close" aria-label={t(lang, 'app.close')}>
+      <X size={20} aria-hidden="true" />
+    </button>
+  </form>
+  <span class="donate__symbol" aria-hidden="true">
+    <Heart size={22} />
+  </span>
+  <h2 id="donate-title">{t(lang, 'donate.title')}</h2>
+  <p id="donate-description">{t(lang, 'donate.description')}</p>
+  <figure class="donate__qr">
+    <Image
+      src={qr}
+      width={280}
+      height={280}
+      densities={[1, 2]}
+      alt={`VietQR · ${SITE.name}`}
+      loading="lazy"
+    />
+    <figcaption>{t(lang, 'donate.scan')}</figcaption>
+  </figure>
+  <a
+    class="button button--secondary donate__action"
+    href={qr.src}
+    download="pham-hung-tien-vietqr.jpg"
+  >
+    <Download size={16} aria-hidden="true" />
+    {t(lang, 'donate.save')}
+  </a>
+  <a
+    class="button button--primary donate__action"
+    href={SITE.paypal}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    {t(lang, 'donate.paypal')}
+    <ArrowUpRight size={18} aria-hidden="true" />
+  </a>
+  <p class="donate__note">{t(lang, 'donate.note')}</p>
+</dialog>
+
+<script>
+  import { enhanceDialog } from '../../scripts/dialog';
+
+  const dialog = document.querySelector<HTMLDialogElement>('[data-donate-dialog]');
+  if (dialog) {
+    const controller = enhanceDialog(dialog);
+    document.addEventListener('click', (event) => {
+      const trigger = (event.target as Element).closest<HTMLElement>('[data-donate]');
+      if (!trigger) return;
+      event.preventDefault();
+      controller.open(trigger);
+    });
+    if (location.hash === '#donate') controller.open();
+  }
+</script>
+
+<style>
+  .donate {
+    width: min(420px, calc(100% - 32px));
+    max-height: calc(100dvh - 32px);
+    margin: auto;
+    padding: 32px 28px 24px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    background: var(--surface);
+    color: var(--ink);
+    box-shadow: 0 24px 80px rgb(0 0 0 / 0.25);
+    text-align: center;
+  }
+
+  .donate::backdrop {
+    background: rgb(8 11 18 / 0.5);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+
+  .donate__close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: grid;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--muted);
+  }
+
+  .donate__close:hover {
+    background: var(--surface-2);
+    color: var(--ink);
+  }
+
+  .donate__symbol {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    margin: 0 auto 14px;
+    place-items: center;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--brand) 12%, transparent);
+    color: var(--brand);
+  }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    max-width: 32ch;
+    margin: 8px auto 0;
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  .donate__qr {
+    width: min(260px, 100%);
+    margin: 22px auto 16px;
+  }
+
+  .donate__qr img {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    background: #fff;
+  }
+
+  figcaption {
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .donate__action {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .donate__note {
+    margin-top: 16px;
+    font-size: 13px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .donate[open] {
+      animation: rise 200ms var(--ease);
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+    }
+  }
+</style>

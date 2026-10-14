@@ -1,0 +1,284 @@
+---
+import { Menu, X, Moon, Sun, Languages } from '@lucide/astro';
+import Logo from '../ui/Logo.astro';
+import type { Lang } from '../../data/types';
+import { t } from '../../lib/i18n';
+import { homePath, type Alternate } from '../../lib/routes';
+
+export interface NavItem {
+  href: string;
+  label: string;
+  /** Marks the item that represents the current view (the active tab on app pages). */
+  current?: boolean;
+  /** Tab id for app pages, so the client script can keep aria-current in sync. */
+  tab?: string;
+}
+
+interface Props {
+  lang: Lang;
+  nav: NavItem[];
+  alternates: Alternate[];
+}
+
+const { lang, nav, alternates } = Astro.props;
+const switchTarget = alternates.find((alt) => alt.lang !== lang);
+---
+
+<header class="site-header" data-header>
+  <a class="skip-link" href="#main-content">
+    {t(lang, 'nav.skip')}
+  </a>
+
+  <a class="brand" href={homePath(lang)}>
+    <Logo class="brand__mark" />
+    <span class="sr-only">Phạm Hùng Tiến — {t(lang, 'nav.home')}</span>
+  </a>
+
+  <nav class="site-nav" aria-label={t(lang, 'nav.main')}>
+    {nav.map((item) => (
+      <a href={item.href} data-tab={item.tab} aria-current={item.current ? 'page' : undefined}>
+        {item.label}
+      </a>
+    ))}
+  </nav>
+
+  <div class="header-actions">
+    {switchTarget && (
+      <a
+        class="lang-switch"
+        href={switchTarget.href}
+        hreflang={switchTarget.lang}
+        lang={switchTarget.lang}
+        title={t(lang, 'nav.language')}
+      >
+        <Languages size={17} aria-hidden="true" />
+        <span>{t(lang, 'nav.switchTo')}</span>
+      </a>
+    )}
+    <button
+      class="icon-button"
+      type="button"
+      data-theme-toggle
+      data-label-dark={t(lang, 'theme.toDark')}
+      data-label-light={t(lang, 'theme.toLight')}
+      aria-label={t(lang, 'theme.toDark')}
+    >
+      <Moon class="theme-icon theme-icon--moon" size={18} aria-hidden="true" />
+      <Sun class="theme-icon theme-icon--sun" size={18} aria-hidden="true" />
+    </button>
+    <button
+      class="icon-button menu-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="mobile-navigation"
+      data-menu-toggle
+      data-label-open={t(lang, 'nav.openMenu')}
+      data-label-close={t(lang, 'nav.closeMenu')}
+      aria-label={t(lang, 'nav.openMenu')}
+    >
+      <Menu class="menu-icon menu-icon--open" size={20} aria-hidden="true" />
+      <X class="menu-icon menu-icon--close" size={20} aria-hidden="true" />
+    </button>
+  </div>
+
+  <nav
+    class="mobile-nav"
+    id="mobile-navigation"
+    aria-label={t(lang, 'nav.main')}
+    data-mobile-nav
+    inert
+  >
+    {nav.map((item) => (
+      <a href={item.href} data-tab={item.tab} aria-current={item.current ? 'page' : undefined}>
+        {item.label}
+      </a>
+    ))}
+  </nav>
+</header>
+
+<script>
+  import { initHeader } from '../../scripts/header';
+  initHeader();
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    display: flex;
+    height: var(--header-height);
+    align-items: center;
+    gap: 20px;
+    padding: 0 max(var(--gutter), calc((100% - var(--container)) / 2));
+    border-bottom: 1px solid var(--line);
+    background: var(--header-bg);
+    -webkit-backdrop-filter: saturate(160%) blur(16px);
+    backdrop-filter: saturate(160%) blur(16px);
+  }
+
+  .skip-link {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 40;
+    padding: 10px 16px;
+    border-radius: var(--r-control);
+    background: var(--ink);
+    color: var(--paper);
+    font-weight: 600;
+    transform: translateY(-200%);
+  }
+
+  .skip-link:focus {
+    transform: none;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-right: auto;
+    font-weight: 600;
+  }
+
+  .brand :global(.brand__mark) {
+    border-radius: 9px;
+  }
+
+  .site-nav {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .site-nav a {
+    padding: 8px 12px;
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 15px;
+    transition: color 160ms ease;
+  }
+
+  .site-nav a:hover,
+  .site-nav a[aria-current='page'] {
+    color: var(--ink);
+  }
+
+  .site-nav a[aria-current='page'] {
+    background: var(--surface-2);
+    font-weight: 600;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .lang-switch {
+    display: inline-flex;
+    height: 40px;
+    align-items: center;
+    gap: 8px;
+    padding: 0 12px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+    font-size: 14px;
+    font-weight: 600;
+    transition: border-color 160ms ease;
+  }
+
+  .lang-switch:hover {
+    border-color: var(--line-strong);
+  }
+
+  :root[data-theme='dark'] .theme-icon--moon,
+  :root:not([data-theme='dark']) .theme-icon--sun {
+    display: none;
+  }
+
+  .menu-toggle,
+  .menu-icon--close,
+  .mobile-nav {
+    display: none;
+  }
+
+  @media (max-width: 960px) {
+    .site-nav {
+      display: none;
+    }
+
+    .menu-toggle {
+      display: inline-grid;
+    }
+
+    .menu-toggle[aria-expanded='true'] .menu-icon--open {
+      display: none;
+    }
+
+    .menu-toggle[aria-expanded='true'] .menu-icon--close {
+      display: block;
+    }
+
+    .mobile-nav {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      left: 0;
+      display: grid;
+      padding: 8px var(--gutter) 16px;
+      border-bottom: 1px solid var(--line);
+      background: var(--paper);
+      visibility: hidden;
+      opacity: 0;
+      transform: translateY(-6px);
+      transition:
+        opacity 160ms ease,
+        transform 160ms var(--ease),
+        visibility 160ms;
+    }
+
+    .mobile-nav.is-open {
+      visibility: visible;
+      opacity: 1;
+      transform: none;
+    }
+
+    .mobile-nav a {
+      display: flex;
+      min-height: 50px;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+      font-size: 17px;
+      font-weight: 500;
+    }
+
+    .mobile-nav a:last-child {
+      border-bottom: 0;
+    }
+
+    .mobile-nav a[aria-current='page'] {
+      color: var(--brand);
+      font-weight: 600;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .lang-switch span {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
+    .lang-switch {
+      width: 40px;
+      justify-content: center;
+      padding: 0;
+    }
+  }
+</style>

@@ -1,0 +1,150 @@
+---
+import { ExternalLink, Mail } from '@lucide/astro';
+import type { App, Lang } from '../../data/types';
+import { SITE } from '../../data/site';
+import { t } from '../../lib/i18n';
+import { legalPath } from '../../lib/routes';
+
+interface Props {
+  app: App;
+  lang: Lang;
+}
+
+const { app, lang } = Astro.props;
+---
+
+<section class="features container section" id="features" aria-labelledby="features-heading">
+  <div class="section-head">
+    <h2 id="features-heading">{t(lang, 'app.features')}</h2>
+  </div>
+  <div class="features__layout">
+    <ul class="feature-grid" role="list">
+      {app.features.map((feature) => (
+        <li>
+          <h3>{feature.title[lang]}</h3>
+          <p>{feature.description[lang]}</p>
+        </li>
+      ))}
+    </ul>
+
+    <aside class="support" aria-labelledby="support-heading">
+      <h3 id="support-heading">{t(lang, 'app.support')}</h3>
+      <p>{app.support[lang]}</p>
+      <a
+        class="button button--primary"
+        href={`mailto:${SITE.email}?subject=${encodeURIComponent(app.name)}`}
+      >
+        <Mail size={17} aria-hidden="true" />
+        {t(lang, 'app.supportCta')}
+      </a>
+      {app.links.community && (
+        <a
+          class="button button--secondary"
+          href={app.links.community}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <ExternalLink size={17} aria-hidden="true" />
+          {t(lang, 'app.community')}
+        </a>
+      )}
+      <p class="support__legal">
+        <a href={legalPath(app, 'privacy', lang)}>{t(lang, 'app.privacy')}</a>
+        <a href={legalPath(app, 'terms', lang)}>{t(lang, 'app.terms')}</a>
+      </p>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .features__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    align-items: start;
+    gap: clamp(32px, 5vw, 64px);
+  }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 40px;
+    border-top: 1px solid var(--line);
+  }
+
+  .feature-grid li {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .feature-grid h3 {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .feature-grid p {
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  .support {
+    position: sticky;
+    top: calc(var(--header-height) + 28px);
+    display: grid;
+    gap: 12px;
+    padding: 28px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    background: var(--surface);
+  }
+
+  .support h3 {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .support > p {
+    margin-bottom: 8px;
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  .support .button {
+    width: 100%;
+  }
+
+  .support__legal {
+    display: flex;
+    gap: 20px;
+    margin-top: 8px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    font-size: 14px;
+  }
+
+  .support__legal a {
+    color: var(--muted);
+  }
+
+  .support__legal a:hover {
+    color: var(--ink);
+  }
+
+  @media (max-width: 1080px) {
+    .features__layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .support {
+      position: static;
+      max-width: 560px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .feature-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

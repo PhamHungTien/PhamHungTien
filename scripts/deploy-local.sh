@@ -5,9 +5,9 @@
 #
 #   ./scripts/deploy-local.sh
 #
-# macOS-only. It mounts a temporary case-sensitive volume because /PHTV/ and /phtv/
-# cannot coexist on APFS, then writes the gh-pages commit with git plumbing so the
-# branch is never checked out into this (case-insensitive) working tree.
+# macOS-only. It copies the build onto a temporary case-sensitive volume so the
+# lowercase alias pages (/phtv/ next to /PHTV/) can be added, then writes the gh-pages
+# commit with git plumbing so the branch is never checked out into this working tree.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -25,7 +25,6 @@ trap cleanup EXIT
 
 echo "==> Building"
 npm run build
-npm run build:phtv
 
 echo "==> Mounting case-sensitive volume"
 hdiutil create -size 500m -fs "Case-sensitive APFS" -volname "$volume" -quiet "$image"
@@ -33,10 +32,12 @@ hdiutil attach "$image" -quiet
 site="/Volumes/$volume/_site"
 
 echo "==> Assembling"
-./scripts/build-site.sh "$site"
+mkdir -p "$site"
+cp -R dist/. "$site/"
+node scripts/postbuild.mjs "$site"
 
 echo "==> Verifying"
-./scripts/verify-site.sh "$site"
+node scripts/verify.mjs "$site"
 
 echo "==> Committing to $branch"
 export GIT_DIR="$repo/.git"

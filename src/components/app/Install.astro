@@ -1,0 +1,269 @@
+---
+import { ArrowRight, Copy, Cpu, Download } from '@lucide/astro';
+import type { App, Lang } from '../../data/types';
+import { t } from '../../lib/i18n';
+import { getReleaseLinks } from '../../lib/github';
+
+interface Props {
+  app: App;
+  lang: Lang;
+}
+
+const { app, lang } = Astro.props;
+const install = app.install!;
+const links = await getReleaseLinks(install.githubRepo);
+const choices = [
+  {
+    arch: 'arm64',
+    title: t(lang, 'app.install.silicon'),
+    note: t(lang, 'app.install.siliconNote'),
+    href: links.arm64 ?? links.universal ?? links.releaseUrl,
+    primary: true,
+  },
+  {
+    arch: 'intel',
+    title: t(lang, 'app.install.intel'),
+    note: t(lang, 'app.install.intelNote'),
+    href: links.intel ?? links.universal ?? links.releaseUrl,
+    primary: false,
+  },
+];
+
+/** Renders `inline code` from data strings. */
+const withCode = (text: string) =>
+  text
+    .split(/(`[^`]+`)/g)
+    .map((part) => (part.startsWith('`') ? { code: part.slice(1, -1) } : { text: part }));
+---
+
+<section
+  class="install container section"
+  id="install"
+  aria-labelledby="install-heading"
+  data-install={install.githubRepo}
+>
+  <div class="section-head">
+    <div>
+      <h2 id="install-heading">{t(lang, 'app.install.title')}</h2>
+      <p>
+        {t(lang, 'app.install.choose')}
+        <span class="install__version" data-install-version>
+          {links.version ? `· ${links.version}` : ''}
+        </span>
+      </p>
+    </div>
+    <a
+      class="text-link"
+      href={links.releaseUrl}
+      target="_blank"
+      rel="noopener"
+      data-install-release
+    >
+      {t(lang, 'app.install.release')}
+    </a>
+  </div>
+
+  <div class="install__grid">
+    <div class="install__downloads">
+      {choices.map((choice) => (
+        <a
+          class:list={['download', { 'download--primary': choice.primary }]}
+          href={choice.href}
+          data-install-arch={choice.arch}
+        >
+          <span class="download__icon" aria-hidden="true">
+            {choice.primary ? <Download size={20} /> : <Cpu size={20} />}
+          </span>
+          <span class="download__copy">
+            <strong>{choice.title}</strong>
+            <small>{choice.note}</small>
+          </span>
+          <ArrowRight size={18} aria-hidden="true" />
+        </a>
+      ))}
+
+      {install.homebrew && (
+        <div class="homebrew">
+          <p>{t(lang, 'app.install.homebrew')}</p>
+          <div class="homebrew__command">
+            <code>{install.homebrew}</code>
+            <button
+              type="button"
+              class="icon-button"
+              data-copy={install.homebrew}
+              data-copied={t(lang, 'app.install.copied')}
+              aria-label={t(lang, 'app.install.copy')}
+            >
+              <Copy size={16} aria-hidden="true" />
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+
+    <div class="install__steps">
+      <h3>{t(lang, 'app.install.before')}</h3>
+      <ol role="list">
+        {install.steps.map((step, index) => (
+          <li>
+            <span aria-hidden="true">{index + 1}</span>
+            <p>
+              {withCode(step[lang]).map((part) =>
+                'code' in part ? <code>{part.code}</code> : part.text,
+              )}
+            </p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initInstall } from '../../scripts/install';
+  initInstall();
+</script>
+
+<style>
+  .install__version {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .install__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: clamp(24px, 4vw, 48px);
+  }
+
+  .install__downloads {
+    display: grid;
+    gap: 12px;
+    align-content: start;
+  }
+
+  .download {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    background: var(--surface);
+    transition: border-color 160ms ease;
+  }
+
+  .download:hover {
+    border-color: var(--ink);
+  }
+
+  .download--primary {
+    border-color: color-mix(in srgb, var(--brand) 45%, var(--line));
+  }
+
+  .download__icon {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    border-radius: 12px;
+    background: var(--surface-2);
+  }
+
+  .download--primary .download__icon {
+    background: var(--brand);
+    color: var(--on-brand);
+  }
+
+  .download__copy {
+    display: grid;
+  }
+
+  .download__copy strong {
+    font-size: 17px;
+  }
+
+  .download__copy small {
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .homebrew {
+    margin-top: 8px;
+  }
+
+  .homebrew p {
+    margin-bottom: 8px;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .homebrew__command {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 8px 8px 16px;
+    border-radius: var(--r-control);
+    background: #131a27;
+    color: #e6eaf0;
+  }
+
+  .homebrew__command code {
+    flex: 1;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .homebrew__command .icon-button {
+    border-color: rgb(255 255 255 / 0.18);
+    background: transparent;
+    color: inherit;
+  }
+
+  .install__steps {
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    background: var(--surface);
+  }
+
+  h3 {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  ol {
+    display: grid;
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  li {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  li span {
+    display: grid;
+    width: 28px;
+    height: 28px;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--surface-2);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  li p {
+    padding-top: 2px;
+    color: var(--muted);
+  }
+
+  @media (max-width: 900px) {
+    .install__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

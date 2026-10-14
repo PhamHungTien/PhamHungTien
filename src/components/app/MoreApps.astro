@@ -1,0 +1,91 @@
+---
+import { Image } from 'astro:assets';
+import type { App, Lang } from '../../data/types';
+import { apps } from '../../data/apps';
+import { t } from '../../lib/i18n';
+import { appPath, homePath } from '../../lib/routes';
+
+interface Props {
+  app: App;
+  lang: Lang;
+}
+
+const { app, lang } = Astro.props;
+const others = apps.filter((other) => other.slug !== app.slug);
+---
+
+<section class="more container section" aria-labelledby="more-heading">
+  <div class="section-head">
+    <h2 id="more-heading">{t(lang, 'app.more')}</h2>
+    <a class="text-link" href={`${homePath(lang)}#apps`}>
+      {t(lang, 'nav.allApps')}
+    </a>
+  </div>
+  <ul class="more__list" role="list">
+    {others.map((other) => (
+      <li>
+        <a href={appPath(other, lang)}>
+          <Image
+            src={other.icon}
+            alt=""
+            width={56}
+            height={56}
+            densities={[1, 2]}
+            loading="lazy"
+            style={`view-transition-name: app-${other.slug}`}
+          />
+          <span>
+            <strong>{other.name}</strong>
+            <small>{other.category[lang]}</small>
+          </span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .more__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+  }
+
+  .more__list a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--surface);
+    transition: border-color 160ms ease;
+  }
+
+  .more__list a:hover {
+    border-color: var(--line-strong);
+  }
+
+  .more__list img {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--r-icon);
+  }
+
+  .more__list span {
+    display: grid;
+    min-width: 0;
+  }
+
+  strong {
+    font-weight: 600;
+  }
+
+  small {
+    overflow: hidden;
+    color: var(--muted);
+    font-size: 14px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+</style>

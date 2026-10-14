@@ -1,11 +1,16 @@
+/**
+ * Generates the 1200×630 Open Graph cards in public/og (one per app, per legal page,
+ * and the home page). Run `npm run og` after changing an app name, tagline or icon,
+ * then bump OG_VERSION in src/lib/seo.ts so social networks refetch the images.
+ */
 import sharp from 'sharp';
-import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { mkdir } from 'node:fs/promises';
 const apps = [
   [
     'phtv',
     'PHTV',
     'PHTV',
-    'assets/phtv-icon.webp',
+    'src/assets/apps/phtv/app-icon.webp',
     ['Gõ tiếng Việt.', 'Theo cách của bạn.'],
     'Bộ gõ riêng tư cho macOS.',
   ],
@@ -13,7 +18,7 @@ const apps = [
     'vtts',
     'vTTS',
     'vTTS',
-    'vTTS/assets/app-icon.png',
+    'src/assets/apps/vtts/app-icon.png',
     ['Let your books', 'speak to you.'],
     'Books and text to speech, on your device.',
   ],
@@ -21,7 +26,7 @@ const apps = [
     'padcodeai',
     'PadCodeAI',
     'Pad Code AI',
-    'PadCodeAI/assets/app-icon.png',
+    'src/assets/apps/padcodeai/app-icon.png',
     ['Your code.', 'Anywhere.'],
     'An offline coding workspace for iPad and iPhone.',
   ],
@@ -29,7 +34,7 @@ const apps = [
     'padnotesai',
     'PadNotesAI',
     'Pad Notes AI',
-    'PadNotesAI/assets/app-icon.png',
+    'src/assets/apps/padnotesai/app-icon.png',
     ['A place for', 'your thoughts.'],
     'Notes, documents and OCR across your devices.',
   ],
@@ -37,7 +42,7 @@ const apps = [
     'mynasmanager',
     'MyNASManager',
     'My NAS Manager',
-    'MyNASManager/assets/app-icon.png',
+    'src/assets/apps/mynasmanager/app-icon.png',
     ['Your NAS.', 'Within reach.'],
     'Files, monitoring and SSH in one place.',
   ],
@@ -45,7 +50,7 @@ const apps = [
     'lunarv',
     'LunarV',
     'LunarV',
-    'assets/lunarv-icon.png',
+    'src/assets/apps/lunarv/app-icon.png',
     ['Keep your days', 'in harmony.'],
     'Vietnamese lunar dates, widgets and reminders.',
   ],
@@ -53,7 +58,7 @@ const apps = [
     'lunarblock',
     'LunarBlock',
     'Lunar Block',
-    'LunarBlock/assets/app-icon.png',
+    'src/assets/apps/lunarblock/app-icon.png',
     ['A new dimension', 'of play.'],
     'A tactile 3D block puzzle.',
   ],
@@ -70,34 +75,27 @@ const txt = (x, y, size, text, extra = '') =>
   `<text x="${x}" y="${y}" font-size="${size}" ${extra}>${esc(text)}</text>`;
 const outputs = [];
 async function card(slug, body, footer) {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"><defs><linearGradient id="paper"><stop stop-color="#faf5ec"/><stop offset="1" stop-color="#f0e2ce"/></linearGradient><radialGradient id="glow"><stop stop-color="#deb67b" stop-opacity=".35"/><stop offset="1" stop-color="#deb67b" stop-opacity="0"/></radialGradient></defs><rect width="1200" height="630" fill="url(#paper)"/><ellipse cx="1080" cy="150" rx="490" ry="430" fill="url(#glow)"/><path d="M72 78H190" stroke="#a36928" stroke-width="5" stroke-linecap="round"/><circle cx="208" cy="78" r="3" fill="#a34e34"/><g font-family="Helvetica Neue,Arial,sans-serif" fill="#36271f">${body}<path d="M72 507H1128" stroke="#cdb99c"/>${txt(72, 554, 24, 'phamhungtien.com', 'fill="#756354"')}${txt(1128, 554, 22, footer, 'text-anchor="end" fill="#756354"')}</g></svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"><rect width="1200" height="630" fill="#f3f5f8"/><g transform="translate(72 66) scale(0.6875)"><rect width="64" height="64" rx="15" fill="#7a1424"/><rect x="27.5" y="22" width="9" height="28" rx="4.5" fill="#fff"/><rect x="14" y="13" width="36" height="14" rx="7" fill="#f0c04e"/></g><g font-family="Be Vietnam Pro,Helvetica Neue,Arial,sans-serif" fill="#131a27">${txt(132, 96, 22, 'Phạm Hùng Tiến', 'font-weight="600"')}${body}<path d="M72 507H1128" stroke="#d9dee6" stroke-width="2"/>${txt(72, 554, 24, 'phamhungtien.com', 'fill="#566074"')}${txt(1128, 554, 22, footer, 'text-anchor="end" fill="#566074"')}</g></svg>`;
   const path = `public/og/${slug}.png`;
   await sharp(Buffer.from(svg)).png({ compressionLevel: 9 }).toFile(path);
   outputs.push(path);
 }
 const panel = (i, label) =>
-  `<rect x="832" y="126" width="292" height="364" rx="64" fill="#fffaf2" stroke="#d4b98e"/><image href="${icons[i]}" x="878" y="168" width="200" height="200"/>${txt(978, 433, 24, label, 'text-anchor="middle" fill="#756354"')}`;
+  `<rect x="832" y="126" width="292" height="344" rx="40" fill="#ffffff" stroke="#d9dee6" stroke-width="2"/><image href="${icons[i]}" x="878" y="162" width="200" height="200"/>${txt(978, 423, 24, label, 'text-anchor="middle" fill="#566074" font-weight="500"')}`;
 await card(
   'home',
-  txt(72, 235, 64, 'Small ideas.', 'font-weight="700" letter-spacing="-2"') +
-    txt(
-      72,
-      315,
-      64,
-      'Thoughtfully built.',
-      'font-family="Georgia,serif" font-style="italic" letter-spacing="-2"',
-    ) +
-    txt(74, 390, 28, 'Apps for everyday ideas.', 'fill="#756354"') +
+  txt(70, 268, 104, 'Phạm Hùng Tiến', 'font-weight="700" letter-spacing="-4"') +
+    txt(74, 330, 30, 'Independent app developer', 'fill="#566074" font-weight="500"') +
+    `<rect x="72" y="372" width="1056" height="104" rx="28" fill="#ffffff" stroke="#d9dee6" stroke-width="2"/>` +
     icons
       .map(
-        (icon, i) =>
-          `<image href="${icon}" x="${792 + (i === 6 ? 1 : i % 3) * 116}" y="${130 + Math.floor(i / 3) * 116}" width="96" height="96"/>`,
+        (icon, i) => `<image href="${icon}" x="${104 + i * 146}" y="384" width="80" height="80"/>`,
       )
       .join(''),
-  'The app collection',
+  'Offline-first, private apps',
 );
 for (const [i, a] of apps.entries()) {
-  const [slug, route, name, , lines, detail] = a;
+  const [slug, , name, , lines, detail] = a;
   await card(
     slug,
     txt(72, 187, 36, name, 'font-weight="600"') +
@@ -112,7 +110,7 @@ for (const [i, a] of apps.entries()) {
           ),
         )
         .join('') +
-      txt(74, 422, 25, detail, 'fill="#756354"') +
+      txt(74, 422, 25, detail, 'fill="#566074"') +
       panel(i, name),
     slug === 'phtv' ? 'macOS' : 'App Store',
   );
@@ -139,47 +137,11 @@ for (const [i, a] of apps.entries()) {
             : kind === 'privacy'
               ? 'Your data, clearly explained.'
               : 'The details behind the app.',
-          'fill="#756354"',
+          'fill="#566074"',
         ) +
         panel(i, heading),
       name,
     );
-    const file = `${route}/${slug === 'phtv' ? 'public/' : ''}${kind}.html`;
-    let html = await readFile(file, 'utf8');
-    html = html.replace(/\s*<!-- social-preview:start -->[\s\S]*?<!-- social-preview:end -->/g, '');
-    const title = `${name} — ${local}`,
-      desc = html.match(/<meta\s+name="description"\s+content="([^"]*)"/i)?.[1] ?? title;
-    const image = `https://phamhungtien.com/og/${slug}-${kind}.png?v=earth-1`;
-    const tags = {
-      'og:type': 'website',
-      'og:site_name': 'Pham Hung Tien',
-      'og:title': title,
-      'og:description': desc,
-      'og:url': `https://phamhungtien.com/${route}/${kind}.html`,
-      'og:image': image,
-      'og:image:secure_url': image,
-      'og:image:type': 'image/png',
-      'og:image:width': '1200',
-      'og:image:height': '630',
-      'og:image:alt': title,
-    };
-    const block =
-      '\n<!-- social-preview:start -->\n' +
-      Object.entries(tags)
-        .map(([key, val]) => `<meta property="${key}" content="${esc(val)}" />`)
-        .join('\n') +
-      '\n' +
-      Object.entries({
-        'twitter:card': 'summary_large_image',
-        'twitter:title': title,
-        'twitter:description': desc,
-        'twitter:image': image,
-        'twitter:image:alt': title,
-      })
-        .map(([key, val]) => `<meta name="${key}" content="${esc(val)}" />`)
-        .join('\n') +
-      '\n<!-- social-preview:end -->\n';
-    await writeFile(file, html.replace('</head>', `${block}</head>`));
   }
 }
 for (const file of outputs) {
@@ -191,7 +153,7 @@ await sharp({
     width: 1200,
     height: Math.ceil(outputs.length / 4) * 158,
     channels: 3,
-    background: '#e9dfd0',
+    background: '#e9edf2',
   },
 })
   .composite(
@@ -205,4 +167,4 @@ await sharp({
   )
   .jpeg({ quality: 90 })
   .toFile('/tmp/social-preview-contact-sheet.jpg');
-console.log(`Generated ${outputs.length} social previews, 1200 × 630, and legal metadata.`);
+console.log(`Generated ${outputs.length} social previews, 1200 × 630.`);

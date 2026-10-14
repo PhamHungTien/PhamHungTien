@@ -1,0 +1,88 @@
+---
+import { Plus } from '@lucide/astro';
+import type { App, Lang } from '../../data/types';
+import { t } from '../../lib/i18n';
+
+interface Props {
+  app: App;
+  lang: Lang;
+}
+
+const { app, lang } = Astro.props;
+const parts = (text: string) =>
+  text
+    .split(/(`[^`]+`)/g)
+    .map((part) => (part.startsWith('`') ? { code: part.slice(1, -1) } : { text: part }));
+---
+
+{app.faq?.length && (
+  <section class="faq container section defer-render" id="faq" aria-labelledby="faq-heading">
+    <div class="section-head">
+      <h2 id="faq-heading">{t(lang, 'app.faq')}</h2>
+    </div>
+    <div class="faq__list">
+      {app.faq.map((item) => (
+        <details name="faq">
+          <summary>
+            <span>{item.question[lang]}</span>
+            <Plus size={20} aria-hidden="true" />
+          </summary>
+          <p>
+            {parts(item.answer[lang]).map((part) =>
+              'code' in part ? <code>{part.code}</code> : part.text,
+            )}
+          </p>
+        </details>
+      ))}
+    </div>
+  </section>
+)}
+
+<style>
+  .faq__list {
+    max-width: 860px;
+    border-top: 1px solid var(--line);
+  }
+
+  details {
+    border-bottom: 1px solid var(--line);
+  }
+
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 20px 0;
+    font-size: 17px;
+    font-weight: 600;
+    list-style: none;
+    cursor: pointer;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary :global(svg) {
+    color: var(--muted);
+    transition: transform 200ms var(--ease);
+  }
+
+  details[open] summary :global(svg) {
+    transform: rotate(45deg);
+  }
+
+  p {
+    max-width: 70ch;
+    padding-bottom: 22px;
+    color: var(--muted);
+  }
+
+  code {
+    padding: 2px 6px;
+    border-radius: 6px;
+    background: var(--surface-2);
+    color: var(--ink);
+  }
+</style>

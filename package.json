@@ -1,54 +1,34 @@
 {
-  "name": "phamhungtien-portfolio",
-  "version": "1.0.0",
-  "description": "Pham Hung Tien - React product portfolio and app landing pages",
+  "name": "phamhungtien-site",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Phạm Hùng Tiến — one Astro site for the portfolio, every app page and their legal documents",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "dev:phtv": "npm run dev --workspace @phamhungtien/phtv-web",
-    "build": "npm run build:client && npm run build:ssr && npm run prerender && node scripts/security-html.mjs dist dist-aliases",
-    "build:client": "vite build",
-    "build:ssr": "vite build --ssr src/entry-server.tsx",
-    "prerender": "node scripts/prerender.mjs",
-    "og": "./scripts/generate-og.sh",
-    "optimize:images": "npm run images",
+    "dev": "astro dev",
+    "build": "astro build && node scripts/postbuild.mjs",
+    "preview": "astro preview",
+    "check": "astro check",
     "site": "./scripts/build-site.sh",
+    "verify": "node scripts/verify.mjs",
     "verify:site": "./scripts/verify-site.sh",
-    "verify:ui": "node scripts/verify-ui.mjs",
-    "deploy:local": "./scripts/deploy-local.sh",
-    "build:phtv": "npm run build --workspace @phamhungtien/phtv-web",
-    "build:all": "npm run build && npm run build:phtv",
-    "preview": "vite preview",
-    "preview:phtv": "cd PHTV && npm run preview",
-    "type-check": "tsc --noEmit",
-    "type-check:phtv": "npm run type-check --workspace @phamhungtien/phtv-web",
-    "type-check:all": "npm run type-check && npm run type-check:phtv",
-    "install:deps": "npm install",
-    "sync:appstore": "node scripts/sync-appstore.mjs",
     "verify:social": "node scripts/verify-social.mjs",
-    "images": "node scripts/generate-responsive-images.mjs",
-    "format": "prettier --write src PHTV config scripts *.json *.ts CONTRIBUTING.md docs/*.md",
-    "format:check": "prettier --check src PHTV config scripts *.json *.ts CONTRIBUTING.md docs/*.md",
-    "verify:seo": "node scripts/verify-seo.mjs"
+    "og": "node scripts/generate-og.mjs",
+    "sync:appstore": "node scripts/sync-appstore.mjs",
+    "test:rules": "firebase emulators:exec --only firestore --project demo-phtv \"node firebase/firestore.rules.test.mjs\"",
+    "deploy:rules": "firebase deploy --only firestore:rules",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
+    "@astrojs/react": "^7.0.1",
+    "@lucide/astro": "^1.57.0",
+    "astro": "^7.3.8",
     "firebase": "^12.19.0",
-    "liquid-glass-react": "^1.1.1",
-    "lucide-react": "^0.562.0",
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0"
-  },
-  "devDependencies": {
-    "@tailwindcss/vite": "^4.3.3",
-    "@types/node": "^22.14.0",
-    "@types/react": "^19.2.7",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^6.1.2",
-    "prettier": "^3.9.10",
-    "sharp": "^0.35.5",
-    "tailwindcss": "^4.3.3",
-    "typescript": "^7.0.2",
-    "vite": "^8.3.4"
+    "lucide-react": "^1.57.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "sharp": "^0.35.5"
   },
   "keywords": [
     "portfolio",
@@ -56,7 +36,8 @@
     "vietnamese-input",
     "macos",
     "react",
-    "typescript"
+    "typescript",
+    "astro"
   ],
   "author": "Pham Hung Tien",
   "license": "GPL-3.0-only",
@@ -65,13 +46,18 @@
     "url": "https://github.com/PhamHungTien/PhamHungTien"
   },
   "homepage": "https://phamhungtien.com",
-  "overrides": {
-    "@grpc/grpc-js": "1.14.6"
-  },
-  "workspaces": [
-    "PHTV"
-  ],
   "engines": {
-    "node": ">=24"
+    "node": ">=22.12.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@firebase/rules-unit-testing": "^5.0.2",
+    "@fontsource/be-vietnam-pro": "^5.3.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "firebase-tools": "^15.33.0",
+    "prettier": "^3.9.10",
+    "prettier-plugin-astro": "^1.1.1",
+    "typescript": "^6.0.3"
   }
 }

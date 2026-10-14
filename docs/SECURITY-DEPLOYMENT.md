@@ -3,9 +3,9 @@
 GitHub Pages serves `gh-pages`; Cloudflare proxies the custom domain. `_headers`
 files are **not interpreted** by GitHub Pages or a DNS-only Cloudflare record.
 The build injects a per-document CSP with hashes for existing inline scripts,
-without granting arbitrary inline script execution. Inline styles remain enabled
-for React motion and glass effects. Images can load over HTTPS; network/script
-origins are explicitly limited. Test older browsers using the legacy bundle too.
+without granting arbitrary inline script execution (`scripts/postbuild.mjs`).
+Inline styles remain enabled because Astro inlines each page's stylesheet. Images can load over HTTPS; network/script
+origins are explicitly limited.
 
 ## Cloudflare settings requiring account access
 
@@ -30,7 +30,7 @@ to Firebase; Firebase rules and App Check enforce that boundary.
 
 ## Firebase rollout
 
-Run `cd PHTV && npm run test:rules`, then `npm run deploy:rules` using the project
+Run `npm run test:rules`, then `npm run deploy:rules` using the project
 owner account. GitHub website deployment does **not** deploy Firestore rules.
 The rules restrict reply additions, edits, deletions and likes to the caller's
 identity; admin privileges require a verified token email. The UI stops recording
@@ -52,8 +52,7 @@ discussion reads intentionally remain public.
 
 ## Validation and remaining limits
 
-Run `npm run type-check:all`, `npm run build:all`, `npm run verify:ui`, and
-`cd PHTV && npm run test:rules`. Review production dependency audits separately
+Run `npm run check`, `npm run build`, `npm run verify` and `npm run test:rules`. Review production dependency audits separately
 from build/emulator tooling. Do not claim complete security from an audit pass.
 Production headers and deployed Firestore rules must be verified in their consoles.
 

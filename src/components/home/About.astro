@@ -1,0 +1,89 @@
+---
+import type { Lang } from '../../data/types';
+import { focusAreas } from '../../i18n/ui';
+import { t } from '../../lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<section class="about container section defer-render" id="about" aria-labelledby="about-heading">
+  <h2 id="about-heading">{t(lang, 'home.about.title')}</h2>
+  <div>
+    <p class="about__intro">{t(lang, 'home.about.intro')}</p>
+    <ul class="about__focus" role="list">
+      {focusAreas[lang].map((area) => (
+        <li>
+          <h3>{area.title}</h3>
+          <p>{area.body}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .about {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap: 32px clamp(32px, 6vw, 96px);
+  }
+
+  h2 {
+    font-size: clamp(30px, 4.2vw, 48px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+
+  .about__intro {
+    max-width: 32em;
+    font-size: clamp(19px, 2.2vw, 25px);
+    font-weight: 600;
+    line-height: 1.45;
+    letter-spacing: -0.01em;
+  }
+
+  .about__focus {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px;
+    margin-top: 48px;
+  }
+
+  .about__focus li {
+    padding-top: 20px;
+    border-top: 2px solid var(--ink);
+  }
+
+  h3 {
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  .about__focus p {
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  @media (max-width: 900px) {
+    .about {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .about__focus {
+      margin-top: 32px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .about__focus {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 24px;
+    }
+  }
+</style>

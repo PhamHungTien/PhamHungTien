@@ -1,0 +1,88 @@
+/** Theme toggle and the mobile menu. Imported once by Header.astro. */
+
+const root = document.documentElement;
+
+function applyThemeLabels() {
+  const dark = root.dataset.theme === 'dark';
+  for (const button of document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]')) {
+    button.setAttribute(
+      'aria-label',
+      (dark ? button.dataset.labelLight : button.dataset.labelDark) ?? '',
+    );
+  }
+}
+
+function setTheme(theme: 'light' | 'dark') {
+  root.dataset.theme = theme;
+  try {
+    localStorage.setItem('theme', theme);
+  } catch {
+    // Storage can be unavailable (private mode); the choice still applies to this page.
+  }
+  applyThemeLabels();
+}
+
+function initTheme() {
+  applyThemeLabels();
+  for (const button of document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]')) {
+    button.addEventListener('click', () =>
+      setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark'),
+    );
+  }
+
+  // Follow the system until the visitor makes a choice, and keep open tabs in sync.
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
+    let stored: string | null = null;
+    try {
+      stored = localStorage.getItem('theme');
+    } catch {}
+    if (!stored) {
+      root.dataset.theme = event.matches ? 'dark' : 'light';
+      applyThemeLabels();
+    }
+  });
+  window.addEventListener('storage', (event) => {
+    if (event.key === 'theme' && (event.newValue === 'light' || event.newValue === 'dark')) {
+      root.dataset.theme = event.newValue;
+      applyThemeLabels();
+    }
+  });
+}
+
+function initMenu() {
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = document.querySelector<HTMLElement>('[data-mobile-nav]');
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  if (!toggle || !menu || !header) return;
+
+  const setOpen = (open: boolean, restoreFocus = false) => {
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute(
+      'aria-label',
+      (open ? toggle.dataset.labelClose : toggle.dataset.labelOpen) ?? '',
+    );
+    menu.classList.toggle('is-open', open);
+    menu.inert = !open;
+    if (!open && restoreFocus) toggle.focus({ preventScroll: true });
+  };
+
+  toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+  menu.addEventListener('click', (event) => {
+    if ((event.target as Element).closest('a')) setOpen(false);
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && menu.classList.contains('is-open')) setOpen(false, true);
+  });
+  document.addEventListener('pointerdown', (event) => {
+    if (menu.classList.contains('is-open') && !header.contains(event.target as Node))
+      setOpen(false);
+  });
+  matchMedia('(min-width: 961px)').addEventListener('change', (event) => {
+    if (event.matches) setOpen(false);
+  });
+}
+
+export function initHeader() {
+  initTheme();
+  initMenu();
+}

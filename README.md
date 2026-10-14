@@ -22,21 +22,21 @@
 [store]: https://img.shields.io/badge/App%20Store-0071e3?style=flat-square&logo=apple&logoColor=white
 [source]: https://img.shields.io/badge/Source-181717?style=flat-square&logo=github&logoColor=white
 
-| App | Platforms | |
-|---|---|---|
-| <img src="https://phamhungtien.com/assets/phtv-icon.webp" width="20" align="top"> **[PHTV](https://phamhungtien.com/PHTV/)**<br/>Vietnamese input method in 100% Swift: Telex/VNI, macro engine, spell checker. Free and open source. | macOS | [![Source][source]](https://github.com/PhamHungTien/PHTV) |
-| <img src="https://phamhungtien.com/vTTS/assets/app-icon.png" width="20" align="top"> **[vTTS](https://phamhungtien.com/vTTS/)**<br/>On-device Vietnamese & English speech, EPUB library, background music, sleep timer, audio export, and optional LAN hosting. | iOS · iPadOS · macOS · visionOS | [![App Store][store]](https://apps.apple.com/app/id6817003401) |
-| <img src="https://phamhungtien.com/PadCodeAI/assets/app-icon.png" width="20" align="top"> **[Pad Code AI](https://phamhungtien.com/PadCodeAI/)**<br/>IDE that compiles and runs C, C++, Python, JavaScript, TypeScript, Ruby, PHP, Lua, and SQL on device, with an interactive terminal, Git, and an AI assistant. | iOS · iPadOS | [![App Store][store]](https://apps.apple.com/us/app/pad-code-ai-code-editor/id6774398897) |
-| <img src="https://phamhungtien.com/PadNotesAI/assets/app-icon.png" width="20" align="top"> **[Pad Notes AI](https://phamhungtien.com/PadNotesAI/)**<br/>Apple Pencil handwriting, on-device OCR, voice memos, CloudKit sync, and an AI assistant. | iOS · iPadOS · macOS · visionOS | [![App Store][store]](https://apps.apple.com/us/app/pad-notes-ai/id6779363432) |
-| <img src="https://phamhungtien.com/MyNASManager/assets/app-icon.png" width="20" align="top"> **[My NAS Manager](https://phamhungtien.com/MyNASManager/)**<br/>Synology DSM client: live CPU/RAM/S.M.A.R.T. monitoring, File Station, SSH terminal, HTTPS + 2FA. | iOS · iPadOS · macOS · visionOS | [![App Store][store]](https://apps.apple.com/us/app/my-nas-manager/id6780180564) |
-| <img src="https://phamhungtien.com/assets/lunarv-icon.png" width="20" align="top"> **[LunarV](https://phamhungtien.com/LunarV/)**<br/>Vietnamese lunar calendar with timezone-aware conversion, widgets, and holiday reminders. | iOS · iPadOS · macOS · visionOS | [![App Store][store]](https://apps.apple.com/app/id6770913893) |
-| <img src="https://phamhungtien.com/LunarBlock/assets/app-icon.png" width="20" align="top"> **[Lunar Block](https://phamhungtien.com/LunarBlock/)**<br/>SceneKit 3D block puzzle with physics-driven fracture, synthesized audio, and layered haptics. | iOS · iPadOS · macOS · visionOS | [![App Store][store]](https://apps.apple.com/us/app/lunar-block-teris-3d/id6773545437) |
+| App                                                                                                                                                                                                                                                                                                                | Platforms                       |                                                                                           |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------- | ----------------------------------------------------------------------------------------- |
+| <img src="https://phamhungtien.com/assets/phtv-icon.webp" width="20" align="top"> **[PHTV](https://phamhungtien.com/PHTV/)**<br/>Vietnamese input method in 100% Swift: Telex/VNI, macro engine, spell checker. Free and open source.                                                                              | macOS                           | [![Source][source]](https://github.com/PhamHungTien/PHTV)                                 |
+| <img src="https://phamhungtien.com/vTTS/assets/app-icon.png" width="20" align="top"> **[vTTS](https://phamhungtien.com/vTTS/)**<br/>On-device Vietnamese & English speech, EPUB library, background music, sleep timer, audio export, and optional LAN hosting.                                                    | iOS · iPadOS · macOS · visionOS | [![App Store][store]](https://apps.apple.com/app/id6817003401)                            |
+| <img src="https://phamhungtien.com/PadCodeAI/assets/app-icon.png" width="20" align="top"> **[Pad Code AI](https://phamhungtien.com/PadCodeAI/)**<br/>IDE that compiles and runs C, C++, Python, JavaScript, TypeScript, Ruby, PHP, Lua, and SQL on device, with an interactive terminal, Git, and an AI assistant. | iOS · iPadOS                    | [![App Store][store]](https://apps.apple.com/us/app/pad-code-ai-code-editor/id6774398897) |
+| <img src="https://phamhungtien.com/PadNotesAI/assets/app-icon.png" width="20" align="top"> **[Pad Notes AI](https://phamhungtien.com/PadNotesAI/)**<br/>Apple Pencil handwriting, on-device OCR, voice memos, CloudKit sync, and an AI assistant.                                                                  | iOS · iPadOS · macOS · visionOS | [![App Store][store]](https://apps.apple.com/us/app/pad-notes-ai/id6779363432)            |
+| <img src="https://phamhungtien.com/MyNASManager/assets/app-icon.png" width="20" align="top"> **[My NAS Manager](https://phamhungtien.com/MyNASManager/)**<br/>Synology DSM client: live CPU/RAM/S.M.A.R.T. monitoring, File Station, SSH terminal, HTTPS + 2FA.                                                    | iOS · iPadOS · macOS · visionOS | [![App Store][store]](https://apps.apple.com/us/app/my-nas-manager/id6780180564)          |
+| <img src="https://phamhungtien.com/assets/lunarv-icon.png" width="20" align="top"> **[LunarV](https://phamhungtien.com/LunarV/)**<br/>Vietnamese lunar calendar with timezone-aware conversion, widgets, and holiday reminders.                                                                                    | iOS · iPadOS · macOS · visionOS | [![App Store][store]](https://apps.apple.com/app/id6770913893)                            |
+| <img src="https://phamhungtien.com/LunarBlock/assets/app-icon.png" width="20" align="top"> **[Lunar Block](https://phamhungtien.com/LunarBlock/)**<br/>SceneKit 3D block puzzle with physics-driven fracture, synthesized audio, and layered haptics.                                                              | iOS · iPadOS · macOS · visionOS | [![App Store][store]](https://apps.apple.com/us/app/lunar-block-teris-3d/id6773545437)    |
 
 ---
 
 ## 🔧 Embedded
 
-### [STM-FaceGuard](https://github.com/PhamHungTien/STM-FaceGuard) — *Dual-MCU Smart Lock*
+### [STM-FaceGuard](https://github.com/PhamHungTien/STM-FaceGuard) — _Dual-MCU Smart Lock_
 
 Face-recognition smart lock on an **STM32F411 + ESP32-S3/OV3660** dual-MCU architecture. Sub-0.2 s unlock over a custom checksummed UART protocol, with watchdog recovery and 24/7 security lockouts.
 
@@ -71,6 +71,7 @@ Face-recognition smart lock on an **STM32F411 + ESP32-S3/OV3660** dual-MCU archi
 
 ## Website development
 
-This website uses React, Vite and strict TypeScript in an npm workspace. See the
-[architecture](docs/ARCHITECTURE.md) and [contributing guide](CONTRIBUTING.md) for setup,
-shared components, image optimization and deployment checks.
+This repository also builds [phamhungtien.com](https://phamhungtien.com): one
+[Astro](https://astro.build) site for the portfolio, every app page (English and
+Vietnamese) and their legal documents. See the [architecture](docs/ARCHITECTURE.md),
+[design system](docs/DESIGN-SYSTEM.md) and [contributing guide](CONTRIBUTING.md).

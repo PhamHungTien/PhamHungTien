@@ -1,0 +1,17 @@
+---
+import type { GetStaticPaths } from 'astro';
+import LegalPage from '../../components/legal/LegalPage.astro';
+import { appSegment } from '../../data/apps';
+import { getLegalDocuments, isDefaultLegal } from '../../lib/legal';
+
+/** /<App>/privacy.html and /<App>/terms.html, in the app's default language. */
+export const getStaticPaths = (async () =>
+  (await getLegalDocuments()).filter(isDefaultLegal).map((doc) => ({
+    params: { app: appSegment(doc.app), doc: doc.kind },
+    props: { doc },
+  }))) satisfies GetStaticPaths;
+
+const { doc } = Astro.props;
+---
+
+<LegalPage doc={doc} />

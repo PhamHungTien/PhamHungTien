@@ -1,0 +1,199 @@
+---
+/** Product video (self-hosted) and YouTube tutorial. The tutorial loads YouTube only on click. */
+import { Image } from 'astro:assets';
+import { ExternalLink, Play, Video } from '@lucide/astro';
+import type { App, Lang } from '../../data/types';
+import { t } from '../../lib/i18n';
+
+interface Props {
+  app: App;
+  lang: Lang;
+}
+
+const { app, lang } = Astro.props;
+const videoUrl = app.localizedVideoUrls?.[lang] ?? app.videoUrl;
+const tutorial = app.tutorial;
+const poster = tutorial ? `https://i.ytimg.com/vi/${tutorial.youtubeId}/hqdefault.jpg` : null;
+---
+
+{videoUrl && (
+  <section
+    class:list={['video container section defer-render', { 'video--portrait': app.videoPortrait }]}
+    id="demo"
+    aria-labelledby="demo-heading"
+  >
+    <div class="section-head">
+      <div>
+        <h2 id="demo-heading">{t(lang, 'app.video')}</h2>
+        <p>{app.videoDescription?.[lang] ?? t(lang, 'app.videoFallback')}</p>
+      </div>
+    </div>
+    <div class="video__frame">
+      <video src={videoUrl} poster={app.videoPosters?.[lang]} controls playsinline preload="none">
+        {t(lang, 'app.videoUnsupported')}
+      </video>
+    </div>
+  </section>
+)}
+
+{tutorial && poster && (
+  <section
+    class="video container section defer-render"
+    id="tutorial"
+    aria-labelledby="tutorial-heading"
+  >
+    <div class="section-head">
+      <div>
+        <h2 id="tutorial-heading">{tutorial.title[lang]}</h2>
+        <p>{tutorial.description[lang]}</p>
+      </div>
+    </div>
+    <div class="video__frame">
+      <button
+        type="button"
+        class="youtube"
+        data-youtube={tutorial.youtubeId}
+        data-title={tutorial.title[lang]}
+        aria-label={`${t(lang, 'app.tutorial.play')}: ${tutorial.title[lang]}`}
+      >
+        <Image src={poster} alt="" width={480} height={360} inferSize={false} loading="lazy" />
+        <span class="youtube__play" aria-hidden="true">
+          <Play size={30} fill="currentColor" />
+        </span>
+      </button>
+    </div>
+    <div class="video__meta">
+      {tutorial.credit && (
+        <span>
+          <Video size={16} aria-hidden="true" />
+          {tutorial.credit[lang]}
+        </span>
+      )}
+      <a
+        class="text-link"
+        href={`https://youtu.be/${tutorial.youtubeId}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {t(lang, 'app.tutorial.youtube')}
+        <ExternalLink size={14} aria-hidden="true" />
+      </a>
+    </div>
+  </section>
+)}
+
+<script>
+  // A click swaps the poster for the real player, so YouTube costs nothing until then.
+  for (const button of document.querySelectorAll<HTMLButtonElement>('[data-youtube]')) {
+    button.addEventListener(
+      'click',
+      () => {
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube-nocookie.com/embed/${button.dataset.youtube}?autoplay=1&rel=0`;
+        iframe.title = button.dataset.title ?? 'YouTube';
+        iframe.allow =
+          'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+        iframe.allowFullscreen = true;
+        button.replaceWith(iframe);
+        iframe.focus();
+      },
+      { once: true },
+    );
+  }
+</script>
+
+<style>
+  .video__frame {
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--r-media);
+    background: #000;
+    box-shadow: var(--shadow-media);
+  }
+
+  .video__frame video,
+  .video__frame :global(iframe),
+  .youtube {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 0;
+    background: #000;
+  }
+
+  .video--portrait {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 340px);
+    align-items: center;
+    gap: clamp(24px, 5vw, 72px);
+  }
+
+  .video--portrait video {
+    aspect-ratio: 886 / 1920;
+  }
+
+  .youtube {
+    position: relative;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .youtube :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.88;
+    transition: opacity 200ms ease;
+  }
+
+  .youtube:hover :global(img) {
+    opacity: 1;
+  }
+
+  .youtube__play {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    width: 76px;
+    height: 76px;
+    margin: auto;
+    place-items: center;
+    border-radius: 50%;
+    background: rgb(0 0 0 / 0.65);
+    color: #fff;
+    transition: transform 200ms var(--ease);
+  }
+
+  .youtube:hover .youtube__play {
+    transform: scale(1.06);
+  }
+
+  .video__meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 14px;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .video__meta span,
+  .video__meta a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  @media (max-width: 720px) {
+    .video--portrait {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .video--portrait .video__frame {
+      width: min(320px, 100%);
+      margin-inline: auto;
+    }
+  }
+</style>

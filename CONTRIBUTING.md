@@ -1,46 +1,57 @@
-# Contributing to the website
+# Contributing
 
-This repository contains the portfolio website and application landing pages. The native
-PHTV application is maintained in [PhamHungTien/PHTV](https://github.com/PhamHungTien/PHTV).
+This repository builds [phamhungtien.com](https://phamhungtien.com): the portfolio, the
+landing page of every app, and their privacy policies and terms. The apps themselves
+live in their own repositories (for example [PHTV](https://github.com/PhamHungTien/PHTV)).
 
-## Development
+## Getting started
 
-Use Node.js 24 LTS (`nvm use`), then run `npm ci` at the repository root. npm workspaces
-install both web applications using one lockfile.
+Requirements: Node.js 24 (`nvm use`), npm 10+. Java 21 only for the Firestore rules tests.
 
-- `npm run dev`: portfolio and six application landing pages.
-- `npm run dev:phtv`: the PHTV website at `/PHTV/`.
-- `npm run images`: regenerate responsive images without changing source artwork.
-- `npm run og`: regenerate social previews and legal-page social metadata.
-- `npm run format`: apply the shared source formatting rules.
-- `npm run type-check:all`: check both applications with strict TypeScript.
-- `npm run build:all`: build both applications and prerender public pages.
-- `npm run verify:ui` and `npm run verify:social`: validate built output.
+```sh
+npm ci
+npm run dev        # http://localhost:4321
+```
 
-Run `npm run format:check`, type checking, builds and output verification before opening
-a pull request. Firestore changes also require `npm run test:rules --workspace
-@phamhungtien/phtv-web` (Java 21 is needed for the emulator).
+## Scripts
 
-## Project conventions
+| Command                 | What it does                                                   |
+| ----------------------- | -------------------------------------------------------------- |
+| `npm run dev`           | Development server with hot reload                             |
+| `npm run build`         | Production build to `dist/`, then CSP, legacy URLs and aliases |
+| `npm run preview`       | Serve the production build locally                             |
+| `npm run verify`        | Check SEO, links, images, hreflang and sitemap of `dist/`      |
+| `npm run check`         | Type-check `.astro`, `.ts` and `.tsx` files                    |
+| `npm run format`        | Format with Prettier (`format:check` in CI)                    |
+| `npm run og`            | Regenerate the Open Graph cards in `public/og`                 |
+| `npm run sync:appstore` | Refresh `src/data/appstore.json` from the App Store            |
+| `npm run test:rules`    | Run the Firestore security rules tests in the emulator         |
 
-Shared React components belong in `src/components`; application data belongs in `src/data`.
-Shared build settings belong in `config`. Both applications use `tsconfig.base.json`.
-Navigation dimensions and material/color tokens belong in `assets/liquid-glass.css`.
-Avoid adding page-specific overrides for shared control sizes.
+Before opening a pull request run `npm run format:check`, `npm run check`,
+`npm run build` and `npm run verify`.
 
-The portfolio, non-PHTV applications and their legal pages use English only. PHTV
-defaults to Vietnamese and supports English. Preserve existing translations and use the
-shared language switch component when adding controls.
+## Where things live
 
-Use native links for navigation, accessible names for controls, explicit image dimensions,
-and reduced-motion fallbacks. Keep original screenshots available for enlarged views.
-Generated image files are committed so deployment does not need image processing.
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the full layout. In short:
 
-## Security and licensing
+- **App content** (text, screenshots, platforms, store links): `src/data/apps/<slug>.ts`
+- **Interface text** in both languages: `src/i18n/ui.ts`
+- **Legal documents**: `src/content/legal/<slug>/*.md`
+- **Design tokens**: top of `src/styles/global.css` ([design system](docs/DESIGN-SYSTEM.md))
 
-Never put private keys, service-account credentials or email API secrets in browser code,
-Vite `define`, committed environment files or logs. Use GitHub Secrets for notification
-workflows. Firebase authorization is enforced by Firestore rules, not by hiding buttons.
+## Conventions
 
-Follow the repository's [GPL-3.0 license](LICENSE). Report defects with reproduction steps
-and expected behavior; keep pull requests focused and explain their validation.
+- Every user-facing string is written in English and Vietnamese.
+- Prefer HTML and CSS; add browser JavaScript only for real interaction, as a small module
+  in `src/scripts`. Use React only for complex, data-driven islands.
+- Use native elements (`<a>`, `<button>`, `<dialog>`, `<details>`), accessible names,
+  explicit image dimensions and reduced-motion fallbacks.
+- Structured data must describe facts visible on the page. Do not add ratings or prices
+  that are not confirmed.
+- Never commit secrets. Firebase web config is public by design; access is enforced by
+  `firebase/firestore.rules`, which has its own tests.
+
+## License
+
+[GPL-3.0](LICENSE). Report bugs with steps to reproduce and the expected result; keep
+pull requests focused and describe how you validated them.

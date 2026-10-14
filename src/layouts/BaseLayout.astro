@@ -1,0 +1,150 @@
+---
+/**
+ * The one document shell for every page: head metadata, theme bootstrapping, header,
+ * footer and the shared donate dialog.
+ */
+import '../styles/global.css';
+import latin400 from '@fontsource/be-vietnam-pro/files/be-vietnam-pro-latin-400-normal.woff2?url';
+import latin700 from '@fontsource/be-vietnam-pro/files/be-vietnam-pro-latin-700-normal.woff2?url';
+import vietnamese700 from '@fontsource/be-vietnam-pro/files/be-vietnam-pro-vietnamese-700-normal.woff2?url';
+import Header, { type NavItem } from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import DonateDialog from '../components/ui/DonateDialog.astro';
+import type { Lang } from '../data/types';
+import { SITE } from '../data/site';
+import { htmlLang, ogLocale } from '../lib/i18n';
+import { absolute, OG_SIZE } from '../lib/seo';
+import type { Alternate } from '../lib/routes';
+
+export interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  /** Root-relative path of this page, e.g. "/vTTS/". */
+  path: string;
+  alternates?: Alternate[];
+  ogImage: string;
+  ogImageAlt?: string;
+  ogType?: 'website' | 'article';
+  jsonLd?: unknown;
+  favicon?: { href: string; type: string };
+  nav: NavItem[];
+  noindex?: boolean;
+  /** Pages that are not part of the main reading flow (legal, 404) use a quieter footer. */
+  compactFooter?: boolean;
+}
+
+const {
+  lang,
+  title,
+  description,
+  path,
+  alternates = [],
+  ogImage,
+  ogImageAlt = title,
+  ogType = 'website',
+  jsonLd,
+  favicon,
+  nav,
+  noindex = false,
+  compactFooter = false,
+} = Astro.props;
+
+const canonical = absolute(path);
+const defaultAlternate = alternates.find((alt) => alt.href === path) ?? alternates[0];
+const escapeJson = (value: unknown) => JSON.stringify(value).replace(/</g, '\\u003c');
+
+/** Chromium prerenders a same-site page the moment a visitor shows intent to open it. */
+const speculationRules = {
+  prerender: [
+    {
+      where: {
+        and: [
+          { href_matches: '/*' },
+          {
+            not: {
+              selector_matches: '[href^="#"], [target="_blank"], [download], [rel~="nofollow"]',
+            },
+          },
+        ],
+      },
+      eagerness: 'moderate',
+    },
+  ],
+};
+---
+
+<!doctype html>
+<html lang={htmlLang(lang)} data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    {!noindex && (
+      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    )}
+    <meta name="author" content={SITE.name} />
+    {alternates.length > 1 &&
+      alternates.map((alt) => (
+        <link rel="alternate" hreflang={alt.lang} href={absolute(alt.href)} />
+      ))}
+    {alternates.length > 1 && defaultAlternate && (
+      <link rel="alternate" hreflang="x-default" href={absolute(alternates[0].href)} />
+    )}
+
+    <meta name="theme-color" content="#f3f5f8" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0d1118" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light dark" />
+
+    <link
+      rel="icon"
+      href={favicon?.href ?? '/favicon.svg'}
+      type={favicon?.type ?? 'image/svg+xml'}
+    />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <link rel="preload" href={latin400} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={latin700} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={vietnamese700} as="font" type="font/woff2" crossorigin />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:locale" content={ogLocale(lang)} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content={String(OG_SIZE.width)} />
+    <meta property="og:image:height" content={String(OG_SIZE.height)} />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    {jsonLd && <script type="application/ld+json" set:html={escapeJson(jsonLd)} />}
+    <script type="speculationrules" set:html={JSON.stringify(speculationRules)} />
+    <!-- Runs before first paint so a stored or system dark theme never flashes light. -->
+    <script is:inline>
+      (() => {
+        let theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        try {
+          const stored = localStorage.getItem('theme');
+          if (stored === 'light' || stored === 'dark') theme = stored;
+        } catch {}
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+  </head>
+  <body>
+    <Header lang={lang} nav={nav} alternates={alternates} />
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+    <Footer lang={lang} compact={compactFooter} />
+    <DonateDialog lang={lang} />
+  </body>
+</html>

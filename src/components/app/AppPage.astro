@@ -1,0 +1,74 @@
+---
+import { getImage } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AppHero from './AppHero.astro';
+import Facts from './Facts.astro';
+import Install from './Install.astro';
+import Media from './Media.astro';
+import Features from './Features.astro';
+import Gallery from './Gallery.astro';
+import Faq from './Faq.astro';
+import Discussions from './Discussions.astro';
+import MoreApps from './MoreApps.astro';
+import Contact from '../layout/Contact.astro';
+import Lightbox from '../ui/Lightbox.astro';
+import type { NavItem } from '../layout/Header.astro';
+import type { App, Lang } from '../../data/types';
+import { LANGS } from '../../data/types';
+import { defaultLangOf } from '../../data/apps';
+import { t } from '../../lib/i18n';
+import { alternatesFor, appPath, homePath } from '../../lib/routes';
+import { appJsonLd, metaDescription, ogImage } from '../../lib/seo';
+
+interface Props {
+  app: App;
+  lang: Lang;
+}
+
+const { app, lang } = Astro.props;
+const langs = [defaultLangOf(app), ...LANGS.filter((l) => l !== defaultLangOf(app))];
+
+const favicon = await getImage({ src: app.icon, width: 64, height: 64, format: 'png' });
+
+const nav: NavItem[] = [
+  { href: '#overview', label: t(lang, 'nav.overview'), tab: 'overview', current: true },
+  { href: '#features', label: t(lang, 'nav.features') },
+  ...(app.install ? [{ href: '#install', label: t(lang, 'nav.install') }] : []),
+  { href: '#gallery', label: t(lang, 'nav.screenshots') },
+  ...(app.faq?.length ? [{ href: '#faq', label: t(lang, 'nav.faq') }] : []),
+  { href: '#community', label: t(lang, 'nav.discussions'), tab: 'community' },
+  { href: `${homePath(lang)}#apps`, label: t(lang, 'nav.allApps') },
+];
+---
+
+<BaseLayout
+  lang={lang}
+  title={`${app.name} — ${app.category[lang]} | Phạm Hùng Tiến`}
+  description={metaDescription(app.description[lang])}
+  path={appPath(app, lang)}
+  alternates={alternatesFor((l) => appPath(app, l), langs)}
+  ogImage={ogImage(app.slug)}
+  ogImageAlt={`${app.name} — ${app.title[lang]}`}
+  jsonLd={appJsonLd(app, lang)}
+  favicon={{ href: favicon.src, type: 'image/png' }}
+  nav={nav}
+>
+  <div id="overview" data-tab-panel="overview">
+    <AppHero app={app} lang={lang} />
+    <Facts app={app} lang={lang} />
+    {app.install && <Install app={app} lang={lang} />}
+    <Media app={app} lang={lang} />
+    <Features app={app} lang={lang} />
+    <Gallery app={app} lang={lang} />
+    <Faq app={app} lang={lang} />
+  </div>
+  <Discussions app={app} lang={lang} />
+  <MoreApps app={app} lang={lang} />
+  <Contact lang={lang} />
+  <Lightbox lang={lang} />
+</BaseLayout>
+
+<script>
+  import { initAppTabs } from '../../scripts/app-tabs';
+  initAppTabs();
+</script>

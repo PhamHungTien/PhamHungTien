@@ -1,0 +1,31 @@
+---
+/**
+ * The Discussions tab. The board is a React island with `client:visible`: the panel
+ * is hidden until someone opens the tab, so React and Firebase are never downloaded
+ * by visitors who only read the page.
+ */
+import AppBoard from '../community/AppBoard';
+import PhtvBoard from '../community/PhtvBoard';
+import type { App, Lang } from '../../data/types';
+
+interface Props {
+  app: App;
+  lang: Lang;
+}
+
+const { app, lang } = Astro.props;
+---
+
+<div class="discussions container" id="community" data-tab-panel="community" hidden>
+  {app.community === 'phtv' ? (
+    <PhtvBoard client:visible lang={lang} />
+  ) : (
+    <AppBoard client:visible app={app.slug} name={app.name} lang={lang} />
+  )}
+</div>
+
+<style>
+  .discussions {
+    padding-top: clamp(32px, 5vw, 64px);
+  }
+</style>
