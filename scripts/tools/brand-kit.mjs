@@ -268,7 +268,7 @@ const phtvIcon = await sharp('src/assets/apps/phtv/app-icon.webp')
 const example = thumbBase(`
   ${textPath('Gõ tiếng Việt', 56, 330, 104, C.white, { tracking: -0.035 }).svg}
   ${textPath('trên Mac', 56, 452, 104, C.gold, { tracking: -0.035 }).svg}
-  ${textPath('Cài đặt PHTV trong 2 phút', 60, 540, 38, '#c9d0dc', { weight: 500, tracking: 0 }).svg}
+  ${textPath('Hướng dẫn chi tiết với PHTV', 60, 540, 38, '#c9d0dc', { weight: 500, tracking: 0 }).svg}
   <image href="data:image/png;base64,${phtvIcon.toString('base64')}" x="790" y="150" width="420" height="420"/>`);
 await write('youtube/thumbnail-example-1280x720.png', await render(example, TW, TH));
 
