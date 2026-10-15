@@ -39,6 +39,14 @@ const app: App = {
     vi: 'Theo dõi đoạn đang đọc, khám phá thư viện và điều khiển từ Dynamic Island, màn hình khóa. Cảnh hệ thống được quay trên iPhone thật.',
     en: 'Meet vTTS in 30 seconds. Turn your books and words into a listening experience.',
   },
+  tutorial: {
+    youtubeId: 'nWz8zGtZRMo',
+    title: { vi: 'Hướng dẫn nghe sách với vTTS', en: 'Listen to books with vTTS' },
+    description: {
+      vi: 'Thêm sách EPUB, nghe và theo dõi câu đang đọc, đổi giọng, ngôn ngữ, tốc độ, nhạc nền và hẹn giờ tắt. Có phụ đề tiếng Việt.',
+      en: 'Import an EPUB, follow the highlighted sentence, change voice, language and speed, add background music and a sleep timer. Narrated in Vietnamese with subtitles.',
+    },
+  },
   category: {
     vi: 'Đọc sách & văn bản',
     en: 'Books & text to speech',

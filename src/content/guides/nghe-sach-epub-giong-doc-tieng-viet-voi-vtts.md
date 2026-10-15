@@ -3,6 +3,7 @@ title: Nghe sách EPUB và văn bản bằng giọng đọc tiếng Việt với
 description: Hướng dẫn dùng vTTS trên iPhone, iPad và Mac để nghe sách EPUB, PDF, Word bằng giọng Việt ngay trên máy, chỉnh tốc độ, hẹn giờ tắt, thêm nhạc nền và xuất file MP3, M4B.
 published: 2026-10-15
 app: vtts
+youtubeId: nWz8zGtZRMo
 topic: vTTS
 ---
 
