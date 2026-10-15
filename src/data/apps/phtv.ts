@@ -122,13 +122,12 @@ const app: App = {
     ],
   },
   tutorial: {
-    youtubeId: 'q7hDz-Pdhvw',
-    title: { vi: 'Video hướng dẫn cài đặt', en: 'Installation video' },
+    youtubeId: 'VaE4dZncBRs',
+    title: { vi: 'Hướng dẫn cài đặt và gõ tiếng Việt', en: 'Install and type Vietnamese' },
     description: {
-      vi: 'Từng bước tải, mở và cấp quyền cho PHTV trên macOS.',
-      en: 'Download, open and grant permissions to PHTV on macOS, step by step.',
+      vi: 'Cài bằng Homebrew hoặc file DMG, đi qua trình thiết lập 6 bước, cấp quyền và gõ Telex. Có phụ đề tiếng Việt.',
+      en: 'Install with Homebrew or the DMG, walk through the six-step setup, grant access and type with Telex. Narrated in Vietnamese with subtitles.',
     },
-    credit: { vi: 'Video thực hiện bởi Phước Rin', en: 'Video by Phước Rin' },
   },
   faq: [
     {
