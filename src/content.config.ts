@@ -22,9 +22,9 @@ const legal = defineCollection({
  * Images live in src/assets/guides and are referenced with relative paths.
  */
 /** YAML turns bare dates into Date objects; keep guides' dates as ISO `YYYY-MM-DD` strings. */
-const isoDate = z.union([z.string(), z.date()]).transform((d) =>
-  typeof d === 'string' ? d : d.toISOString().slice(0, 10),
-);
+const isoDate = z
+  .union([z.string(), z.date()])
+  .transform((d) => (typeof d === 'string' ? d : d.toISOString().slice(0, 10)));
 
 const guides = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/guides' }),
