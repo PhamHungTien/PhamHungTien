@@ -10,7 +10,8 @@ import { readFile, writeFile } from 'node:fs/promises';
 
 const logo = await readFile('src/assets/brand/logo.svg', 'utf8');
 // Full-bleed variant for platforms that apply their own mask (iOS, Android maskable).
-const square = logo.replace(/<rect width="64" height="64" rx="15"/, '<rect width="64" height="64"');
+const square = logo.replace(/<path d="M20 0h24[^"]*"/, '<rect width="64" height="64"');
+if (square === logo) throw new Error('logo.svg: tile path not found');
 const png = (svg, size) =>
   sharp(Buffer.from(svg), { density: 1200 })
     .resize(size, size)

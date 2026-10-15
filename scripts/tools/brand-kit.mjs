@@ -21,16 +21,24 @@ const C = {
 const NAME = 'Phạm Hùng Tiến';
 
 // ------------------------------------------------------------------ geometry
-// The mark: a "T" for Tiến whose crossbar is an app tile resting on the stem.
-const tile = (fill, rx = 15) => `<rect width="64" height="64" rx="${rx}" fill="${fill}"/>`;
-const stem = (fill) => `<rect x="27.5" y="22" width="9" height="28" rx="4.5" fill="${fill}"/>`;
-const bar = (fill) => `<rect x="14" y="13" width="36" height="14" rx="7" fill="${fill}"/>`;
+// The mark: a "T" for Tiến under the circumflex of "ế", on an app-icon squircle.
+// Keep in sync with src/assets/brand/logo.svg (the generator reads nothing else from it).
+const SQUIRCLE = 'M20 0h24c14 0 20 6 20 20v24c0 14-6 20-20 20H20C6 64 0 58 0 44V20C0 6 6 0 20 0Z';
+const tile = (fill, square = false) =>
+  square
+    ? `<rect width="64" height="64" fill="${fill}"/>`
+    : `<path d="${SQUIRCLE}" fill="${fill}"/>`;
+const letter = (stroke) =>
+  `<path d="M17.5 29.5h29M32 29.5v20" stroke="${stroke}" stroke-width="11" stroke-linecap="round" fill="none"/>`;
+const accent = (stroke) =>
+  `<path d="M22.5 19 32 12l9.5 7" stroke="${stroke}" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`;
+const glyph = (letterFill, accentFill) => `${letter(letterFill)}${accent(accentFill)}`;
 
-const markBody = ({ rx = 15 } = {}) => `${tile(C.maroon, rx)}${stem(C.white)}${bar(C.gold)}`;
-/** Single colour: the tile with the T cut out, for stamping, embossing and fax-grade use. */
+const markBody = ({ square = false } = {}) => `${tile(C.maroon, square)}${glyph(C.white, C.gold)}`;
+/** Single colour: the tile with the glyph cut out, for stamping, engraving and one-colour print. */
 const monoBody = (fill, id) =>
-  `<mask id="${id}"><rect width="64" height="64" fill="#fff"/>${stem('#000')}${bar('#000')}</mask>` +
-  `<rect width="64" height="64" rx="15" fill="${fill}" mask="url(#${id})"/>`;
+  `<mask id="${id}"><rect width="64" height="64" fill="#fff"/>${glyph('#000', '#000')}</mask>` +
+  `<path d="${SQUIRCLE}" fill="${fill}" mask="url(#${id})"/>`;
 
 const svg = (w, h, body, label = NAME) =>
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w * 8}" height="${h * 8}" role="img" aria-label="${label}">\n  ${body}\n</svg>\n`;
@@ -100,18 +108,16 @@ const render = (svgText, width, height = width) =>
     .png({ compressionLevel: 9 })
     .toBuffer();
 
-await rm(OUT, { recursive: true, force: true });
+// Clear generated output only; README.md is hand-written and lives alongside.
+for (const dir of ['svg', 'png', 'favicon', 'social', 'preview.png'])
+  await rm(`${OUT}/${dir}`, { recursive: true, force: true });
 for (const dir of ['svg', 'png', 'favicon', 'social'])
   await mkdir(`${OUT}/${dir}`, { recursive: true });
 
 const marks = {
   'logo-mark': svg(64, 64, markBody()),
-  'logo-mark-square': svg(64, 64, markBody({ rx: 0 })),
-  'logo-glyph': svg(
-    36,
-    37,
-    `<g transform="translate(-14 -13)">${stem(C.maroon)}${bar(C.gold)}</g>`,
-  ),
+  'logo-mark-square': svg(64, 64, markBody({ square: true })),
+  'logo-glyph': svg(40, 46, `<g transform="translate(-12 -9)">${glyph(C.maroon, C.gold)}</g>`),
   'logo-mono-black': svg(64, 64, monoBody('#000000', 'cut')),
   'logo-mono-white': svg(64, 64, monoBody('#ffffff', 'cut')),
 };
@@ -152,7 +158,7 @@ for (const file of [
 const avatar = svg(
   64,
   64,
-  `<rect width="64" height="64" fill="${C.maroon}"/><g transform="translate(9.6 9.6) scale(.7)">${stem(C.white)}${bar(C.gold)}</g>`,
+  `<rect width="64" height="64" fill="${C.maroon}"/><g transform="translate(9.6 9.6) scale(.7)">${glyph(C.white, C.gold)}</g>`,
 );
 await write('svg/avatar.svg', avatar);
 await write('social/avatar-1024.png', await render(avatar, 1024));
@@ -186,7 +192,7 @@ const preview = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${pw} ${ph
   <text x="40" y="70" font-family="sans-serif" font-weight="700" font-size="34" fill="${C.ink}">Phạm Hùng Tiến — brand kit</text>
   ${cell(40, 110, 360, 300, '#ffffff', inner(marks['logo-mark']), 64, 64, 'logo-mark')}
   ${cell(420, 110, 360, 300, C.night, inner(marks['logo-mark']), 64, 64, 'logo-mark on dark')}
-  ${cell(800, 110, 360, 300, '#ffffff', inner(marks['logo-glyph']), 36, 37, 'logo-glyph')}
+  ${cell(800, 110, 360, 300, '#ffffff', inner(marks['logo-glyph']), 40, 46, 'logo-glyph')}
   ${cell(1180, 110, 180, 300, '#ffffff', inner(marks['logo-mono-black']), 64, 64, 'mono black')}
   ${cell(1380, 110, 180, 300, C.maroon, inner(marks['logo-mono-white']), 64, 64, 'mono white')}
   ${cell(40, 430, 760, 260, '#ffffff', lockups['lockup-horizontal'].body, lockups['lockup-horizontal'].w, 64, 'lockup-horizontal')}

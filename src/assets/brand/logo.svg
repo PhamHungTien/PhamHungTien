@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Phạm Hùng Tiến">
-  <!-- "T" for Tiến: the crossbar is an app tile resting on the letter's stem. -->
-  <rect width="64" height="64" rx="15" fill="#7a1424"/>
-  <rect x="27.5" y="22" width="9" height="28" rx="4.5" fill="#fff"/>
-  <rect x="14" y="13" width="36" height="14" rx="7" fill="#f0c04e"/>
+  <!-- "T" for Tiến, crowned by the circumflex of "ế"; the tile is an app-icon squircle. -->
+  <path d="M20 0h24c14 0 20 6 20 20v24c0 14-6 20-20 20H20C6 64 0 58 0 44V20C0 6 6 0 20 0Z" fill="#7a1424"/>
+  <path d="M17.5 29.5h29M32 29.5v20" stroke="#fff" stroke-width="11" stroke-linecap="round" fill="none"/>
+  <path d="M22.5 19 32 12l9.5 7" stroke="#f0c04e" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
 </svg>

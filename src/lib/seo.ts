@@ -8,7 +8,7 @@ import { platformList, storesOf } from '../data/platforms';
 import { appPath, homePath } from './routes';
 
 /** Bump when the Open Graph cards in public/og are regenerated (npm run og). */
-export const OG_VERSION = 'pht-3';
+export const OG_VERSION = 'pht-4';
 export const OG_SIZE = { width: 1200, height: 630 } as const;
 
 export const absolute = (path: string) => new URL(path, SITE.origin).href;

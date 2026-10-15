@@ -7,8 +7,8 @@ app icon; everything around it stays quiet.
 
 ## Brand mark
 
-`src/assets/brand/logo.svg`: a "T" for Tiến whose crossbar is a gold app tile resting on
-a white stem, on a maroon tile. It is distinct from every app icon (PHTV's is a gold "P"),
+`src/assets/brand/logo.svg`: a white "T" for Tiến crowned by the gold circumflex of "ế",
+on a maroon app-icon squircle. It is distinct from every app icon (PHTV's is a gold "P"),
 reads at 16 px and works on light and dark backgrounds. `npm run brand` regenerates the
 favicons and manifest icons in `public/` and the full brand kit in `brand/` (SVG and PNG
 marks, lockups with the outlined wordmark, social images; see `brand/README.md`);

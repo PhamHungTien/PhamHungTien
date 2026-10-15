@@ -4,7 +4,13 @@
  * then bump OG_VERSION in src/lib/seo.ts so social networks refetch the images.
  */
 import sharp from 'sharp';
-import { mkdir } from 'node:fs/promises';
+import { mkdir, readFile } from 'node:fs/promises';
+
+/** The brand mark's shapes, read from the single source so the cards never drift. */
+const MARK = (await readFile('src/assets/brand/logo.svg', 'utf8'))
+  .replace(/<!--.*?-->/gs, '')
+  .replace(/^\s*<svg[^>]*>|<\/svg>\s*$/g, '')
+  .trim();
 const apps = [
   [
     'phtv',
@@ -75,7 +81,7 @@ const txt = (x, y, size, text, extra = '') =>
   `<text x="${x}" y="${y}" font-size="${size}" ${extra}>${esc(text)}</text>`;
 const outputs = [];
 async function card(slug, body, footer) {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"><rect width="1200" height="630" fill="#f3f5f8"/><g transform="translate(72 66) scale(0.6875)"><rect width="64" height="64" rx="15" fill="#7a1424"/><rect x="27.5" y="22" width="9" height="28" rx="4.5" fill="#fff"/><rect x="14" y="13" width="36" height="14" rx="7" fill="#f0c04e"/></g><g font-family="Be Vietnam Pro,Helvetica Neue,Arial,sans-serif" fill="#131a27">${txt(132, 96, 22, 'Phạm Hùng Tiến', 'font-weight="600"')}${body}<path d="M72 507H1128" stroke="#d9dee6" stroke-width="2"/>${txt(72, 554, 24, 'phamhungtien.com', 'fill="#566074"')}${txt(1128, 554, 22, footer, 'text-anchor="end" fill="#566074"')}</g></svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"><rect width="1200" height="630" fill="#f3f5f8"/><g transform="translate(72 66) scale(0.6875)">${MARK}</g><g font-family="Be Vietnam Pro,Helvetica Neue,Arial,sans-serif" fill="#131a27">${txt(132, 96, 22, 'Phạm Hùng Tiến', 'font-weight="600"')}${body}<path d="M72 507H1128" stroke="#d9dee6" stroke-width="2"/>${txt(72, 554, 24, 'phamhungtien.com', 'fill="#566074"')}${txt(1128, 554, 22, footer, 'text-anchor="end" fill="#566074"')}</g></svg>`;
   const path = `public/og/${slug}.png`;
   await sharp(Buffer.from(svg)).png({ compressionLevel: 9 }).toFile(path);
   outputs.push(path);
