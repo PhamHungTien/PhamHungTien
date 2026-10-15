@@ -18,7 +18,7 @@ const [email, ...profiles] = socialProfiles;
     <h2 id="contact-heading">{t(lang, 'contact.title')}</h2>
     <p>{t(lang, 'contact.body')}</p>
   </div>
-  <div class="contact__links">
+  <div class="contact__links" data-reveal>
     <a class="contact__email" href={email.href}>
       <Mail size={22} aria-hidden="true" />
       <span>{email.handle}</span>

@@ -28,7 +28,7 @@ const poster = tutorial ? `https://i.ytimg.com/vi/${tutorial.youtubeId}/hqdefaul
         <p>{app.videoDescription?.[lang] ?? t(lang, 'app.videoFallback')}</p>
       </div>
     </div>
-    <div class="video__frame">
+    <div class="video__frame" data-reveal>
       <video src={videoUrl} poster={app.videoPosters?.[lang]} controls playsinline preload="none">
         {t(lang, 'app.videoUnsupported')}
       </video>
@@ -48,7 +48,7 @@ const poster = tutorial ? `https://i.ytimg.com/vi/${tutorial.youtubeId}/hqdefaul
         <p>{tutorial.description[lang]}</p>
       </div>
     </div>
-    <div class="video__frame">
+    <div class="video__frame" data-reveal>
       <button
         type="button"
         class="youtube"

@@ -22,12 +22,31 @@ function setTheme(theme: 'light' | 'dark') {
   applyThemeLabels();
 }
 
+/** Switches theme; where supported, the new theme grows as a circle out of the toggle. */
+function switchTheme(origin: HTMLElement) {
+  const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+  if (!document.startViewTransition || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    setTheme(next);
+    return;
+  }
+  const { left, top, width, height } = origin.getBoundingClientRect();
+  const x = left + width / 2;
+  const y = top + height / 2;
+  root.style.setProperty('--vt-x', `${x}px`);
+  root.style.setProperty('--vt-y', `${y}px`);
+  root.style.setProperty(
+    '--vt-r',
+    `${Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y))}px`,
+  );
+  root.classList.add('theme-switching');
+  const transition = document.startViewTransition(() => setTheme(next));
+  transition.finished.finally(() => root.classList.remove('theme-switching'));
+}
+
 function initTheme() {
   applyThemeLabels();
   for (const button of document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]')) {
-    button.addEventListener('click', () =>
-      setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark'),
-    );
+    button.addEventListener('click', () => switchTheme(button));
   }
 
   // Follow the system until the visitor makes a choice, and keep open tabs in sync.

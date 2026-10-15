@@ -194,6 +194,60 @@ const switchTarget = alternates.find((alt) => alt.lang !== lang);
     border-color: var(--line-strong);
   }
 
+  /* Scroll: the hairline appears once the page moves, and doubles as a reading-progress
+     bar. Pure CSS scroll timelines; browsers without them keep the static border. */
+  .site-header::after {
+    position: absolute;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--brand), var(--gold));
+    content: '';
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    pointer-events: none;
+  }
+
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .site-header {
+        animation: header-settle linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0 96px;
+      }
+
+      .site-header::after {
+        animation: reading-progress linear both;
+        animation-timeline: scroll(root);
+      }
+    }
+  }
+
+  @keyframes header-settle {
+    from {
+      border-bottom-color: transparent;
+    }
+  }
+
+  @keyframes reading-progress {
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  /* The new theme's icon spins in during the theme transition. */
+  :global(html.theme-switching) [data-theme-toggle] :global(.theme-icon) {
+    animation: theme-icon-in 600ms var(--spring);
+  }
+
+  @keyframes theme-icon-in {
+    from {
+      opacity: 0;
+      transform: rotate(-120deg) scale(0.4);
+    }
+  }
+
   :root[data-theme='dark'] .theme-icon--moon,
   :root:not([data-theme='dark']) .theme-icon--sun {
     display: none;

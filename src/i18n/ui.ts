@@ -28,7 +28,7 @@ const en = {
   'theme.toDark': 'Use dark mode',
   'theme.toLight': 'Use light mode',
 
-  'home.role': 'Independent app developer',
+  'home.headline': 'Useful apps, private by design.',
   'home.lead': 'Native apps with offline features and on-device data processing.',
   'home.cta': 'Browse the apps',
   'home.dock': 'App shortcuts',
@@ -133,7 +133,8 @@ const vi: Record<UiKey, string> = {
   'theme.toDark': 'Bật giao diện tối',
   'theme.toLight': 'Bật giao diện sáng',
 
-  'home.role': 'Nhà phát triển ứng dụng độc lập',
+  // The no-break space keeps “riêng tư” together when the headline wraps.
+  'home.headline': 'Ứng dụng hữu ích, riêng\u00a0tư ngay từ thiết kế.',
   'home.lead': 'Ứng dụng native với tính năng offline và xử lý dữ liệu trên thiết bị.',
   'home.cta': 'Xem các ứng dụng',
   'home.dock': 'Lối tắt ứng dụng',

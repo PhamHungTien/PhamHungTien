@@ -16,7 +16,7 @@ const { lang } = Astro.props;
 ---
 
 <section class="hero container" aria-labelledby="hero-title">
-  <h1 id="hero-title">{t(lang, 'home.role')}</h1>
+  <h1 id="hero-title">{t(lang, 'home.headline')}</h1>
   <p class="hero__lead">{t(lang, 'home.lead')}</p>
   <div class="hero__actions">
     <a class="button button--primary" href="#apps">
@@ -49,7 +49,36 @@ const { lang } = Astro.props;
 
 <style>
   .hero {
+    position: relative;
+    isolation: isolate;
     padding-top: clamp(56px, 10vw, 128px);
+  }
+
+  /* A soft maroon-and-gold glow behind the headline. Gradients only (no blur filter),
+     drifting on the compositor, so it costs nothing on the main thread. */
+  .hero::before {
+    position: absolute;
+    z-index: -1;
+    inset: -160px -12% auto;
+    height: 760px;
+    background:
+      radial-gradient(
+        38% 46% at 22% 38%,
+        color-mix(in srgb, var(--brand) 16%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        30% 40% at 70% 28%,
+        color-mix(in srgb, var(--gold) 20%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        34% 38% at 52% 70%,
+        color-mix(in srgb, var(--brand) 8%, transparent),
+        transparent 72%
+      );
+    content: '';
+    pointer-events: none;
   }
 
   h1 {
@@ -116,24 +145,82 @@ const { lang } = Astro.props;
     white-space: nowrap;
   }
 
-  .dock a:hover img {
-    transform: translateY(-6px);
+  /* Dock magnification: the hovered icon rises and grows, its neighbours follow. */
+  @media (hover: hover) and (pointer: fine) {
+    .dock img {
+      transition: transform 420ms var(--spring);
+    }
+
+    .dock li:hover img {
+      transform: translateY(-12px) scale(1.14);
+    }
+
+    .dock li:has(+ li:hover) img,
+    .dock li:hover + li img {
+      transform: translateY(-5px) scale(1.06);
+    }
+  }
+
+  .dock a:active img {
+    transform: scale(0.94);
   }
 
   .dock a:hover span {
     color: var(--ink);
   }
 
+  .hero__actions .button--primary :global(svg) {
+    transition: transform 300ms var(--spring);
+  }
+
+  .hero__actions .button--primary:hover :global(svg) {
+    transform: translateY(3px);
+  }
+
   @media (prefers-reduced-motion: no-preference) {
+    /* Entrance: headline, lead and actions settle in one after another. The headline
+       starts nearly (not fully) transparent so it still counts as painted for LCP. */
+    h1,
+    .hero__lead,
+    .hero__actions {
+      animation: hero-in 900ms var(--ease) both;
+    }
+
+    .hero__lead {
+      animation-delay: 90ms;
+    }
+
+    .hero__actions {
+      animation-delay: 180ms;
+    }
+
+    @keyframes hero-in {
+      from {
+        opacity: 0.01;
+        filter: blur(6px);
+        transform: translateY(22px);
+      }
+    }
+
+    .hero::before {
+      animation: glow-drift 18s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow-drift {
+      to {
+        transform: translate3d(4%, 3%, 0) scale(1.08) rotate(3deg);
+      }
+    }
+
     .dock li {
-      animation: dock-rise 620ms var(--ease) both;
-      animation-delay: calc(120ms + var(--i) * 55ms);
+      animation: dock-rise 760ms var(--spring) both;
+      animation-delay: calc(260ms + var(--i) * 60ms);
     }
 
     @keyframes dock-rise {
       from {
         opacity: 0;
-        transform: translateY(18px);
+        transform: translateY(26px) scale(0.92);
       }
     }
   }

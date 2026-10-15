@@ -20,7 +20,7 @@ const parts = (text: string) =>
     <div class="section-head">
       <h2 id="faq-heading">{t(lang, 'app.faq')}</h2>
     </div>
-    <div class="faq__list">
+    <div class="faq__list" data-reveal-stagger>
       {app.faq.map((item) => (
         <details name="faq">
           <summary>

@@ -16,8 +16,28 @@ export const PLATFORM_LABELS: Record<Platform, string> = {
 
 export const PLATFORM_ORDER = Object.keys(PLATFORM_LABELS) as Platform[];
 
+/** Every platform by name, for structured data (schema.org operatingSystem). */
 export const platformList = (platforms: Platform[]) =>
   PLATFORM_ORDER.filter((p) => platforms.includes(p)).map((p) => PLATFORM_LABELS[p]);
+
+/**
+ * What visitors see and filter by. iPhone and iPad builds are one product, so iOS and
+ * iPadOS share a label; each other platform stands alone. Order is display order.
+ */
+export const PLATFORM_GROUPS: { id: string; label: string; platforms: Platform[] }[] = [
+  { id: 'ios', label: 'iOS & iPadOS', platforms: ['ios', 'ipados'] },
+  { id: 'macos', label: 'macOS', platforms: ['macos'] },
+  { id: 'android', label: 'Android', platforms: ['android'] },
+  { id: 'windows', label: 'Windows', platforms: ['windows'] },
+  { id: 'linux', label: 'Linux', platforms: ['linux'] },
+  { id: 'web', label: 'Web', platforms: ['web'] },
+  { id: 'visionos', label: 'visionOS', platforms: ['visionos'] },
+  { id: 'watchos', label: 'watchOS', platforms: ['watchos'] },
+  { id: 'tvos', label: 'tvOS', platforms: ['tvos'] },
+];
+
+export const platformGroupsOf = (platforms: Platform[]) =>
+  PLATFORM_GROUPS.filter((group) => group.platforms.some((p) => platforms.includes(p)));
 
 /** Download buttons, in priority order: the first store an app is in becomes its main button. */
 export const STORES: Record<Store, { name: string; cta: Localized }> = {

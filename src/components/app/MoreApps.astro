@@ -21,7 +21,7 @@ const others = apps.filter((other) => other.slug !== app.slug);
       {t(lang, 'nav.allApps')}
     </a>
   </div>
-  <ul class="more__list" role="list">
+  <ul class="more__list" role="list" data-reveal-stagger>
     {others.map((other) => (
       <li>
         <a href={appPath(other, lang)}>

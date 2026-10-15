@@ -62,19 +62,19 @@ const app: App = {
     en: 'Handwriting, notes, and documents.',
   },
   subtitle: {
-    vi: 'Cho ghi chú, OCR và làm việc dài trên iPhone, iPad, Mac và Apple Vision Pro.',
-    en: 'For notes, OCR, and long work sessions on iPhone, iPad, Mac, and Apple Vision Pro.',
+    vi: 'Cho ghi chú, OCR và làm việc dài trên iPhone, iPad và Mac.',
+    en: 'For notes, OCR, and long work sessions on iPhone, iPad, and Mac.',
   },
   description: {
     vi: 'Pad Notes AI kết hợp viết tay, nhận dạng chữ viết, ghi âm và trợ lý AI để biến ghi chú thành tài liệu dễ tìm, dễ hiểu trên các thiết bị Apple.',
     en: 'Pad Notes AI combines handwriting, recognition, audio capture, and an AI assistant so notes become searchable, understandable documents across Apple devices.',
   },
-  platforms: ['ios', 'ipados', 'macos', 'visionos'],
+  platforms: ['ios', 'ipados', 'macos'],
   appCategory: 'ProductivityApplication',
   facts: [
     {
       label: { vi: 'Nền tảng', en: 'Platforms' },
-      value: { vi: 'iOS, iPadOS, macOS, visionOS', en: 'iOS, iPadOS, macOS, visionOS' },
+      value: { vi: 'iOS & iPadOS, macOS', en: 'iOS & iPadOS, macOS' },
     },
     {
       label: { vi: 'Nhập liệu', en: 'Input' },

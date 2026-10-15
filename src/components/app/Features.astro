@@ -18,7 +18,7 @@ const { app, lang } = Astro.props;
     <h2 id="features-heading">{t(lang, 'app.features')}</h2>
   </div>
   <div class="features__layout">
-    <ul class="feature-grid" role="list">
+    <ul class="feature-grid" role="list" data-reveal-stagger>
       {app.features.map((feature) => (
         <li>
           <h3>{feature.title[lang]}</h3>

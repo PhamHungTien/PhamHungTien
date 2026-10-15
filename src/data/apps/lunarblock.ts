@@ -45,8 +45,8 @@ const app: App = {
     vi: 'Lunar Block nâng tầm trải nghiệm xếp khối kinh điển thành một bàn cờ quỹ đạo 3D phát sáng. Tích hợp phím D-Pad công thái học, bóng chiếu khối trực quan (Ghost Piece), hiệu ứng vỡ khối vật lý Line Fracture, 3 chế độ chơi thử thách, hệ thống thăng hạng XP và bảng xếp hạng Game Center toàn cầu.',
     en: 'Lunar Block transforms classic falling-block puzzles into a glowing 3D orbital console. Built natively with SceneKit, featuring ergonomic D-Pad controls, instant ghost piece projection, physics-driven line fractures, 3 game modes, XP progression ranks, and global Game Center leaderboards.',
   },
-  platforms: ['ios', 'ipados', 'macos', 'visionos'],
-  requirements: 'iOS 16+, iPadOS 16+, macOS 13+, visionOS 1+',
+  platforms: ['ios', 'ipados', 'macos'],
+  requirements: 'iOS & iPadOS 16+, macOS 13+',
   appCategory: 'GameApplication',
   facts: [
     {

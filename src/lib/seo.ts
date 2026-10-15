@@ -56,7 +56,6 @@ export const personSchema = {
     'SwiftUI',
     'iOS development',
     'macOS development',
-    'visionOS',
     'On-device machine learning',
     'Embedded systems',
     'STM32',

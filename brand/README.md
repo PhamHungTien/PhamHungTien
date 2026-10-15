@@ -2,9 +2,10 @@
 
 ![Preview](preview.png)
 
-The mark is a **T** for _Tiến_, crowned by the circumflex of **ế**. The accent makes it
-unmistakably Vietnamese and doubles as an upward chevron. It sits on an app-icon
-squircle, a nod to the apps it signs.
+The mark is a **T** for _Tiến_ wearing a **nón lá**, the conical hat of the Mekong Delta
+and of Bến Tre, the author's home. The hat has two readings: it is also the circumflex of
+**ế** in Tiến. Hat and letter share the same soft, rounded corners, and the mark sits on
+an app-icon tile, a nod to the apps it signs.
 
 Everything in this folder except this README is generated from the geometry in
 `src/assets/brand/logo.svg` by `npm run brand`. Change the source and re-run the
@@ -30,7 +31,7 @@ SVGs open correctly without the font installed.
 | Name   | Hex       | Role                                      |
 | ------ | --------- | ----------------------------------------- |
 | Maroon | `#7A1424` | Tile, primary brand colour                |
-| Gold   | `#F0C04E` | Circumflex, accent (brand colour on dark) |
+| Gold   | `#F0C04E` | The nón lá, accent (brand colour on dark) |
 | White  | `#FFFFFF` | The T, text on dark                       |
 | Ink    | `#131A27` | Text on light                             |
 | Night  | `#0D1118` | Dark backgrounds                          |
@@ -41,7 +42,7 @@ SVGs open correctly without the font installed.
 - **Minimum size:** 16 px for the mark, 120 px wide for the horizontal lockup.
 - Use the `-dark` lockups on dark backgrounds and the plain ones on light backgrounds.
 - Don't recolour, stretch, rotate, outline or add shadows to the mark.
-- Don't separate the circumflex from the T, and don't set the name in another typeface.
+- Don't separate the hat from the T, and don't set the name in another typeface.
 - The mark identifies the developer, not an app. Don't use it as an app icon.
 
 ## Licence

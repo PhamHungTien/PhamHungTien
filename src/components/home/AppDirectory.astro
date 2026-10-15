@@ -5,7 +5,7 @@ import type { Lang } from '../../data/types';
 import { apps } from '../../data/apps';
 import { t } from '../../lib/i18n';
 import { appPath } from '../../lib/routes';
-import { PLATFORM_LABELS, PLATFORM_ORDER, platformList, storesOf } from '../../data/platforms';
+import { PLATFORM_GROUPS, platformGroupsOf, storesOf } from '../../data/platforms';
 
 interface Props {
   lang: Lang;
@@ -13,8 +13,8 @@ interface Props {
 
 const { lang } = Astro.props;
 // Only platforms that at least one app supports get a filter button.
-const platforms = PLATFORM_ORDER.filter((platform) =>
-  apps.some((app) => app.platforms.includes(platform)),
+const groups = PLATFORM_GROUPS.filter((group) =>
+  apps.some((app) => platformGroupsOf(app.platforms).includes(group)),
 );
 ---
 
@@ -29,9 +29,9 @@ const platforms = PLATFORM_ORDER.filter((platform) =>
         <button type="button" aria-pressed="true" data-platform="">
           {t(lang, 'home.apps.all')}
         </button>
-        {platforms.map((platform) => (
-          <button type="button" aria-pressed="false" data-platform={platform}>
-            {PLATFORM_LABELS[platform]}
+        {groups.map((group) => (
+          <button type="button" aria-pressed="false" data-platform={group.id}>
+            {group.label}
           </button>
         ))}
       </div>
@@ -58,11 +58,13 @@ const platforms = PLATFORM_ORDER.filter((platform) =>
     {apps.length} {t(lang, 'home.apps.count.other')}
   </p>
 
-  <ul class="app-list" role="list">
+  <ul class="app-list" role="list" data-reveal-stagger>
     {apps.map((app) => (
       <li
         data-app
-        data-platforms={app.platforms.join(' ')}
+        data-platforms={platformGroupsOf(app.platforms)
+          .map((group) => group.id)
+          .join(' ')}
         data-search={`${app.name} ${app.category[lang]} ${app.description[lang]}`.toLowerCase()}
       >
         <a class="app-row" href={appPath(app, lang)}>
@@ -89,7 +91,11 @@ const platforms = PLATFORM_ORDER.filter((platform) =>
             </div>
             <span class="app-row__category">{app.category[lang]}</span>
             <span class="app-row__desc">{app.description[lang]}</span>
-            <span class="app-row__platforms">{platformList(app.platforms).join(', ')}</span>
+            <span class="app-row__platforms">
+              {platformGroupsOf(app.platforms)
+                .map((group) => group.label)
+                .join(' · ')}
+            </span>
           </div>
           <ChevronRight class="app-row__chevron" size={20} aria-hidden="true" />
         </a>
@@ -119,6 +125,7 @@ const platforms = PLATFORM_ORDER.filter((platform) =>
   }
 
   .segmented {
+    position: relative;
     display: inline-flex;
     padding: 4px;
     border: 1px solid var(--line);
@@ -144,6 +151,34 @@ const platforms = PLATFORM_ORDER.filter((platform) =>
     background: var(--ink);
     color: var(--paper);
     font-weight: 600;
+  }
+
+  /* With JS, one thumb slides between options instead of each button lighting up. */
+  .segmented.has-thumb::before {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: 0;
+    width: var(--thumb-w, 0);
+    border-radius: 8px;
+    background: var(--ink);
+    content: '';
+    transform: translateX(var(--thumb-x, 0));
+  }
+
+  .segmented.has-thumb.is-ready::before {
+    transition:
+      transform 480ms var(--spring),
+      width 480ms var(--spring);
+  }
+
+  .segmented.has-thumb button {
+    position: relative;
+    transition: color 200ms ease;
+  }
+
+  .segmented.has-thumb button[aria-pressed='true'] {
+    background: transparent;
   }
 
   .search-field {
@@ -199,11 +234,20 @@ const platforms = PLATFORM_ORDER.filter((platform) =>
     background: var(--surface);
   }
 
+  .app-row:active {
+    background: var(--surface-2);
+  }
+
   .app-row__icon {
     width: 72px;
     height: 72px;
     border-radius: var(--r-icon);
     box-shadow: var(--shadow-icon);
+    transition: transform 420ms var(--spring);
+  }
+
+  .app-row:hover .app-row__icon {
+    transform: translateY(-3px) scale(1.05) rotate(-2deg);
   }
 
   .app-row__copy {
@@ -275,6 +319,13 @@ const platforms = PLATFORM_ORDER.filter((platform) =>
     gap: 16px;
     padding: 40px 0;
     color: var(--muted);
+  }
+
+  /* Filtering animates as a same-document view transition (see scripts/app-directory.ts):
+     rows that stay glide to their new place, others fade. */
+  :global(::view-transition-group(.app-row-vt)) {
+    animation-duration: 420ms;
+    animation-timing-function: var(--ease);
   }
 
   @media (max-width: 900px) {

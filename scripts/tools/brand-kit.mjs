@@ -21,7 +21,7 @@ const C = {
 const NAME = 'Phạm Hùng Tiến';
 
 // ------------------------------------------------------------------ geometry
-// The mark: a "T" for Tiến under the circumflex of "ế", on an app-icon squircle.
+// The mark: a "T" for Tiến wearing a nón lá (also the circumflex of "ế"), on an app-icon tile.
 // Keep in sync with src/assets/brand/logo.svg (the generator reads nothing else from it).
 const SQUIRCLE = 'M20 0h24c14 0 20 6 20 20v24c0 14-6 20-20 20H20C6 64 0 58 0 44V20C0 6 6 0 20 0Z';
 const tile = (fill, square = false) =>
@@ -29,9 +29,9 @@ const tile = (fill, square = false) =>
     ? `<rect width="64" height="64" fill="${fill}"/>`
     : `<path d="${SQUIRCLE}" fill="${fill}"/>`;
 const letter = (stroke) =>
-  `<path d="M17.5 29.5h29M32 29.5v20" stroke="${stroke}" stroke-width="11" stroke-linecap="round" fill="none"/>`;
-const accent = (stroke) =>
-  `<path d="M22.5 19 32 12l9.5 7" stroke="${stroke}" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`;
+  `<path d="M17.5 31h29M32 31v20" stroke="${stroke}" stroke-width="11" stroke-linecap="round" fill="none"/>`;
+const accent = (fill) =>
+  `<path d="M32 8.5 47.5 19Q32 22 16.5 19Z" fill="${fill}" stroke="${fill}" stroke-width="4.5" stroke-linejoin="round"/>`;
 const glyph = (letterFill, accentFill) => `${letter(letterFill)}${accent(accentFill)}`;
 
 const markBody = ({ square = false } = {}) => `${tile(C.maroon, square)}${glyph(C.white, C.gold)}`;
@@ -117,7 +117,7 @@ for (const dir of ['svg', 'png', 'favicon', 'social'])
 const marks = {
   'logo-mark': svg(64, 64, markBody()),
   'logo-mark-square': svg(64, 64, markBody({ square: true })),
-  'logo-glyph': svg(40, 46, `<g transform="translate(-12 -9)">${glyph(C.maroon, C.gold)}</g>`),
+  'logo-glyph': svg(40, 51, `<g transform="translate(-12 -6)">${glyph(C.maroon, C.gold)}</g>`),
   'logo-mono-black': svg(64, 64, monoBody('#000000', 'cut')),
   'logo-mono-white': svg(64, 64, monoBody('#ffffff', 'cut')),
 };
@@ -192,7 +192,7 @@ const preview = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${pw} ${ph
   <text x="40" y="70" font-family="sans-serif" font-weight="700" font-size="34" fill="${C.ink}">Phạm Hùng Tiến — brand kit</text>
   ${cell(40, 110, 360, 300, '#ffffff', inner(marks['logo-mark']), 64, 64, 'logo-mark')}
   ${cell(420, 110, 360, 300, C.night, inner(marks['logo-mark']), 64, 64, 'logo-mark on dark')}
-  ${cell(800, 110, 360, 300, '#ffffff', inner(marks['logo-glyph']), 40, 46, 'logo-glyph')}
+  ${cell(800, 110, 360, 300, '#ffffff', inner(marks['logo-glyph']), 40, 51, 'logo-glyph')}
   ${cell(1180, 110, 180, 300, '#ffffff', inner(marks['logo-mono-black']), 64, 64, 'mono black')}
   ${cell(1380, 110, 180, 300, C.maroon, inner(marks['logo-mono-white']), 64, 64, 'mono white')}
   ${cell(40, 430, 760, 260, '#ffffff', lockups['lockup-horizontal'].body, lockups['lockup-horizontal'].w, 64, 'lockup-horizontal')}

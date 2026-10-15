@@ -52,6 +52,35 @@
   --r-media: 28px;
   --r-icon: 22.5%;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* A gentle spring (slight overshoot) for things that move into place: thumbs, icons. */
+  --spring: linear(
+    0,
+    0.009,
+    0.035 2.1%,
+    0.141,
+    0.281 6.7%,
+    0.723 12.9%,
+    0.938 16.7%,
+    1.017,
+    1.077,
+    1.121,
+    1.149 24.3%,
+    1.159,
+    1.163,
+    1.161,
+    1.154 29.9%,
+    1.129 32.8%,
+    1.051 39.6%,
+    1.017 43.1%,
+    0.991,
+    0.977 51%,
+    0.974 53.8%,
+    0.975 57.1%,
+    0.997 69.8%,
+    1.003 76.9%,
+    1.004 83.8%,
+    1
+  );
 }
 
 :root[data-theme='dark'] {
@@ -260,7 +289,12 @@ kbd {
   transition:
     background-color 160ms ease,
     border-color 160ms ease,
-    color 160ms ease;
+    color 160ms ease,
+    transform 160ms var(--ease);
+}
+
+.button:active {
+  transform: scale(0.97);
 }
 
 .button--primary {
@@ -374,6 +408,60 @@ kbd {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Scroll reveal: classes are added by the inline script in BaseLayout, only to content
+   that starts below the fold, and removed again once the entrance has played. */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+.reveal.is-revealed {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 700ms var(--ease) var(--reveal-delay, 0ms),
+    transform 900ms var(--ease) var(--reveal-delay, 0ms);
+}
+
+/* Switching tabs on an app page fades the new panel in. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-tab-panel]:not([hidden]) {
+    animation: panel-in 360ms var(--ease);
+  }
+
+  @keyframes panel-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+}
+
+/* Theme switch: the new theme grows out of the toggle as a circle (see scripts/header.ts). */
+html.theme-switching::view-transition-old(root),
+html.theme-switching::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+html.theme-switching::view-transition-new(root) {
+  animation: theme-reveal 560ms var(--ease);
+}
+
+@keyframes theme-reveal {
+  from {
+    clip-path: circle(0 at var(--vt-x, 50%) var(--vt-y, 0));
+  }
+  to {
+    clip-path: circle(var(--vt-r, 150vmax) at var(--vt-x, 50%) var(--vt-y, 0));
+  }
+}
+
+/* Decorative overflow (the hero glow) never makes the page scroll sideways. */
+main {
+  overflow-x: clip;
 }
 
 /* An open modal dialog freezes the page behind it. */

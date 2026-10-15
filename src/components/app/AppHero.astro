@@ -242,4 +242,41 @@ const secondary = app.links.source
       flex: 1 1 auto;
     }
   }
+
+  /* Entrance: copy settles in line by line and the hero image rises into place. The icon
+     is left alone: it already glides in from the app list as a view transition. */
+  @media (prefers-reduced-motion: no-preference) {
+    h1,
+    .app-hero__subtitle,
+    .app-hero__actions {
+      animation: app-hero-in 860ms var(--ease) both;
+    }
+
+    .app-hero__subtitle {
+      animation-delay: 80ms;
+    }
+
+    .app-hero__actions {
+      animation-delay: 160ms;
+    }
+
+    .app-hero__media {
+      animation: app-media-in 1100ms var(--ease) 120ms both;
+    }
+
+    @keyframes app-hero-in {
+      from {
+        opacity: 0.01;
+        filter: blur(6px);
+        transform: translateY(20px);
+      }
+    }
+
+    @keyframes app-media-in {
+      from {
+        opacity: 0.01;
+        transform: translateY(36px) scale(0.97);
+      }
+    }
+  }
 </style>

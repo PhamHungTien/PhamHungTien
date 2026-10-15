@@ -9,7 +9,7 @@ interface Props {
 const { app, lang } = Astro.props;
 ---
 
-<dl class="facts container">
+<dl class="facts container" data-reveal-stagger>
   {app.facts.map((fact) => (
     <div>
       <dt>{fact.label[lang]}</dt>

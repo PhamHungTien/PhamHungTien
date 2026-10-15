@@ -91,7 +91,7 @@ const panel = (i, label) =>
 await card(
   'home',
   txt(70, 268, 104, 'Phạm Hùng Tiến', 'font-weight="700" letter-spacing="-4"') +
-    txt(74, 330, 30, 'Independent app developer', 'fill="#566074" font-weight="500"') +
+    txt(74, 330, 30, 'Useful apps, private by design', 'fill="#566074" font-weight="500"') +
     `<rect x="72" y="372" width="1056" height="104" rx="28" fill="#ffffff" stroke="#d9dee6" stroke-width="2"/>` +
     icons
       .map(

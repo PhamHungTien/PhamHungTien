@@ -35,15 +35,15 @@ const app: App = {
     en: 'System monitoring, File Station, and SSH in one app.',
   },
   description: {
-    vi: 'My NAS Manager giúp theo dõi tài nguyên, duyệt file, quản lý gói DSM và truy cập terminal an toàn trên iPhone, iPad, Mac và Apple Vision Pro.',
-    en: 'My NAS Manager helps you monitor resources, browse files, manage DSM packages, and access a secure terminal on iPhone, iPad, Mac, and Apple Vision Pro.',
+    vi: 'My NAS Manager giúp theo dõi tài nguyên, duyệt file, quản lý gói DSM và truy cập terminal an toàn trên iPhone, iPad và Mac.',
+    en: 'My NAS Manager helps you monitor resources, browse files, manage DSM packages, and access a secure terminal on iPhone, iPad, and Mac.',
   },
-  platforms: ['ios', 'ipados', 'macos', 'visionos'],
+  platforms: ['ios', 'ipados', 'macos'],
   appCategory: 'UtilitiesApplication',
   facts: [
     {
       label: { vi: 'Nền tảng', en: 'Platforms' },
-      value: { vi: 'iOS, iPadOS, macOS, visionOS', en: 'iOS, iPadOS, macOS, visionOS' },
+      value: { vi: 'iOS & iPadOS, macOS', en: 'iOS & iPadOS, macOS' },
     },
     {
       label: { vi: 'Máy chủ', en: 'Server' },
@@ -72,8 +72,8 @@ const app: App = {
     {
       title: { vi: 'File Station di động', en: 'Mobile File Station' },
       description: {
-        vi: 'Duyệt, tải lên, tải xuống và tạo link chia sẻ từ iPhone, iPad, Mac hoặc Apple Vision Pro.',
-        en: 'Browse, upload, download, and create share links from iPhone, iPad, Mac, or Apple Vision Pro.',
+        vi: 'Duyệt, tải lên, tải xuống và tạo link chia sẻ từ iPhone, iPad hoặc Mac.',
+        en: 'Browse, upload, download, and create share links from iPhone, iPad, or Mac.',
       },
     },
     {
