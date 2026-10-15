@@ -1,0 +1,100 @@
+---
+/**
+ * A YouTube video that costs nothing until it is played: a poster button that a click
+ * swaps for the privacy-enhanced (youtube-nocookie) player.
+ */
+import { Image } from 'astro:assets';
+import { Play } from '@lucide/astro';
+import type { Lang } from '../../data/types';
+import { t } from '../../lib/i18n';
+
+interface Props {
+  id: string;
+  title: string;
+  lang: Lang;
+}
+
+const { id, title, lang } = Astro.props;
+const poster = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+---
+
+<button
+  type="button"
+  class="youtube"
+  data-youtube={id}
+  data-title={title}
+  aria-label={`${t(lang, 'app.tutorial.play')}: ${title}`}
+>
+  <Image src={poster} alt="" width={480} height={360} inferSize={false} loading="lazy" />
+  <span class="youtube__play" aria-hidden="true">
+    <Play size={30} fill="currentColor" />
+  </span>
+</button>
+
+<script>
+  for (const button of document.querySelectorAll<HTMLButtonElement>('[data-youtube]')) {
+    button.addEventListener(
+      'click',
+      () => {
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube-nocookie.com/embed/${button.dataset.youtube}?autoplay=1&rel=0`;
+        iframe.title = button.dataset.title ?? 'YouTube';
+        iframe.allow =
+          'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+        iframe.allowFullscreen = true;
+        iframe.className = 'youtube-player';
+        button.replaceWith(iframe);
+        iframe.focus();
+      },
+      { once: true },
+    );
+  }
+</script>
+
+<style>
+  .youtube,
+  :global(.youtube-player) {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 0;
+    background: #000;
+  }
+
+  .youtube {
+    position: relative;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .youtube :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.88;
+    transition: opacity 200ms ease;
+  }
+
+  .youtube:hover :global(img) {
+    opacity: 1;
+  }
+
+  .youtube__play {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    width: 76px;
+    height: 76px;
+    margin: auto;
+    place-items: center;
+    border-radius: 50%;
+    background: rgb(0 0 0 / 0.65);
+    color: #fff;
+    transition: transform 200ms var(--ease);
+  }
+
+  .youtube:hover .youtube__play {
+    transform: scale(1.06);
+  }
+</style>

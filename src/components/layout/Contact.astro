@@ -27,7 +27,7 @@ const [email, ...profiles] = socialProfiles;
       {profiles.map((profile) => (
         <li>
           <a href={profile.href} target="_blank" rel="noopener noreferrer me">
-            <BrandIcon name={profile.id as 'github' | 'linkedin'} />
+            <BrandIcon name={profile.id as 'github' | 'youtube' | 'linkedin'} />
             <span>{profile.label}</span>
             <small>{profile.handle}</small>
           </a>

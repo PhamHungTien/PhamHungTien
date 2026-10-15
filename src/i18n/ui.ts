@@ -8,6 +8,13 @@ const en = {
     'Offline-first, private apps by Phạm Hùng Tiến: PHTV, vTTS, Pad Code AI, Pad Notes AI, My NAS Manager, LunarV and Lunar Block.',
   'meta.notFound.title': 'Page not found',
 
+  'nav.guides': 'Guides',
+  'guides.title': 'Guides',
+  'guides.lead':
+    'Step-by-step guides for typing Vietnamese on the Mac and getting more from the apps (in Vietnamese).',
+  'guides.all': 'All guides',
+  'guides.minutes': 'min read',
+  'footer.privacy': 'Website privacy',
   'nav.main': 'Main navigation',
   'nav.skip': 'Skip to content',
   'nav.home': 'Home',
@@ -113,6 +120,13 @@ const vi: Record<UiKey, string> = {
     'Ứng dụng offline, tôn trọng quyền riêng tư của Phạm Hùng Tiến: PHTV, vTTS, Pad Code AI, Pad Notes AI, My NAS Manager, LunarV và Lunar Block.',
   'meta.notFound.title': 'Không tìm thấy trang',
 
+  'nav.guides': 'Hướng dẫn',
+  'guides.title': 'Hướng dẫn',
+  'guides.lead':
+    'Hướng dẫn từng bước: gõ tiếng Việt trên Mac, nghe sách, âm lịch, NAS và dùng các ứng dụng hiệu quả hơn.',
+  'guides.all': 'Tất cả hướng dẫn',
+  'guides.minutes': 'phút đọc',
+  'footer.privacy': 'Quyền riêng tư',
   'nav.main': 'Điều hướng chính',
   'nav.skip': 'Đến nội dung chính',
   'nav.home': 'Trang chủ',

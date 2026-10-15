@@ -1,0 +1,93 @@
+---
+import { Image } from 'astro:assets';
+import { appBySlug } from '../../data/apps';
+import type { AppSlug } from '../../data/types';
+import { formatDate, guidePath, readingMinutes, type Guide } from '../../lib/guides';
+
+interface Props {
+  guide: Guide;
+}
+
+const { guide } = Astro.props;
+const app = guide.data.app ? appBySlug.get(guide.data.app as AppSlug) : undefined;
+---
+
+<a class="guide-card" href={guidePath(guide.id)}>
+  <span class="guide-card__top">
+    {app ? (
+      <Image src={app.icon} alt="" width={28} height={28} densities={[1, 2]} loading="lazy" />
+    ) : (
+      <span class="guide-card__dot" aria-hidden="true" />
+    )}
+    <span>{guide.data.topic}</span>
+  </span>
+  <h3>{guide.data.title}</h3>
+  <p>{guide.data.description}</p>
+  <span class="guide-card__meta">
+    <time datetime={guide.data.published}>{formatDate(guide.data.published)}</time> ·
+    {readingMinutes(guide)} phút đọc
+  </span>
+</a>
+
+<style>
+  .guide-card {
+    display: grid;
+    align-content: start;
+    gap: 10px;
+    height: 100%;
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    background: var(--surface);
+    transition:
+      border-color 160ms ease,
+      transform 300ms var(--ease);
+  }
+
+  .guide-card:hover {
+    border-color: var(--line-strong);
+    transform: translateY(-2px);
+  }
+
+  .guide-card__top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .guide-card__top img {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--r-icon);
+  }
+
+  .guide-card__dot {
+    width: 10px;
+    height: 10px;
+    margin: 9px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  h3 {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+  }
+
+  p {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .guide-card__meta {
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+</style>

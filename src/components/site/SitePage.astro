@@ -1,0 +1,81 @@
+---
+/** A site-wide Markdown page (src/content/site/<name>.<lang>.md), e.g. the website privacy policy. */
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import type { Lang } from '../../data/types';
+import { LANGS } from '../../data/types';
+import { t } from '../../lib/i18n';
+import { alternatesFor, homePath } from '../../lib/routes';
+import { absolute, ogImage, WEBSITE_ID } from '../../lib/seo';
+
+interface Props {
+  name: 'privacy';
+  lang: Lang;
+  pathFor: (lang: Lang) => string;
+}
+
+const { name, lang, pathFor } = Astro.props;
+const entry = await getEntry('site', `${name}.${lang}`);
+if (!entry) throw new Error(`Missing src/content/site/${name}.${lang}.md`);
+const { Content } = await render(entry);
+const path = pathFor(lang);
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': `${absolute(path)}#page`,
+  url: absolute(path),
+  name: entry.data.title,
+  description: entry.data.description,
+  inLanguage: lang,
+  isPartOf: { '@id': WEBSITE_ID },
+};
+---
+
+<BaseLayout
+  lang={lang}
+  title={`${entry.data.title} | Phạm Hùng Tiến`}
+  description={entry.data.description}
+  path={path}
+  alternates={alternatesFor(pathFor, [...LANGS])}
+  ogImage={ogImage(name)}
+  ogType="article"
+  jsonLd={jsonLd}
+  nav={[{ href: homePath(lang), label: t(lang, 'nav.home') }]}
+  compactFooter
+>
+  <article class="page container">
+    <header>
+      <h1>{entry.data.title}</h1>
+      <p>
+        {t(lang, 'legal.updated')}: <time>{entry.data.updated}</time>
+      </p>
+    </header>
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .page {
+    max-width: 760px;
+    padding-top: clamp(32px, 5vw, 64px);
+  }
+
+  header {
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  h1 {
+    font-size: clamp(34px, 5vw, 52px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+
+  header p {
+    margin-top: 12px;
+    color: var(--muted);
+  }
+</style>

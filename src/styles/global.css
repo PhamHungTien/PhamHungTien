@@ -368,6 +368,132 @@ kbd {
   box-shadow: var(--shadow-icon);
 }
 
+/* Long-form text: legal documents, guides and site pages rendered from Markdown. */
+.prose {
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+.prose h2 {
+  margin-top: 48px;
+  font-size: clamp(24px, 3vw, 28px);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  scroll-margin-top: calc(var(--header-height) + 20px);
+}
+
+.prose h3 {
+  margin-top: 32px;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.35;
+  scroll-margin-top: calc(var(--header-height) + 20px);
+}
+
+.prose p,
+.prose ul,
+.prose ol,
+.prose table,
+.prose pre,
+.prose blockquote,
+.prose figure {
+  margin-top: 16px;
+  color: color-mix(in srgb, var(--ink) 82%, var(--muted));
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.3em;
+}
+
+.prose li + li {
+  margin-top: 8px;
+}
+
+.prose strong {
+  color: var(--ink);
+}
+
+.prose a {
+  color: var(--brand);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose img {
+  margin-top: 20px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow-media);
+}
+
+.prose code {
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: var(--surface-2);
+  font-size: 0.88em;
+}
+
+.prose pre {
+  overflow-x: auto;
+  padding: 16px 20px;
+  border-radius: 14px;
+  background: #10141c;
+  color: #e6ebf3;
+  line-height: 1.6;
+}
+
+.prose pre code {
+  padding: 0;
+  background: none;
+  color: inherit;
+}
+
+.prose blockquote {
+  padding: 14px 20px;
+  border-left: 4px solid var(--gold);
+  border-radius: 0 12px 12px 0;
+  background: var(--surface);
+}
+
+.prose blockquote p:first-child {
+  margin-top: 0;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+  display: block;
+  overflow-x: auto;
+}
+
+.prose th,
+.prose td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose th {
+  color: var(--ink);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.prose kbd {
+  padding: 1px 7px;
+  border: 1px solid var(--line-strong);
+  border-bottom-width: 2px;
+  border-radius: 6px;
+  background: var(--surface);
+  font-family: var(--font);
+  font-size: 0.85em;
+  font-weight: 600;
+}
+
 /* Off-screen sections skip layout and paint until they approach the viewport. */
 .defer-render {
   content-visibility: auto;

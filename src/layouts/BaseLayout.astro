@@ -32,6 +32,8 @@ export interface Props {
   noindex?: boolean;
   /** Pages that are not part of the main reading flow (legal, 404) use a quieter footer. */
   compactFooter?: boolean;
+  /** Loads Google AdSense (Auto ads). Only long-form pages (guides) carry ads. */
+  ads?: boolean;
 }
 
 const {
@@ -48,6 +50,7 @@ const {
   nav,
   noindex = false,
   compactFooter = false,
+  ads = false,
 } = Astro.props;
 
 const canonical = absolute(path);
@@ -81,6 +84,15 @@ const speculationRules = {
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="google-adsense-account" content={SITE.adsense} />
+    {ads && (
+      <script
+        is:inline
+        async
+        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${SITE.adsense}`}
+        crossorigin="anonymous"
+      />
+    )}
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex, follow" />}
     {!noindex && (

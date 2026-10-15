@@ -4,6 +4,8 @@ import { LANGS, type Lang } from '../data/types';
 import appStore from '../data/appstore.json';
 import { appPath, homePath, legalPath } from '../lib/routes';
 import { absolute, ogImage } from '../lib/seo';
+import { getGuides, GUIDES_PATH, guidePath } from '../lib/guides';
+import { sitePrivacyPath } from '../lib/sitePages';
 
 /**
  * One <url> per page, each listing every language version (hreflang) so search
@@ -23,7 +25,8 @@ const releaseDate = (slug: string) =>
     slug
   ]?.currentVersionReleaseDate?.slice(0, 10);
 
-export const GET: APIRoute = () => {
+export const GET: APIRoute = async () => {
+  const guides = await getGuides();
   const entries: Entry[] = [
     { versions: LANGS.map((lang) => ({ lang, path: homePath(lang) })) },
     ...apps.map((app) => ({
@@ -31,6 +34,13 @@ export const GET: APIRoute = () => {
       lastmod: releaseDate(app.slug),
       image: { loc: ogImage(app.slug), title: app.name },
     })),
+    { versions: [{ lang: 'vi' as Lang, path: GUIDES_PATH }], lastmod: guides[0]?.data.published },
+    ...guides.map((g) => ({
+      versions: [{ lang: 'vi' as Lang, path: guidePath(g.id) }],
+      lastmod: g.data.updated ?? g.data.published,
+      image: { loc: ogImage(`guide-${g.id}`), title: g.data.title },
+    })),
+    { versions: LANGS.map((lang) => ({ lang, path: sitePrivacyPath(lang) })) },
     ...apps.flatMap((app) =>
       (['privacy', 'terms'] as const).map((kind) => ({
         versions: legalLangsOf(app).map((lang) => ({ lang, path: legalPath(app, kind, lang) })),

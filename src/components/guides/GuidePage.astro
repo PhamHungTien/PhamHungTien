@@ -1,0 +1,358 @@
+---
+import { Image } from 'astro:assets';
+import { render } from 'astro:content';
+import { ArrowRight, ChevronRight } from '@lucide/astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GuideList from './GuideList.astro';
+import YouTube from '../ui/YouTube.astro';
+import Logo from '../ui/Logo.astro';
+import { appBySlug } from '../../data/apps';
+import type { AppSlug } from '../../data/types';
+import { SITE } from '../../data/site';
+import { appPath, homePath } from '../../lib/routes';
+import { absolute, ogImage, PERSON_ID, WEBSITE_ID } from '../../lib/seo';
+import {
+  formatDate,
+  getGuides,
+  GUIDES_PATH,
+  guidePath,
+  readingMinutes,
+  type Guide,
+} from '../../lib/guides';
+
+interface Props {
+  guide: Guide;
+}
+
+const { guide } = Astro.props;
+const { Content, headings } = await render(guide);
+const data = guide.data;
+const app = data.app ? appBySlug.get(data.app as AppSlug) : undefined;
+const path = guidePath(guide.id);
+const toc = headings.filter((h) => h.depth === 2);
+
+// Related: same app first, then the newest others; never the guide itself.
+const others = (await getGuides()).filter((g) => g.id !== guide.id);
+const related = [
+  ...others.filter((g) => app && g.data.app === data.app),
+  ...others.filter((g) => !app || g.data.app !== data.app),
+].slice(0, 3);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Article',
+      '@id': `${absolute(path)}#article`,
+      headline: data.title,
+      description: data.description,
+      inLanguage: 'vi',
+      datePublished: data.published,
+      dateModified: data.updated ?? data.published,
+      url: absolute(path),
+      mainEntityOfPage: absolute(path),
+      image: ogImage(`guide-${guide.id}`),
+      author: { '@id': PERSON_ID, '@type': 'Person', name: SITE.name, url: SITE.origin },
+      publisher: { '@id': PERSON_ID },
+      isPartOf: { '@id': WEBSITE_ID },
+      ...(app ? { about: { '@id': `${absolute(app.route)}#app` } } : {}),
+      ...(data.youtubeId
+        ? {
+            video: {
+              '@type': 'VideoObject',
+              name: data.title,
+              description: data.description,
+              thumbnailUrl: `https://i.ytimg.com/vi/${data.youtubeId}/hqdefault.jpg`,
+              uploadDate: data.published,
+              embedUrl: `https://www.youtube-nocookie.com/embed/${data.youtubeId}`,
+              contentUrl: `https://www.youtube.com/watch?v=${data.youtubeId}`,
+            },
+          }
+        : {}),
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Trang chủ', item: absolute(homePath('vi')) },
+        { '@type': 'ListItem', position: 2, name: 'Hướng dẫn', item: absolute(GUIDES_PATH) },
+        { '@type': 'ListItem', position: 3, name: data.title, item: absolute(path) },
+      ],
+    },
+  ],
+};
+---
+
+<BaseLayout
+  lang="vi"
+  title={`${data.title} | Phạm Hùng Tiến`}
+  description={data.description}
+  path={path}
+  ogImage={ogImage(`guide-${guide.id}`)}
+  ogType="article"
+  jsonLd={jsonLd}
+  ads
+  nav={[
+    { href: homePath('vi'), label: 'Trang chủ' },
+    { href: GUIDES_PATH, label: 'Hướng dẫn', current: true },
+    ...(app ? [{ href: appPath(app, 'vi'), label: app.name }] : []),
+  ]}
+>
+  <article class="guide container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href={homePath('vi')}>Trang chủ</a>
+      <ChevronRight size={14} aria-hidden="true" />
+      <a href={GUIDES_PATH}>Hướng dẫn</a>
+    </nav>
+
+    <header class="guide__head">
+      <p class="guide__topic">{data.topic}</p>
+      <h1>{data.title}</h1>
+      <p class="guide__lead">{data.description}</p>
+      <div class="guide__byline">
+        <Logo size={40} />
+        <span>
+          <a href={homePath('vi')}>{SITE.name}</a>
+          <small>
+            <time datetime={data.published}>{formatDate(data.published)}</time>
+            {data.updated && data.updated !== data.published && (
+              <>
+                {' '}
+                · Cập nhật <time datetime={data.updated}>{formatDate(data.updated)}</time>
+              </>
+            )}{' '}
+            · {readingMinutes(guide)} phút đọc
+          </small>
+        </span>
+      </div>
+    </header>
+
+    {data.youtubeId && (
+      <div class="guide__video">
+        <YouTube id={data.youtubeId} title={data.title} lang="vi" />
+      </div>
+    )}
+
+    {toc.length > 2 && (
+      <nav class="toc" aria-labelledby="toc-heading">
+        <h2 id="toc-heading">Trong bài này</h2>
+        <ol>
+          {toc.map((h) => (
+            <li>
+              <a href={`#${h.slug}`}>{h.text}</a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+    )}
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    {app && (
+      <aside class="app-cta" aria-label={app.name}>
+        <Image src={app.icon} alt="" width={64} height={64} densities={[1, 2]} loading="lazy" />
+        <div>
+          <strong>{app.name}</strong>
+          <span>{app.subtitle.vi}</span>
+        </div>
+        <a class="button button--primary" href={appPath(app, 'vi')}>
+          Xem {app.name}
+          <ArrowRight size={18} aria-hidden="true" />
+        </a>
+      </aside>
+    )}
+
+    <aside class="author" aria-label="Tác giả">
+      <Logo size={56} />
+      <div>
+        <strong>{SITE.name}</strong>
+        <p>
+          Nhà phát triển ứng dụng đến từ Bến Tre, tác giả của PHTV, vTTS và các ứng dụng chạy ngay
+          trên máy, tôn trọng quyền riêng tư. Mọi hướng dẫn ở đây đều được viết và kiểm tra trên
+          phiên bản ứng dụng mới nhất. Xem thêm video hướng dẫn trên{' '}
+          <a href={SITE.youtube} target="_blank" rel="noopener noreferrer">
+            kênh YouTube
+          </a>
+          .
+        </p>
+      </div>
+    </aside>
+  </article>
+
+  {related.length > 0 && (
+    <GuideList guides={related} title="Đọc tiếp" allLabel="Tất cả hướng dẫn" id="related" />
+  )}
+</BaseLayout>
+
+<style>
+  .guide {
+    max-width: 780px;
+    padding-top: clamp(28px, 4vw, 56px);
+  }
+
+  .crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .crumbs a:hover {
+    color: var(--ink);
+  }
+
+  .guide__head {
+    margin-top: 24px;
+  }
+
+  .guide__topic {
+    color: var(--gold);
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  :root:not([data-theme='dark']) .guide__topic {
+    color: var(--brand);
+  }
+
+  h1 {
+    margin-top: 10px;
+    font-size: clamp(34px, 5vw, 52px);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.035em;
+  }
+
+  .guide__lead {
+    margin-top: 18px;
+    color: var(--muted);
+    font-size: 20px;
+    line-height: 1.55;
+  }
+
+  .guide__byline {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 26px;
+    padding-bottom: 26px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .guide__byline :global(svg) {
+    border-radius: 10px;
+  }
+
+  .guide__byline span {
+    display: grid;
+  }
+
+  .guide__byline a {
+    font-weight: 700;
+  }
+
+  .guide__byline small {
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .guide__video {
+    overflow: hidden;
+    margin-top: 32px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-media);
+    background: #000;
+    box-shadow: var(--shadow-media);
+  }
+
+  .toc {
+    margin-top: 32px;
+    padding: 22px 26px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    background: var(--surface);
+  }
+
+  .toc h2 {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .toc ol {
+    margin-top: 12px;
+    padding-left: 1.3em;
+    display: grid;
+    gap: 6px;
+  }
+
+  .toc a {
+    font-weight: 500;
+  }
+
+  .toc a:hover {
+    color: var(--brand);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .app-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 18px;
+    margin-top: 56px;
+    padding: 22px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    background: var(--surface);
+  }
+
+  .app-cta img {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--r-icon);
+  }
+
+  .app-cta div {
+    display: grid;
+    flex: 1 1 220px;
+  }
+
+  .app-cta span {
+    color: var(--muted);
+  }
+
+  .author {
+    display: flex;
+    gap: 18px;
+    margin-top: 24px;
+    padding: 22px;
+    border-radius: var(--r-card);
+    background: var(--surface-2);
+  }
+
+  .author :global(svg) {
+    flex: none;
+    border-radius: 13px;
+  }
+
+  .author a {
+    color: var(--brand);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .author p {
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+</style>

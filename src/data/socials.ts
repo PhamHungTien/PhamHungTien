@@ -1,4 +1,4 @@
-export type SocialProfileId = 'email' | 'github' | 'linkedin';
+export type SocialProfileId = 'email' | 'github' | 'youtube' | 'linkedin';
 
 export interface SocialProfile {
   id: SocialProfileId;
@@ -7,7 +7,7 @@ export interface SocialProfile {
   href: string;
 }
 
-/** Only professional channels are published: email for support, GitHub and LinkedIn for work. */
+/** Only professional channels are published: email for support, GitHub, YouTube tutorials and LinkedIn. */
 export const socialProfiles: SocialProfile[] = [
   {
     id: 'email',
@@ -20,6 +20,12 @@ export const socialProfiles: SocialProfile[] = [
     label: 'GitHub',
     handle: 'PhamHungTien',
     href: 'https://github.com/PhamHungTien',
+  },
+  {
+    id: 'youtube',
+    label: 'YouTube',
+    handle: '@phamhungtien14',
+    href: 'https://www.youtube.com/@phamhungtien14',
   },
   {
     id: 'linkedin',

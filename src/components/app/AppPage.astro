@@ -11,6 +11,8 @@ import Faq from './Faq.astro';
 import Discussions from './Discussions.astro';
 import MoreApps from './MoreApps.astro';
 import Contact from '../layout/Contact.astro';
+import GuideList from '../guides/GuideList.astro';
+import { getGuides } from '../../lib/guides';
 import Lightbox from '../ui/Lightbox.astro';
 import type { NavItem } from '../layout/Header.astro';
 import type { App, Lang } from '../../data/types';
@@ -26,6 +28,7 @@ interface Props {
 }
 
 const { app, lang } = Astro.props;
+const guides = (await getGuides()).filter((g) => g.data.app === app.slug);
 const langs = [defaultLangOf(app), ...LANGS.filter((l) => l !== defaultLangOf(app))];
 
 const favicon = await getImage({ src: app.icon, width: 64, height: 64, format: 'png' });
@@ -61,6 +64,15 @@ const nav: NavItem[] = [
     <Features app={app} lang={lang} />
     <Gallery app={app} lang={lang} />
     <Faq app={app} lang={lang} />
+    {guides.length > 0 && (
+      <GuideList
+        guides={guides}
+        title={lang === 'vi' ? `Hướng dẫn ${app.name}` : `${app.name} guides`}
+        lead={t(lang, 'guides.lead')}
+        allLabel={t(lang, 'guides.all')}
+        id="app-guides"
+      />
+    )}
   </div>
   <Discussions app={app} lang={lang} />
   <MoreApps app={app} lang={lang} />

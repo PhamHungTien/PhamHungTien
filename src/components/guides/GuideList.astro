@@ -1,0 +1,56 @@
+---
+/** A grid of guide cards with a section heading; used on the home page, app pages and /huong-dan/. */
+import GuideCard from './GuideCard.astro';
+import type { Guide } from '../../lib/guides';
+import { GUIDES_PATH } from '../../lib/guides';
+
+interface Props {
+  guides: Guide[];
+  title: string;
+  lead?: string;
+  allLabel?: string;
+  id?: string;
+  headingLevel?: 'h1' | 'h2';
+}
+
+const { guides, title, lead, allLabel, id = 'guides', headingLevel = 'h2' } = Astro.props;
+const Heading = headingLevel;
+---
+
+<section class="guides container section" id={id} aria-labelledby={`${id}-heading`}>
+  <div class="section-head">
+    <div>
+      <Heading id={`${id}-heading`} class:list={{ guides__h1: headingLevel === 'h1' }}>
+        {title}
+      </Heading>
+      {lead && <p>{lead}</p>}
+    </div>
+    {allLabel && (
+      <a class="text-link" href={GUIDES_PATH}>
+        {allLabel}
+      </a>
+    )}
+  </div>
+  <ul class="guides__grid" role="list" data-reveal-stagger>
+    {guides.map((guide) => (
+      <li>
+        <GuideCard guide={guide} />
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .guides__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+
+  .guides__h1 {
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+  }
+</style>

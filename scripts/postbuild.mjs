@@ -32,7 +32,32 @@ async function* htmlFiles(dir) {
 
 const sha256 = (body) => `'sha256-${createHash('sha256').update(body).digest('base64')}'`;
 
+/**
+ * Pages that load Google AdSense (only the guides) need its loader to inject further
+ * scripts and frames from many Google hosts, so they get a policy that allows HTTPS
+ * scripts and frames instead of the strict, hash-based one every other page keeps.
+ */
+function adsPolicy() {
+  return [
+    "default-src 'self'",
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https:",
+    "style-src 'self' 'unsafe-inline' https:",
+    "img-src 'self' data: blob: https:",
+    "font-src 'self' https: data:",
+    "media-src 'self' https:",
+    "connect-src 'self' https:",
+    'frame-src https:',
+    'fenced-frame-src https:',
+    "worker-src 'self' blob:",
+    "manifest-src 'self'",
+    "object-src 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+  ].join('; ');
+}
+
 function policyFor(html) {
+  if (html.includes('pagead2.googlesyndication.com/pagead/js/adsbygoogle.js')) return adsPolicy();
   const inlineScripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)]
     .filter(([, attributes, body]) => !/\bsrc\s*=/i.test(attributes) && body.trim())
     .map(([, , body]) => sha256(body));

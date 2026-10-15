@@ -150,6 +150,68 @@ for (const [i, a] of apps.entries()) {
     );
   }
 }
+/** Wraps a title into lines of at most `max` characters. */
+const wrap = (text, max) => {
+  const lines = [''];
+  for (const word of text.split(' ')) {
+    const cur = lines.at(-1);
+    if (cur && (cur + ' ' + word).length > max) lines.push(word);
+    else lines[lines.length - 1] = cur ? `${cur} ${word}` : word;
+  }
+  return lines;
+};
+const headline = (lines, size, top = 230) =>
+  lines
+    .map((line, j) =>
+      txt(
+        72,
+        top + j * Math.round(size * 1.22),
+        size,
+        line,
+        'font-weight="700" letter-spacing="-1"',
+      ),
+    )
+    .join('');
+await card(
+  'guides',
+  txt(72, 187, 36, 'Hướng dẫn', 'font-weight="600"') +
+    headline(['Mẹo và hướng dẫn', 'dùng ứng dụng.'], 62, 280) +
+    txt(74, 440, 25, 'Gõ tiếng Việt trên Mac, nghe sách và nhiều hơn nữa.', 'fill="#566074"'),
+  'Tiếng Việt',
+);
+await card(
+  'privacy',
+  txt(72, 187, 36, 'phamhungtien.com', 'font-weight="600"') +
+    headline(['Privacy Policy'], 70, 300) +
+    txt(74, 380, 25, 'Chính sách quyền riêng tư của trang web.', 'fill="#566074"'),
+  'Website',
+);
+const { readdir } = await import('node:fs/promises');
+for (const file of (await readdir('src/content/guides')).filter((f) => f.endsWith('.md'))) {
+  const src = await readFile(`src/content/guides/${file}`, 'utf8');
+  const field = (k) =>
+    src
+      .match(new RegExp(`^${k}:\\s*(.+)$`, 'm'))?.[1]
+      .trim()
+      .replace(/^(['"])(.*)\1$/, '$2');
+  const title = field('title');
+  const app = field('app');
+  const i = apps.findIndex((a) => a[0] === app);
+  const max = i >= 0 ? 26 : 36;
+  let size = 54;
+  let lines = wrap(title, max);
+  if (lines.length > 3) {
+    size = 44;
+    lines = wrap(title, Math.round(max * 1.2));
+  }
+  await card(
+    `guide-${file.replace(/\.md$/, '')}`,
+    txt(72, 187, 30, `Hướng dẫn · ${field('topic')}`, 'font-weight="600" fill="#566074"') +
+      headline(lines, size, 262) +
+      (i >= 0 ? panel(i, apps[i][2]) : ''),
+    'Hướng dẫn',
+  );
+}
 for (const file of outputs) {
   const m = await sharp(file).metadata();
   if (m.width !== 1200 || m.height !== 630) throw Error(file);

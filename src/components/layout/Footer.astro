@@ -13,6 +13,8 @@ interface Props {
 
 const { lang, compact = false } = Astro.props;
 const year = new Date().getFullYear();
+import { GUIDES_PATH } from '../../lib/guides';
+import { sitePrivacyPath } from '../../lib/sitePages';
 ---
 
 <footer class:list={['site-footer container', { 'site-footer--compact': compact }]}>
@@ -32,6 +34,9 @@ const year = new Date().getFullYear();
             <a href={appPath(app, lang)}>{app.name}</a>
           </li>
         ))}
+        <li>
+          <a href={GUIDES_PATH}>{t(lang, 'nav.guides')}</a>
+        </li>
       </ul>
     </nav>
   )}
@@ -54,6 +59,9 @@ const year = new Date().getFullYear();
         <a href={SITE.repository} target="_blank" rel="noopener noreferrer">
           {t(lang, 'footer.source')}
         </a>
+      </li>
+      <li>
+        <a href={sitePrivacyPath(lang)}>{t(lang, 'footer.privacy')}</a>
       </li>
       <li>
         <button type="button" class="link-button" data-donate aria-haspopup="dialog">
