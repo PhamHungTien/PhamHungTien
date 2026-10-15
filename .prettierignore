@@ -6,3 +6,7 @@ public
 package-lock.json
 src/data/appstore.json
 src/content/legal
+
+# Generated brand kit (scripts/tools/brand-kit.mjs)
+brand/favicon/
+brand/svg/
