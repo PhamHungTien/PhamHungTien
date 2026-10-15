@@ -22,9 +22,25 @@ command; don't edit the generated files by hand.
 | `png/`     | `logo-mark-{16…1024}`, mono marks at 512, lockups at 12×                   | Where SVG is not accepted           |
 | `favicon/` | The exact icons the website ships, plus `site.webmanifest`                 | Websites                            |
 | `social/`  | `avatar-1024`, `banner-1500x500` (LinkedIn, X, GitHub), `og-home-1200x630` | Social profiles and link previews   |
+| `youtube/` | Channel avatar, banner, watermark and thumbnail base and example           | The YouTube channel (see below)     |
 
 The wordmark in the lockups is **Be Vietnam Pro Bold**, converted to outlines, so the
 SVGs open correctly without the font installed.
+
+## YouTube
+
+| File                             | Upload in YouTube Studio                         |
+| -------------------------------- | ------------------------------------------------ |
+| `avatar-800.png`                 | Customisation › Branding › Picture               |
+| `banner-2560x1440.png`           | Customisation › Branding › Banner image          |
+| `watermark-150.png`              | Customisation › Branding › Video watermark       |
+| `thumbnail-base-1280x720.png`    | Background to design each video thumbnail on     |
+| `thumbnail-example-1280x720.png` | The thumbnail layout, filled in for a real video |
+
+The banner keeps the name and tagline inside the 1546 × 423 centre that phones, desktops
+and TVs all show; the glow and hats around it only appear on larger screens. Thumbnails
+put the logo and name top left, the title large on the left (a key word in gold) and a
+screenshot or app icon on the right.
 
 ## Colours
 
