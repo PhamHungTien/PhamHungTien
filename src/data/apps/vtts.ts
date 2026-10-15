@@ -29,16 +29,6 @@ const app: App = {
     community: 'https://www.facebook.com/vTTSOffline',
   },
   accent: '#9255bd',
-  videoUrl: '/media/vtts/promo-real-16x9.mp4',
-  videoPosters: {
-    vi: '/media/vtts/promo-real-poster.webp',
-    en: '/media/vtts/promo-real-poster.webp',
-  },
-  videoPortrait: false,
-  videoDescription: {
-    vi: 'Theo dõi đoạn đang đọc, khám phá thư viện và điều khiển từ Dynamic Island, màn hình khóa. Cảnh hệ thống được quay trên iPhone thật.',
-    en: 'Meet vTTS in 30 seconds. Turn your books and words into a listening experience.',
-  },
   tutorial: {
     youtubeId: 'nWz8zGtZRMo',
     title: { vi: 'Hướng dẫn nghe sách với vTTS', en: 'Listen to books with vTTS' },
