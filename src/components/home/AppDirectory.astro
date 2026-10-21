@@ -24,7 +24,7 @@ const groups = PLATFORM_GROUPS.filter((group) =>
       <h2 id="apps-heading">{t(lang, 'home.apps.title')}</h2>
       <p>{t(lang, 'home.apps.lead')}</p>
     </div>
-    <div class="apps__tools">
+    <div class="apps__tools" hidden data-app-tools>
       <div class="segmented" role="group" aria-label={t(lang, 'home.apps.filter')}>
         <button type="button" aria-pressed="true" data-platform="">
           {t(lang, 'home.apps.all')}
@@ -43,22 +43,29 @@ const groups = PLATFORM_GROUPS.filter((group) =>
           placeholder={t(lang, 'home.apps.search')}
           autocomplete="off"
           data-app-search
+          aria-controls="app-results"
         />
       </label>
     </div>
   </div>
 
-  <p
-    class="sr-only"
-    role="status"
-    data-app-count
-    data-one={t(lang, 'home.apps.count.one')}
-    data-other={t(lang, 'home.apps.count.other')}
-  >
-    {apps.length} {t(lang, 'home.apps.count.other')}
-  </p>
+  <div class="apps__summary">
+    <p
+      class="apps__count"
+      role="status"
+      data-app-count
+      data-one={t(lang, 'home.apps.count.one')}
+      data-other={t(lang, 'home.apps.count.other')}
+    >
+      {apps.length} {t(lang, 'home.apps.count.other')}
+    </p>
 
-  <ul class="app-list" role="list" data-reveal-stagger>
+    <button class="text-link apps__reset" type="button" hidden data-app-reset>
+      {t(lang, 'home.apps.clear')}
+    </button>
+  </div>
+
+  <ul id="app-results" class="app-list" role="list" data-reveal-stagger>
     {apps.map((app) => (
       <li
         data-app
@@ -117,6 +124,26 @@ const groups = PLATFORM_GROUPS.filter((group) =>
 </script>
 
 <style>
+  .apps__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+    min-height: 44px;
+  }
+
+  .apps__count {
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .apps__reset {
+    min-height: 44px;
+    background: transparent;
+    border: 0;
+  }
+
   .apps__tools {
     display: flex;
     flex-wrap: wrap;
@@ -134,7 +161,7 @@ const groups = PLATFORM_GROUPS.filter((group) =>
   }
 
   .segmented button {
-    min-height: 36px;
+    min-height: 44px;
     padding: 0 14px;
     border: 0;
     border-radius: 8px;

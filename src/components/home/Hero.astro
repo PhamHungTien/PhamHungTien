@@ -205,19 +205,8 @@ const { lang } = Astro.props;
 
     @keyframes hero-in {
       from {
-        opacity: 0.01;
-        filter: blur(6px);
+        opacity: 1;
         transform: translateY(22px);
-      }
-    }
-
-    .hero::before {
-      animation: glow-drift 18s ease-in-out infinite alternate;
-    }
-
-    @keyframes glow-drift {
-      to {
-        transform: translate3d(4%, 3%, 0) scale(1.08) rotate(3deg);
       }
     }
 
