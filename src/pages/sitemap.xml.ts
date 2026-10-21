@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { apps, legalLangsOf } from '../data/apps';
+import { LOCALES, type Locale } from '../i18n/locales';
 import { LANGS, type Lang } from '../data/types';
 import appStore from '../data/appstore.json';
 import { appPath, homePath, legalPath } from '../lib/routes';
@@ -12,7 +13,7 @@ import { sitePrivacyPath } from '../lib/sitePages';
  * engines understand /vTTS/ and /vi/vTTS/ are translations, not duplicates.
  */
 interface Entry {
-  versions: { lang: Lang; path: string }[];
+  versions: { lang: Locale; path: string }[];
   lastmod?: string;
   image?: { loc: string; title: string };
 }
@@ -28,7 +29,7 @@ const releaseDate = (slug: string) =>
 export const GET: APIRoute = async () => {
   const guides = await getGuides();
   const entries: Entry[] = [
-    { versions: LANGS.map((lang) => ({ lang, path: homePath(lang) })) },
+    { versions: LOCALES.map((lang) => ({ lang, path: homePath(lang) })) },
     ...apps.map((app) => ({
       versions: LANGS.map((lang) => ({ lang, path: appPath(app, lang) })),
       lastmod: releaseDate(app.slug),

@@ -1,7 +1,7 @@
 ---
 import { Check, ChevronDown, Languages } from '@lucide/astro';
-import type { Lang } from '../../data/types';
-import { LANGS } from '../../data/types';
+import { LOCALES as LANGS, LANGUAGE_NAMES as names, type Locale as Lang } from '../../i18n/locales';
+import { homePath } from '../../lib/routes';
 import { t } from '../../lib/i18n';
 import type { Alternate } from '../../lib/routes';
 
@@ -10,7 +10,6 @@ interface Props {
   alternates: Alternate[];
 }
 const { lang, alternates } = Astro.props;
-const names: Record<Lang, string> = { vi: 'Tiếng Việt', en: 'English' };
 ---
 
 <details class="language-picker" data-language-picker>
@@ -27,27 +26,25 @@ const names: Record<Lang, string> = { vi: 'Tiếng Việt', en: 'English' };
         const current = code === lang;
         return (
           <li>
-            {current ? (
-              <span class="language-picker__option" aria-current="true">
-                <span lang={code}>{names[code]}</span>
-                <Check size={17} aria-hidden="true" />
-              </span>
-            ) : alternate ? (
-              <a
-                class="language-picker__option"
-                href={alternate.href}
-                hreflang={code}
-                lang={code}
-                data-language-link
-              >
-                {names[code]}
-              </a>
-            ) : (
-              <span class="language-picker__option language-picker__unavailable">
-                <span lang={code}>{names[code]}</span>
-                <small>{t(lang, 'nav.untranslated')}</small>
-              </span>
-            )}
+            <a
+              class="language-picker__option"
+              href={alternate?.href ?? (current ? Astro.url.pathname : homePath(code))}
+              aria-label={
+                !alternate && !current
+                  ? `${names[code]} — ${t(lang, 'nav.languageHome')}`
+                  : names[code]
+              }
+              hreflang={code}
+              lang={code}
+              aria-current={current ? 'true' : undefined}
+              data-language-link
+              data-language={code}
+              data-language-home={!alternate && !current ? '' : undefined}
+            >
+              <span lang={code}>{names[code]}</span>
+              {current && <Check size={17} aria-hidden="true" />}
+              {!alternate && !current && <small>{t(lang, 'nav.languageHome')}</small>}
+            </a>
           </li>
         );
       })}
@@ -70,11 +67,22 @@ const names: Record<Lang, string> = { vi: 'Tiếng Việt', en: 'English' };
     const updateLinks = () => {
       for (const link of picker.querySelectorAll<HTMLAnchorElement>('[data-language-link]')) {
         const destination = new URL(link.href);
-        destination.hash = window.location.hash;
-        destination.search = window.location.search;
+        if (!link.hasAttribute('data-language-home')) {
+          destination.hash = window.location.hash;
+          destination.search = window.location.search;
+        }
+        destination.searchParams.set('lang', link.dataset.language ?? 'en');
         link.href = destination.href;
       }
     };
+    for (const link of picker.querySelectorAll<HTMLAnchorElement>('[data-language-link]')) {
+      link.addEventListener('click', () => {
+        try {
+          localStorage.setItem('language', link.dataset.language ?? 'en');
+        } catch {}
+      });
+    }
+    updateLinks();
     picker.addEventListener('toggle', updateLinks);
     picker.addEventListener('click', updateLinks);
   }
@@ -109,7 +117,9 @@ const names: Record<Lang, string> = { vi: 'Tiếng Việt', en: 'English' };
     position: absolute;
     top: calc(100% + 10px);
     right: 0;
-    width: min(260px, calc(100vw - 32px));
+    width: min(300px, calc(100vw - 32px));
+    max-height: min(440px, 70dvh);
+    overflow-y: auto;
     padding: 8px;
     border: 1px solid var(--line);
     border-radius: 14px;

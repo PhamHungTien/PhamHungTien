@@ -1,3 +1,4 @@
+import { LOCALES, type Locale } from '../i18n/locales';
 import type { App, Lang } from '../data/types';
 import { SITE } from '../data/site';
 import { apps } from '../data/apps';
@@ -64,18 +65,18 @@ export const personSchema = {
   sameAs: socialProfiles.map((p) => p.href).filter((href) => href.startsWith('https://')),
 };
 
-const websiteSchema = (lang: Lang) => ({
+const websiteSchema = (lang: Locale) => ({
   '@type': 'WebSite',
   '@id': WEBSITE_ID,
   url: `${SITE.origin}/`,
   name: SITE.name,
   alternateName: SITE.asciiName,
   publisher: { '@id': PERSON_ID },
-  inLanguage: ['en', 'vi'],
+  inLanguage: LOCALES,
   description: t(lang, 'meta.home.description'),
 });
 
-export function homeJsonLd(lang: Lang) {
+export function homeJsonLd(lang: Locale) {
   return {
     '@context': 'https://schema.org',
     '@graph': [

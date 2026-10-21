@@ -1,7 +1,8 @@
 ---
+import { appPreviews } from '../../i18n/home-translations';
 import { Image } from 'astro:assets';
 import { ChevronRight, Search } from '@lucide/astro';
-import type { Lang } from '../../data/types';
+import type { Locale as Lang } from '../../i18n/locales';
 import { apps } from '../../data/apps';
 import { t } from '../../lib/i18n';
 import { appPath } from '../../lib/routes';
@@ -12,6 +13,11 @@ interface Props {
 }
 
 const { lang } = Astro.props;
+const previews = lang === 'fr' || lang === 'ja' ? appPreviews[lang] : undefined;
+const category = (app: (typeof apps)[number]) =>
+  previews?.[app.slug][0] ?? app.category[lang === 'vi' ? 'vi' : 'en'];
+const description = (app: (typeof apps)[number]) =>
+  previews?.[app.slug][1] ?? app.description[lang === 'vi' ? 'vi' : 'en'];
 // Only platforms that at least one app supports get a filter button.
 const groups = PLATFORM_GROUPS.filter((group) =>
   apps.some((app) => platformGroupsOf(app.platforms).includes(group)),
@@ -49,6 +55,7 @@ const groups = PLATFORM_GROUPS.filter((group) =>
     </div>
   </div>
 
+  {previews && <p class="apps__translation-note">{t(lang, 'home.translationNote')}</p>}
   <div class="apps__summary">
     <p
       class="apps__count"
@@ -72,7 +79,7 @@ const groups = PLATFORM_GROUPS.filter((group) =>
         data-platforms={platformGroupsOf(app.platforms)
           .map((group) => group.id)
           .join(' ')}
-        data-search={`${app.name} ${app.category[lang]} ${app.description[lang]}`.toLowerCase()}
+        data-search={`${app.name} ${category(app)} ${description(app)}`.toLowerCase()}
       >
         <a class="app-row" href={appPath(app, lang)} style={`--app: ${app.accent}`}>
           <Image
@@ -96,8 +103,9 @@ const groups = PLATFORM_GROUPS.filter((group) =>
                       .join(' · ')}
               </span>
             </div>
-            <span class="app-row__category">{app.category[lang]}</span>
-            <span class="app-row__desc">{app.description[lang]}</span>
+            <span class="app-row__category">{category(app)}</span>
+            <span class="app-row__desc">{description(app)}</span>
+            {previews && <span class="app-row__platforms">{t(lang, 'home.detailsLanguage')}</span>}
             <span class="app-row__platforms">
               {platformGroupsOf(app.platforms)
                 .map((group) => group.label)
@@ -124,6 +132,12 @@ const groups = PLATFORM_GROUPS.filter((group) =>
 </script>
 
 <style>
+  .apps__translation-note {
+    color: var(--muted);
+    max-width: 70ch;
+    margin-bottom: 16px;
+    font-size: 14px;
+  }
   .apps__summary {
     display: flex;
     align-items: center;

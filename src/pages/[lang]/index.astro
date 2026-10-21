@@ -1,0 +1,9 @@
+---
+import HomePage from '../../components/home/HomePage.astro';
+export function getStaticPaths() {
+  return (['fr', 'ja'] as const).map((lang) => ({ params: { lang }, props: { lang } }));
+}
+const { lang } = Astro.props;
+---
+
+<HomePage lang={lang} />

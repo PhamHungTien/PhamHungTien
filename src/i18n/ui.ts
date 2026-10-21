@@ -31,6 +31,10 @@ const en = {
   'nav.openMenu': 'Open menu',
   'nav.closeMenu': 'Close menu',
   'nav.language': 'Language',
+  'nav.languageHome': 'Home in this language',
+  'home.translationNote':
+    'App details are available in English and Vietnamese. Guides are in Vietnamese.',
+  'home.detailsLanguage': 'Details in English',
   'nav.untranslated': 'Not translated yet',
   'nav.switchTo': 'Tiếng Việt',
   'theme.toDark': 'Use dark mode',
@@ -144,6 +148,10 @@ const vi: Record<UiKey, string> = {
   'nav.openMenu': 'Mở menu',
   'nav.closeMenu': 'Đóng menu',
   'nav.language': 'Ngôn ngữ',
+  'nav.languageHome': 'Trang chủ bằng ngôn ngữ này',
+  'home.translationNote':
+    'Trang chi tiết ứng dụng có tiếng Anh và tiếng Việt. Hướng dẫn được viết bằng tiếng Việt.',
+  'home.detailsLanguage': 'Chi tiết bằng tiếng Anh',
   'nav.untranslated': 'Chưa có bản dịch',
   'nav.switchTo': 'English',
   'theme.toDark': 'Bật giao diện tối',

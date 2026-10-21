@@ -64,7 +64,7 @@ for (const [path, html] of pages) {
 
   if (count(/<title>/g) !== 1) fail(path, 'needs exactly one <title>');
   if (count(/<h1[\s>]/g) !== 1) fail(path, 'needs exactly one <h1>');
-  if (!/<html lang="(en|vi)"/.test(html)) fail(path, 'missing html lang');
+  if (!/<html lang="(en|vi|fr|ja)"/.test(html)) fail(path, 'missing html lang');
   if (!html.includes('data-site-security'))
     fail(path, 'missing Content-Security-Policy (run postbuild)');
   if (!html.includes('id="main-content"')) fail(path, 'missing skip-link target');
