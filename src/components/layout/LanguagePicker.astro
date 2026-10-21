@@ -1,0 +1,154 @@
+---
+import { Check, ChevronDown, Languages } from '@lucide/astro';
+import type { Lang } from '../../data/types';
+import { LANGS } from '../../data/types';
+import { t } from '../../lib/i18n';
+import type { Alternate } from '../../lib/routes';
+
+interface Props {
+  lang: Lang;
+  alternates: Alternate[];
+}
+const { lang, alternates } = Astro.props;
+const names: Record<Lang, string> = { vi: 'Tiếng Việt', en: 'English' };
+---
+
+<details class="language-picker" data-language-picker>
+  <summary aria-label={`${t(lang, 'nav.language')}: ${names[lang]}`}>
+    <Languages size={17} aria-hidden="true" />
+    <span lang={lang}>{names[lang]}</span>
+    <ChevronDown size={14} aria-hidden="true" />
+  </summary>
+  <nav class="language-picker__panel" aria-label={t(lang, 'nav.language')}>
+    <p>{t(lang, 'nav.language')}</p>
+    <ul role="list">
+      {LANGS.map((code) => {
+        const alternate = alternates.find((item) => item.lang === code);
+        const current = code === lang;
+        return (
+          <li>
+            {current ? (
+              <span class="language-picker__option" aria-current="true">
+                <span lang={code}>{names[code]}</span>
+                <Check size={17} aria-hidden="true" />
+              </span>
+            ) : alternate ? (
+              <a
+                class="language-picker__option"
+                href={alternate.href}
+                hreflang={code}
+                lang={code}
+                data-language-link
+              >
+                {names[code]}
+              </a>
+            ) : (
+              <span class="language-picker__option language-picker__unavailable">
+                <span lang={code}>{names[code]}</span>
+                <small>{t(lang, 'nav.untranslated')}</small>
+              </span>
+            )}
+          </li>
+        );
+      })}
+    </ul>
+  </nav>
+</details>
+
+<script>
+  for (const picker of document.querySelectorAll<HTMLDetailsElement>('[data-language-picker]')) {
+    picker.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape' || !picker.open) return;
+      picker.open = false;
+      picker.querySelector('summary')?.focus();
+      event.stopPropagation();
+    });
+    document.addEventListener('pointerdown', (event) => {
+      if (!picker.contains(event.target as Node)) picker.open = false;
+    });
+    // Keep reading position and filters without guessing translated URL prefixes.
+    const updateLinks = () => {
+      for (const link of picker.querySelectorAll<HTMLAnchorElement>('[data-language-link]')) {
+        const destination = new URL(link.href);
+        destination.hash = window.location.hash;
+        destination.search = window.location.search;
+        link.href = destination.href;
+      }
+    };
+    picker.addEventListener('toggle', updateLinks);
+    picker.addEventListener('click', updateLinks);
+  }
+</script>
+
+<style>
+  .language-picker {
+    position: relative;
+  }
+  summary {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 12px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary:hover,
+  details[open] summary {
+    border-color: var(--line-strong);
+  }
+  .language-picker__panel {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: min(260px, calc(100vw - 32px));
+    padding: 8px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--surface);
+    box-shadow: var(--shadow-media);
+  }
+  p {
+    padding: 8px 12px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .language-picker__option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 48px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 15px;
+  }
+  a:hover,
+  [aria-current] {
+    background: var(--surface-2);
+  }
+  [aria-current] {
+    font-weight: 600;
+  }
+  .language-picker__unavailable {
+    flex-wrap: wrap;
+    color: var(--muted);
+  }
+  small {
+    font-size: 12px;
+  }
+  @media (max-width: 380px) {
+    summary {
+      gap: 5px;
+      padding-inline: 8px;
+    }
+  }
+</style>

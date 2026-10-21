@@ -1,6 +1,7 @@
 ---
-import { Menu, X, Moon, Sun, Languages } from '@lucide/astro';
+import { Menu, X, Moon, Sun } from '@lucide/astro';
 import Logo from '../ui/Logo.astro';
+import LanguagePicker from './LanguagePicker.astro';
 import type { Lang } from '../../data/types';
 import { t } from '../../lib/i18n';
 import { homePath, type Alternate } from '../../lib/routes';
@@ -21,7 +22,6 @@ interface Props {
 }
 
 const { lang, nav, alternates } = Astro.props;
-const switchTarget = alternates.find((alt) => alt.lang !== lang);
 ---
 
 <header class="site-header" data-header>
@@ -43,18 +43,7 @@ const switchTarget = alternates.find((alt) => alt.lang !== lang);
   </nav>
 
   <div class="header-actions">
-    {switchTarget && (
-      <a
-        class="lang-switch"
-        href={switchTarget.href}
-        hreflang={switchTarget.lang}
-        lang={switchTarget.lang}
-        title={t(lang, 'nav.language')}
-      >
-        <Languages size={17} aria-hidden="true" />
-        <span>{t(lang, 'nav.switchTo')}</span>
-      </a>
-    )}
+    <LanguagePicker lang={lang} alternates={alternates} />
     <button
       class="icon-button"
       type="button"
@@ -174,24 +163,6 @@ const switchTarget = alternates.find((alt) => alt.lang !== lang);
     display: flex;
     align-items: center;
     gap: 8px;
-  }
-
-  .lang-switch {
-    display: inline-flex;
-    height: 40px;
-    align-items: center;
-    gap: 8px;
-    padding: 0 12px;
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    background: var(--surface);
-    font-size: 14px;
-    font-weight: 600;
-    transition: border-color 160ms ease;
-  }
-
-  .lang-switch:hover {
-    border-color: var(--line-strong);
   }
 
   /* Scroll: the hairline appears once the page moves, and doubles as a reading-progress
@@ -316,23 +287,6 @@ const switchTarget = alternates.find((alt) => alt.lang !== lang);
     .mobile-nav a[aria-current='page'] {
       color: var(--brand);
       font-weight: 600;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .lang-switch span {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-      clip: rect(0 0 0 0);
-      white-space: nowrap;
-    }
-
-    .lang-switch {
-      width: 40px;
-      justify-content: center;
-      padding: 0;
     }
   }
 </style>
