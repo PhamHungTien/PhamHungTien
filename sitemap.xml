@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://phamhungtien.com/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phamhungtien.com/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/vi/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://phamhungtien.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://phamhungtien.com/ja/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phamhungtien.com/"/>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/vi/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phamhungtien.com/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/vi/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://phamhungtien.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://phamhungtien.com/ja/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phamhungtien.com/"/>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/fr/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phamhungtien.com/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/vi/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://phamhungtien.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://phamhungtien.com/ja/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phamhungtien.com/"/>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/ja/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phamhungtien.com/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/vi/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://phamhungtien.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://phamhungtien.com/ja/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phamhungtien.com/"/>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/en/PHTV/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phamhungtien.com/en/PHTV/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/PHTV/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phamhungtien.com/en/PHTV/"/>
+    <image:image><image:loc>https://phamhungtien.com/og/phtv.png?v=pht-5</image:loc><image:title>PHTV</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/PHTV/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phamhungtien.com/en/PHTV/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/PHTV/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phamhungtien.com/en/PHTV/"/>
+    <image:image><image:loc>https://phamhungtien.com/og/phtv.png?v=pht-5</image:loc><image:title>PHTV</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/vTTS/</loc>
+    <lastmod>2026-10-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phamhungtien.com/vTTS/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/vi/vTTS/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phamhungtien.com/vTTS/"/>
+    <image:image><image:loc>https://phamhungtien.com/og/vtts.png?v=pht-5</image:loc><image:title>vTTS</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/vi/vTTS/</loc>
+    <lastmod>2026-10-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phamhungtien.com/vTTS/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/vi/vTTS/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phamhungtien.com/vTTS/"/>
+    <image:image><image:loc>https://phamhungtien.com/og/vtts.png?v=pht-5</image:loc><image:title>vTTS</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/PadCodeAI/</loc>
+    <lastmod>2026-07-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phamhungtien.com/PadCodeAI/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/vi/PadCodeAI/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phamhungtien.com/PadCodeAI/"/>
+    <image:image><image:loc>https://phamhungtien.com/og/padcodeai.png?v=pht-5</image:loc><image:title>Pad Code AI</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/vi/PadCodeAI/</loc>
+    <lastmod>2026-07-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phamhungtien.com/PadCodeAI/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/vi/PadCodeAI/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phamhungtien.com/PadCodeAI/"/>
+    <image:image><image:loc>https://phamhungtien.com/og/padcodeai.png?v=pht-5</image:loc><image:title>Pad Code AI</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/PadNotesAI/</loc>
+    <lastmod>2026-09-14</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phamhungtien.com/PadNotesAI/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/vi/PadNotesAI/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phamhungtien.com/PadNotesAI/"/>
+    <image:image><image:loc>https://phamhungtien.com/og/padnotesai.png?v=pht-5</image:loc><image:title>Pad Notes AI</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/vi/PadNotesAI/</loc>
+    <lastmod>2026-09-14</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phamhungtien.com/PadNotesAI/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/vi/PadNotesAI/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phamhungtien.com/PadNotesAI/"/>
+    <image:image><image:loc>https://phamhungtien.com/og/padnotesai.png?v=pht-5</image:loc><image:title>Pad Notes AI</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/MyNASManager/</loc>
+    <lastmod>2026-06-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phamhungtien.com/MyNASManager/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/vi/MyNASManager/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phamhungtien.com/MyNASManager/"/>
+    <image:image><image:loc>https://phamhungtien.com/og/mynasmanager.png?v=pht-5</image:loc><image:title>My NAS Manager</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/vi/MyNASManager/</loc>
+    <lastmod>2026-06-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phamhungtien.com/MyNASManager/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/vi/MyNASManager/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phamhungtien.com/MyNASManager/"/>
+    <image:image><image:loc>https://phamhungtien.com/og/mynasmanager.png?v=pht-5</image:loc><image:title>My NAS Manager</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/LunarV/</loc>
+    <lastmod>2026-08-14</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phamhungtien.com/LunarV/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/vi/LunarV/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phamhungtien.com/LunarV/"/>
+    <image:image><image:loc>https://phamhungtien.com/og/lunarv.png?v=pht-5</image:loc><image:title>LunarV</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/vi/LunarV/</loc>
+    <lastmod>2026-08-14</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phamhungtien.com/LunarV/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/vi/LunarV/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phamhungtien.com/LunarV/"/>
+    <image:image><image:loc>https://phamhungtien.com/og/lunarv.png?v=pht-5</image:loc><image:title>LunarV</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/LunarBlock/</loc>
+    <lastmod>2026-10-02</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phamhungtien.com/LunarBlock/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/vi/LunarBlock/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phamhungtien.com/LunarBlock/"/>
+    <image:image><image:loc>https://phamhungtien.com/og/lunarblock.png?v=pht-5</image:loc><image:title>Lunar Block</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/vi/LunarBlock/</loc>
+    <lastmod>2026-10-02</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phamhungtien.com/LunarBlock/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/vi/LunarBlock/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phamhungtien.com/LunarBlock/"/>
+    <image:image><image:loc>https://phamhungtien.com/og/lunarblock.png?v=pht-5</image:loc><image:title>Lunar Block</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/huong-dan/</loc>
+    <lastmod>2026-10-15</lastmod>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/huong-dan/go-tieng-viet-tren-mac-voi-phtv/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <image:image><image:loc>https://phamhungtien.com/og/guide-go-tieng-viet-tren-mac-voi-phtv.png?v=pht-5</image:loc><image:title>Cách gõ tiếng Việt trên Mac với PHTV (hướng dẫn đầy đủ)</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/huong-dan/nghe-sach-epub-giong-doc-tieng-viet-voi-vtts/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <image:image><image:loc>https://phamhungtien.com/og/guide-nghe-sach-epub-giong-doc-tieng-viet-voi-vtts.png?v=pht-5</image:loc><image:title>Nghe sách EPUB và văn bản bằng giọng đọc tiếng Việt với vTTS</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/huong-dan/am-lich-viet-nam-cach-tinh-can-chi-tiet-khi/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <image:image><image:loc>https://phamhungtien.com/og/guide-am-lich-viet-nam-cach-tinh-can-chi-tiet-khi.png?v=pht-5</image:loc><image:title>Âm lịch Việt Nam: cách tính, can chi, tiết khí và vì sao khác lịch Trung Quốc</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/huong-dan/bang-go-telex-day-du/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <image:image><image:loc>https://phamhungtien.com/og/guide-bang-go-telex-day-du.png?v=pht-5</image:loc><image:title>Bảng gõ Telex đầy đủ và cách đặt dấu đúng</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/huong-dan/bang-ma-tieng-viet-unicode-tcvn3-vni/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <image:image><image:loc>https://phamhungtien.com/og/guide-bang-ma-tieng-viet-unicode-tcvn3-vni.png?v=pht-5</image:loc><image:title>Bảng mã tiếng Việt: Unicode, Unicode tổ hợp, TCVN3, VNI và cách chuyển đổi</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/huong-dan/cach-go-vni-telex-hay-vni/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <image:image><image:loc>https://phamhungtien.com/og/guide-cach-go-vni-telex-hay-vni.png?v=pht-5</image:loc><image:title>Cách gõ VNI và nên chọn Telex hay VNI?</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/huong-dan/go-tat-tren-mac-voi-phtv/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <image:image><image:loc>https://phamhungtien.com/og/guide-go-tat-tren-mac-voi-phtv.png?v=pht-5</image:loc><image:title>Gõ tắt trên Mac với PHTV: macro, ngày giờ, clipboard và bộ đếm</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/huong-dan/sua-loi-go-tieng-viet-tren-mac/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <image:image><image:loc>https://phamhungtien.com/og/guide-sua-loi-go-tieng-viet-tren-mac.png?v=pht-5</image:loc><image:title>Sửa lỗi gõ tiếng Việt trên Mac: lặp chữ, mất dấu, không gõ được</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/huong-dan/truy-cap-synology-nas-tu-xa-an-toan/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <image:image><image:loc>https://phamhungtien.com/og/guide-truy-cap-synology-nas-tu-xa-an-toan.png?v=pht-5</image:loc><image:title>Truy cập Synology NAS từ xa an toàn và quản lý bằng iPhone, iPad, Mac</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phamhungtien.com/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/vi/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phamhungtien.com/privacy/"/>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/vi/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phamhungtien.com/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/vi/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phamhungtien.com/privacy/"/>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/PHTV/privacy.html</loc>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/PHTV/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phamhungtien.com/en/PHTV/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phamhungtien.com/PHTV/privacy.html"/>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/en/PHTV/privacy.html</loc>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/PHTV/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phamhungtien.com/en/PHTV/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phamhungtien.com/PHTV/privacy.html"/>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/PHTV/terms.html</loc>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/PHTV/terms.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phamhungtien.com/en/PHTV/terms.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phamhungtien.com/PHTV/terms.html"/>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/en/PHTV/terms.html</loc>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://phamhungtien.com/PHTV/terms.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phamhungtien.com/en/PHTV/terms.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://phamhungtien.com/PHTV/terms.html"/>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/vTTS/privacy.html</loc>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/vTTS/terms.html</loc>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/PadCodeAI/privacy.html</loc>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/PadCodeAI/terms.html</loc>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/PadNotesAI/privacy.html</loc>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/PadNotesAI/terms.html</loc>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/MyNASManager/privacy.html</loc>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/MyNASManager/terms.html</loc>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/LunarV/privacy.html</loc>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/LunarV/terms.html</loc>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/LunarBlock/privacy.html</loc>
+  </url>
+  <url>
+    <loc>https://phamhungtien.com/LunarBlock/terms.html</loc>
+  </url>
+</urlset>

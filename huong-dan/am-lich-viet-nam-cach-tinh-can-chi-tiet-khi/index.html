@@ -1,0 +1,364 @@
+<!DOCTYPE html><html lang="vi" data-theme="light"> <head><meta charset="utf-8"><meta data-site-security http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' https: data:; media-src 'self' https:; connect-src 'self' https:; frame-src https:; fenced-frame-src https:; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'"><meta data-site-security name="referrer" content="strict-origin-when-cross-origin"><script>(function(){const languageRoutes = {"en":"/","vi":"/vi/","fr":"/fr/","ja":"/ja/"};
+
+      (() => {
+        const match = (value) => {
+          const base = String(value ?? '')
+            .toLowerCase()
+            .replaceAll('_', '-')
+            .split('-')[0];
+          return Object.hasOwn(languageRoutes, base) ? base : undefined;
+        };
+        const url = new URL(location.href);
+        const explicit = match(url.searchParams.get('lang'));
+        if (explicit) {
+          try {
+            localStorage.setItem('language', explicit);
+          } catch {}
+          return;
+        }
+        // Explicit translated URLs and app/legal deep links always retain their language.
+        if (url.pathname !== '/') return;
+        let saved;
+        try {
+          saved = match(localStorage.getItem('language'));
+        } catch {}
+        const preferred =
+          saved ?? (navigator.languages ?? [navigator.language]).map(match).find(Boolean) ?? 'en';
+        const target = languageRoutes[preferred];
+        if (target !== url.pathname) {
+          url.pathname = target;
+          location.replace(url.href);
+        }
+      })();
+    })();</script><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Âm lịch Việt Nam: cách tính, can chi, tiết khí và vì sao khác lịch Trung Quốc | Phạm Hùng Tiến</title><meta name="description" content="Âm lịch Việt Nam tính thế nào: tháng đủ thiếu, tháng nhuận, cách nhẩm can chi, 24 tiết khí, 12 canh giờ và vì sao có năm Tết Việt lệch lịch Trung Quốc."><meta name="google-adsense-account" content="ca-pub-1148793312095742"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1148793312095742" crossorigin="anonymous"></script><link rel="canonical" href="https://phamhungtien.com/huong-dan/am-lich-viet-nam-cach-tinh-can-chi-tiet-khi/"><meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1"><meta name="author" content="Phạm Hùng Tiến"><meta name="theme-color" content="#f3f5f8" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0d1118" media="(prefers-color-scheme: dark)"><meta name="color-scheme" content="light dark"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="preload" href="/assets/build/be-vietnam-pro-latin-400-normal.PpnXBOrz.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/build/be-vietnam-pro-latin-700-normal.DlW1Zbsh.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/build/be-vietnam-pro-vietnamese-700-normal.Csr0PCuG.woff2" as="font" type="font/woff2" crossorigin><meta property="og:type" content="article"><meta property="og:site_name" content="Phạm Hùng Tiến"><meta property="og:locale" content="vi_VN"><meta property="og:url" content="https://phamhungtien.com/huong-dan/am-lich-viet-nam-cach-tinh-can-chi-tiet-khi/"><meta property="og:title" content="Âm lịch Việt Nam: cách tính, can chi, tiết khí và vì sao khác lịch Trung Quốc | Phạm Hùng Tiến"><meta property="og:description" content="Âm lịch Việt Nam tính thế nào: tháng đủ thiếu, tháng nhuận, cách nhẩm can chi, 24 tiết khí, 12 canh giờ và vì sao có năm Tết Việt lệch lịch Trung Quốc."><meta property="og:image" content="https://phamhungtien.com/og/guide-am-lich-viet-nam-cach-tinh-can-chi-tiet-khi.png?v=pht-5"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Âm lịch Việt Nam: cách tính, can chi, tiết khí và vì sao khác lịch Trung Quốc | Phạm Hùng Tiến"><meta name="twitter:card" content="summary_large_image"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","@id":"https://phamhungtien.com/huong-dan/am-lich-viet-nam-cach-tinh-can-chi-tiet-khi/#article","headline":"Âm lịch Việt Nam: cách tính, can chi, tiết khí và vì sao khác lịch Trung Quốc","description":"Âm lịch Việt Nam tính thế nào: tháng đủ thiếu, tháng nhuận, cách nhẩm can chi, 24 tiết khí, 12 canh giờ và vì sao có năm Tết Việt lệch lịch Trung Quốc.","inLanguage":"vi","datePublished":"2026-10-15","dateModified":"2026-10-15","url":"https://phamhungtien.com/huong-dan/am-lich-viet-nam-cach-tinh-can-chi-tiet-khi/","mainEntityOfPage":"https://phamhungtien.com/huong-dan/am-lich-viet-nam-cach-tinh-can-chi-tiet-khi/","image":"https://phamhungtien.com/og/guide-am-lich-viet-nam-cach-tinh-can-chi-tiet-khi.png?v=pht-5","author":{"@id":"https://phamhungtien.com/#person","@type":"Person","name":"Phạm Hùng Tiến","url":"https://phamhungtien.com"},"publisher":{"@id":"https://phamhungtien.com/#person"},"isPartOf":{"@id":"https://phamhungtien.com/#website"},"about":{"@id":"https://phamhungtien.com/LunarV/#app"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Trang chủ","item":"https://phamhungtien.com/vi/"},{"@type":"ListItem","position":2,"name":"Hướng dẫn","item":"https://phamhungtien.com/huong-dan/"},{"@type":"ListItem","position":3,"name":"Âm lịch Việt Nam: cách tính, can chi, tiết khí và vì sao khác lịch Trung Quốc","item":"https://phamhungtien.com/huong-dan/am-lich-viet-nam-cach-tinh-can-chi-tiet-khi/"}]}]}</script><script type="speculationrules">{"prerender":[{"where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"[href^=\"#\"], [target=\"_blank\"], [download], [rel~=\"nofollow\"]"}}]},"eagerness":"moderate"}]}</script><!-- Runs before first paint so a stored or system dark theme never flashes light. --><script>
+      (() => {
+        let theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        try {
+          const stored = localStorage.getItem('theme');
+          if (stored === 'light' || stored === 'dark') theme = stored;
+        } catch {}
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script><style>@font-face{font-family:Be Vietnam Pro;font-style:normal;font-display:swap;font-weight:400;src:url(/assets/build/be-vietnam-pro-vietnamese-400-normal.CRcqvyg1.woff2)format("woff2"),url(/assets/build/be-vietnam-pro-vietnamese-400-normal.BuGn0gnm.woff)format("woff");unicode-range:U+102-103,U+110-111,U+128-129,U+168-169,U+1A0-1A1,U+1AF-1B0,U+300-301,U+303-304,U+308-309,U+323,U+329,U+1EA0-1EF9,U+20AB}@font-face{font-family:Be Vietnam Pro;font-style:normal;font-display:swap;font-weight:400;src:url(/assets/build/be-vietnam-pro-latin-ext-400-normal.CiZNW1ec.woff2)format("woff2"),url(/assets/build/be-vietnam-pro-latin-ext-400-normal.DYBYyMQr.woff)format("woff");unicode-range:U+100-2BA,U+2BD-2C5,U+2C7-2CC,U+2CE-2D7,U+2DD-2FF,U+304,U+308,U+329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:Be Vietnam Pro;font-style:normal;font-display:swap;font-weight:400;src:url(/assets/build/be-vietnam-pro-latin-400-normal.PpnXBOrz.woff2)format("woff2"),url(/assets/build/be-vietnam-pro-latin-400-normal.bXgqVju9.woff)format("woff");unicode-range:U+??,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:Be Vietnam Pro;font-style:normal;font-display:swap;font-weight:600;src:url(/assets/build/be-vietnam-pro-vietnamese-600-normal.nyU-ZL2p.woff2)format("woff2"),url(/assets/build/be-vietnam-pro-vietnamese-600-normal.DkpCIyan.woff)format("woff");unicode-range:U+102-103,U+110-111,U+128-129,U+168-169,U+1A0-1A1,U+1AF-1B0,U+300-301,U+303-304,U+308-309,U+323,U+329,U+1EA0-1EF9,U+20AB}@font-face{font-family:Be Vietnam Pro;font-style:normal;font-display:swap;font-weight:600;src:url(/assets/build/be-vietnam-pro-latin-ext-600-normal.BNd8euf0.woff2)format("woff2"),url(/assets/build/be-vietnam-pro-latin-ext-600-normal.BeUwKxhG.woff)format("woff");unicode-range:U+100-2BA,U+2BD-2C5,U+2C7-2CC,U+2CE-2D7,U+2DD-2FF,U+304,U+308,U+329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:Be Vietnam Pro;font-style:normal;font-display:swap;font-weight:600;src:url(/assets/build/be-vietnam-pro-latin-600-normal.BZDkUTrt.woff2)format("woff2"),url(/assets/build/be-vietnam-pro-latin-600-normal.5IO4e7bK.woff)format("woff");unicode-range:U+??,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:Be Vietnam Pro;font-style:normal;font-display:swap;font-weight:700;src:url(/assets/build/be-vietnam-pro-vietnamese-700-normal.Csr0PCuG.woff2)format("woff2"),url(/assets/build/be-vietnam-pro-vietnamese-700-normal.By_5yT39.woff)format("woff");unicode-range:U+102-103,U+110-111,U+128-129,U+168-169,U+1A0-1A1,U+1AF-1B0,U+300-301,U+303-304,U+308-309,U+323,U+329,U+1EA0-1EF9,U+20AB}@font-face{font-family:Be Vietnam Pro;font-style:normal;font-display:swap;font-weight:700;src:url(/assets/build/be-vietnam-pro-latin-ext-700-normal.C8_gqRu2.woff2)format("woff2"),url(/assets/build/be-vietnam-pro-latin-ext-700-normal.4Hjo2OtD.woff)format("woff");unicode-range:U+100-2BA,U+2BD-2C5,U+2C7-2CC,U+2CE-2D7,U+2DD-2FF,U+304,U+308,U+329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:Be Vietnam Pro;font-style:normal;font-display:swap;font-weight:700;src:url(/assets/build/be-vietnam-pro-latin-700-normal.DlW1Zbsh.woff2)format("woff2"),url(/assets/build/be-vietnam-pro-latin-700-normal.C2EtzaOi.woff)format("woff");unicode-range:U+??,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:Be Vietnam Pro Fallback;src:local(Arial),local(Helvetica Neue),local(Liberation Sans);size-adjust:110.24%;ascent-override:90.71%;descent-override:24.04%;line-gap-override:0%}:root{color-scheme:light;--paper:#f3f5f8;--surface:#fff;--surface-2:#e9edf2;--ink:#131a27;--muted:#566074;--line:#d9dee6;--line-strong:#bcc4d0;--brand:#7a1424;--brand-hover:#5f0e1b;--on-brand:#fff;--gold:#c38f22;--focus:#7a1424;--danger:#b42318;--success:#067647;--header-bg:#f3f5f8d1;--shadow-media:0 1px 2px #131a270f, 0 24px 48px -24px #131a2740;--shadow-icon:0 8px 20px -10px #131a2773;--font:"Be Vietnam Pro", "Be Vietnam Pro Fallback", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;--font-mono:ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;--container:1200px;--gutter:clamp(16px, 4vw, 48px);--section-gap:clamp(72px, 10vw, 128px);--header-height:68px;--r-control:12px;--r-card:20px;--r-media:28px;--r-icon:22.5%;--ease:cubic-bezier(.22, 1, .36, 1);--spring:linear(0, .009, .035 2.1%, .141, .281 6.7%, .723 12.9%, .938 16.7%, 1.017, 1.077, 1.121, 1.149 24.3%, 1.159, 1.163, 1.161, 1.154 29.9%, 1.129 32.8%, 1.051 39.6%, 1.017 43.1%, .991, .977 51%, .974 53.8%, .975 57.1%, .997 69.8%, 1.003 76.9%, 1.004 83.8%, 1)}:root[data-theme=dark]{color-scheme:dark;--paper:#0d1118;--surface:#151b26;--surface-2:#1c2431;--ink:#eceff4;--muted:#9aa4b6;--line:#262f3e;--line-strong:#364256;--brand:#f0c04e;--brand-hover:#f6cf6f;--on-brand:#1b1405;--gold:#f0c04e;--focus:#f0c04e;--danger:#ff8a7a;--success:#6ce9a6;--header-bg:#0d1118cc;--shadow-media:0 1px 2px #0000004d, 0 24px 48px -24px #000000b3;--shadow-icon:0 8px 20px -10px #000000b3}*,:before,:after{box-sizing:border-box}html{background:var(--paper);scrollbar-gutter:stable;scroll-behavior:smooth;scroll-padding-top:calc(var(--header-height) + 20px);-webkit-text-size-adjust:100%;text-size-adjust:100%}body{background:var(--paper);min-width:320px;min-height:100dvh;color:var(--ink);font-family:var(--font);text-rendering:optimizelegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;margin:0;font-size:16px;line-height:1.6}h1,h2,h3,h4,p,ul,ol,dl,dd,figure,blockquote{margin:0}h1,h2,h3{text-wrap:balance}p,li{text-wrap:pretty}ul[role=list],ol[role=list]{padding:0;list-style:none}a{color:inherit;text-decoration:none}button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer}a,button{-webkit-tap-highlight-color:transparent}img,video,svg,iframe{max-width:100%;display:block}img,video{height:auto}svg{flex-shrink:0}code,kbd{font-family:var(--font-mono);font-size:.92em}:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:4px}::selection{background:color-mix(in srgb, var(--gold) 40%, transparent);color:var(--ink)}[hidden]{display:none!important}.container{width:min(var(--container), 100% - 2 * var(--gutter));margin-inline:auto}.section{padding-top:var(--section-gap)}.sr-only{clip:rect(0 0 0 0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}.section-head{flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px 32px;margin-bottom:32px;display:flex}.section-head h2{letter-spacing:-.03em;font-size:clamp(30px,4.2vw,48px);font-weight:700;line-height:1.1}.section-head p{max-width:40em;color:var(--muted);margin-top:10px;font-size:17px}.button{border-radius:var(--r-control);text-align:center;min-height:48px;transition:background-color .16s ease, border-color .16s ease, color .16s ease, transform .16s var(--ease);background:0 0;border:1px solid #0000;justify-content:center;align-items:center;gap:10px;padding:0 22px;font-size:15px;font-weight:600;line-height:1.2;display:inline-flex}.button:active{transform:scale(.97)}.button--primary{background:var(--brand);color:var(--on-brand)}.button--primary:hover{background:var(--brand-hover)}.button--secondary{border-color:var(--line-strong);background:var(--surface);color:var(--ink)}.button--secondary:hover{border-color:var(--ink)}.link-button{color:var(--muted);background:0 0;border:0;align-items:center;gap:8px;padding:0;font-size:15px;font-weight:600;display:inline-flex}.link-button:hover{color:var(--ink)}.text-link{color:var(--muted);text-decoration:underline;text-decoration-color:var(--line-strong);text-underline-offset:4px;font-size:15px;font-weight:600}.text-link:hover{color:var(--ink);text-decoration-color:currentColor}.icon-button{width:var(--header-control-size,40px);height:var(--header-control-size,40px);border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;place-items:center;padding:0;transition:border-color .16s;display:inline-grid}.icon-button:hover{border-color:var(--line-strong)}.app-icon{border-radius:var(--r-icon);box-shadow:var(--shadow-icon)}.prose{font-size:17px;line-height:1.75}.prose h2{letter-spacing:-.02em;scroll-margin-top:calc(var(--header-height) + 20px);margin-top:48px;font-size:clamp(24px,3vw,28px);font-weight:700;line-height:1.25}.prose h3{scroll-margin-top:calc(var(--header-height) + 20px);margin-top:32px;font-size:20px;font-weight:600;line-height:1.35}.prose p,.prose ul,.prose ol,.prose table,.prose pre,.prose blockquote,.prose figure{color:color-mix(in srgb, var(--ink) 82%, var(--muted));margin-top:16px}.prose ul,.prose ol{padding-left:1.3em}.prose li+li{margin-top:8px}.prose strong{color:var(--ink)}.prose a{color:var(--brand);text-underline-offset:3px;text-decoration:underline}.prose img{border:1px solid var(--line);box-shadow:var(--shadow-media);border-radius:16px;margin-top:20px}.prose code{background:var(--surface-2);border-radius:6px;padding:2px 6px;font-size:.88em}.prose pre{color:#e6ebf3;background:#10141c;border-radius:14px;padding:16px 20px;line-height:1.6;overflow-x:auto}.prose pre code{color:inherit;background:0 0;padding:0}.prose blockquote{border-left:4px solid var(--gold);background:var(--surface);border-radius:0 12px 12px 0;padding:14px 20px}.prose blockquote p:first-child{margin-top:0}.prose table{border-collapse:collapse;width:100%;font-size:16px;display:block;overflow-x:auto}.prose th,.prose td{border-bottom:1px solid var(--line);text-align:left;vertical-align:top;padding:10px 14px}.prose th{color:var(--ink);white-space:nowrap;font-weight:600}.prose kbd{border:1px solid var(--line-strong);background:var(--surface);font-family:var(--font);border-bottom-width:2px;border-radius:6px;padding:1px 7px;font-size:.85em;font-weight:600}.defer-render{content-visibility:auto;contain-intrinsic-size:auto 640px}@media (prefers-reduced-motion:no-preference){@view-transition{navigation:auto}::view-transition-old(root),::view-transition-new(root){animation-duration:.2s}::view-transition-group(*){animation-duration:.32s;animation-timing-function:var(--ease)}}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,:before,:after{transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}.reveal{opacity:0;transform:translateY(16px)}.reveal.is-revealed{opacity:1;transition:opacity .56s var(--ease) var(--reveal-delay,0s), transform .72s var(--ease) var(--reveal-delay,0s);transform:none}@media (prefers-reduced-motion:no-preference){[data-tab-panel]:not([hidden]){animation:panel-in .36s var(--ease)}@keyframes panel-in{0%{opacity:0;transform:translateY(10px)}}}html.theme-switching::view-transition-old(root),html.theme-switching::view-transition-new(root){mix-blend-mode:normal;animation:none}html.theme-switching::view-transition-new(root){animation:theme-reveal .56s var(--ease)}@keyframes theme-reveal{0%{clip-path:circle(0 at var(--vt-x,50%) var(--vt-y,0))}to{clip-path:circle(var(--vt-r,150vmax) at var(--vt-x,50%) var(--vt-y,0))}}main{overflow-x:clip}html.has-dialog{overflow:hidden}.language-picker[data-astro-cid-6bxgv7um]{position:relative}summary[data-astro-cid-6bxgv7um]{height:var(--header-control-size,40px);border:1px solid var(--line);background:var(--surface);cursor:pointer;border-radius:10px;align-items:center;gap:8px;padding:0 12px;font-size:14px;font-weight:600;list-style:none;display:flex}summary[data-astro-cid-6bxgv7um]::-webkit-details-marker{display:none}summary[data-astro-cid-6bxgv7um]:hover,details[data-astro-cid-6bxgv7um][open] summary[data-astro-cid-6bxgv7um]{border-color:var(--line-strong)}.language-picker__panel[data-astro-cid-6bxgv7um]{border:1px solid var(--line);background:var(--surface);width:min(300px,100vw - 32px);max-height:min(440px,70dvh);box-shadow:var(--shadow-media);border-radius:14px;padding:8px;position:absolute;top:calc(100% + 10px);right:0;overflow-y:auto}p[data-astro-cid-6bxgv7um]{color:var(--muted);padding:8px 12px;font-size:13px}.language-picker__option[data-astro-cid-6bxgv7um]{border-radius:8px;justify-content:space-between;align-items:center;gap:12px;min-height:48px;padding:10px 12px;font-size:15px;display:flex}a[data-astro-cid-6bxgv7um]:hover,[data-astro-cid-6bxgv7um][aria-current]{background:var(--surface-2)}[data-astro-cid-6bxgv7um][aria-current]{font-weight:600}.language-picker__unavailable[data-astro-cid-6bxgv7um]{color:var(--muted);flex-wrap:wrap}small[data-astro-cid-6bxgv7um]{font-size:12px}@media (width<=380px){summary[data-astro-cid-6bxgv7um]{gap:5px;padding-inline:8px}}.site-header[data-astro-cid-isef26zo]{z-index:30;height:var(--header-height);padding:0 max(var(--gutter), calc((100% - var(--container)) / 2));border-bottom:1px solid var(--line);background:var(--header-bg);backdrop-filter:saturate(160%)blur(16px);align-items:center;gap:20px;display:flex;position:sticky;top:0}.skip-link[data-astro-cid-isef26zo]{z-index:40;border-radius:var(--r-control);background:var(--ink);color:var(--paper);padding:10px 16px;font-weight:600;position:absolute;top:12px;left:12px;transform:translateY(-200%)}.skip-link[data-astro-cid-isef26zo]:focus{transform:none}.brand[data-astro-cid-isef26zo]{align-items:center;gap:12px;margin-right:auto;font-weight:600;display:inline-flex}.brand[data-astro-cid-isef26zo] .brand__mark{border-radius:9px}.site-nav[data-astro-cid-isef26zo]{align-items:center;gap:2px;display:flex}.site-nav[data-astro-cid-isef26zo] a[data-astro-cid-isef26zo]{color:var(--muted);border-radius:8px;padding:8px 12px;font-size:15px;transition:color .16s}.site-nav[data-astro-cid-isef26zo] a[data-astro-cid-isef26zo]:hover,.site-nav[data-astro-cid-isef26zo] a[data-astro-cid-isef26zo][aria-current=page]{color:var(--ink)}.site-nav[data-astro-cid-isef26zo] a[data-astro-cid-isef26zo][aria-current=page]{background:var(--surface-2);font-weight:600}.header-actions[data-astro-cid-isef26zo]{--header-control-size:40px;align-items:center;gap:8px;display:flex}.site-header[data-astro-cid-isef26zo]:after{background:linear-gradient(90deg, var(--brand), var(--gold));content:"";transform-origin:0;pointer-events:none;height:2px;position:absolute;bottom:-1px;left:0;right:0;transform:scaleX(0)}@supports (animation-timeline:scroll()){@media (prefers-reduced-motion:no-preference){.site-header[data-astro-cid-isef26zo]{animation:linear both header-settle scroll(root);animation-range:0 96px}.site-header[data-astro-cid-isef26zo]:after{animation:linear both reading-progress scroll(root)}}}@keyframes header-settle{0%{border-bottom-color:#0000}}@keyframes reading-progress{to{transform:scaleX(1)}}html.theme-switching [data-astro-cid-isef26zo][data-theme-toggle] .theme-icon{animation:theme-icon-in .6s var(--spring)}@keyframes theme-icon-in{0%{opacity:0;transform:rotate(-120deg)scale(.4)}}:root[data-theme=dark] .theme-icon--moon[data-astro-cid-isef26zo],:root:not([data-theme=dark]) .theme-icon--sun[data-astro-cid-isef26zo],.menu-toggle[data-astro-cid-isef26zo],.menu-icon--close[data-astro-cid-isef26zo],.mobile-nav[data-astro-cid-isef26zo]{display:none}@media (width<=960px){.site-nav[data-astro-cid-isef26zo]{display:none}.menu-toggle[data-astro-cid-isef26zo]{display:inline-grid}.menu-toggle[data-astro-cid-isef26zo][aria-expanded=true] .menu-icon--open[data-astro-cid-isef26zo]{display:none}.menu-toggle[data-astro-cid-isef26zo][aria-expanded=true] .menu-icon--close[data-astro-cid-isef26zo]{display:block}.mobile-nav[data-astro-cid-isef26zo]{padding:8px var(--gutter) 16px;border-bottom:1px solid var(--line);background:var(--paper);visibility:hidden;opacity:0;transition:opacity .16s ease, transform .16s var(--ease), visibility .16s;display:grid;position:absolute;top:100%;left:0;right:0;transform:translateY(-6px)}.mobile-nav[data-astro-cid-isef26zo].is-open{visibility:visible;opacity:1;transform:none}.mobile-nav[data-astro-cid-isef26zo] a[data-astro-cid-isef26zo]{border-bottom:1px solid var(--line);align-items:center;min-height:50px;font-size:17px;font-weight:500;display:flex}.mobile-nav[data-astro-cid-isef26zo] a[data-astro-cid-isef26zo]:last-child{border-bottom:0}.mobile-nav[data-astro-cid-isef26zo] a[data-astro-cid-isef26zo][aria-current=page]{color:var(--brand);font-weight:600}}.site-footer[data-astro-cid-oenwriqq]{grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1fr);gap:32px;padding:64px 0 40px;display:grid}.site-footer--compact[data-astro-cid-oenwriqq]{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}.site-footer__name[data-astro-cid-oenwriqq]{letter-spacing:-.01em;font-size:18px;font-weight:700}.site-footer__brand[data-astro-cid-oenwriqq] p[data-astro-cid-oenwriqq]{color:var(--muted);margin-top:6px;font-size:15px}h2[data-astro-cid-oenwriqq]{margin-bottom:12px;font-size:14px;font-weight:600}ul[data-astro-cid-oenwriqq]{gap:8px;display:grid}nav[data-astro-cid-oenwriqq] a[data-astro-cid-oenwriqq],.link-button[data-astro-cid-oenwriqq]{color:var(--muted);font-size:15px;font-weight:400}nav[data-astro-cid-oenwriqq] a[data-astro-cid-oenwriqq]:hover{color:var(--ink)}.site-footer__legal[data-astro-cid-oenwriqq]{border-top:1px solid var(--line);color:var(--muted);grid-column:1/-1;padding-top:24px;font-size:14px}@media (width<=900px){.site-footer[data-astro-cid-oenwriqq]{grid-template-columns:repeat(2,minmax(0,1fr))}.site-footer__brand[data-astro-cid-oenwriqq]{grid-column:1/-1}}@media (width<=480px){.site-footer[data-astro-cid-oenwriqq],.site-footer--compact[data-astro-cid-oenwriqq]{grid-template-columns:minmax(0,1fr)}}.donate[data-astro-cid-yeo5l57p]{overscroll-behavior:contain;border:1px solid var(--line);background:var(--surface);width:min(420px,100% - 32px);max-height:calc(100dvh - 32px);color:var(--ink);text-align:center;border-radius:24px;margin:auto;padding:32px 28px 24px;overflow-y:auto;box-shadow:0 24px 80px #00000040}.donate[data-astro-cid-yeo5l57p]::backdrop{backdrop-filter:blur(6px);background:#080b1280}.donate__close[data-astro-cid-yeo5l57p]{width:44px;height:44px;color:var(--muted);background:0 0;border:0;border-radius:10px;place-items:center;display:grid;position:absolute;top:12px;right:12px}.donate__close[data-astro-cid-yeo5l57p]:hover{background:var(--surface-2);color:var(--ink)}.donate__symbol[data-astro-cid-yeo5l57p]{background:color-mix(in srgb, var(--brand) 12%, transparent);width:44px;height:44px;color:var(--brand);border-radius:50%;place-items:center;margin:0 auto 14px;display:grid}h2[data-astro-cid-yeo5l57p]{letter-spacing:-.02em;font-size:24px;font-weight:700;line-height:1.2}p[data-astro-cid-yeo5l57p]{max-width:32ch;color:var(--muted);margin:8px auto 0;font-size:15px}.donate__qr[data-astro-cid-yeo5l57p]{width:min(260px,100%);margin:22px auto 16px}.donate__qr[data-astro-cid-yeo5l57p] img[data-astro-cid-yeo5l57p]{border:1px solid var(--line);background:#fff;border-radius:20px;width:100%;padding:12px}figcaption[data-astro-cid-yeo5l57p]{color:var(--muted);margin-top:12px;font-size:13px}.donate__action[data-astro-cid-yeo5l57p]{width:100%;margin-top:10px}.donate__note[data-astro-cid-yeo5l57p]{margin-top:16px;font-size:13px}@media (prefers-reduced-motion:no-preference){.donate[data-astro-cid-yeo5l57p][open]{animation:rise .2s var(--ease)}@keyframes rise{0%{opacity:0;transform:translateY(8px)}}}
+.guide-card[data-astro-cid-yjby3j6m]{border:1px solid var(--line);border-radius:var(--r-card);background:var(--surface);height:100%;transition:border-color .16s ease, transform .3s var(--ease);align-content:start;gap:10px;padding:24px;display:grid}.guide-card[data-astro-cid-yjby3j6m]:hover{border-color:var(--line-strong);transform:translateY(-2px)}.guide-card__top[data-astro-cid-yjby3j6m]{color:var(--muted);align-items:center;gap:10px;font-size:14px;font-weight:600;display:flex}.guide-card__top[data-astro-cid-yjby3j6m] img[data-astro-cid-yjby3j6m]{border-radius:var(--r-icon);width:28px;height:28px}.guide-card__dot[data-astro-cid-yjby3j6m]{background:var(--gold);border-radius:50%;width:10px;height:10px;margin:9px}h3[data-astro-cid-yjby3j6m]{letter-spacing:-.015em;font-size:20px;font-weight:700;line-height:1.3}p[data-astro-cid-yjby3j6m]{color:var(--muted);font-size:15px;line-height:1.55}.guide-card__meta[data-astro-cid-yjby3j6m]{color:var(--muted);margin-top:4px;font-size:13px}.guides__grid[data-astro-cid-46473xp2]{grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;display:grid}.guides__h1[data-astro-cid-46473xp2]{letter-spacing:-.035em;font-size:clamp(36px,5vw,56px);font-weight:700;line-height:1.08}
+.youtube[data-astro-cid-kxox247c],.youtube-player{aspect-ratio:16/9;background:#000;border:0;width:100%;display:block}.youtube[data-astro-cid-kxox247c]{cursor:pointer;padding:0;position:relative}.youtube[data-astro-cid-kxox247c] img{object-fit:cover;opacity:.88;width:100%;height:100%;transition:opacity .2s}.youtube[data-astro-cid-kxox247c]:hover img{opacity:1}.youtube__play[data-astro-cid-kxox247c]{color:#fff;width:76px;height:76px;transition:transform .2s var(--ease);background:#000000a6;border-radius:50%;place-items:center;margin:auto;display:grid;position:absolute;inset:0}.youtube[data-astro-cid-kxox247c]:hover .youtube__play[data-astro-cid-kxox247c]{transform:scale(1.06)}
+.guide[data-astro-cid-25pw7nbb]{max-width:780px;padding-top:clamp(28px,4vw,56px)}.crumbs[data-astro-cid-25pw7nbb]{color:var(--muted);flex-wrap:wrap;align-items:center;gap:8px;font-size:14px;font-weight:600;display:flex}.crumbs[data-astro-cid-25pw7nbb] a[data-astro-cid-25pw7nbb]:hover{color:var(--ink)}.guide__head[data-astro-cid-25pw7nbb]{margin-top:24px}.guide__topic[data-astro-cid-25pw7nbb]{color:var(--gold);font-size:15px;font-weight:700}:root:not([data-theme=dark]) .guide__topic[data-astro-cid-25pw7nbb]{color:var(--brand)}h1[data-astro-cid-25pw7nbb]{letter-spacing:-.035em;margin-top:10px;font-size:clamp(34px,5vw,52px);font-weight:700;line-height:1.12}.guide__lead[data-astro-cid-25pw7nbb]{color:var(--muted);margin-top:18px;font-size:20px;line-height:1.55}.guide__byline[data-astro-cid-25pw7nbb]{border-bottom:1px solid var(--line);align-items:center;gap:14px;margin-top:26px;padding-bottom:26px;display:flex}.guide__byline[data-astro-cid-25pw7nbb] svg{border-radius:10px}.guide__byline[data-astro-cid-25pw7nbb] span[data-astro-cid-25pw7nbb]{display:grid}.guide__byline[data-astro-cid-25pw7nbb] a[data-astro-cid-25pw7nbb]{font-weight:700}.guide__byline[data-astro-cid-25pw7nbb] small[data-astro-cid-25pw7nbb]{color:var(--muted);font-size:14px}.guide__video[data-astro-cid-25pw7nbb]{border:1px solid var(--line);border-radius:var(--r-media);box-shadow:var(--shadow-media);background:#000;margin-top:32px;overflow:hidden}.toc[data-astro-cid-25pw7nbb]{border:1px solid var(--line);border-radius:var(--r-card);background:var(--surface);margin-top:32px;padding:22px 26px}.toc[data-astro-cid-25pw7nbb] h2[data-astro-cid-25pw7nbb]{letter-spacing:.02em;text-transform:uppercase;color:var(--muted);font-size:15px;font-weight:700}.toc[data-astro-cid-25pw7nbb] ol[data-astro-cid-25pw7nbb]{gap:6px;margin-top:12px;padding-left:1.3em;display:grid}.toc[data-astro-cid-25pw7nbb] a[data-astro-cid-25pw7nbb]{font-weight:500}.toc[data-astro-cid-25pw7nbb] a[data-astro-cid-25pw7nbb]:hover{color:var(--brand);text-underline-offset:3px;text-decoration:underline}.app-cta[data-astro-cid-25pw7nbb]{border:1px solid var(--line);border-radius:var(--r-card);background:var(--surface);flex-wrap:wrap;align-items:center;gap:18px;margin-top:56px;padding:22px;display:flex}.app-cta[data-astro-cid-25pw7nbb] img[data-astro-cid-25pw7nbb]{border-radius:var(--r-icon);width:64px;height:64px}.app-cta[data-astro-cid-25pw7nbb] div[data-astro-cid-25pw7nbb]{flex:220px;display:grid}.app-cta[data-astro-cid-25pw7nbb] span[data-astro-cid-25pw7nbb]{color:var(--muted)}.author[data-astro-cid-25pw7nbb]{border-radius:var(--r-card);background:var(--surface-2);gap:18px;margin-top:24px;padding:22px;display:flex}.author[data-astro-cid-25pw7nbb] svg{border-radius:13px;flex:none}.author[data-astro-cid-25pw7nbb] a[data-astro-cid-25pw7nbb]{color:var(--brand);text-underline-offset:3px;text-decoration:underline}.author[data-astro-cid-25pw7nbb] p[data-astro-cid-25pw7nbb]{color:var(--muted);margin-top:4px;font-size:15px;line-height:1.6}
+</style></head> <body> <header class="site-header" data-header data-astro-cid-isef26zo> <a class="skip-link" href="#main-content" data-astro-cid-isef26zo> Đến nội dung chính </a> <a class="brand" href="/vi/" data-astro-cid-isef26zo> <svg class="brand__mark" width="34" height="34" viewBox="0 0 64 64" aria-hidden="true" focusable="false"> <path d="M20 0h24c14 0 20 6 20 20v24c0 14-6 20-20 20H20C6 64 0 58 0 44V20C0 6 6 0 20 0Z" fill="#7a1424"></path> <path d="M17.5 31h29M32 31v20" stroke="#fff" stroke-width="11" stroke-linecap="round" fill="none"></path> <path d="M32 8.5 47.5 19Q32 22 16.5 19Z" fill="#f0c04e" stroke="#f0c04e" stroke-width="4.5" stroke-linejoin="round"></path> </svg> <span class="sr-only" data-astro-cid-isef26zo>Phạm Hùng Tiến — Trang chủ</span> </a> <nav class="site-nav" aria-label="Điều hướng chính" data-astro-cid-isef26zo> <a href="/vi/" data-astro-cid-isef26zo> Trang chủ </a><a href="/huong-dan/" aria-current="page" data-astro-cid-isef26zo> Hướng dẫn </a><a href="/vi/LunarV/" data-astro-cid-isef26zo> LunarV </a> </nav> <div class="header-actions" data-astro-cid-isef26zo> <details class="language-picker" data-language-picker data-astro-cid-6bxgv7um> <summary aria-label="Ngôn ngữ: Tiếng Việt" data-astro-cid-6bxgv7um> <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-languages" aria-hidden="true" data-astro-cid-6bxgv7um="true"> <path d="m5 8 6 6"></path><path d="m4 14 6-6 2-3"></path><path d="M2 5h12"></path><path d="M7 2h1"></path><path d="m22 22-5-10-5 10"></path><path d="M14 18h6"></path>  </svg> <span lang="vi" data-astro-cid-6bxgv7um>Tiếng Việt</span> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down" aria-hidden="true" data-astro-cid-6bxgv7um="true"> <path d="m6 9 6 6 6-6"></path>  </svg> </summary> <nav class="language-picker__panel" aria-label="Ngôn ngữ" data-astro-cid-6bxgv7um> <p data-astro-cid-6bxgv7um>Ngôn ngữ</p> <ul role="list" data-astro-cid-6bxgv7um> <li data-astro-cid-6bxgv7um> <a class="language-picker__option" href="/" aria-label="English — Trang chủ bằng ngôn ngữ này" hreflang="en" lang="en" data-language-link data-language="en" data-language-home data-astro-cid-6bxgv7um> <span lang="en" data-astro-cid-6bxgv7um>English</span>  <small data-astro-cid-6bxgv7um>Trang chủ bằng ngôn ngữ này</small> </a> </li><li data-astro-cid-6bxgv7um> <a class="language-picker__option" href="/huong-dan/am-lich-viet-nam-cach-tinh-can-chi-tiet-khi/" aria-label="Tiếng Việt" hreflang="vi" lang="vi" aria-current="true" data-language-link data-language="vi" data-astro-cid-6bxgv7um> <span lang="vi" data-astro-cid-6bxgv7um>Tiếng Việt</span> <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check" aria-hidden="true" data-astro-cid-6bxgv7um="true"> <path d="M20 6 9 17l-5-5"></path>  </svg>  </a> </li><li data-astro-cid-6bxgv7um> <a class="language-picker__option" href="/fr/" aria-label="Français — Trang chủ bằng ngôn ngữ này" hreflang="fr" lang="fr" data-language-link data-language="fr" data-language-home data-astro-cid-6bxgv7um> <span lang="fr" data-astro-cid-6bxgv7um>Français</span>  <small data-astro-cid-6bxgv7um>Trang chủ bằng ngôn ngữ này</small> </a> </li><li data-astro-cid-6bxgv7um> <a class="language-picker__option" href="/ja/" aria-label="日本語 — Trang chủ bằng ngôn ngữ này" hreflang="ja" lang="ja" data-language-link data-language="ja" data-language-home data-astro-cid-6bxgv7um> <span lang="ja" data-astro-cid-6bxgv7um>日本語</span>  <small data-astro-cid-6bxgv7um>Trang chủ bằng ngôn ngữ này</small> </a> </li> </ul> </nav> </details><script type="module" src="/assets/build/LanguagePicker.astro_astro_type_script_index_0_lang.DJK3Ti5B.js"></script> <button class="icon-button" type="button" data-theme-toggle data-label-dark="Bật giao diện tối" data-label-light="Bật giao diện sáng" aria-label="Bật giao diện tối" data-astro-cid-isef26zo> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon theme-icon theme-icon--moon" aria-hidden="true" data-astro-cid-isef26zo="true"> <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"></path>  </svg> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun theme-icon theme-icon--sun" aria-hidden="true" data-astro-cid-isef26zo="true"> <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path>  </svg> </button> <button class="icon-button menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-navigation" data-menu-toggle data-label-open="Mở menu" data-label-close="Đóng menu" aria-label="Mở menu" data-astro-cid-isef26zo> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu menu-icon menu-icon--open" aria-hidden="true" data-astro-cid-isef26zo="true"> <path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path>  </svg> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x menu-icon menu-icon--close" aria-hidden="true" data-astro-cid-isef26zo="true"> <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>  </svg> </button> </div> <nav class="mobile-nav" id="mobile-navigation" aria-label="Điều hướng chính" data-mobile-nav inert data-astro-cid-isef26zo> <a href="/vi/" data-astro-cid-isef26zo> Trang chủ </a><a href="/huong-dan/" aria-current="page" data-astro-cid-isef26zo> Hướng dẫn </a><a href="/vi/LunarV/" data-astro-cid-isef26zo> LunarV </a> </nav> </header><script type="module" src="/assets/build/Header.astro_astro_type_script_index_0_lang.CwDXcZj9.js"></script> <main id="main-content" tabindex="-1">  <article class="guide container" data-astro-cid-25pw7nbb> <nav class="crumbs" aria-label="Breadcrumb" data-astro-cid-25pw7nbb> <a href="/vi/" data-astro-cid-25pw7nbb>Trang chủ</a> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right" aria-hidden="true" data-astro-cid-25pw7nbb="true"> <path d="m9 18 6-6-6-6"></path>  </svg> <a href="/huong-dan/" data-astro-cid-25pw7nbb>Hướng dẫn</a> </nav> <header class="guide__head" data-astro-cid-25pw7nbb> <p class="guide__topic" data-astro-cid-25pw7nbb>Kiến thức</p> <h1 data-astro-cid-25pw7nbb>Âm lịch Việt Nam: cách tính, can chi, tiết khí và vì sao khác lịch Trung Quốc</h1> <p class="guide__lead" data-astro-cid-25pw7nbb>Âm lịch Việt Nam tính thế nào: tháng đủ thiếu, tháng nhuận, cách nhẩm can chi, 24 tiết khí, 12 canh giờ và vì sao có năm Tết Việt lệch lịch Trung Quốc.</p> <div class="guide__byline" data-astro-cid-25pw7nbb> <svg width="40" height="40" viewBox="0 0 64 64" aria-hidden="true" focusable="false"> <path d="M20 0h24c14 0 20 6 20 20v24c0 14-6 20-20 20H20C6 64 0 58 0 44V20C0 6 6 0 20 0Z" fill="#7a1424"></path> <path d="M17.5 31h29M32 31v20" stroke="#fff" stroke-width="11" stroke-linecap="round" fill="none"></path> <path d="M32 8.5 47.5 19Q32 22 16.5 19Z" fill="#f0c04e" stroke="#f0c04e" stroke-width="4.5" stroke-linejoin="round"></path> </svg> <span data-astro-cid-25pw7nbb> <a href="/vi/" data-astro-cid-25pw7nbb>Phạm Hùng Tiến</a> <small data-astro-cid-25pw7nbb> <time datetime="2026-10-15" data-astro-cid-25pw7nbb>15/10/2026</time>  
+· 10 phút đọc
+</small> </span> </div> </header>  <nav class="toc" aria-labelledby="toc-heading" data-astro-cid-25pw7nbb> <h2 id="toc-heading" data-astro-cid-25pw7nbb>Trong bài này</h2> <ol data-astro-cid-25pw7nbb> <li data-astro-cid-25pw7nbb> <a href="#tháng-âm-lịch-theo-chu-kỳ-của-mặt-trăng" data-astro-cid-25pw7nbb>Tháng âm lịch: theo chu kỳ của Mặt Trăng</a> </li><li data-astro-cid-25pw7nbb> <a href="#năm-âm-lịch-12-hoặc-13-tháng" data-astro-cid-25pw7nbb>Năm âm lịch: 12 hoặc 13 tháng</a> </li><li data-astro-cid-25pw7nbb> <a href="#vì-sao-có-năm-tết-việt-nam-khác-trung-quốc" data-astro-cid-25pw7nbb>Vì sao có năm Tết Việt Nam khác Trung Quốc?</a> </li><li data-astro-cid-25pw7nbb> <a href="#can-chi-tên-gọi-của-năm-tháng-ngày-giờ" data-astro-cid-25pw7nbb>Can chi: tên gọi của năm, tháng, ngày, giờ</a> </li><li data-astro-cid-25pw7nbb> <a href="#24-tiết-khí-phần-dương-của-âm-lịch" data-astro-cid-25pw7nbb>24 tiết khí: phần “dương” của âm lịch</a> </li><li data-astro-cid-25pw7nbb> <a href="#giờ-theo-12-con-giáp-và-giờ-hoàng-đạo" data-astro-cid-25pw7nbb>Giờ theo 12 con giáp và giờ hoàng đạo</a> </li><li data-astro-cid-25pw7nbb> <a href="#làm-giỗ-theo-âm-lịch-những-điều-nên-biết" data-astro-cid-25pw7nbb>Làm giỗ theo âm lịch: những điều nên biết</a> </li><li data-astro-cid-25pw7nbb> <a href="#xem-lịch-âm-và-nhắc-giỗ-với-lunarv" data-astro-cid-25pw7nbb>Xem lịch âm và nhắc giỗ với LunarV</a> </li><li data-astro-cid-25pw7nbb> <a href="#tóm-tắt" data-astro-cid-25pw7nbb>Tóm tắt</a> </li> </ol> </nav> <div class="prose" data-astro-cid-25pw7nbb> <p>Chúng ta vẫn quen gọi là “âm lịch”, nhưng lịch truyền thống mà người Việt dùng để ăn Tết, làm giỗ hay xem ngày thật ra là <strong>âm dương lịch</strong>: tháng đi theo Mặt Trăng, còn năm và các tiết khí đi theo Mặt Trời. Bài này giải thích lịch được tính thế nào, can chi của năm từ đâu ra, tiết khí là gì, và vì sao có những năm Tết của Việt Nam không trùng với Trung Quốc.</p>
+<h2 id="tháng-âm-lịch-theo-chu-kỳ-của-mặt-trăng">Tháng âm lịch: theo chu kỳ của Mặt Trăng</h2>
+<p>Mỗi tháng âm lịch bắt đầu vào ngày có <strong>điểm sóc</strong>, tức thời điểm Mặt Trăng nằm giữa Trái Đất và Mặt Trời, khi ta không nhìn thấy trăng. Ngày đó là <strong>mùng 1</strong>. Khoảng 14 đến 15 ngày sau, trăng tròn, đó là quanh ngày rằm.</p>
+<p>Một chu kỳ trăng dài trung bình khoảng <strong>29,53 ngày</strong>, nên tháng âm lịch có lúc 30 ngày (<strong>tháng đủ</strong>), có lúc 29 ngày (<strong>tháng thiếu</strong>). Không có quy luật xen kẽ cố định: tháng nào đủ, tháng nào thiếu phụ thuộc vào thời điểm sóc thực tế, được tính bằng thiên văn.</p>
+<p>Hệ quả thú vị: không phải tháng nào cũng có ngày 30. Nếu bạn làm giỗ hay hẹn việc vào “ngày 30 tháng Chạp”, hãy kiểm tra năm đó tháng Chạp đủ hay thiếu. Có năm, đêm Giao thừa là đêm 29.</p>
+<h2 id="năm-âm-lịch-12-hoặc-13-tháng">Năm âm lịch: 12 hoặc 13 tháng</h2>
+<p>Mười hai tháng âm lịch chỉ dài khoảng 354 ngày, ngắn hơn năm theo Mặt Trời (khoảng 365,24 ngày) chừng 11 ngày. Nếu không điều chỉnh, sau vài năm Tết sẽ trôi sang mùa hè. Vì vậy, cứ khoảng 2 đến 3 năm lại có một năm thêm <strong>tháng nhuận</strong>, thành 13 tháng. Trung bình có 7 tháng nhuận trong 19 năm.</p>
+<p>Tháng nào được nhuận không phải chọn tùy ý. Quy tắc là: trong khoảng giữa hai tháng 11 âm lịch liên tiếp (tháng 11 luôn là tháng chứa ngày Đông chí), nếu có 13 tháng thì <strong>tháng đầu tiên không chứa trung khí</strong> sẽ là tháng nhuận, mang tên tháng liền trước. Ví dụ năm 2025 (Ất Tỵ) có tháng 6 nhuận: sau tháng 6 là một tháng “6 nhuận” rồi mới đến tháng 7.</p>
+<p>Nhờ cơ chế này, Tết Nguyên đán luôn rơi vào khoảng <strong>từ 21/1 đến 20/2 dương lịch</strong>.</p>
+<h2 id="vì-sao-có-năm-tết-việt-nam-khác-trung-quốc">Vì sao có năm Tết Việt Nam khác Trung Quốc?</h2>
+<p>Việt Nam và Trung Quốc dùng cùng phương pháp lập lịch, nhưng tính theo <strong>múi giờ khác nhau</strong>: Việt Nam dùng giờ UTC+7 (kinh tuyến 105° Đông), còn Trung Quốc dùng UTC+8. Lịch Việt Nam được tính theo múi giờ này từ năm 1968.</p>
+<p>Khi điểm sóc rơi vào khoảng 23 giờ đến nửa đêm giờ Hà Nội, thì ở Bắc Kinh đã là ngày hôm sau. Vậy là mùng 1 của hai nước lệch nhau một ngày. Tương tự, một trung khí nằm sát nửa đêm có thể khiến tháng nhuận đặt ở hai chỗ khác nhau, kéo theo lệch cả tháng.</p>
+<p>Vài ví dụ đã xảy ra:</p>
+<table>
+<thead>
+<tr>
+<th>Năm</th>
+<th>Tết ở Việt Nam</th>
+<th>Tết ở Trung Quốc</th>
+<th>Lý do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mậu Thân 1968</td>
+<td>29/1/1968</td>
+<td>30/1/1968</td>
+<td>Lệch mùng 1 do múi giờ</td>
+</tr>
+<tr>
+<td>Ất Sửu 1985</td>
+<td>21/1/1985</td>
+<td>20/2/1985</td>
+<td>Lệch cả tháng do tháng nhuận đặt khác nhau</td>
+</tr>
+<tr>
+<td>Đinh Hợi 2007</td>
+<td>17/2/2007</td>
+<td>18/2/2007</td>
+<td>Lệch mùng 1 do múi giờ</td>
+</tr>
+</tbody>
+</table>
+<p>Vì vậy, khi tra ngày âm lịch cho các việc ở Việt Nam, hãy dùng ứng dụng tính theo <strong>giờ Việt Nam</strong>. Một số lịch in sẵn hoặc ứng dụng quốc tế dùng lịch Trung Quốc, có thể sai một ngày vào đúng những năm đặc biệt như trên.</p>
+<h2 id="can-chi-tên-gọi-của-năm-tháng-ngày-giờ">Can chi: tên gọi của năm, tháng, ngày, giờ</h2>
+<p>Người Việt gọi năm theo <strong>can chi</strong>, ví dụ năm 2026 là <strong>Bính Ngọ</strong>. Tên gồm hai phần:</p>
+<ul>
+<li><strong>10 thiên can:</strong> Giáp, Ất, Bính, Đinh, Mậu, Kỷ, Canh, Tân, Nhâm, Quý.</li>
+<li><strong>12 địa chi:</strong> Tý, Sửu, Dần, Mão, Thìn, Tỵ, Ngọ, Mùi, Thân, Dậu, Tuất, Hợi.</li>
+</ul>
+<p>Can và chi ghép lần lượt với nhau, tạo thành chu kỳ <strong>60 năm</strong> (lục thập hoa giáp). Sau 60 năm, tên năm lặp lại: năm 1966 và 2026 cùng là Bính Ngọ.</p>
+<h3 id="tự-tính-can-chi-của-một-năm">Tự tính can chi của một năm</h3>
+<p>Bạn có thể nhẩm can chi của bất kỳ năm dương lịch nào (tính cho phần lớn năm âm lịch bắt đầu trong năm đó):</p>
+<p><strong>Can:</strong> nhìn chữ số cuối của năm.</p>
+<table>
+<thead>
+<tr>
+<th>Số cuối</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Can</td>
+<td>Canh</td>
+<td>Tân</td>
+<td>Nhâm</td>
+<td>Quý</td>
+<td>Giáp</td>
+<td>Ất</td>
+<td>Bính</td>
+<td>Đinh</td>
+<td>Mậu</td>
+<td>Kỷ</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Chi:</strong> lấy năm chia cho 12, xem số dư.</p>
+<table>
+<thead>
+<tr>
+<th>Số dư</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chi</td>
+<td>Thân</td>
+<td>Dậu</td>
+<td>Tuất</td>
+<td>Hợi</td>
+<td>Tý</td>
+<td>Sửu</td>
+<td>Dần</td>
+<td>Mão</td>
+<td>Thìn</td>
+<td>Tỵ</td>
+<td>Ngọ</td>
+<td>Mùi</td>
+</tr>
+</tbody>
+</table>
+<p>Ví dụ năm <strong>2026</strong>: số cuối là 6 nên can là <strong>Bính</strong>; 2026 chia 12 dư 10 nên chi là <strong>Ngọ</strong>. Vậy 2026 là Bính Ngọ. Thử với năm sinh của bạn nhé.</p>
+<p>Lưu ý: người sinh vào tháng 1 hoặc đầu tháng 2 dương lịch, trước Tết, thì vẫn thuộc <strong>năm âm lịch trước</strong>. Ví dụ người sinh ngày 10/1/2026 là tuổi Ất Tỵ, không phải Bính Ngọ.</p>
+<p>Mười hai con giáp của Việt Nam có hai điểm khác Trung Quốc: năm <strong>Mão</strong> là con <strong>mèo</strong> (Trung Quốc là thỏ), và năm <strong>Sửu</strong> là con <strong>trâu</strong>.</p>
+<p>Không chỉ năm, mỗi <strong>tháng</strong>, <strong>ngày</strong> và <strong>giờ</strong> cũng có tên can chi riêng. Ngày can chi chạy liên tục theo chu kỳ 60 ngày, không phụ thuộc tháng, nên phải tra lịch hoặc dùng ứng dụng để biết.</p>
+<h2 id="24-tiết-khí-phần-dương-của-âm-lịch">24 tiết khí: phần “dương” của âm lịch</h2>
+<p>Nếu tháng đi theo Mặt Trăng thì <strong>tiết khí</strong> đi theo Mặt Trời. Quỹ đạo biểu kiến của Mặt Trời trong năm được chia làm 24 phần bằng nhau, mỗi điểm chia là một tiết khí, cách nhau khoảng 15 ngày. Vì gắn với Mặt Trời, tiết khí rơi vào ngày gần như cố định theo <strong>dương lịch</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Tiết khí</th>
+<th>Ngày dương lịch (khoảng)</th>
+<th>Ý nghĩa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lập xuân</td>
+<td>4/2</td>
+<td>Bắt đầu mùa xuân</td>
+</tr>
+<tr>
+<td>Xuân phân</td>
+<td>20–21/3</td>
+<td>Ngày và đêm dài bằng nhau</td>
+</tr>
+<tr>
+<td>Thanh minh</td>
+<td>4–5/4</td>
+<td>Trời trong sáng; dịp tảo mộ</td>
+</tr>
+<tr>
+<td>Lập hạ</td>
+<td>5–6/5</td>
+<td>Bắt đầu mùa hè</td>
+</tr>
+<tr>
+<td>Hạ chí</td>
+<td>21/6</td>
+<td>Ngày dài nhất năm (Bắc bán cầu)</td>
+</tr>
+<tr>
+<td>Lập thu</td>
+<td>7–8/8</td>
+<td>Bắt đầu mùa thu</td>
+</tr>
+<tr>
+<td>Thu phân</td>
+<td>22–23/9</td>
+<td>Ngày và đêm dài bằng nhau</td>
+</tr>
+<tr>
+<td>Lập đông</td>
+<td>7–8/11</td>
+<td>Bắt đầu mùa đông</td>
+</tr>
+<tr>
+<td>Đông chí</td>
+<td>21–22/12</td>
+<td>Đêm dài nhất năm</td>
+</tr>
+</tbody>
+</table>
+<p>Tiết khí từng là “lịch nông vụ” của ông cha ta: biết khi nào gieo mạ, khi nào trời chuyển rét. Và như phần trên, chính các trung khí quyết định tháng nào là tháng nhuận.</p>
+<h2 id="giờ-theo-12-con-giáp-và-giờ-hoàng-đạo">Giờ theo 12 con giáp và giờ hoàng đạo</h2>
+<p>Lịch truyền thống chia ngày thành 12 <strong>canh giờ</strong>, mỗi canh dài 2 tiếng và mang tên một địa chi:</p>
+<table>
+<thead>
+<tr>
+<th>Giờ</th>
+<th>Khoảng thời gian</th>
+<th>Giờ</th>
+<th>Khoảng thời gian</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tý</td>
+<td>23h – 1h</td>
+<td>Ngọ</td>
+<td>11h – 13h</td>
+</tr>
+<tr>
+<td>Sửu</td>
+<td>1h – 3h</td>
+<td>Mùi</td>
+<td>13h – 15h</td>
+</tr>
+<tr>
+<td>Dần</td>
+<td>3h – 5h</td>
+<td>Thân</td>
+<td>15h – 17h</td>
+</tr>
+<tr>
+<td>Mão</td>
+<td>5h – 7h</td>
+<td>Dậu</td>
+<td>17h – 19h</td>
+</tr>
+<tr>
+<td>Thìn</td>
+<td>7h – 9h</td>
+<td>Tuất</td>
+<td>19h – 21h</td>
+</tr>
+<tr>
+<td>Tỵ</td>
+<td>9h – 11h</td>
+<td>Hợi</td>
+<td>21h – 23h</td>
+</tr>
+</tbody>
+</table>
+<p>Giờ Tý bắt đầu từ 23 giờ của ngày hôm trước, nên “giờ Tý đêm Giao thừa” là khoảng 23 giờ đến 1 giờ sáng mùng 1.</p>
+<p>Theo quan niệm dân gian, mỗi ngày có 6 giờ <strong>hoàng đạo</strong> (giờ tốt) và 6 giờ <strong>hắc đạo</strong>. Giờ nào là hoàng đạo phụ thuộc vào địa chi của ngày đó. Đây là nét văn hóa tham khảo khi chọn giờ khai trương, xuất hành hay cúng lễ, không phải dự báo khoa học.</p>
+<h2 id="làm-giỗ-theo-âm-lịch-những-điều-nên-biết">Làm giỗ theo âm lịch: những điều nên biết</h2>
+<ul>
+<li><strong>Ngày giỗ tính theo âm lịch</strong>, nên mỗi năm rơi vào một ngày dương lịch khác nhau. Năm nay giỗ ông vào cuối tháng 3 dương, năm sau có thể sang tháng 4.</li>
+<li>Nếu người mất vào <strong>ngày 30</strong> của tháng đủ, những năm tháng đó thiếu thì nhiều gia đình làm giỗ vào ngày 29, tức ngày cuối tháng.</li>
+<li>Nếu người mất trong <strong>tháng nhuận</strong>, phong tục phổ biến là làm giỗ vào tháng thường cùng tên ở những năm không có tháng nhuận đó. Mỗi gia đình, mỗi vùng có thể có cách làm riêng, nên hãy hỏi người lớn trong nhà.</li>
+</ul>
+<h2 id="xem-lịch-âm-và-nhắc-giỗ-với-lunarv">Xem lịch âm và nhắc giỗ với LunarV</h2>
+<p>Nhẩm can chi thì được, nhưng tính ngày sóc, tháng đủ thiếu hay tháng nhuận thì cần đến thuật toán thiên văn. <a href="/LunarV/">LunarV</a> là ứng dụng lịch âm mình làm cho iPhone, iPad và Mac, <strong>tính theo giờ Việt Nam (UTC+7)</strong> để khớp với lịch Việt Nam trong cả những năm đặc biệt như 1985 hay 2007.</p>
+<ul>
+<li><strong>Xem nhanh ngày âm:</strong> trên Mac, ngày âm lịch hiện ngay trên thanh menu; trên iPhone và iPad, thêm widget ra màn hình chính.</li>
+<li><strong>Thông tin đầy đủ của từng ngày:</strong> can chi của ngày, tháng, năm, tiết khí, giờ hoàng đạo và lưới tháng hiển thị song song ngày dương và ngày âm.</li>
+<li><strong>Chuyển đổi ngày:</strong> đổi qua lại giữa ngày dương và ngày âm, ví dụ để biết giỗ năm nay rơi vào ngày nào.</li>
+<li><strong>Nhắc lễ và dịp gia đình:</strong> thêm đám giỗ, lễ chạp hay ngày kỵ một lần, LunarV tự nhắc mỗi năm theo âm lịch. Bạn chọn nhắc đúng ngày hoặc nhắc trước vài ngày, và giờ nhắc. Bản miễn phí lưu được 20 lời nhắc.</li>
+<li><strong>Đồng bộ với Lịch của Apple</strong> nếu bạn muốn thấy các dịp này cùng lịch làm việc.</li>
+</ul>
+<p>Tải LunarV trên <a href="https://apps.apple.com/vn/app/lunarv-l%E1%BB%8Bch-%C3%A2m-vi%E1%BB%87t-nam/id6770913893?l=vi">App Store</a>.</p>
+<h2 id="tóm-tắt">Tóm tắt</h2>
+<ul>
+<li>Âm lịch Việt Nam là âm dương lịch: tháng theo Mặt Trăng, năm và tiết khí theo Mặt Trời.</li>
+<li>Tháng có 29 hoặc 30 ngày; khoảng 7 năm trong 19 năm có tháng nhuận.</li>
+<li>Việt Nam tính lịch theo UTC+7 nên có năm Tết lệch Trung Quốc một ngày, thậm chí một tháng.</li>
+<li>Can của năm theo số cuối, chi theo số dư khi chia 12; chu kỳ can chi dài 60 năm.</li>
+<li>Hãy dùng lịch tính theo giờ Việt Nam khi xem ngày giỗ, ngày Tết.</li>
+</ul>
+ </div> <aside class="app-cta" aria-label="LunarV" data-astro-cid-25pw7nbb>  <img src="/assets/build/app-icon.D1WOsanq_189CoE.webp" srcset="/assets/build/app-icon.D1WOsanq_189CoE.webp 1x, /assets/build/app-icon.D1WOsanq_ZEEkp3.webp 2x" alt loading="lazy" data-astro-cid-25pw7nbb="true" decoding="async" width="64" height="64"> <div data-astro-cid-25pw7nbb> <strong data-astro-cid-25pw7nbb>LunarV</strong> <span data-astro-cid-25pw7nbb>Ngày âm, dịp gia đình, widget và nhắc nhở.</span> </div> <a class="button button--primary" href="/vi/LunarV/" data-astro-cid-25pw7nbb>
+Xem LunarV <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right" aria-hidden="true" data-astro-cid-25pw7nbb="true"> <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>  </svg> </a> </aside> <aside class="author" aria-label="Tác giả" data-astro-cid-25pw7nbb> <svg width="56" height="56" viewBox="0 0 64 64" aria-hidden="true" focusable="false"> <path d="M20 0h24c14 0 20 6 20 20v24c0 14-6 20-20 20H20C6 64 0 58 0 44V20C0 6 6 0 20 0Z" fill="#7a1424"></path> <path d="M17.5 31h29M32 31v20" stroke="#fff" stroke-width="11" stroke-linecap="round" fill="none"></path> <path d="M32 8.5 47.5 19Q32 22 16.5 19Z" fill="#f0c04e" stroke="#f0c04e" stroke-width="4.5" stroke-linejoin="round"></path> </svg> <div data-astro-cid-25pw7nbb> <strong data-astro-cid-25pw7nbb>Phạm Hùng Tiến</strong> <p data-astro-cid-25pw7nbb>
+Nhà phát triển ứng dụng đến từ Bến Tre, tác giả của PHTV, vTTS và các ứng dụng chạy ngay
+          trên máy, tôn trọng quyền riêng tư. Mọi hướng dẫn ở đây đều được viết và kiểm tra trên
+          phiên bản ứng dụng mới nhất. Xem thêm video hướng dẫn trên  <a href="https://www.youtube.com/@phamhungtien14" target="_blank" rel="noopener noreferrer" data-astro-cid-25pw7nbb>
+kênh YouTube
+</a>
+.
+</p> </div> </aside> </article> <section class="guides container section" id="related" aria-labelledby="related-heading" data-astro-cid-46473xp2> <div class="section-head" data-astro-cid-46473xp2> <div data-astro-cid-46473xp2> <h2 id="related-heading" data-astro-cid-46473xp2="true">Đọc tiếp</h2>  </div> <a class="text-link" href="/huong-dan/" data-astro-cid-46473xp2> Tất cả hướng dẫn </a> </div> <ul class="guides__grid" role="list" data-reveal-stagger data-astro-cid-46473xp2> <li data-astro-cid-46473xp2> <a class="guide-card" href="/huong-dan/go-tieng-viet-tren-mac-voi-phtv/" data-astro-cid-yjby3j6m> <span class="guide-card__top" data-astro-cid-yjby3j6m>  <img src="/assets/build/app-icon.DLzPkwYk_eTYrY.webp" srcset="/assets/build/app-icon.DLzPkwYk_eTYrY.webp 1x, /assets/build/app-icon.DLzPkwYk_Z2uKLIn.webp 2x" alt loading="lazy" data-astro-cid-yjby3j6m="true" decoding="async" width="28" height="28"> <span data-astro-cid-yjby3j6m>PHTV</span> </span> <h3 data-astro-cid-yjby3j6m>Cách gõ tiếng Việt trên Mac với PHTV (hướng dẫn đầy đủ)</h3> <p data-astro-cid-yjby3j6m>Cài PHTV bằng Homebrew hoặc file DMG, đi qua trình thiết lập 6 bước, cấp quyền nhập liệu và bắt đầu gõ Telex trên macOS. Có video và ảnh từng bước.</p> <span class="guide-card__meta" data-astro-cid-yjby3j6m> <time datetime="2026-10-15" data-astro-cid-yjby3j6m>15/10/2026</time> ·
+7 phút đọc
+</span> </a> </li><li data-astro-cid-46473xp2> <a class="guide-card" href="/huong-dan/nghe-sach-epub-giong-doc-tieng-viet-voi-vtts/" data-astro-cid-yjby3j6m> <span class="guide-card__top" data-astro-cid-yjby3j6m>  <img src="/assets/build/app-icon.SUAArbwo_ZO3BIG.webp" srcset="/assets/build/app-icon.SUAArbwo_ZO3BIG.webp 1x, /assets/build/app-icon.SUAArbwo_1r29XG.webp 2x" alt loading="lazy" data-astro-cid-yjby3j6m="true" decoding="async" width="28" height="28"> <span data-astro-cid-yjby3j6m>vTTS</span> </span> <h3 data-astro-cid-yjby3j6m>Nghe sách EPUB và văn bản bằng giọng đọc tiếng Việt với vTTS</h3> <p data-astro-cid-yjby3j6m>Hướng dẫn dùng vTTS trên iPhone, iPad và Mac để nghe sách EPUB, PDF, Word bằng giọng Việt ngay trên máy, chỉnh tốc độ, hẹn giờ tắt, thêm nhạc nền và xuất file MP3, M4B.</p> <span class="guide-card__meta" data-astro-cid-yjby3j6m> <time datetime="2026-10-15" data-astro-cid-yjby3j6m>15/10/2026</time> ·
+5 phút đọc
+</span> </a> </li><li data-astro-cid-46473xp2> <a class="guide-card" href="/huong-dan/bang-go-telex-day-du/" data-astro-cid-yjby3j6m> <span class="guide-card__top" data-astro-cid-yjby3j6m>  <img src="/assets/build/app-icon.DLzPkwYk_eTYrY.webp" srcset="/assets/build/app-icon.DLzPkwYk_eTYrY.webp 1x, /assets/build/app-icon.DLzPkwYk_Z2uKLIn.webp 2x" alt loading="lazy" data-astro-cid-yjby3j6m="true" decoding="async" width="28" height="28"> <span data-astro-cid-yjby3j6m>Kiến thức</span> </span> <h3 data-astro-cid-yjby3j6m>Bảng gõ Telex đầy đủ và cách đặt dấu đúng</h3> <p data-astro-cid-yjby3j6m>Bảng gõ Telex đầy đủ cho chữ â, ă, ê, ô, ơ, ư, đ và năm dấu thanh, cách sửa và bỏ dấu, gõ nhanh phụ âm, kèm ví dụ cho các từ khó như người, được, trường.</p> <span class="guide-card__meta" data-astro-cid-yjby3j6m> <time datetime="2026-10-15" data-astro-cid-yjby3j6m>15/10/2026</time> ·
+7 phút đọc
+</span> </a> </li> </ul> </section> </main> <footer class="site-footer container" data-astro-cid-oenwriqq> <div class="site-footer__brand" data-astro-cid-oenwriqq> <a href="/vi/" class="site-footer__name" data-astro-cid-oenwriqq> Phạm Hùng Tiến </a> <p data-astro-cid-oenwriqq>Ứng dụng offline, tôn trọng quyền riêng tư.</p> </div> <nav aria-labelledby="footer-apps" data-astro-cid-oenwriqq> <h2 id="footer-apps" data-astro-cid-oenwriqq>Ứng dụng</h2> <ul role="list" data-astro-cid-oenwriqq> <li data-astro-cid-oenwriqq> <a href="/PHTV/" data-astro-cid-oenwriqq>PHTV</a> </li><li data-astro-cid-oenwriqq> <a href="/vi/vTTS/" data-astro-cid-oenwriqq>vTTS</a> </li><li data-astro-cid-oenwriqq> <a href="/vi/PadCodeAI/" data-astro-cid-oenwriqq>Pad Code AI</a> </li><li data-astro-cid-oenwriqq> <a href="/vi/PadNotesAI/" data-astro-cid-oenwriqq>Pad Notes AI</a> </li><li data-astro-cid-oenwriqq> <a href="/vi/MyNASManager/" data-astro-cid-oenwriqq>My NAS Manager</a> </li><li data-astro-cid-oenwriqq> <a href="/vi/LunarV/" data-astro-cid-oenwriqq>LunarV</a> </li><li data-astro-cid-oenwriqq> <a href="/vi/LunarBlock/" data-astro-cid-oenwriqq>Lunar Block</a> </li> <li data-astro-cid-oenwriqq> <a href="/huong-dan/" data-astro-cid-oenwriqq>Hướng dẫn</a> </li> </ul> </nav> <nav aria-labelledby="footer-connect" data-astro-cid-oenwriqq> <h2 id="footer-connect" data-astro-cid-oenwriqq>Kết nối</h2> <ul role="list" data-astro-cid-oenwriqq> <li data-astro-cid-oenwriqq> <a href="mailto:contact@phamhungtien.com" data-astro-cid-oenwriqq> Email </a> </li><li data-astro-cid-oenwriqq> <a href="https://github.com/PhamHungTien" target="_blank" rel="noopener noreferrer me" data-astro-cid-oenwriqq> GitHub </a> </li><li data-astro-cid-oenwriqq> <a href="https://www.youtube.com/@phamhungtien14" target="_blank" rel="noopener noreferrer me" data-astro-cid-oenwriqq> YouTube </a> </li><li data-astro-cid-oenwriqq> <a href="https://www.linkedin.com/in/ph%E1%BA%A1m-h%C3%B9ng-ti%E1%BA%BFn-a1b405327/" target="_blank" rel="noopener noreferrer me" data-astro-cid-oenwriqq> LinkedIn </a> </li> <li data-astro-cid-oenwriqq> <a href="https://github.com/PhamHungTien/PhamHungTien" target="_blank" rel="noopener noreferrer" data-astro-cid-oenwriqq> Mã nguồn website </a> </li> <li data-astro-cid-oenwriqq> <a href="/vi/privacy/" data-astro-cid-oenwriqq>Quyền riêng tư</a> </li> <li data-astro-cid-oenwriqq> <button type="button" class="link-button" data-donate aria-haspopup="dialog" data-astro-cid-oenwriqq> Ủng hộ </button> </li> </ul> </nav> <p class="site-footer__legal" data-astro-cid-oenwriqq>
+© 2026 Phạm Hùng Tiến. Bảo lưu mọi quyền. </p> </footer> <dialog class="donate" aria-labelledby="donate-title" aria-describedby="donate-description" data-donate-dialog data-astro-cid-yeo5l57p> <form method="dialog" data-astro-cid-yeo5l57p> <button class="donate__close" aria-label="Đóng" data-astro-cid-yeo5l57p> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x" aria-hidden="true" data-astro-cid-yeo5l57p="true"> <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>  </svg> </button> </form> <span class="donate__symbol" aria-hidden="true" data-astro-cid-yeo5l57p> <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart" aria-hidden="true" data-astro-cid-yeo5l57p="true"> <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"></path>  </svg> </span> <h2 id="donate-title" data-astro-cid-yeo5l57p>Ủng hộ tác giả</h2> <p id="donate-description" data-astro-cid-yeo5l57p>Cảm ơn bạn đã đồng hành cùng các ứng dụng của mình.</p> <figure class="donate__qr" data-astro-cid-yeo5l57p>  <img src="/assets/build/donate-qr.DpDSYRzT_ZFzrI5.webp" srcset="/assets/build/donate-qr.DpDSYRzT_ZFzrI5.webp 1x, /assets/build/donate-qr.DpDSYRzT_Z1iKsRq.webp 2x" alt="VietQR · Phạm Hùng Tiến" loading="lazy" data-astro-cid-yeo5l57p="true" decoding="async" width="280" height="280"> <figcaption data-astro-cid-yeo5l57p>Quét bằng ứng dụng ngân hàng hoặc MoMo</figcaption> </figure> <a class="button button--secondary donate__action" href="/assets/build/donate-qr.DpDSYRzT.jpg" download="pham-hung-tien-vietqr.jpg" data-astro-cid-yeo5l57p> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download" aria-hidden="true" data-astro-cid-yeo5l57p="true"> <path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path>  </svg> Lưu mã QR </a> <a class="button button--primary donate__action" href="https://www.paypal.com/paypalme/phamhungtien1404" target="_blank" rel="noopener noreferrer" data-astro-cid-yeo5l57p> Ủng hộ qua PayPal <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right" aria-hidden="true" data-astro-cid-yeo5l57p="true"> <path d="M7 7h10v10"></path><path d="M7 17 17 7"></path>  </svg> </a> <p class="donate__note" data-astro-cid-yeo5l57p>Hoàn toàn tự nguyện. Bạn tự chọn số tiền đóng góp.</p> </dialog><script type="module" src="/assets/build/DonateDialog.astro_astro_type_script_index_0_lang.7uAnYZJo.js"></script> <!--
+      Scroll reveal. Inline and synchronous so it runs before first paint: only content
+      that starts below the fold is hidden, so nothing visible ever blinks, and if this
+      never runs (old browser, reduced motion) everything simply stays visible.
+    --> <script>
+      (() => {
+        if (
+          !('IntersectionObserver' in window) ||
+          matchMedia('(prefers-reduced-motion: reduce)').matches
+        )
+          return;
+        const fold = innerHeight;
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries
+              .filter((entry) => entry.isIntersecting)
+              .forEach((entry, order) => {
+                const el = entry.target;
+                observer.unobserve(el);
+                // Items that arrive together cascade; each batch starts from zero.
+                el.style.setProperty('--reveal-delay', `${Math.min(order, 8) * 70}ms`);
+                el.classList.add('is-revealed');
+                const done = () => {
+                  el.classList.remove('reveal', 'is-revealed');
+                  el.style.removeProperty('--reveal-delay');
+                };
+                setTimeout(done, 1200 + order * 70);
+              });
+          },
+          { rootMargin: '0px 0px -6% 0px' },
+        );
+        for (const el of document.querySelectorAll(
+          '.section-head, [data-reveal], [data-reveal-stagger] > *',
+        )) {
+          if (el.getBoundingClientRect().top < fold) continue;
+          el.classList.add('reveal');
+          observer.observe(el);
+        }
+      })();
+    </script> </body> </html>
