@@ -114,6 +114,7 @@ const secondary = app.links.source
   <button
     type="button"
     class="app-hero__media"
+    data-tilt
     data-lightbox-src={large.src}
     data-lightbox-alt={heroAlt}
     aria-label={`${t(lang, 'app.enlarge')}: ${heroAlt}`}
@@ -132,11 +133,34 @@ const secondary = app.links.source
 
 <style>
   .app-hero {
+    --app-soft: color-mix(in srgb, var(--app, var(--brand)) 14%, var(--surface-2));
+    position: relative;
+    isolation: isolate;
     display: grid;
     grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
     align-items: center;
     gap: clamp(32px, 6vw, 88px);
     padding-top: clamp(32px, 5vw, 72px);
+  }
+
+  /* The page takes on the app's own colour: a soft glow behind the media. */
+  .app-hero::before {
+    position: absolute;
+    z-index: -1;
+    inset: -140px -14% -60px 38%;
+    background:
+      radial-gradient(
+        42% 48% at 58% 46%,
+        color-mix(in srgb, var(--app, var(--brand)) 24%, transparent),
+        transparent 72%
+      ),
+      radial-gradient(
+        26% 30% at 84% 18%,
+        color-mix(in srgb, var(--gold) 16%, transparent),
+        transparent 70%
+      );
+    content: '';
+    pointer-events: none;
   }
 
   .breadcrumb ol {
@@ -209,11 +233,19 @@ const secondary = app.links.source
     display: grid;
     width: 100%;
     place-items: center;
-    padding: clamp(16px, 3vw, 32px);
-    border: 1px solid var(--line);
+    padding: clamp(12px, 2vw, 22px);
+    border: 1px solid color-mix(in srgb, var(--app, var(--brand)) 18%, var(--line));
     border-radius: var(--r-media);
-    background: var(--surface-2);
+    background:
+      radial-gradient(120% 90% at 50% 0%, var(--surface) 0%, transparent 70%), var(--app-soft);
+    box-shadow: var(--shadow-media);
     cursor: zoom-in;
+    transform: perspective(1400px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+    transition: transform 600ms var(--ease);
+  }
+
+  .app-hero__media:hover {
+    transition-duration: 160ms;
   }
 
   .app-hero__media :global(picture) {
@@ -226,8 +258,8 @@ const secondary = app.links.source
   .app-hero__media :global(img) {
     width: 100%;
     height: auto;
-    max-height: min(560px, 62vh);
-    border-radius: 12px;
+    max-height: min(600px, 66vh);
+    border-radius: 16px;
     object-fit: contain;
   }
 
@@ -261,7 +293,7 @@ const secondary = app.links.source
     }
 
     .app-hero__media {
-      animation: app-media-in 1100ms var(--ease) 120ms both;
+      animation: app-media-in 1100ms var(--ease) 120ms backwards;
     }
 
     @keyframes app-hero-in {

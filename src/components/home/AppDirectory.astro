@@ -67,7 +67,7 @@ const groups = PLATFORM_GROUPS.filter((group) =>
           .join(' ')}
         data-search={`${app.name} ${app.category[lang]} ${app.description[lang]}`.toLowerCase()}
       >
-        <a class="app-row" href={appPath(app, lang)}>
+        <a class="app-row" href={appPath(app, lang)} style={`--app: ${app.accent}`}>
           <Image
             class="app-row__icon"
             src={app.icon}
@@ -230,8 +230,13 @@ const groups = PLATFORM_GROUPS.filter((group) =>
     transition: background-color 160ms ease;
   }
 
+  /* Hovering a row lights it in that app's own colour, a preview of its page. */
   .app-row:hover {
-    background: var(--surface);
+    background: linear-gradient(
+      100deg,
+      color-mix(in srgb, var(--app) 10%, var(--surface)) 0%,
+      var(--surface) 55%
+    );
   }
 
   .app-row:active {
@@ -309,7 +314,7 @@ const groups = PLATFORM_GROUPS.filter((group) =>
   }
 
   .app-row:hover :global(.app-row__chevron) {
-    color: var(--ink);
+    color: color-mix(in srgb, var(--app) 70%, var(--ink));
     transform: translateX(3px);
   }
 

@@ -55,6 +55,7 @@ const nav: NavItem[] = [
   jsonLd={appJsonLd(app, lang)}
   favicon={{ href: favicon.src, type: 'image/png' }}
   nav={nav}
+  accent={app.accent}
 >
   <div id="overview" data-tab-panel="overview">
     <AppHero app={app} lang={lang} />
@@ -82,5 +83,7 @@ const nav: NavItem[] = [
 
 <script>
   import { initAppTabs } from '../../scripts/app-tabs';
+  import { initTilt } from '../../scripts/tilt';
   initAppTabs();
+  initTilt();
 </script>

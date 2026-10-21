@@ -34,6 +34,8 @@ export interface Props {
   compactFooter?: boolean;
   /** Loads Google AdSense (Auto ads). Only long-form pages (guides) carry ads. */
   ads?: boolean;
+  /** App pages take on their app's colour (--app) for the hero glow and media stages. */
+  accent?: string;
 }
 
 const {
@@ -51,6 +53,7 @@ const {
   noindex = false,
   compactFooter = false,
   ads = false,
+  accent,
 } = Astro.props;
 
 const canonical = absolute(path);
@@ -153,7 +156,7 @@ const speculationRules = {
   </head>
   <body>
     <Header lang={lang} nav={nav} alternates={alternates} />
-    <main id="main-content" tabindex="-1">
+    <main id="main-content" tabindex="-1" style={accent ? `--app: ${accent}` : undefined}>
       <slot />
     </main>
     <Footer lang={lang} compact={compactFooter} />

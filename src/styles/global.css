@@ -540,15 +540,15 @@ kbd {
    that starts below the fold, and removed again once the entrance has played. */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
+  transform: translateY(16px);
 }
 
 .reveal.is-revealed {
   opacity: 1;
   transform: none;
   transition:
-    opacity 700ms var(--ease) var(--reveal-delay, 0ms),
-    transform 900ms var(--ease) var(--reveal-delay, 0ms);
+    opacity 560ms var(--ease) var(--reveal-delay, 0ms),
+    transform 720ms var(--ease) var(--reveal-delay, 0ms);
 }
 
 /* Switching tabs on an app page fades the new panel in. */
