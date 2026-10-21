@@ -348,8 +348,8 @@ kbd {
 
 .icon-button {
   display: inline-grid;
-  width: 40px;
-  height: 40px;
+  width: var(--header-control-size, 40px);
+  height: var(--header-control-size, 40px);
   place-items: center;
   padding: 0;
   border: 1px solid var(--line);
