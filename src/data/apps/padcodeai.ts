@@ -1,9 +1,11 @@
 import type { App } from '../types';
 import icon from '../../assets/apps/padcodeai/app-icon.png';
 import currentV2IpadEditorMockup from '../../assets/apps/padcodeai/current/v2/ipad-editor-mockup.webp';
-import currentV2IpadPremiumMockup from '../../assets/apps/padcodeai/current/v2/ipad-premium-mockup.webp';
 import currentV2IphoneEditorMockup from '../../assets/apps/padcodeai/current/v2/iphone-editor-mockup.webp';
-import currentV2IphonePremiumMockup from '../../assets/apps/padcodeai/current/v2/iphone-premium-mockup.webp';
+import featureRun from '../../assets/apps/padcodeai/current/v2/feature-run.webp';
+import featureWeb from '../../assets/apps/padcodeai/current/v2/feature-web.webp';
+import featureGit from '../../assets/apps/padcodeai/current/v2/feature-git.webp';
+import featureAi from '../../assets/apps/padcodeai/current/v2/feature-ai.webp';
 import currentV2OnboardingMockup from '../../assets/apps/padcodeai/current/v2/onboarding-mockup.webp';
 import currentV2HeroDevices from '../../assets/apps/padcodeai/current/v2/hero-devices.webp';
 
@@ -22,24 +24,38 @@ const app: App = {
       },
     },
     {
+      src: featureRun,
+      alt: {
+        vi: 'Chạy Python ngay trên iPad, kết quả hiện trong terminal',
+        en: 'Running Python on iPad with output in the terminal',
+      },
+    },
+    {
+      src: featureWeb,
+      alt: {
+        vi: 'Xem trước HTML, CSS và JavaScript ngay trong ứng dụng',
+        en: 'Live preview of HTML, CSS and JavaScript inside the app',
+      },
+    },
+    {
+      src: featureGit,
+      alt: {
+        vi: 'Source Control: xem thay đổi, commit và đẩy lên GitHub',
+        en: 'Source Control: review changes, commit and push to GitHub',
+      },
+    },
+    {
+      src: featureAi,
+      alt: {
+        vi: 'Trợ lý AI tuỳ chọn: giải thích, refactor, viết test, sửa lỗi',
+        en: 'Optional AI assistant: explain, refactor, write tests, fix',
+      },
+    },
+    {
       src: currentV2IphoneEditorMockup,
       alt: {
         vi: 'Không gian soạn thảo trên iPhone — bản 2.0',
         en: 'iPhone coding workspace — version 2.0',
-      },
-    },
-    {
-      src: currentV2IpadPremiumMockup,
-      alt: {
-        vi: 'Premium mua một lần trên iPad — bản 2.0',
-        en: 'One-time Premium on iPad — version 2.0',
-      },
-    },
-    {
-      src: currentV2IphonePremiumMockup,
-      alt: {
-        vi: 'Premium và khôi phục giao dịch trên iPhone',
-        en: 'Premium and Restore Purchases on iPhone',
       },
     },
     {
@@ -55,6 +71,14 @@ const app: App = {
     community: 'https://www.facebook.com/PadCodeAI',
   },
   accent: '#a3162b',
+  tutorial: {
+    youtubeId: '_GN8XpwSNNw',
+    title: { vi: 'Pad Code AI trong một phút', en: 'Pad Code AI in a minute' },
+    description: {
+      vi: 'Gợi ý code thông minh, chạy code ngay trên máy, xem trước web, đồng bộ GitHub và trợ lý AI tuỳ chọn. Có phụ đề tiếng Việt và tiếng Anh.',
+      en: 'Smart completion, code that runs on your device, instant web preview, GitHub sync and an optional AI assistant. Subtitles in English and Vietnamese.',
+    },
+  },
   category: { vi: 'IDE cho iPad và iPhone', en: 'IDE for iPad and iPhone' },
   title: {
     vi: 'Viết và chạy code thật trên iPad và iPhone.',
