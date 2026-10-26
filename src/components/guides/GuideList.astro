@@ -29,6 +29,9 @@ const Heading = headingLevel;
 <section class="guides container section" id={id} aria-labelledby={`${id}-heading`}>
   <div class="section-head">
     <div>
+      <span class="section-kicker">
+        {lang === 'vi' ? 'Tài liệu & hướng dẫn' : 'Resources & guides'}
+      </span>
       <Heading id={`${id}-heading`} class:list={{ guides__h1: headingLevel === 'h1' }}>
         {title}
       </Heading>
@@ -52,7 +55,7 @@ const Heading = headingLevel;
 <style>
   .guides__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
     gap: 16px;
   }
 

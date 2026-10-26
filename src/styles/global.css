@@ -579,3 +579,13 @@ main {
 html.has-dialog {
   overflow: hidden;
 }
+
+/* Shared editorial labels keep home and product sections in the same visual family. */
+.section-kicker {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--muted);
+  font: 600 11px var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}

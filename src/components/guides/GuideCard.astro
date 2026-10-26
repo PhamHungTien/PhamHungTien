@@ -43,6 +43,7 @@ const app = guide.data.app ? appBySlug.get(guide.data.app as AppSlug) : undefine
 <style>
   .guide-card {
     display: grid;
+    grid-template-rows: auto auto 1fr auto;
     align-content: start;
     gap: 10px;
     height: 100%;
@@ -97,7 +98,9 @@ const app = guide.data.app ? appBySlug.get(guide.data.app as AppSlug) : undefine
   }
 
   .guide-card__meta {
-    margin-top: 4px;
+    margin-top: 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
     color: var(--muted);
     font-size: 13px;
   }

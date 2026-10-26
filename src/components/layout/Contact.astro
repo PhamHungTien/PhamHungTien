@@ -20,6 +20,9 @@ const [email, ...profiles] = socialProfiles;
   data-spotlight
 >
   <div>
+    <span class="contact__eyebrow">
+      {lang === 'vi' ? 'Kết nối trực tiếp' : 'A direct conversation'}
+    </span>
     <h2 id="contact-heading">{t(lang, 'contact.title')}</h2>
     <p>{t(lang, 'contact.body')}</p>
   </div>
@@ -70,6 +73,14 @@ const [email, ...profiles] = socialProfiles;
     --contact-line-strong: var(--line-strong);
   }
 
+  .contact__eyebrow {
+    display: block;
+    margin-bottom: 20px;
+    font: 11px var(--font-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--contact-muted);
+  }
   h2 {
     font-size: clamp(30px, 4.2vw, 48px);
     font-weight: 700;

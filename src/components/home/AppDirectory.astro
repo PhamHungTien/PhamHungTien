@@ -27,6 +27,7 @@ const groups = PLATFORM_GROUPS.filter((group) =>
 <section class="apps container section" id="apps" aria-labelledby="apps-heading" data-app-directory>
   <div class="section-head">
     <div>
+      <span class="section-kicker">The collection</span>
       <h2 id="apps-heading">{t(lang, 'home.apps.title')}</h2>
       <p>{t(lang, 'home.apps.lead')}</p>
     </div>
@@ -131,7 +132,10 @@ const groups = PLATFORM_GROUPS.filter((group) =>
                 .join(' · ')}
             </span>
           </div>
-          <ChevronRight class="app-row__chevron" size={20} aria-hidden="true" />
+          <span class="app-row__footer">
+            <span>{lang === 'vi' ? 'Khám phá ứng dụng' : 'Explore app'}</span>
+            <ChevronRight class="app-row__chevron" size={18} aria-hidden="true" />
+          </span>
         </a>
       </li>
     ))}
@@ -151,6 +155,27 @@ const groups = PLATFORM_GROUPS.filter((group) =>
 </script>
 
 <style>
+  .apps > .section-head {
+    align-items: start;
+    flex-direction: column;
+    gap: 28px;
+  }
+  .apps__tools {
+    width: 100%;
+    justify-content: space-between;
+    padding-block: 20px;
+    border-block: 1px solid var(--line);
+  }
+  .app-row__footer {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    font-size: 14px;
+    font-weight: 600;
+  }
   .apps__translation-note {
     color: var(--muted);
     max-width: 70ch;
@@ -271,7 +296,7 @@ const groups = PLATFORM_GROUPS.filter((group) =>
   .app-list {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 28px;
+    gap: 24px;
   }
 
   .app-list li {
@@ -280,7 +305,8 @@ const groups = PLATFORM_GROUPS.filter((group) =>
 
   .app-row {
     display: grid;
-    grid-template-columns: 72px minmax(0, 1fr) 20px;
+    grid-template-columns: 60px minmax(0, 1fr);
+    grid-template-rows: auto 1fr auto;
     align-items: start;
     gap: 20px;
     height: 100%;
@@ -348,8 +374,8 @@ const groups = PLATFORM_GROUPS.filter((group) =>
   }
 
   .app-row__icon {
-    width: 72px;
-    height: 72px;
+    width: 60px;
+    height: 60px;
     border-radius: var(--r-icon);
     box-shadow: var(--shadow-icon);
     transition: transform 420ms var(--spring);
@@ -361,7 +387,7 @@ const groups = PLATFORM_GROUPS.filter((group) =>
 
   .app-row__copy {
     display: grid;
-    gap: 4px;
+    gap: 7px;
   }
 
   .app-row__title {
@@ -393,11 +419,7 @@ const groups = PLATFORM_GROUPS.filter((group) =>
   }
 
   .app-row__desc {
-    display: -webkit-box;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
+    display: block;
     color: var(--muted);
     font-size: 15px;
     line-height: 1.55;
@@ -473,10 +495,6 @@ const groups = PLATFORM_GROUPS.filter((group) =>
     .app-row__icon {
       width: 56px;
       height: 56px;
-    }
-
-    .app-row :global(.app-row__chevron) {
-      display: none;
     }
   }
 </style>
