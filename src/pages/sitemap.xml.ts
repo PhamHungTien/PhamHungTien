@@ -29,7 +29,17 @@ const releaseDate = (slug: string) =>
 export const GET: APIRoute = async () => {
   const guides = await getGuides();
   const entries: Entry[] = [
-    { versions: [{ lang: 'en', path: homePath() }] },
+    {
+      versions: [{ lang: 'en', path: homePath() }],
+      // The home page lists every app and the newest guides, so it changes when they do.
+      lastmod: [
+        ...apps.map((app) => releaseDate(app.slug)),
+        ...guides.map((g) => g.data.updated ?? g.data.published),
+      ]
+        .filter((date): date is string => !!date)
+        .sort()
+        .at(-1),
+    },
     ...apps.map((app) => ({
       versions: [{ lang: defaultLangOf(app), path: appPath(app) }],
       lastmod: releaseDate(app.slug),

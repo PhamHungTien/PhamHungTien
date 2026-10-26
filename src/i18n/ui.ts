@@ -3,7 +3,7 @@
  * src/data/apps; legal documents live in src/content/legal.
  */
 const en = {
-  'meta.home.title': 'Phạm Hùng Tiến — App Developer',
+  'meta.home.title': 'Phạm Hùng Tiến — iOS & macOS App Developer',
   'meta.home.description':
     'Offline-first, private apps by Phạm Hùng Tiến: PHTV, vTTS, Pad Code AI, Pad Notes AI, My NAS Manager, LunarV and Lunar Block.',
   'meta.notFound.title': 'Page not found',
@@ -120,7 +120,7 @@ const en = {
 export type UiKey = keyof typeof en;
 
 const vi: Record<UiKey, string> = {
-  'meta.home.title': 'Phạm Hùng Tiến — Nhà phát triển ứng dụng',
+  'meta.home.title': 'Phạm Hùng Tiến — Nhà phát triển ứng dụng iOS và macOS',
   'meta.home.description':
     'Ứng dụng offline, tôn trọng quyền riêng tư của Phạm Hùng Tiến: PHTV, vTTS, Pad Code AI, Pad Notes AI, My NAS Manager, LunarV và Lunar Block.',
   'meta.notFound.title': 'Không tìm thấy trang',

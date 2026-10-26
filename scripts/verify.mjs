@@ -48,14 +48,7 @@ for await (const file of walk(outDir)) {
   pages.set(rel, html);
 }
 
-const REMOVED_NETWORKS = [
-  'instagram.com',
-  'threads.net',
-  'tiktok.com',
-  'locket.cam',
-  'cake.me',
-  'facebook.com/phamhungtien1404',
-];
+const REMOVED_NETWORKS = ['instagram.com', 'threads.net', 'tiktok.com', 'locket.cam', 'cake.me'];
 
 for (const [path, html] of pages) {
   const is404 = path === '/404.html';
