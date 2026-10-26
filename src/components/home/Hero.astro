@@ -1,5 +1,5 @@
 ---
-import { ArrowDown } from '@lucide/astro';
+import { ArrowDown, Heart } from '@lucide/astro';
 import BrandIcon from '../ui/BrandIcon.astro';
 import OrbitScene from './OrbitScene.astro';
 import type { Locale as Lang } from '../../i18n/locales';
@@ -11,24 +11,49 @@ interface Props {
 }
 
 const { lang } = Astro.props;
+
+const socials = [
+  { name: 'github', label: 'GitHub', href: SITE.github },
+  { name: 'youtube', label: 'YouTube', href: SITE.youtube },
+  { name: 'linkedin', label: 'LinkedIn', href: SITE.linkedin },
+  { name: 'facebook', label: 'Facebook', href: SITE.facebook },
+] as const;
 ---
 
 <section class="hero container" aria-labelledby="hero-title">
   <h1 id="hero-title" class="sr-only">
     Phạm Hùng Tiến — independent apps for Apple devices
   </h1>
+  <div class="hero__sky" aria-hidden="true">
+    <span class="hero__galaxy"></span>
+  </div>
   <OrbitScene />
   <div class="hero__actions">
     <a class="button button--primary" href="#apps">
       {t(lang, 'home.cta')}
       <ArrowDown size={18} aria-hidden="true" />
     </a>
-    <a class="hero__social" href={SITE.github} target="_blank" rel="noopener noreferrer me">
-      <BrandIcon name="github" /> GitHub
-    </a>
-    <a class="hero__social" href={SITE.youtube} target="_blank" rel="noopener noreferrer me">
-      <BrandIcon name="youtube" /> YouTube
-    </a>
+    <button class="button hero__donate" type="button" data-donate aria-haspopup="dialog">
+      <Heart size={17} aria-hidden="true" />
+      {t(lang, 'donate.open')}
+    </button>
+    <ul class="hero__socials" aria-label="Social profiles">
+      {socials.map((social) => (
+        <li>
+          <a
+            class="hero__social"
+            href={social.href}
+            target="_blank"
+            rel="noopener noreferrer me"
+            aria-label={social.label}
+            title={social.label}
+            data-brand={social.name}
+          >
+            <BrandIcon name={social.name} size={19} />
+          </a>
+        </li>
+      ))}
+    </ul>
   </div>
 </section>
 
@@ -36,12 +61,41 @@ const { lang } = Astro.props;
   .hero {
     position: relative;
     --hero-reserve: 92px;
-    --orbit-ratio: 1.5;
+    --orbit-max-height: 0.95;
     min-height: calc(100svh - var(--header-height));
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding-block: 16px;
+  }
+  /* Full-bleed sky behind the universe: a faint band of the galaxy. */
+  .hero__sky {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 100vw;
+    translate: -50% 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: -1;
+  }
+  .hero__galaxy {
+    position: absolute;
+    left: -20%;
+    right: -20%;
+    top: 38%;
+    height: 34%;
+    rotate: -14deg;
+    background:
+      radial-gradient(ellipse 50% 50% at 50% 50%, rgb(150 160 220 / 0.07), transparent 70%),
+      radial-gradient(ellipse 22% 40% at 30% 48%, rgb(200 170 230 / 0.06), transparent 70%),
+      radial-gradient(ellipse 26% 45% at 72% 54%, rgb(120 170 220 / 0.05), transparent 70%);
+    filter: blur(8px);
+    opacity: calc(1 - var(--hero-scroll, 0));
+  }
+  :global([data-theme='light']) .hero__galaxy {
+    opacity: 0.5;
   }
   .hero__actions {
     position: relative;
@@ -49,20 +103,63 @@ const { lang } = Astro.props;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: 20px 28px;
+    gap: 14px 16px;
     margin-top: 12px;
   }
-  .hero__social {
-    display: inline-flex;
-    align-items: center;
+  .hero__donate {
     gap: 8px;
-    min-height: 44px;
-    color: var(--muted);
-    font-size: 14px;
-    font-weight: 600;
-  }
-  .hero__social:hover {
     color: var(--ink);
+    background: color-mix(in srgb, var(--paper) 70%, transparent);
+    border: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .hero__donate :global(svg) {
+    color: #ff5d7a;
+    transition: scale 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .hero__donate:hover {
+    border-color: color-mix(in srgb, #ff5d7a 55%, transparent);
+  }
+  .hero__donate:hover :global(svg) {
+    scale: 1.2;
+  }
+  .hero__socials {
+    display: flex;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .hero__social {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    color: var(--muted);
+    border: 1px solid transparent;
+    transition:
+      color 180ms ease,
+      background-color 180ms ease,
+      border-color 180ms ease,
+      translate 260ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .hero__social:hover,
+  .hero__social:focus-visible {
+    color: var(--ink);
+    background: color-mix(in srgb, var(--ink) 7%, transparent);
+    border-color: color-mix(in srgb, var(--ink) 12%, transparent);
+    translate: 0 -2px;
+  }
+  .hero__social[data-brand='youtube']:hover {
+    color: #ff3d3d;
+  }
+  .hero__social[data-brand='linkedin']:hover {
+    color: #2f8fdc;
+  }
+  .hero__social[data-brand='facebook']:hover {
+    color: #3a8bff;
   }
   .hero__actions .button--primary :global(svg) {
     transition: transform 300ms var(--ease);
@@ -72,22 +169,28 @@ const { lang } = Astro.props;
   }
   @media (max-width: 560px) {
     .hero {
-      --hero-reserve: 156px;
-      --orbit-ratio: 1;
+      --hero-reserve: 150px;
+      --orbit-max-height: 1.3;
     }
     .hero__actions {
-      gap: 12px 24px;
+      gap: 10px 12px;
     }
     .hero__actions .button {
+      flex: 1 1 0;
+      max-width: 200px;
+      padding-inline: 12px;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+    .hero__socials {
       flex-basis: 100%;
-      max-width: 280px;
-      margin-inline: 20%;
+      justify-content: center;
     }
   }
   @media (max-height: 500px) and (min-width: 480px) {
     .hero {
-      --hero-reserve: 80px;
-      --orbit-ratio: 1.5;
+      --hero-reserve: 76px;
+      --orbit-max-height: 0.6;
       padding-block: 10px;
     }
     .hero__actions {
@@ -95,8 +198,11 @@ const { lang } = Astro.props;
       gap: 12px 20px;
     }
     .hero__actions .button {
+      flex: 0 0 auto;
+      max-width: none;
+    }
+    .hero__socials {
       flex-basis: auto;
-      margin-inline: 0;
     }
   }
 </style>

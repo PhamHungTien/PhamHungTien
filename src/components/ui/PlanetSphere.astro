@@ -1,0 +1,92 @@
+---
+/**
+ * One app planet, drawn exactly as on the home page universe: the app's own colours, its
+ * Icon Composer glyph optically centred, a lit hemisphere and a coloured atmosphere rim.
+ * Size comes from the parent through `--sphere-size`; `--light` turns the lit side.
+ */
+import { getImage } from 'astro:assets';
+import { planetAppearance } from '../../data/planet-appearance';
+import type { AppSlug } from '../../data/types';
+
+interface Props {
+  slug: AppSlug;
+  class?: string;
+}
+
+const { slug, class: className } = Astro.props;
+const sources = import.meta.glob<{ default: ImageMetadata }>('../../assets/planet-artwork/*.png', {
+  eager: true,
+});
+const art = await getImage({
+  src: sources[`../../assets/planet-artwork/${slug}.png`].default,
+  width: 320,
+  format: 'webp',
+});
+const look = planetAppearance[slug];
+const photo = slug === 'vtts' || slug === 'lunarblock';
+---
+
+<span
+  class:list={['sphere', className]}
+  aria-hidden="true"
+  style={`--planet-color: ${look.base}; --planet-pole: ${look.pole}; --planet-glow: ${look.glow}; --track-color: ${look.track}; --glyph-start: ${look.glyphStart}; --glyph-end: ${look.glyphEnd}; --artwork-size: ${look.artworkSize}%; --art-dx: ${look.artOffsetX}%; --art-dy: ${look.artOffsetY}%;`}
+>
+  {photo ? (
+    <img class="sphere__art" src={art.src} alt="" width="160" height="160" decoding="async" />
+  ) : (
+    <span class="sphere__art sphere__glyph" style={`--glyph: url('${art.src}');`} />
+  )}
+  <span class="sphere__light"></span>
+  <span class="sphere__rim"></span>
+</span>
+
+<style>
+  .sphere {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: var(--sphere-size, 64px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    background: radial-gradient(
+      circle at 50% 40%,
+      color-mix(in srgb, var(--planet-pole) 70%, #fff) 0%,
+      var(--planet-color) 50%,
+      color-mix(in srgb, var(--planet-color) 30%, #06040a) 100%
+    );
+    box-shadow:
+      inset 0 0 0 1px rgb(255 255 255 / 0.08),
+      0 12px 24px -10px rgb(0 0 0 / 0.6),
+      0 0 34px -6px var(--planet-glow);
+  }
+  .sphere__art {
+    position: relative;
+    width: var(--artwork-size);
+    height: var(--artwork-size);
+    object-fit: contain;
+    translate: var(--art-dx, 0) var(--art-dy, 0);
+    filter: drop-shadow(0 3px 2px rgb(15 7 22 / 0.45));
+  }
+  .sphere__glyph {
+    background: linear-gradient(165deg, var(--glyph-start) 12%, var(--glyph-end) 85%);
+    mask: var(--glyph) center / contain no-repeat;
+    -webkit-mask: var(--glyph) center / contain no-repeat;
+  }
+  .sphere__light {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 50% 6%, rgb(255 244 228 / 0.5), transparent 46%),
+      linear-gradient(180deg, transparent 38%, rgb(5 3 12 / 0.62) 100%);
+    transform: rotate(var(--light, -40deg));
+  }
+  .sphere__rim {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--track-color) 55%, transparent);
+    opacity: 0.6;
+  }
+</style>

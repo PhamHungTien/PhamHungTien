@@ -7,6 +7,8 @@ export const SITE = {
   email: 'contact@phamhungtien.com',
   github: 'https://github.com/PhamHungTien',
   youtube: 'https://www.youtube.com/@phamhungtien14',
+  linkedin: 'https://www.linkedin.com/in/ph%E1%BA%A1m-h%C3%B9ng-ti%E1%BA%BFn-a1b405327/',
+  facebook: 'https://www.facebook.com/phamhungtien1404',
   repository: 'https://github.com/PhamHungTien/PhamHungTien',
   paypal: 'https://www.paypal.com/paypalme/phamhungtien1404',
   /** Google AdSense publisher ID (also in public/ads.txt). */

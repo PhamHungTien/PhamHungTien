@@ -2,6 +2,7 @@
 import { Image, Picture, getImage } from 'astro:assets';
 import { ChevronRight, Download, Heart, Store } from '@lucide/astro';
 import BrandIcon from '../ui/BrandIcon.astro';
+import PlanetSphere from '../ui/PlanetSphere.astro';
 import type { App, Lang } from '../../data/types';
 import { t } from '../../lib/i18n';
 import { homePath, legalPath } from '../../lib/routes';
@@ -119,30 +120,42 @@ const secondary = app.links.source
     </div>
   </div>
 
-  <button
-    type="button"
-    class="app-hero__media"
-    data-tilt
-    data-tilt-strength="5"
-    data-spotlight
-    data-lightbox-src={large.src}
-    data-lightbox-alt={heroAlt}
-    aria-label={`${t(lang, 'app.enlarge')}: ${heroAlt}`}
-  >
-    <Picture
-      src={app.heroImage}
-      alt={heroAlt}
-      formats={['avif', 'webp']}
-      widths={[480, 800, 1200, 1600].filter((w) => w <= app.heroImage.width)}
-      sizes="(max-width: 960px) 92vw, 620px"
-      loading="eager"
-      fetchpriority="high"
-    />
-    <span class="app-hero__caption">
-      {lang === 'vi' ? 'Khám phá giao diện · Nhấn để phóng to' : 'A closer look · Click to enlarge'}
+  <div class="app-hero__stage" data-moon-stage>
+    <span class="app-hero__moon" data-moon>
+      <PlanetSphere slug={app.slug} />
     </span>
-  </button>
+    <button
+      type="button"
+      class="app-hero__media"
+      data-tilt
+      data-tilt-strength="5"
+      data-spotlight
+      data-lightbox-src={large.src}
+      data-lightbox-alt={heroAlt}
+      aria-label={`${t(lang, 'app.enlarge')}: ${heroAlt}`}
+    >
+      <Picture
+        src={app.heroImage}
+        alt={heroAlt}
+        formats={['avif', 'webp']}
+        widths={[480, 800, 1200, 1600].filter((w) => w <= app.heroImage.width)}
+        sizes="(max-width: 960px) 92vw, 620px"
+        loading="eager"
+        fetchpriority="high"
+      />
+      <span class="app-hero__caption">
+        {lang === 'vi'
+          ? 'Khám phá giao diện · Nhấn để phóng to'
+          : 'A closer look · Click to enlarge'}
+      </span>
+    </button>
+  </div>
 </section>
+
+<script>
+  import { initAppMoon } from '../../scripts/app-moon';
+  initAppMoon();
+</script>
 
 <style>
   .app-hero {
@@ -176,16 +189,6 @@ const secondary = app.links.source
     pointer-events: none;
   }
 
-  .app-hero::after {
-    position: absolute;
-    z-index: -1;
-    inset: 10% -5% 0 50%;
-    border: 1px solid color-mix(in srgb, var(--app) 18%, transparent);
-    border-radius: 50%;
-    transform: rotate(-24deg) scaleY(0.75);
-    content: '';
-    pointer-events: none;
-  }
   .breadcrumb ol {
     display: flex;
     flex-wrap: wrap;
@@ -273,7 +276,28 @@ const secondary = app.links.source
     margin-top: 32px;
   }
 
+  /* The app's planet circles the screenshot, behind it and in front of it. */
+  .app-hero__stage {
+    position: relative;
+    isolation: isolate;
+  }
+  .app-hero__moon {
+    --sphere-size: clamp(48px, 6vw, 84px);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 3;
+    pointer-events: none;
+    transform: translate(28vw, -16vw) translate(-50%, -50%);
+    filter: brightness(calc(0.82 + (var(--depth, 1) + 1) * 0.09));
+    will-change: transform;
+  }
+  .app-hero__stage:not([data-moon]) .app-hero__moon {
+    display: none;
+  }
   .app-hero__media {
+    position: relative;
+    z-index: 1;
     display: grid;
     width: 100%;
     place-items: center;
@@ -313,15 +337,15 @@ const secondary = app.links.source
     .app-hero::before {
       inset: 45% -10% -40px;
     }
-    .app-hero::after {
-      display: none;
-    }
     .app-hero {
       grid-template-columns: minmax(0, 1fr);
     }
   }
 
   @media (max-width: 560px) {
+    .app-hero__moon {
+      --sphere-size: 44px;
+    }
     .app-hero__actions .button {
       flex: 1 1 auto;
     }

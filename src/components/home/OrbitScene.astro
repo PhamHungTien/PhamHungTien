@@ -3,7 +3,6 @@ import { getImage } from 'astro:assets';
 import { apps } from '../../data/apps';
 import { planetAppearance } from '../../data/planet-appearance';
 import { appPath } from '../../lib/routes';
-import { ORBIT_TRACKS } from '../../scripts/planet-system';
 
 const artworkSources = import.meta.glob<{ default: ImageMetadata }>(
   '../../assets/planet-artwork/*.png',
@@ -23,29 +22,18 @@ const artwork = await Promise.all(
 
 <div class="orbit" data-planet-system data-motion-scene>
   <div class="orbit__arrival">
-    <!-- SVG orbital track rings for visual planetary paths -->
-    <svg class="orbit__tracks" aria-hidden="true">
-      <defs>
-        <radialGradient id="sun-corona" cx="50%" cy="47%" r="42%">
-          <stop offset="0%" stop-color="#ffeaca" stop-opacity="0.16" />
-          <stop offset="35%" stop-color="#ad465b" stop-opacity="0.06" />
-          <stop offset="100%" stop-color="#000000" stop-opacity="0" />
-        </radialGradient>
-      </defs>
-      <circle class="orbit__corona" cx="50%" cy="47%" r="35%" fill="url(#sun-corona)" />
+    <div class="orbit__halo" aria-hidden="true"></div>
+
+    <!-- Far half of every orbit: drawn behind the sun. -->
+    <svg class="orbit__tracks orbit__tracks--back" aria-hidden="true">
       {apps.map((_, index) => (
-        <ellipse
-          class={`orbit__track orbit__track--${index}`}
-          cx="0"
-          cy="0"
-          rx="0"
-          ry="0"
-          data-track-ring={index}
-        />
+        <path class={`orbit__ring orbit__ring--${index}`} d="" data-ring-back={index} />
       ))}
     </svg>
 
     <div class="orbit__core" aria-hidden="true">
+      <span class="orbit__flare"></span>
+      <span class="orbit__corona"></span>
       <div class="orbit__sun">
         <svg viewBox="0 0 64 64" focusable="false">
           <path
@@ -66,10 +54,15 @@ const artwork = await Promise.all(
       </div>
     </div>
 
+    <!-- Near half of every orbit: crosses in front of the sun. -->
+    <svg class="orbit__tracks orbit__tracks--front" aria-hidden="true">
+      {apps.map((_, index) => (
+        <path class={`orbit__ring orbit__ring--${index}`} d="" data-ring-front={index} />
+      ))}
+    </svg>
+
     <nav class="orbit__planets" aria-label="Explore the app planets">
       {apps.map((app, index) => {
-        const trackDef = ORBIT_TRACKS[index] ?? ORBIT_TRACKS[0];
-        const initialDeg = Math.round((trackDef.initialPhase * 180) / Math.PI);
         const appearance = planetAppearance[app.slug];
 
         return (
@@ -78,11 +71,9 @@ const artwork = await Promise.all(
             href={appPath(app)}
             aria-label={`Explore ${app.name}`}
             data-planet
-            data-phase={initialDeg}
             data-track={index}
-            data-period={trackDef.period}
             data-track-color={appearance.track}
-            style={`--planet-color: ${appearance.base}; --planet-pole: ${appearance.pole}; --planet-glow: ${appearance.glow}; --track-color: ${appearance.track}; --glyph-start: ${appearance.glyphStart}; --glyph-end: ${appearance.glyphEnd}; --artwork-size: ${appearance.artworkSize}%; --planet-size: ${index === 0 ? 'clamp(50px, 6.6vw, 68px)' : 'clamp(46px, 5.8vw, 62px)'}; --spin-duration: ${9 + index * 2.7}s; --spin-delay: ${index * -2.3}s; --spin-direction: ${index % 2 ? 'reverse' : 'normal'};`}
+            style={`--planet-color: ${appearance.base}; --planet-pole: ${appearance.pole}; --planet-glow: ${appearance.glow}; --track-color: ${appearance.track}; --glyph-start: ${appearance.glyphStart}; --glyph-end: ${appearance.glyphEnd}; --artwork-size: ${appearance.artworkSize}%; --art-dx: ${appearance.artOffsetX}%; --art-dy: ${appearance.artOffsetY}%; --planet-k: ${index === 0 ? 1.1 : 1}; --spin-duration: ${9 + index * 2.7}s; --spin-delay: ${index * -2.3}s; --spin-direction: ${index % 2 ? 'reverse' : 'normal'};`}
           >
             <span class="planet__body">
               {['vtts', 'lunarblock'].includes(app.slug) ? (
@@ -93,6 +84,7 @@ const artwork = await Promise.all(
                   width="160"
                   height="160"
                   loading="eager"
+                  decoding="async"
                 />
               ) : (
                 <span
@@ -101,8 +93,9 @@ const artwork = await Promise.all(
                   aria-hidden="true"
                 ></span>
               )}
-              <span class="planet__atmosphere" aria-hidden="true"></span>
               <span class="planet__light" aria-hidden="true"></span>
+              <span class="planet__shade" aria-hidden="true"></span>
+              <span class="planet__atmosphere" aria-hidden="true"></span>
             </span>
             <span class="planet__name">{app.name}</span>
           </a>
@@ -111,9 +104,9 @@ const artwork = await Promise.all(
     </nav>
 
     <div class="orbit__dust" aria-hidden="true">
-      {Array.from({ length: 18 }, (_, i) => (
+      {Array.from({ length: 22 }, (_, i) => (
         <i
-          style={`--x: ${8 + ((i * 37) % 84)}%; --y: ${12 + ((i * 23) % 72)}%; --delay: ${i * -0.7}s;`}
+          style={`--x: ${6 + ((i * 37) % 88)}%; --y: ${8 + ((i * 23) % 80)}%; --delay: ${i * -0.7}s; --size: ${i % 5 === 0 ? 3 : 2}px;`}
         ></i>
       ))}
     </div>
@@ -126,19 +119,26 @@ const artwork = await Promise.all(
 </script>
 
 <style>
+  /* The frame takes whatever the screen offers; the engine then picks the camera angle and
+     scale that fill it, so the system fits every size and orientation. */
   .orbit {
+    --orbit-width: min(100vw - 40px, 1680px);
     position: relative;
-    width: min(
-      100%,
-      1080px,
-      calc((100svh - var(--header-height) - var(--hero-reserve)) * var(--orbit-ratio))
+    /* Break out of the page container: the universe is allowed to be wider than text. */
+    width: var(--orbit-width);
+    margin-left: 50%;
+    translate: -50% 0;
+    height: clamp(
+      220px,
+      calc(100svh - var(--header-height) - var(--hero-reserve)),
+      calc(var(--orbit-width) * var(--orbit-max-height, 1.05))
     );
-    aspect-ratio: var(--orbit-ratio);
     flex-shrink: 0;
-    margin-inline: auto;
     isolation: isolate;
     touch-action: pan-y pinch-zoom;
     user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
     cursor: grab;
   }
   .orbit[data-dragging='true'] {
@@ -149,221 +149,340 @@ const artwork = await Promise.all(
     inset: 0;
   }
 
-  /* SVG Orbital Tracks */
+  /* Soft light pool around the sun; it breathes slowly and fades as the hero scrolls away. */
+  .orbit__halo {
+    position: absolute;
+    left: var(--sun-x, 50%);
+    top: var(--sun-y, 48%);
+    width: calc(var(--sun-size, 160px) * 4.5);
+    max-width: 100%;
+    aspect-ratio: 1.6;
+    translate: -50% -50%;
+    border-radius: 50%;
+    background: radial-gradient(
+      closest-side,
+      rgb(255 214 170 / 0.16),
+      rgb(173 70 91 / 0.07) 45%,
+      transparent 100%
+    );
+    opacity: calc(1 - var(--scroll, 0) * 0.8);
+    pointer-events: none;
+    z-index: 1;
+  }
+  :global([data-theme='light']) .orbit__halo {
+    background: radial-gradient(
+      closest-side,
+      rgb(240 160 90 / 0.18),
+      rgb(173 70 91 / 0.06) 45%,
+      transparent 100%
+    );
+  }
+
+  /* Orbit rings: back halves sit under the sun, front halves over it. */
   .orbit__tracks {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none;
-    z-index: 2;
     overflow: visible;
-  }
-  .orbit__corona {
     pointer-events: none;
   }
-  .orbit__track {
+  .orbit__tracks--back {
+    z-index: 3;
+  }
+  .orbit__tracks--front {
+    z-index: 12;
+  }
+  .orbit__ring {
     fill: none;
-    stroke: color-mix(in srgb, var(--ink) 9%, transparent);
-    stroke-width: 1.2px;
-    stroke-dasharray: 4 6;
-    opacity: 0.65;
+    stroke: color-mix(in srgb, var(--ink) 14%, transparent);
+    stroke-width: 1.1px;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
     transition:
-      stroke 260ms ease,
-      stroke-width 260ms ease,
-      opacity 260ms ease,
-      filter 260ms ease;
+      stroke 320ms ease,
+      stroke-width 320ms ease,
+      opacity 320ms ease;
   }
-  :global([data-theme='dark']) .orbit__track {
-    stroke: color-mix(in srgb, #ffffff 10%, transparent);
+  /* No drawn orbits by default — just bodies in space. Pointing at a planet reveals
+     its own path, faintly, so the motion still reads. */
+  .orbit__ring {
+    opacity: 0;
   }
-
-  /* Highlight specific orbital track on hover/focus */
-  .orbit[data-hover-track='0'] .orbit__track--0,
-  .orbit[data-hover-track='1'] .orbit__track--1,
-  .orbit[data-hover-track='2'] .orbit__track--2,
-  .orbit[data-hover-track='3'] .orbit__track--3,
-  .orbit[data-hover-track='4'] .orbit__track--4,
-  .orbit[data-hover-track='5'] .orbit__track--5,
-  .orbit[data-hover-track='6'] .orbit__track--6 {
+  :global([data-theme='dark']) .orbit__ring {
+    stroke: rgb(255 255 255 / 0.13);
+  }
+  .orbit[data-hover-track='0'] .orbit__ring--0,
+  .orbit[data-hover-track='1'] .orbit__ring--1,
+  .orbit[data-hover-track='2'] .orbit__ring--2,
+  .orbit[data-hover-track='3'] .orbit__ring--3,
+  .orbit[data-hover-track='4'] .orbit__ring--4,
+  .orbit[data-hover-track='5'] .orbit__ring--5,
+  .orbit[data-hover-track='6'] .orbit__ring--6 {
     stroke: var(--active-track-color, var(--gold));
-    stroke-width: 2.2px;
-    stroke-dasharray: none;
-    opacity: 0.95;
-    filter: drop-shadow(0 0 5px var(--active-track-color, var(--gold)));
+    stroke-width: 1.4px;
+    opacity: 0.55;
+  }
+  .orbit__tracks--back {
+    opacity: 0.4;
+  }
+  .orbit__tracks--back .orbit__ring {
+    stroke-dasharray: 2 5;
   }
 
+  /* Sun */
   .orbit__core {
     position: absolute;
-    left: 50%;
-    top: 47%;
-    width: min(22%, 130px);
+    left: var(--sun-x, 50%);
+    top: var(--sun-y, 48%);
+    width: var(--sun-size, clamp(92px, 20%, 220px));
     aspect-ratio: 1;
     translate: -50% -50%;
     z-index: 10;
     border-radius: 50%;
     pointer-events: none;
   }
+  .orbit__flare {
+    position: absolute;
+    inset: -45%;
+    border-radius: 50%;
+    background: radial-gradient(
+      closest-side,
+      rgb(255 226 180 / 0.34),
+      rgb(240 150 90 / 0.12) 45%,
+      transparent 72%
+    );
+    filter: blur(2px);
+  }
+  /* Corona: light scattering off the star, falling off smoothly like a real bloom. */
+  .orbit__corona {
+    position: absolute;
+    inset: -60%;
+    border-radius: 50%;
+    background: radial-gradient(
+      closest-side,
+      rgb(255 214 170 / 0.5) 34%,
+      rgb(255 168 112 / 0.22) 44%,
+      rgb(235 110 90 / 0.1) 58%,
+      rgb(173 60 90 / 0.04) 76%,
+      transparent 100%
+    );
+    mix-blend-mode: screen;
+  }
+  :global([data-theme='light']) .orbit__corona {
+    mix-blend-mode: normal;
+    opacity: 0.7;
+  }
+  /* An emissive star, not a glossy ball: brightest at the centre, darker and redder at
+     the limb (limb darkening), with a slowly churning granulated surface. */
   .orbit__sun {
     position: absolute;
     inset: 0;
     border-radius: 50%;
+    overflow: hidden;
     background: radial-gradient(
-      circle at 28% 22%,
-      #ffeaca,
-      #dca47b 9%,
-      #ad465b 28%,
-      #751f3a 48%,
-      #33162c 74%,
-      #130f1d 98%
+      circle at 50% 50%,
+      #ffd79a 0%,
+      #ffb066 18%,
+      #f27d48 40%,
+      #d24a3c 62%,
+      #a32637 82%,
+      #6e1229 100%
     );
     box-shadow:
-      inset 3px 3px 8px rgb(255 232 190 / 0.7),
-      inset -6px -4px 14px #110a1b,
-      0 0 35px rgb(240 192 78 / 0.18),
-      0 25px 35px -15px rgb(20 10 24 / 0.7);
+      inset 0 0 0 1px rgb(255 205 160 / 0.28),
+      inset 0 0 calc(var(--sun-size, 140px) * 0.1) rgb(110 18 41 / 0.75),
+      0 0 calc(var(--sun-size, 140px) * 0.06) rgb(255 214 160 / 0.8),
+      0 0 calc(var(--sun-size, 140px) * 0.22) rgb(255 160 96 / 0.42),
+      0 0 calc(var(--sun-size, 140px) * 0.6) rgb(236 100 70 / 0.2),
+      0 0 calc(var(--sun-size, 140px) * 1.2) rgb(190 60 80 / 0.1);
+  }
+  .orbit__sun::before {
+    position: absolute;
+    inset: -25%;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16' numOctaves='2' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 0.85 0 0 0 0 0.6 0 0 0 1.6 -0.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")
+      center / 34% repeat;
+    mix-blend-mode: overlay;
+    opacity: 0.32;
+    content: '';
+  }
+  /* A soft rim of brighter gas where the light grazes the edge. */
+  .orbit__sun::after {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      transparent 70%,
+      rgb(255 190 130 / 0.16) 92%,
+      transparent 100%
+    );
+    content: '';
   }
   .orbit__sun svg {
     position: absolute;
-    inset: 22%;
-    width: 56%;
-    height: 56%;
-    transform: rotate(-5deg);
-    filter: drop-shadow(0 7px 3px rgb(37 10 27 / 0.4));
+    z-index: 1;
+    inset: 14%;
+    width: 72%;
+    height: 72%;
+    filter: drop-shadow(0 1px 1px rgb(90 14 34 / 0.55))
+      drop-shadow(0 3px 10px rgb(110 20 40 / 0.45));
   }
 
-  /* display:contents keeps planets and sun in a single depth-sorting context. */
+  /* Planets */
   .orbit__planets {
     display: contents;
   }
   .planet {
+    --s: 1;
+    --depth: 1;
+    --light: 315deg;
     position: absolute;
-    left: 50%;
-    top: 47%;
-    width: var(--planet-size);
-    height: var(--planet-size);
+    width: calc(var(--planet-unit, clamp(44px, 5.6vw, 62px)) * var(--planet-k, 1));
+    height: calc(var(--planet-unit, clamp(44px, 5.6vw, 62px)) * var(--planet-k, 1));
     min-width: 44px;
     min-height: 44px;
-    aspect-ratio: 1;
-    margin: 0;
     border-radius: 50%;
     transform: translate(-50%, -50%);
-    z-index: 12;
+    z-index: 20;
     touch-action: pan-y pinch-zoom;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
   }
+  .orbit[data-ready] .planet {
+    left: 0;
+    top: 0;
+    will-change: transform, opacity;
+  }
+  /* With JS, planets wait for the engine so they never jump from the fallback layout. */
+  :global(html[data-motion]) .orbit:not([data-ready]) .planet {
+    opacity: 0;
+  }
+
   .planet__body {
     position: absolute;
     inset: 0;
     display: grid;
     place-items: center;
     border-radius: 50%;
+    overflow: hidden;
     background: radial-gradient(
-      circle at 30% 25%,
-      color-mix(in srgb, var(--planet-pole) 60%, #fff) 0%,
-      color-mix(in srgb, var(--planet-pole) 85%, #fff) 16%,
-      var(--planet-color) 48%,
-      color-mix(in srgb, var(--planet-color) 28%, #06040a) 95%
+      circle at 50% 40%,
+      color-mix(in srgb, var(--planet-pole) 70%, #fff) 0%,
+      var(--planet-color) 50%,
+      color-mix(in srgb, var(--planet-color) 30%, #06040a) 100%
     );
     box-shadow:
-      inset -8px -9px 16px rgb(0 0 0 / 0.65),
-      inset 2px 2px 5px rgb(255 255 255 / 0.5),
-      0 12px 18px -8px rgb(0 0 0 / 0.55);
+      inset 0 0 0 1px rgb(255 255 255 / 0.08),
+      0 calc(10px * var(--s)) calc(20px * var(--s)) -8px rgb(0 0 0 / 0.6);
+    transform: scale(var(--s));
     transition:
-      transform 240ms cubic-bezier(0.16, 1, 0.3, 1),
-      box-shadow 240ms ease;
-  }
-  .planet:hover .planet__body,
-  .planet:focus-visible .planet__body {
-    box-shadow:
-      inset -6px -7px 14px rgb(0 0 0 / 0.5),
-      inset 2px 2px 7px rgb(255 255 255 / 0.7),
-      0 0 24px var(--planet-glow),
-      0 16px 22px -8px rgb(0 0 0 / 0.7);
-    transform: scale(1.08);
+      box-shadow 260ms ease,
+      scale 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   .planet__artwork {
+    position: relative;
     width: var(--artwork-size);
     height: var(--artwork-size);
     object-fit: contain;
     pointer-events: none;
-    filter: drop-shadow(2px 5px 2px rgb(15 7 22 / 0.5));
-    transform: rotate(-5deg);
+    filter: drop-shadow(0 3px 2px rgb(15 7 22 / 0.45));
+    translate: var(--art-dx, 0) var(--art-dy, 0);
   }
   .planet__glyph {
     background: linear-gradient(165deg, var(--glyph-start) 12%, var(--glyph-end) 85%);
     mask: var(--glyph) center / contain no-repeat;
     -webkit-mask: var(--glyph) center / contain no-repeat;
   }
+  /* Day side faces the sun: the whole light layer rotates with --light. */
   .planet__light {
     position: absolute;
     inset: 0;
     border-radius: 50%;
     background:
-      radial-gradient(ellipse at 28% 18%, rgb(255 255 255 / 0.35), transparent 28%),
-      linear-gradient(140deg, transparent 55%, rgb(6 7 19 / 0.4));
+      radial-gradient(circle at 50% 6%, rgb(255 244 228 / 0.5), transparent 46%),
+      linear-gradient(180deg, transparent 38%, rgb(5 3 12 / 0.62) 100%);
+    transform: rotate(var(--light));
+    pointer-events: none;
+  }
+  /* Depth fog: planets on the far side of the sun are a little darker. */
+  .planet__shade {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: #05030c;
+    opacity: calc((1 - var(--depth)) * 0.2);
     pointer-events: none;
   }
   .planet__atmosphere {
     position: absolute;
-    inset: -3%;
+    inset: 0;
     border-radius: 50%;
-    border: 1.5px solid color-mix(in srgb, var(--track-color) 60%, transparent);
-    opacity: 0.5;
+    box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--track-color) 55%, transparent);
+    opacity: 0.55;
     pointer-events: none;
-    transition:
-      opacity 220ms ease,
-      border-width 220ms ease,
-      box-shadow 220ms ease;
+    transition: opacity 240ms ease;
+  }
+  .planet:hover .planet__body,
+  .planet:focus-visible .planet__body {
+    scale: 1.14;
+    box-shadow:
+      inset 0 0 0 1px rgb(255 255 255 / 0.18),
+      0 0 0 3px color-mix(in srgb, var(--track-color) 45%, transparent),
+      0 0 28px var(--planet-glow),
+      0 14px 24px -8px rgb(0 0 0 / 0.7);
   }
   .planet:hover .planet__atmosphere,
   .planet:focus-visible .planet__atmosphere {
     opacity: 1;
-    border-width: 2px;
-    box-shadow: 0 0 12px var(--planet-glow);
   }
 
   .planet__name {
     position: absolute;
-    top: calc(100% + 7px);
+    top: calc(50% + 50% * var(--s) + 6px);
     left: 50%;
     translate: -50% 0;
     color: var(--muted);
-    font-size: clamp(10px, 1.1vw, 12px);
+    font-size: clamp(10px, calc(var(--planet-unit, 60px) * 0.19), 12.5px);
     font-weight: 600;
+    line-height: 1.35;
     white-space: nowrap;
-    padding: 2.5px 8px;
+    padding: 2px 8px;
     border-radius: 999px;
-    background: color-mix(in srgb, var(--paper) 80%, transparent);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: color-mix(in srgb, var(--paper) 78%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1px solid color-mix(in srgb, var(--ink) 9%, transparent);
     box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
+    opacity: calc((0.62 + (var(--depth) + 1) * 0.19) * var(--label, 1));
     pointer-events: none;
     transition:
-      color 180ms ease,
-      border-color 180ms ease,
-      background-color 180ms ease,
-      transform 180ms ease,
-      box-shadow 180ms ease;
+      color 200ms ease,
+      border-color 200ms ease,
+      background-color 200ms ease,
+      scale 260ms cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   .planet:hover .planet__name,
   .planet:focus-visible .planet__name {
     color: var(--ink);
+    opacity: 1;
     border-color: color-mix(in srgb, var(--track-color) 70%, transparent);
-    background: color-mix(in srgb, var(--paper) 95%, transparent);
-    transform: translateY(2px) scale(1.04);
-    box-shadow: 0 6px 16px rgb(0 0 0 / 0.25);
+    background: color-mix(in srgb, var(--paper) 94%, transparent);
+    scale: 1.06;
   }
   .planet:focus-visible {
+    outline: none;
+  }
+  .planet:focus-visible .planet__body {
     outline: 2px solid var(--focus);
-    outline-offset: 8px;
-    z-index: 1000 !important;
+    outline-offset: 5px;
+  }
+  .planet:focus-visible {
+    z-index: 100 !important;
     opacity: 1 !important;
   }
 
-  /* No-JS and reduced-motion fallback constellation:
-     Distinct distances to center, harmonious spacing, fully linked, zero overlap. */
+  /* Fallback constellation for browsers without JavaScript. */
   .planet--0 {
     left: 36%;
     top: 26%;
@@ -397,51 +516,85 @@ const artwork = await Promise.all(
     position: absolute;
     inset: 0;
     pointer-events: none;
+    z-index: 2;
   }
   .orbit__dust i {
     position: absolute;
     left: var(--x);
     top: var(--y);
-    width: 2px;
-    height: 2px;
+    width: var(--size);
+    height: var(--size);
     border-radius: 50%;
     background: var(--gold);
-    opacity: 0.6;
+    box-shadow: 0 0 6px var(--gold);
+    opacity: 0.5;
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    :global(html:not([data-motion='off'])) .orbit__arrival {
-      animation: universe-arrival 1400ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    :global(html:not([data-motion='off'])) .orbit__core {
+      animation: sun-arrival 1100ms cubic-bezier(0.34, 1.4, 0.64, 1) both;
+    }
+    :global(html:not([data-motion='off'])) .orbit__halo,
+    :global(html:not([data-motion='off'])) .orbit__dust {
+      animation: fade-in 1600ms ease 200ms both;
+    }
+    .orbit__flare {
+      animation: sun-breathe 6s ease-in-out infinite;
+    }
+    .orbit__sun::before {
+      animation: sun-churn 140s linear infinite;
+    }
+    .orbit__corona {
+      animation: corona-breathe 7s ease-in-out infinite;
+    }
+    @keyframes sun-churn {
+      to {
+        rotate: 360deg;
+      }
+    }
+    @keyframes corona-breathe {
+      50% {
+        scale: 1.06;
+        opacity: 0.85;
+      }
     }
     .planet__artwork {
       animation: planet-drift var(--spin-duration) ease-in-out var(--spin-delay) infinite
         var(--spin-direction);
     }
-    @keyframes planet-drift {
-      0%,
-      100% {
-        transform: translateY(-2%) rotate(-7deg);
-      }
-      50% {
-        transform: translateY(2%) rotate(5deg);
-      }
-    }
     .orbit__dust i {
       animation: dust-twinkle 5s ease-in-out var(--delay) infinite;
     }
-    @keyframes universe-arrival {
-      from {
-        opacity: 0.2;
-        transform: scale(0.78) rotate(-9deg);
+    /* A slow sway around the optical centre: alive, but never off-centre. */
+    @keyframes planet-drift {
+      0%,
+      100% {
+        rotate: -3deg;
       }
-      to {
-        opacity: 1;
-        transform: none;
+      50% {
+        rotate: 3deg;
+      }
+    }
+    @keyframes sun-arrival {
+      from {
+        opacity: 0;
+        scale: 0.4;
+      }
+    }
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+      }
+    }
+    @keyframes sun-breathe {
+      50% {
+        opacity: 0.6;
+        scale: 1.1;
       }
     }
     @keyframes dust-twinkle {
       50% {
-        opacity: 0.15;
+        opacity: 0.12;
       }
     }
   }
@@ -451,54 +604,23 @@ const artwork = await Promise.all(
   }
 
   @media (max-width: 560px) {
-    .orbit__core {
-      width: min(24%, 90px);
-    }
-    .planet {
-      width: 44px;
-      height: 44px;
-      min-width: 44px;
-      min-height: 44px;
+    .orbit {
+      --orbit-width: calc(100vw - 12px);
     }
     .planet__name {
-      font-size: 9.5px;
-      padding: 2px 6px;
-      top: calc(100% + 5px);
+      padding: 1.5px 6px;
+      top: calc(50% + 50% * var(--s) + 4px);
     }
-    .planet--0 {
-      left: 35%;
-      top: 25%;
-    }
-    .planet--1 {
-      left: 66%;
-      top: 27%;
-    }
-    .planet--2 {
-      left: 80%;
-      top: 47%;
-    }
-    .planet--3 {
-      left: 69%;
-      top: 71%;
-    }
-    .planet--4 {
-      left: 31%;
-      top: 71%;
-    }
-    .planet--5 {
-      left: 17%;
-      top: 47%;
-    }
-    .planet--6 {
-      left: 50%;
-      top: 11%;
+    .orbit__halo {
+      width: 90%;
+      aspect-ratio: 1.2;
     }
   }
 
   @media (max-height: 500px) and (min-width: 480px) {
     .planet__name {
       font-size: 9px;
-      top: calc(100% + 4px);
+      top: calc(50% + 50% * var(--s) + 3px);
     }
   }
 </style>
