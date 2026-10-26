@@ -70,8 +70,7 @@ use a local spotlight. Reading progress follows the native CSS scroll timeline.
 - `src/scripts/tilt.ts` batches pointer events, caches bounds until scroll/resize and
   removes all listeners and styles when motion is disabled. No perpetual JS loop.
 - `src/styles/motion.css` owns shared effects and reduced-motion overrides.
-- The decorative orbit pauses offscreen and in hidden tabs. Its equivalent accessible
-  links remain in the dock. All content is rendered and readable without JavaScript.
+- The linked planets pause offscreen, in hidden tabs, on hover and on keyboard focus. All content is rendered and readable without JavaScript.
 - The header sparkle button disables motion globally; system Reduce Motion always wins.
 - CSS 3D preserves a lightweight static fallback without a WebGL runtime or model downloads.
 
@@ -88,14 +87,16 @@ Research used for implementation:
 
 ### Open orbital hero
 
-The hero is centered and borderless, up to 1000 px wide, with no backdrop panel or
+The hero is centered and borderless, up to 1080 px wide, with no backdrop panel or
 introductory copy. The single h1 remains available to assistive technology. The
-seven orbital tiles are real links, replacing the duplicate icon dock. Each has a
-raised artwork face, an extruded edge, a highlight and its own depth plane. The
-brand sphere uses the T and nón lá directly, with three differently paced rings,
-subtle breathing and small particles. Decorative geometry ignores pointer events.
-On mobile the scene becomes square with shallower depth and minimum 44 px tile widths.
+seven planets are real links, replacing the duplicate icon dock. A single requestAnimationFrame
+loop projects circular orbits into screen coordinates, sharing geometry with the SVG tracks.
+Perspective scale and depth ordering carry planets in front of and behind the central sphere.
+The loop stops offscreen, in hidden tabs, during hover/focus and when motion is disabled.
+Reduced motion and no JavaScript show seven separated, reachable app links.
 
-Reference: [MDN transform-style](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/transform-style).
-Keep preserve-3d on non-leaf scene layers; avoid opacity or filters on those layers,
-which would flatten their children. Motion continues to use the shared pause controls.
+Artwork comes directly from each application's Icon Composer `.icon/Assets` source in Documents.
+The original transparent PNG layers are retained in `src/assets/planet-artwork`; Astro emits
+320 px WebP assets for the hero. Monochrome layers use CSS masks with a gold highlight;
+vTTS and LunarBlock retain their original colors. No square app-icon backgrounds are added.
+The sphere shading, atmosphere and arrival are CSS; no WebGL runtime is downloaded.
