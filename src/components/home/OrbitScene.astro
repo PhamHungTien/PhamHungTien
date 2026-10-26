@@ -21,12 +21,6 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
 
 <div class="orbit" data-planet-system data-motion-scene>
   <div class="orbit__arrival">
-    <svg class="orbit__paths" viewBox="0 0 1000 690" aria-hidden="true" data-orbit-paths>
-      <ellipse cx="500" cy="345" rx="350" ry="180" />
-      <ellipse cx="500" cy="345" rx="400" ry="220" />
-      <ellipse cx="500" cy="345" rx="300" ry="140" />
-    </svg>
-    <svg class="orbit__paths orbit__paths--front" aria-hidden="true" data-orbit-front></svg>
     <div class="orbit__core" aria-hidden="true">
       <div class="orbit__sun">
         <svg viewBox="0 0 64 64" focusable="false">
@@ -46,7 +40,6 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
           />
         </svg>
       </div>
-      <div class="orbit__corona"></div>
     </div>
     <nav class="orbit__planets" aria-label="Explore the app planets">
       {apps.map((app, index) => (
@@ -58,7 +51,7 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
           data-phase={phases[index]}
           data-track={index}
           data-period={32 + index * 3}
-          style={`--planet-color: ${planetAppearance[app.slug].base}; --planet-pole: ${planetAppearance[app.slug].pole}; --glyph-start: ${planetAppearance[app.slug].glyphStart}; --glyph-end: ${planetAppearance[app.slug].glyphEnd}; --artwork-size: ${planetAppearance[app.slug].artworkSize}%; --planet-size: ${index === 0 ? 10.8 : 10}%;`}
+          style={`--planet-color: ${planetAppearance[app.slug].base}; --planet-pole: ${planetAppearance[app.slug].pole}; --glyph-start: ${planetAppearance[app.slug].glyphStart}; --glyph-end: ${planetAppearance[app.slug].glyphEnd}; --artwork-size: ${planetAppearance[app.slug].artworkSize}%; --planet-size: ${index === 0 ? 10.8 : 10}%; --spin-duration: ${9 + index * 2.7}s; --spin-delay: ${index * -2.3}s; --spin-direction: ${index % 2 ? 'reverse' : 'normal'};`}
         >
           <span class="planet__body">
             {['vtts', 'lunarblock'].includes(app.slug) ? (
@@ -118,31 +111,6 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
     position: absolute;
     inset: 0;
   }
-  .orbit__paths {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-    pointer-events: none;
-  }
-  .orbit__paths :global(path),
-  .orbit__paths ellipse {
-    fill: none;
-    stroke: color-mix(in srgb, var(--gold) 38%, transparent);
-    stroke-width: 1;
-    vector-effect: non-scaling-stroke;
-  }
-  .orbit__paths {
-    opacity: 0.35;
-  }
-  .orbit__paths--front {
-    z-index: 11;
-    opacity: 0.75;
-  }
-  .orbit__paths :global(path:nth-child(even)) {
-    stroke: color-mix(in srgb, var(--brand) 28%, var(--gold));
-  }
   .orbit__core {
     position: absolute;
     left: 50%;
@@ -178,13 +146,6 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
     height: 56%;
     transform: rotate(-5deg);
     filter: drop-shadow(0 7px 3px rgb(37 10 27 / 0.4));
-  }
-  .orbit__corona {
-    position: absolute;
-    inset: -5%;
-    border: 1px solid color-mix(in srgb, var(--gold) 24%, transparent);
-    border-radius: 50%;
-    box-shadow: 0 0 32px color-mix(in srgb, var(--gold) 8%, transparent);
   }
   /* display:contents keeps planets and sun in a single depth-sorting context. */
   .orbit__planets {
@@ -326,8 +287,18 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
     :global(html:not([data-motion='off'])) .orbit__arrival {
       animation: universe-arrival 1400ms cubic-bezier(0.16, 1, 0.3, 1) both;
     }
-    .orbit__corona {
-      animation: corona-breathe 6s ease-in-out infinite;
+    .planet__artwork {
+      animation: planet-drift var(--spin-duration) ease-in-out var(--spin-delay) infinite
+        var(--spin-direction);
+    }
+    @keyframes planet-drift {
+      0%,
+      100% {
+        transform: translateY(-2%) rotate(-7deg);
+      }
+      50% {
+        transform: translateY(2%) rotate(5deg);
+      }
     }
     .orbit__dust i {
       animation: dust-twinkle 5s ease-in-out var(--delay) infinite;
@@ -340,12 +311,6 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
       to {
         opacity: 1;
         transform: none;
-      }
-    }
-    @keyframes corona-breathe {
-      50% {
-        transform: scale(1.05);
-        opacity: 0.4;
       }
     }
     @keyframes dust-twinkle {

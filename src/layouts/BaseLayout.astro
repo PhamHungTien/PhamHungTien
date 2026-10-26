@@ -8,6 +8,7 @@ import '../styles/motion.css';
 import latin400 from '@fontsource/be-vietnam-pro/files/be-vietnam-pro-latin-400-normal.woff2?url';
 import latin700 from '@fontsource/be-vietnam-pro/files/be-vietnam-pro-latin-700-normal.woff2?url';
 import vietnamese700 from '@fontsource/be-vietnam-pro/files/be-vietnam-pro-vietnamese-700-normal.woff2?url';
+import SpaceBackground from '../components/layout/SpaceBackground.astro';
 import Header, { type NavItem } from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import DonateDialog from '../components/ui/DonateDialog.astro';
@@ -78,7 +79,7 @@ const speculationRules = {
 ---
 
 <!doctype html>
-<html lang={htmlLang(lang)} data-theme="light">
+<html lang={htmlLang(lang)} data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -134,7 +135,7 @@ const speculationRules = {
     <!-- Runs before first paint so a stored or system dark theme never flashes light. -->
     <script is:inline>
       (() => {
-        let theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        let theme = 'dark';
         try {
           const stored = localStorage.getItem('theme');
           if (stored === 'light' || stored === 'dark') theme = stored;
@@ -147,6 +148,7 @@ const speculationRules = {
     </script>
   </head>
   <body>
+    <SpaceBackground />
     <Header lang={lang} nav={nav} />
     <div class="reading-progress" aria-hidden="true"></div>
     <main id="main-content" tabindex="-1" style={accent ? `--app: ${accent}` : undefined}>

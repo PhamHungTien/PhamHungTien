@@ -1,0 +1,81 @@
+---
+// Deterministic, decorative star layers: no image downloads or canvas render loop.
+const stars = Array.from({ length: 110 }, (_, i) => ({
+  x: (i * 173 + i * i * 29) % 1600,
+  y: (i * 97 + i * i * 13) % 1000,
+  radius: i % 11 === 0 ? 1.6 : i % 3 === 0 ? 1 : 0.55,
+}));
+---
+
+<div class="space" aria-hidden="true" data-motion-scene>
+  <div class="space__nebula"></div>
+  <svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" focusable="false">
+    <g class="space__distant">
+      {stars
+        .filter((_, i) => i % 3 !== 0)
+        .map((star) => (
+          <circle cx={star.x} cy={star.y} r={star.radius} />
+        ))}
+    </g>
+    <g class="space__near">
+      {stars
+        .filter((_, i) => i % 3 === 0)
+        .map((star) => (
+          <circle cx={star.x} cy={star.y} r={star.radius} />
+        ))}
+    </g>
+  </svg>
+</div>
+<style>
+  .space {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+    background: var(--paper);
+  }
+  .space__nebula {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 14% 26%, rgb(58 58 145 / 0.22), transparent 48%),
+      radial-gradient(ellipse at 86% 65%, rgb(107 30 88 / 0.17), transparent 48%),
+      radial-gradient(ellipse at 57% 5%, rgb(32 83 113 / 0.14), transparent 42%);
+  }
+  svg {
+    width: 100%;
+    height: 100%;
+    fill: #bacbe8;
+    opacity: 0.58;
+  }
+  .space__distant {
+    opacity: 0.48;
+  }
+  .space__near {
+    opacity: 0.8;
+  }
+  :global(html[data-theme='light']) .space__nebula {
+    opacity: 0.22;
+  }
+  :global(html[data-theme='light']) svg {
+    fill: #697da3;
+    opacity: 0.22;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .space__near {
+      animation: starlight 9s ease-in-out infinite alternate;
+    }
+    .space__distant {
+      animation: starlight 15s ease-in-out -6s infinite alternate-reverse;
+    }
+    @keyframes starlight {
+      to {
+        opacity: 0.24;
+      }
+    }
+  }
+  .space:not([data-running='true']) * {
+    animation-play-state: paused;
+  }
+</style>

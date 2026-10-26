@@ -146,3 +146,16 @@ updates planet transforms, opacity and depth order.
 
 References: [Three.js perspective cameras](https://threejs.org/manual/pages/cameras.html)
 and [web.dev animation performance](https://web.dev/articles/animations-guide).
+
+### Cosmic background and clean planetary silhouettes
+
+A shared fixed backdrop now gives every page a dark space canvas, soft blue/violet nebulae
+and 110 deterministic SVG stars. Dark is the default; an explicitly saved light preference
+is retained with a subdued light version. Cards keep solid surfaces for text legibility.
+Star groups twinkle using opacity only, pause in hidden tabs and respect reduced motion.
+No full-screen image or canvas loop is required.
+
+The central corona and all visible orbital paths have been removed (superseding the
+previous split SVG path treatment). The seven independent orbital planes and speed curves
+remain. Each planet's artwork has a distinct 9–25 second drift period, phase and alternating
+direction; modest translation and rotation preserve recognizable artwork and stable links.

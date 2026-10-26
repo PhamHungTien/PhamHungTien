@@ -1,11 +1,9 @@
-/** Project actual circular 3D orbits into screen coordinates, sharing geometry with the tracks. */
+/** Project independent circular 3D orbits into screen coordinates. */
 export function initPlanetSystem(): void {
   const scene = document.querySelector<HTMLElement>('[data-planet-system]');
   if (!scene) return;
   const root = document.documentElement;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  const svg = scene.querySelector<SVGSVGElement>('[data-orbit-paths]')!;
-  const frontSvg = scene.querySelector<SVGSVGElement>('[data-orbit-front]')!;
   const planes = [
     { radius: 0.39, tilt: -0.55, inclination: 1.08 },
     { radius: 0.43, tilt: 0.42, inclination: 1.16 },
@@ -110,22 +108,6 @@ export function initPlanetSystem(): void {
   function resize() {
     width = scene!.clientWidth;
     height = scene!.clientHeight;
-    [svg, frontSvg].forEach((layer, layerIndex) => {
-      layer.setAttribute('viewBox', `0 0 ${width} ${height}`);
-      layer.replaceChildren(
-        ...planes.map((_, track) => {
-          const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-          // sin(angle) >= 0 is the near half; split tracks to occlude behind the sun.
-          const start = layerIndex === 1 ? 0 : Math.PI;
-          const points = Array.from({ length: 81 }, (_, i) => {
-            const p = project(start + (i / 80) * Math.PI, track);
-            return `${i ? 'L' : 'M'}${(width / 2 + p.x).toFixed(2)},${(height * 0.47 + p.y).toFixed(2)}`;
-          });
-          path.setAttribute('d', points.join(' '));
-          return path;
-        }),
-      );
-    });
     sync();
   }
   planets.forEach(({ el }) => {
