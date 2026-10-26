@@ -85,3 +85,17 @@ Research used for implementation:
   retain native multi-page navigation and unique shared icon names.
 - [W3C: animation from interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions):
   honor reduced motion and provide a user control.
+
+### Open orbital hero
+
+The hero is centered and borderless, up to 1000 px wide, with no backdrop panel or
+introductory copy. The single h1 remains available to assistive technology. The
+seven orbital tiles are real links, replacing the duplicate icon dock. Each has a
+raised artwork face, an extruded edge, a highlight and its own depth plane. The
+brand sphere uses the T and nón lá directly, with three differently paced rings,
+subtle breathing and small particles. Decorative geometry ignores pointer events.
+On mobile the scene becomes square with shallower depth and minimum 44 px tile widths.
+
+Reference: [MDN transform-style](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/transform-style).
+Keep preserve-3d on non-leaf scene layers; avoid opacity or filters on those layers,
+which would flatten their children. Motion continues to use the shared pause controls.
