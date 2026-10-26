@@ -132,3 +132,17 @@ gets more visual emphasis. FAQ uses a two-column editorial layout on desktop and
 on mobile. The gallery explains scrolling/enlargement. Decorative hero rings are omitted
 on stacked layouts to keep text clear. These components serve all seven apps, preserving
 Vietnamese PHTV content and English on other product pages.
+
+### Independent orbital planes
+
+Each app has a distinct radius, inclination and roll. Perspective projection uses the same
+geometry for the link and its SVG orbit; near and far half-paths sit on opposite sides of
+the central sphere. Near planets scale up and distant planets recede. A continuous angular
+speed curve (`1.2 - 0.7 sin(angle)`) lets apps linger in front and move faster behind the
+center; this is presentation timing, not a simulation of orbital physics. Swipe rotation
+adds to the same angle and retains exponentially decaying inertia. The decorative tagline
+is removed. Paths are calculated only on resize; the single visible-scene animation loop
+updates planet transforms, opacity and depth order.
+
+References: [Three.js perspective cameras](https://threejs.org/manual/pages/cameras.html)
+and [web.dev animation performance](https://web.dev/articles/animations-guide).

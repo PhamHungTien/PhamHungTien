@@ -5,6 +5,16 @@ export function initPlanetSystem(): void {
   const root = document.documentElement;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const svg = scene.querySelector<SVGSVGElement>('[data-orbit-paths]')!;
+  const frontSvg = scene.querySelector<SVGSVGElement>('[data-orbit-front]')!;
+  const planes = [
+    { radius: 0.39, tilt: -0.55, inclination: 1.08 },
+    { radius: 0.43, tilt: 0.42, inclination: 1.16 },
+    { radius: 0.36, tilt: -0.95, inclination: 0.98 },
+    { radius: 0.41, tilt: 0.16, inclination: 1.22 },
+    { radius: 0.4, tilt: 0.84, inclination: 1.1 },
+    { radius: 0.34, tilt: -0.18, inclination: 0.93 },
+    { radius: 0.38, tilt: 1.1, inclination: 1.18 },
+  ];
   const planets = [...scene.querySelectorAll<HTMLElement>('[data-planet]')].map((el) => ({
     el,
     phase: (Number(el.dataset.phase) * Math.PI) / 180,
@@ -13,7 +23,6 @@ export function initPlanetSystem(): void {
   }));
   let width = 1,
     height = 1,
-    elapsed = 0,
     previous = 0,
     frame = 0;
   let visible = false,
@@ -35,13 +44,12 @@ export function initPlanetSystem(): void {
     motionEnabled() && visible && !document.hidden && !hovered && !focused && !gesture?.dragging;
 
   function project(angle: number, track: number) {
-    const radius = [0.34, 0.4, 0.29][track];
-    const x = Math.cos(angle) * width * radius;
-    const y = Math.sin(angle) * height * radius * 0.69;
-    const inclination = Math.min(0.9, (height / width) * 0.69);
-    const z = Math.sin(angle) * width * radius * Math.sqrt(1 - inclination ** 2);
-    const tilt = -0.22;
-    const scale = (width * 2) / (width * 2 - z);
+    const { radius, tilt, inclination } = planes[track];
+    const unit = Math.min(width, height * 1.1);
+    const x = Math.cos(angle) * unit * radius;
+    const y = Math.sin(angle) * unit * radius * Math.cos(inclination);
+    const z = Math.sin(angle) * unit * radius * Math.sin(inclination);
+    const scale = (unit * 1.6) / (unit * 1.6 - z);
     return {
       x: (x * Math.cos(tilt) - y * Math.sin(tilt)) * scale,
       y: (x * Math.sin(tilt) + y * Math.cos(tilt)) * scale,
@@ -50,12 +58,13 @@ export function initPlanetSystem(): void {
     };
   }
   function draw() {
-    planets.forEach(({ el, phase, track, period }) => {
-      const p = project(phase + orbitOffset + (elapsed * Math.PI * 2) / period, track);
+    planets.forEach(({ el, phase, track }) => {
+      const p = project(phase + orbitOffset, track);
       el.style.left = '50%';
       el.style.top = '47%';
       el.style.transform = `translate(-50%, -50%) translate(${p.x.toFixed(2)}px, ${p.y.toFixed(2)}px) scale(${p.scale.toFixed(3)})`;
       el.style.zIndex = String(p.z < 0 ? 5 : 15 + Math.round(p.z));
+      el.style.opacity = String(0.84 + 0.16 * Math.sin(phase + orbitOffset));
     });
   }
   function tick(now: number) {
@@ -64,7 +73,12 @@ export function initPlanetSystem(): void {
     // Resume without jumping after a hidden tab or an interaction pause.
     if (previous) {
       const dt = Math.min((now - previous) / 1000, 0.05);
-      elapsed += dt;
+      planets.forEach((planet) => {
+        // A continuous speed curve: linger in front, pass through the rear faster.
+        const speed = 1.2 - 0.7 * Math.sin(planet.phase + orbitOffset);
+        planet.phase =
+          (planet.phase + ((dt * Math.PI * 2) / planet.period) * speed) % (Math.PI * 2);
+      });
       orbitOffset += velocity * dt;
       velocity *= Math.exp(-3.5 * dt);
       if (Math.abs(velocity) < 0.002) velocity = 0;
@@ -86,6 +100,7 @@ export function initPlanetSystem(): void {
         el.style.removeProperty('top');
         el.style.removeProperty('transform');
         el.style.removeProperty('z-index');
+        el.style.removeProperty('opacity');
       });
       return;
     }
@@ -95,18 +110,22 @@ export function initPlanetSystem(): void {
   function resize() {
     width = scene!.clientWidth;
     height = scene!.clientHeight;
-    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
-    svg.replaceChildren(
-      ...[0, 1, 2].map((track) => {
-        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        const points = Array.from({ length: 121 }, (_, i) => {
-          const p = project((i / 120) * Math.PI * 2, track);
-          return `${i ? 'L' : 'M'}${(width / 2 + p.x).toFixed(2)},${(height * 0.47 + p.y).toFixed(2)}`;
-        });
-        path.setAttribute('d', points.join(' ') + ' Z');
-        return path;
-      }),
-    );
+    [svg, frontSvg].forEach((layer, layerIndex) => {
+      layer.setAttribute('viewBox', `0 0 ${width} ${height}`);
+      layer.replaceChildren(
+        ...planes.map((_, track) => {
+          const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          // sin(angle) >= 0 is the near half; split tracks to occlude behind the sun.
+          const start = layerIndex === 1 ? 0 : Math.PI;
+          const points = Array.from({ length: 81 }, (_, i) => {
+            const p = project(start + (i / 80) * Math.PI, track);
+            return `${i ? 'L' : 'M'}${(width / 2 + p.x).toFixed(2)},${(height * 0.47 + p.y).toFixed(2)}`;
+          });
+          path.setAttribute('d', points.join(' '));
+          return path;
+        }),
+      );
+    });
     sync();
   }
   planets.forEach(({ el }) => {

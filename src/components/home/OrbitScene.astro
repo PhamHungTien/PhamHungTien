@@ -26,6 +26,7 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
       <ellipse cx="500" cy="345" rx="400" ry="220" />
       <ellipse cx="500" cy="345" rx="300" ry="140" />
     </svg>
+    <svg class="orbit__paths orbit__paths--front" aria-hidden="true" data-orbit-front></svg>
     <div class="orbit__core" aria-hidden="true">
       <div class="orbit__sun">
         <svg viewBox="0 0 64 64" focusable="false">
@@ -55,8 +56,8 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
           aria-label={`Explore ${app.name}`}
           data-planet
           data-phase={phases[index]}
-          data-track={index % 3}
-          data-period={38 + index * 5}
+          data-track={index}
+          data-period={32 + index * 3}
           style={`--planet-color: ${planetAppearance[app.slug].base}; --planet-pole: ${planetAppearance[app.slug].pole}; --glyph-start: ${planetAppearance[app.slug].glyphStart}; --glyph-end: ${planetAppearance[app.slug].glyphEnd}; --artwork-size: ${planetAppearance[app.slug].artworkSize}%; --planet-size: ${index === 0 ? 10.8 : 10}%;`}
         >
           <span class="planet__body">
@@ -90,9 +91,6 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
         ></i>
       ))}
     </div>
-    <p class="orbit__hint">
-      Seven apps. One little universe. <span class="orbit__swipe-hint">Swipe to orbit.</span>
-    </p>
   </div>
 </div>
 
@@ -116,14 +114,6 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
     touch-action: pan-y pinch-zoom;
     user-select: none;
   }
-  .orbit__swipe-hint {
-    display: none;
-  }
-  @media (pointer: coarse) {
-    .orbit__swipe-hint {
-      display: inline;
-    }
-  }
   .orbit__arrival {
     position: absolute;
     inset: 0;
@@ -143,12 +133,15 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
     stroke-width: 1;
     vector-effect: non-scaling-stroke;
   }
-  .orbit__paths :global(path:nth-child(2)) {
-    stroke: color-mix(in srgb, var(--brand) 25%, transparent);
+  .orbit__paths {
+    opacity: 0.35;
   }
-  .orbit__paths :global(path:nth-child(3)) {
-    stroke-dasharray: 2 7;
-    stroke: color-mix(in srgb, var(--muted) 30%, transparent);
+  .orbit__paths--front {
+    z-index: 11;
+    opacity: 0.75;
+  }
+  .orbit__paths :global(path:nth-child(even)) {
+    stroke: color-mix(in srgb, var(--brand) 28%, var(--gold));
   }
   .orbit__core {
     position: absolute;
@@ -283,6 +276,7 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
     outline: 2px solid var(--focus);
     outline-offset: 8px;
     z-index: 1000 !important;
+    opacity: 1 !important;
   }
   /* No-JS and reduced-motion visitors receive a composed, fully linked constellation. */
   .planet--0 {
@@ -327,16 +321,6 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
     border-radius: 50%;
     background: var(--gold);
     opacity: 0.6;
-  }
-  .orbit__hint {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    color: var(--muted);
-    font: 11px var(--font-mono);
-    letter-spacing: 0.08em;
-    pointer-events: none;
   }
   @media (prefers-reduced-motion: no-preference) {
     :global(html:not([data-motion='off'])) .orbit__arrival {
@@ -384,14 +368,8 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
       font-size: 9px;
       top: calc(100% + 7px);
     }
-    .orbit__hint {
-      font-size: 9px;
-    }
   }
   @media (max-height: 500px) and (min-width: 480px) {
-    .orbit__hint {
-      display: none;
-    }
     .planet__name {
       font-size: 9px;
       top: calc(100% + 5px);
