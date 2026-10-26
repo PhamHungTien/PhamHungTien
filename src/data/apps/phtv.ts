@@ -37,8 +37,8 @@ const app: App = {
     en: 'A 100% Swift input method for macOS: fast, private and fully on your Mac. Free and open source.',
   },
   description: {
-    vi: 'PHTV là bộ gõ tiếng Việt mã nguồn mở cho macOS 14+, hỗ trợ Telex, VNI, gõ tắt, kiểm tra chính tả và bản riêng cho Apple Silicon và Intel.',
-    en: 'PHTV is an open-source Vietnamese input method for macOS 14+, with Telex, VNI, macros, spell checking and separate Apple Silicon and Intel builds.',
+    vi: 'PHTV là bộ gõ tiếng Việt mã nguồn mở cho macOS 14+, hỗ trợ Telex, VNI, gõ tắt, kiểm tra chính tả, PHTV Picker và lịch sử Clipboard. PHTV Keyboard là bản nguồn nhập chuẩn macOS dành cho Mac App Store.',
+    en: 'PHTV is an open-source Vietnamese input method for macOS 14+, with Telex, VNI, macros, spell checking, PHTV Picker and clipboard history. PHTV Keyboard is the native input source edition for the Mac App Store.',
   },
   platforms: ['macos'],
   requirements: 'macOS 14.0 or later',
@@ -52,7 +52,11 @@ const app: App = {
     { label: { vi: 'Giá', en: 'Price' }, value: { vi: 'Miễn phí', en: 'Free' } },
     {
       label: { vi: 'Giấy phép', en: 'License' },
-      value: { vi: 'Mã nguồn mở', en: 'Open source' },
+      value: { vi: 'Mã nguồn mở (AGPLv3)', en: 'Open source (AGPLv3)' },
+    },
+    {
+      label: { vi: 'Phiên bản', en: 'Editions' },
+      value: { vi: 'PHTV · PHTV Keyboard', en: 'PHTV · PHTV Keyboard' },
     },
   ],
   features: [
@@ -92,10 +96,10 @@ const app: App = {
       },
     },
     {
-      title: { vi: 'Tải đúng bản cho máy Mac', en: 'The right build for your Mac' },
+      title: { vi: 'PHTV Keyboard cho Mac App Store', en: 'PHTV Keyboard for the Mac App Store' },
       description: {
-        vi: 'Bản Apple Silicon và Intel tách riêng, hoặc cài bằng Homebrew để tự chọn đúng.',
-        en: 'Separate Apple Silicon and Intel builds, or install with Homebrew to pick the right one automatically.',
+        vi: 'Chạy như nguồn nhập của chính macOS, trong App Sandbox, không cần quyền Trợ năng. Có PHTV Emoji và PHTV Clipboard. Sắp có trên Mac App Store.',
+        en: 'Works as a native macOS input source in the App Sandbox, with no Accessibility access, plus PHTV Emoji and PHTV Clipboard. Coming to the Mac App Store.',
       },
     },
   ],
@@ -173,8 +177,8 @@ const app: App = {
         en: 'Does PHTV send my typing to the Internet?',
       },
       answer: {
-        vi: 'Không. PHTV hoạt động offline và không thu thập dữ liệu cá nhân. Chỉ trình chọn GIF cần Internet để tải GIF từ Klipy.',
-        en: 'No. PHTV works offline and collects no personal data. Only the GIF picker connects to Klipy to fetch GIFs.',
+        vi: 'Không. PHTV hoạt động offline và không thu thập dữ liệu cá nhân; chỉ trình chọn GIF tải ảnh từ Klipy và kiểm tra cập nhật cần Internet. PHTV Keyboard không kết nối Internet.',
+        en: 'No. PHTV works offline and collects no personal data; only the GIF picker (images from Klipy) and update checks use the Internet. PHTV Keyboard never connects to the Internet.',
       },
     },
     {
@@ -183,8 +187,18 @@ const app: App = {
         en: 'Why does PHTV need Accessibility access?',
       },
       answer: {
-        vi: 'Để nhận phím gõ, chuyển ngôn ngữ và hoạt động trên mọi ứng dụng. Đây là yêu cầu chuẩn của mọi bộ gõ trên macOS.',
-        en: 'To read keystrokes, switch languages and work in every app. Every macOS input method needs it.',
+        vi: 'PHTV nhận phím qua Trợ năng để chuyển ngôn ngữ và hoạt động trên mọi ứng dụng. Quyền này chỉ dùng để xử lý phím ngay lúc gõ. PHTV Keyboard (bản Mac App Store) là nguồn nhập của macOS nên không cần quyền này.',
+        en: 'PHTV reads keystrokes through Accessibility to switch languages and work in every app, and uses it only to process keys as you type. PHTV Keyboard (the Mac App Store edition) is a macOS input source and does not need it.',
+      },
+    },
+    {
+      question: {
+        vi: 'PHTV và PHTV Keyboard khác nhau thế nào?',
+        en: 'How do PHTV and PHTV Keyboard differ?',
+      },
+      answer: {
+        vi: 'Dùng chung bộ máy gõ. PHTV là bản mã nguồn mở, tải từ đây hoặc Homebrew, có thêm gõ tắt, GIF và nhiều tuỳ chỉnh. PHTV Keyboard là bản Mac App Store: thêm vào menu Nhập liệu như bàn phím ABC, chuyển Việt/Anh bằng Control-Space hoặc phím fn, có PHTV Emoji và PHTV Clipboard. Chỉ nên chạy một trong hai.',
+        en: 'They share one typing engine. PHTV is the open-source edition, downloaded here or with Homebrew, with macros, GIFs and many options. PHTV Keyboard is the Mac App Store edition: it sits in the Input menu like the ABC keyboard, switches with Control-Space or the fn key, and includes PHTV Emoji and PHTV Clipboard. Run only one of them.',
       },
     },
   ],

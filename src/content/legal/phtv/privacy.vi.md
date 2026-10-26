@@ -1,30 +1,45 @@
 ---
 title: "Chính Sách Quyền Riêng Tư"
-description: "Chính sách riêng tư của PHTV. Xem thông tin về dữ liệu và quyền sử dụng ứng dụng."
-updated: "25 tháng 5, 2026"
+description: "PHTV và PHTV Keyboard xử lý mọi phím gõ ngay trên máy Mac, không thu thập hay gửi dữ liệu của bạn đi đâu."
+updated: "27 tháng 10, 2026"
 lang: vi
 ---
-## Tổng Quan
+## Tóm tắt
 
-PHTV là bộ gõ tiếng Việt dành cho macOS. Quyền riêng tư của bạn là ưu tiên tuyệt đối của chúng tôi, đặc biệt là với một ứng dụng bộ gõ xử lý từng phím bấm của bạn.
+PHTV không thu thập, không lưu và không gửi đi bất kỳ nội dung nào bạn gõ. Mọi phím được xử lý ngay trên máy Mac của bạn rồi quên đi. Chúng tôi không dùng quảng cáo, công cụ phân tích hay theo dõi.
 
-## Thu Thập Dữ Liệu
+Chính sách này áp dụng cho hai phiên bản:
 
-**PHTV hoàn toàn KHÔNG thu thập, lưu trữ, hay truyền bất kỳ dữ liệu cá nhân hay lịch sử gõ phím nào ra bên ngoài.**
+- **PHTV**: bản mã nguồn mở, tải từ trang này, GitHub hoặc Homebrew.
+- **PHTV Keyboard**: bản trên Mac App Store.
 
-- Mọi quá trình xử lý phím bấm (keystroke processing) diễn ra cục bộ (offline) trên thiết bị của bạn thông qua InputMethodKit của Apple.
-- PHTV không có tính năng gửi log gõ phím lên máy chủ.
-- Không sử dụng bất kỳ thư viện theo dõi (tracking) hay phân tích dữ liệu (analytics) nào của bên thứ ba.
+## Dữ liệu được xử lý trên máy
 
-## Quyền Hoạt Động Của Ứng Dụng
+- **Phím gõ:** chỉ được dùng để ghép thành chữ tiếng Việt ngay lúc bạn gõ. Không có lịch sử gõ phím nào được lưu lại hay gửi đi.
+- **Cài đặt:** kiểu gõ, phím tắt và các tuỳ chọn khác chỉ được lưu trên máy Mac của bạn.
+- **Lịch sử Clipboard** (khi bạn bật PHTV Clipboard): những gì bạn sao chép được lưu trong thư mục của ứng dụng trên máy để bạn dán lại. Dữ liệu này không bao giờ rời khỏi máy, và bạn có thể xoá bất cứ lúc nào. Nội dung chép từ trình quản lý mật khẩu được bỏ qua.
+- **Emoji dùng gần đây:** lưu trên máy để hiện ở đầu bảng emoji.
 
-Là một Input Method, macOS yêu cầu bạn cấp quyền truy cập để ứng dụng có thể "đọc" phím bấm nhằm chuyển đổi thành ký tự tiếng Việt. Tuy nhiên, PHTV chỉ sử dụng quyền này để xử lý nội bộ theo thời gian thực và lập tức quên đi sau khi từ tiếng Việt được hoàn thiện.
+## Quyền ứng dụng cần
 
-## Truy Cập Mạng
+- **PHTV** cần quyền **Trợ năng (Accessibility)** để nhận phím gõ và hoạt động trong mọi ứng dụng. Quyền này chỉ dùng để xử lý phím ngay lúc gõ.
+- **PHTV Keyboard** là một nguồn nhập của macOS (InputMethodKit), chạy trong App Sandbox của Apple, **không cần** quyền Trợ năng hay Theo dõi đầu vào.
 
-PHTV chỉ dùng kết nối mạng để tải bản cập nhật mới (nếu bạn dùng chức năng kiểm tra cập nhật), hoàn toàn không truyền tải nội dung người dùng.
+Khi bạn nhập mật khẩu, macOS tự tắt mọi bộ gõ, kể cả PHTV.
 
-## Liên Hệ
+## Kết nối mạng
 
-Nếu bạn có câu hỏi về chính sách này, vui lòng liên hệ:  
-**contact@phamhungtien.com**
+- **PHTV Keyboard** không kết nối Internet.
+- **PHTV** chỉ kết nối mạng để kiểm tra bản cập nhật, và khi bạn mở thẻ GIF hoặc Sticker trong PHTV Picker (tải ảnh từ dịch vụ Klipy). Không có nội dung bạn gõ nào được gửi đi.
+
+## Trẻ em
+
+Ứng dụng không thu thập dữ liệu của bất kỳ ai, kể cả trẻ em.
+
+## Thay đổi chính sách
+
+Khi chính sách thay đổi, ngày cập nhật ở đầu trang sẽ đổi theo.
+
+## Liên hệ
+
+Câu hỏi về quyền riêng tư: **contact@phamhungtien.com**

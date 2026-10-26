@@ -1,7 +1,7 @@
 ---
 title: "Điều Khoản Sử Dụng"
 description: "Điều khoản sử dụng của PHTV. Xem thông tin về dữ liệu và quyền sử dụng ứng dụng."
-updated: "25 tháng 5, 2026"
+updated: "27 tháng 10, 2026"
 lang: vi
 ---
 ## Chấp nhận Điều Khoản
@@ -10,7 +10,8 @@ Bằng việc cài đặt và sử dụng bộ gõ PHTV, bạn đồng ý với 
 
 ## Giấy phép Phần mềm
 
-PHTV là một dự án nguồn mở. Bạn có quyền sử dụng phần mềm cho cả mục đích cá nhân và thương mại. Mã nguồn của ứng dụng tuân thủ theo giấy phép (License) được công bố tại kho lưu trữ GitHub tương ứng.
+- **PHTV** (bản tải từ trang này, GitHub hoặc Homebrew) là phần mềm nguồn mở theo giấy phép GNU AGPLv3 công bố tại [kho GitHub](https://github.com/PhamHungTien/PHTV). Bạn được dùng cho mục đích cá nhân và thương mại theo giấy phép đó.
+- **PHTV Keyboard** (bản trên Mac App Store) được cấp phép cho bạn theo [Thoả thuận cấp phép người dùng cuối tiêu chuẩn của Apple](https://www.apple.com/legal/internet-services/itunes/dev/stdeula/).
 
 ## Từ chối Trách nhiệm
 
