@@ -90,7 +90,9 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
         ></i>
       ))}
     </div>
-    <p class="orbit__hint">Seven apps. One little universe.</p>
+    <p class="orbit__hint">
+      Seven apps. One little universe. <span class="orbit__swipe-hint">Swipe to orbit.</span>
+    </p>
   </div>
 </div>
 
@@ -106,6 +108,16 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
     aspect-ratio: 1.5;
     margin-inline: auto;
     isolation: isolate;
+    touch-action: pan-y pinch-zoom;
+    user-select: none;
+  }
+  .orbit__swipe-hint {
+    display: none;
+  }
+  @media (pointer: coarse) {
+    .orbit__swipe-hint {
+      display: inline;
+    }
   }
   .orbit__arrival {
     position: absolute;
@@ -191,7 +203,7 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
     border-radius: 50%;
     transform: translate(-50%, -50%);
     z-index: 12;
-    touch-action: manipulation;
+    touch-action: pan-y pinch-zoom;
   }
   .planet__body {
     position: absolute;
@@ -215,6 +227,7 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
     width: var(--artwork-size);
     height: var(--artwork-size);
     object-fit: contain;
+    pointer-events: none;
     filter: drop-shadow(2px 5px 2px rgb(15 7 22 / 0.5));
     transform: rotate(-5deg);
   }

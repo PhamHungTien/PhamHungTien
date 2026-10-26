@@ -3,7 +3,6 @@ import { initTilt } from './tilt';
 /** One motion preference for CSS, pointer interactions and viewport effects. */
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 const root = document.documentElement;
-const toggle = document.querySelector<HTMLButtonElement>('[data-motion-toggle]');
 let dispose = () => {};
 
 function startReveals(): () => void {
@@ -68,10 +67,6 @@ function updateMotion() {
   dispose();
   const enabled = !reduced.matches && root.dataset.motion !== 'off';
   root.dataset.motionActive = String(enabled);
-  if (toggle) {
-    toggle.setAttribute('aria-pressed', String(enabled));
-    toggle.disabled = reduced.matches;
-  }
   if (!enabled) return;
   const stopReveals = startReveals();
   const stopTilt = initTilt();
@@ -81,15 +76,6 @@ function updateMotion() {
   };
 }
 
-toggle?.addEventListener('click', () => {
-  root.dataset.motion = root.dataset.motion === 'off' ? 'on' : 'off';
-  try {
-    localStorage.setItem('motion', root.dataset.motion);
-  } catch {
-    /* Storage can be blocked. */
-  }
-  updateMotion();
-});
 reduced.addEventListener('change', updateMotion);
 updateMotion();
 

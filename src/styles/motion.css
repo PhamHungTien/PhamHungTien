@@ -6,18 +6,6 @@
   opacity: 1;
 }
 
-.motion-toggle[aria-pressed='true'] {
-  color: var(--brand);
-  border-color: var(--brand);
-}
-.motion-toggle[aria-pressed='false'] {
-  opacity: 0.65;
-}
-.motion-toggle:disabled {
-  opacity: 0.4;
-  cursor: default;
-}
-
 [data-spotlight] {
   position: relative;
   isolation: isolate;

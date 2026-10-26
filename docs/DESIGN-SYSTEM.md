@@ -66,12 +66,12 @@ floating real app icons. Product cards show the actual interface before navigati
 App heroes, guide cards and recommendations respond to fine pointers; feature cards
 use a local spotlight. Reading progress follows the native CSS scroll timeline.
 
-- `src/scripts/motion.ts` owns the persisted motion switch, system preference and reveals.
+- `src/scripts/motion.ts` owns the system motion preference and reveals. Effects default to on; legacy stored opt-outs are ignored.
 - `src/scripts/tilt.ts` batches pointer events, caches bounds until scroll/resize and
   removes all listeners and styles when motion is disabled. No perpetual JS loop.
 - `src/styles/motion.css` owns shared effects and reduced-motion overrides.
 - The linked planets pause offscreen, in hidden tabs, on hover and on keyboard focus. All content is rendered and readable without JavaScript.
-- The header sparkle button disables motion globally; system Reduce Motion always wins.
+- The header has no motion button. System Reduce Motion still selects the static accessible layout.
 - CSS 3D preserves a lightweight static fallback without a WebGL runtime or model downloads.
 
 Research used for implementation:
@@ -83,7 +83,7 @@ Research used for implementation:
 - [Chrome: cross-document view transitions](https://developer.chrome.com/docs/web-platform/view-transitions/cross-document):
   retain native multi-page navigation and unique shared icon names.
 - [W3C: animation from interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions):
-  honor reduced motion and provide a user control.
+  honor the system reduced-motion preference.
 
 ### Open orbital hero
 
@@ -106,3 +106,9 @@ the source Icon Composer fills rather than the website UI accent. Five app spher
 their original burgundy; vTTS retains blue/violet and LunarBlock retains midnight blue.
 Artwork scales are optically balanced per source canvas, with a consistent 10% planet size
 and a slightly larger PHTV. Lighting uses the same direction and restrained highlights.
+
+Horizontal pointer drags rotate all planets together, with capped velocity and exponential
+inertia decay. The scene uses `pan-y pinch-zoom` so vertical scrolling and pinch zoom stay
+native. A directional threshold preserves taps, and drag completion suppresses accidental
+link activation. Touch does not set sticky hover or keyboard focus pauses. Inner artwork
+is 20% smaller to leave breathing room within the spherical surface.

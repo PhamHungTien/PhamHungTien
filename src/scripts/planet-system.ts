@@ -19,8 +19,20 @@ export function initPlanetSystem(): void {
   let visible = false,
     hovered = false,
     focused = false;
+  let orbitOffset = 0,
+    velocity = 0;
+  let gesture: {
+    id: number;
+    x: number;
+    y: number;
+    lastX: number;
+    time: number;
+    dragging: boolean;
+  } | null = null;
+  let suppressClick = false;
   const motionEnabled = () => !reduced.matches && root.dataset.motion !== 'off';
-  const running = () => motionEnabled() && visible && !document.hidden && !hovered && !focused;
+  const running = () =>
+    motionEnabled() && visible && !document.hidden && !hovered && !focused && !gesture?.dragging;
 
   function project(angle: number, track: number) {
     const radius = [0.34, 0.4, 0.29][track];
@@ -39,7 +51,7 @@ export function initPlanetSystem(): void {
   }
   function draw() {
     planets.forEach(({ el, phase, track, period }) => {
-      const p = project(phase + (elapsed * Math.PI * 2) / period, track);
+      const p = project(phase + orbitOffset + (elapsed * Math.PI * 2) / period, track);
       el.style.left = '50%';
       el.style.top = '47%';
       el.style.transform = `translate(-50%, -50%) translate(${p.x.toFixed(2)}px, ${p.y.toFixed(2)}px) scale(${p.scale.toFixed(3)})`;
@@ -50,7 +62,13 @@ export function initPlanetSystem(): void {
     frame = 0;
     if (!running()) return;
     // Resume without jumping after a hidden tab or an interaction pause.
-    if (previous) elapsed += Math.min((now - previous) / 1000, 0.05);
+    if (previous) {
+      const dt = Math.min((now - previous) / 1000, 0.05);
+      elapsed += dt;
+      orbitOffset += velocity * dt;
+      velocity *= Math.exp(-3.5 * dt);
+      if (Math.abs(velocity) < 0.002) velocity = 0;
+    }
     previous = now;
     draw();
     frame = requestAnimationFrame(tick);
@@ -60,6 +78,8 @@ export function initPlanetSystem(): void {
     frame = 0;
     previous = 0;
     if (!motionEnabled()) {
+      gesture = null;
+      velocity = 0;
       // Restore separated, reachable fallback positions instead of freezing an occluded link.
       planets.forEach(({ el }) => {
         el.style.removeProperty('left');
@@ -90,30 +110,83 @@ export function initPlanetSystem(): void {
     sync();
   }
   planets.forEach(({ el }) => {
-    el.addEventListener('pointerenter', () => {
+    el.addEventListener('pointerenter', (event) => {
+      if (event.pointerType !== 'mouse') return;
       hovered = true;
       sync();
     });
-    el.addEventListener('pointerleave', () => {
-      hovered = false;
-      sync();
-    });
-    el.addEventListener('pointerdown', () => {
-      hovered = true;
-      sync();
-    });
-    el.addEventListener('pointercancel', () => {
+    el.addEventListener('pointerleave', (event) => {
+      if (event.pointerType !== 'mouse') return;
       hovered = false;
       sync();
     });
   });
+  scene.addEventListener('dragstart', (event) => event.preventDefault());
+  scene.addEventListener('pointerdown', (event) => {
+    if (!event.isPrimary || event.button !== 0 || !motionEnabled()) return;
+    suppressClick = false;
+    gesture = {
+      id: event.pointerId,
+      x: event.clientX,
+      y: event.clientY,
+      lastX: event.clientX,
+      time: event.timeStamp,
+      dragging: false,
+    };
+    velocity = 0;
+  });
+  scene.addEventListener('pointermove', (event) => {
+    if (!gesture || gesture.id !== event.pointerId) return;
+    const dx = event.clientX - gesture.x,
+      dy = event.clientY - gesture.y;
+    if (!gesture.dragging) {
+      if (Math.max(Math.abs(dx), Math.abs(dy)) < 8) return;
+      if (Math.abs(dy) > Math.abs(dx)) {
+        gesture = null;
+        return;
+      }
+      gesture.dragging = true;
+      suppressClick = true;
+      scene.setPointerCapture(event.pointerId);
+      sync();
+    }
+    const delta = ((event.clientX - gesture.lastX) / width) * Math.PI * 2;
+    const dt = Math.max(8, event.timeStamp - gesture.time) / 1000;
+    orbitOffset += delta;
+    velocity = Math.max(-3, Math.min(3, delta / dt));
+    gesture.lastX = event.clientX;
+    gesture.time = event.timeStamp;
+    draw();
+  });
+  const endGesture = (event: PointerEvent) => {
+    if (!gesture || gesture.id !== event.pointerId) return;
+    if (event.type === 'pointercancel' || event.timeStamp - gesture.time > 120) velocity = 0;
+    gesture = null;
+    if (scene.hasPointerCapture(event.pointerId)) scene.releasePointerCapture(event.pointerId);
+    hovered = false;
+    sync();
+  };
+  scene.addEventListener('pointerup', endGesture);
+  scene.addEventListener('pointercancel', endGesture);
+  scene.addEventListener('lostpointercapture', endGesture);
+  scene.addEventListener(
+    'click',
+    (event) => {
+      if (suppressClick && event.detail !== 0) {
+        event.preventDefault();
+        event.stopPropagation();
+        suppressClick = false;
+      }
+    },
+    true,
+  );
   scene.addEventListener('focusin', () => {
-    focused = true;
+    focused = !!scene.querySelector(':focus-visible');
     sync();
   });
   scene.addEventListener('focusout', () =>
     queueMicrotask(() => {
-      focused = scene.contains(document.activeElement);
+      focused = !!scene.querySelector(':focus-visible');
       sync();
     }),
   );
@@ -122,7 +195,10 @@ export function initPlanetSystem(): void {
     sync();
   }).observe(scene);
   new ResizeObserver(resize).observe(scene);
-  new MutationObserver(sync).observe(root, { attributes: true, attributeFilter: ['data-motion'] });
+  new MutationObserver(sync).observe(root, {
+    attributes: true,
+    attributeFilter: ['data-motion', 'data-motion-active'],
+  });
   reduced.addEventListener('change', sync);
   document.addEventListener('visibilitychange', sync);
   window.addEventListener('pagehide', () => {
