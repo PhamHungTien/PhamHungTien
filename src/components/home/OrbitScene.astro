@@ -3,10 +3,13 @@ import { getImage } from 'astro:assets';
 import { apps } from '../../data/apps';
 import { planetAppearance } from '../../data/planet-appearance';
 import { appPath } from '../../lib/routes';
+import { ORBIT_TRACKS } from '../../scripts/planet-system';
+
 const artworkSources = import.meta.glob<{ default: ImageMetadata }>(
   '../../assets/planet-artwork/*.png',
   { eager: true },
 );
+
 const artwork = await Promise.all(
   apps.map((app) =>
     getImage({
@@ -16,11 +19,32 @@ const artwork = await Promise.all(
     }),
   ),
 );
-const phases = [-135, -70, 10, 65, 140, 195, 265];
 ---
 
 <div class="orbit" data-planet-system data-motion-scene>
   <div class="orbit__arrival">
+    <!-- SVG orbital track rings for visual planetary paths -->
+    <svg class="orbit__tracks" aria-hidden="true">
+      <defs>
+        <radialGradient id="sun-corona" cx="50%" cy="47%" r="42%">
+          <stop offset="0%" stop-color="#ffeaca" stop-opacity="0.16" />
+          <stop offset="35%" stop-color="#ad465b" stop-opacity="0.06" />
+          <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+        </radialGradient>
+      </defs>
+      <circle class="orbit__corona" cx="50%" cy="47%" r="35%" fill="url(#sun-corona)" />
+      {apps.map((_, index) => (
+        <ellipse
+          class={`orbit__track orbit__track--${index}`}
+          cx="0"
+          cy="0"
+          rx="0"
+          ry="0"
+          data-track-ring={index}
+        />
+      ))}
+    </svg>
+
     <div class="orbit__core" aria-hidden="true">
       <div class="orbit__sun">
         <svg viewBox="0 0 64 64" focusable="false">
@@ -41,42 +65,51 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
         </svg>
       </div>
     </div>
+
     <nav class="orbit__planets" aria-label="Explore the app planets">
-      {apps.map((app, index) => (
-        <a
-          class={`planet planet--${index}`}
-          href={appPath(app)}
-          aria-label={`Explore ${app.name}`}
-          data-planet
-          data-phase={phases[index]}
-          data-track={index}
-          data-period={32 + index * 3}
-          style={`--planet-color: ${planetAppearance[app.slug].base}; --planet-pole: ${planetAppearance[app.slug].pole}; --glyph-start: ${planetAppearance[app.slug].glyphStart}; --glyph-end: ${planetAppearance[app.slug].glyphEnd}; --artwork-size: ${planetAppearance[app.slug].artworkSize}%; --planet-size: ${index === 0 ? 10.8 : 10}%; --spin-duration: ${9 + index * 2.7}s; --spin-delay: ${index * -2.3}s; --spin-direction: ${index % 2 ? 'reverse' : 'normal'};`}
-        >
-          <span class="planet__body">
-            {['vtts', 'lunarblock'].includes(app.slug) ? (
-              <img
-                class="planet__artwork"
-                src={artwork[index].src}
-                alt=""
-                width="160"
-                height="160"
-                loading="eager"
-              />
-            ) : (
-              <span
-                class={`planet__artwork planet__glyph planet__glyph--${app.slug}`}
-                style={`--glyph: url('${artwork[index].src}');`}
-                aria-hidden="true"
-              ></span>
-            )}
-            <span class="planet__atmosphere" aria-hidden="true"></span>
-            <span class="planet__light" aria-hidden="true"></span>
-          </span>
-          <span class="planet__name">{app.name}</span>
-        </a>
-      ))}
+      {apps.map((app, index) => {
+        const trackDef = ORBIT_TRACKS[index] ?? ORBIT_TRACKS[0];
+        const initialDeg = Math.round((trackDef.initialPhase * 180) / Math.PI);
+        const appearance = planetAppearance[app.slug];
+
+        return (
+          <a
+            class={`planet planet--${index}`}
+            href={appPath(app)}
+            aria-label={`Explore ${app.name}`}
+            data-planet
+            data-phase={initialDeg}
+            data-track={index}
+            data-period={trackDef.period}
+            data-track-color={appearance.track}
+            style={`--planet-color: ${appearance.base}; --planet-pole: ${appearance.pole}; --planet-glow: ${appearance.glow}; --track-color: ${appearance.track}; --glyph-start: ${appearance.glyphStart}; --glyph-end: ${appearance.glyphEnd}; --artwork-size: ${appearance.artworkSize}%; --planet-size: ${index === 0 ? 'clamp(50px, 6.6vw, 68px)' : 'clamp(46px, 5.8vw, 62px)'}; --spin-duration: ${9 + index * 2.7}s; --spin-delay: ${index * -2.3}s; --spin-direction: ${index % 2 ? 'reverse' : 'normal'};`}
+          >
+            <span class="planet__body">
+              {['vtts', 'lunarblock'].includes(app.slug) ? (
+                <img
+                  class="planet__artwork"
+                  src={artwork[index].src}
+                  alt=""
+                  width="160"
+                  height="160"
+                  loading="eager"
+                />
+              ) : (
+                <span
+                  class={`planet__artwork planet__glyph planet__glyph--${app.slug}`}
+                  style={`--glyph: url('${artwork[index].src}');`}
+                  aria-hidden="true"
+                ></span>
+              )}
+              <span class="planet__atmosphere" aria-hidden="true"></span>
+              <span class="planet__light" aria-hidden="true"></span>
+            </span>
+            <span class="planet__name">{app.name}</span>
+          </a>
+        );
+      })}
     </nav>
+
     <div class="orbit__dust" aria-hidden="true">
       {Array.from({ length: 18 }, (_, i) => (
         <i
@@ -106,20 +139,70 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
     isolation: isolate;
     touch-action: pan-y pinch-zoom;
     user-select: none;
+    cursor: grab;
+  }
+  .orbit[data-dragging='true'] {
+    cursor: grabbing;
   }
   .orbit__arrival {
     position: absolute;
     inset: 0;
   }
+
+  /* SVG Orbital Tracks */
+  .orbit__tracks {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+    overflow: visible;
+  }
+  .orbit__corona {
+    pointer-events: none;
+  }
+  .orbit__track {
+    fill: none;
+    stroke: color-mix(in srgb, var(--ink) 9%, transparent);
+    stroke-width: 1.2px;
+    stroke-dasharray: 4 6;
+    opacity: 0.65;
+    transition:
+      stroke 260ms ease,
+      stroke-width 260ms ease,
+      opacity 260ms ease,
+      filter 260ms ease;
+  }
+  :global([data-theme='dark']) .orbit__track {
+    stroke: color-mix(in srgb, #ffffff 10%, transparent);
+  }
+
+  /* Highlight specific orbital track on hover/focus */
+  .orbit[data-hover-track='0'] .orbit__track--0,
+  .orbit[data-hover-track='1'] .orbit__track--1,
+  .orbit[data-hover-track='2'] .orbit__track--2,
+  .orbit[data-hover-track='3'] .orbit__track--3,
+  .orbit[data-hover-track='4'] .orbit__track--4,
+  .orbit[data-hover-track='5'] .orbit__track--5,
+  .orbit[data-hover-track='6'] .orbit__track--6 {
+    stroke: var(--active-track-color, var(--gold));
+    stroke-width: 2.2px;
+    stroke-dasharray: none;
+    opacity: 0.95;
+    filter: drop-shadow(0 0 5px var(--active-track-color, var(--gold)));
+  }
+
   .orbit__core {
     position: absolute;
     left: 50%;
     top: 47%;
-    width: 26%;
+    width: min(22%, 130px);
     aspect-ratio: 1;
     translate: -50% -50%;
     z-index: 10;
     border-radius: 50%;
+    pointer-events: none;
   }
   .orbit__sun {
     position: absolute;
@@ -135,9 +218,10 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
       #130f1d 98%
     );
     box-shadow:
-      inset 3px 3px 8px rgb(255 232 190 / 0.65),
+      inset 3px 3px 8px rgb(255 232 190 / 0.7),
       inset -6px -4px 14px #110a1b,
-      0 35px 40px -25px rgb(20 10 24 / 0.7);
+      0 0 35px rgb(240 192 78 / 0.18),
+      0 25px 35px -15px rgb(20 10 24 / 0.7);
   }
   .orbit__sun svg {
     position: absolute;
@@ -147,6 +231,7 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
     transform: rotate(-5deg);
     filter: drop-shadow(0 7px 3px rgb(37 10 27 / 0.4));
   }
+
   /* display:contents keeps planets and sun in a single depth-sorting context. */
   .orbit__planets {
     display: contents;
@@ -156,13 +241,16 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
     left: 50%;
     top: 47%;
     width: var(--planet-size);
+    height: var(--planet-size);
     min-width: 44px;
+    min-height: 44px;
     aspect-ratio: 1;
     margin: 0;
     border-radius: 50%;
     transform: translate(-50%, -50%);
     z-index: 12;
     touch-action: pan-y pinch-zoom;
+    cursor: pointer;
   }
   .planet__body {
     position: absolute;
@@ -178,9 +266,21 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
       color-mix(in srgb, var(--planet-color) 28%, #06040a) 95%
     );
     box-shadow:
-      inset -9px -10px 18px rgb(0 0 0 / 0.65),
+      inset -8px -9px 16px rgb(0 0 0 / 0.65),
       inset 2px 2px 5px rgb(255 255 255 / 0.5),
-      0 16px 20px -12px rgb(0 0 0 / 0.6);
+      0 12px 18px -8px rgb(0 0 0 / 0.55);
+    transition:
+      transform 240ms cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 240ms ease;
+  }
+  .planet:hover .planet__body,
+  .planet:focus-visible .planet__body {
+    box-shadow:
+      inset -6px -7px 14px rgb(0 0 0 / 0.5),
+      inset 2px 2px 7px rgb(255 255 255 / 0.7),
+      0 0 24px var(--planet-glow),
+      0 16px 22px -8px rgb(0 0 0 / 0.7);
+    transform: scale(1.08);
   }
   .planet__artwork {
     width: var(--artwork-size);
@@ -193,13 +293,14 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
   .planet__glyph {
     background: linear-gradient(165deg, var(--glyph-start) 12%, var(--glyph-end) 85%);
     mask: var(--glyph) center / contain no-repeat;
+    -webkit-mask: var(--glyph) center / contain no-repeat;
   }
   .planet__light {
     position: absolute;
     inset: 0;
     border-radius: 50%;
     background:
-      radial-gradient(ellipse at 28% 18%, rgb(255 255 255 / 0.3), transparent 25%),
+      radial-gradient(ellipse at 28% 18%, rgb(255 255 255 / 0.35), transparent 28%),
       linear-gradient(140deg, transparent 55%, rgb(6 7 19 / 0.4));
     pointer-events: none;
   }
@@ -207,31 +308,52 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
     position: absolute;
     inset: -3%;
     border-radius: 50%;
-    border: 1px solid color-mix(in srgb, var(--planet-color) 55%, #fff);
+    border: 1.5px solid color-mix(in srgb, var(--track-color) 60%, transparent);
     opacity: 0.5;
     pointer-events: none;
-  }
-  .planet__name {
-    position: absolute;
-    top: calc(100% + 10px);
-    left: 50%;
-    translate: -50% 0;
-    color: var(--muted);
-    font-size: clamp(10px, 1.1vw, 13px);
-    font-weight: 600;
-    white-space: nowrap;
-    padding: 2px 6px;
-    border-radius: 8px;
-    background: color-mix(in srgb, var(--paper) 85%, transparent);
-  }
-  .planet:hover .planet__name,
-  .planet:focus-visible .planet__name {
-    color: var(--ink);
+    transition:
+      opacity 220ms ease,
+      border-width 220ms ease,
+      box-shadow 220ms ease;
   }
   .planet:hover .planet__atmosphere,
   .planet:focus-visible .planet__atmosphere {
     opacity: 1;
     border-width: 2px;
+    box-shadow: 0 0 12px var(--planet-glow);
+  }
+
+  .planet__name {
+    position: absolute;
+    top: calc(100% + 7px);
+    left: 50%;
+    translate: -50% 0;
+    color: var(--muted);
+    font-size: clamp(10px, 1.1vw, 12px);
+    font-weight: 600;
+    white-space: nowrap;
+    padding: 2.5px 8px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--paper) 80%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid color-mix(in srgb, var(--ink) 9%, transparent);
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
+    pointer-events: none;
+    transition:
+      color 180ms ease,
+      border-color 180ms ease,
+      background-color 180ms ease,
+      transform 180ms ease,
+      box-shadow 180ms ease;
+  }
+  .planet:hover .planet__name,
+  .planet:focus-visible .planet__name {
+    color: var(--ink);
+    border-color: color-mix(in srgb, var(--track-color) 70%, transparent);
+    background: color-mix(in srgb, var(--paper) 95%, transparent);
+    transform: translateY(2px) scale(1.04);
+    box-shadow: 0 6px 16px rgb(0 0 0 / 0.25);
   }
   .planet:focus-visible {
     outline: 2px solid var(--focus);
@@ -239,35 +361,38 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
     z-index: 1000 !important;
     opacity: 1 !important;
   }
-  /* No-JS and reduced-motion visitors receive a composed, fully linked constellation. */
+
+  /* No-JS and reduced-motion fallback constellation:
+     Distinct distances to center, harmonious spacing, fully linked, zero overlap. */
   .planet--0 {
-    left: 20%;
-    top: 22%;
+    left: 36%;
+    top: 26%;
   }
   .planet--1 {
-    left: 72%;
-    top: 19%;
+    left: 65%;
+    top: 28%;
   }
   .planet--2 {
-    left: 85%;
-    top: 53%;
+    left: 78%;
+    top: 46%;
   }
   .planet--3 {
-    left: 65%;
-    top: 77%;
+    left: 68%;
+    top: 68%;
   }
   .planet--4 {
-    left: 30%;
-    top: 77%;
+    left: 32%;
+    top: 68%;
   }
   .planet--5 {
-    left: 12%;
-    top: 51%;
+    left: 18%;
+    top: 48%;
   }
   .planet--6 {
-    left: 46%;
-    top: 10%;
+    left: 50%;
+    top: 12%;
   }
+
   .orbit__dust {
     position: absolute;
     inset: 0;
@@ -283,6 +408,7 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
     background: var(--gold);
     opacity: 0.6;
   }
+
   @media (prefers-reduced-motion: no-preference) {
     :global(html:not([data-motion='off'])) .orbit__arrival {
       animation: universe-arrival 1400ms cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -319,25 +445,60 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
       }
     }
   }
+
   .orbit:not([data-running='true']) * {
     animation-play-state: paused;
   }
+
   @media (max-width: 560px) {
     .orbit__core {
-      width: 28%;
+      width: min(24%, 90px);
     }
     .planet {
-      width: 12%;
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      min-height: 44px;
     }
     .planet__name {
-      font-size: 9px;
-      top: calc(100% + 7px);
+      font-size: 9.5px;
+      padding: 2px 6px;
+      top: calc(100% + 5px);
+    }
+    .planet--0 {
+      left: 35%;
+      top: 25%;
+    }
+    .planet--1 {
+      left: 66%;
+      top: 27%;
+    }
+    .planet--2 {
+      left: 80%;
+      top: 47%;
+    }
+    .planet--3 {
+      left: 69%;
+      top: 71%;
+    }
+    .planet--4 {
+      left: 31%;
+      top: 71%;
+    }
+    .planet--5 {
+      left: 17%;
+      top: 47%;
+    }
+    .planet--6 {
+      left: 50%;
+      top: 11%;
     }
   }
+
   @media (max-height: 500px) and (min-width: 480px) {
     .planet__name {
       font-size: 9px;
-      top: calc(100% + 5px);
+      top: calc(100% + 4px);
     }
   }
 </style>

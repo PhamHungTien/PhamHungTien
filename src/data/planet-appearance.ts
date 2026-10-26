@@ -8,6 +8,8 @@ export const planetAppearance = {
     glyphStart: 'color(display-p3 0.81111 0.89934 0.69635)',
     glyphEnd: 'color(display-p3 0.96783 0.84574 0.00000)',
     artworkSize: 78,
+    glow: 'rgba(230, 57, 70, 0.65)',
+    track: '#e63946',
   },
   vtts: {
     base: 'color(display-p3 0.35866 0.10420 0.71316)',
@@ -15,6 +17,8 @@ export const planetAppearance = {
     glyphStart: 'color(srgb 1 1 1)',
     glyphEnd: 'color(srgb 1 0.85 0.1)',
     artworkSize: 64,
+    glow: 'rgba(138, 79, 255, 0.65)',
+    track: '#8a4fff',
   },
   padcodeai: {
     base: 'color(display-p3 0.29754 0.00576 0.00852)',
@@ -22,6 +26,8 @@ export const planetAppearance = {
     glyphStart: 'color(display-p3 0.89407 0.89042 0.77225)',
     glyphEnd: 'color(display-p3 0.96783 0.88654 0.00187)',
     artworkSize: 54,
+    glow: 'rgba(235, 94, 85, 0.65)',
+    track: '#eb5e55',
   },
   padnotesai: {
     base: 'color(display-p3 0.29754 0.00576 0.00852)',
@@ -29,6 +35,8 @@ export const planetAppearance = {
     glyphStart: 'color(display-p3 1.00000 0.96818 0.99679)',
     glyphEnd: 'color(display-p3 0.96783 0.85642 0.22502)',
     artworkSize: 62,
+    glow: 'rgba(247, 143, 179, 0.65)',
+    track: '#f78fb3',
   },
   mynasmanager: {
     base: 'color(display-p3 0.29754 0.00576 0.00852)',
@@ -36,6 +44,8 @@ export const planetAppearance = {
     glyphStart: 'color(srgb 0.99942 0.98555 0.00000)',
     glyphEnd: 'color(srgb 1.00000 1.00000 1.00000)',
     artworkSize: 61,
+    glow: 'rgba(56, 173, 240, 0.65)',
+    track: '#38adf0',
   },
   lunarv: {
     base: 'color(display-p3 0.29754 0.00576 0.00852)',
@@ -43,6 +53,8 @@ export const planetAppearance = {
     glyphStart: 'color(srgb 1.00000 1.00000 1.00000)',
     glyphEnd: 'color(srgb 0.99942 0.98555 0.00000)',
     artworkSize: 61,
+    glow: 'rgba(245, 176, 65, 0.65)',
+    track: '#f5b041',
   },
   lunarblock: {
     base: 'color(display-p3 0.00000 0.00830 0.03938)',
@@ -50,8 +62,18 @@ export const planetAppearance = {
     glyphStart: 'color(srgb 1 1 1)',
     glyphEnd: 'color(srgb 1 0.85 0.1)',
     artworkSize: 70,
+    glow: 'rgba(84, 160, 255, 0.65)',
+    track: '#54a0ff',
   },
 } satisfies Record<
   AppSlug,
-  { base: string; pole: string; glyphStart: string; glyphEnd: string; artworkSize: number }
+  {
+    base: string;
+    pole: string;
+    glyphStart: string;
+    glyphEnd: string;
+    artworkSize: number;
+    glow: string;
+    track: string;
+  }
 >;
