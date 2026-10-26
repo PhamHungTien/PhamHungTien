@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import { ArrowDown } from '@lucide/astro';
 import BrandIcon from '../ui/BrandIcon.astro';
+import OrbitScene from './OrbitScene.astro';
 import type { Locale as Lang } from '../../i18n/locales';
 import { apps } from '../../data/apps';
 import { SITE } from '../../data/site';
@@ -16,34 +17,49 @@ const { lang } = Astro.props;
 ---
 
 <section class="hero container" aria-labelledby="hero-title">
-  <h1 id="hero-title">{t(lang, 'home.headline')}</h1>
-  <p class="hero__lead">{t(lang, 'home.lead')}</p>
-  <div class="hero__actions">
-    <a class="button button--primary" href="#apps">
-      {t(lang, 'home.cta')}
-      <ArrowDown size={18} aria-hidden="true" />
-    </a>
-    <a
-      class="button button--secondary"
-      href={SITE.github}
-      target="_blank"
-      rel="noopener noreferrer me"
-    >
-      <BrandIcon name="github" />
-      GitHub
-    </a>
-    <a
-      class="button button--secondary"
-      href={SITE.youtube}
-      target="_blank"
-      rel="noopener noreferrer me"
-    >
-      <BrandIcon name="youtube" />
-      YouTube
-    </a>
+  <div class="hero__intro">
+    <div class="hero__copy">
+      <p class="hero__eyebrow">
+        <span></span> PHẠM HÙNG TIẾN <span class="hero__eyebrow-divider">/</span>{' '}
+        {lang === 'vi'
+          ? 'NHÀ PHÁT TRIỂN ĐỘC LẬP'
+          : lang === 'fr'
+            ? 'DÉVELOPPEUR INDÉPENDANT'
+            : lang === 'ja'
+              ? '個人開発者'
+              : 'INDEPENDENT DEVELOPER'}
+      </p>
+      <h1 id="hero-title">{t(lang, 'home.headline')}</h1>
+      <p class="hero__lead">{t(lang, 'home.lead')}</p>
+      <div class="hero__actions">
+        <a class="button button--primary" href="#apps">
+          {t(lang, 'home.cta')}
+          <ArrowDown size={18} aria-hidden="true" />
+        </a>
+        <a
+          class="button button--secondary"
+          href={SITE.github}
+          target="_blank"
+          rel="noopener noreferrer me"
+        >
+          <BrandIcon name="github" />
+          GitHub
+        </a>
+        <a
+          class="button button--secondary"
+          href={SITE.youtube}
+          target="_blank"
+          rel="noopener noreferrer me"
+        >
+          <BrandIcon name="youtube" />
+          YouTube
+        </a>
+      </div>
+    </div>
+    <OrbitScene />
   </div>
 
-  <!-- The one expressive element on the page: every real app icon, shelved and linked. -->
+  <!-- Every real app remains directly accessible by keyboard and touch. -->
   <ul class="dock" role="list" aria-label={t(lang, 'home.dock')}>
     {apps.map((app, index) => (
       <li style={`--i: ${index}`}>
@@ -60,7 +76,48 @@ const { lang } = Astro.props;
   .hero {
     position: relative;
     isolation: isolate;
-    padding-top: clamp(56px, 10vw, 128px);
+    padding-top: clamp(40px, 6vw, 80px);
+  }
+
+  .hero__intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(32px, 5vw, 72px);
+  }
+  .hero__copy {
+    position: relative;
+    z-index: 1;
+  }
+  .hero__eyebrow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 24px;
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+  }
+  .hero__eyebrow > span:first-child {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--brand);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand) 10%, transparent);
+  }
+  .hero__eyebrow-divider {
+    color: var(--line-strong);
+  }
+  @media (max-width: 900px) {
+    .hero__intro {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .hero__intro > :global(.orbit) {
+      width: min(480px, 90%);
+      margin-inline: auto;
+    }
   }
 
   /* A soft maroon-and-gold glow behind the headline. Gradients only (no blur filter),
@@ -93,7 +150,7 @@ const { lang } = Astro.props;
   h1 {
     padding-block: 0.06em;
     max-width: 16ch;
-    font-size: clamp(40px, 6vw, 80px);
+    font-size: clamp(40px, 5.2vw, 70px);
     font-weight: 700;
     line-height: 1.12;
     text-wrap: balance;
@@ -119,7 +176,7 @@ const { lang } = Astro.props;
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
     gap: clamp(8px, 2vw, 28px);
-    margin-top: clamp(56px, 8vw, 96px);
+    margin-top: clamp(40px, 6vw, 72px);
     padding: clamp(20px, 3vw, 32px) clamp(16px, 3vw, 40px) clamp(16px, 2vw, 24px);
     border: 1px solid var(--line);
     border-radius: 32px;
