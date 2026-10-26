@@ -3,13 +3,12 @@ import { apps, defaultLangOf } from '../data/apps';
 import { type Locale } from '../i18n/locales';
 import { type Lang } from '../data/types';
 import appStore from '../data/appstore.json';
-import { appPath, homePath, legalPath } from '../lib/routes';
+import { appPath, homePath } from '../lib/routes';
 import { absolute, ogImage } from '../lib/seo';
 import { getGuides, guideLang, GUIDES_PATH, guidePath } from '../lib/guides';
-import { sitePrivacyPath } from '../lib/sitePages';
 
 /**
- * One <url> per page, each listing every language version (hreflang) so search
+ * One <url> per indexable page, each listing every language version (hreflang) so search
  * engines understand /vTTS/ and /vi/vTTS/ are translations, not duplicates.
  */
 interface Entry {
@@ -51,12 +50,8 @@ export const GET: APIRoute = async () => {
       lastmod: g.data.updated ?? g.data.published,
       image: { loc: ogImage(`guide-${g.id}`), title: g.data.title },
     })),
-    { versions: [{ lang: 'en', path: sitePrivacyPath('en') }] },
-    ...apps.flatMap((app) =>
-      (['privacy', 'terms'] as const).map((kind) => ({
-        versions: [{ lang: defaultLangOf(app), path: legalPath(app, kind) }],
-      })),
-    ),
+    // Privacy policies and terms stay public (and linked) but are noindex: they are not
+    // listed here, so crawlers spend their time on the apps and guides.
   ];
 
   const urls = entries.flatMap(({ versions, lastmod, image }) =>

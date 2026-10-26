@@ -115,8 +115,12 @@ const sitemap = await readFile(join(outDir, 'sitemap.xml'), 'utf8');
 const listed = new Set(
   [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(([, loc]) => new URL(loc).pathname),
 );
-for (const path of pages.keys())
-  if (path !== '/404.html' && !listed.has(path)) fail('sitemap.xml', `missing ${path}`);
+const noindex = (html) => /<meta name="robots" content="noindex/.test(html);
+for (const [path, html] of pages) {
+  if (noindex(html)) {
+    if (listed.has(path)) fail('sitemap.xml', `lists noindex page ${path}`);
+  } else if (!listed.has(path)) fail('sitemap.xml', `missing ${path}`);
+}
 for (const path of listed) if (!pages.has(path)) fail('sitemap.xml', `lists missing page ${path}`);
 
 const robots = await readFile(join(outDir, 'robots.txt'), 'utf8');
