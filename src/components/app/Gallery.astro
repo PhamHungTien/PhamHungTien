@@ -24,7 +24,15 @@ const images = await Promise.all(
   aria-labelledby="gallery-heading"
 >
   <div class="section-head">
-    <h2 id="gallery-heading">{t(lang, 'app.screenshots')}</h2>
+    <div>
+      <span class="section-kicker">{lang === 'vi' ? 'Bên trong ứng dụng' : 'Inside the app'}</span>
+      <h2 id="gallery-heading">{t(lang, 'app.screenshots')}</h2>
+      <p>
+        {lang === 'vi'
+          ? 'Vuốt để xem thêm. Chọn ảnh để phóng to.'
+          : 'Scroll to explore. Select an image for a closer look.'}
+      </p>
+    </div>
   </div>
   <ul class="gallery__strip" role="list" data-reveal-stagger>
     {images.map((image) => (

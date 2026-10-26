@@ -15,7 +15,12 @@ const { app, lang } = Astro.props;
 
 <section class="features container section" id="features" aria-labelledby="features-heading">
   <div class="section-head">
-    <h2 id="features-heading">{t(lang, 'app.features')}</h2>
+    <div>
+      <span class="section-kicker">
+        {lang === 'vi' ? 'Thiết kế cho công việc hằng ngày' : 'Made for everyday use'}
+      </span>
+      <h2 id="features-heading">{t(lang, 'app.features')}</h2>
+    </div>
   </div>
   <div class="features__layout">
     <ul class="feature-grid" role="list" data-reveal-stagger>
@@ -64,7 +69,7 @@ const { app, lang } = Astro.props;
     display: grid;
     grid-template-columns: minmax(0, 1fr) 340px;
     align-items: start;
-    gap: clamp(32px, 5vw, 64px);
+    gap: 24px;
   }
 
   .feature-grid {
@@ -81,10 +86,26 @@ const { app, lang } = Astro.props;
   }
 
   .feature-number {
-    display: block;
-    margin-bottom: 30px;
+    margin-bottom: 24px;
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--app, var(--brand)) 8%, var(--surface-2));
     font: 13px var(--font-mono);
     color: color-mix(in srgb, var(--app, var(--brand)) 65%, var(--ink));
+  }
+  .feature-grid li:first-child {
+    grid-column: 1 / -1;
+    background: linear-gradient(
+      120deg,
+      color-mix(in srgb, var(--app, var(--brand)) 7%, var(--surface)),
+      var(--surface)
+    );
+  }
+  .feature-grid li:first-child h3 {
+    font-size: 22px;
   }
   .feature-grid h3 {
     font-size: 17px;
@@ -106,7 +127,7 @@ const { app, lang } = Astro.props;
     padding: 28px;
     border: 1px solid var(--line);
     border-radius: var(--r-card);
-    background: var(--surface);
+    background: var(--surface-2);
   }
 
   .support h3 {
@@ -126,7 +147,8 @@ const { app, lang } = Astro.props;
 
   .support__legal {
     display: flex;
-    gap: 20px;
+    gap: 12px 20px;
+    flex-wrap: wrap;
     margin-top: 8px;
     padding-top: 16px;
     border-top: 1px solid var(--line);

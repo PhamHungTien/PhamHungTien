@@ -118,3 +118,17 @@ limited by both the container and remaining viewport height, reserving space for
 Portrait phones use a square scene; desktop and short landscape screens use 3:2. Short
 landscape screens keep actions in one row and omit the decorative hint to avoid collisions.
 The app directory starts below the initial viewport. `svh` avoids browser-toolbar resize jumps.
+
+### Collection and product pages
+
+The directory separates its title from the full-width filter/search toolbar. App cards
+share preview proportions, readable descriptions and an aligned Explore app footer.
+Resource cards align their reading metadata and fit narrow screens without a 300 px minimum.
+Shared section kickers connect the collection, guides, features, gallery and FAQ visually.
+
+Product heroes show supported platforms from app data, balance heading line breaks and
+label the image enlargement action. Facts use a single rounded panel; the first feature
+gets more visual emphasis. FAQ uses a two-column editorial layout on desktop and stacks
+on mobile. The gallery explains scrolling/enlargement. Decorative hero rings are omitted
+on stacked layouts to keep text clear. These components serve all seven apps, preserving
+Vietnamese PHTV content and English on other product pages.

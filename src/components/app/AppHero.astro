@@ -5,7 +5,7 @@ import BrandIcon from '../ui/BrandIcon.astro';
 import type { App, Lang } from '../../data/types';
 import { t } from '../../lib/i18n';
 import { homePath, legalPath } from '../../lib/routes';
-import { storesOf } from '../../data/platforms';
+import { storesOf, platformGroupsOf } from '../../data/platforms';
 
 interface Props {
   app: App;
@@ -76,6 +76,14 @@ const secondary = app.links.source
       </div>
     </div>
 
+    <div
+      class="app-hero__platforms"
+      aria-label={lang === 'vi' ? 'Nền tảng hỗ trợ' : 'Available platforms'}
+    >
+      {platformGroupsOf(app.platforms).map((group) => (
+        <span>{group.label}</span>
+      ))}
+    </div>
     <h1 id="app-title">{app.title[lang]}</h1>
     <p class="app-hero__subtitle">{app.subtitle[lang]}</p>
 
@@ -115,7 +123,7 @@ const secondary = app.links.source
     type="button"
     class="app-hero__media"
     data-tilt
-    data-tilt-strength="10"
+    data-tilt-strength="5"
     data-spotlight
     data-lightbox-src={large.src}
     data-lightbox-alt={heroAlt}
@@ -130,6 +138,9 @@ const secondary = app.links.source
       loading="eager"
       fetchpriority="high"
     />
+    <span class="app-hero__caption">
+      {lang === 'vi' ? 'Khám phá giao diện · Nhấn để phóng to' : 'A closer look · Click to enlarge'}
+    </span>
   </button>
 </section>
 
@@ -219,13 +230,34 @@ const secondary = app.links.source
   }
 
   h1 {
-    margin-top: 28px;
-    font-size: clamp(36px, 5vw, 60px);
+    margin-top: 20px;
+    font-size: clamp(34px, 4.4vw, 56px);
+    text-wrap: balance;
     font-weight: 700;
     line-height: 1.08;
     letter-spacing: -0.035em;
   }
 
+  .app-hero__platforms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 24px;
+  }
+  .app-hero__platforms span {
+    padding: 5px 10px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--muted);
+    font-size: 12px;
+    background: var(--surface);
+  }
+  .app-hero__caption {
+    margin-top: 16px;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.5;
+  }
   .app-hero__subtitle {
     max-width: 32em;
     margin-top: 18px;
@@ -278,6 +310,12 @@ const secondary = app.links.source
   }
 
   @media (max-width: 960px) {
+    .app-hero::before {
+      inset: 45% -10% -40px;
+    }
+    .app-hero::after {
+      display: none;
+    }
     .app-hero {
       grid-template-columns: minmax(0, 1fr);
     }
@@ -298,6 +336,26 @@ const secondary = app.links.source
       animation: app-hero-in 860ms var(--ease) both;
     }
 
+    .app-hero__platforms {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 24px;
+    }
+    .app-hero__platforms span {
+      padding: 5px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 12px;
+      background: var(--surface);
+    }
+    .app-hero__caption {
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
     .app-hero__subtitle {
       animation-delay: 80ms;
     }
