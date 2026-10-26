@@ -6,6 +6,7 @@ import { GUIDES_PATH } from '../../lib/guides';
 
 interface Props {
   guides: Guide[];
+  lang?: 'en' | 'vi';
   title: string;
   lead?: string;
   allLabel?: string;
@@ -13,7 +14,15 @@ interface Props {
   headingLevel?: 'h1' | 'h2';
 }
 
-const { guides, title, lead, allLabel, id = 'guides', headingLevel = 'h2' } = Astro.props;
+const {
+  guides,
+  title,
+  lead,
+  allLabel,
+  lang = 'en',
+  id = 'guides',
+  headingLevel = 'h2',
+} = Astro.props;
 const Heading = headingLevel;
 ---
 
@@ -34,7 +43,7 @@ const Heading = headingLevel;
   <ul class="guides__grid" role="list" data-reveal-stagger>
     {guides.map((guide) => (
       <li>
-        <GuideCard guide={guide} />
+        <GuideCard guide={guide} lang={lang} />
       </li>
     ))}
   </ul>

@@ -56,22 +56,21 @@ scripts/                  Build, verification and content tools (Node)
 
 ## Routes and languages
 
-Each page exists in English and Vietnamese. A page's **default language** lives at its
-historical URL; the other language is served under a `/<lang>/` prefix.
+The public website is English, except Vietnamese-first PHTV and its tutorials.
+Each destination has one canonical URL. See [LANGUAGES.md](LANGUAGES.md).
 
-| URL                         | Page                                   |
-| --------------------------- | -------------------------------------- |
-| `/`, `/vi/`                 | Home                                   |
-| `/vTTS/`, `/vi/vTTS/`       | App page (English default)             |
-| `/PHTV/`, `/en/PHTV/`       | App page (PHTV defaults to Vietnamese) |
-| `/vTTS/privacy.html`        | Legal document (`terms.html` likewise) |
-| `/en/PHTV/privacy.html`     | Translated legal document              |
-| `/sitemap.xml`, `/404.html` | Sitemap with hreflang, error page      |
+| URL                                        | Content                                       |
+| ------------------------------------------ | --------------------------------------------- |
+| `/`                                        | English home                                  |
+| `/vTTS/`                                   | English app page                              |
+| `/PHTV/`                                   | Vietnamese-first PHTV                         |
+| `/<App>/privacy.html`, `/<App>/terms.html` | App legal documents                           |
+| `/guides/`                                 | English guide index                           |
+| `/guides/<slug>/`                          | English articles or Vietnamese PHTV tutorials |
+| `/sitemap.xml`, `/404.html`                | Canonical sitemap and error page              |
 
-`src/lib/routes.ts` is the only place that builds these paths. Every page declares its
-alternates with `hreflang`, and the language switch in the header links to them. App
-Store listings link to the `privacy.html` URLs, so their shape must not change
-(`build.format: 'preserve'`).
+Old locale-prefixed pages and `/huong-dan/` URLs are static redirect documents.
+`LegacyRedirect.astro` retains search parameters and fragments when JavaScript is enabled.
 
 ## Adding or changing an app
 
@@ -108,7 +107,7 @@ links and images, and that the sitemap lists exactly the indexable pages.
 - `Person`, `WebSite`, `ProfilePage`, `SoftwareApplication`, `BreadcrumbList` and
   `FAQPage` structured data, built only from facts that are visible on the page or in
   the App Store snapshot. Never add unverified ratings or prices.
-- Sitemap with `hreflang` alternates and App Store release dates as `lastmod`.
+- Sitemap with canonical pages and App Store release dates as `lastmod`.
 - Speculation rules prerender a same-site page when a visitor shows intent to open it,
   and cross-document view transitions animate app icons between pages.
 

@@ -1,6 +1,8 @@
 ---
 title: Cách gõ tiếng Việt trên Mac với PHTV (hướng dẫn đầy đủ)
 description: Cài PHTV bằng Homebrew hoặc file DMG, đi qua trình thiết lập 6 bước, cấp quyền nhập liệu và bắt đầu gõ Telex trên macOS. Có video và ảnh từng bước.
+titleEn: 'Get started with Vietnamese typing on Mac'
+descriptionEn: 'Install PHTV, grant the required permissions and set up your preferred input method. Full tutorial in Vietnamese.'
 published: 2026-10-15
 app: phtv
 youtubeId: VaE4dZncBRs

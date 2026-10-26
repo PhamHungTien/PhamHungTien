@@ -1,4 +1,4 @@
-import { LOCALES, type Locale } from '../i18n/locales';
+import { type Locale } from '../i18n/locales';
 import type { App, Lang } from '../data/types';
 import { SITE } from '../data/site';
 import { apps } from '../data/apps';
@@ -72,7 +72,7 @@ const websiteSchema = (lang: Locale) => ({
   name: SITE.name,
   alternateName: SITE.asciiName,
   publisher: { '@id': PERSON_ID },
-  inLanguage: LOCALES,
+  inLanguage: ['en', 'vi'],
   description: t(lang, 'meta.home.description'),
 });
 

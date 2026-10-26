@@ -1,6 +1,8 @@
 ---
 title: 'Sửa lỗi gõ tiếng Việt trên Mac: lặp chữ, mất dấu, không gõ được'
 description: Cách khắc phục các lỗi gõ tiếng Việt thường gặp trên macOS như lặp chữ, mất dấu trong Chrome, không gõ được sau khi cập nhật, lỗi trong Terminal, VS Code và Excel.
+titleEn: 'Fix Vietnamese typing problems on Mac'
+descriptionEn: 'Troubleshoot repeated letters, missing accents and input conflicts with PHTV. Tutorial in Vietnamese.'
 published: 2026-10-15
 app: phtv
 topic: Khắc phục sự cố

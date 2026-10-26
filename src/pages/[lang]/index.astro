@@ -1,9 +1,8 @@
 ---
-import HomePage from '../../components/home/HomePage.astro';
+import LegacyRedirect from '../../components/site/LegacyRedirect.astro';
 export function getStaticPaths() {
-  return (['fr', 'ja'] as const).map((lang) => ({ params: { lang }, props: { lang } }));
+  return ['en', 'fr', 'ja'].map((lang) => ({ params: { lang } }));
 }
-const { lang } = Astro.props;
 ---
 
-<HomePage lang={lang} />
+<LegacyRedirect to="/" />

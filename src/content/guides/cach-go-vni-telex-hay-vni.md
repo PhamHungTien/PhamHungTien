@@ -1,6 +1,8 @@
 ---
 title: Cách gõ VNI và nên chọn Telex hay VNI?
 description: Bảng gõ VNI đầy đủ với các phím số từ 1 đến 9, ví dụ cho các từ khó, so sánh ưu nhược điểm của VNI và Telex để chọn kiểu gõ tiếng Việt hợp với bạn.
+titleEn: 'VNI or Telex: choose your typing method'
+descriptionEn: 'Compare the two Vietnamese typing methods and learn VNI letter and tone shortcuts. PHTV tutorial in Vietnamese.'
 published: 2026-10-15
 app: phtv
 topic: Kiến thức

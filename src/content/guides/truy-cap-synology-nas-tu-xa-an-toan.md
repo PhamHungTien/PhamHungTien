@@ -1,115 +1,103 @@
 ---
-title: 'Truy cập Synology NAS từ xa an toàn và quản lý bằng iPhone, iPad, Mac'
-description: So sánh QuickConnect, DDNS mở cổng và VPN để vào Synology NAS khi ở ngoài nhà, các bước bảo mật cần làm trước, rồi kết nối và giám sát NAS bằng My NAS Manager.
+title: Access your Synology NAS remotely with iPhone, iPad and Mac
+description: Compare QuickConnect, DDNS and VPN access for a Synology NAS, prepare your security settings and connect with My NAS Manager on iPhone, iPad and Mac.
 published: 2026-10-15
 app: mynasmanager
 topic: My NAS Manager
 ---
 
-Có một chiếc Synology NAS ở nhà thì tiện thật: ảnh gia đình, tài liệu, phim đều ở một chỗ. Nhưng câu hỏi tiếp theo luôn là: **làm sao vào được NAS khi đang ở ngoài**, mà không biến nó thành mục tiêu cho kẻ xấu trên Internet? Bài này so sánh các cách truy cập từ xa, liệt kê những việc bảo mật nên làm trước, rồi hướng dẫn kết nối và theo dõi NAS bằng [My NAS Manager](/MyNASManager/) trên iPhone, iPad và Mac.
+A Synology NAS keeps family photos, documents and media in one place. Accessing it away from home requires a connection method that also protects those files. This guide compares remote-access options, explains the security settings to review and shows how to connect with [My NAS Manager](/MyNASManager/) on iPhone, iPad and Mac.
 
-## Trước hết: NAS của bạn nhận kết nối ở đâu?
+## Where does your NAS accept connections?
 
-Trong mạng nhà, bạn vào DSM (hệ điều hành của Synology) bằng địa chỉ IP nội bộ, ví dụ `192.168.1.10`, với hai cổng mặc định:
+At home, you connect to DSM, Synology's operating system, using a private IP address such as `192.168.1.10`. Its default management ports are:
 
-- **5000** cho HTTP (không mã hóa);
-- **5001** cho HTTPS (có mã hóa).
+- **5000:** HTTP, without encryption.
+- **5001:** HTTPS, with encryption.
 
-Khi ra khỏi nhà, địa chỉ `192.168.x.x` không còn dùng được nữa vì đó là địa chỉ trong mạng riêng. Bạn cần một trong ba cách dưới đây.
+A private `192.168.x.x` address is not reachable directly from the public internet. Away from home, you need a remote-access method.
 
-## Ba cách truy cập NAS từ xa
+## Three ways to connect remotely
 
-### 1. QuickConnect: dễ nhất
+### QuickConnect
 
-QuickConnect là dịch vụ của Synology. Bạn đặt một **QuickConnect ID**, rồi vào NAS qua địa chỉ dạng `quickconnect.to/ten-cua-ban`. Synology tự tìm đường đến NAS, kể cả khi bạn không mở cổng trên router. Khi không kết nối thẳng được, dữ liệu đi vòng qua máy chủ trung gian (relay) của Synology.
+Synology's QuickConnect service uses an ID and an address such as `quickconnect.to/your-name`. It finds a route to the NAS without requiring manual router port forwarding. When a direct connection is unavailable, traffic may pass through Synology's relay servers.
 
-- **Ưu điểm:** không cần cấu hình router, không cần IP tĩnh.
-- **Nhược điểm:** qua relay thì chậm, không hợp để chép file lớn. Ứng dụng bên thứ ba thường không dùng được QuickConnect ID trực tiếp.
+- **Advantages:** straightforward setup, no fixed public IP required.
+- **Tradeoffs:** relayed transfers can be slower, especially for large files. Third-party apps may not accept a QuickConnect ID directly.
 
-### 2. DDNS và mở cổng: nhanh, nhưng phải cẩn thận
+### DDNS and port forwarding
 
-Phần lớn mạng gia đình ở Việt Nam có **IP động**, nghĩa là địa chỉ IP công cộng thay đổi theo thời gian. **DDNS** (Dynamic DNS) gắn một tên miền cố định, ví dụ `tennas.synology.me`, với IP hiện tại của nhà bạn và tự cập nhật khi IP đổi. Synology cung cấp miễn phí tên miền `synology.me` trong **Bảng điều khiển › Truy cập ngoài › DDNS**.
+A home connection may have a changing public IP address. **Dynamic DNS (DDNS)** maps a hostname, such as `your-nas.synology.me`, to that address and updates the record when it changes. In DSM, configure DDNS under **Control Panel › External Access › DDNS**.
 
-Sau đó bạn **chuyển tiếp cổng** (port forwarding) trên router: cho cổng 5001 từ Internet đi vào NAS.
+With port forwarding, a router sends incoming connections on a chosen public port to the NAS. Forwarding HTTPS port 5001 exposes the DSM service to the internet.
 
-- **Ưu điểm:** kết nối trực tiếp, tốc độ tối đa theo đường truyền nhà bạn.
-- **Nhược điểm:** NAS lộ ra Internet. Bất kỳ ai cũng có thể thử đăng nhập, nên bắt buộc phải làm đủ các bước bảo mật ở phần sau.
-- **Lưu ý:** nếu nhà mạng dùng **CGNAT** (bạn không có IP công cộng riêng), mở cổng sẽ không có tác dụng. Hãy kiểm tra IP WAN trên router có trùng với IP mà các trang "what is my IP" báo không.
+- **Advantages:** a direct connection, limited by your network speeds.
+- **Tradeoffs:** the exposed service receives connection and login attempts from the internet. Keep DSM patched and configure the protections below.
+- **CGNAT:** if your ISP uses carrier-grade NAT, ordinary port forwarding may not work. Compare the router's WAN address with your public IP, and check with your ISP when uncertain.
 
-### 3. VPN: an toàn nhất
+### VPN access
 
-Với VPN, điện thoại của bạn "vào" mạng nhà qua một đường hầm mã hóa, rồi truy cập NAS bằng IP nội bộ như đang ở nhà. NAS **không cần lộ cổng DSM ra Internet**.
+A VPN provides a private route to the NAS without exposing the DSM port publicly.
 
-- **Tailscale:** cài gói Tailscale từ Trung tâm gói trên NAS và ứng dụng Tailscale trên iPhone, iPad, Mac. Không cần mở cổng, hoạt động được cả khi nhà mạng dùng CGNAT. Đây là lựa chọn dễ nhất cho gia đình.
-- **VPN Server của Synology:** gói chính thức, hỗ trợ OpenVPN và L2TP/IPSec. Cần mở một cổng cho VPN, nhưng chỉ một cổng đó.
-- Nhiều router đời mới cũng có sẵn máy chủ WireGuard hoặc OpenVPN.
+- **Tailscale:** install it on the NAS and your Apple devices, then connect using the NAS's Tailscale address. Reaching its ordinary home-network IP requires subnet routing. Tailscale can work through CGNAT without manually forwarding a DSM port.
+- **Synology VPN Server:** offers VPN services such as OpenVPN. The chosen VPN service needs its own network configuration and, where applicable, a forwarded port.
+- Some routers can host **WireGuard** or **OpenVPN**, providing access to the home network.
 
-### Nên chọn cách nào?
+| Your needs                                          | Option to consider                             |
+| --------------------------------------------------- | ---------------------------------------------- |
+| Occasional access to photos or documents            | QuickConnect and compatible Synology apps      |
+| NAS management, file transfers and third-party apps | A VPN or Tailscale connection                  |
+| Direct access without a VPN                         | DDNS and carefully restricted HTTPS forwarding |
 
-| Nhu cầu                                              | Gợi ý                                              |
-| ---------------------------------------------------- | -------------------------------------------------- |
-| Thỉnh thoảng xem ảnh, mở vài tài liệu                | QuickConnect hoặc ứng dụng chính thức của Synology |
-| Quản lý NAS, chép file lớn, dùng ứng dụng bên thứ ba | VPN (Tailscale), rồi kết nối bằng IP nội bộ        |
-| Cần truy cập trực tiếp không qua VPN                 | DDNS + mở cổng 5001, kèm đủ các bước bảo mật       |
+A private VPN connection reduces the need to expose management services. Configure access rules so only the intended users and devices can reach the NAS. For setup details, see the [official Tailscale Synology guide](https://tailscale.com/docs/integrations/synology).
 
-Nếu không chắc, hãy chọn **VPN**. Đó là cách vừa nhanh vừa không để NAS lộ ra ngoài.
+## Secure the NAS before enabling remote access
 
-## Bảo mật NAS trước khi cho truy cập từ xa
+1. **Disable the default `admin` account** after creating and verifying another administrator account.
+2. Use **long, unique passwords**.
+3. Enable **two-factor authentication (2FA)** on administrator accounts.
+4. Enable **Auto Block** in DSM security settings to limit repeated failed login attempts.
+5. Use **HTTPS**. For a public hostname, configure a trusted certificate, such as a Let's Encrypt certificate, under **Control Panel › Security › Certificate**.
+6. Expose only the ports you need. Avoid exposing SSH directly; review automatic port mappings and UPnP settings on the router.
+7. Keep **DSM and installed packages updated**.
+8. Maintain **a separate backup**. RAID protects against certain disk failures but does not replace a backup. Use snapshots where supported and keep another copy on an external drive or backup service.
 
-NAS bị mã độc tống tiền (ransomware) mã hóa toàn bộ dữ liệu là chuyện đã xảy ra nhiều lần trên thế giới, và gần như luôn bắt đầu từ một NAS lộ ra Internet với mật khẩu yếu. Hãy làm đủ những việc sau, đặc biệt nếu dùng cách mở cổng:
+## Connect with My NAS Manager
 
-1. **Không dùng tài khoản `admin` mặc định.** Tạo tài khoản quản trị riêng với tên khác và tắt `admin`. Kẻ tấn công luôn thử `admin` đầu tiên.
-2. **Mật khẩu dài và riêng**, không dùng lại ở dịch vụ khác.
-3. **Bật xác minh hai bước (2FA)** cho mọi tài khoản quản trị. Khi đăng nhập, ngoài mật khẩu còn cần mã OTP từ ứng dụng xác thực trên điện thoại.
-4. **Bật Tự động chặn (Auto Block)** trong Bảng điều khiển › Bảo mật, để chặn IP đăng nhập sai nhiều lần.
-5. **Chỉ dùng HTTPS (cổng 5001)** khi truy cập từ xa. Xin chứng chỉ **Let's Encrypt** miễn phí cho tên miền DDNS trong Bảng điều khiển › Bảo mật › Chứng chỉ.
-6. **Chỉ mở đúng cổng cần thiết.** Không mở cổng SSH (22) ra Internet. Tắt UPnP trên router để thiết bị không tự mở cổng.
-7. **Cập nhật DSM và các gói** thường xuyên.
-8. **Có bản sao lưu ở nơi khác.** RAID giúp chống hỏng ổ cứng, nhưng **không phải là sao lưu**: xóa nhầm hay bị mã hóa thì RAID cũng mất theo. Bật Snapshot (nếu ổ dùng Btrfs) và sao lưu ra ổ ngoài hoặc dịch vụ đám mây.
+My NAS Manager manages Synology devices running **DSM 7 or later** from iPhone, iPad and Mac. It provides resource monitoring, file browsing, package management and SSH controls.
 
-## Kết nối NAS bằng My NAS Manager
+### Try Demo Mode
 
-My NAS Manager là ứng dụng mình làm để quản lý Synology NAS (DSM 7 trở lên) trên iPhone, iPad và Mac: xem tài nguyên theo thời gian thực, duyệt file, quản lý gói và bật tắt SSH.
+Choose **Demo Mode** on the sign-in screen to explore the interface with simulated data before entering real NAS credentials.
 
-### Thử trước bằng chế độ Demo
+### Sign in to your NAS
 
-Chưa muốn nhập thông tin NAS thật? Ở màn hình đăng nhập, chọn **Chế độ trải nghiệm (Demo Mode)** để xem toàn bộ giao diện với dữ liệu mô phỏng.
+Enter the connection details:
 
-### Đăng nhập NAS thật
+- **NAS IP / DNS:** the local IP at home, an address reachable through your VPN, the NAS's Tailscale address, or a configured DDNS hostname.
+- **DSM port:** `5001` with **HTTPS**, or your custom HTTPS port. Port `5000` is the default for unencrypted HTTP.
+- **Username and DSM password:** an account on the NAS. Prefer a dedicated account with only the permissions you need.
 
-Ở mục **Thông tin kết nối**, điền:
+If your account uses two-factor authentication, enable **2FA** under security settings and enter the OTP when prompted. **Remember sign-in** retains the session for later use.
 
-- **NAS IP / DNS:** IP nội bộ (ví dụ `192.168.1.10`) khi ở nhà hoặc khi đã bật VPN; tên miền DDNS (ví dụ `tennas.synology.me`) nếu bạn mở cổng.
-- **Port DSM:** `5001` khi bật **HTTPS** (khuyên dùng), `5000` nếu dùng HTTP trong mạng nhà.
-- **Username** và **Mật khẩu DSM:** tài khoản trên NAS. Nên dùng tài khoản riêng, không dùng `admin`.
+When away from home, connect your VPN or Tailscale first. For Tailscale, use its assigned NAS address unless you have configured access to your home subnet.
 
-Nếu tài khoản đã bật xác minh hai bước, bật **2FA** ở mục **Bảo mật & Cài đặt** và nhập mã OTP khi được hỏi. Bật **Ghi nhớ đăng nhập** nếu muốn giữ phiên cho lần mở sau.
+### Troubleshooting
 
-Lời khuyên: khi ở ngoài nhà, hãy bật Tailscale hoặc VPN trước, rồi kết nối bằng IP nội bộ. Bạn có tốc độ trực tiếp mà không phải mở cổng DSM.
+| Problem                                | Things to check                                                                  |
+| -------------------------------------- | -------------------------------------------------------------------------------- |
+| Cannot connect to DSM                  | Address, port, VPN connection, HTTPS setting and NAS firewall rules              |
+| DSM rejects sign-in                    | Username, password, missing 2FA code or an Auto Block entry                      |
+| Invalid NAS IP, QuickConnect ID or DNS | Unexpected spaces, an extra `http://` prefix or an incorrectly formatted address |
 
-### Gặp lỗi khi kết nối?
+After repeated failed sign-ins, check the block list in DSM's security settings.
 
-| Thông báo                                     | Nguyên nhân thường gặp                                                                                     |
-| --------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| Không kết nối được DSM                        | Sai IP hoặc port, chưa bật VPN khi ở ngoài, HTTPS bật nhưng port đang là 5000, hoặc tường lửa của NAS chặn |
-| DSM từ chối đăng nhập                         | Sai tên hoặc mật khẩu, thiếu mã 2FA, hoặc IP của bạn đã bị Tự động chặn                                    |
-| NAS IP, QuickConnect ID hoặc DNS không hợp lệ | Địa chỉ gõ sai định dạng, có thừa `http://` hoặc dấu cách                                                  |
+## What you can do after connecting
 
-Nếu đã đăng nhập sai nhiều lần, hãy kiểm tra danh sách chặn trong Bảng điều khiển › Bảo mật trên DSM.
+- **Monitor resources:** CPU, RAM, temperature, network traffic, disks and RAID status.
+- **Browse files:** upload from your device, download to Files, create folders and generate sharing links.
+- **Manage packages:** start and stop installed services, such as Download Station.
+- **Manage SSH:** enable or disable the service, change its port and use the terminal interface for commands such as `ls`, `df -h`, `top` and `uptime`.
 
-## Những gì bạn làm được sau khi kết nối
-
-- **Giám sát thời gian thực:** CPU, RAM, nhiệt độ, lưu lượng mạng và trạng thái ổ đĩa, RAID. Rất tiện để kiểm tra NAS có đang quá tải hay ổ nào có dấu hiệu hỏng.
-- **File Station di động:** duyệt thư mục, tải file lên từ điện thoại, tải file xuống rồi lưu vào ứng dụng Tệp, tạo thư mục và tạo **liên kết chia sẻ** để gửi file cho người khác.
-- **Quản lý gói:** bật, tắt các ứng dụng đã cài trên NAS như Download Station.
-- **SSH:** bật hoặc tắt dịch vụ SSH, đổi cổng, và chạy các lệnh xem nhanh như `ls`, `df -h`, `top`, `uptime` qua terminal mô phỏng.
-
-Mẹo bảo mật: chỉ bật SSH khi cần dùng, xong việc thì tắt đi. My NAS Manager giúp bật tắt nhanh từ điện thoại mà không phải mở DSM trên máy tính.
-
-Tải My NAS Manager trên [App Store](https://apps.apple.com/us/app/my-nas-manager/id6780180564). Ứng dụng có giao diện tiếng Việt và sáu ngôn ngữ khác.
-
-## Tóm tắt
-
-- Muốn đơn giản: QuickConnect. Muốn nhanh và an toàn: VPN như Tailscale. Mở cổng chỉ khi bạn làm đủ các bước bảo mật.
-- Tắt `admin`, bật 2FA, bật Tự động chặn, chỉ dùng HTTPS và luôn có bản sao lưu ở nơi khác.
-- Với My NAS Manager, kết nối bằng IP nội bộ qua VPN hoặc tên miền DDNS với cổng 5001 và HTTPS.
+Turn SSH off when you no longer need it. Download [My NAS Manager on the App Store](https://apps.apple.com/us/app/my-nas-manager/id6780180564).

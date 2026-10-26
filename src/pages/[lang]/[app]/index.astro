@@ -1,6 +1,6 @@
 ---
 import type { GetStaticPaths } from 'astro';
-import AppPage from '../../../components/app/AppPage.astro';
+import LegacyRedirect from '../../../components/site/LegacyRedirect.astro';
 import { apps, appSegment, defaultLangOf } from '../../../data/apps';
 import { otherLang } from '../../../lib/i18n';
 
@@ -11,7 +11,7 @@ export const getStaticPaths = (() =>
     return { params: { lang, app: appSegment(app) }, props: { app, lang } };
   })) satisfies GetStaticPaths;
 
-const { app, lang } = Astro.props;
+const { app } = Astro.props;
 ---
 
-<AppPage app={app} lang={lang} />
+<LegacyRedirect to={app.route} />

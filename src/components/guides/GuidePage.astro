@@ -13,6 +13,7 @@ import { appPath, homePath } from '../../lib/routes';
 import { absolute, ogImage, PERSON_ID, WEBSITE_ID } from '../../lib/seo';
 import {
   formatDate,
+  guideLang,
   getGuides,
   GUIDES_PATH,
   guidePath,
@@ -27,6 +28,8 @@ interface Props {
 const { guide } = Astro.props;
 const { Content, headings } = await render(guide);
 const data = guide.data;
+const lang = guideLang(guide);
+const vi = lang === 'vi';
 const app = data.app ? appBySlug.get(data.app as AppSlug) : undefined;
 const path = guidePath(guide.id);
 const toc = headings.filter((h) => h.depth === 2);
@@ -46,7 +49,7 @@ const jsonLd = {
       '@id': `${absolute(path)}#article`,
       headline: data.title,
       description: data.description,
-      inLanguage: 'vi',
+      inLanguage: lang,
       datePublished: data.published,
       dateModified: data.updated ?? data.published,
       url: absolute(path),
@@ -73,8 +76,18 @@ const jsonLd = {
     {
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Trang chủ', item: absolute(homePath('vi')) },
-        { '@type': 'ListItem', position: 2, name: 'Hướng dẫn', item: absolute(GUIDES_PATH) },
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: vi ? 'Trang chủ' : 'Home',
+          item: absolute(homePath(lang)),
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: vi ? 'Hướng dẫn' : 'Guides',
+          item: absolute(GUIDES_PATH),
+        },
         { '@type': 'ListItem', position: 3, name: data.title, item: absolute(path) },
       ],
     },
@@ -83,7 +96,7 @@ const jsonLd = {
 ---
 
 <BaseLayout
-  lang="vi"
+  lang={lang}
   title={`${data.title} | Phạm Hùng Tiến`}
   description={data.description}
   path={path}
@@ -92,16 +105,16 @@ const jsonLd = {
   jsonLd={jsonLd}
   ads
   nav={[
-    { href: homePath('vi'), label: 'Trang chủ' },
-    { href: GUIDES_PATH, label: 'Hướng dẫn', current: true },
-    ...(app ? [{ href: appPath(app, 'vi'), label: app.name }] : []),
+    { href: homePath(lang), label: vi ? 'Trang chủ' : 'Home' },
+    { href: GUIDES_PATH, label: vi ? 'Hướng dẫn' : 'Guides', current: true },
+    ...(app ? [{ href: appPath(app, lang), label: app.name }] : []),
   ]}
 >
   <article class="guide container">
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href={homePath('vi')}>Trang chủ</a>
+      <a href={homePath(lang)}>{vi ? 'Trang chủ' : 'Home'}</a>
       <ChevronRight size={14} aria-hidden="true" />
-      <a href={GUIDES_PATH}>Hướng dẫn</a>
+      <a href={GUIDES_PATH}>{vi ? 'Hướng dẫn' : 'Guides'}</a>
     </nav>
 
     <header class="guide__head">
@@ -111,16 +124,17 @@ const jsonLd = {
       <div class="guide__byline">
         <Logo size={40} />
         <span>
-          <a href={homePath('vi')}>{SITE.name}</a>
+          <a href={homePath(lang)}>{SITE.name}</a>
           <small>
             <time datetime={data.published}>{formatDate(data.published)}</time>
             {data.updated && data.updated !== data.published && (
               <>
                 {' '}
-                · Cập nhật <time datetime={data.updated}>{formatDate(data.updated)}</time>
+                · {vi ? 'Cập nhật' : 'Updated'}{' '}
+                <time datetime={data.updated}>{formatDate(data.updated)}</time>
               </>
             )}{' '}
-            · {readingMinutes(guide)} phút đọc
+            · {readingMinutes(guide)} {vi ? 'phút đọc' : 'min read'}
           </small>
         </span>
       </div>
@@ -128,13 +142,13 @@ const jsonLd = {
 
     {data.youtubeId && (
       <div class="guide__video">
-        <YouTube id={data.youtubeId} title={data.title} lang="vi" />
+        <YouTube id={data.youtubeId} title={data.title} lang={lang} />
       </div>
     )}
 
     {toc.length > 2 && (
       <nav class="toc" aria-labelledby="toc-heading">
-        <h2 id="toc-heading">Trong bài này</h2>
+        <h2 id="toc-heading">{vi ? 'Trong bài này' : 'On this page'}</h2>
         <ol>
           {toc.map((h) => (
             <li>
@@ -154,25 +168,25 @@ const jsonLd = {
         <Image src={app.icon} alt="" width={64} height={64} densities={[1, 2]} loading="lazy" />
         <div>
           <strong>{app.name}</strong>
-          <span>{app.subtitle.vi}</span>
+          <span>{app.subtitle[lang]}</span>
         </div>
-        <a class="button button--primary" href={appPath(app, 'vi')}>
-          Xem {app.name}
+        <a class="button button--primary" href={appPath(app, lang)}>
+          {vi ? 'Xem' : 'Explore'} {app.name}
           <ArrowRight size={18} aria-hidden="true" />
         </a>
       </aside>
     )}
 
-    <aside class="author" aria-label="Tác giả">
+    <aside class="author" aria-label={vi ? 'Tác giả' : 'Author'}>
       <Logo size={56} />
       <div>
         <strong>{SITE.name}</strong>
         <p>
-          Nhà phát triển ứng dụng đến từ Bến Tre, tác giả của PHTV, vTTS và các ứng dụng chạy ngay
-          trên máy, tôn trọng quyền riêng tư. Mọi hướng dẫn ở đây đều được viết và kiểm tra trên
-          phiên bản ứng dụng mới nhất. Xem thêm video hướng dẫn trên{' '}
+          {vi
+            ? 'Nhà phát triển ứng dụng đến từ Bến Tre, tác giả của PHTV, vTTS và các ứng dụng chạy ngay trên máy, tôn trọng quyền riêng tư. Xem thêm video hướng dẫn trên '
+            : 'Independent developer from Bến Tre, creating PHTV, vTTS and apps that work on your device and respect your privacy. Find more tutorials on '}
           <a href={SITE.youtube} target="_blank" rel="noopener noreferrer">
-            kênh YouTube
+            {vi ? 'kênh YouTube' : 'YouTube'}
           </a>
           .
         </p>
@@ -181,7 +195,13 @@ const jsonLd = {
   </article>
 
   {related.length > 0 && (
-    <GuideList guides={related} title="Đọc tiếp" allLabel="Tất cả hướng dẫn" id="related" />
+    <GuideList
+      guides={related}
+      lang={lang}
+      title={vi ? 'Đọc tiếp' : 'Keep reading'}
+      allLabel={vi ? 'Tất cả hướng dẫn' : 'All guides'}
+      id="related"
+    />
   )}
 </BaseLayout>
 

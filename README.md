@@ -72,6 +72,6 @@ Face-recognition smart lock on an **STM32F411 + ESP32-S3/OV3660** dual-MCU archi
 ## Website development
 
 This repository also builds [phamhungtien.com](https://phamhungtien.com): one
-[Astro](https://astro.build) site for the portfolio, every app page (English and
-Vietnamese) and their legal documents. See the [architecture](docs/ARCHITECTURE.md),
+[Astro](https://astro.build) site for the portfolio, app pages and legal documents.
+The site is English, with Vietnamese-first PHTV pages and tutorials. See the [architecture](docs/ARCHITECTURE.md),
 [design system](docs/DESIGN-SYSTEM.md) and [contributing guide](CONTRIBUTING.md).

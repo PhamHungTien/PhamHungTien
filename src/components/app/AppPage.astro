@@ -16,10 +16,8 @@ import { getGuides } from '../../lib/guides';
 import Lightbox from '../ui/Lightbox.astro';
 import type { NavItem } from '../layout/Header.astro';
 import type { App, Lang } from '../../data/types';
-import { LANGS } from '../../data/types';
-import { defaultLangOf } from '../../data/apps';
 import { t } from '../../lib/i18n';
-import { alternatesFor, appPath, homePath } from '../../lib/routes';
+import { appPath, homePath } from '../../lib/routes';
 import { appJsonLd, metaDescription, ogImage } from '../../lib/seo';
 
 interface Props {
@@ -29,7 +27,6 @@ interface Props {
 
 const { app, lang } = Astro.props;
 const guides = (await getGuides()).filter((g) => g.data.app === app.slug);
-const langs = [defaultLangOf(app), ...LANGS.filter((l) => l !== defaultLangOf(app))];
 
 const favicon = await getImage({ src: app.icon, width: 64, height: 64, format: 'png' });
 
@@ -49,7 +46,6 @@ const nav: NavItem[] = [
   title={`${app.name} — ${app.category[lang]} | Phạm Hùng Tiến`}
   description={metaDescription(app.description[lang])}
   path={appPath(app, lang)}
-  alternates={alternatesFor((l) => appPath(app, l), langs)}
   ogImage={ogImage(app.slug)}
   ogImageAlt={`${app.name} — ${app.title[lang]}`}
   jsonLd={appJsonLd(app, lang)}
@@ -68,6 +64,7 @@ const nav: NavItem[] = [
     {guides.length > 0 && (
       <GuideList
         guides={guides}
+        lang={lang}
         title={lang === 'vi' ? `Hướng dẫn ${app.name}` : `${app.name} guides`}
         lead={t(lang, 'guides.lead')}
         allLabel={t(lang, 'guides.all')}

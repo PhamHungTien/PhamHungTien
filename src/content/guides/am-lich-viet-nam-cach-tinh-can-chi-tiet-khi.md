@@ -1,135 +1,123 @@
 ---
-title: 'Âm lịch Việt Nam: cách tính, can chi, tiết khí và vì sao khác lịch Trung Quốc'
-description: 'Âm lịch Việt Nam tính thế nào: tháng đủ thiếu, tháng nhuận, cách nhẩm can chi, 24 tiết khí, 12 canh giờ và vì sao có năm Tết Việt lệch lịch Trung Quốc.'
+title: 'The Vietnamese lunar calendar: leap months, zodiac cycles and solar terms'
+description: Understand Vietnam's lunar calendar, leap months, the 60-year stem-branch cycle, solar terms and why Vietnamese and Chinese New Year sometimes differ.
 published: 2026-10-15
 app: lunarv
-topic: Kiến thức
+topic: Calendar essentials
 ---
 
-Chúng ta vẫn quen gọi là "âm lịch", nhưng lịch truyền thống mà người Việt dùng để ăn Tết, làm giỗ hay xem ngày thật ra là **âm dương lịch**: tháng đi theo Mặt Trăng, còn năm và các tiết khí đi theo Mặt Trời. Bài này giải thích lịch được tính thế nào, can chi của năm từ đâu ra, tiết khí là gì, và vì sao có những năm Tết của Việt Nam không trùng với Trung Quốc.
+Vietnam's traditional “lunar calendar” is actually **lunisolar**: its months follow the Moon, while its year and solar terms follow the Sun. It is used for Tết, ancestral anniversaries and traditional celebrations. Here is how its months work, how years get their names and why Vietnamese New Year does not always match Chinese New Year.
 
-## Tháng âm lịch: theo chu kỳ của Mặt Trăng
+## Lunar months follow the Moon
 
-Mỗi tháng âm lịch bắt đầu vào ngày có **điểm sóc**, tức thời điểm Mặt Trăng nằm giữa Trái Đất và Mặt Trời, khi ta không nhìn thấy trăng. Ngày đó là **mùng 1**. Khoảng 14 đến 15 ngày sau, trăng tròn, đó là quanh ngày rằm.
+Each lunar month starts on the local calendar day containing the **new moon**, when the Moon lies between Earth and the Sun. That date is day 1. The full moon follows roughly 14 or 15 days later.
 
-Một chu kỳ trăng dài trung bình khoảng **29,53 ngày**, nên tháng âm lịch có lúc 30 ngày (**tháng đủ**), có lúc 29 ngày (**tháng thiếu**). Không có quy luật xen kẽ cố định: tháng nào đủ, tháng nào thiếu phụ thuộc vào thời điểm sóc thực tế, được tính bằng thiên văn.
+A lunar cycle averages about **29.53 days**, so months contain either **29 or 30 days**. They do not alternate in a fixed pattern: month lengths depend on the calculated times of consecutive new moons.
 
-Hệ quả thú vị: không phải tháng nào cũng có ngày 30. Nếu bạn làm giỗ hay hẹn việc vào "ngày 30 tháng Chạp", hãy kiểm tra năm đó tháng Chạp đủ hay thiếu. Có năm, đêm Giao thừa là đêm 29.
+This means a date such as “the 30th day of the twelfth lunar month” does not occur every year. In a short month, New Year's Eve falls on day 29.
 
-## Năm âm lịch: 12 hoặc 13 tháng
+## Years contain 12 or 13 months
 
-Mười hai tháng âm lịch chỉ dài khoảng 354 ngày, ngắn hơn năm theo Mặt Trời (khoảng 365,24 ngày) chừng 11 ngày. Nếu không điều chỉnh, sau vài năm Tết sẽ trôi sang mùa hè. Vì vậy, cứ khoảng 2 đến 3 năm lại có một năm thêm **tháng nhuận**, thành 13 tháng. Trung bình có 7 tháng nhuận trong 19 năm.
+Twelve lunar months total roughly 354 days, about 11 days shorter than the solar year of approximately 365.24 days. An occasional **leap month** keeps the calendar aligned with the seasons. A leap month is added roughly every two or three years, with about seven in a 19-year period.
 
-Tháng nào được nhuận không phải chọn tùy ý. Quy tắc là: trong khoảng giữa hai tháng 11 âm lịch liên tiếp (tháng 11 luôn là tháng chứa ngày Đông chí), nếu có 13 tháng thì **tháng đầu tiên không chứa trung khí** sẽ là tháng nhuận, mang tên tháng liền trước. Ví dụ năm 2025 (Ất Tỵ) có tháng 6 nhuận: sau tháng 6 là một tháng "6 nhuận" rồi mới đến tháng 7.
+The choice of leap month depends on solar terms. Lunar month 11 contains the winter solstice. When there are 13 lunar months between successive month-11 starts, the first month without a major solar term becomes the leap month and repeats the previous month's number. For example, 2025 had a leap sixth month: month 6 was followed by leap month 6, then month 7.
 
-Nhờ cơ chế này, Tết Nguyên đán luôn rơi vào khoảng **từ 21/1 đến 20/2 dương lịch**.
+This adjustment keeps Tết in late January or February rather than allowing it to drift through the seasons.
 
-## Vì sao có năm Tết Việt Nam khác Trung Quốc?
+## Why can Vietnamese and Chinese New Year differ?
 
-Việt Nam và Trung Quốc dùng cùng phương pháp lập lịch, nhưng tính theo **múi giờ khác nhau**: Việt Nam dùng giờ UTC+7 (kinh tuyến 105° Đông), còn Trung Quốc dùng UTC+8. Lịch Việt Nam được tính theo múi giờ này từ năm 1968.
+Vietnam and China calculate their calendars using different time zones: **UTC+7** in Vietnam and **UTC+8** in China. Vietnam's modern calendar has used the UTC+7 basis since 1968.
 
-Khi điểm sóc rơi vào khoảng 23 giờ đến nửa đêm giờ Hà Nội, thì ở Bắc Kinh đã là ngày hôm sau. Vậy là mùng 1 của hai nước lệch nhau một ngày. Tương tự, một trung khí nằm sát nửa đêm có thể khiến tháng nhuận đặt ở hai chỗ khác nhau, kéo theo lệch cả tháng.
+If a new moon occurs between 23:00 and midnight in Hanoi, it is already the following day in Beijing. The first day of the lunar month can therefore differ by one day. The placement of a major solar term near a date boundary can also affect the leap month and produce a larger difference.
 
-Vài ví dụ đã xảy ra:
+| Year           | Vietnamese New Year | Chinese New Year | Difference      |
+| -------------- | ------------------- | ---------------- | --------------- |
+| 1968, Mậu Thân | 29 January 1968     | 30 January 1968  | One day         |
+| 1985, Ất Sửu   | 21 January 1985     | 20 February 1985 | One lunar month |
+| 2007, Đinh Hợi | 17 February 2007    | 18 February 2007 | One day         |
 
-| Năm           | Tết ở Việt Nam | Tết ở Trung Quốc | Lý do                                      |
-| ------------- | -------------- | ---------------- | ------------------------------------------ |
-| Mậu Thân 1968 | 29/1/1968      | 30/1/1968        | Lệch mùng 1 do múi giờ                     |
-| Ất Sửu 1985   | 21/1/1985      | 20/2/1985        | Lệch cả tháng do tháng nhuận đặt khác nhau |
-| Đinh Hợi 2007 | 17/2/2007      | 18/2/2007        | Lệch mùng 1 do múi giờ                     |
+For Vietnamese anniversaries and celebrations, use a calendar calculated for **Vietnamese time**. A calendar based on Chinese dates can differ in these exceptional years.
 
-Vì vậy, khi tra ngày âm lịch cho các việc ở Việt Nam, hãy dùng ứng dụng tính theo **giờ Việt Nam**. Một số lịch in sẵn hoặc ứng dụng quốc tế dùng lịch Trung Quốc, có thể sai một ngày vào đúng những năm đặc biệt như trên.
+## Heavenly stems and earthly branches
 
-## Can chi: tên gọi của năm, tháng, ngày, giờ
+Vietnamese years have names such as **Bính Ngọ**, the lunar year beginning in 2026. Each name combines two cycles:
 
-Người Việt gọi năm theo **can chi**, ví dụ năm 2026 là **Bính Ngọ**. Tên gồm hai phần:
+- **Ten heavenly stems:** Giáp, Ất, Bính, Đinh, Mậu, Kỷ, Canh, Tân, Nhâm and Quý.
+- **Twelve earthly branches:** Tý, Sửu, Dần, Mão, Thìn, Tỵ, Ngọ, Mùi, Thân, Dậu, Tuất and Hợi.
 
-- **10 thiên can:** Giáp, Ất, Bính, Đinh, Mậu, Kỷ, Canh, Tân, Nhâm, Quý.
-- **12 địa chi:** Tý, Sửu, Dần, Mão, Thìn, Tỵ, Ngọ, Mùi, Thân, Dậu, Tuất, Hợi.
+The paired cycles repeat every **60 years**. Both 1966 and 2026 are Bính Ngọ years.
 
-Can và chi ghép lần lượt với nhau, tạo thành chu kỳ **60 năm** (lục thập hoa giáp). Sau 60 năm, tên năm lặp lại: năm 1966 và 2026 cùng là Bính Ngọ.
+### Calculate a year's stem and branch
 
-### Tự tính can chi của một năm
+For the lunar year that begins within a Gregorian year, find the **stem** from the year's last digit:
 
-Bạn có thể nhẩm can chi của bất kỳ năm dương lịch nào (tính cho phần lớn năm âm lịch bắt đầu trong năm đó):
+| Last digit | 0    | 1   | 2    | 3   | 4    | 5   | 6    | 7    | 8   | 9   |
+| ---------- | ---- | --- | ---- | --- | ---- | --- | ---- | ---- | --- | --- |
+| Stem       | Canh | Tân | Nhâm | Quý | Giáp | Ất  | Bính | Đinh | Mậu | Kỷ  |
 
-**Can:** nhìn chữ số cuối của năm.
+For the **branch**, divide the year by 12 and use the remainder:
 
-| Số cuối | 0    | 1   | 2    | 3   | 4    | 5   | 6    | 7    | 8   | 9   |
-| ------- | ---- | --- | ---- | --- | ---- | --- | ---- | ---- | --- | --- |
-| Can     | Canh | Tân | Nhâm | Quý | Giáp | Ất  | Bính | Đinh | Mậu | Kỷ  |
+| Remainder | 0    | 1   | 2    | 3   | 4   | 5   | 6   | 7   | 8    | 9   | 10  | 11  |
+| --------- | ---- | --- | ---- | --- | --- | --- | --- | --- | ---- | --- | --- | --- |
+| Branch    | Thân | Dậu | Tuất | Hợi | Tý  | Sửu | Dần | Mão | Thìn | Tỵ  | Ngọ | Mùi |
 
-**Chi:** lấy năm chia cho 12, xem số dư.
+For **2026**, the last digit is 6, giving **Bính**. Dividing 2026 by 12 leaves 10, giving **Ngọ**.
 
-| Số dư | 0    | 1   | 2    | 3   | 4   | 5   | 6   | 7   | 8    | 9   | 10  | 11  |
-| ----- | ---- | --- | ---- | --- | --- | --- | --- | --- | ---- | --- | --- | --- |
-| Chi   | Thân | Dậu | Tuất | Hợi | Tý  | Sửu | Dần | Mão | Thìn | Tỵ  | Ngọ | Mùi |
+A birthday in January or early February **before Tết** still belongs to the preceding lunar year. Someone born on 10 January 2026, for example, belongs to Ất Tỵ rather than Bính Ngọ.
 
-Ví dụ năm **2026**: số cuối là 6 nên can là **Bính**; 2026 chia 12 dư 10 nên chi là **Ngọ**. Vậy 2026 là Bính Ngọ. Thử với năm sinh của bạn nhé.
+In the Vietnamese zodiac, **Mão** represents the **cat**, while the Chinese zodiac uses the rabbit. **Sửu** is associated with the water buffalo in Vietnamese tradition.
 
-Lưu ý: người sinh vào tháng 1 hoặc đầu tháng 2 dương lịch, trước Tết, thì vẫn thuộc **năm âm lịch trước**. Ví dụ người sinh ngày 10/1/2026 là tuổi Ất Tỵ, không phải Bính Ngọ.
+Months, days and hours also have stem-branch names. The day cycle runs continuously across months, so use a calendar to look up a particular day's name.
 
-Mười hai con giáp của Việt Nam có hai điểm khác Trung Quốc: năm **Mão** là con **mèo** (Trung Quốc là thỏ), và năm **Sửu** là con **trâu**.
+## The 24 solar terms
 
-Không chỉ năm, mỗi **tháng**, **ngày** và **giờ** cũng có tên can chi riêng. Ngày can chi chạy liên tục theo chu kỳ 60 ngày, không phụ thuộc tháng, nên phải tra lịch hoặc dùng ứng dụng để biết.
+**Solar terms**, or _tiết khí_, follow the Sun rather than the Moon. They divide its apparent annual path into 24 equal parts, spaced roughly 15 days apart. As a result, they fall on approximately the same **Gregorian dates** each year.
 
-## 24 tiết khí: phần "dương" của âm lịch
+| Solar term | Approximate date | Meaning                                                    |
+| ---------- | ---------------- | ---------------------------------------------------------- |
+| Lập xuân   | 4 February       | Start of spring                                            |
+| Xuân phân  | 20–21 March      | Spring equinox                                             |
+| Thanh minh | 4–5 April        | Clear and bright; associated with tending ancestral graves |
+| Lập hạ     | 5–6 May          | Start of summer                                            |
+| Hạ chí     | 21 June          | Summer solstice in the Northern Hemisphere                 |
+| Lập thu    | 7–8 August       | Start of autumn                                            |
+| Thu phân   | 22–23 September  | Autumn equinox                                             |
+| Lập đông   | 7–8 November     | Start of winter                                            |
+| Đông chí   | 21–22 December   | Winter solstice in the Northern Hemisphere                 |
 
-Nếu tháng đi theo Mặt Trăng thì **tiết khí** đi theo Mặt Trời. Quỹ đạo biểu kiến của Mặt Trời trong năm được chia làm 24 phần bằng nhau, mỗi điểm chia là một tiết khí, cách nhau khoảng 15 ngày. Vì gắn với Mặt Trời, tiết khí rơi vào ngày gần như cố định theo **dương lịch**:
+Solar terms traditionally guided agricultural work and seasonal activities. The major solar terms also determine where leap months belong.
 
-| Tiết khí   | Ngày dương lịch (khoảng) | Ý nghĩa                         |
-| ---------- | ------------------------ | ------------------------------- |
-| Lập xuân   | 4/2                      | Bắt đầu mùa xuân                |
-| Xuân phân  | 20–21/3                  | Ngày và đêm dài bằng nhau       |
-| Thanh minh | 4–5/4                    | Trời trong sáng; dịp tảo mộ     |
-| Lập hạ     | 5–6/5                    | Bắt đầu mùa hè                  |
-| Hạ chí     | 21/6                     | Ngày dài nhất năm (Bắc bán cầu) |
-| Lập thu    | 7–8/8                    | Bắt đầu mùa thu                 |
-| Thu phân   | 22–23/9                  | Ngày và đêm dài bằng nhau       |
-| Lập đông   | 7–8/11                   | Bắt đầu mùa đông                |
-| Đông chí   | 21–22/12                 | Đêm dài nhất năm                |
+## The twelve traditional double-hours
 
-Tiết khí từng là "lịch nông vụ" của ông cha ta: biết khi nào gieo mạ, khi nào trời chuyển rét. Và như phần trên, chính các trung khí quyết định tháng nào là tháng nhuận.
+A traditional day is divided into twelve two-hour periods, each named after an earthly branch:
 
-## Giờ theo 12 con giáp và giờ hoàng đạo
+| Branch | Time        | Branch | Time        |
+| ------ | ----------- | ------ | ----------- |
+| Tý     | 23:00–01:00 | Ngọ    | 11:00–13:00 |
+| Sửu    | 01:00–03:00 | Mùi    | 13:00–15:00 |
+| Dần    | 03:00–05:00 | Thân   | 15:00–17:00 |
+| Mão    | 05:00–07:00 | Dậu    | 17:00–19:00 |
+| Thìn   | 07:00–09:00 | Tuất   | 19:00–21:00 |
+| Tỵ     | 09:00–11:00 | Hợi    | 21:00–23:00 |
 
-Lịch truyền thống chia ngày thành 12 **canh giờ**, mỗi canh dài 2 tiếng và mang tên một địa chi:
+The Tý period crosses midnight. On New Year's Eve, it runs from 23:00 into the first hour of the new lunar year.
 
-| Giờ  | Khoảng thời gian | Giờ  | Khoảng thời gian |
-| ---- | ---------------- | ---- | ---------------- |
-| Tý   | 23h – 1h         | Ngọ  | 11h – 13h        |
-| Sửu  | 1h – 3h          | Mùi  | 13h – 15h        |
-| Dần  | 3h – 5h          | Thân | 15h – 17h        |
-| Mão  | 5h – 7h          | Dậu  | 17h – 19h        |
-| Thìn | 7h – 9h          | Tuất | 19h – 21h        |
-| Tỵ   | 9h – 11h         | Hợi  | 21h – 23h        |
+Traditional almanacs classify six periods as **hoàng đạo**, or auspicious hours, and six as **hắc đạo**. Their placement depends on the day's branch. These are cultural traditions used when planning ceremonies, not scientific forecasts.
 
-Giờ Tý bắt đầu từ 23 giờ của ngày hôm trước, nên "giờ Tý đêm Giao thừa" là khoảng 23 giờ đến 1 giờ sáng mùng 1.
+## Planning ancestral anniversaries
 
-Theo quan niệm dân gian, mỗi ngày có 6 giờ **hoàng đạo** (giờ tốt) và 6 giờ **hắc đạo**. Giờ nào là hoàng đạo phụ thuộc vào địa chi của ngày đó. Đây là nét văn hóa tham khảo khi chọn giờ khai trương, xuất hành hay cúng lễ, không phải dự báo khoa học.
+- An anniversary set by a **lunar date** falls on a different Gregorian date each year.
+- If the original date was day 30 and that month has only 29 days in a later year, many families observe the anniversary on the final day of the month.
+- For anniversaries originally occurring in a **leap month**, a common custom is to use the regular month of the same number in years without that leap month. Customs vary by family and region; check your family's practice.
 
-## Làm giỗ theo âm lịch: những điều nên biết
+## Use LunarV for dates and reminders
 
-- **Ngày giỗ tính theo âm lịch**, nên mỗi năm rơi vào một ngày dương lịch khác nhau. Năm nay giỗ ông vào cuối tháng 3 dương, năm sau có thể sang tháng 4.
-- Nếu người mất vào **ngày 30** của tháng đủ, những năm tháng đó thiếu thì nhiều gia đình làm giỗ vào ngày 29, tức ngày cuối tháng.
-- Nếu người mất trong **tháng nhuận**, phong tục phổ biến là làm giỗ vào tháng thường cùng tên ở những năm không có tháng nhuận đó. Mỗi gia đình, mỗi vùng có thể có cách làm riêng, nên hãy hỏi người lớn trong nhà.
+Finding a year's stem and branch is straightforward, but calculating new moons, month lengths and leap months requires astronomical calculations. [LunarV](/LunarV/) is a lunar calendar for iPhone, iPad and Mac using **Vietnamese time, UTC+7**, including years when Vietnamese and Chinese dates differ.
 
-## Xem lịch âm và nhắc giỗ với LunarV
+- **See today's lunar date:** use the Mac menu bar or add an iPhone or iPad widget.
+- **Explore a day:** view its stem-branch names, solar term, traditional auspicious hours and both calendars in a month grid.
+- **Convert dates:** switch between Gregorian and lunar dates to plan an anniversary.
+- **Set recurring reminders:** add an ancestral anniversary or family occasion once and receive a reminder each lunar year. Choose the day, advance notice and reminder time. The free edition supports 20 reminders.
+- **Sync with Apple Calendar** to see these occasions alongside your other events.
 
-Nhẩm can chi thì được, nhưng tính ngày sóc, tháng đủ thiếu hay tháng nhuận thì cần đến thuật toán thiên văn. [LunarV](/LunarV/) là ứng dụng lịch âm mình làm cho iPhone, iPad và Mac, **tính theo giờ Việt Nam (UTC+7)** để khớp với lịch Việt Nam trong cả những năm đặc biệt như 1985 hay 2007.
-
-- **Xem nhanh ngày âm:** trên Mac, ngày âm lịch hiện ngay trên thanh menu; trên iPhone và iPad, thêm widget ra màn hình chính.
-- **Thông tin đầy đủ của từng ngày:** can chi của ngày, tháng, năm, tiết khí, giờ hoàng đạo và lưới tháng hiển thị song song ngày dương và ngày âm.
-- **Chuyển đổi ngày:** đổi qua lại giữa ngày dương và ngày âm, ví dụ để biết giỗ năm nay rơi vào ngày nào.
-- **Nhắc lễ và dịp gia đình:** thêm đám giỗ, lễ chạp hay ngày kỵ một lần, LunarV tự nhắc mỗi năm theo âm lịch. Bạn chọn nhắc đúng ngày hoặc nhắc trước vài ngày, và giờ nhắc. Bản miễn phí lưu được 20 lời nhắc.
-- **Đồng bộ với Lịch của Apple** nếu bạn muốn thấy các dịp này cùng lịch làm việc.
-
-Tải LunarV trên [App Store](https://apps.apple.com/vn/app/lunarv-l%E1%BB%8Bch-%C3%A2m-vi%E1%BB%87t-nam/id6770913893?l=vi).
-
-## Tóm tắt
-
-- Âm lịch Việt Nam là âm dương lịch: tháng theo Mặt Trăng, năm và tiết khí theo Mặt Trời.
-- Tháng có 29 hoặc 30 ngày; khoảng 7 năm trong 19 năm có tháng nhuận.
-- Việt Nam tính lịch theo UTC+7 nên có năm Tết lệch Trung Quốc một ngày, thậm chí một tháng.
-- Can của năm theo số cuối, chi theo số dư khi chia 12; chu kỳ can chi dài 60 năm.
-- Hãy dùng lịch tính theo giờ Việt Nam khi xem ngày giỗ, ngày Tết.
+Download [LunarV on the App Store](https://apps.apple.com/app/id6770913893).

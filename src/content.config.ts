@@ -18,7 +18,7 @@ const legal = defineCollection({
 });
 
 /**
- * Guides (Vietnamese): src/content/guides/<slug>.md, served at /huong-dan/<slug>/.
+ * Guides: English except PHTV tutorials, served at /guides/<slug>/.
  * Images live in src/assets/guides and are referenced with relative paths.
  */
 /** YAML turns bare dates into Date objects; keep guides' dates as ISO `YYYY-MM-DD` strings. */
@@ -31,6 +31,8 @@ const guides = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string().min(50).max(170),
+    titleEn: z.string().optional(),
+    descriptionEn: z.string().optional(),
     published: isoDate,
     updated: isoDate.optional(),
     /** App slug the guide is about; links the guide and the app page to each other. */

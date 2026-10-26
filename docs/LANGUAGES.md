@@ -1,31 +1,26 @@
 # Website languages
 
-The home page and shared navigation support English, Vietnamese, French and Japanese.
-`src/i18n/locales.ts` lists their names and codes. French/Japanese home interface text
-and app previews are in `src/i18n/home-translations.ts`.
+The website uses one canonical language per destination:
 
-App detail pages and legal documents have independently scoped English/Vietnamese
-translations (`Lang` and `Localized` in `src/data/types.ts`). French/Japanese home
-pages explicitly label app detail links as English. On a page without a translation,
-the picker offers the corresponding language's home page and labels that destination.
-Do not add hreflang links for untranslated content.
+- Home, other app pages, website privacy, guide index and general guides: **English**.
+- PHTV, its legal pages and its typing tutorials: **Vietnamese first**, retaining English
+  product names and technical terms such as Telex, Clipboard, Picker and Mac App Store.
 
-On the unprefixed home URL `/`, a saved manual selection takes priority over the
-browser's ordered language preferences. Regional codes such as `fr-CA` match the
-supported base language. No match defaults to English. Explicit language paths and
-app/legal deep links are never automatically redirected.
+There is no language selector or automatic browser-language detection. Stored language
+preferences and `?lang=` parameters do not change the page language. The website's
+source translations remain available for maintenance but are not separate public pages.
 
-Manual choices are saved in localStorage. A `lang` query parameter on picker links
-also prevents automatic detection from overriding an explicit English choice when
-storage is blocked. Language switching retains query parameters and section anchors
-when the same page is translated; a home-page fallback starts at the home page.
+Historical `/vi/`, `/fr/`, `/ja/`, `/en/PHTV/`, translated app/legal URLs and
+`/huong-dan/` routes redirect to their canonical destinations. JavaScript redirects
+retain query parameters and fragments; meta refresh and a visible link provide fallbacks.
+The guide index is `/guides/`; existing guide slugs are retained.
 
-Validation:
+PHTV guide cards use English summaries on English pages, with a “Tiếng Việt” label.
+The articles themselves remain Vietnamese. The sitemap lists only canonical content,
+and pages do not advertise alternate language URLs.
+
+Verify after building:
 
 ```sh
-npm run check
-npm run build
-npm run verify
 node scripts/test-language.mjs
-npm run format:check
 ```

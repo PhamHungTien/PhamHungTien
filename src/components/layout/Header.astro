@@ -1,10 +1,9 @@
 ---
 import { Menu, X, Moon, Sun, Sparkles } from '@lucide/astro';
 import Logo from '../ui/Logo.astro';
-import LanguagePicker from './LanguagePicker.astro';
 import type { Locale as Lang } from '../../i18n/locales';
 import { t } from '../../lib/i18n';
-import { homePath, type Alternate } from '../../lib/routes';
+import { homePath } from '../../lib/routes';
 
 export interface NavItem {
   href: string;
@@ -18,10 +17,9 @@ export interface NavItem {
 interface Props {
   lang: Lang;
   nav: NavItem[];
-  alternates: Alternate[];
 }
 
-const { lang, nav, alternates } = Astro.props;
+const { lang, nav } = Astro.props;
 ---
 
 <header class="site-header" data-header>
@@ -43,7 +41,6 @@ const { lang, nav, alternates } = Astro.props;
   </nav>
 
   <div class="header-actions">
-    <LanguagePicker lang={lang} alternates={alternates} />
     <button
       class="icon-button"
       type="button"

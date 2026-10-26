@@ -1,6 +1,8 @@
 ---
 title: 'Bảng mã tiếng Việt: Unicode, Unicode tổ hợp, TCVN3, VNI và cách chuyển đổi'
 description: Giải thích các bảng mã tiếng Việt Unicode, Unicode tổ hợp, TCVN3 (ABC), VNI Windows và CP1258, vì sao chữ bị lỗi font và cách chuyển văn bản cũ sang Unicode trên Mac.
+titleEn: 'Vietnamese encodings: Unicode, TCVN3 and VNI'
+descriptionEn: 'Understand Vietnamese character encodings, recognize legacy fonts and convert text with PHTV. Tutorial in Vietnamese.'
 published: 2026-10-15
 app: phtv
 topic: Kiến thức

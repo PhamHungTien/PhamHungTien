@@ -2,7 +2,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 
 export type Guide = CollectionEntry<'guides'>;
 
-export const GUIDES_PATH = '/huong-dan/';
+export const GUIDES_PATH = '/guides/';
 export const guidePath = (slug: string) => `${GUIDES_PATH}${slug}/`;
 
 /** Newest first; on the same day, guides with a video lead. */
@@ -26,3 +26,5 @@ export function readingMinutes(guide: Guide): number {
 
 /** "2026-10-15" → "15/10/2026". */
 export const formatDate = (iso: string) => iso.split('-').reverse().join('/');
+
+export const guideLang = (guide: Guide): 'en' | 'vi' => (guide.data.app === 'phtv' ? 'vi' : 'en');

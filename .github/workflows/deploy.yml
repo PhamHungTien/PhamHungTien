@@ -54,6 +54,9 @@ jobs:
       - name: Verify SEO, links and images
         run: npm run verify
 
+      - name: Verify canonical languages and legacy redirects
+        run: node scripts/test-language.mjs
+
       - name: Publish to gh-pages
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         env:

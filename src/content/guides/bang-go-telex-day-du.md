@@ -1,6 +1,8 @@
 ---
 title: Bảng gõ Telex đầy đủ và cách đặt dấu đúng
 description: Bảng gõ Telex đầy đủ cho chữ â, ă, ê, ô, ơ, ư, đ và năm dấu thanh, cách sửa và bỏ dấu, gõ nhanh phụ âm, kèm ví dụ cho các từ khó như người, được, trường.
+titleEn: 'The complete Telex typing chart'
+descriptionEn: 'Learn Vietnamese letters, tone keys and accent placement with the Telex input method. PHTV tutorial in Vietnamese.'
 published: 2026-10-15
 app: phtv
 topic: Kiến thức

@@ -1,70 +1,80 @@
-/** Run after npm run build: exercise the actual inline language bootstrap in built HTML. */
+/** Run after build: canonical languages and static-host legacy redirects. */
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import vm from 'node:vm';
 
-const html = await readFile(new URL('../dist/index.html', import.meta.url), 'utf8');
-const bootstrap = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)]
-  .map((match) => match[1])
-  .find((script) => script.includes('const languageRoutes'));
-assert.ok(bootstrap, 'Built page includes language detection');
+const read = (path) => readFile(new URL(`../dist/${path}`, import.meta.url), 'utf8');
+const home = await read('index.html');
+assert.ok(home.includes('<html lang="en"'));
+assert.ok(!home.includes('languageRoutes'), 'No browser-language redirect');
+assert.ok(!home.includes('data-language'), 'No language picker');
+assert.ok(home.includes('href="/PHTV/"'), 'Home links to Vietnamese-first PHTV');
+assert.ok(!home.includes('href="/en/PHTV/"'));
 
-function visit(path, languages, saved, blocked = false) {
-  let redirect;
-  let stored = saved;
-  const location = {
-    href: `https://phamhungtien.com${path}`,
-    replace(url) {
-      redirect = url;
-    },
-  };
-  vm.runInNewContext(bootstrap, {
-    URL,
-    location,
-    navigator: { languages, language: languages[0] },
-    localStorage: {
-      getItem() {
-        if (blocked) throw new Error('Storage disabled');
-        return stored;
-      },
-      setItem(_key, value) {
-        if (blocked) throw new Error('Storage disabled');
-        stored = value;
+for (const app of [
+  'vTTS',
+  'PadCodeAI',
+  'PadNotesAI',
+  'MyNASManager',
+  'LunarV',
+  'LunarBlock',
+  'PHTV',
+]) {
+  const lang = app === 'PHTV' ? 'vi' : 'en';
+  for (const file of ['index.html', 'privacy.html', 'terms.html']) {
+    const html = await read(`${app}/${file}`);
+    assert.ok(html.includes(`<html lang="${lang}"`), `${app}/${file} language`);
+    assert.ok(!html.includes('data-language'), `${app}/${file} has no language picker`);
+    assert.ok(!html.includes('hreflang='), `${app}/${file} has no alternate locale URLs`);
+  }
+}
+for (const [oldPath, target] of [
+  ['vi/index.html', '/'],
+  ['en/index.html', '/'],
+  ['fr/index.html', '/'],
+  ['ja/index.html', '/'],
+  ['vi/vTTS/index.html', '/vTTS/'],
+  ['en/PHTV/index.html', '/PHTV/'],
+  ['en/PHTV/privacy.html', '/PHTV/privacy.html'],
+  ['vi/privacy/index.html', '/privacy/'],
+  ['huong-dan/index.html', '/guides/'],
+  ['huong-dan/bang-go-telex-day-du/index.html', '/guides/bang-go-telex-day-du/'],
+]) {
+  const html = await read(oldPath);
+  assert.ok(html.includes('http-equiv="refresh"'), `${oldPath}: no-JS redirect`);
+  assert.ok(html.includes('noindex, follow'), `${oldPath}: noindex`);
+  const script = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)]
+    .map((m) => m[1])
+    .find((s) => s.includes('location.replace'));
+  assert.ok(script, `${oldPath}: redirect script`);
+  let redirected;
+  vm.runInNewContext(script, {
+    location: {
+      search: '?q=notes',
+      hash: '#features',
+      replace: (url) => {
+        redirected = url;
       },
     },
   });
-  return { redirect, stored };
+  assert.equal(redirected, `${target}?q=notes#features`, `${oldPath}: preserve query/hash`);
 }
-assert.equal(visit('/', ['fr-CA', 'en-US']).redirect, 'https://phamhungtien.com/fr/');
-assert.equal(visit('/', ['de-DE', 'ja-JP']).redirect, 'https://phamhungtien.com/ja/');
-assert.equal(visit('/', ['vi-VN'], 'en').redirect, undefined, 'Saved English wins');
-assert.equal(visit('/', ['fr-FR'], 'vi').redirect, 'https://phamhungtien.com/vi/');
-assert.equal(
-  visit('/', ['de-DE']).redirect,
-  undefined,
-  'Unsupported browser language uses English',
-);
-assert.equal(visit('/', []).redirect, undefined, 'Missing browser language uses English');
-assert.equal(visit('/', ['ja-JP'], 'invalid').redirect, 'https://phamhungtien.com/ja/');
-assert.equal(visit('/', ['fr-FR'], null, true).redirect, 'https://phamhungtien.com/fr/');
-assert.equal(
-  visit('/?lang=en', ['ja-JP'], null, true).redirect,
-  undefined,
-  'Explicit choice works without storage',
-);
-assert.equal(visit('/?lang=vi', ['fr-FR']).stored, 'vi');
-assert.equal(visit('/vi/', ['ja-JP'], 'fr').redirect, undefined, 'Explicit locale URL wins');
-assert.equal(visit('/vTTS/', ['ja-JP'], 'fr').redirect, undefined, 'App deep links stay intact');
-assert.equal(
-  visit('/?q=notes#apps', ['ja-JP']).redirect,
-  'https://phamhungtien.com/ja/?q=notes#apps',
-);
-for (const locale of ['fr', 'ja']) {
-  const page = await readFile(new URL(`../dist/${locale}/index.html`, import.meta.url), 'utf8');
-  assert.ok(page.includes(`<html lang="${locale}"`));
-  assert.ok(page.includes(`hreflang="${locale}"`));
-  assert.equal((page.match(/data-app /g) ?? []).length, 7);
+const guides = await readdir(new URL('../dist/guides/', import.meta.url), { withFileTypes: true });
+const englishGuides = [
+  'nghe-sach-epub-giong-doc-tieng-viet-voi-vtts',
+  'truy-cap-synology-nas-tu-xa-an-toan',
+  'am-lich-viet-nam-cach-tinh-can-chi-tiet-khi',
+];
+for (const guide of guides.filter((entry) => entry.isDirectory())) {
+  const html = await read(`guides/${guide.name}/index.html`);
+  const lang = englishGuides.includes(guide.name) ? 'en' : 'vi';
+  assert.ok(html.includes(`<html lang="${lang}"`), `${guide.name}: guide language`);
 }
+const sitemap = await read('sitemap.xml');
+assert.ok(
+  !/<loc>[^<]*\/(vi|en|fr|ja|huong-dan)\//.test(sitemap),
+  'Sitemap only contains canonical pages',
+);
 console.log(
-  '✓ Language detection, preference persistence, fallback, deep links and translated home pages',
+  '✓ English site, Vietnamese PHTV, guide languages, removed picker, legacy query/hash redirects and canonical sitemap',
 );

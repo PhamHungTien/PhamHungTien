@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GuideList from '../../components/guides/GuideList.astro';
+import { getGuides, GUIDES_PATH, guidePath } from '../../lib/guides';
+import { homePath } from '../../lib/routes';
+import { absolute, ogImage, PERSON_ID, WEBSITE_ID } from '../../lib/seo';
+
+const guides = await getGuides();
+const description =
+  'Practical guides to offline audiobooks, the Vietnamese lunar calendar, secure NAS access and Vietnamese typing on Mac with PHTV.';
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  '@id': `${absolute(GUIDES_PATH)}#page`,
+  url: absolute(GUIDES_PATH),
+  name: 'Guides',
+  description,
+  inLanguage: 'en',
+  isPartOf: { '@id': WEBSITE_ID },
+  author: { '@id': PERSON_ID },
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: guides.map((g, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: absolute(guidePath(g.id)),
+      name: g.data.title,
+    })),
+  },
+};
+---
+
+<BaseLayout
+  lang="en"
+  title="App guides and tutorials | Phạm Hùng Tiến"
+  description={description}
+  path={GUIDES_PATH}
+  ogImage={ogImage('guides')}
+  jsonLd={jsonLd}
+  ads
+  nav={[
+    { href: homePath('en'), label: 'Home' },
+    { href: GUIDES_PATH, label: 'Guides', current: true },
+    { href: `${homePath('en')}#apps`, label: 'Apps' },
+  ]}
+>
+  <GuideList
+    guides={guides}
+    title="Guides"
+    lead="Make more of your apps. Explore offline reading, lunar calendars and NAS management, plus Vietnamese-language tutorials for PHTV."
+    headingLevel="h1"
+    id="all"
+  />
+</BaseLayout>

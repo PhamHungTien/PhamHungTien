@@ -15,8 +15,6 @@ import type { Locale as Lang } from '../i18n/locales';
 import { SITE } from '../data/site';
 import { htmlLang, ogLocale } from '../lib/i18n';
 import { absolute, OG_SIZE } from '../lib/seo';
-import { homePath, type Alternate } from '../lib/routes';
-import { LOCALES } from '../i18n/locales';
 
 export interface Props {
   lang: Lang;
@@ -24,7 +22,6 @@ export interface Props {
   description: string;
   /** Root-relative path of this page, e.g. "/vTTS/". */
   path: string;
-  alternates?: Alternate[];
   ogImage: string;
   ogImageAlt?: string;
   ogType?: 'website' | 'article';
@@ -45,7 +42,6 @@ const {
   title,
   description,
   path,
-  alternates = [],
   ogImage,
   ogImageAlt = title,
   ogType = 'website',
@@ -59,7 +55,6 @@ const {
 } = Astro.props;
 
 const canonical = absolute(path);
-const defaultAlternate = alternates.find((alt) => alt.href === path) ?? alternates[0];
 const escapeJson = (value: unknown) => JSON.stringify(value).replace(/</g, '\\u003c');
 
 /** Chromium prerenders a same-site page the moment a visitor shows intent to open it. */
@@ -86,43 +81,6 @@ const speculationRules = {
 <html lang={htmlLang(lang)} data-theme="light">
   <head>
     <meta charset="utf-8" />
-    <script
-      is:inline
-      define:vars={{
-        languageRoutes: Object.fromEntries(LOCALES.map((code) => [code, homePath(code)])),
-      }}
-    >
-      (() => {
-        const match = (value) => {
-          const base = String(value ?? '')
-            .toLowerCase()
-            .replaceAll('_', '-')
-            .split('-')[0];
-          return Object.hasOwn(languageRoutes, base) ? base : undefined;
-        };
-        const url = new URL(location.href);
-        const explicit = match(url.searchParams.get('lang'));
-        if (explicit) {
-          try {
-            localStorage.setItem('language', explicit);
-          } catch {}
-          return;
-        }
-        // Explicit translated URLs and app/legal deep links always retain their language.
-        if (url.pathname !== '/') return;
-        let saved;
-        try {
-          saved = match(localStorage.getItem('language'));
-        } catch {}
-        const preferred =
-          saved ?? (navigator.languages ?? [navigator.language]).map(match).find(Boolean) ?? 'en';
-        const target = languageRoutes[preferred];
-        if (target !== url.pathname) {
-          url.pathname = target;
-          location.replace(url.href);
-        }
-      })();
-    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -141,14 +99,6 @@ const speculationRules = {
       <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
     )}
     <meta name="author" content={SITE.name} />
-    {alternates.length > 1 &&
-      alternates.map((alt) => (
-        <link rel="alternate" hreflang={alt.lang} href={absolute(alt.href)} />
-      ))}
-    {alternates.length > 1 && defaultAlternate && (
-      <link rel="alternate" hreflang="x-default" href={absolute(alternates[0].href)} />
-    )}
-
     <meta name="theme-color" content="#f3f5f8" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0d1118" media="(prefers-color-scheme: dark)" />
     <meta name="color-scheme" content="light dark" />
@@ -197,7 +147,7 @@ const speculationRules = {
     </script>
   </head>
   <body>
-    <Header lang={lang} nav={nav} alternates={alternates} />
+    <Header lang={lang} nav={nav} />
     <div class="reading-progress" aria-hidden="true"></div>
     <main id="main-content" tabindex="-1" style={accent ? `--app: ${accent}` : undefined}>
       <slot />

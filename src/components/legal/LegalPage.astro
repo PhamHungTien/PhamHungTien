@@ -4,9 +4,8 @@ import { render } from 'astro:content';
 import { ArrowLeft } from '@lucide/astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import type { LegalDocument } from '../../lib/legal';
-import { legalLangsOf } from '../../data/apps';
 import { t } from '../../lib/i18n';
-import { alternatesFor, appPath, legalPath } from '../../lib/routes';
+import { appPath, legalPath } from '../../lib/routes';
 import { absolute, ogImage } from '../../lib/seo';
 import { SITE } from '../../data/site';
 
@@ -38,7 +37,6 @@ const jsonLd = {
   title={`${entry.data.title} — ${app.name}`}
   description={entry.data.description}
   path={path}
-  alternates={alternatesFor((l) => legalPath(app, kind, l), legalLangsOf(app))}
   ogImage={ogImage(`${app.slug}-${kind}`)}
   ogType="article"
   jsonLd={jsonLd}

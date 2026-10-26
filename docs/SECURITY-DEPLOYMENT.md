@@ -82,6 +82,5 @@ The static frontend does not send automated email. A trusted server-side trigger
 rate limiting and private credentials is needed before enabling email delivery; never
 put such credentials into this repository. No test email was sent.
 
-The portfolio uses `portfolio_preferred_lang_v2`, starting in English even when an
-older shared Vietnamese preference exists. Explicit language choices are retained.
-PHTV retains its separate language preference and Vietnamese default.
+The website always uses English, except Vietnamese-first PHTV. No saved or browser
+language preference changes the canonical page. Historical locale URLs redirect.
