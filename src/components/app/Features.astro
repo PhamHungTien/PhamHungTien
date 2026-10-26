@@ -19,8 +19,11 @@ const { app, lang } = Astro.props;
   </div>
   <div class="features__layout">
     <ul class="feature-grid" role="list" data-reveal-stagger>
-      {app.features.map((feature) => (
-        <li>
+      {app.features.map((feature, index) => (
+        <li data-spotlight>
+          <span class="feature-number" aria-hidden="true">
+            {String(index + 1).padStart(2, '0')}
+          </span>
           <h3>{feature.title[lang]}</h3>
           <p>{feature.description[lang]}</p>
         </li>
@@ -67,15 +70,22 @@ const { app, lang } = Astro.props;
   .feature-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0 40px;
-    border-top: 1px solid var(--line);
+    gap: 16px;
   }
 
   .feature-grid li {
-    padding: 24px 0;
-    border-bottom: 1px solid var(--line);
+    padding: 28px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    background: var(--surface);
   }
 
+  .feature-number {
+    display: block;
+    margin-bottom: 30px;
+    font: 13px var(--font-mono);
+    color: color-mix(in srgb, var(--app, var(--brand)) 65%, var(--ink));
+  }
   .feature-grid h3 {
     font-size: 17px;
     font-weight: 600;

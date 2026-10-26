@@ -95,3 +95,65 @@ html[data-motion='off']::view-transition-new(*) {
     animation: none !important;
   }
 }
+
+/* Scroll progress uses the browser timeline; unsupported browsers keep a clean header. */
+.reading-progress {
+  display: none;
+}
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    html:not([data-motion='off']) .reading-progress {
+      display: block;
+      position: fixed;
+      inset: 0 0 auto;
+      height: 2px;
+      z-index: 60;
+      pointer-events: none;
+      background: linear-gradient(90deg, var(--brand), var(--gold));
+      transform-origin: left;
+      animation: reading-progress linear both;
+      animation-timeline: scroll();
+    }
+    @keyframes reading-progress {
+      from {
+        transform: scaleX(0);
+      }
+      to {
+        transform: scaleX(1);
+      }
+    }
+  }
+}
+.section-head h2::before {
+  display: block;
+  width: 32px;
+  height: 3px;
+  margin-bottom: 16px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--app, var(--brand)), var(--gold));
+  content: '';
+}
+html[data-motion='off']
+  :is(
+    .orbit__world,
+    .dock img,
+    .app-row__icon,
+    .app-row__preview img,
+    .gallery__preview,
+    .guide-card,
+    .app-hero__media
+  ) {
+  transform: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(
+    .orbit__world,
+    .dock img,
+    .app-row__icon,
+    .app-row__preview img,
+    .gallery__preview,
+    .guide-card
+  ) {
+    transform: none !important;
+  }
+}

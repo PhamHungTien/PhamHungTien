@@ -12,7 +12,13 @@ const { guide } = Astro.props;
 const app = guide.data.app ? appBySlug.get(guide.data.app as AppSlug) : undefined;
 ---
 
-<a class="guide-card" href={guidePath(guide.id)}>
+<a
+  class="guide-card depth-surface"
+  data-tilt
+  data-tilt-strength="4"
+  data-spotlight
+  href={guidePath(guide.id)}
+>
   <span class="guide-card__top">
     {app ? (
       <Image src={app.icon} alt="" width={28} height={28} densities={[1, 2]} loading="lazy" />

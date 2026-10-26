@@ -24,7 +24,14 @@ const others = apps.filter((other) => other.slug !== app.slug);
   <ul class="more__list" role="list" data-reveal-stagger>
     {others.map((other) => (
       <li>
-        <a href={appPath(other, lang)}>
+        <a
+          class="depth-surface"
+          data-tilt
+          data-tilt-strength="5"
+          data-spotlight
+          style={`--app: ${other.accent}`}
+          href={appPath(other, lang)}
+        >
           <Image
             src={other.icon}
             alt=""

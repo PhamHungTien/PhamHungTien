@@ -115,6 +115,8 @@ const secondary = app.links.source
     type="button"
     class="app-hero__media"
     data-tilt
+    data-tilt-strength="10"
+    data-spotlight
     data-lightbox-src={large.src}
     data-lightbox-alt={heroAlt}
     aria-label={`${t(lang, 'app.enlarge')}: ${heroAlt}`}
@@ -163,6 +165,16 @@ const secondary = app.links.source
     pointer-events: none;
   }
 
+  .app-hero::after {
+    position: absolute;
+    z-index: -1;
+    inset: 10% -5% 0 50%;
+    border: 1px solid color-mix(in srgb, var(--app) 18%, transparent);
+    border-radius: 50%;
+    transform: rotate(-24deg) scaleY(0.75);
+    content: '';
+    pointer-events: none;
+  }
   .breadcrumb ol {
     display: flex;
     flex-wrap: wrap;
@@ -238,7 +250,9 @@ const secondary = app.links.source
     border-radius: var(--r-media);
     background:
       radial-gradient(120% 90% at 50% 0%, var(--surface) 0%, transparent 70%), var(--app-soft);
-    box-shadow: var(--shadow-media);
+    box-shadow:
+      var(--shadow-media),
+      0 40px 80px -50px color-mix(in srgb, var(--app) 50%, transparent);
     cursor: zoom-in;
     transform: perspective(1400px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
     transition: transform 600ms var(--ease);
@@ -298,8 +312,7 @@ const secondary = app.links.source
 
     @keyframes app-hero-in {
       from {
-        opacity: 0.01;
-        filter: blur(6px);
+        opacity: 1;
         transform: translateY(20px);
       }
     }

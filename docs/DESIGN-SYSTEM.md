@@ -2,8 +2,8 @@
 
 A cool, precise "workbench": neutral blue-grey paper and navy ink, so the real app icons
 carry the colour. The only brand colours are the maroon and gold that recur across the
-icons themselves. The one expressive element is the home-page dock that shelves every
-app icon; everything around it stays quiet.
+icons themselves. The orbital home hero establishes depth and movement; product previews, local
+spotlights and restrained interaction states carry that language through the site.
 
 ## Brand mark
 
@@ -50,7 +50,7 @@ The discussion boards are React, so they use plain `board-*` classes from
 
 ## Motion and accessibility
 
-- One orchestrated moment: the dock icons rise in on load.
+- The orbital hero and dock introduce the apps; content sections reveal as they enter view.
 - Cross-document view transitions cross-fade pages and move an app icon from the list
   into the app page header (`view-transition-name: app-<slug>`).
 - Everything respects `prefers-reduced-motion`; dialogs are native `<dialog>` elements
@@ -58,3 +58,30 @@ The discussion boards are React, so they use plain `board-*` classes from
 - Off-screen sections use `content-visibility: auto` (`.defer-render`).
 - Every control has a visible focus ring and an accessible name; touch targets are at
   least 40 px; the theme follows the system until the visitor picks one.
+
+## Spatial motion update (October 2026)
+
+The home hero is now a product universe: a CSS 3D brand sphere, orbital rings and
+floating real app icons. Product cards show the actual interface before navigation.
+App heroes, guide cards and recommendations respond to fine pointers; feature cards
+use a local spotlight. Reading progress follows the native CSS scroll timeline.
+
+- `src/scripts/motion.ts` owns the persisted motion switch, system preference and reveals.
+- `src/scripts/tilt.ts` batches pointer events, caches bounds until scroll/resize and
+  removes all listeners and styles when motion is disabled. No perpetual JS loop.
+- `src/styles/motion.css` owns shared effects and reduced-motion overrides.
+- The decorative orbit pauses offscreen and in hidden tabs. Its equivalent accessible
+  links remain in the dock. All content is rendered and readable without JavaScript.
+- The header sparkle button disables motion globally; system Reduce Motion always wins.
+- CSS 3D preserves a lightweight static fallback without a WebGL runtime or model downloads.
+
+Research used for implementation:
+
+- [web.dev: high-performance animations](https://web.dev/articles/animations-guide):
+  prefer transform and opacity; avoid animating layout.
+- [WebKit: scroll-driven animations](https://webkit.org/blog/17101/a-guide-to-scroll-driven-animations-with-just-css/):
+  native scroll timelines with feature detection.
+- [Chrome: cross-document view transitions](https://developer.chrome.com/docs/web-platform/view-transitions/cross-document):
+  retain native multi-page navigation and unique shared icon names.
+- [W3C: animation from interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions):
+  honor reduced motion and provide a user control.

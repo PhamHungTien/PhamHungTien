@@ -72,7 +72,11 @@ export function initAppDirectory() {
   // Filter changes animate as a view transition where supported: rows glide into place.
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
   const update = () => {
-    if (!document.startViewTransition || reduce.matches) {
+    if (
+      !document.startViewTransition ||
+      reduce.matches ||
+      document.documentElement.dataset.motion === 'off'
+    ) {
       apply();
       moveThumb();
       return;

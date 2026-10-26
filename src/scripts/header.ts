@@ -25,7 +25,11 @@ function setTheme(theme: 'light' | 'dark') {
 /** Switches theme; where supported, the new theme grows as a circle out of the toggle. */
 function switchTheme(origin: HTMLElement) {
   const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
-  if (!document.startViewTransition || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (
+    !document.startViewTransition ||
+    root.dataset.motion === 'off' ||
+    matchMedia('(prefers-reduced-motion: reduce)').matches
+  ) {
     setTheme(next);
     return;
   }

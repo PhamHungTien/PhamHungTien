@@ -13,7 +13,12 @@ const { lang } = Astro.props;
 const [email, ...profiles] = socialProfiles;
 ---
 
-<section class="contact container defer-render" id="contact" aria-labelledby="contact-heading">
+<section
+  class="contact container defer-render"
+  id="contact"
+  aria-labelledby="contact-heading"
+  data-spotlight
+>
   <div>
     <h2 id="contact-heading">{t(lang, 'contact.title')}</h2>
     <p>{t(lang, 'contact.body')}</p>
@@ -52,7 +57,8 @@ const [email, ...profiles] = socialProfiles;
     padding: clamp(28px, 5vw, 64px);
     border: 1px solid var(--contact-line);
     border-radius: 32px;
-    background: var(--contact-bg);
+    background:
+      radial-gradient(ellipse at 5% 110%, rgb(122 20 36 / 0.45), transparent 65%), var(--contact-bg);
     color: var(--contact-fg);
   }
 
