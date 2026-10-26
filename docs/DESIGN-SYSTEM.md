@@ -100,3 +100,9 @@ The original transparent PNG layers are retained in `src/assets/planet-artwork`;
 320 px WebP assets for the hero. Monochrome layers use CSS masks with a gold highlight;
 vTTS and LunarBlock retain their original colors. No square app-icon backgrounds are added.
 The sphere shading, atmosphere and arrival are CSS; no WebGL runtime is downloaded.
+
+Planet colors and glyph gradients are stored in `src/data/planet-appearance.ts`, copied from
+the source Icon Composer fills rather than the website UI accent. Five app spheres share
+their original burgundy; vTTS retains blue/violet and LunarBlock retains midnight blue.
+Artwork scales are optically balanced per source canvas, with a consistent 10% planet size
+and a slightly larger PHTV. Lighting uses the same direction and restrained highlights.

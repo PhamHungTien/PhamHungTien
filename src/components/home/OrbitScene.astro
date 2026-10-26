@@ -1,6 +1,7 @@
 ---
 import { getImage } from 'astro:assets';
 import { apps } from '../../data/apps';
+import { planetAppearance } from '../../data/planet-appearance';
 import { appPath } from '../../lib/routes';
 const artworkSources = import.meta.glob<{ default: ImageMetadata }>(
   '../../assets/planet-artwork/*.png',
@@ -56,7 +57,7 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
           data-phase={phases[index]}
           data-track={index % 3}
           data-period={38 + index * 5}
-          style={`--planet-color: ${app.accent}; --planet-size: ${index === 0 ? 10.8 : 8.5 + (index % 3)}%;`}
+          style={`--planet-color: ${planetAppearance[app.slug].base}; --planet-pole: ${planetAppearance[app.slug].pole}; --glyph-start: ${planetAppearance[app.slug].glyphStart}; --glyph-end: ${planetAppearance[app.slug].glyphEnd}; --artwork-size: ${planetAppearance[app.slug].artworkSize}%; --planet-size: ${index === 0 ? 10.8 : 10}%;`}
         >
           <span class="planet__body">
             {['vtts', 'lunarblock'].includes(app.slug) ? (
@@ -165,7 +166,7 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
     inset: 22%;
     width: 56%;
     height: 56%;
-    transform: rotate(-8deg);
+    transform: rotate(-5deg);
     filter: drop-shadow(0 7px 3px rgb(37 10 27 / 0.4));
   }
   .orbit__corona {
@@ -200,9 +201,10 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
     border-radius: 50%;
     background: radial-gradient(
       circle at 30% 25%,
-      color-mix(in srgb, var(--planet-color) 32%, #fff),
-      var(--planet-color) 46%,
-      #100d1d 95%
+      color-mix(in srgb, var(--planet-pole) 60%, #fff) 0%,
+      color-mix(in srgb, var(--planet-pole) 85%, #fff) 16%,
+      var(--planet-color) 48%,
+      color-mix(in srgb, var(--planet-color) 28%, #06040a) 95%
     );
     box-shadow:
       inset -9px -10px 18px rgb(0 0 0 / 0.65),
@@ -210,27 +212,23 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
       0 16px 20px -12px rgb(0 0 0 / 0.6);
   }
   .planet__artwork {
-    width: 80%;
-    height: 80%;
+    width: var(--artwork-size);
+    height: var(--artwork-size);
     object-fit: contain;
     filter: drop-shadow(2px 5px 2px rgb(15 7 22 / 0.5));
-    transform: rotate(-8deg);
+    transform: rotate(-5deg);
   }
   .planet__glyph {
-    background: linear-gradient(165deg, #fffbe6 12%, #f5d938 65%, #d6a726);
+    background: linear-gradient(165deg, var(--glyph-start) 12%, var(--glyph-end) 85%);
     mask: var(--glyph) center / contain no-repeat;
-  }
-  .planet__glyph--phtv {
-    width: 98%;
-    height: 98%;
   }
   .planet__light {
     position: absolute;
     inset: 0;
     border-radius: 50%;
     background:
-      radial-gradient(ellipse at 28% 18%, rgb(255 255 255 / 0.65), transparent 27%),
-      linear-gradient(140deg, transparent 40%, rgb(6 7 19 / 0.65));
+      radial-gradient(ellipse at 28% 18%, rgb(255 255 255 / 0.3), transparent 25%),
+      linear-gradient(140deg, transparent 55%, rgb(6 7 19 / 0.4));
     pointer-events: none;
   }
   .planet__atmosphere {
