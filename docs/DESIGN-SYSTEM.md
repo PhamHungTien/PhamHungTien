@@ -112,3 +112,9 @@ inertia decay. The scene uses `pan-y pinch-zoom` so vertical scrolling and pinch
 native. A directional threshold preserves taps, and drag completion suppresses accidental
 link activation. Touch does not set sticky hover or keyboard focus pauses. Inner artwork
 is 20% smaller to leave breathing room within the spherical surface.
+
+The home hero fills the first small viewport below the 68 px header. Orbit width is
+limited by both the container and remaining viewport height, reserving space for actions.
+Portrait phones use a square scene; desktop and short landscape screens use 3:2. Short
+landscape screens keep actions in one row and omit the decorative hint to avoid collisions.
+The app directory starts below the initial viewport. `svh` avoids browser-toolbar resize jumps.

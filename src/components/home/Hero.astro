@@ -35,7 +35,13 @@ const { lang } = Astro.props;
 <style>
   .hero {
     position: relative;
-    padding-top: clamp(16px, 3vh, 40px);
+    --hero-reserve: 92px;
+    --orbit-ratio: 1.5;
+    min-height: calc(100svh - var(--header-height));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-block: 16px;
   }
   .hero__actions {
     position: relative;
@@ -65,6 +71,10 @@ const { lang } = Astro.props;
     transform: translateY(3px);
   }
   @media (max-width: 560px) {
+    .hero {
+      --hero-reserve: 156px;
+      --orbit-ratio: 1;
+    }
     .hero__actions {
       gap: 12px 24px;
     }
@@ -72,6 +82,21 @@ const { lang } = Astro.props;
       flex-basis: 100%;
       max-width: 280px;
       margin-inline: 20%;
+    }
+  }
+  @media (max-height: 500px) and (min-width: 480px) {
+    .hero {
+      --hero-reserve: 80px;
+      --orbit-ratio: 1.5;
+      padding-block: 10px;
+    }
+    .hero__actions {
+      margin-top: 8px;
+      gap: 12px 20px;
+    }
+    .hero__actions .button {
+      flex-basis: auto;
+      margin-inline: 0;
     }
   }
 </style>

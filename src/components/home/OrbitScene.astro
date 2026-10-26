@@ -104,8 +104,13 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
 <style>
   .orbit {
     position: relative;
-    width: min(100%, 1080px);
-    aspect-ratio: 1.5;
+    width: min(
+      100%,
+      1080px,
+      calc((100svh - var(--header-height) - var(--hero-reserve)) * var(--orbit-ratio))
+    );
+    aspect-ratio: var(--orbit-ratio);
+    flex-shrink: 0;
     margin-inline: auto;
     isolation: isolate;
     touch-action: pan-y pinch-zoom;
@@ -369,10 +374,6 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
     animation-play-state: paused;
   }
   @media (max-width: 560px) {
-    .orbit {
-      aspect-ratio: 1;
-      margin-block: 18px;
-    }
     .orbit__core {
       width: 28%;
     }
@@ -385,6 +386,15 @@ const phases = [-135, -70, 10, 65, 140, 195, 265];
     }
     .orbit__hint {
       font-size: 9px;
+    }
+  }
+  @media (max-height: 500px) and (min-width: 480px) {
+    .orbit__hint {
+      display: none;
+    }
+    .planet__name {
+      font-size: 9px;
+      top: calc(100% + 5px);
     }
   }
 </style>
