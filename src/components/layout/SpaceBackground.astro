@@ -55,6 +55,12 @@ const stars = Array.from({ length: 110 }, (_, i) => ({
   .space__near {
     opacity: 0.8;
   }
+  :global(html[data-theme='dark']) .space__nebula {
+    display: none;
+  }
+  :global(html[data-theme='dark']) svg {
+    fill: #dce0e8;
+  }
   :global(html[data-theme='light']) .space__nebula {
     opacity: 0.22;
   }

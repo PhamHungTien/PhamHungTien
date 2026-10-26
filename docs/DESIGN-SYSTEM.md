@@ -159,3 +159,6 @@ The central corona and all visible orbital paths have been removed (superseding 
 previous split SVG path treatment). The seven independent orbital planes and speed curves
 remain. Each planet's artwork has a distinct 9–25 second drift period, phase and alternating
 direction; modest translation and rotation preserve recognizable artwork and stable links.
+
+Dark mode uses a pure black (#000000) space background and neutral stars. Colored nebula
+overlays are disabled in dark mode; the light theme retains its subdued nebula treatment.
