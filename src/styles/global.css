@@ -536,21 +536,6 @@ kbd {
   }
 }
 
-/* Scroll reveal: classes are added by the inline script in BaseLayout, only to content
-   that starts below the fold, and removed again once the entrance has played. */
-.reveal {
-  opacity: 0;
-  transform: translateY(16px);
-}
-
-.reveal.is-revealed {
-  opacity: 1;
-  transform: none;
-  transition:
-    opacity 560ms var(--ease) var(--reveal-delay, 0ms),
-    transform 720ms var(--ease) var(--reveal-delay, 0ms);
-}
-
 /* Switching tabs on an app page fades the new panel in. */
 @media (prefers-reduced-motion: no-preference) {
   [data-tab-panel]:not([hidden]) {

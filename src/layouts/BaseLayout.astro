@@ -4,6 +4,7 @@
  * footer and the shared donate dialog.
  */
 import '../styles/global.css';
+import '../styles/motion.css';
 import latin400 from '@fontsource/be-vietnam-pro/files/be-vietnam-pro-latin-400-normal.woff2?url';
 import latin700 from '@fontsource/be-vietnam-pro/files/be-vietnam-pro-latin-700-normal.woff2?url';
 import vietnamese700 from '@fontsource/be-vietnam-pro/files/be-vietnam-pro-vietnamese-700-normal.woff2?url';
@@ -189,6 +190,9 @@ const speculationRules = {
           if (stored === 'light' || stored === 'dark') theme = stored;
         } catch {}
         document.documentElement.dataset.theme = theme;
+        try {
+          document.documentElement.dataset.motion = localStorage.getItem('motion') ?? 'on';
+        } catch {}
       })();
     </script>
   </head>
@@ -199,46 +203,8 @@ const speculationRules = {
     </main>
     <Footer lang={lang} compact={compactFooter} />
     <DonateDialog lang={lang} />
-    <!--
-      Scroll reveal. Inline and synchronous so it runs before first paint: only content
-      that starts below the fold is hidden, so nothing visible ever blinks, and if this
-      never runs (old browser, reduced motion) everything simply stays visible.
-    -->
-    <script is:inline>
-      (() => {
-        if (
-          !('IntersectionObserver' in window) ||
-          matchMedia('(prefers-reduced-motion: reduce)').matches
-        )
-          return;
-        const fold = innerHeight;
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries
-              .filter((entry) => entry.isIntersecting)
-              .forEach((entry, order) => {
-                const el = entry.target;
-                observer.unobserve(el);
-                // Items that arrive together cascade; each batch starts from zero.
-                el.style.setProperty('--reveal-delay', `${Math.min(order, 8) * 70}ms`);
-                el.classList.add('is-revealed');
-                const done = () => {
-                  el.classList.remove('reveal', 'is-revealed');
-                  el.style.removeProperty('--reveal-delay');
-                };
-                setTimeout(done, 1200 + order * 70);
-              });
-          },
-          { rootMargin: '0px 0px -6% 0px' },
-        );
-        for (const el of document.querySelectorAll(
-          '.section-head, [data-reveal], [data-reveal-stagger] > *',
-        )) {
-          if (el.getBoundingClientRect().top < fold) continue;
-          el.classList.add('reveal');
-          observer.observe(el);
-        }
-      })();
+    <script>
+      import '../scripts/motion';
     </script>
   </body>
 </html>

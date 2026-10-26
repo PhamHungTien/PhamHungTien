@@ -1,5 +1,5 @@
 ---
-import { Menu, X, Moon, Sun } from '@lucide/astro';
+import { Menu, X, Moon, Sun, Sparkles } from '@lucide/astro';
 import Logo from '../ui/Logo.astro';
 import LanguagePicker from './LanguagePicker.astro';
 import type { Locale as Lang } from '../../i18n/locales';
@@ -54,6 +54,24 @@ const { lang, nav, alternates } = Astro.props;
     >
       <Moon class="theme-icon theme-icon--moon" size={18} aria-hidden="true" />
       <Sun class="theme-icon theme-icon--sun" size={18} aria-hidden="true" />
+    </button>
+    <button
+      class="icon-button motion-toggle"
+      type="button"
+      data-motion-toggle
+      aria-pressed="true"
+      aria-label={
+        lang === 'vi'
+          ? 'Hiệu ứng chuyển động'
+          : lang === 'fr'
+            ? 'Animations'
+            : lang === 'ja'
+              ? 'アニメーション'
+              : 'Motion effects'
+      }
+      title={lang === 'vi' ? 'Bật/tắt hiệu ứng chuyển động' : 'Toggle motion effects'}
+    >
+      <Sparkles size={18} aria-hidden="true" />
     </button>
     <button
       class="icon-button menu-toggle"

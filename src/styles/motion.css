@@ -1,0 +1,97 @@
+/* Shared motion contract: visible HTML first, enhancement only after JS is ready. */
+.motion-pending {
+  opacity: 0;
+}
+.motion-pending:focus-within {
+  opacity: 1;
+}
+
+.motion-toggle[aria-pressed='true'] {
+  color: var(--brand);
+  border-color: var(--brand);
+}
+.motion-toggle[aria-pressed='false'] {
+  opacity: 0.65;
+}
+.motion-toggle:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+[data-spotlight] {
+  position: relative;
+  isolation: isolate;
+}
+[data-spotlight]::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(
+    320px circle at var(--pointer-x, 50%) var(--pointer-y, 50%),
+    color-mix(in srgb, var(--app, var(--gold)) 17%, transparent),
+    transparent 75%
+  );
+  opacity: 0;
+  content: '';
+  pointer-events: none;
+  transition: opacity 300ms ease;
+}
+[data-spotlight][data-pointer-active]::after {
+  opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html:not([data-motion='off']) .depth-surface {
+    transform: perspective(1100px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+    transition:
+      transform 500ms var(--ease),
+      border-color 250ms ease;
+  }
+  html:not([data-motion='off']) .depth-surface[data-pointer-active] {
+    transition-duration: 140ms;
+  }
+  html:not([data-motion='off']) .button:hover {
+    translate: 0 -2px;
+  }
+}
+.button {
+  transition:
+    translate 280ms var(--ease),
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms var(--ease);
+}
+
+html[data-motion='off'] {
+  scroll-behavior: auto;
+}
+html[data-motion='off'] *,
+html[data-motion='off'] *::before,
+html[data-motion='off'] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+html[data-motion='off'] .motion-pending {
+  opacity: 1;
+}
+html[data-motion='off']::view-transition-group(*),
+html[data-motion='off']::view-transition-old(*),
+html[data-motion='off']::view-transition-new(*) {
+  animation: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .motion-pending {
+    opacity: 1;
+  }
+  [data-tilt] {
+    transform: none !important;
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
