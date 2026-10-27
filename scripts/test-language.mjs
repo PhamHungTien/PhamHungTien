@@ -20,7 +20,7 @@ for (const app of [
   'LunarBlock',
   'PHTV',
 ]) {
-  const lang = app === 'PHTV' ? 'vi' : 'en';
+  const lang = ['PHTV', 'LunarV'].includes(app) ? 'vi' : 'en';
   for (const file of ['index.html', 'privacy.html', 'terms.html']) {
     const html = await read(`${app}/${file}`);
     assert.ok(html.includes(`<html lang="${lang}"`), `${app}/${file} language`);
@@ -35,6 +35,8 @@ for (const [oldPath, target] of [
   ['ja/index.html', '/'],
   ['vi/vTTS/index.html', '/vTTS/'],
   ['en/PHTV/index.html', '/PHTV/'],
+  ['en/LunarV/index.html', '/LunarV/'],
+  ['vi/LunarV/index.html', '/LunarV/'],
   ['en/PHTV/privacy.html', '/PHTV/privacy.html'],
   ['vi/privacy/index.html', '/privacy/'],
   ['huong-dan/index.html', '/guides/'],
@@ -70,11 +72,18 @@ for (const guide of guides.filter((entry) => entry.isDirectory())) {
   const lang = englishGuides.includes(guide.name) ? 'en' : 'vi';
   assert.ok(html.includes(`<html lang="${lang}"`), `${guide.name}: guide language`);
 }
+const lunar = await read('LunarV/index.html');
+assert.ok(lunar.includes('Lịch âm Việt Nam trên thiết bị Apple.'));
+assert.ok(lunar.includes('Bài viết tiếng Anh'));
+const lunarPrivacy = await read('LunarV/privacy.html');
+assert.ok(lunarPrivacy.includes('không thu thập, lưu trữ hoặc truyền'));
+const lunarTerms = await read('LunarV/terms.html');
+assert.ok(lunarTerms.includes('Điều khoản sử dụng'));
 const sitemap = await read('sitemap.xml');
 assert.ok(
   !/<loc>[^<]*\/(vi|en|fr|ja|huong-dan)\//.test(sitemap),
   'Sitemap only contains canonical pages',
 );
 console.log(
-  '✓ English site, Vietnamese PHTV, guide languages, removed picker, legacy query/hash redirects and canonical sitemap',
+  '✓ English site, Vietnamese PHTV and LunarV, guide languages, removed picker, legacy query/hash redirects and canonical sitemap',
 );

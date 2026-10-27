@@ -56,14 +56,14 @@ scripts/                  Build, verification and content tools (Node)
 
 ## Routes and languages
 
-The public website is English, except Vietnamese-first PHTV and its tutorials.
+The public website is English, except Vietnamese-first PHTV, LunarV and PHTV tutorials.
 Each destination has one canonical URL. See [LANGUAGES.md](LANGUAGES.md).
 
 | URL                                        | Content                                       |
 | ------------------------------------------ | --------------------------------------------- |
 | `/`                                        | English home                                  |
 | `/vTTS/`                                   | English app page                              |
-| `/PHTV/`                                   | Vietnamese-first PHTV                         |
+| `/PHTV/`, `/LunarV/`                       | Vietnamese-first app pages                    |
 | `/<App>/privacy.html`, `/<App>/terms.html` | App legal documents                           |
 | `/guides/`                                 | English guide index                           |
 | `/guides/<slug>/`                          | English articles or Vietnamese PHTV tutorials |

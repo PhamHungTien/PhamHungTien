@@ -131,7 +131,7 @@ label the image enlargement action. Facts use a single rounded panel; the first 
 gets more visual emphasis. FAQ uses a two-column editorial layout on desktop and stacks
 on mobile. The gallery explains scrolling/enlargement. Decorative hero rings are omitted
 on stacked layouts to keep text clear. These components serve all seven apps, preserving
-Vietnamese PHTV content and English on other product pages.
+Vietnamese PHTV and LunarV content and English on other product pages.
 
 ### Independent orbital planes
 

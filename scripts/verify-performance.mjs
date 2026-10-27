@@ -23,7 +23,7 @@ for (const route of routes) {
   if (gzip > 25_000) errors.push(`gzip HTML ${gzip} exceeds 25,000 bytes`);
   if (!/<link\b[^>]*rel="stylesheet"/.test(html)) errors.push('Missing cacheable stylesheet');
   if (
-    route !== 'PHTV/index.html' &&
+    !/<html\b[^>]*lang="vi"/.test(html) &&
     /<link\b(?=[^>]*rel="preload")(?=[^>]*vietnamese)[^>]*>/.test(html)
   )
     errors.push('Unnecessary Vietnamese font preload');

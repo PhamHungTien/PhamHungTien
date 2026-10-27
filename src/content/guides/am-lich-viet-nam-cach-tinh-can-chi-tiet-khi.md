@@ -1,6 +1,8 @@
 ---
 title: 'The Vietnamese lunar calendar: leap months, zodiac cycles and solar terms'
 description: Understand Vietnam's lunar calendar, leap months, the 60-year stem-branch cycle, solar terms and why Vietnamese and Chinese New Year sometimes differ.
+titleVi: 'Âm lịch Việt Nam: tháng nhuận, can chi và tiết khí'
+descriptionVi: 'Tìm hiểu tháng nhuận, chu kỳ can chi, tiết khí và vì sao Tết Việt Nam đôi khi khác Tết Trung Quốc.'
 published: 2026-10-15
 app: lunarv
 topic: Calendar essentials

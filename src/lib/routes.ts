@@ -1,7 +1,7 @@
 import type { App, Lang } from '../data/types';
 import type { Locale } from '../i18n/locales';
 
-/** One canonical language per destination: English, except Vietnamese-first PHTV. */
+/** One canonical language per destination: English, except Vietnamese-first PHTV and LunarV. */
 export const SITE_DEFAULT_LANG: Lang = 'en';
 export const homePath = (_lang?: Locale) => '/';
 export const appPath = (app: App, _lang?: Locale) => app.route;

@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import { appBySlug } from '../../data/apps';
 import type { AppSlug } from '../../data/types';
-import { formatDate, guidePath, readingMinutes, type Guide } from '../../lib/guides';
+import { formatDate, guideLang, guidePath, readingMinutes, type Guide } from '../../lib/guides';
 
 interface Props {
   guide: Guide;
@@ -27,12 +27,22 @@ const app = guide.data.app ? appBySlug.get(guide.data.app as AppSlug) : undefine
       <span class="guide-card__dot" aria-hidden="true" />
     )}
     <span>
-      {lang === 'en' && guide.data.app === 'phtv' ? 'PHTV · Tiếng Việt' : guide.data.topic}
+      {lang === 'en' && guideLang(guide) === 'vi'
+        ? `${app?.name ?? guide.data.topic} · Tiếng Việt`
+        : lang === 'vi' && guideLang(guide) === 'en'
+          ? 'Bài viết tiếng Anh'
+          : guide.data.topic}
     </span>
   </span>
-  <h3>{lang === 'en' ? (guide.data.titleEn ?? guide.data.title) : guide.data.title}</h3>
+  <h3>
+    {lang === 'en'
+      ? (guide.data.titleEn ?? guide.data.title)
+      : (guide.data.titleVi ?? guide.data.title)}
+  </h3>
   <p>
-    {lang === 'en' ? (guide.data.descriptionEn ?? guide.data.description) : guide.data.description}
+    {lang === 'en'
+      ? (guide.data.descriptionEn ?? guide.data.description)
+      : (guide.data.descriptionVi ?? guide.data.description)}
   </p>
   <span class="guide-card__meta">
     <time datetime={guide.data.published}>{formatDate(guide.data.published)}</time> ·

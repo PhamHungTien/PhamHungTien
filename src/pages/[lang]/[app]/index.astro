@@ -6,9 +6,13 @@ import { otherLang } from '../../../lib/i18n';
 
 /** Each app in its second language, under a language prefix (e.g. /vi/vTTS/, /en/PHTV/). */
 export const getStaticPaths = (() =>
-  apps.map((app) => {
-    const lang = otherLang(defaultLangOf(app));
-    return { params: { lang, app: appSegment(app) }, props: { app, lang } };
+  apps.flatMap((app) => {
+    // Preserve the former /vi/LunarV/ redirect as well as the new /en/LunarV/ alias.
+    const languages = app.slug === 'lunarv' ? ['en', 'vi'] : [otherLang(defaultLangOf(app))];
+    return languages.map((lang) => ({
+      params: { lang, app: appSegment(app) },
+      props: { app, lang },
+    }));
   })) satisfies GetStaticPaths;
 
 const { app } = Astro.props;

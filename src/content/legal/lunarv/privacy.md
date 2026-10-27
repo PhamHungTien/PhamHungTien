@@ -1,25 +1,27 @@
 ---
-title: "Privacy Policy"
-description: "Chính sách riêng tư của LunarV. Xem thông tin về dữ liệu và quyền sử dụng ứng dụng."
-updated: "May 26, 2026"
-lang: en
+title: 'Chính sách quyền riêng tư'
+description: 'Chính sách riêng tư của LunarV. Xem thông tin về dữ liệu và quyền sử dụng ứng dụng.'
+updated: '26 tháng 5, 2026'
+lang: vi
 ---
-## Overview
 
-LunarV is a lunar calendar application for iPhone, iPad, Mac, and Apple Vision Pro. This policy explains how LunarV handles your data.
+## Tổng quan
 
-## Data Collection
+LunarV là ứng dụng lịch âm dành cho iPhone, iPad, Mac và Apple Vision Pro. Chính sách này giải thích cách LunarV xử lý dữ liệu của bạn.
 
-**LunarV does not collect, store, or transmit any personal data.**
+## Thu thập dữ liệu
 
-- LunarV does not include any third-party analytics SDKs, advertising, or tracking frameworks.
-- All calendar data, family occasions, and reminders are processed locally on your device.
+**LunarV không thu thập, lưu trữ hoặc truyền bất kỳ dữ liệu cá nhân nào.**
 
-## Network Access
+- LunarV không tích hợp SDK phân tích của bên thứ ba, quảng cáo hoặc công cụ theo dõi.
+- Toàn bộ dữ liệu lịch, dịp gia đình và lời nhắc được xử lý cục bộ trên thiết bị của bạn.
 
-LunarV does not include an in-app update downloader or installer. Updates are distributed through the App Store; the app opens external links only when you choose them.
+## Truy cập mạng
 
-## Contact
+LunarV không có công cụ tải xuống hoặc cài đặt bản cập nhật trong ứng dụng. Các bản cập nhật được phân phối qua App Store; ứng dụng chỉ mở liên kết bên ngoài khi bạn chọn.
 
-If you have any questions about this policy, please contact:  
+## Liên hệ
+
+Nếu có câu hỏi về chính sách này, vui lòng liên hệ:
+
 **contact@phamhungtien.com**

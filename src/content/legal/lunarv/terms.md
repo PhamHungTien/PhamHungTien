@@ -1,26 +1,28 @@
 ---
-title: "Terms of Use"
-description: "Điều khoản sử dụng của LunarV. Xem thông tin về dữ liệu và quyền sử dụng ứng dụng."
-updated: "May 26, 2026"
-lang: en
+title: 'Điều khoản sử dụng'
+description: 'Điều khoản sử dụng của LunarV. Xem thông tin về dữ liệu và quyền sử dụng ứng dụng.'
+updated: '26 tháng 5, 2026'
+lang: vi
 ---
-## Acceptance of Terms
 
-By downloading, installing, or using LunarV, you agree to be bound by these Terms of Use.
+## Chấp nhận điều khoản
 
-## App Distribution
+Khi tải xuống, cài đặt hoặc sử dụng LunarV, bạn đồng ý tuân theo các Điều khoản sử dụng này.
 
-LunarV is distributed for iPhone, iPad, Mac, and Apple Vision Pro through the App Store under Apple's applicable terms and the terms of the app.
+## Phân phối ứng dụng
 
-## Disclaimer of Warranties
+LunarV được phân phối cho iPhone, iPad, Mac và Apple Vision Pro qua App Store, theo các điều khoản áp dụng của Apple và các điều khoản của ứng dụng.
 
-LunarV is provided "AS IS", without warranty of any kind, express or implied. We do not guarantee absolute accuracy of the lunar calendar calculations. You use this application at your own risk.
+## Tuyên bố miễn trừ bảo đảm
 
-## Modifications to the App
+LunarV được cung cấp **“NGUYÊN TRẠNG”**, không có bất kỳ bảo đảm nào, dù rõ ràng hay ngụ ý. Chúng tôi không bảo đảm các phép tính lịch âm chính xác tuyệt đối. Bạn tự chịu rủi ro khi sử dụng ứng dụng này.
 
-We reserve the right to modify or discontinue the app (or any part thereof) at any time without notice.
+## Thay đổi ứng dụng
 
-## Contact
+Chúng tôi có quyền thay đổi hoặc ngừng cung cấp ứng dụng (hoặc bất kỳ phần nào của ứng dụng) vào bất kỳ lúc nào mà không cần thông báo.
 
-If you have any questions about these terms, please contact:  
+## Liên hệ
+
+Nếu có câu hỏi về các điều khoản này, vui lòng liên hệ:
+
 **contact@phamhungtien.com**

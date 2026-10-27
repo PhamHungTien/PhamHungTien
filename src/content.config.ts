@@ -32,7 +32,9 @@ const guides = defineCollection({
     title: z.string(),
     description: z.string().min(50).max(170),
     titleEn: z.string().optional(),
+    titleVi: z.string().optional(),
     descriptionEn: z.string().optional(),
+    descriptionVi: z.string().optional(),
     published: isoDate,
     updated: isoDate.optional(),
     /** App slug the guide is about; links the guide and the app page to each other. */
