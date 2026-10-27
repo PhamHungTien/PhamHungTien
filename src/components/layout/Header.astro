@@ -103,6 +103,19 @@ const { lang, nav } = Astro.props;
     backdrop-filter: saturate(160%) blur(16px);
   }
 
+  :global(html[data-home-header]) .site-header {
+    position: fixed;
+    inset: 0 0 auto;
+    transition:
+      transform 300ms var(--ease),
+      opacity 250ms ease;
+  }
+  :global(html[data-home-header='hidden']) .site-header:not(:focus-within) {
+    transform: translateY(-110%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
   .skip-link {
     position: absolute;
     top: 12px;

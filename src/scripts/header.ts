@@ -105,7 +105,18 @@ function initMenu() {
   });
 }
 
+function initHomeHeader() {
+  if (root.dataset.home !== 'true') return;
+  const update = () => {
+    root.dataset.homeHeader = window.scrollY > 12 ? 'visible' : 'hidden';
+  };
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('pageshow', update);
+  update();
+}
+
 export function initHeader() {
+  initHomeHeader();
   initTheme();
   initMenu();
 }

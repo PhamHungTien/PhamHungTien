@@ -179,3 +179,14 @@ scan. Active meteors are cancelled when the page is hidden or reduced motion is 
 The central body uses ochre, clay and brown shading, a quiet mineral texture and a soft
 directional highlight rather than a star corona. Its responsive diameter is larger but
 limited by available space; app links retain their own paths and keyboard focus.
+
+### Home navigation and app visibility
+
+The home header is fixed and hidden at the top, revealing after scrolling 12 px or when
+keyboard focus enters it. Other pages retain the sticky header; without JavaScript it
+remains available. The home hero fills the viewport freed by the header.
+
+On initial layout, the engine chooses an opening rotation by evaluating app clearance
+from the central planet and other app bodies for the current viewport. When a moving app
+would overlap the center in projection, it draws in front so it remains visible and
+clickable. This is a presentation choice; near/far scale and shading are retained.

@@ -139,6 +139,7 @@ export function initPlanetSystem(): void {
   let yaw = 0; // Pointer-driven turn of the system toward the mouse
   let timeScale = 1;
   let rotation = 0; // Shared orbital angle of the whole system
+  let openingAngleChosen = false;
   let velocity = 0; // Extra spin from dragging, decays with inertia
   let arrival = 0;
   let arrived = false;
@@ -258,6 +259,36 @@ export function initPlanetSystem(): void {
       p.orbit.radius = inner + (OUTER - inner) * p.def.reach;
     });
 
+    if (!openingAngleChosen) {
+      // Start with the clearest composition for this screen and camera angle.
+      const camera = { pitch: basePitch, roll: baseRoll };
+      let bestScore = -Infinity;
+      for (let i = 0; i < 144; i++) {
+        const angle = (i * TAU) / 144;
+        const projected = planets.map((p) => project(p.slot + angle, p.orbit, camera, unit));
+        let score = Infinity;
+        projected.forEach((point, index) => {
+          score = Math.min(
+            score,
+            Math.hypot(point.x, point.y) - sunSize * 0.5 - planetSize * point.scale * 0.5,
+          );
+          for (let j = 0; j < index; j++) {
+            const other = projected[j];
+            score = Math.min(
+              score,
+              Math.hypot(point.x - other.x, point.y - other.y) -
+                planetSize * (point.scale + other.scale) * 0.5,
+            );
+          }
+        });
+        if (score > bestScore) {
+          bestScore = score;
+          rotation = angle;
+        }
+      }
+      openingAngleChosen = true;
+    }
+
     scene!.style.setProperty('--planet-unit', `${planetSize.toFixed(1)}px`);
     scene!.style.setProperty('--sun-size', `${sunSize.toFixed(1)}px`);
     scene!.style.setProperty('--sun-x', `${center.x.toFixed(1)}px`);
@@ -301,9 +332,13 @@ export function initPlanetSystem(): void {
       el.style.setProperty('--s', pt.scale.toFixed(4));
       el.style.setProperty('--depth', depth.toFixed(3));
       el.style.setProperty('--label', p.labelAlpha.toFixed(3));
-      // Below the sun (z-index 10) when behind it, above it when in front; sorted by depth.
+      // Keep every app visible and clickable when it crosses the central planet.
+      const overlapsCore =
+        Math.hypot(pt.x, pt.y) < (sunSize + planetSize * p.size * pt.scale) * 0.5 + 4;
       el.style.zIndex = String(
-        pt.z < 0 ? 2 + Math.round((depth + 1) * 3) : 20 + Math.round(depth * 30),
+        pt.z < 0 && !overlapsCore
+          ? 2 + Math.round((depth + 1) * 3)
+          : 20 + Math.round((depth + 1) * 15),
       );
       el.style.opacity = appear.toFixed(3);
 

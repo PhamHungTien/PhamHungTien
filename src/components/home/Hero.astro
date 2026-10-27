@@ -60,6 +60,7 @@ const socials = [
 <style>
   .hero {
     position: relative;
+    --header-height: 0px;
     --hero-reserve: 92px;
     --orbit-max-height: 0.95;
     min-height: calc(100svh - var(--header-height));
@@ -67,6 +68,9 @@ const socials = [
     flex-direction: column;
     justify-content: center;
     padding-block: 16px;
+  }
+  :global(html:not([data-home-header])) .hero {
+    --header-height: 68px;
   }
   /* Full-bleed sky behind the universe: a faint band of the galaxy. */
   .hero__sky {

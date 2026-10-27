@@ -79,7 +79,7 @@ const speculationRules = {
 ---
 
 <!doctype html>
-<html lang={htmlLang(lang)} data-theme="dark">
+<html lang={htmlLang(lang)} data-theme="dark" data-home={path === '/' ? 'true' : undefined}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -143,6 +143,8 @@ const speculationRules = {
           if (stored === 'light' || stored === 'dark') theme = stored;
         } catch {}
         document.documentElement.dataset.theme = theme;
+        if (document.documentElement.dataset.home === 'true')
+          document.documentElement.dataset.homeHeader = window.scrollY > 12 ? 'visible' : 'hidden';
         try {
           document.documentElement.dataset.motion = 'on';
         } catch {}

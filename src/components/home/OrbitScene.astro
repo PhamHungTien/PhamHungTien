@@ -57,6 +57,7 @@ const artwork = await Promise.all(
             data-planet
             data-app-slug={app.slug}
             data-track={index}
+            data-size={index === 0 ? 1.1 : 1}
             data-track-color={appearance.track}
             style={`--planet-color: ${appearance.base}; --planet-pole: ${appearance.pole}; --planet-glow: ${appearance.glow}; --track-color: ${appearance.track}; --glyph-start: ${appearance.glyphStart}; --glyph-end: ${appearance.glyphEnd}; --artwork-size: ${appearance.artworkSize}%; --art-dx: ${appearance.artOffsetX}%; --art-dy: ${appearance.artOffsetY}%; --planet-k: ${index === 0 ? 1.1 : 1}; --spin-duration: ${9 + index * 2.7}s; --spin-delay: ${index * -2.3}s; --spin-direction: ${index % 2 ? 'reverse' : 'normal'};`}
           >
