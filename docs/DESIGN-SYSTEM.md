@@ -214,3 +214,11 @@ taken into account. The listener is removed offscreen, in hidden tabs and under 
 motion; it recalibrates when restarted. No sensor values are stored or transmitted. Swipe
 remains available, and devices requiring explicit permission use the existing motion only.
 See [MDN's device orientation guidance](https://developer.mozilla.org/en-US/docs/Web/API/Device_orientation_events/Detecting_device_orientation).
+
+### Screenshot galleries
+
+All app screenshots, including Chinese LunarV, use the same responsive grid rather than a
+horizontal carousel. Landscape images span two columns; portrait images share a row on
+mobile. Each keeps its aspect ratio inside a rounded, focusable preview and opens the
+existing full-size viewer. Responsive image sources and lazy loading remain enabled.
+Home directory previews use rounded image edges to match their surrounding frames.

@@ -338,10 +338,13 @@ const groups = PLATFORM_GROUPS.filter((group) =>
       var(--surface-2);
   }
   .app-row__preview img {
-    width: 100%;
-    height: 100%;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
     min-height: 0;
     object-fit: contain;
+    border-radius: 12px;
     filter: drop-shadow(0 18px 14px rgb(0 0 0 / 0.15));
     transition: transform 700ms var(--ease);
   }

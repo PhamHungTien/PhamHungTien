@@ -4,6 +4,7 @@ import { Download, Mail, ChevronRight } from '@lucide/astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Contact from '../../../components/layout/Contact.astro';
 import Lightbox from '../../../components/ui/Lightbox.astro';
+import Gallery from '../../../components/app/Gallery.astro';
 import AppBoard from '../../../components/community/AppBoard';
 import { apps, appBySlug } from '../../../data/apps';
 import { appPath } from '../../../lib/routes';
@@ -17,15 +18,6 @@ const hero = await getImage({
   width: Math.min(app.heroImage.width, 2000),
   format: 'webp',
 });
-const shots = await Promise.all(
-  app.gallery.map(async (image, index) => ({
-    ...image,
-    large: (
-      await getImage({ src: image.src, width: Math.min(image.src.width, 2000), format: 'webp' })
-    ).src,
-    caption: `${index < 3 ? 'iPad' : index < 6 ? 'iPhone' : 'Mac'} 界面 · ${index < 3 ? index + 1 : index < 6 ? index - 2 : 1}`,
-  })),
-);
 const features = [
   ['农历与公历', '查看农历、公历、干支和节气，快速转换日期。'],
   ['家庭纪念日', '按农历或公历记录忌日、生日和重要日子。'],
@@ -155,30 +147,7 @@ const jsonLd = {
         <a href="/zh/LunarV/terms.html">使用条款</a>
       </p>
     </section>
-    <section id="gallery" class="container section" aria-labelledby="zh-gallery">
-      <div class="section-head">
-        <div>
-          <span class="section-kicker">探索应用</span>
-          <h2 id="zh-gallery">屏幕截图</h2>
-          <p>滑动浏览，选择图片可放大。</p>
-        </div>
-      </div>
-      <ul class="zh-gallery" role="list">
-        {shots.map((shot) => (
-          <li>
-            <button
-              type="button"
-              data-lightbox-src={shot.large}
-              data-lightbox-alt={shot.caption}
-              aria-label={`放大${shot.caption}`}
-            >
-              <Image src={shot.src} alt={shot.caption} width={640} format="webp" loading="lazy" />
-            </button>
-            <p>{shot.caption}</p>
-          </li>
-        ))}
-      </ul>
-    </section>
+    <Gallery app={app} lang="zh" />
     <section class="container section">
       <div class="section-head">
         <div>
@@ -371,34 +340,6 @@ const jsonLd = {
   }
   .zh-more span {
     margin-left: auto;
-    color: var(--muted);
-  }
-  .zh-gallery {
-    display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    padding-bottom: 20px;
-    scroll-snap-type: x mandatory;
-  }
-  .zh-gallery li {
-    flex: 0 0 min(80vw, 560px);
-    scroll-snap-align: start;
-  }
-  .zh-gallery button {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid var(--line);
-    border-radius: var(--r-card);
-    background: var(--surface-2);
-    cursor: zoom-in;
-  }
-  .zh-gallery img {
-    width: 100%;
-    height: 300px;
-    object-fit: contain;
-  }
-  .zh-gallery p {
-    margin-top: 12px;
     color: var(--muted);
   }
   @media (max-width: 960px) {

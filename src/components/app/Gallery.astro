@@ -5,15 +5,20 @@ import { t } from '../../lib/i18n';
 
 interface Props {
   app: App;
-  lang: Lang;
+  lang: Lang | 'zh';
 }
 
 const { app, lang } = Astro.props;
 const images = await Promise.all(
-  app.gallery.map(async (image) => {
-    const src = image.localizedSrc?.[lang] ?? image.src;
+  app.gallery.map(async (image, index) => {
+    const contentLang = lang === 'zh' ? 'en' : lang;
+    const src = image.localizedSrc?.[contentLang] ?? image.src;
     const large = await getImage({ src, width: Math.min(src.width, 2000), format: 'webp' });
-    return { src, alt: image.alt[lang], large: large.src, ratio: src.width / src.height };
+    const alt =
+      lang === 'zh'
+        ? `${index < 3 ? 'iPad' : index < 6 ? 'iPhone' : 'Mac'} 界面 · ${index < 3 ? index + 1 : index < 6 ? index - 2 : 1}`
+        : image.alt[contentLang];
+    return { src, alt, large: large.src, ratio: src.width / src.height };
   }),
 );
 ---
@@ -25,18 +30,22 @@ const images = await Promise.all(
 >
   <div class="section-head">
     <div>
-      <span class="section-kicker">{lang === 'vi' ? 'Bên trong ứng dụng' : 'Inside the app'}</span>
+      <span class="section-kicker">
+        {lang === 'vi' ? 'Bên trong ứng dụng' : lang === 'zh' ? '探索应用' : 'Inside the app'}
+      </span>
       <h2 id="gallery-heading">{t(lang, 'app.screenshots')}</h2>
       <p>
         {lang === 'vi'
-          ? 'Vuốt để xem thêm. Chọn ảnh để phóng to.'
-          : 'Scroll to explore. Select an image for a closer look.'}
+          ? 'Chọn ảnh để phóng to.'
+          : lang === 'zh'
+            ? '选择图片可放大。'
+            : 'Select an image for a closer look.'}
       </p>
     </div>
   </div>
-  <ul class="gallery__strip" role="list" data-reveal-stagger>
+  <ul class="gallery__grid" role="list" data-reveal-stagger>
     {images.map((image) => (
-      <li style={`--ratio: ${image.ratio.toFixed(4)}`}>
+      <li class:list={{ 'gallery__item--wide': image.ratio >= 1.15 }}>
         <figure>
           <button
             type="button"
@@ -50,7 +59,11 @@ const images = await Promise.all(
               alt={image.alt}
               formats={['avif', 'webp']}
               widths={[320, 480, 760, 1200].filter((w) => w <= image.src.width)}
-              sizes={`(max-width: 560px) ${Math.round(Math.min(90, (400 * image.ratio) / 3.9))}vw, ${Math.round(Math.min(1000, 500 * image.ratio))}px`}
+              sizes={
+                image.ratio >= 1.15
+                  ? '(max-width: 720px) 92vw, 560px'
+                  : '(max-width: 720px) 45vw, 280px'
+              }
               loading="lazy"
             />
           </button>
@@ -62,35 +75,29 @@ const images = await Promise.all(
 </section>
 
 <style>
-  /* Each screenshot keeps its own shape: cards share a height and take the width their
-     image needs, so landscape iPad shots are not shrunk into portrait boxes. */
-  .gallery {
-    --shot-h: clamp(340px, 40vw, 500px);
+  /* Landscape shots span two columns; portraits pair naturally on small screens. */
+  .gallery__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: start;
+    gap: clamp(16px, 2vw, 24px);
   }
-
-  .gallery__strip {
-    display: flex;
-    gap: 20px;
-    margin-inline: calc(-1 * var(--gutter));
-    padding: 4px var(--gutter) 20px;
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scroll-padding-inline: var(--gutter);
-    scroll-snap-type: x mandatory;
-    scrollbar-width: thin;
+  .gallery__grid li {
+    min-width: 0;
   }
-
-  .gallery__strip li {
-    --h: min(var(--shot-h), calc((86vw - 24px) / var(--ratio)));
-    flex: none;
-    width: calc(var(--h) * var(--ratio) + 24px);
-    scroll-snap-align: start;
+  .gallery__item--wide {
+    grid-column: span 2;
   }
-
+  @media (max-width: 720px) {
+    .gallery__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
   .gallery__preview {
     display: grid;
     width: 100%;
-    height: calc(var(--h) + 24px);
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
     place-items: center;
     padding: 12px;
     border: 1px solid color-mix(in srgb, var(--app, var(--brand)) 14%, var(--line));
@@ -100,6 +107,10 @@ const images = await Promise.all(
     transition:
       transform 420ms var(--spring),
       box-shadow 420ms var(--ease);
+  }
+
+  .gallery__item--wide .gallery__preview {
+    aspect-ratio: 16 / 10;
   }
 
   @media (hover: hover) and (pointer: fine) {
@@ -113,16 +124,21 @@ const images = await Promise.all(
     transform: scale(0.98);
   }
 
-  .gallery__preview :global(picture),
+  .gallery__preview :global(picture) {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    min-height: 0;
+  }
   .gallery__preview :global(img) {
     display: block;
-    max-width: 100%;
-    max-height: 100%;
-  }
-
-  .gallery__preview :global(img) {
     width: auto;
     height: auto;
+    max-width: 100%;
+    max-height: 100%;
     object-fit: contain;
     border-radius: 12px;
   }
@@ -132,11 +148,5 @@ const images = await Promise.all(
     margin-top: 12px;
     color: var(--muted);
     font-size: 14px;
-  }
-
-  @media (max-width: 560px) {
-    .gallery {
-      --shot-h: 400px;
-    }
   }
 </style>
