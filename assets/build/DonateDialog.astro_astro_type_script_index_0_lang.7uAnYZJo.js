@@ -1,0 +1,1 @@
+import{t as e}from"./dialog.TI9Csr7E.js";var t=document.querySelector(`[data-donate-dialog]`);if(t){let n=e(t);document.addEventListener(`click`,e=>{let t=e.target.closest(`[data-donate]`);t&&(e.preventDefault(),n.open(t))}),location.hash===`#donate`&&n.open()}

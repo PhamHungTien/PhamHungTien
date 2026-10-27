@@ -1,0 +1,44 @@
+# Phạm Hùng Tiến
+
+> Phạm Hùng Tiến (Pham Hung Tien) is an independent developer from Vietnam who builds private, offline-first apps for iPhone, iPad and Mac.
+
+Contact: contact@phamhungtien.com.
+
+## Apps
+
+- [PHTV](https://phamhungtien.com/PHTV/): PHTV is an open-source Vietnamese input method for macOS 14+, with Telex, VNI, macros, spell checking, PHTV Picker and clipboard history. PHTV Keyboard is the native input source edition for the Mac App Store. (macOS 14.0 or later)
+- [vTTS](https://phamhungtien.com/vTTS/): vTTS reads EPUB books and text offline on iPhone, iPad, and Mac. Vietnamese and English voices, live speed adjustment, background music, sleep timer, and audio export. (iOS & iPadOS 17+, macOS 14+)
+- [Pad Code AI](https://phamhungtien.com/PadCodeAI/): Pad Code AI compiles and runs C, C++, Python, JavaScript, TypeScript, Ruby, PHP, Lua, and SQL right on your device, with no server or internet connection. The editor supports 43 languages, the terminal waits for your input like a computer does, and Git and an AI assistant are built in. (iOS, iPadOS)
+- [Pad Notes AI](https://phamhungtien.com/PadNotesAI/): Pad Notes AI combines handwriting, recognition, audio capture, and an AI assistant so notes become searchable, understandable documents across Apple devices. (iOS, iPadOS, macOS)
+- [My NAS Manager](https://phamhungtien.com/MyNASManager/): My NAS Manager helps you monitor resources, browse files, manage DSM packages, and access a secure terminal on iPhone, iPad, and Mac. (iOS, iPadOS, macOS)
+- [LunarV](https://phamhungtien.com/LunarV/): LunarV brings lunar and solar dates, sexagenary cycles, solar terms, and personal reminders into one synced experience for iPhone, iPad, Mac, and Apple Vision Pro. (iOS, iPadOS, macOS, visionOS)
+- [Lunar Block](https://phamhungtien.com/LunarBlock/): Lunar Block transforms classic falling-block puzzles into a glowing 3D orbital console. Built natively with SceneKit, featuring ergonomic D-Pad controls, instant ghost piece projection, physics-driven line fractures, 3 game modes, XP progression ranks, and global Game Center leaderboards. (iOS & iPadOS 16+, macOS 13+)
+
+## Guides
+
+- [Cách gõ tiếng Việt trên Mac với PHTV (hướng dẫn đầy đủ)](https://phamhungtien.com/guides/go-tieng-viet-tren-mac-voi-phtv/): Cài PHTV bằng Homebrew hoặc file DMG, đi qua trình thiết lập 6 bước, cấp quyền nhập liệu và bắt đầu gõ Telex trên macOS. Có video và ảnh từng bước.
+- [Listen to EPUB books and documents with vTTS](https://phamhungtien.com/guides/nghe-sach-epub-giong-doc-tieng-viet-voi-vtts/): Use vTTS on iPhone, iPad and Mac to read EPUB, PDF and Word documents aloud offline, adjust voices, set a sleep timer and export MP3 or M4B audiobooks.
+- [The Vietnamese lunar calendar: leap months, zodiac cycles and solar terms](https://phamhungtien.com/guides/am-lich-viet-nam-cach-tinh-can-chi-tiet-khi/): Understand Vietnam's lunar calendar, leap months, the 60-year stem-branch cycle, solar terms and why Vietnamese and Chinese New Year sometimes differ.
+- [Bảng gõ Telex đầy đủ và cách đặt dấu đúng](https://phamhungtien.com/guides/bang-go-telex-day-du/): Bảng gõ Telex đầy đủ cho chữ â, ă, ê, ô, ơ, ư, đ và năm dấu thanh, cách sửa và bỏ dấu, gõ nhanh phụ âm, kèm ví dụ cho các từ khó như người, được, trường.
+- [Bảng mã tiếng Việt: Unicode, Unicode tổ hợp, TCVN3, VNI và cách chuyển đổi](https://phamhungtien.com/guides/bang-ma-tieng-viet-unicode-tcvn3-vni/): Giải thích các bảng mã tiếng Việt Unicode, Unicode tổ hợp, TCVN3 (ABC), VNI Windows và CP1258, vì sao chữ bị lỗi font và cách chuyển văn bản cũ sang Unicode trên Mac.
+- [Cách gõ VNI và nên chọn Telex hay VNI?](https://phamhungtien.com/guides/cach-go-vni-telex-hay-vni/): Bảng gõ VNI đầy đủ với các phím số từ 1 đến 9, ví dụ cho các từ khó, so sánh ưu nhược điểm của VNI và Telex để chọn kiểu gõ tiếng Việt hợp với bạn.
+- [Gõ tắt trên Mac với PHTV: macro, ngày giờ, clipboard và bộ đếm](https://phamhungtien.com/guides/go-tat-tren-mac-voi-phtv/): Cách tạo gõ tắt (macro) trong PHTV để gõ nhanh câu chào, email, địa chỉ; dùng snippet động cho ngày giờ, clipboard, nội dung ngẫu nhiên và bộ đếm tự tăng.
+- [Sửa lỗi gõ tiếng Việt trên Mac: lặp chữ, mất dấu, không gõ được](https://phamhungtien.com/guides/sua-loi-go-tieng-viet-tren-mac/): Cách khắc phục các lỗi gõ tiếng Việt thường gặp trên macOS như lặp chữ, mất dấu trong Chrome, không gõ được sau khi cập nhật, lỗi trong Terminal, VS Code và Excel.
+- [Access your Synology NAS remotely with iPhone, iPad and Mac](https://phamhungtien.com/guides/truy-cap-synology-nas-tu-xa-an-toan/): Compare QuickConnect, DDNS and VPN access for a Synology NAS, prepare your security settings and connect with My NAS Manager on iPhone, iPad and Mac.
+
+## Profiles
+
+- [GitHub](https://github.com/PhamHungTien)
+- [YouTube](https://www.youtube.com/@phamhungtien14)
+- [LinkedIn](https://www.linkedin.com/in/ph%E1%BA%A1m-h%C3%B9ng-ti%E1%BA%BFn-a1b405327/)
+- [Facebook](https://www.facebook.com/phamhungtien1404)
+
+## Optional
+
+- [PHTV privacy policy](https://phamhungtien.com/PHTV/privacy.html)
+- [vTTS privacy policy](https://phamhungtien.com/vTTS/privacy.html)
+- [Pad Code AI privacy policy](https://phamhungtien.com/PadCodeAI/privacy.html)
+- [Pad Notes AI privacy policy](https://phamhungtien.com/PadNotesAI/privacy.html)
+- [My NAS Manager privacy policy](https://phamhungtien.com/MyNASManager/privacy.html)
+- [LunarV privacy policy](https://phamhungtien.com/LunarV/privacy.html)
+- [Lunar Block privacy policy](https://phamhungtien.com/LunarBlock/privacy.html)
