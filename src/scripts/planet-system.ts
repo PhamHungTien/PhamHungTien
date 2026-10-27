@@ -120,6 +120,7 @@ export function initPlanetSystem(): void {
       size: Number(el.dataset.size) || 1,
       crowded: false,
       labelAlpha: 1,
+      labelBox: { x: 35, y: 155, width: 130, height: 26 },
       arrivalDelay: 0.15 + index * 0.09,
     };
   });
@@ -219,7 +220,7 @@ export function initPlanetSystem(): void {
     const rolls = portrait ? [-0.08, -0.28, -0.48, -0.68] : [-0.12];
     const minPitch = 0.36;
     const maxPitch = portrait ? 1.2 : 0.9;
-    planetSize = clamp(Math.min(width, height * 1.5) * 0.06, 40, 82);
+    planetSize = clamp(Math.min(width, height * 1.5) * 0.06, 40, 120);
     let pitch = minPitch;
     let roll = rolls[0];
     let best = fit(pitch, roll, planetSize);
@@ -244,14 +245,14 @@ export function initPlanetSystem(): void {
       roll = pick.roll;
       best = pick.result;
       // Planets and sun grow with the system; fit once more with that size.
-      planetSize = clamp(best.unit * 0.078, 40, 82);
+      planetSize = clamp(best.unit * 0.078, 40, 120);
     }
 
     basePitch = pitch;
     baseRoll = roll;
     unit = best.unit;
     center = { x: best.cx, y: best.cy };
-    sunSize = clamp(unit * 0.32, Math.min(width * 0.36, height * 0.3, 145), 330);
+    sunSize = clamp(unit * 0.32, Math.min(width * 0.36, height * 0.3, 145), 480);
 
     // Innermost orbit clears the sun plus a (near, enlarged) planet; the rest follow.
     const inner = Math.min(OUTER * 0.82, (sunSize * 0.5 + planetSize * 0.95) / unit);
@@ -307,23 +308,45 @@ export function initPlanetSystem(): void {
       project(p.slot + rotation + yaw, p.orbit, cam, unit, planetSpread(index)),
     );
 
-    // Safety net for very small screens: if two names would touch, the farther one fades.
+    // Test the real curved-text bounds against other names and planet bodies. The farther
+    // label yields gently; focus/hover can still reveal it, and accessible names stay intact.
+    const labels = points.map((pt, index) => {
+      const p = planets[index];
+      const size = planetSize * p.size * pt.scale;
+      const svgSize = size * 1.85;
+      const box = p.labelBox;
+      return {
+        left: pt.x + (box.x / 200 - 0.5) * svgSize - 3,
+        right: pt.x + ((box.x + box.width) / 200 - 0.5) * svgSize + 3,
+        top: pt.y + (box.y / 200 - 0.5) * svgSize - 3,
+        bottom: pt.y + ((box.y + box.height) / 200 - 0.5) * svgSize + 3,
+      };
+    });
+    const intersects = (a: (typeof labels)[number], b: (typeof labels)[number]) =>
+      a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
     planets.forEach((p) => (p.crowded = false));
     for (let i = 0; i < planets.length; i++) {
       for (let j = i + 1; j < planets.length; j++) {
-        const a = points[i];
-        const b = points[j];
-        const reach = planetSize * 0.5 * (a.scale + b.scale);
-        if (Math.abs(a.x - b.x) < reach * 1.5 && Math.abs(a.y - b.y) < reach * 0.95) {
-          (a.z < b.z ? planets[i] : planets[j]).crowded = true;
-        }
+        if (intersects(labels[i], labels[j]))
+          (points[i].z < points[j].z ? planets[i] : planets[j]).crowded = true;
+      }
+      for (let j = 0; j < planets.length; j++) {
+        if (i === j) continue;
+        const half = planetSize * planets[j].size * points[j].scale * 0.5;
+        const body = {
+          left: points[j].x - half,
+          right: points[j].x + half,
+          top: points[j].y - half,
+          bottom: points[j].y + half,
+        };
+        if (intersects(labels[i], body)) planets[i].crowded = true;
       }
     }
 
     planets.forEach((p, index) => {
       const pt = points[index];
       const el = p.el;
-      p.labelAlpha = approach(p.labelAlpha, p.crowded ? 0.1 : 1, 7, dt);
+      p.labelAlpha = approach(p.labelAlpha, p.crowded ? 0 : 1, 7, dt);
 
       const depth = clamp(pt.z / (OUTER * Math.cos(cam.pitch)), -1, 1); // -1 far … 1 near
       const appear = arrived ? 1 : easeOutExpo(clamp((arrival - p.arrivalDelay) / 0.5, 0, 1));
@@ -658,6 +681,20 @@ export function initPlanetSystem(): void {
     sync();
   });
 
+  const measureLabels = () => {
+    planets.forEach((p) => {
+      const text = p.el.querySelector<SVGTextElement>('.planet__name text');
+      if (!text) return;
+      const box = text.getBBox();
+      if (box.width && box.height)
+        p.labelBox = { x: box.x, y: box.y, width: box.width, height: box.height };
+    });
+  };
+  measureLabels();
+  document.fonts?.ready.then(() => {
+    measureLabels();
+    if (motionEnabled()) wake();
+  });
   measure();
   cam.roll = baseRoll;
   // The intro starts from a steeper view and settles into place.

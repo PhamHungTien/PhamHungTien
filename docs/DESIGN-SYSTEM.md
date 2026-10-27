@@ -190,3 +190,16 @@ On initial layout, the engine chooses an opening rotation by evaluating app clea
 from the central planet and other app bodies for the current viewport. When a moving app
 would overlap the center in projection, it draws in front so it remains visible and
 clickable. This is a presentation choice; near/far scale and shading are retained.
+
+### Wide planetary belt and label clearance
+
+The central planet has a viewport-wide, non-interactive belt in translucent earth tones.
+Two clipped SVG layers place its far half behind the central body and its near half in front.
+The layered ring shapes take inspiration from [NASA's Saturn ring observations](https://science.nasa.gov/mission/cassini/science/rings/);
+they are a visual interpretation, not a scientific model. The belt has no animation loop.
+
+Orbit layout scales to a larger canvas on 4K screens. Curved names are measured after fonts
+load, then their projected bounding boxes are compared with other labels and planet bodies.
+A crowded label fades temporarily and reappears when clear; focus or hover reveals its name
+and the link's accessible name is always available. Geometry is cached, avoiding per-frame
+DOM measurements.
