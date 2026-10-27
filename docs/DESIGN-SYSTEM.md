@@ -203,3 +203,14 @@ load, then their projected bounding boxes are compared with other labels and pla
 A crowded label fades temporarily and reappears when clear; focus or hover reveals its name
 and the link's accessible name is always available. Geometry is cached, avoiding per-frame
 DOM measurements.
+
+### Passive device orientation
+
+On coarse-pointer devices in a secure context, the home scene listens for orientation
+only when the browser exposes it without a `requestPermission` method. No permission
+prompt is triggered. The first valid reading calibrates a neutral position; bounded pitch,
+roll and yaw feed the same smoothed camera as pointer parallax, with screen rotation
+taken into account. The listener is removed offscreen, in hidden tabs and under reduced
+motion; it recalibrates when restarted. No sensor values are stored or transmitted. Swipe
+remains available, and devices requiring explicit permission use the existing motion only.
+See [MDN's device orientation guidance](https://developer.mozilla.org/en-US/docs/Web/API/Device_orientation_events/Detecting_device_orientation).

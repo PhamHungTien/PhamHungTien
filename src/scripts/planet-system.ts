@@ -433,8 +433,68 @@ export function initPlanetSystem(): void {
     }
   }
 
+  // Listen only where orientation arrives without a permission request. Values stay on
+  // device, are calibrated to the first reading, and are used only while the hero is visible.
+  const coarsePointer = matchMedia('(pointer: coarse)');
+  const orientationApi = window.DeviceOrientationEvent as
+    | (typeof DeviceOrientationEvent & { requestPermission?: () => Promise<PermissionState> })
+    | undefined;
+  const passiveSensor =
+    window.isSecureContext &&
+    !!orientationApi &&
+    typeof orientationApi.requestPermission !== 'function';
+  let sensorListening = false;
+  let sensorOrigin: { beta: number; gamma: number } | null = null;
+  const resetSensor = () => {
+    sensorOrigin = null;
+  };
+  const angleDelta = (value: number, origin: number) => ((value - origin + 540) % 360) - 180;
+  const onOrientation = (event: DeviceOrientationEvent) => {
+    if (
+      !awake() ||
+      focused ||
+      hoveredTrack >= 0 ||
+      gesture ||
+      event.beta == null ||
+      event.gamma == null ||
+      !Number.isFinite(event.beta) ||
+      !Number.isFinite(event.gamma)
+    )
+      return;
+    if (!sensorOrigin) {
+      sensorOrigin = { beta: event.beta, gamma: event.gamma };
+      return;
+    }
+    const beta = angleDelta(event.beta, sensorOrigin.beta);
+    const gamma = angleDelta(event.gamma, sensorOrigin.gamma);
+    const orientation = ((screen.orientation?.angle ?? 0) * Math.PI) / 180;
+    const horizontal = gamma * Math.cos(orientation) + beta * Math.sin(orientation);
+    const vertical = beta * Math.cos(orientation) - gamma * Math.sin(orientation);
+    const x = clamp(horizontal / 25, -1, 1);
+    const y = clamp(vertical / 25, -1, 1);
+    camTarget.pitchOffset = y * 0.06;
+    camTarget.rollOffset = x * 0.035;
+    camTarget.yaw = -x * 0.16;
+    wake();
+  };
+  const syncSensor = () => {
+    const shouldListen = passiveSensor && coarsePointer.matches && awake();
+    if (shouldListen === sensorListening) return;
+    sensorListening = shouldListen;
+    resetSensor();
+    if (shouldListen)
+      window.addEventListener('deviceorientation', onOrientation, { passive: true });
+    else {
+      window.removeEventListener('deviceorientation', onOrientation);
+      camTarget.pitchOffset = camTarget.rollOffset = camTarget.yaw = 0;
+    }
+  };
+  screen.orientation?.addEventListener('change', resetSensor);
+  coarsePointer.addEventListener('change', syncSensor);
+
   function sync() {
     scene!.dataset.motion = motionEnabled() ? 'live' : 'still';
+    syncSensor();
     if (!motionEnabled()) {
       cancelAnimationFrame(frame);
       frame = 0;
