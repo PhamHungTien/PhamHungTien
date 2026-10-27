@@ -187,9 +187,9 @@ keyboard focus enters it. Other pages retain the sticky header; without JavaScri
 remains available. The home hero fills the viewport freed by the header.
 
 On initial layout, the engine chooses an opening rotation by evaluating app clearance
-from the central planet and other app bodies for the current viewport. When a moving app
-would overlap the center in projection, it draws in front so it remains visible and
-clickable. This is a presentation choice; near/far scale and shading are retained.
+from the central planet and other app bodies for the current viewport. Planets are sorted by projected depth: those on the far side pass behind the central
+planet, while near-side planets pass in front. The central body intercepts pointer input
+so hidden links cannot be clicked accidentally; keyboard focus brings a link forward.
 
 ### Wide planetary belt and label clearance
 

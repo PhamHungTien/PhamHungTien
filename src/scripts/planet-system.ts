@@ -355,13 +355,9 @@ export function initPlanetSystem(): void {
       el.style.setProperty('--s', pt.scale.toFixed(4));
       el.style.setProperty('--depth', depth.toFixed(3));
       el.style.setProperty('--label', p.labelAlpha.toFixed(3));
-      // Keep every app visible and clickable when it crosses the central planet.
-      const overlapsCore =
-        Math.hypot(pt.x, pt.y) < (sunSize + planetSize * p.size * pt.scale) * 0.5 + 4;
+      // Sort strictly by depth: rear planets pass behind the center and its front ring.
       el.style.zIndex = String(
-        pt.z < 0 && !overlapsCore
-          ? 2 + Math.round((depth + 1) * 3)
-          : 20 + Math.round((depth + 1) * 15),
+        pt.z < 0 ? 2 + Math.round((depth + 1) * 3) : 20 + Math.round(depth * 30),
       );
       el.style.opacity = appear.toFixed(3);
 
