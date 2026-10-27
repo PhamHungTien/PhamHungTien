@@ -51,6 +51,7 @@
   --r-card: 20px;
   --r-media: 28px;
   --r-icon: 22.5%;
+  --r-image: 14px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   /* A gentle spring (slight overshoot) for things that move into place: thumbs, icons. */
   --spring: linear(
@@ -424,7 +425,7 @@ kbd {
 .prose img {
   margin-top: 20px;
   border: 1px solid var(--line);
-  border-radius: 16px;
+  border-radius: var(--r-image);
   box-shadow: var(--shadow-media);
 }
 

@@ -364,17 +364,18 @@ const secondary = app.links.source
   }
 
   .app-hero__media :global(picture) {
-    display: block;
+    display: grid;
     width: 100%;
+    place-items: center;
   }
 
-  /* Width is fixed and height follows the width/height attributes, so the box never
-     changes size when the image arrives (no layout shift). */
+  /* Retain the entire image and round its actual edges. */
   .app-hero__media :global(img) {
-    width: 100%;
+    width: auto;
     height: auto;
+    max-width: 100%;
     max-height: min(600px, 66vh);
-    border-radius: 16px;
+    border-radius: var(--r-image);
     object-fit: contain;
   }
 

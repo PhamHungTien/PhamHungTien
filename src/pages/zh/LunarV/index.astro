@@ -281,12 +281,18 @@ const jsonLd = {
     cursor: zoom-in;
     box-shadow: var(--shadow-media);
   }
-  .zh-media :global(img) {
+  .zh-media :global(picture) {
+    display: grid;
     width: 100%;
+    place-items: center;
+  }
+  .zh-media :global(img) {
+    width: auto;
     height: auto;
+    max-width: 100%;
     max-height: 66vh;
     object-fit: contain;
-    border-radius: 16px;
+    border-radius: var(--r-image);
   }
   .zh-feature-grid {
     display: grid;
