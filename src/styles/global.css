@@ -46,7 +46,7 @@
   --container: 1200px;
   --gutter: clamp(16px, 4vw, 48px);
   --section-gap: clamp(72px, 10vw, 128px);
-  --header-height: 68px;
+  --header-height: 80px;
   --r-control: 12px;
   --r-card: 20px;
   --r-media: 28px;
