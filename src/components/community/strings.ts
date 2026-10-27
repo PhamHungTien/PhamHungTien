@@ -1,4 +1,5 @@
 import type { Lang } from '../../data/types';
+export type DiscussionLang = Lang | 'zh';
 
 /** Strings for both discussion boards. Kept beside the islands so they ship only with them. */
 export const boardText = {
@@ -38,6 +39,42 @@ export const boardText = {
     repliesFailed: 'Replies could not be loaded. Try again.',
     deleteFailed: 'The message was not deleted.',
   },
+  zh: {
+    title: '讨论',
+    about: (name: string) => `关于 ${name} 的问题、想法与反馈。`,
+    startAbout: (name: string) => `开始讨论 ${name}…`,
+    member: '成员',
+    signIn: '使用 Google 登录',
+    signOut: '退出登录',
+    search: '搜索讨论',
+    filter: '筛选讨论',
+    category: '类别',
+    allTopics: '所有主题',
+    categories: { question: '问题', bug: '错误报告', idea: '建议' },
+    message: '内容',
+    post: '发布',
+    publicNotice: '讨论内容公开，请勿发布个人信息。',
+    loading: '正在加载讨论…',
+    empty: '暂无讨论，欢迎发表第一条。',
+    noMatches: '没有匹配的讨论。',
+    loadMore: '加载更多',
+    replies: '回复',
+    noReplies: '暂无回复。',
+    yourReply: '你的回复',
+    writeReply: '写回复…',
+    send: '回复',
+    signInToReply: '请登录后回复。',
+    deletePost: '删除帖子',
+    deleteReply: '删除回复',
+    confirmDelete: '删除此内容？',
+    loadFailed: '暂时无法加载讨论，请稍后重试。',
+    connectFailed: '无法连接讨论服务。',
+    signInFailed: '登录未完成，请允许登录窗口后重试。',
+    postFailed: '发布失败，请重试。',
+    replyFailed: '回复发送失败，请重试。',
+    repliesFailed: '无法加载回复，请重试。',
+    deleteFailed: '删除失败。',
+  },
   vi: {
     title: 'Thảo luận',
     about: (name: string) => `Câu hỏi, ý tưởng và góp ý về ${name}.`,
@@ -74,19 +111,21 @@ export const boardText = {
     repliesFailed: 'Không tải được phản hồi. Hãy thử lại.',
     deleteFailed: 'Chưa xoá được nội dung.',
   },
-} satisfies Record<Lang, unknown>;
+} satisfies Record<DiscussionLang, unknown>;
 
-export const formatDate = (time: number, lang: Lang) =>
-  new Intl.DateTimeFormat(lang === 'vi' ? 'vi-VN' : 'en', { dateStyle: 'medium' }).format(time);
+export const formatDate = (time: number, lang: DiscussionLang) =>
+  new Intl.DateTimeFormat(lang === 'vi' ? 'vi-VN' : lang === 'zh' ? 'zh-CN' : 'en', {
+    dateStyle: 'medium',
+  }).format(time);
 
 /** "3 min", "2 h", "5 days" or a date, for activity timestamps. */
-export function formatRelative(time: number, lang: Lang) {
+export function formatRelative(time: number, lang: DiscussionLang) {
   const minutes = Math.floor((Date.now() - time) / 60_000);
-  const rtf = new Intl.RelativeTimeFormat(lang === 'vi' ? 'vi' : 'en', {
+  const rtf = new Intl.RelativeTimeFormat(lang === 'vi' ? 'vi' : lang === 'zh' ? 'zh-CN' : 'en', {
     numeric: 'auto',
     style: 'short',
   });
-  if (minutes < 1) return lang === 'vi' ? 'Vừa xong' : 'Just now';
+  if (minutes < 1) return lang === 'vi' ? 'Vừa xong' : lang === 'zh' ? '刚刚' : 'Just now';
   if (minutes < 60) return rtf.format(-minutes, 'minute');
   if (minutes < 60 * 24) return rtf.format(-Math.floor(minutes / 60), 'hour');
   if (minutes < 60 * 24 * 7) return rtf.format(-Math.floor(minutes / 1440), 'day');

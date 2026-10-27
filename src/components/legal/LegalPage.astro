@@ -73,6 +73,11 @@ const jsonLd = {
         >
           English
         </a>
+        {app.slug === 'lunarv' && (
+          <a href={`/zh/LunarV/${kind}.html`} hreflang="zh">
+            简体中文
+          </a>
+        )}
       </nav>
     )}
     <a class="legal__back" href={appPath(app, lang)}>

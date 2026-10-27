@@ -25,7 +25,14 @@ for (const app of [
     const html = await read(`${app}/${file}`);
     assert.ok(html.includes(`<html lang="${lang}"`), `${app}/${file} language`);
     assert.ok(!html.includes('data-language'), `${app}/${file} has no language picker`);
-    assert.ok(!/<link rel="alternate" hreflang=/.test(html), `${app}/${file} has no alternate locale metadata`);
+    if (file === 'index.html' && ['PHTV', 'LunarV'].includes(app)) {
+      assert.ok(html.includes('<link rel="alternate" hreflang="en"'), `${app} English alternate`);
+    } else {
+      assert.ok(
+        !/<link rel="alternate" hreflang=/.test(html),
+        `${app}/${file} has no alternate locale metadata`,
+      );
+    }
   }
 }
 for (const [oldPath, target] of [
@@ -75,14 +82,30 @@ for (const app of ['PHTV', 'LunarV']) {
     assert.ok(html.includes('<html lang="en"'), `en/${app}/${file} language`);
   }
 }
+for (const file of ['index.html', 'privacy.html', 'terms.html']) {
+  const html = await read(`zh/LunarV/${file}`);
+  assert.ok(html.includes('<html lang="zh"'), `zh/LunarV/${file} language`);
+  assert.ok(html.includes('简体中文'), `zh/LunarV/${file} language links`);
+}
 const lunar = await read('LunarV/index.html');
 assert.ok(lunar.includes('Lịch âm Việt Nam trên thiết bị Apple.'));
 assert.ok(lunar.includes('Bài viết tiếng Anh'));
+assert.ok(lunar.includes('visionOS'), 'LunarV supports visionOS');
+assert.ok(
+  (await read('en/LunarV/index.html')).includes('visionOS'),
+  'English LunarV supports visionOS',
+);
+assert.ok(
+  (await read('zh/LunarV/index.html')).includes('visionOS'),
+  'Chinese LunarV supports visionOS',
+);
 const lunarPrivacy = await read('LunarV/privacy.html');
 assert.ok(lunarPrivacy.includes('không thu thập, lưu trữ hoặc truyền'));
 const lunarTerms = await read('LunarV/terms.html');
 assert.ok(lunarTerms.includes('Điều khoản sử dụng'));
 const sitemap = await read('sitemap.xml');
+assert.ok(sitemap.includes('/zh/LunarV/'), 'Chinese LunarV in sitemap');
+assert.ok(sitemap.includes('/en/PHTV/'), 'English PHTV in sitemap');
 assert.ok(
   !/<loc>[^<]*\/(vi|fr|ja|huong-dan)\//.test(sitemap),
   'Sitemap only contains canonical pages',

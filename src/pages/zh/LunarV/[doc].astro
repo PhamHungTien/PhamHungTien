@@ -1,0 +1,167 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { ArrowLeft } from '@lucide/astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { absolute, ogImage } from '../../../lib/seo';
+
+export const getStaticPaths = (() =>
+  ['privacy', 'terms'].map((doc) => ({
+    params: { doc },
+    props: { doc },
+  }))) satisfies GetStaticPaths;
+const { doc } = Astro.props;
+const privacy = doc === 'privacy';
+const title = privacy ? '隐私政策' : '使用条款';
+const path = `/zh/LunarV/${doc}.html`;
+const description = privacy
+  ? '了解 LunarV 的隐私政策、数据处理方式，以及如何联系我们。'
+  : '了解 LunarV 的使用条款、应用分发、免责声明和联系方式。';
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: `LunarV — ${title}`,
+  description,
+  url: absolute(path),
+  inLanguage: 'zh-CN',
+};
+---
+
+<BaseLayout
+  lang="zh"
+  title={`${title} — LunarV`}
+  description={description}
+  path={path}
+  ogImage={ogImage(`lunarv-${doc}`)}
+  ogType="article"
+  noindex
+  jsonLd={jsonLd}
+  compactFooter
+  nav={[
+    { href: '/zh/LunarV/', label: 'LunarV' },
+    { href: '/zh/LunarV/privacy.html', label: '隐私政策', current: privacy },
+    { href: '/zh/LunarV/terms.html', label: '使用条款', current: !privacy },
+  ]}
+>
+  <article class="legal container">
+    <nav class="languages" aria-label="页面语言">
+      <a href={`/LunarV/${doc}.html`} hreflang="vi">
+        Tiếng Việt
+      </a>
+      <a href={`/en/LunarV/${doc}.html`} hreflang="en">
+        English
+      </a>
+      <a href={path} hreflang="zh" aria-current="page">
+        简体中文
+      </a>
+    </nav>
+    <a class="back" href="/zh/LunarV/">
+      <ArrowLeft size={16} />
+      返回 LunarV
+    </a>
+    <header>
+      <h1>{title}</h1>
+      <p>
+        最后更新：<time>2026年5月26日</time>
+      </p>
+    </header>
+    <div class="prose">
+      {privacy ? (
+        <>
+          <h2>概述</h2>
+          <p>
+            LunarV 是适用于 iPhone、iPad、Mac 和 Apple Vision Pro 的农历应用。本政策说明 LunarV
+            如何处理您的数据。
+          </p>
+          <h2>数据收集</h2>
+          <p>
+            <strong>LunarV 不收集、存储或传输任何个人数据。</strong>
+          </p>
+          <ul>
+            <li>LunarV 不包含第三方分析 SDK、广告或跟踪框架。</li>
+            <li>所有日历数据、家庭纪念日和提醒均在您的设备上本地处理。</li>
+          </ul>
+          <h2>网络访问</h2>
+          <p>
+            LunarV 不包含应用内更新下载器或安装器。更新通过 App Store
+            发布；应用仅在您选择时打开外部链接。
+          </p>
+        </>
+      ) : (
+        <>
+          <h2>接受条款</h2>
+          <p>下载、安装或使用 LunarV 即表示您同意遵守本使用条款。</p>
+          <h2>应用分发</h2>
+          <p>
+            LunarV 通过 App Store 分发至 iPhone、iPad、Mac 和 Apple Vision Pro，受 Apple
+            的适用条款及本应用条款约束。
+          </p>
+          <h2>免责声明</h2>
+          <p>
+            LunarV 按<strong>“原样”</strong>
+            提供，不作任何明示或默示保证。我们不保证农历计算绝对准确。您需自行承担使用本应用的风险。
+          </p>
+          <h2>应用变更</h2>
+          <p>我们保留随时修改或停止提供应用（或其任何部分）的权利，恕不另行通知。</p>
+        </>
+      )}
+      <h2>联系</h2>
+      <p>
+        如有任何问题，请联系 <a href="mailto:contact@phamhungtien.com">contact@phamhungtien.com</a>
+        。
+      </p>
+    </div>
+    <p class="other">
+      <a class="text-link" href={privacy ? '/zh/LunarV/terms.html' : '/zh/LunarV/privacy.html'}>
+        {privacy ? '使用条款' : '隐私政策'}
+      </a>
+    </p>
+  </article>
+</BaseLayout>
+<style>
+  .legal {
+    max-width: 760px;
+    padding-top: clamp(32px, 5vw, 64px);
+  }
+  .languages {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .languages a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .languages a[aria-current='page'] {
+    color: var(--ink);
+    background: var(--surface-2);
+    border-color: var(--line-strong);
+  }
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+  }
+  header {
+    margin-top: 32px;
+  }
+  h1 {
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1.15;
+  }
+  header p {
+    margin-top: 12px;
+    color: var(--muted);
+  }
+  .other {
+    margin-top: 40px;
+  }
+</style>

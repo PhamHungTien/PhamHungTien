@@ -45,6 +45,7 @@ export const GET: APIRoute = async () => {
         ...(['phtv', 'lunarv'].includes(app.slug)
           ? [{ lang: 'en' as const, path: appPath(app, 'en') }]
           : []),
+        ...(app.slug === 'lunarv' ? [{ lang: 'zh' as const, path: '/zh/LunarV/' }] : []),
       ],
       lastmod: releaseDate(app.slug),
       image: { loc: ogImage(app.slug), title: app.name },

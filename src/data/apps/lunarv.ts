@@ -1,4 +1,5 @@
 import type { App } from '../types';
+import appStore from '../appstore.json';
 import icon from '../../assets/apps/lunarv/app-icon.png';
 import ipad1 from '../../assets/apps/lunarv/appstore/ipad-1.jpg';
 import ipad2 from '../../assets/apps/lunarv/appstore/ipad-2.jpg';
@@ -42,16 +43,19 @@ const app: App = {
     en: 'Lunar dates, family moments, widgets, and reminders.',
   },
   description: {
-    vi: 'LunarV gom lịch âm, lịch dương, can chi, tiết khí và nhắc dịp quan trọng vào một trải nghiệm đồng bộ cho iPhone, iPad và Mac.',
-    en: 'LunarV brings lunar and solar dates, sexagenary cycles, solar terms, and personal reminders into one synced experience for iPhone, iPad, and Mac.',
+    vi: 'LunarV gom lịch âm, lịch dương, can chi, tiết khí và nhắc dịp quan trọng vào một trải nghiệm đồng bộ cho iPhone, iPad, Mac và Apple Vision Pro.',
+    en: 'LunarV brings lunar and solar dates, sexagenary cycles, solar terms, and personal reminders into one synced experience for iPhone, iPad, Mac, and Apple Vision Pro.',
   },
-  platforms: ['ios', 'ipados', 'macos'],
+  platforms: ['ios', 'ipados', 'macos', 'visionos'],
   appCategory: 'LifestyleApplication',
   facts: [
-    { label: { vi: 'Phiên bản', en: 'Version' }, value: { vi: '1.0.1', en: '1.0.1' } },
+    {
+      label: { vi: 'Phiên bản', en: 'Version' },
+      value: { vi: appStore.apps.lunarv.version, en: appStore.apps.lunarv.version },
+    },
     {
       label: { vi: 'Nền tảng', en: 'Platforms' },
-      value: { vi: 'iOS & iPadOS, macOS', en: 'iOS & iPadOS, macOS' },
+      value: { vi: 'iOS & iPadOS, macOS, visionOS', en: 'iOS & iPadOS, macOS, visionOS' },
     },
     { label: { vi: 'Phát hành', en: 'Release' }, value: { vi: 'App Store', en: 'App Store' } },
   ],

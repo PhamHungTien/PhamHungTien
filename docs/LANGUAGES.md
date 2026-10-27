@@ -1,26 +1,16 @@
 # Website languages
 
-The website uses one canonical language per destination:
+Home, other app pages, site privacy and the guide index use English. PHTV and LunarV
+use Vietnamese by default, with language links scoped to those app and legal pages:
 
-- Home, other app pages, website privacy, guide index and general guides: **English**.
-- PHTV, its legal pages and its typing tutorials: **Vietnamese first**, retaining English
-  product names and technical terms such as Telex, Clipboard, Picker and Mac App Store.
+- PHTV: `/PHTV/` (Vietnamese), `/en/PHTV/` (English).
+- LunarV: `/LunarV/` (Vietnamese), `/en/LunarV/` (English), `/zh/LunarV/`
+  (Simplified Chinese). Each also has translated `privacy.html` and `terms.html`.
 
-There is no language selector or automatic browser-language detection. Stored language
-preferences and `?lang=` parameters do not change the page language. The website's
-source translations remain available for maintenance but are not separate public pages.
+PHTV typing tutorials are Vietnamese; general guides remain English. A guide card labels
+its language when the article differs from the surrounding app page. There is no automatic
+language detection or global selector. Other historical locale URLs redirect to their
+canonical destinations, retaining query parameters and fragments when JavaScript is enabled.
+The sitemap and application-page hreflang links advertise the available translations.
 
-Historical `/vi/`, `/fr/`, `/ja/`, `/en/PHTV/`, translated app/legal URLs and
-`/huong-dan/` routes redirect to their canonical destinations. JavaScript redirects
-retain query parameters and fragments; meta refresh and a visible link provide fallbacks.
-The guide index is `/guides/`; existing guide slugs are retained.
-
-PHTV guide cards use English summaries on English pages, with a “Tiếng Việt” label.
-The articles themselves remain Vietnamese. The sitemap lists only canonical content,
-and pages do not advertise alternate language URLs.
-
-Verify after building:
-
-```sh
-node scripts/test-language.mjs
-```
+Run `node scripts/test-language.mjs` after building to check the routes and languages.

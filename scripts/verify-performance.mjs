@@ -10,6 +10,9 @@ const routes = [
   'PadNotesAI/index.html',
   'MyNASManager/index.html',
   'LunarV/index.html',
+  'en/PHTV/index.html',
+  'en/LunarV/index.html',
+  'zh/LunarV/index.html',
   'LunarBlock/index.html',
   'guides/index.html',
 ];

@@ -21,7 +21,7 @@ const [email, ...profiles] = socialProfiles;
 >
   <div>
     <span class="contact__eyebrow">
-      {lang === 'vi' ? 'Kết nối trực tiếp' : 'A direct conversation'}
+      {lang === 'vi' ? 'Kết nối trực tiếp' : lang === 'zh' ? '直接联系' : 'A direct conversation'}
     </span>
     <h2 id="contact-heading">{t(lang, 'contact.title')}</h2>
     <p>{t(lang, 'contact.body')}</p>

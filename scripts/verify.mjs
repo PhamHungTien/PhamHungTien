@@ -57,14 +57,15 @@ for (const [path, html] of pages) {
 
   if (count(/<title>/g) !== 1) fail(path, 'needs exactly one <title>');
   if (count(/<h1[\s>]/g) !== 1) fail(path, 'needs exactly one <h1>');
-  if (!/<html lang="(en|vi|fr|ja)"/.test(html)) fail(path, 'missing html lang');
+  if (!/<html lang="(en|vi|fr|ja|zh)"/.test(html)) fail(path, 'missing html lang');
   if (!html.includes('data-site-security'))
     fail(path, 'missing Content-Security-Policy (run postbuild)');
   if (!html.includes('id="main-content"')) fail(path, 'missing skip-link target');
 
   const description = meta.description ?? '';
-  if (description.length < 50 || description.length > 170)
-    fail(path, `description is ${description.length} characters (want 50–170)`);
+  const minDescription = /<html lang="zh"/.test(html) ? 20 : 50;
+  if (description.length < minDescription || description.length > 170)
+    fail(path, `description is ${description.length} characters (want ${minDescription}–170)`);
 
   const canonical = html.match(/<link rel="canonical" href="([^"]+)"/)?.[1];
   if (!is404 && canonical !== `${ORIGIN}${path}`) fail(path, `canonical is ${canonical}`);

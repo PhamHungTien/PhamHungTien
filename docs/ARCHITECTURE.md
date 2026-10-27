@@ -56,20 +56,22 @@ scripts/                  Build, verification and content tools (Node)
 
 ## Routes and languages
 
-The public website is English, except Vietnamese-first PHTV, LunarV and PHTV tutorials.
-Each destination has one canonical URL. See [LANGUAGES.md](LANGUAGES.md).
+The public website is English; PHTV and LunarV default to Vietnamese and provide translated app pages. PHTV tutorials are Vietnamese.
+Each language version has its own canonical URL. See [LANGUAGES.md](LANGUAGES.md).
 
 | URL                                        | Content                                       |
 | ------------------------------------------ | --------------------------------------------- |
 | `/`                                        | English home                                  |
 | `/vTTS/`                                   | English app page                              |
-| `/PHTV/`, `/LunarV/`                       | Vietnamese-first app pages                    |
+| `/PHTV/`, `/LunarV/`                       | Vietnamese app pages                          |
+| `/en/PHTV/`, `/en/LunarV/`                 | English app pages                             |
+| `/zh/LunarV/`                              | Simplified Chinese LunarV page                |
 | `/<App>/privacy.html`, `/<App>/terms.html` | App legal documents                           |
 | `/guides/`                                 | English guide index                           |
 | `/guides/<slug>/`                          | English articles or Vietnamese PHTV tutorials |
 | `/sitemap.xml`, `/404.html`                | Canonical sitemap and error page              |
 
-Old locale-prefixed pages and `/huong-dan/` URLs are static redirect documents.
+Other legacy locale-prefixed pages and `/huong-dan/` URLs are static redirect documents.
 `LegacyRedirect.astro` retains search parameters and fragments when JavaScript is enabled.
 
 ## Adding or changing an app

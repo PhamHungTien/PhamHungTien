@@ -46,6 +46,15 @@ const nav: NavItem[] = [
   title={`${app.name} — ${app.category[lang]} | Phạm Hùng Tiến`}
   description={metaDescription(app.description[lang])}
   path={appPath(app, lang)}
+  alternates={
+    ['phtv', 'lunarv'].includes(app.slug)
+      ? [
+          { lang: 'vi', path: app.route },
+          { lang: 'en', path: appPath(app, 'en') },
+          ...(app.slug === 'lunarv' ? [{ lang: 'zh', path: '/zh/LunarV/' }] : []),
+        ]
+      : []
+  }
   ogImage={ogImage(app.slug)}
   ogImageAlt={`${app.name} — ${app.title[lang]}`}
   jsonLd={appJsonLd(app, lang)}
