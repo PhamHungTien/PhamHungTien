@@ -40,7 +40,12 @@ export const GET: APIRoute = async () => {
         .at(-1),
     },
     ...apps.map((app) => ({
-      versions: [{ lang: defaultLangOf(app), path: appPath(app) }],
+      versions: [
+        { lang: defaultLangOf(app), path: appPath(app) },
+        ...(['phtv', 'lunarv'].includes(app.slug)
+          ? [{ lang: 'en' as const, path: appPath(app, 'en') }]
+          : []),
+      ],
       lastmod: releaseDate(app.slug),
       image: { loc: ogImage(app.slug), title: app.name },
     })),

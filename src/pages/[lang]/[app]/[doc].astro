@@ -1,6 +1,6 @@
 ---
 import type { GetStaticPaths } from 'astro';
-import LegacyRedirect from '../../../components/site/LegacyRedirect.astro';
+import LegalPage from '../../../components/legal/LegalPage.astro';
 import { appSegment } from '../../../data/apps';
 import { getLegalDocuments, isDefaultLegal } from '../../../lib/legal';
 
@@ -16,4 +16,4 @@ export const getStaticPaths = (async () =>
 const { doc } = Astro.props;
 ---
 
-<LegacyRedirect to={`${doc.app.route}${doc.kind}.html`} />
+<LegalPage doc={doc} />

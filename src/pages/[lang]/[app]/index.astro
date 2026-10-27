@@ -1,5 +1,6 @@
 ---
 import type { GetStaticPaths } from 'astro';
+import AppPage from '../../../components/app/AppPage.astro';
 import LegacyRedirect from '../../../components/site/LegacyRedirect.astro';
 import { apps, appSegment, defaultLangOf } from '../../../data/apps';
 import { otherLang } from '../../../lib/i18n';
@@ -15,7 +16,11 @@ export const getStaticPaths = (() =>
     }));
   })) satisfies GetStaticPaths;
 
-const { app } = Astro.props;
+const { app, lang } = Astro.props;
 ---
 
-<LegacyRedirect to={app.route} />
+{lang === 'en' && (app.slug === 'phtv' || app.slug === 'lunarv') ? (
+  <AppPage app={app} lang="en" />
+) : (
+  <LegacyRedirect to={app.route} />
+)}

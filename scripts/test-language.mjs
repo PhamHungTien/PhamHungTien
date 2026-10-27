@@ -9,7 +9,7 @@ assert.ok(home.includes('<html lang="en"'));
 assert.ok(!home.includes('languageRoutes'), 'No browser-language redirect');
 assert.ok(!home.includes('data-language'), 'No language picker');
 assert.ok(home.includes('href="/PHTV/"'), 'Home links to Vietnamese-first PHTV');
-assert.ok(!home.includes('href="/en/PHTV/"'));
+assert.ok(home.includes('href="/en/PHTV/"'), 'English app card links to the English PHTV page');
 
 for (const app of [
   'vTTS',
@@ -25,7 +25,7 @@ for (const app of [
     const html = await read(`${app}/${file}`);
     assert.ok(html.includes(`<html lang="${lang}"`), `${app}/${file} language`);
     assert.ok(!html.includes('data-language'), `${app}/${file} has no language picker`);
-    assert.ok(!html.includes('hreflang='), `${app}/${file} has no alternate locale URLs`);
+    assert.ok(!/<link rel="alternate" hreflang=/.test(html), `${app}/${file} has no alternate locale metadata`);
   }
 }
 for (const [oldPath, target] of [
@@ -34,10 +34,7 @@ for (const [oldPath, target] of [
   ['fr/index.html', '/'],
   ['ja/index.html', '/'],
   ['vi/vTTS/index.html', '/vTTS/'],
-  ['en/PHTV/index.html', '/PHTV/'],
-  ['en/LunarV/index.html', '/LunarV/'],
   ['vi/LunarV/index.html', '/LunarV/'],
-  ['en/PHTV/privacy.html', '/PHTV/privacy.html'],
   ['vi/privacy/index.html', '/privacy/'],
   ['huong-dan/index.html', '/guides/'],
   ['huong-dan/bang-go-telex-day-du/index.html', '/guides/bang-go-telex-day-du/'],
@@ -72,6 +69,12 @@ for (const guide of guides.filter((entry) => entry.isDirectory())) {
   const lang = englishGuides.includes(guide.name) ? 'en' : 'vi';
   assert.ok(html.includes(`<html lang="${lang}"`), `${guide.name}: guide language`);
 }
+for (const app of ['PHTV', 'LunarV']) {
+  for (const file of ['index.html', 'privacy.html', 'terms.html']) {
+    const html = await read(`en/${app}/${file}`);
+    assert.ok(html.includes('<html lang="en"'), `en/${app}/${file} language`);
+  }
+}
 const lunar = await read('LunarV/index.html');
 assert.ok(lunar.includes('Lịch âm Việt Nam trên thiết bị Apple.'));
 assert.ok(lunar.includes('Bài viết tiếng Anh'));
@@ -81,7 +84,7 @@ const lunarTerms = await read('LunarV/terms.html');
 assert.ok(lunarTerms.includes('Điều khoản sử dụng'));
 const sitemap = await read('sitemap.xml');
 assert.ok(
-  !/<loc>[^<]*\/(vi|en|fr|ja|huong-dan)\//.test(sitemap),
+  !/<loc>[^<]*\/(vi|fr|ja|huong-dan)\//.test(sitemap),
   'Sitemap only contains canonical pages',
 );
 console.log(

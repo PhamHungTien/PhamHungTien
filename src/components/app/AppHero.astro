@@ -5,7 +5,7 @@ import BrandIcon from '../ui/BrandIcon.astro';
 import PlanetSphere from '../ui/PlanetSphere.astro';
 import type { App, Lang } from '../../data/types';
 import { t } from '../../lib/i18n';
-import { homePath, legalPath } from '../../lib/routes';
+import { appPath, homePath, legalPath } from '../../lib/routes';
 import { storesOf, platformGroupsOf } from '../../data/platforms';
 
 interface Props {
@@ -61,6 +61,24 @@ const secondary = app.links.source
       </ol>
     </nav>
 
+    {(app.slug === 'phtv' || app.slug === 'lunarv') && (
+      <nav class="language-links" aria-label={lang === 'vi' ? 'Ngôn ngữ trang' : 'Page language'}>
+        <a
+          href={appPath(app, 'vi')}
+          hreflang="vi"
+          aria-current={lang === 'vi' ? 'page' : undefined}
+        >
+          Tiếng Việt
+        </a>
+        <a
+          href={appPath(app, 'en')}
+          hreflang="en"
+          aria-current={lang === 'en' ? 'page' : undefined}
+        >
+          English
+        </a>
+      </nav>
+    )}
     <div class="lockup">
       <Image
         src={app.icon}
@@ -208,6 +226,28 @@ const secondary = app.links.source
     font-weight: 600;
   }
 
+  .language-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: -12px 0 22px;
+  }
+  .language-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 14px;
+    border-radius: 999px;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .language-links a[aria-current='page'] {
+    color: var(--ink);
+    background: var(--surface-2);
+    border-color: var(--line-strong);
+  }
   .lockup {
     display: flex;
     align-items: center;

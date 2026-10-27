@@ -11,6 +11,7 @@ import mac1 from '../../assets/apps/lunarv/appstore/mac-1.jpg';
 const app: App = {
   slug: 'lunarv',
   defaultLang: 'vi',
+  legalLangs: ['vi', 'en'],
   name: 'LunarV',
   route: '/LunarV/',
   icon: icon,
