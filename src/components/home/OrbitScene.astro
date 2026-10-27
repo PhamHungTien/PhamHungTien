@@ -81,7 +81,16 @@ const artwork = await Promise.all(
               <span class="planet__light" aria-hidden="true"></span>
               <span class="planet__shade" aria-hidden="true"></span>
             </span>
-            <span class="planet__name">{app.name}</span>
+            <svg class="planet__name" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+              <defs>
+                <path id={`planet-name-${app.slug}`} d="M 18 101 A 82 82 0 0 0 182 101" />
+              </defs>
+              <text>
+                <textPath href={`#planet-name-${app.slug}`} startOffset="50%" text-anchor="middle">
+                  {app.name}
+                </textPath>
+              </text>
+            </svg>
           </a>
         );
       })}
@@ -257,7 +266,7 @@ const artwork = await Promise.all(
       circle at 50% 40%,
       color-mix(in srgb, var(--planet-pole) 70%, #fff) 0%,
       var(--planet-color) 50%,
-      color-mix(in srgb, var(--planet-color) 30%, #06040a) 100%
+      color-mix(in srgb, var(--planet-color) 58%, #14101b) 100%
     );
     box-shadow: 0 calc(10px * var(--s)) calc(20px * var(--s)) -8px rgb(0 0 0 / 0.6);
     transform: scale(var(--s));
@@ -267,6 +276,7 @@ const artwork = await Promise.all(
   }
   .planet__artwork {
     position: relative;
+    z-index: 1;
     width: var(--artwork-size);
     height: var(--artwork-size);
     object-fit: contain;
@@ -286,7 +296,7 @@ const artwork = await Promise.all(
     border-radius: 50%;
     background:
       radial-gradient(circle at 50% 6%, rgb(255 244 228 / 0.5), transparent 46%),
-      linear-gradient(180deg, transparent 38%, rgb(5 3 12 / 0.62) 100%);
+      linear-gradient(180deg, transparent 38%, rgb(5 3 12 / 0.32) 100%);
     transform: rotate(var(--light));
     pointer-events: none;
   }
@@ -296,7 +306,7 @@ const artwork = await Promise.all(
     inset: 0;
     border-radius: 50%;
     background: #05030c;
-    opacity: calc((1 - var(--depth)) * 0.2);
+    opacity: calc((1 - var(--depth)) * 0.07);
     pointer-events: none;
   }
   .planet:hover .planet__body,
@@ -308,34 +318,28 @@ const artwork = await Promise.all(
   }
   .planet__name {
     position: absolute;
-    top: calc(50% + 50% * var(--s) + 6px);
+    top: 50%;
     left: 50%;
-    translate: -50% 0;
-    color: var(--muted);
-    font-size: clamp(10px, calc(var(--planet-unit, 60px) * 0.19), 12.5px);
-    font-weight: 600;
-    line-height: 1.35;
-    white-space: nowrap;
-    padding: 2px 8px;
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--paper) 78%, transparent);
-    border: 1px solid color-mix(in srgb, var(--ink) 9%, transparent);
-    box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
-    opacity: calc((0.62 + (var(--depth) + 1) * 0.19) * var(--label, 1));
+    width: calc(185% * var(--s));
+    max-width: none;
+    height: auto;
+    translate: -50% -50%;
+    overflow: visible;
     pointer-events: none;
-    transition:
-      color 200ms ease,
-      border-color 200ms ease,
-      background-color 200ms ease,
-      scale 260ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    opacity: calc((0.9 + (var(--depth) + 1) * 0.05) * var(--label, 1));
+  }
+  .planet__name text {
+    fill: var(--ink);
+    stroke: var(--paper);
+    stroke-width: 3px;
+    paint-order: stroke fill;
+    stroke-linejoin: round;
+    font: 600 21px var(--font);
+    letter-spacing: 0.01em;
   }
   .planet:hover .planet__name,
   .planet:focus-visible .planet__name {
-    color: var(--ink);
     opacity: 1;
-    border-color: color-mix(in srgb, var(--track-color) 70%, transparent);
-    background: color-mix(in srgb, var(--paper) 94%, transparent);
-    scale: 1.06;
   }
   .planet:focus-visible {
     outline: none;
@@ -466,20 +470,9 @@ const artwork = await Promise.all(
     .orbit {
       --orbit-width: calc(100vw - 12px);
     }
-    .planet__name {
-      padding: 1.5px 6px;
-      top: calc(50% + 50% * var(--s) + 4px);
-    }
     .orbit__halo {
       width: 90%;
       aspect-ratio: 1.2;
-    }
-  }
-
-  @media (max-height: 500px) and (min-width: 480px) {
-    .planet__name {
-      font-size: 9px;
-      top: calc(50% + 50% * var(--s) + 3px);
     }
   }
 </style>
