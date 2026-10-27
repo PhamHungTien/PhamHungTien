@@ -35,7 +35,6 @@ export const ORBIT_TRACKS: TrackDef[] = [
 ];
 
 const TAU = Math.PI * 2;
-const RING_SAMPLES = 120;
 /** Seconds for one revolution of the whole system at time scale 1. */
 const PERIOD = 80;
 /** Outer orbit radius in layout units. */
@@ -106,9 +105,6 @@ export function initPlanetSystem(): void {
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
 
-  const backRings = [...scene.querySelectorAll<SVGPathElement>('[data-ring-back]')];
-  const frontRings = [...scene.querySelectorAll<SVGPathElement>('[data-ring-front]')];
-
   const elements = [...scene.querySelectorAll<HTMLElement>('[data-planet]')];
   const count = Math.max(1, elements.length);
   const planets = elements.map((el, index) => {
@@ -155,7 +151,6 @@ export function initPlanetSystem(): void {
   let visible = false;
   let hoveredTrack = -1;
   let focused = false;
-  let lastRingKey = '';
   let lastCamKey = '';
 
   let gesture: {
@@ -265,40 +260,6 @@ export function initPlanetSystem(): void {
     scene!.style.setProperty('--sun-size', `${sunSize.toFixed(1)}px`);
     scene!.style.setProperty('--sun-x', `${center.x.toFixed(1)}px`);
     scene!.style.setProperty('--sun-y', `${center.y.toFixed(1)}px`);
-    lastRingKey = '';
-  }
-
-  /* ---------------------------------------------------------------- rings */
-  /** Paths are hidden until a planet is pointed at; then its orbit is drawn in 3D. */
-  function drawRings() {
-    const key = `${cam.pitch.toFixed(4)}|${cam.roll.toFixed(4)}|${unit.toFixed(1)}|${arrived ? 1 : arrival.toFixed(2)}`;
-    if (key === lastRingKey) return;
-    lastRingKey = key;
-
-    planets.forEach((p, index) => {
-      const back = backRings[index];
-      const front = frontRings[index];
-      if (!back || !front) return;
-      const spread = planetSpread(index);
-      let backPath = '';
-      let frontPath = '';
-      let lastSide: boolean | null = null;
-      for (let i = 0; i <= RING_SAMPLES; i++) {
-        const pt = project((i / RING_SAMPLES) * TAU, p.orbit, cam, unit, spread);
-        const isFront = pt.z >= 0;
-        const point = `${(center.x + pt.x).toFixed(1)} ${(center.y + pt.y).toFixed(1)}`;
-        if (isFront) {
-          frontPath += lastSide === true ? `L${point}` : `M${point}`;
-          if (lastSide === false) backPath += `L${point}`;
-        } else {
-          backPath += lastSide === false ? `L${point}` : `M${point}`;
-          if (lastSide === true) frontPath += `L${point}`;
-        }
-        lastSide = isFront;
-      }
-      back.setAttribute('d', backPath);
-      front.setAttribute('d', frontPath);
-    });
   }
 
   /* -------------------------------------------------------------- planets */
@@ -385,7 +346,6 @@ export function initPlanetSystem(): void {
   }
 
   function render(dt = 1) {
-    drawRings();
     drawPlanets(dt);
   }
 
@@ -488,7 +448,7 @@ export function initPlanetSystem(): void {
   window.addEventListener(
     'scroll',
     () => {
-      if (scrollQueued || !motionEnabled()) return;
+      if (scrollQueued || !motionEnabled() || !visible) return;
       scrollQueued = true;
       requestAnimationFrame(() => {
         scrollQueued = false;

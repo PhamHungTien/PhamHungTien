@@ -24,13 +24,6 @@ const artwork = await Promise.all(
   <div class="orbit__arrival">
     <div class="orbit__halo" aria-hidden="true"></div>
 
-    <!-- Far half of every orbit: drawn behind the sun. -->
-    <svg class="orbit__tracks orbit__tracks--back" aria-hidden="true">
-      {apps.map((_, index) => (
-        <path class={`orbit__ring orbit__ring--${index}`} d="" data-ring-back={index} />
-      ))}
-    </svg>
-
     <div class="orbit__core" aria-hidden="true">
       <span class="orbit__flare"></span>
       <span class="orbit__corona"></span>
@@ -53,13 +46,6 @@ const artwork = await Promise.all(
         </svg>
       </div>
     </div>
-
-    <!-- Near half of every orbit: crosses in front of the sun. -->
-    <svg class="orbit__tracks orbit__tracks--front" aria-hidden="true">
-      {apps.map((_, index) => (
-        <path class={`orbit__ring orbit__ring--${index}`} d="" data-ring-front={index} />
-      ))}
-    </svg>
 
     <nav class="orbit__planets" aria-label="Explore the app planets">
       {apps.map((app, index) => {
@@ -95,7 +81,6 @@ const artwork = await Promise.all(
               )}
               <span class="planet__light" aria-hidden="true"></span>
               <span class="planet__shade" aria-hidden="true"></span>
-              <span class="planet__atmosphere" aria-hidden="true"></span>
             </span>
             <span class="planet__name">{app.name}</span>
           </a>
@@ -178,59 +163,6 @@ const artwork = await Promise.all(
     );
   }
 
-  /* Orbit rings: back halves sit under the sun, front halves over it. */
-  .orbit__tracks {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-    pointer-events: none;
-  }
-  .orbit__tracks--back {
-    z-index: 3;
-  }
-  .orbit__tracks--front {
-    z-index: 12;
-  }
-  .orbit__ring {
-    fill: none;
-    stroke: color-mix(in srgb, var(--ink) 14%, transparent);
-    stroke-width: 1.1px;
-    stroke-linecap: round;
-    vector-effect: non-scaling-stroke;
-    transition:
-      stroke 320ms ease,
-      stroke-width 320ms ease,
-      opacity 320ms ease;
-  }
-  /* No drawn orbits by default — just bodies in space. Pointing at a planet reveals
-     its own path, faintly, so the motion still reads. */
-  .orbit__ring {
-    opacity: 0;
-  }
-  :global([data-theme='dark']) .orbit__ring {
-    stroke: rgb(255 255 255 / 0.13);
-  }
-  .orbit[data-hover-track='0'] .orbit__ring--0,
-  .orbit[data-hover-track='1'] .orbit__ring--1,
-  .orbit[data-hover-track='2'] .orbit__ring--2,
-  .orbit[data-hover-track='3'] .orbit__ring--3,
-  .orbit[data-hover-track='4'] .orbit__ring--4,
-  .orbit[data-hover-track='5'] .orbit__ring--5,
-  .orbit[data-hover-track='6'] .orbit__ring--6 {
-    stroke: var(--active-track-color, var(--gold));
-    stroke-width: 1.4px;
-    opacity: 0.55;
-  }
-  .orbit__tracks--back {
-    opacity: 0.4;
-  }
-  .orbit__tracks--back .orbit__ring {
-    stroke-dasharray: 2 5;
-  }
-
-  /* Sun */
   .orbit__core {
     position: absolute;
     left: var(--sun-x, 50%);
@@ -372,9 +304,7 @@ const artwork = await Promise.all(
       var(--planet-color) 50%,
       color-mix(in srgb, var(--planet-color) 30%, #06040a) 100%
     );
-    box-shadow:
-      inset 0 0 0 1px rgb(255 255 255 / 0.08),
-      0 calc(10px * var(--s)) calc(20px * var(--s)) -8px rgb(0 0 0 / 0.6);
+    box-shadow: 0 calc(10px * var(--s)) calc(20px * var(--s)) -8px rgb(0 0 0 / 0.6);
     transform: scale(var(--s));
     transition:
       box-shadow 260ms ease,
@@ -414,29 +344,13 @@ const artwork = await Promise.all(
     opacity: calc((1 - var(--depth)) * 0.2);
     pointer-events: none;
   }
-  .planet__atmosphere {
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--track-color) 55%, transparent);
-    opacity: 0.55;
-    pointer-events: none;
-    transition: opacity 240ms ease;
-  }
   .planet:hover .planet__body,
   .planet:focus-visible .planet__body {
     scale: 1.14;
     box-shadow:
-      inset 0 0 0 1px rgb(255 255 255 / 0.18),
-      0 0 0 3px color-mix(in srgb, var(--track-color) 45%, transparent),
       0 0 28px var(--planet-glow),
       0 14px 24px -8px rgb(0 0 0 / 0.7);
   }
-  .planet:hover .planet__atmosphere,
-  .planet:focus-visible .planet__atmosphere {
-    opacity: 1;
-  }
-
   .planet__name {
     position: absolute;
     top: calc(50% + 50% * var(--s) + 6px);
@@ -450,8 +364,6 @@ const artwork = await Promise.all(
     padding: 2px 8px;
     border-radius: 999px;
     background: color-mix(in srgb, var(--paper) 78%, transparent);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     border: 1px solid color-mix(in srgb, var(--ink) 9%, transparent);
     box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
     opacity: calc((0.62 + (var(--depth) + 1) * 0.19) * var(--label, 1));

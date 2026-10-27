@@ -4,11 +4,13 @@ export function initTilt(): () => void {
   const controller = new AbortController();
   const elements = document.querySelectorAll<HTMLElement>('[data-tilt], [data-spotlight]');
   const resets: (() => void)[] = [];
+  const active = new Set<() => void>();
   elements.forEach((el) => {
     let frame = 0;
     let box: DOMRect | undefined;
     const reset = () => {
       cancelAnimationFrame(frame);
+      active.delete(reset);
       box = undefined;
       for (const property of ['--tilt-x', '--tilt-y', '--pointer-x', '--pointer-y'])
         el.style.removeProperty(property);
@@ -17,7 +19,9 @@ export function initTilt(): () => void {
     resets.push(reset);
     el.addEventListener(
       'pointerenter',
-      () => {
+      (event) => {
+        if (!fine.matches || event.pointerType === 'touch') return;
+        active.add(reset);
         box = el.getBoundingClientRect();
       },
       { signal: controller.signal },
@@ -28,6 +32,7 @@ export function initTilt(): () => void {
         if (!fine.matches || event.pointerType === 'touch') return;
         cancelAnimationFrame(frame);
         frame = requestAnimationFrame(() => {
+          active.add(reset);
           box ??= el.getBoundingClientRect();
           if (!box.width || !box.height) return;
           const x = Math.max(0, Math.min(1, (event.clientX - box.left) / box.width));
@@ -46,7 +51,9 @@ export function initTilt(): () => void {
     el.addEventListener('pointercancel', reset, { signal: controller.signal });
   });
   const resetAll = () => resets.forEach((reset) => reset());
-  window.addEventListener('scroll', resetAll, { passive: true, signal: controller.signal });
+  const resetActive = () => [...active].forEach((reset) => reset());
+  fine.addEventListener('change', resetAll, { signal: controller.signal });
+  window.addEventListener('scroll', resetActive, { passive: true, signal: controller.signal });
   window.addEventListener('resize', resetAll, { passive: true, signal: controller.signal });
   return () => {
     controller.abort();

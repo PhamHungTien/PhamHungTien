@@ -115,7 +115,9 @@ const speculationRules = {
 
     <link rel="preload" href={latin400} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={latin700} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={vietnamese700} as="font" type="font/woff2" crossorigin />
+    {lang === 'vi' && (
+      <link rel="preload" href={vietnamese700} as="font" type="font/woff2" crossorigin />
+    )}
 
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={SITE.name} />

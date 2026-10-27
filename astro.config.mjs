@@ -15,7 +15,7 @@ export default defineConfig({
   build: {
     format: 'preserve',
     assets: 'assets/build',
-    inlineStylesheets: 'always',
+    inlineStylesheets: 'auto',
   },
   compressHTML: true,
   // React is only shipped for the two discussion boards; everything else is HTML + CSS.
