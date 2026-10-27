@@ -160,8 +160,10 @@ export function initPlanetSystem(): void {
     lastX: number;
     time: number;
     dragging: boolean;
+    side: number;
   } | null = null;
   let suppressClick = false;
+  const transitionNames = new Map<HTMLElement, string>();
 
   const motionEnabled = () => !reduced.matches && root.dataset.motion !== 'off';
   const paused = () => hoveredTrack >= 0 || focused || !!gesture?.dragging;
@@ -387,9 +389,23 @@ export function initPlanetSystem(): void {
       arrived = true;
       cam.pitch = basePitch;
       cam.roll = baseRoll;
-      render(1);
+      camTarget.pitchOffset = camTarget.rollOffset = camTarget.yaw = 0;
+      yaw = 0;
+      planets.forEach(({ el }) => {
+        for (const property of [
+          'transform',
+          'z-index',
+          'opacity',
+          '--s',
+          '--depth',
+          '--label',
+          '--light',
+        ])
+          el.style.removeProperty(property);
+      });
       return;
     }
+    if (!frame) render(1);
     wake();
   }
 
@@ -416,6 +432,27 @@ export function initPlanetSystem(): void {
       clearHighlight();
       wake();
     });
+    p.el.addEventListener('click', (event) => {
+      if (
+        suppressClick ||
+        event.defaultPrevented ||
+        !motionEnabled() ||
+        !('startViewTransition' in document)
+      )
+        return;
+      const slug = p.el.dataset.appSlug;
+      const body = p.el.querySelector<HTMLElement>('.planet__body');
+      if (!slug || !body) return;
+      // Only the selected planet owns this name during the navigation snapshot.
+      const name = `app-${slug}`;
+      document.querySelectorAll<HTMLElement>('[style*="view-transition-name"]').forEach((el) => {
+        if (el.style.viewTransitionName === name) {
+          transitionNames.set(el, name);
+          el.style.viewTransitionName = 'none';
+        }
+      });
+      body.style.viewTransitionName = name;
+    });
     p.el.addEventListener('focus', () => highlight(p.index, p.trackColor));
     p.el.addEventListener('blur', () => {
       if (hoveredTrack < 0) clearHighlight();
@@ -425,7 +462,14 @@ export function initPlanetSystem(): void {
   // Pointer parallax across the whole hero.
   const hero = scene.closest('section') ?? scene;
   hero.addEventListener('pointermove', (event) => {
-    if (event.pointerType !== 'mouse' || !motionEnabled()) return;
+    if (
+      event.pointerType !== 'mouse' ||
+      !motionEnabled() ||
+      hoveredTrack >= 0 ||
+      focused ||
+      gesture?.dragging
+    )
+      return;
     const box = scene.getBoundingClientRect();
     const nx = clamp(((event.clientX - box.left) / box.width) * 2 - 1, -1, 1);
     const ny = clamp(((event.clientY - box.top) / box.height) * 2 - 1, -1, 1);
@@ -475,6 +519,7 @@ export function initPlanetSystem(): void {
       lastX: event.clientX,
       time: event.timeStamp,
       dragging: false,
+      side: event.clientY - scene.getBoundingClientRect().top < center.y ? 1 : -1,
     };
   });
 
@@ -498,9 +543,8 @@ export function initPlanetSystem(): void {
     }
 
     // Grab the near side and the system follows the finger, like turning a globe.
-    const box = scene.getBoundingClientRect();
-    const side = event.clientY - box.top < center.y ? 1 : -1;
-    const delta = ((event.clientX - gesture.lastX) / Math.max(200, unit * OUTER * 1.6)) * side;
+    const delta =
+      ((event.clientX - gesture.lastX) / Math.max(200, unit * OUTER * 1.6)) * gesture.side;
     const elapsed = Math.max(8, event.timeStamp - gesture.time) / 1000;
     rotation += delta;
     velocity = clamp(approach(velocity, delta / elapsed, 18, elapsed), -4, 4);
@@ -551,6 +595,11 @@ export function initPlanetSystem(): void {
   /* ------------------------------------------------------------ lifecycle */
   new IntersectionObserver(([entry]) => {
     visible = entry.isIntersecting;
+    if (!visible) {
+      cancelAnimationFrame(frame);
+      frame = 0;
+      previous = 0;
+    }
     sync();
   }).observe(scene);
 
@@ -563,7 +612,16 @@ export function initPlanetSystem(): void {
   new MutationObserver(sync).observe(root, { attributes: true, attributeFilter: ['data-motion'] });
   reduced.addEventListener('change', sync);
   document.addEventListener('visibilitychange', sync);
-  window.addEventListener('pageshow', sync);
+  window.addEventListener('pageshow', () => {
+    planets.forEach(({ el }) =>
+      el.querySelector<HTMLElement>('.planet__body')?.style.removeProperty('view-transition-name'),
+    );
+    transitionNames.forEach((name, el) => {
+      el.style.viewTransitionName = name;
+    });
+    transitionNames.clear();
+    sync();
+  });
 
   measure();
   cam.roll = baseRoll;

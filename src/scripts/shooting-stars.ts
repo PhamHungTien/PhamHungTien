@@ -19,6 +19,7 @@ export function initShootingStars(): void {
   let timer = 0;
   let visible = false;
   let first = true;
+  const activeMeteors = new Set<Animation>();
 
   const enabled = () => !reduced.matches && root.dataset.motion !== 'off';
   const random = (min: number, max: number) => min + Math.random() * (max - min);
@@ -59,12 +60,25 @@ export function initShootingStars(): void {
       ],
       { duration, delay, easing: 'cubic-bezier(0.3, 0, 0.6, 1)', fill: 'both' },
     );
-    animation.finished.then(() => meteor.remove()).catch(() => meteor.remove());
+    activeMeteors.add(animation);
+    animation.finished
+      .catch(() => {})
+      .finally(() => {
+        activeMeteors.delete(animation);
+        meteor.remove();
+      });
   }
 
   function schedule() {
     clearTimeout(timer);
-    if (!enabled() || !visible || document.hidden) return;
+    if (!enabled() || !visible || document.hidden) {
+      activeMeteors.forEach((animation) => animation.cancel());
+      if (!enabled()) {
+        space?.style.removeProperty('--px');
+        space?.style.removeProperty('--py');
+      }
+      return;
+    }
     // The first one comes soon after the intro so visitors notice it.
     const wait = first
       ? lively()

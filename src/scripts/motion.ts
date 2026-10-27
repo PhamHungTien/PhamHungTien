@@ -20,12 +20,12 @@ function startReveals(): () => void {
           el.classList.remove('motion-pending');
           const animation = el.animate(
             [
-              { opacity: 0, translate: '0 28px' },
+              { opacity: 0, translate: '0 12px' },
               { opacity: 1, translate: '0 0' },
             ],
             {
-              duration: 760,
-              delay: Math.min(index, 5) * 65,
+              duration: 520,
+              delay: Math.min(index, 3) * 45,
               easing: 'cubic-bezier(.22,1,.36,1)',
               fill: 'backwards',
             },

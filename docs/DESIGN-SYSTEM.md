@@ -162,3 +162,14 @@ direction; modest translation and rotation preserve recognizable artwork and sta
 
 Dark mode uses a pure black (#000000) space background and neutral stars. Colored nebula
 overlays are disabled in dark mode; the light theme retains its subdued nebula treatment.
+
+### Motion interaction refinements
+
+Reduced-motion visitors use the separated static constellation, including after changing
+the system setting while the page is open. A horizontal drag keeps the direction from its
+initial contact point, even when crossing the centre; vertical scroll remains native.
+Camera parallax stops retargeting while a planet is hovered or keyboard-focused. When
+supported, a selected planet shares its transition name with the destination app icon;
+other app icons temporarily release that name and are restored on history navigation.
+Reveal distance, stagger and product-card tilt are restrained to make content easier to
+scan. Active meteors are cancelled when the page is hidden or reduced motion is enabled.

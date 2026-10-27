@@ -57,6 +57,7 @@ const artwork = await Promise.all(
             href={appPath(app)}
             aria-label={`Explore ${app.name}`}
             data-planet
+            data-app-slug={app.slug}
             data-track={index}
             data-track-color={appearance.track}
             style={`--planet-color: ${appearance.base}; --planet-pole: ${appearance.pole}; --planet-glow: ${appearance.glow}; --track-color: ${appearance.track}; --glyph-start: ${appearance.glyphStart}; --glyph-end: ${appearance.glyphEnd}; --artwork-size: ${appearance.artworkSize}%; --art-dx: ${appearance.artOffsetX}%; --art-dy: ${appearance.artOffsetY}%; --planet-k: ${index === 0 ? 1.1 : 1}; --spin-duration: ${9 + index * 2.7}s; --spin-delay: ${index * -2.3}s; --spin-direction: ${index % 2 ? 'reverse' : 'normal'};`}
@@ -281,7 +282,7 @@ const artwork = await Promise.all(
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
   }
-  .orbit[data-ready] .planet {
+  .orbit[data-ready][data-motion='live'] .planet {
     left: 0;
     top: 0;
     will-change: transform, opacity;
@@ -394,6 +395,16 @@ const artwork = await Promise.all(
     opacity: 1 !important;
   }
 
+  /* Separated and reachable both without JavaScript and with reduced motion. */
+  .orbit[data-motion='still'] .planet {
+    z-index: 20;
+  }
+  .orbit[data-motion='still'] .planet__name {
+    opacity: 1;
+  }
+  .orbit[data-motion='still'] {
+    cursor: default;
+  }
   /* Fallback constellation for browsers without JavaScript. */
   .planet--0 {
     left: 36%;
