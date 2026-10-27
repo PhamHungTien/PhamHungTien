@@ -173,3 +173,9 @@ supported, a selected planet shares its transition name with the destination app
 other app icons temporarily release that name and are restored on history navigation.
 Reveal distance, stagger and product-card tilt are restrained to make content easier to
 scan. Active meteors are cancelled when the page is hidden or reduced motion is enabled.
+
+### Earth-toned central planet
+
+The central body uses ochre, clay and brown shading, a quiet mineral texture and a soft
+directional highlight rather than a star corona. Its responsive diameter is larger but
+limited by available space; app links retain their own paths and keyboard focus.

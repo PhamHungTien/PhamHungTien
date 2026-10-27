@@ -250,10 +250,10 @@ export function initPlanetSystem(): void {
     baseRoll = roll;
     unit = best.unit;
     center = { x: best.cx, y: best.cy };
-    sunSize = clamp(unit * 0.2, 92, 210);
+    sunSize = clamp(unit * 0.32, Math.min(width * 0.36, height * 0.3, 145), 330);
 
     // Innermost orbit clears the sun plus a (near, enlarged) planet; the rest follow.
-    const inner = Math.min(OUTER * 0.7, (sunSize * 0.5 + planetSize * 0.95) / unit);
+    const inner = Math.min(OUTER * 0.82, (sunSize * 0.5 + planetSize * 0.95) / unit);
     planets.forEach((p) => {
       p.orbit.radius = inner + (OUTER - inner) * p.def.reach;
     });
