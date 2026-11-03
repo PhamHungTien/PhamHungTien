@@ -1,0 +1,1 @@
+import{t as e}from"./app-tabs.BCsygzCJ.js";e();
