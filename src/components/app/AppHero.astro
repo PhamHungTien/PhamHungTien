@@ -34,6 +34,7 @@ const buttons = [
     external: true,
   })),
 ];
+const equalStoreButtons = !app.install && stores.length === 2;
 const secondary = app.links.source
   ? { href: app.links.source, label: t(lang, 'app.source'), external: true }
   : { href: legalPath(app, 'privacy', lang), label: t(lang, 'app.privacy'), external: false };
@@ -112,7 +113,16 @@ const secondary = app.links.source
     <p class="app-hero__subtitle">{app.subtitle[lang]}</p>
 
     <div class="app-hero__actions">
-      {buttons.map((button, index) => (
+      {equalStoreButtons ? (
+        <div class="app-hero__store-pair">
+          {buttons.map((button) => (
+            <a class="button button--primary" href={button.href} target="_blank" rel="noopener">
+              <Store size={18} aria-hidden="true" />
+              <span>{button.label}</span>
+            </a>
+          ))}
+        </div>
+      ) : buttons.map((button, index) => (
         <a
           class:list={['button', index === 0 ? 'button--primary' : 'button--secondary']}
           href={button.href}
@@ -319,6 +329,21 @@ const secondary = app.links.source
     align-items: center;
     gap: 12px 16px;
     margin-top: 32px;
+  }
+
+  .app-hero__store-pair {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    width: min(100%, 460px);
+  }
+  .app-hero__store-pair .button {
+    min-width: 0;
+    min-height: 56px;
+    padding: 8px 10px;
+  }
+  .app-hero__store-pair svg {
+    flex: none;
   }
 
   /* The app's planet circles the screenshot, behind it and in front of it. */
