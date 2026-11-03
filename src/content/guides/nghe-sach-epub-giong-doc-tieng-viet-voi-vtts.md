@@ -16,7 +16,7 @@ When your eyes need a break or your hands are busy, **vTTS** turns EPUB books an
 - **iPhone and iPad:** iOS and iPadOS 17 or later.
 - **Mac:** macOS 14 or later.
 
-Download vTTS from the [App Store](https://apps.apple.com/app/id6817003401). Voices are bundled with the app, so you can listen on first launch, even offline. The video above is narrated in Vietnamese; the written instructions below are in English.
+Download vTTS from the [App Store](https://apps.apple.com/app/id6817003401) or [Google Play](https://play.google.com/store/apps/details?id=com.phamhungtien.vtts). The steps below describe the Apple version. Voices are bundled with the app, so you can listen on first launch, even offline. The video above is narrated in Vietnamese; the written instructions below are in English.
 
 ## Step 1: Import books and documents
 

@@ -25,7 +25,10 @@ const app: App = {
     { src: mac1, alt: { vi: 'Giao diện Mac · 1', en: 'Mac experience · 1' } },
   ],
   links: {
-    stores: { appStore: 'https://apps.apple.com/app/id6817003401' },
+    stores: {
+      appStore: 'https://apps.apple.com/app/id6817003401',
+      googlePlay: 'https://play.google.com/store/apps/details?id=com.phamhungtien.vtts',
+    },
     community: 'https://www.facebook.com/vTTSOffline',
   },
   accent: '#9255bd',
@@ -50,11 +53,11 @@ const app: App = {
     en: 'Listen to books and text in Vietnamese and English, on your device. Follow each passage, add background music, and pick up where you left off.',
   },
   description: {
-    vi: 'vTTS đọc sách EPUB và văn bản ngoại tuyến trên iPhone, iPad và Mac. Giọng Việt và Anh, điều chỉnh tốc độ khi phát, nhạc nền, hẹn giờ và xuất âm thanh.',
-    en: 'vTTS reads EPUB books and text offline on iPhone, iPad, and Mac. Vietnamese and English voices, live speed adjustment, background music, sleep timer, and audio export.',
+    vi: 'vTTS đọc sách EPUB và văn bản ngoại tuyến trên Android, iPhone, iPad và Mac. Giọng Việt và Anh, điều chỉnh tốc độ khi phát, nhạc nền, hẹn giờ và xuất âm thanh.',
+    en: 'vTTS reads EPUB books and text offline on Android, iPhone, iPad, and Mac. Vietnamese and English voices, live speed adjustment, background music, sleep timer, and audio export.',
   },
-  platforms: ['ios', 'ipados', 'macos'],
-  requirements: 'iOS & iPadOS 17+, macOS 14+',
+  platforms: ['ios', 'ipados', 'macos', 'android'],
+  requirements: 'iOS & iPadOS 17+, macOS 14+; Android',
   appCategory: 'UtilitiesApplication',
   facts: [
     {
@@ -102,8 +105,8 @@ const app: App = {
     {
       title: { vi: 'Sách nói M4B, widget & Siri', en: 'M4B audiobooks, widgets & Siri' },
       description: {
-        vi: 'Xuất cả sách thành M4B có chương, dùng nhạc nền của bạn, điều khiển từ widget và tiếp tục nghe bằng Siri.',
-        en: 'Export a whole book as a chaptered M4B audiobook, add your own background music, and continue listening with widgets and Siri.',
+        vi: 'Trên thiết bị Apple, xuất cả sách thành M4B có chương, dùng nhạc nền của bạn, điều khiển từ widget và tiếp tục nghe bằng Siri.',
+        en: 'On Apple devices, export a whole book as a chaptered M4B audiobook, add your own background music, and continue listening with widgets and Siri.',
       },
     },
     {

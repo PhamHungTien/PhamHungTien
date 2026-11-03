@@ -1,10 +1,10 @@
 ---
 title: "Terms of Use"
-description: "vTTS Terms of Use - On-device Vietnamese and English Text-to-Speech & EPUB Reader for iOS, iPadOS, and macOS."
+description: "vTTS Terms of Use - On-device Vietnamese and English Text-to-Speech & EPUB Reader for Android, iOS, iPadOS, and macOS."
 updated: "October 4, 2026"
 lang: en
 ---
-Welcome to **vTTS**. By downloading, installing, or using vTTS on iOS, iPadOS, or macOS, you agree to be bound by these Terms of Use.
+Welcome to **vTTS**. By downloading, installing, or using vTTS on Android, iOS, iPadOS, or macOS, you agree to be bound by these Terms of Use.
 
 ## 1\. Intellectual Property Rights
 
