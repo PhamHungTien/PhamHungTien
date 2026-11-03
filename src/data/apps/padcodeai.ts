@@ -13,6 +13,7 @@ const app: App = {
   slug: 'padcodeai',
   name: 'Pad Code AI',
   route: '/PadCodeAI/',
+  legalLangs: ['en', 'vi'],
   icon: icon,
   heroImage: currentV2HeroDevices,
   gallery: [

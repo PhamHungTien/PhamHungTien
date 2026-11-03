@@ -1,7 +1,7 @@
 ---
 title: "Terms of Use"
 description: "Pad Code AI Terms of Use: code editor and IDE for iPad and iPhone with on-device runtimes, Git, and an AI assistant."
-updated: "October 14, 2026"
+updated: "November 3, 2026"
 lang: en
 ---
 ## 1\. Acceptance of Terms
@@ -24,11 +24,11 @@ You are solely responsible for the code you write, run, clone, or push with the 
 
 ## 4\. On-Device Code Execution
 
-Programs run on your device inside a sandbox, for coding, learning, and testing. The sandbox has no network access and does not provide full system access. Execution time, memory, and output are limited to keep the App responsive.
+Programs run on your device inside a sandbox, for coding, learning, and testing. The sandbox does not provide full system access. Running Python code can download additional packages and dependencies from package services; Web Preview content can contact remote services referenced by your code. Your source code is not uploaded to a compilation or execution server. Execution time, memory, and output are limited to keep the App responsive.
 
 ## 5\. AI Assistant
 
-The AI assistant can use Apple Intelligence on your device or a third-party provider you configure with your own API key. When you use a third-party provider:
+The optional AI assistant can use a supported model on your device or a third-party provider you configure with your own API key, depending on device and App Store regional availability. When you use a third-party provider:
 
 - Your use is also governed by that provider's terms and privacy policy.
 - You are responsible for your API key and for any usage charges billed by the provider.
@@ -37,10 +37,10 @@ AI-generated suggestions are provided as-is and should be reviewed before use. W
 
 ## 6\. Git & Network Features
 
-Git clone and push features use GitHub's API. You are responsible for:
+Git clone, fetch, pull and push communicate with the supported HTTPS repository host you choose, including hosts other than GitHub. Authentication may require an access token for that host. You are responsible for:
 
 - The repositories you clone and the code you push.
-- Keeping your GitHub personal access tokens safe.
+- Keeping your repository access tokens safe.
 - Following the terms of service of any third-party platform you use.
 
 ## 7\. Open-Source Components

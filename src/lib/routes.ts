@@ -8,4 +8,6 @@ export const appPath = (app: App, lang?: Locale) =>
   lang === 'en' && (app.slug === 'phtv' || app.slug === 'lunarv') ? `/en${app.route}` : app.route;
 export type LegalKind = 'privacy' | 'terms';
 export const legalPath = (app: App, kind: LegalKind, lang?: Lang) =>
-  `${appPath(app, lang)}${kind}.html`;
+  app.slug === 'padcodeai' && lang === 'vi'
+    ? `/vi${app.route}${kind}.html`
+    : `${appPath(app, lang)}${kind}.html`;
