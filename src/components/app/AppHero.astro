@@ -122,21 +122,23 @@ const secondary = app.links.source
             </a>
           ))}
         </div>
-      ) : buttons.map((button, index) => (
-        <a
-          class:list={['button', index === 0 ? 'button--primary' : 'button--secondary']}
-          href={button.href}
-          target={button.external ? '_blank' : undefined}
-          rel={button.external ? 'noopener' : undefined}
-        >
-          {button.icon === 'store' ? (
-            <Store size={18} aria-hidden="true" />
-          ) : (
-            <Download size={18} aria-hidden="true" />
-          )}
-          {button.label}
-        </a>
-      ))}
+      ) : (
+        buttons.map((button, index) => (
+          <a
+            class:list={['button', index === 0 ? 'button--primary' : 'button--secondary']}
+            href={button.href}
+            target={button.external ? '_blank' : undefined}
+            rel={button.external ? 'noopener' : undefined}
+          >
+            {button.icon === 'store' ? (
+              <Store size={18} aria-hidden="true" />
+            ) : (
+              <Download size={18} aria-hidden="true" />
+            )}
+            {button.label}
+          </a>
+        ))
+      )}
       <a
         class="button button--secondary"
         href={secondary.href}
