@@ -110,7 +110,7 @@ const jsonLd = {
     ...(app ? [{ href: appPath(app, lang), label: app.name }] : []),
   ]}
 >
-  <article class="guide container">
+  <article class="guide container" data-has-toc={toc.length > 2 ? '' : undefined}>
     <nav class="crumbs" aria-label="Breadcrumb">
       <a href={homePath(lang)}>{vi ? 'Trang chủ' : 'Home'}</a>
       <ChevronRight size={14} aria-hidden="true" />
@@ -152,7 +152,9 @@ const jsonLd = {
         <ol>
           {toc.map((h) => (
             <li>
-              <a href={`#${h.slug}`}>{h.text}</a>
+              <a href={`#${h.slug}`} data-toc-link>
+                {h.text}
+              </a>
             </li>
           ))}
         </ol>
@@ -194,6 +196,10 @@ const jsonLd = {
     </aside>
   </article>
 
+  <script>
+    import { initToc } from '../../scripts/toc';
+    initToc();
+  </script>
   {related.length > 0 && (
     <GuideList
       guides={related}
@@ -300,9 +306,6 @@ const jsonLd = {
   .toc h2 {
     font-size: 15px;
     font-weight: 700;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    color: var(--muted);
   }
 
   .toc ol {
@@ -320,6 +323,78 @@ const jsonLd = {
     color: var(--brand);
     text-decoration: underline;
     text-underline-offset: 3px;
+  }
+
+  .toc a[aria-current='true'] {
+    color: var(--brand);
+  }
+
+  /* Wide screens: the contents move into a sticky column beside the article, so readers
+     always see where they are and can jump without scrolling back up. */
+  @media (min-width: 1180px) {
+    .guide[data-has-toc] {
+      display: grid;
+      grid-template-columns: minmax(0, 760px) 248px;
+      column-gap: 72px;
+      max-width: 1080px;
+    }
+
+    .guide[data-has-toc] > :global(*) {
+      grid-column: 1;
+    }
+
+    .guide[data-has-toc] > .toc {
+      position: sticky;
+      top: calc(var(--header-height) + 24px);
+      grid-column: 2;
+      grid-row: 1 / span 8;
+      align-self: start;
+      max-height: calc(100dvh - var(--header-height) - 48px);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      margin-top: 0;
+      padding: 4px 0 4px 20px;
+      border: 0;
+      border-left: 1px solid var(--line);
+      border-radius: 0;
+      background: none;
+    }
+
+    .guide[data-has-toc] > .toc ol {
+      padding-left: 0;
+      list-style: none;
+      gap: 2px;
+    }
+
+    .guide[data-has-toc] > .toc a {
+      position: relative;
+      display: block;
+      padding: 5px 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .guide[data-has-toc] > .toc a:hover,
+    .guide[data-has-toc] > .toc a[aria-current='true'] {
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .guide[data-has-toc] > .toc a[aria-current='true'] {
+      font-weight: 600;
+    }
+
+    .guide[data-has-toc] > .toc a[aria-current='true']::before {
+      position: absolute;
+      top: 6px;
+      bottom: 6px;
+      left: -21px;
+      width: 2px;
+      border-radius: 2px;
+      background: var(--brand);
+      content: '';
+    }
   }
 
   .app-cta {
