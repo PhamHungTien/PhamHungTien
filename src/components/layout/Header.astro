@@ -257,10 +257,10 @@ const { lang, nav } = Astro.props;
       padding: 8px 14px;
       border: 1px solid var(--glass-border);
       border-radius: 20px;
-      background: var(--glass-bg);
+      /* Solid: the header's own backdrop filter is the backdrop root, so a nested blur here
+         would sample nothing and the page would show through the links. */
+      background: var(--surface);
       box-shadow: 0 18px 40px rgb(0 0 0 / 0.25);
-      -webkit-backdrop-filter: saturate(150%) blur(20px);
-      backdrop-filter: saturate(150%) blur(20px);
       visibility: hidden;
       opacity: 0;
       transform: translateY(-6px);
@@ -276,18 +276,6 @@ const { lang, nav } = Astro.props;
       transform: none;
     }
 
-    @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
-      .mobile-nav {
-        background: var(--surface);
-        -webkit-backdrop-filter: none;
-        backdrop-filter: none;
-      }
-    }
-    @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-      .mobile-nav {
-        background: var(--surface);
-      }
-    }
     .mobile-nav a {
       display: flex;
       min-height: 50px;

@@ -39,7 +39,9 @@ const sha256 = (body) => `'sha256-${createHash('sha256').update(body).digest('ba
  */
 function adsPolicy() {
   return [
-    "default-src 'self'",
+    // https: also covers fetches without their own directive (prefetches, beacons), which
+    // AdSense makes to Google hosts that change over time.
+    "default-src 'self' https:",
     "script-src 'self' 'unsafe-inline' 'unsafe-eval' https:",
     "style-src 'self' 'unsafe-inline' https:",
     "img-src 'self' data: blob: https:",
