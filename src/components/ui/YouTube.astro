@@ -38,7 +38,7 @@ if (!local && import.meta.env.DEV)
       src={local}
       alt=""
       widths={[480, 800, 1280].filter((w) => w <= local.width)}
-      sizes="(max-width: 820px) 92vw, 760px"
+      sizes={sizes}
       loading="lazy"
     />
   ) : (
