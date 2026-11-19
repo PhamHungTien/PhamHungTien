@@ -299,9 +299,12 @@ const artwork = await Promise.all(
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
   }
-  .orbit[data-ready][data-motion='live'] .planet {
+  /* Once the engine has measured, every planet is placed by its transform, moving or still. */
+  .orbit[data-ready] .planet {
     left: 0;
     top: 0;
+  }
+  .orbit[data-ready][data-motion='live'] .planet {
     will-change: transform, opacity;
   }
   /* With JS, planets wait for the engine so they never jump from the fallback layout. */
@@ -406,13 +409,6 @@ const artwork = await Promise.all(
     opacity: 1 !important;
   }
 
-  /* Separated and reachable both without JavaScript and with reduced motion. */
-  .orbit[data-motion='still'] .planet {
-    z-index: 20;
-  }
-  .orbit[data-motion='still'] .planet__name {
-    opacity: 1;
-  }
   .orbit[data-motion='still'] {
     cursor: default;
   }

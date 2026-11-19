@@ -530,14 +530,8 @@ export function initPlanetSystem(): void {
       cam.roll = baseRoll;
       camTarget.pitchOffset = camTarget.rollOffset = camTarget.yaw = 0;
       yaw = 0;
-      planets.forEach((p) => {
-        for (const property of ['transform', 'z-index', 'opacity'])
-          p.el.style.removeProperty(property);
-        p.light?.style.removeProperty('transform');
-        p.shade?.style.removeProperty('opacity');
-        p.name?.style.removeProperty('--label-opacity');
-        p.written = {};
-      });
+      // Reduced motion keeps the composed, overlap-free layout: one still frame, no loop.
+      render(1);
       return;
     }
     if (!frame) render(1);

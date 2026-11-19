@@ -7,9 +7,12 @@ import { formatDate, guideLang, guidePath, readingMinutes, type Guide } from '..
 interface Props {
   guide: Guide;
   lang?: 'en' | 'vi';
+  /** One level below the list's own heading, so the outline never skips a level. */
+  headingLevel?: 'h2' | 'h3';
 }
 
-const { guide, lang = 'en' } = Astro.props;
+const { guide, lang = 'en', headingLevel = 'h3' } = Astro.props;
+const Heading = headingLevel;
 const app = guide.data.app ? appBySlug.get(guide.data.app as AppSlug) : undefined;
 ---
 
@@ -34,11 +37,11 @@ const app = guide.data.app ? appBySlug.get(guide.data.app as AppSlug) : undefine
           : guide.data.topic}
     </span>
   </span>
-  <h3>
+  <Heading class="guide-card__title">
     {lang === 'en'
       ? (guide.data.titleEn ?? guide.data.title)
       : (guide.data.titleVi ?? guide.data.title)}
-  </h3>
+  </Heading>
   <p>
     {lang === 'en'
       ? (guide.data.descriptionEn ?? guide.data.description)
@@ -94,7 +97,7 @@ const app = guide.data.app ? appBySlug.get(guide.data.app as AppSlug) : undefine
     background: var(--gold);
   }
 
-  h3 {
+  .guide-card__title {
     font-size: 20px;
     font-weight: 700;
     line-height: 1.3;

@@ -46,7 +46,7 @@ const Heading = headingLevel;
   <ul class="guides__grid" role="list" data-reveal-stagger>
     {guides.map((guide) => (
       <li>
-        <GuideCard guide={guide} lang={lang} />
+        <GuideCard guide={guide} lang={lang} headingLevel={headingLevel === 'h1' ? 'h2' : 'h3'} />
       </li>
     ))}
   </ul>
