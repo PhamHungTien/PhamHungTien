@@ -582,13 +582,14 @@ html.has-dialog {
 }
 
 /* Shared editorial labels keep home and product sections in the same visual family. */
+/* A short line of context above a section heading, in the page's own voice. */
 .section-kicker {
   display: block;
-  margin-bottom: 12px;
-  color: var(--muted);
-  font: 600 11px var(--font-mono);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  margin-bottom: 14px;
+  color: color-mix(in srgb, var(--app, var(--brand)) 55%, var(--muted));
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
 }
 
 body {
