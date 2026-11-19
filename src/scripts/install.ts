@@ -1,7 +1,7 @@
 import { linksFromRelease, type ReleaseLinks } from '../lib/github';
 
-const CACHE_KEY = 'release-links:v1';
-const CACHE_MS = 10 * 60 * 1000;
+const CACHE_KEY = 'release-links:v2';
+const CACHE_MS = 60 * 60 * 1000;
 
 /** Refresh build-time download links with the newest GitHub release. */
 async function latest(repo: string): Promise<ReleaseLinks | null> {
@@ -10,14 +10,14 @@ async function latest(repo: string): Promise<ReleaseLinks | null> {
     if (cached && Date.now() - cached.at < CACHE_MS) return cached.links;
   } catch {}
   try {
-    const response = await fetch(`https://api.github.com/repos/${repo}/releases?per_page=20`);
+    // One small request for the newest published release (drafts and pre-releases are
+    // skipped by GitHub). Unauthenticated calls are rate limited per visitor, so the answer
+    // is cached and the build-time links stay in place whenever it fails.
+    const response = await fetch(`https://api.github.com/repos/${repo}/releases/latest`, {
+      headers: { Accept: 'application/vnd.github+json' },
+    });
     if (!response.ok) return null;
-    const releases = await response.json();
-    const release =
-      releases.find((r: { draft: boolean; prerelease: boolean }) => !r.draft && !r.prerelease) ??
-      releases[0];
-    if (!release) return null;
-    const links = linksFromRelease(release);
+    const links = linksFromRelease(await response.json());
     try {
       localStorage.setItem(`${CACHE_KEY}:${repo}`, JSON.stringify({ at: Date.now(), links }));
     } catch {}

@@ -12,14 +12,22 @@ function applyThemeLabels() {
   }
 }
 
-function setTheme(theme: 'light' | 'dark') {
+/** Browser chrome (address bar, overscroll) matches the page background. */
+const THEME_COLOR = { light: '#f3f5f8', dark: '#000000' } as const;
+
+function applyTheme(theme: 'light' | 'dark') {
   root.dataset.theme = theme;
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', THEME_COLOR[theme]);
+  applyThemeLabels();
+}
+
+function setTheme(theme: 'light' | 'dark') {
+  applyTheme(theme);
   try {
     localStorage.setItem('theme', theme);
   } catch {
     // Storage can be unavailable (private mode); the choice still applies to this page.
   }
-  applyThemeLabels();
 }
 
 /** Switches theme; where supported, the new theme grows as a circle out of the toggle. */
@@ -53,21 +61,10 @@ function initTheme() {
     button.addEventListener('click', () => switchTheme(button));
   }
 
-  // Follow the system until the visitor makes a choice, and keep open tabs in sync.
-  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
-    let stored: string | null = null;
-    try {
-      stored = localStorage.getItem('theme');
-    } catch {}
-    if (!stored) {
-      root.dataset.theme = event.matches ? 'dark' : 'light';
-      applyThemeLabels();
-    }
-  });
+  // Dark is the default; a saved choice wins and stays in sync across open tabs.
   window.addEventListener('storage', (event) => {
     if (event.key === 'theme' && (event.newValue === 'light' || event.newValue === 'dark')) {
-      root.dataset.theme = event.newValue;
-      applyThemeLabels();
+      applyTheme(event.newValue);
     }
   });
 }

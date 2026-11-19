@@ -105,8 +105,8 @@ const speculationRules = {
       <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
     )}
     <meta name="author" content={SITE.name} />
-    <meta name="theme-color" content="#f3f5f8" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+    <!-- The site is dark unless the visitor picked light; the script below keeps this in step. -->
+    <meta name="theme-color" content="#000000" />
     <meta name="color-scheme" content="light dark" />
 
     <link
@@ -148,11 +148,11 @@ const speculationRules = {
           if (stored === 'light' || stored === 'dark') theme = stored;
         } catch {}
         document.documentElement.dataset.theme = theme;
+        if (theme === 'light')
+          document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#f3f5f8');
         if (document.documentElement.dataset.home === 'true')
           document.documentElement.dataset.homeHeader = window.scrollY > 12 ? 'visible' : 'hidden';
-        try {
-          document.documentElement.dataset.motion = 'on';
-        } catch {}
+        document.documentElement.dataset.motion = 'on';
       })();
     </script>
   </head>
