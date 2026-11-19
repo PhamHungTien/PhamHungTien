@@ -24,11 +24,8 @@ const { app, lang } = Astro.props;
   </div>
   <div class="features__layout">
     <ul class="feature-grid" role="list" data-reveal-stagger>
-      {app.features.map((feature, index) => (
+      {app.features.map((feature) => (
         <li data-spotlight>
-          <span class="feature-number" aria-hidden="true">
-            {String(index + 1).padStart(2, '0')}
-          </span>
           <h3>{feature.title[lang]}</h3>
           <p>{feature.description[lang]}</p>
         </li>
@@ -85,17 +82,6 @@ const { app, lang } = Astro.props;
     background: var(--surface);
   }
 
-  .feature-number {
-    margin-bottom: 24px;
-    width: 36px;
-    height: 36px;
-    display: grid;
-    place-items: center;
-    border-radius: 10px;
-    background: color-mix(in srgb, var(--app, var(--brand)) 8%, var(--surface-2));
-    font: 13px var(--font-mono);
-    color: color-mix(in srgb, var(--app, var(--brand)) 65%, var(--ink));
-  }
   .feature-grid li:first-child {
     grid-column: 1 / -1;
     background: linear-gradient(
@@ -106,6 +92,10 @@ const { app, lang } = Astro.props;
   }
   .feature-grid li:first-child h3 {
     font-size: 22px;
+  }
+  /* The first feature spans the row; a last one left alone on its row does too. */
+  .feature-grid li:last-child:nth-child(even) {
+    grid-column: 1 / -1;
   }
   .feature-grid h3 {
     font-size: 17px;
@@ -177,6 +167,12 @@ const { app, lang } = Astro.props;
   @media (max-width: 720px) {
     .feature-grid {
       grid-template-columns: minmax(0, 1fr);
+      gap: 12px;
+    }
+
+    .feature-grid li,
+    .support {
+      padding: 22px;
     }
   }
 </style>

@@ -74,9 +74,10 @@ const groups = PLATFORM_GROUPS.filter((group) =>
   </div>
 
   <ul id="app-results" class="app-list" role="list" data-reveal-stagger>
-    {apps.map((app) => (
+    {apps.map((app, index) => (
       <li
         data-app
+        data-wide={apps.length % 2 === 1 && index === apps.length - 1 ? '' : undefined}
         data-platforms={platformGroupsOf(app.platforms)
           .map((group) => group.id)
           .join(' ')}
@@ -100,7 +101,6 @@ const groups = PLATFORM_GROUPS.filter((group) =>
               format="webp"
               loading="lazy"
             />
-            <span class="app-row__preview-label">{app.name}</span>
           </div>
           <Image
             class="app-row__icon"
@@ -348,15 +348,6 @@ const groups = PLATFORM_GROUPS.filter((group) =>
     filter: drop-shadow(0 18px 14px rgb(0 0 0 / 0.15));
     transition: transform 700ms var(--ease);
   }
-  .app-row__preview-label {
-    position: absolute;
-    bottom: 12px;
-    left: 18px;
-    font: 10px var(--font-mono);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
   @media (hover: hover) and (prefers-reduced-motion: no-preference) {
     .app-row:hover .app-row__preview img {
       transform: perspective(800px) rotateY(-2deg) rotateX(1.5deg) scale(1.02);
@@ -462,6 +453,40 @@ const groups = PLATFORM_GROUPS.filter((group) =>
     animation-timing-function: var(--ease);
   }
 
+  /* An odd last card takes the full row, laid out side by side, instead of sitting alone. */
+  @media (min-width: 901px) {
+    .app-list li[data-wide] {
+      grid-column: 1 / -1;
+    }
+
+    li[data-wide] .app-row {
+      grid-template-columns: minmax(0, 1.1fr) 60px minmax(0, 1fr);
+      grid-template-rows: auto 1fr auto;
+      column-gap: 24px;
+    }
+
+    li[data-wide] .app-row__preview {
+      grid-column: 1;
+      grid-row: 1 / -1;
+      align-self: stretch;
+    }
+
+    li[data-wide] .app-row__icon {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    li[data-wide] .app-row__copy {
+      grid-column: 3;
+      grid-row: 1 / span 2;
+    }
+
+    li[data-wide] .app-row__footer {
+      grid-column: 2 / -1;
+      grid-row: 3;
+    }
+  }
+
   @media (max-width: 900px) {
     .app-list {
       grid-template-columns: minmax(0, 1fr);
@@ -477,6 +502,25 @@ const groups = PLATFORM_GROUPS.filter((group) =>
     .segmented {
       width: 100%;
       overflow-x: auto;
+      scrollbar-width: none;
+      overscroll-behavior-x: contain;
+    }
+
+    .segmented::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* More options off to the side fade out at that edge, so it reads as scrollable. */
+    .segmented[data-more='end'] {
+      mask-image: linear-gradient(90deg, #000 78%, transparent);
+    }
+
+    .segmented[data-more='start'] {
+      mask-image: linear-gradient(90deg, transparent, #000 22%);
+    }
+
+    .segmented[data-more='both'] {
+      mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
     }
 
     .segmented button {

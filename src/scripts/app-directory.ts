@@ -29,14 +29,18 @@ export function initAppDirectory() {
       .trim()
       .split(/\s+/)
       .filter(Boolean);
-    let visible = 0;
+    const shown: HTMLElement[] = [];
     for (const row of rows) {
       const match =
         (!platform || (row.dataset.platforms ?? '').split(' ').includes(platform)) &&
         query.every((term) => searchable.get(row)!.includes(term));
       row.hidden = !match;
-      if (match) visible++;
+      if (match) shown.push(row);
     }
+    const visible = shown.length;
+    // An odd last card spans the row (see AppDirectory.astro), whatever the filter.
+    for (const row of rows) delete row.dataset.wide;
+    if (visible % 2 === 1 && visible > 1) shown[visible - 1].dataset.wide = '';
     for (const button of buttons)
       button.setAttribute('aria-pressed', String(button.dataset.platform === platform));
     if (empty) empty.hidden = visible > 0;
@@ -61,7 +65,17 @@ export function initAppDirectory() {
     segmented.style.setProperty('--thumb-x', `${pressed.offsetLeft}px`);
     segmented.style.setProperty('--thumb-w', `${pressed.offsetWidth}px`);
   };
+  // On narrow screens the options scroll sideways; mark which edges have more to show.
+  const markOverflow = () => {
+    if (!segmented) return;
+    const end = segmented.scrollWidth - segmented.clientWidth - segmented.scrollLeft > 4;
+    const start = segmented.scrollLeft > 4;
+    if (start || end) segmented.dataset.more = start && end ? 'both' : start ? 'start' : 'end';
+    else delete segmented.dataset.more;
+  };
   if (segmented) {
+    segmented.addEventListener('scroll', markOverflow, { passive: true });
+    new ResizeObserver(markOverflow).observe(segmented);
     segmented.classList.add('has-thumb');
     moveThumb();
     requestAnimationFrame(() => segmented.classList.add('is-ready'));
@@ -99,6 +113,7 @@ export function initAppDirectory() {
     button.addEventListener('click', () => {
       platform = button.dataset.platform ?? '';
       update();
+      button.scrollIntoView({ block: 'nearest', inline: 'nearest' });
     });
   }
   // Typing filters instantly: a transition per keystroke would feel sluggish.
