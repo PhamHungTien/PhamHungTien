@@ -15,9 +15,17 @@ interface Props {
   lang: Lang;
   /** Rendered width of the player, for choosing the poster size. */
   sizes?: string;
+  /** The poster is the first large image on the page (guides): load it right away. */
+  priority?: boolean;
 }
 
-const { id, title, lang, sizes = '(max-width: 1248px) 92vw, 1200px' } = Astro.props;
+const {
+  id,
+  title,
+  lang,
+  sizes = '(max-width: 1248px) 92vw, 1200px',
+  priority = false,
+} = Astro.props;
 const posters = import.meta.glob<{ default: ImageMetadata }>('../../assets/youtube/*.jpg', {
   eager: true,
 });
@@ -39,7 +47,8 @@ if (!local && import.meta.env.DEV)
       alt=""
       widths={[480, 800, 1280].filter((w) => w <= local.width)}
       sizes={sizes}
-      loading="lazy"
+      loading={priority ? 'eager' : 'lazy'}
+      fetchpriority={priority ? 'high' : undefined}
     />
   ) : (
     <img

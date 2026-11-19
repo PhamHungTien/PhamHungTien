@@ -19,12 +19,16 @@ Rules that keep pages fast:
 Lighthouse 13 (simulated Moto G Power for mobile, desktop preset), production build served
 locally on an Apple Silicon Mac, two runs each.
 
-| Page         | Before (mobile / desktop) | After (mobile / desktop) |
-| ------------ | ------------------------: | -----------------------: |
-| Home         |                   63 / 78 |                100 / 100 |
-| Pad Code AI  |                  99 / 100 |                100 / 100 |
-| PHTV         |                   97 / 99 |                 98 / 100 |
-| Guides index |                 100 / 100 |                100 / 100 |
+| Page               | Before (mobile / desktop) | After (mobile / desktop) |
+| ------------------ | ------------------------: | -----------------------: |
+| Home               |                   63 / 78 |                100 / 100 |
+| Pad Code AI        |                  99 / 100 |                 98 / 100 |
+| PHTV               |                   97 / 99 |                 96 / 100 |
+| Guides index       |                 100 / 100 |                100 / 100 |
+| Guide with a video |                         — |                 99 / 100 |
+
+App and guide pages were already fast; their differences are within run-to-run noise.
+Guide pages score 73–77 for Best Practices because AdSense sets third-party cookies.
 
 Home before: Total Blocking Time 5.8 s and CLS 0.125 on mobile, CLS 0.62 on desktop.
 A Chrome trace showed the orbit loop saturating the main thread with style recalculation
@@ -41,7 +45,8 @@ Changes:
   (`50cqw`/`48cqh` before measuring), which removed the load-time layout shift.
 - The engine starts after first paint, with a coarser camera search (40 samples, 0.04 rad).
 - YouTube posters are stored locally (`npm run sync:youtube`) and served as responsive
-  WebP: no request to Google before play, and no letterboxing.
+  WebP: no request to Google before play, and no letterboxing. On guides the poster is the
+  largest image near the top, so it loads eagerly with `fetchpriority="high"`.
 
 These are lab results. Judge real-user LCP, INP and CLS from field data after deployment.
 
