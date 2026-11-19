@@ -137,7 +137,9 @@ const artwork = await Promise.all(
 
 <script>
   import { initPlanetSystem } from '../../scripts/planet-system';
-  initPlanetSystem();
+  // Start after the first paint: the page is laid out by then, so measuring is cheap and
+  // the engine's set-up never lengthens the task that renders the hero.
+  requestAnimationFrame(() => setTimeout(initPlanetSystem, 0));
 </script>
 
 <style>
@@ -156,6 +158,9 @@ const artwork = await Promise.all(
       calc(var(--orbit-width) * var(--orbit-max-height, 1.05))
     );
     flex-shrink: 0;
+    /* Lets the sun sit at 50cqw/48cqh before the engine measures, and lets every layer
+       follow it with translate (no layout shift) once it has. */
+    container-type: size;
     isolation: isolate;
     touch-action: pan-y pinch-zoom;
     user-select: none;
@@ -174,12 +179,12 @@ const artwork = await Promise.all(
   /* Soft light pool around the sun; it breathes slowly and fades as the hero scrolls away. */
   .orbit__halo {
     position: absolute;
-    left: var(--sun-x, 50%);
-    top: var(--sun-y, 48%);
+    left: 0;
+    top: 0;
     width: calc(var(--sun-size, 160px) * 4.5);
     max-width: 100%;
     aspect-ratio: 1.6;
-    translate: -50% -50%;
+    translate: calc(var(--sun-x, 50cqw) - 50%) calc(var(--sun-y, 48cqh) - 50%);
     border-radius: 50%;
     background: radial-gradient(
       closest-side,
@@ -202,12 +207,12 @@ const artwork = await Promise.all(
 
   .orbit__belt {
     position: absolute;
-    left: var(--sun-x, 50%);
-    top: var(--sun-y, 48%);
+    left: 0;
+    top: 0;
     width: 150vw;
     max-width: none;
     height: 37.5vw;
-    translate: -50% -50%;
+    translate: calc(var(--sun-x, 50cqw) - 50%) calc(var(--sun-y, 48cqh) - 50%);
     rotate: -9deg;
     pointer-events: none;
     opacity: 0.8;
@@ -225,11 +230,11 @@ const artwork = await Promise.all(
   }
   .orbit__core {
     position: absolute;
-    left: var(--sun-x, 50%);
-    top: var(--sun-y, 48%);
-    width: var(--sun-size, clamp(92px, 20%, 220px));
+    left: 0;
+    top: 0;
+    width: var(--sun-size, clamp(92px, 20cqw, 220px));
     aspect-ratio: 1;
-    translate: -50% -50%;
+    translate: calc(var(--sun-x, 50cqw) - 50%) calc(var(--sun-y, 48cqh) - 50%);
     z-index: 10;
     border-radius: 50%;
     pointer-events: auto;
@@ -282,9 +287,6 @@ const artwork = await Promise.all(
     display: contents;
   }
   .planet {
-    --s: 1;
-    --depth: 1;
-    --light: 315deg;
     position: absolute;
     width: calc(var(--planet-unit, clamp(44px, 5.6vw, 62px)) * var(--planet-k, 1));
     height: calc(var(--planet-unit, clamp(44px, 5.6vw, 62px)) * var(--planet-k, 1));
@@ -320,8 +322,7 @@ const artwork = await Promise.all(
       var(--planet-color) 50%,
       color-mix(in srgb, var(--planet-color) 58%, #14101b) 100%
     );
-    box-shadow: 0 calc(10px * var(--s)) calc(20px * var(--s)) -8px rgb(0 0 0 / 0.6);
-    transform: scale(var(--s));
+    box-shadow: 0 10px 20px -8px rgb(0 0 0 / 0.6);
     transition:
       box-shadow 260ms ease,
       scale 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -341,7 +342,7 @@ const artwork = await Promise.all(
     mask: var(--glyph) center / contain no-repeat;
     -webkit-mask: var(--glyph) center / contain no-repeat;
   }
-  /* Day side faces the sun: the whole light layer rotates with --light. */
+  /* Day side faces the sun: the engine rotates the whole light layer toward it. */
   .planet__light {
     position: absolute;
     inset: 0;
@@ -349,7 +350,7 @@ const artwork = await Promise.all(
     background:
       radial-gradient(circle at 50% 6%, rgb(255 244 228 / 0.5), transparent 46%),
       linear-gradient(180deg, transparent 38%, rgb(5 3 12 / 0.32) 100%);
-    transform: rotate(var(--light));
+    transform: rotate(315deg);
     pointer-events: none;
   }
   /* Depth fog: planets on the far side of the sun are a little darker. */
@@ -358,7 +359,7 @@ const artwork = await Promise.all(
     inset: 0;
     border-radius: 50%;
     background: #05030c;
-    opacity: calc((1 - var(--depth)) * 0.07);
+    opacity: 0;
     pointer-events: none;
   }
   .planet:hover .planet__body,
@@ -372,13 +373,13 @@ const artwork = await Promise.all(
     position: absolute;
     top: 50%;
     left: 50%;
-    width: calc(185% * var(--s));
+    width: 185%;
     max-width: none;
     height: auto;
     translate: -50% -50%;
     overflow: visible;
     pointer-events: none;
-    opacity: calc((0.9 + (var(--depth) + 1) * 0.05) * var(--label, 1));
+    opacity: var(--label-opacity, 1);
   }
   .planet__name text {
     fill: var(--ink);

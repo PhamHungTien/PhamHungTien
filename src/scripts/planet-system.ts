@@ -41,6 +41,9 @@ const PERIOD = 80;
 const OUTER = 0.5;
 /** Camera distance in layout units: small enough for strong near/far perspective. */
 const CAMERA_DISTANCE = 1.65;
+/** Layout search resolution: fine enough to be invisible, coarse enough to stay off the main thread. */
+const FIT_SAMPLES = 40;
+const PITCH_STEP = 0.04;
 
 interface Camera {
   pitch: number; // Angle between the orbital plane and the line of sight (0 = edge-on)
@@ -122,6 +125,11 @@ export function initPlanetSystem(): void {
       labelAlpha: 1,
       labelBox: { x: 35, y: 155, width: 130, height: 26 },
       arrivalDelay: 0.15 + index * 0.09,
+      light: el.querySelector<HTMLElement>('.planet__light'),
+      shade: el.querySelector<HTMLElement>('.planet__shade'),
+      name: el.querySelector<SVGElement>('.planet__name'),
+      /** Last values written to the DOM, so unchanged styles are never touched again. */
+      written: {} as Record<string, string>,
     };
   });
 
@@ -186,8 +194,8 @@ export function initPlanetSystem(): void {
     let nearScale = 1;
     for (const p of [pitch - 0.11, pitch + 0.11]) {
       for (const r of [roll - 0.05, roll + 0.05]) {
-        for (let i = 0; i < 64; i++) {
-          const pt = project((i / 64) * TAU, outer, { pitch: p, roll: r }, 1);
+        for (let i = 0; i < FIT_SAMPLES; i++) {
+          const pt = project((i / FIT_SAMPLES) * TAU, outer, { pitch: p, roll: r }, 1);
           minX = Math.min(minX, pt.x);
           maxX = Math.max(maxX, pt.x);
           minY = Math.min(minY, pt.y);
@@ -228,7 +236,7 @@ export function initPlanetSystem(): void {
       const candidates: { pitch: number; roll: number; result: ReturnType<typeof fit> }[] = [];
       let max = 0;
       for (const r of rolls) {
-        for (let p = minPitch; p <= maxPitch + 1e-6; p += 0.02) {
+        for (let p = minPitch; p <= maxPitch + 1e-6; p += PITCH_STEP) {
           const result = fit(p, r, planetSize);
           candidates.push({ pitch: p, roll: r, result });
           max = Math.max(max, result.unit);
@@ -345,26 +353,43 @@ export function initPlanetSystem(): void {
 
     planets.forEach((p, index) => {
       const pt = points[index];
-      const el = p.el;
       p.labelAlpha = approach(p.labelAlpha, p.crowded ? 0 : 1, 7, dt);
 
       const depth = clamp(pt.z / (OUTER * Math.cos(cam.pitch)), -1, 1); // -1 far … 1 near
       const appear = arrived ? 1 : easeOutExpo(clamp((arrival - p.arrivalDelay) / 0.5, 0, 1));
 
-      el.style.transform = `translate3d(${(center.x + pt.x).toFixed(2)}px, ${(center.y + pt.y).toFixed(2)}px, 0) translate(-50%, -50%)`;
-      el.style.setProperty('--s', pt.scale.toFixed(4));
-      el.style.setProperty('--depth', depth.toFixed(3));
-      el.style.setProperty('--label', p.labelAlpha.toFixed(3));
+      // Only the transform changes every frame, and it stays on the compositor. Perspective
+      // scale is part of it, so neither the planet's shadow nor its curved name re-lays out.
+      p.el.style.transform = `translate3d(${(center.x + pt.x).toFixed(2)}px, ${(center.y + pt.y).toFixed(2)}px, 0) translate(-50%, -50%) scale(${pt.scale.toFixed(4)})`;
       // Sort strictly by depth: rear planets pass behind the center and its front ring.
-      el.style.zIndex = String(
-        pt.z < 0 ? 2 + Math.round((depth + 1) * 3) : 20 + Math.round(depth * 30),
+      write(
+        p,
+        'z',
+        String(pt.z < 0 ? 2 + Math.round((depth + 1) * 3) : 20 + Math.round(depth * 30)),
+        (v) => (p.el.style.zIndex = v),
       );
-      el.style.opacity = appear.toFixed(3);
-
+      write(p, 'opacity', appear.toFixed(2), (v) => (p.el.style.opacity = v));
       // Light comes from the sun: rotate the lit hemisphere toward the centre.
-      const light = Math.atan2(-pt.y, -pt.x) * (180 / Math.PI) + 90;
-      el.style.setProperty('--light', `${light.toFixed(1)}deg`);
+      const light = Math.round(Math.atan2(-pt.y, -pt.x) * (180 / Math.PI) + 90);
+      write(p, 'light', `rotate(${light}deg)`, (v) => p.light && (p.light.style.transform = v));
+      // Depth fog: planets on the far side of the sun are a little darker.
+      write(
+        p,
+        'shade',
+        ((1 - depth) * 0.07).toFixed(3),
+        (v) => p.shade && (p.shade.style.opacity = v),
+      );
+      write(p, 'label', ((0.9 + (depth + 1) * 0.05) * p.labelAlpha).toFixed(2), (v) =>
+        p.name?.style.setProperty('--label-opacity', v),
+      );
     });
+  }
+
+  type Planet = (typeof planets)[number];
+  function write(p: Planet, key: string, value: string, apply: (value: string) => unknown) {
+    if (p.written[key] === value) return;
+    p.written[key] = value;
+    apply(value);
   }
 
   /* ----------------------------------------------------------------- loop */
@@ -505,17 +530,13 @@ export function initPlanetSystem(): void {
       cam.roll = baseRoll;
       camTarget.pitchOffset = camTarget.rollOffset = camTarget.yaw = 0;
       yaw = 0;
-      planets.forEach(({ el }) => {
-        for (const property of [
-          'transform',
-          'z-index',
-          'opacity',
-          '--s',
-          '--depth',
-          '--label',
-          '--light',
-        ])
-          el.style.removeProperty(property);
+      planets.forEach((p) => {
+        for (const property of ['transform', 'z-index', 'opacity'])
+          p.el.style.removeProperty(property);
+        p.light?.style.removeProperty('transform');
+        p.shade?.style.removeProperty('opacity');
+        p.name?.style.removeProperty('--label-opacity');
+        p.written = {};
       });
       return;
     }
