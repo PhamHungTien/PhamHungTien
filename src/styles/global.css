@@ -586,7 +586,7 @@ html.has-dialog {
 .section-kicker {
   display: block;
   margin-bottom: 14px;
-  color: color-mix(in srgb, var(--app, var(--brand)) 55%, var(--muted));
+  color: color-mix(in srgb, var(--app, var(--brand)) 50%, var(--ink));
   font-size: 15px;
   font-weight: 600;
   line-height: 1.4;
