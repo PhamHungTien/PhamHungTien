@@ -13,6 +13,7 @@
     "og": "node scripts/generate-og.mjs",
     "brand": "node scripts/tools/brand-icons.mjs && node scripts/tools/brand-kit.mjs",
     "sync:appstore": "node scripts/sync-appstore.mjs",
+    "sync:youtube": "node scripts/sync-youtube-posters.mjs",
     "test:rules": "firebase emulators:exec --only firestore --project demo-phtv \"node firebase/firestore.rules.test.mjs\"",
     "deploy:rules": "firebase deploy --only firestore:rules",
     "format": "prettier --write .",
