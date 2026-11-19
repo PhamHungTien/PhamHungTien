@@ -24,7 +24,6 @@ export const homeTranslations = {
     'home.lead':
       'Des applications natives avec des fonctions hors ligne et un traitement des données sur votre appareil.',
     'home.cta': 'Découvrir les applications',
-    'home.dock': 'Raccourcis des applications',
     'home.apps.title': 'Applications',
     'home.apps.lead': 'Des outils pour le quotidien.',
     'home.apps.filter': 'Filtrer par plateforme',
@@ -79,7 +78,6 @@ export const homeTranslations = {
     'home.headline': '毎日に役立つ、プライバシーを大切にしたアプリ。',
     'home.lead': 'オフライン機能と端末上でのデータ処理に対応するネイティブアプリ。',
     'home.cta': 'アプリを見る',
-    'home.dock': 'アプリへのショートカット',
     'home.apps.title': 'アプリ',
     'home.apps.lead': '毎日の作業を支えるツール。',
     'home.apps.filter': 'プラットフォームで絞り込む',

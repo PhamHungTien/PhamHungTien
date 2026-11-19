@@ -40,6 +40,17 @@ Be Vietnam Pro (400, 600, 700), drawn for Vietnamese so the stacked diacritics i
 layout shift while it loads; the Latin 400/700 and Vietnamese 700 files are preloaded.
 Headings use `text-wrap: balance`, paragraphs `text-wrap: pretty`.
 
+## Section headings
+
+A section heading is a short accent bar (the app colour on app pages), an optional
+kicker — one sentence-case line of context in the accent colour — then the `h2` and an
+optional lead. Kickers are written as plain phrases ("The collection"), never all caps or
+monospace, and are left out when they would only repeat the heading.
+
+Numbers and counters appear only for real sequences (installation steps, tutorials).
+Feature lists are unnumbered; the first feature spans the row and an odd last one does
+too. On the home page an odd last app card spans the row with its preview beside the text.
+
 ## Components
 
 Each component owns its styles in a scoped `<style>` block. Shared primitives live in
@@ -57,7 +68,8 @@ The discussion boards are React, so they use plain `board-*` classes from
   with focus return; menus close on Escape and outside clicks.
 - Off-screen sections use `content-visibility: auto` (`.defer-render`).
 - Every control has a visible focus ring and an accessible name; touch targets are at
-  least 40 px; the theme follows the system until the visitor picks one.
+  least 40 px; the site is dark by default and keeps a theme the visitor picks (the
+  `theme-color` meta follows it).
 
 ## Spatial motion update (October 2026)
 
@@ -222,3 +234,15 @@ horizontal carousel. Landscape images span two columns; portrait images share a 
 mobile. Each keeps its aspect ratio inside a rounded, focusable preview and opens the
 existing full-size viewer. Responsive image sources and lazy loading remain enabled.
 Home directory previews use rounded image edges to match their surrounding frames.
+
+### Reduced motion keeps the composition
+
+With reduced motion the orbit engine renders one still frame of its overlap-checked
+layout (same camera, depth order and label clearance) and starts no loop. The fixed
+percentage constellation is used only without JavaScript.
+
+### Guides on wide screens
+
+At 1180 px and wider, a guide's table of contents becomes a sticky column beside the
+article and marks the section being read (`src/scripts/toc.ts`); below that it stays an
+inline box before the article.

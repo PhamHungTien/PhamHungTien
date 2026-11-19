@@ -1,0 +1,22 @@
+name: Content correction
+description: A typo, an outdated fact, a broken link or a translation that reads wrong.
+labels: [content]
+body:
+  - type: input
+    id: url
+    attributes:
+      label: Page
+      placeholder: https://phamhungtien.com/guides/bang-go-telex-day-du/
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: Current text
+    validations:
+      required: true
+  - type: textarea
+    id: suggested
+    attributes:
+      label: Suggested text
+      description: Optional. Include a source if a fact has changed.

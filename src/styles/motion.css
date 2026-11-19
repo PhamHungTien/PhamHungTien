@@ -94,26 +94,11 @@ html[data-motion='off']::view-transition-new(*) {
   content: '';
 }
 html[data-motion='off']
-  :is(
-    .orbit__world,
-    .dock img,
-    .app-row__icon,
-    .app-row__preview img,
-    .gallery__preview,
-    .guide-card,
-    .app-hero__media
-  ) {
+  :is(.app-row__icon, .app-row__preview img, .gallery__preview, .guide-card, .app-hero__media) {
   transform: none !important;
 }
 @media (prefers-reduced-motion: reduce) {
-  :is(
-    .orbit__world,
-    .dock img,
-    .app-row__icon,
-    .app-row__preview img,
-    .gallery__preview,
-    .guide-card
-  ) {
+  :is(.app-row__icon, .app-row__preview img, .gallery__preview, .guide-card) {
     transform: none !important;
   }
 }

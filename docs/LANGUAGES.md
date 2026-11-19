@@ -13,4 +13,4 @@ language detection or global selector. Other historical locale URLs redirect to 
 canonical destinations, retaining query parameters and fragments when JavaScript is enabled.
 The sitemap and application-page hreflang links advertise the available translations.
 
-Run `node scripts/test-language.mjs` after building to check the routes and languages.
+Run `npm run test:language` after building to check the routes and languages.

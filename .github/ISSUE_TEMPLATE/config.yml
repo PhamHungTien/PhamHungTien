@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/PhamHungTien/PhamHungTien/security/advisories/new
+    about: Please report security issues privately, never in a public issue.
+  - name: Help with an app
+    url: https://phamhungtien.com/#apps
+    about: Each app page has a support section and a discussion board.
+  - name: Email
+    url: mailto:contact@phamhungtien.com
+    about: Feedback, collaboration and anything else.

@@ -47,7 +47,9 @@ src/
   layouts/BaseLayout.astro  The one HTML document shell
   lib/                    Routing, SEO/JSON-LD, Firebase, GitHub releases, legal loader
   pages/                  Routes (see below)
-  scripts/                Browser modules for header, filters, tabs, dialogs, installs
+  assets/youtube/         Local posters for embedded YouTube videos (npm run sync:youtube)
+  scripts/                Browser modules: header, orbit engine, filters, tabs, dialogs,
+                          installs, guide contents
   styles/global.css       Tokens, reset and shared primitives
 public/                   Copied as is: CNAME, robots.txt, icons, Open Graph cards, videos
 firebase/                 Firestore security rules and their emulator tests
@@ -84,6 +86,7 @@ Other legacy locale-prefixed pages and `/huong-dan/` URLs are static redirect do
    buttons, platform filters and structured data are derived from these.
 4. Write `src/content/legal/<slug>/privacy.md` and `terms.md`.
 5. Run `npm run og` for its social cards, then `npm run build`.
+6. If the app page embeds a video (`tutorial.youtubeId`), run `npm run sync:youtube`.
 
 A new platform or store only needs a name in `src/data/platforms.ts` and its id in the
 `Platform` or `Store` type.
@@ -102,6 +105,14 @@ A new platform or store only needs a name in `src/data/platforms.ts` and its id 
 `npm run verify` then checks every built page: one title and `<h1>`, description
 length, canonical, reciprocal hreflang, Open Graph image, valid JSON-LD, CSP, internal
 links and images, and that the sitemap lists exactly the indexable pages.
+
+## Continuous integration
+
+`.github/workflows/deploy.yml` runs on every push and pull request with a read-only token:
+formatting, types, Firestore rules tests, build, `verify` and `test:language`. Only a
+push to `main` starts the separate publish job, which has write access and force-pushes
+`dist/` to `gh-pages`. Dependabot proposes grouped monthly updates for npm packages and
+actions; each one goes through the same checks.
 
 ## SEO
 

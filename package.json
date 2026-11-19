@@ -10,6 +10,7 @@
     "preview": "astro preview",
     "check": "astro check",
     "verify": "node scripts/verify.mjs && node scripts/verify-performance.mjs",
+    "test:language": "node scripts/test-language.mjs",
     "og": "node scripts/generate-og.mjs",
     "brand": "node scripts/tools/brand-icons.mjs && node scripts/tools/brand-kit.mjs",
     "sync:appstore": "node scripts/sync-appstore.mjs",
