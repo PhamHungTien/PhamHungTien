@@ -3,7 +3,8 @@
  * Runs after `astro build` on the static output:
  *
  *   1. Content-Security-Policy. GitHub Pages cannot send headers, so every page gets
- *      a <meta> policy that allows only its own inline scripts (by hash).
+ *      a <meta> policy that allows only its own inline scripts (by hash). Markdown
+ *      tables get a tab stop in the same pass, since they scroll sideways.
  *   2. Legacy URLs. App icons that external pages (READMEs, App Store notes) link to.
  *   3. Lowercase aliases (/vtts/ -> /vTTS/). Skipped on case-insensitive disks such as
  *      the default macOS volume, where /phtv/ and /PHTV/ would be the same folder;
@@ -84,6 +85,9 @@ let pages = 0;
 for await (const file of htmlFiles(outDir)) {
   let html = await readFile(file, 'utf8');
   html = html.replace(/<meta[^>]*data-site-security[^>]*>/g, '');
+  // Wide Markdown tables scroll sideways (.prose table), so each needs a keyboard tab stop.
+  // Done here because Astro's default Markdown processor does not run rehype plugins.
+  html = html.replace(/<table(?![^>]*\btabindex=)(?=[\s>])/g, '<table tabindex="0"');
   const policy = policyFor(html).replace(/"/g, '&quot;');
   html = html.replace(
     /<meta charset="utf-8"\s*\/?>/i,
