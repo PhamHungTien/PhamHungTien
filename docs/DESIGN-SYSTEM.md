@@ -20,24 +20,28 @@ inline in the header.
 
 Defined once at the top of `src/styles/global.css`.
 
-| Token         | Light     | Dark      | Use                           |
-| ------------- | --------- | --------- | ----------------------------- |
-| `--paper`     | `#f3f5f8` | `#0d1118` | Page background               |
-| `--surface`   | `#ffffff` | `#151b26` | Cards, controls               |
-| `--surface-2` | `#e9edf2` | `#1c2431` | Media frames, subtle fills    |
-| `--ink`       | `#131a27` | `#eceff4` | Text                          |
-| `--muted`     | `#566074` | `#9aa4b6` | Secondary text                |
-| `--line`      | `#d9dee6` | `#262f3e` | Borders                       |
-| `--brand`     | `#7a1424` | `#f0c04e` | Primary buttons, focus, links |
+| Token         | Light     | Dark      | Use                                   |
+| ------------- | --------- | --------- | ------------------------------------- |
+| `--paper`     | `#f3f5f8` | `#000000` | Page background (dark is the space)   |
+| `--surface`   | `#ffffff` | `#0e1117` | Cards, controls (L1)                  |
+| `--surface-2` | `#e9edf2` | `#161b24` | Media frames, subtle fills (L2)       |
+| `--ink`       | `#131a27` | `#eef1f6` | Text                                  |
+| `--muted`     | `#566074` | `#9ba4b4` | Secondary text                        |
+| `--line`      | `#dfe3ea` | `#222a36` | Hairline borders, the first depth cue |
+| `--brand`     | `#7a1424` | `#f0c04e` | Primary buttons, links, focus         |
 
-Radii: controls 12 px, cards 20 px, media 28 px, app icons 22.5 %. Container 1200 px,
-gutter `clamp(16px, 4vw, 48px)`, section spacing `clamp(72px, 10vw, 128px)`.
+Radii: controls 10 px, cards 16 px, media 14 px, app icons 22.5 %. Container 1200 px,
+gutter `clamp(16px, 4vw, 48px)`, section spacing `clamp(48px, 7vw, 96px)` (tight on phones
+so more of each page fits). Depth comes from a 1 px border first; shadows stay soft
+(`--shadow-card`, alpha under 0.08 in light mode; a faint top highlight in dark mode).
 
 ## Type
 
-Be Vietnam Pro (400, 600, 700), drawn for Vietnamese so the stacked diacritics in
-"Phạm Hùng Tiến" stay clean at display sizes. A metric-matched fallback face prevents
-layout shift while it loads; the Latin 400/700 and Vietnamese 700 files are preloaded.
+Be Vietnam Pro (400, 500, 600 — never heavier), drawn for Vietnamese so the stacked
+diacritics in "Phạm Hùng Tiến" stay clean at display sizes. Hierarchy comes from size:
+`--text-display` (28–48 px), `--text-h2` (24–36 px), `--text-h3` (17–20 px), body 16 px,
+secondary 14–15 px, meta 13 px. A metric-matched fallback face prevents layout shift while
+it loads; the Latin 400/600 files (and Vietnamese 600 on Vietnamese pages) are preloaded.
 Headings use `text-wrap: balance`, paragraphs `text-wrap: pretty`.
 
 ## Section headings
@@ -246,3 +250,29 @@ percentage constellation is used only without JavaScript.
 At 1180 px and wider, a guide's table of contents becomes a sticky column beside the
 article and marks the section being read (`src/scripts/toc.ts`); below that it stays an
 inline box before the article.
+
+## November 2026 refresh: store media and a quieter interface
+
+This section supersedes the earlier notes on tilt, spotlights, scroll reveals, section
+kickers in monospace, the app-page moon and the hand-made screenshot galleries.
+
+- **One source of imagery.** Every app image is its App Store artwork (see
+  [ARCHITECTURE.md](ARCHITECTURE.md#app-store-media)): search results art on home cards,
+  product page header art at the top of app pages, screenshots and App Previews in the
+  gallery. The site and the store always look the same.
+- **One bold moment.** The orbital home hero is the signature; everything else is quiet.
+  Cards and buttons have no tilt, lift, glow or cursor spotlight, and sections appear at
+  once instead of fading in. Hover deepens a border and, on fine pointers, scales art by 2 %.
+- **App cards** (`AppDirectory.astro`): art, icon, name, category, a three-line
+  description, platforms and store as plain text. Three a row on wide screens, two below;
+  the last cards of an uneven row widen to fill it. Phones show two compact cards a row
+  (art, icon, name, category) so most of the collection fits on one screen.
+- **App hero** (`AppHero.astro`): breadcrumb and language links, the header art at its
+  native 2.33:1, then icon, name and category, the promise (`h1`), subtitle, platforms as
+  text, and the download actions. The Chinese LunarV page uses the same component.
+- **Gallery** (`StoreGallery.astro`): device tabs (iPhone, iPad, Mac, Apple Vision Pro) over
+  App Store-style rows of equal height; the App Preview comes first and loads only when
+  played. Phones scroll a row edge to edge with the next shot peeking in; pointer devices
+  get previous/next buttons. Without JavaScript every device row is shown.
+- **Motion tokens.** 150–200 ms ease-out on transform and opacity; no bounce on chrome; no
+  infinite loops outside the home scene; `prefers-reduced-motion` honoured everywhere.

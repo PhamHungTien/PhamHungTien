@@ -33,6 +33,15 @@ jobs:
 
       - run: npm ci
 
+      # Astro keeps resized screenshots and art in node_modules/.astro; reusing them saves
+      # most of the build time. A change to any image or the config makes a fresh entry.
+      - name: Reuse optimised images
+        uses: actions/cache@v6
+        with:
+          path: node_modules/.astro
+          key: astro-assets-${{ hashFiles('src/assets/**', 'astro.config.mjs', 'package-lock.json') }}
+          restore-keys: astro-assets-
+
       - name: Formatting
         run: npm run format:check
 

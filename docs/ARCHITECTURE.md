@@ -27,7 +27,8 @@ inside a panel that stays hidden until then.
 
 ```
 src/
-  assets/apps/<slug>/     Screenshots and icons, processed at build time
+  assets/apps/<slug>/     app-icon, and store/<lang>/ with the App Store header and search
+                          art, screenshots and App Previews (npm run sync:media)
   assets/brand/logo.svg   The brand mark (source for favicons and social cards)
   components/
     layout/               Header, footer, contact block
@@ -78,7 +79,8 @@ Other legacy locale-prefixed pages and `/huong-dan/` URLs are static redirect do
 
 ## Adding or changing an app
 
-1. Put images in `src/assets/apps/<slug>/`.
+1. Put the icon in `src/assets/apps/<slug>/`, add the bundle id to `APPS` in
+   `scripts/sync-appstore-media.mjs` and run `npm run sync:media` for its store media.
 2. Create `src/data/apps/<slug>.ts` (copy an existing app) and add it to
    `src/data/apps/index.ts`. Add the slug to `AppSlug` in `src/data/types.ts`.
 3. List its `platforms` (e.g. `['android', 'windows']`) and `links.stores`
@@ -106,10 +108,30 @@ A new platform or store only needs a name in `src/data/platforms.ts` and its id 
 length, canonical, reciprocal hreflang, Open Graph image, valid JSON-LD, CSP, internal
 links and images, and that the sitemap lists exactly the indexable pages.
 
+## App Store media
+
+Every image of an app on the site is the one on its App Store listing.
+`npm run sync:media` signs in to the App Store Connect API (key outside the repository),
+takes the newest version of each platform, including one still in review, and downloads per
+page language: screenshots for iPhone, iPad, Mac and Apple Vision Pro, the first App Preview
+of each device (re-encoded to H.264 with ffmpeg), and the product page header and search
+results art from the app's asset library. `scripts/tools/import-store-media.mjs` turns them
+into WebP in `src/assets/apps/<slug>/store/<en|vi|zh>/`, and `src/lib/store-media.ts` reads
+them, falling back to English. `docs/provenance/appstore-media.json` records which store
+version and art each sync used.
+
+| Where                  | Uses                                                        |
+| ---------------------- | ----------------------------------------------------------- |
+| Home app cards         | Search results art (3:2)                                    |
+| App page hero          | Product page header art (2.33:1)                            |
+| App page "Screenshots" | Screenshots and App Previews, one row per device            |
+| Structured data        | First eight screenshots as `SoftwareApplication.screenshot` |
+
 ## Continuous integration
 
 `.github/workflows/deploy.yml` runs on every push and pull request with a read-only token:
-formatting, types, Firestore rules tests, build, `verify` and `test:language`. Only a
+formatting, types, Firestore rules tests, build, `verify` and `test:language`. Optimised
+images are cached between runs (`node_modules/.astro`). Only a
 push to `main` starts the separate publish job, which has write access and force-pushes
 `dist/` to `gh-pages`. Dependabot proposes grouped monthly updates for npm packages and
 actions; each one goes through the same checks.
