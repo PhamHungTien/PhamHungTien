@@ -1,5 +1,4 @@
 import type { App } from '../types';
-import appStore from '../appstore.json';
 import icon from '../../assets/apps/lunarv/app-icon.png';
 
 const app: App = {
@@ -33,10 +32,6 @@ const app: App = {
   appCategory: 'LifestyleApplication',
   facts: [
     {
-      label: { vi: 'Phiên bản', en: 'Version' },
-      value: { vi: appStore.apps.lunarv.version, en: appStore.apps.lunarv.version },
-    },
-    {
       label: { vi: 'Nền tảng', en: 'Platforms' },
       value: { vi: 'iOS & iPadOS, macOS, visionOS', en: 'iOS & iPadOS, macOS, visionOS' },
     },
@@ -45,6 +40,7 @@ const app: App = {
       value: { vi: 'Việt, Anh, Trung', en: 'Vietnamese, English, Chinese' },
     },
     { label: { vi: 'Tài khoản', en: 'Account' }, value: { vi: 'Không cần', en: 'None needed' } },
+    { label: { vi: 'Giá', en: 'Price' }, value: { vi: 'Miễn phí', en: 'Free' } },
   ],
   features: [
     {

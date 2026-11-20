@@ -28,7 +28,6 @@ export function metaDescription(text: string, max = 158) {
 }
 
 type StoreRecord = {
-  version?: string;
   currentVersionReleaseDate?: string;
   price?: number;
   currency?: string;
@@ -137,7 +136,6 @@ export function appJsonLd(app: App, lang: Lang) {
 
   // Only facts confirmed by the App Store lookup (npm run sync:appstore) are published.
   const store = storeApps[app.slug];
-  if (store?.version) software.softwareVersion = store.version;
   if (store?.currentVersionReleaseDate)
     software.dateModified = store.currentVersionReleaseDate.slice(0, 10);
   const price = store?.price ?? (app.links.source ? 0 : undefined);
