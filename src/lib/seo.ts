@@ -10,7 +10,7 @@ import { appPath, homePath } from './routes';
 import { storeMedia } from './store-media';
 
 /** Bump when the Open Graph cards in public/og are regenerated (npm run og). */
-export const OG_VERSION = 'pht-5';
+export const OG_VERSION = 'pht-6';
 export const OG_SIZE = { width: 1200, height: 630 } as const;
 
 export const absolute = (path: string) => new URL(path, SITE.origin).href;
