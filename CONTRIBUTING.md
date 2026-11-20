@@ -27,6 +27,7 @@ npm run dev        # http://localhost:4321
 | `npm run format`        | Format with Prettier (`format:check` in CI)                     |
 | `npm run og`            | Regenerate the Open Graph cards in `public/og`                  |
 | `npm run brand`         | Regenerate favicons, manifest icons and the `brand/` kit        |
+| `npm run icons`         | Render app icons and orbit planets from Icon Composer (macOS)   |
 | `npm run sync:appstore` | Refresh `src/data/appstore.json` from the App Store             |
 | `npm run sync:media`    | Pull screenshots, previews and store art from App Store Connect |
 | `npm run sync:youtube`  | Save posters for newly embedded YouTube videos                  |

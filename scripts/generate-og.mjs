@@ -16,7 +16,7 @@ const apps = [
     'phtv',
     'PHTV',
     'PHTV',
-    'src/assets/apps/phtv/app-icon.webp',
+    'src/assets/apps/phtv/app-icon.png',
     ['Gõ tiếng Việt.', 'Theo cách của bạn.'],
     'Bộ gõ riêng tư cho macOS.',
   ],

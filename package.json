@@ -13,6 +13,7 @@
     "test:language": "node scripts/test-language.mjs",
     "og": "node scripts/generate-og.mjs",
     "brand": "node scripts/tools/brand-icons.mjs && node scripts/tools/brand-kit.mjs",
+    "icons": "node scripts/tools/app-icons.mjs",
     "sync:appstore": "node scripts/sync-appstore.mjs",
     "sync:media": "node scripts/sync-appstore-media.mjs",
     "sync:youtube": "node scripts/sync-youtube-posters.mjs",

@@ -79,7 +79,8 @@ Other legacy locale-prefixed pages and `/huong-dan/` URLs are static redirect do
 
 ## Adding or changing an app
 
-1. Put the icon in `src/assets/apps/<slug>/`, add the bundle id to `APPS` in
+1. Add the app's Icon Composer document to `SOURCES` in `scripts/tools/app-icons.mjs` and
+   run `npm run icons` (see [App icons](#app-icons)). Add the bundle id to `APPS` in
    `scripts/sync-appstore-media.mjs` and run `npm run sync:media` for its store media.
 2. Create `src/data/apps/<slug>.ts` (copy an existing app) and add it to
    `src/data/apps/index.ts`. Add the slug to `AppSlug` in `src/data/types.ts`.
@@ -126,6 +127,17 @@ version and art each sync used.
 | App page hero          | Product page header art (2.33:1)                            |
 | App page "Screenshots" | Screenshots and App Previews, one row per device            |
 | Structured data        | First eight screenshots as `SoftwareApplication.screenshot` |
+
+## App icons
+
+`npm run icons` (`scripts/tools/app-icons.mjs`, on a Mac with Xcode 26) renders each app's
+Icon Composer document with Apple's `ictool`, so the site shows the same Liquid Glass icon
+as the store build: 1024 px, saved at 512 px as `src/assets/apps/<slug>/app-icon.png`. It
+also cuts the document's layers into the transparent artwork of the home orbit planets
+(`src/assets/planet-artwork/<slug>.png`) and prints the planet colours for
+`src/data/planet-appearance.ts`. With `--from <dir>` it works from renders made elsewhere.
+After an icon changes, run `npm run og` and bump `OG_VERSION` in `src/lib/seo.ts` so social
+networks fetch the new cards.
 
 ## Continuous integration
 

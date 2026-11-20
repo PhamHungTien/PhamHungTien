@@ -261,10 +261,7 @@ const thumbBase = (
 </svg>\n`;
 await write('youtube/thumbnail-base-1280x720.png', await render(thumbBase(), TW, TH));
 
-const phtvIcon = await sharp('src/assets/apps/phtv/app-icon.webp')
-  .resize(420, 420)
-  .png()
-  .toBuffer();
+const phtvIcon = await sharp('src/assets/apps/phtv/app-icon.png').resize(420, 420).png().toBuffer();
 const example = thumbBase(`
   ${textPath('Gõ tiếng Việt', 56, 330, 104, C.white, { tracking: -0.035 }).svg}
   ${textPath('trên Mac', 56, 452, 104, C.gold, { tracking: -0.035 }).svg}

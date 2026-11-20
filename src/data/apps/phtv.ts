@@ -1,5 +1,5 @@
 import type { App } from '../types';
-import icon from '../../assets/apps/phtv/app-icon.webp';
+import icon from '../../assets/apps/phtv/app-icon.png';
 
 const app: App = {
   slug: 'phtv',

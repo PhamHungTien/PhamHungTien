@@ -161,7 +161,8 @@ darken slightly). There is no WebGL: planets are links positioned by transforms.
 Planet colours and glyph gradients come from each app's Icon Composer icon
 (`src/data/planet-appearance.ts`); the transparent artwork layers live in
 `src/assets/planet-artwork`. Monochrome glyphs are CSS masks with a gradient; vTTS and
-Lunar Block keep their original colours.
+Lunar Block keep their original colours. `npm run icons` rebuilds the app icons and these
+layers from the `.icon` documents (see [ARCHITECTURE.md](ARCHITECTURE.md#app-icons)).
 
 ## App imagery and pages
 

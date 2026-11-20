@@ -12,6 +12,7 @@
  *
  *   node scripts/postbuild.mjs [outDir]
  */
+import sharp from 'sharp';
 import { createHash } from 'node:crypto';
 import { copyFile, mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
@@ -109,12 +110,15 @@ const legacyFiles = {
   'MyNASManager/assets/app-icon.png': 'src/assets/apps/mynasmanager/app-icon.png',
   'LunarBlock/assets/app-icon.png': 'src/assets/apps/lunarblock/app-icon.png',
   'assets/lunarv-icon.png': 'src/assets/apps/lunarv/app-icon.png',
-  'assets/phtv-icon.webp': 'src/assets/apps/phtv/app-icon.webp',
-  'PHTV/phtv-icon.webp': 'src/assets/apps/phtv/app-icon.webp',
+  'assets/phtv-icon.webp': 'src/assets/apps/phtv/app-icon.png',
+  'PHTV/phtv-icon.webp': 'src/assets/apps/phtv/app-icon.png',
 };
 for (const [target, source] of Object.entries(legacyFiles)) {
   await mkdir(dirname(join(outDir, target)), { recursive: true });
-  await copyFile(join(root, source), join(outDir, target));
+  // Old URLs keep their format: a .webp address gets WebP bytes.
+  if (target.endsWith('.webp') && !source.endsWith('.webp'))
+    await sharp(join(root, source)).webp({ quality: 90 }).toFile(join(outDir, target));
+  else await copyFile(join(root, source), join(outDir, target));
 }
 console.log(`  legacy   ${Object.keys(legacyFiles).length} files`);
 

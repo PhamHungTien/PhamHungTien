@@ -9,7 +9,7 @@ const app: App = {
   links: {
     stores: { appStore: 'https://apps.apple.com/us/app/lunar-block-teris-3d/id6773545437' },
   },
-  accent: '#f59e0b',
+  accent: '#2f9bff',
   category: { vi: 'Game xếp khối 3D', en: '3D block puzzle' },
   title: {
     vi: 'Xếp khối rơi kinh điển trong đấu trường 3D giữa không gian.',
