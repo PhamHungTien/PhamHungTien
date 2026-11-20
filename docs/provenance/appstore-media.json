@@ -1,17 +1,64 @@
 {
   "synced": "2026-11-20",
   "apps": {
-    "lunarv": {
-      "name": "LunarV – Lịch Âm Việt Nam",
+    "vtts": {
+      "name": "vTTS: Văn bản thành giọng nói",
       "versions": {
-        "VISION_OS": "2.1.0 (IN_REVIEW)",
+        "IOS": "3.2.0 (WAITING_FOR_REVIEW)",
+        "MAC_OS": "3.2.0 (WAITING_FOR_REVIEW)"
+      },
+      "locales": {
+        "en-US": {
+          "screenshots": {
+            "iphone": 6,
+            "ipad": 6,
+            "mac": 6
+          },
+          "previews": [
+            "iphone",
+            "ipad",
+            "mac"
+          ],
+          "art": {
+            "header": "vTTS 3.2.0 header en-US 2fcabcea",
+            "search": "vTTS 3.2.0 header en-US 2fcabcea"
+          }
+        }
+      }
+    },
+    "mynasmanager": {
+      "name": "My NAS Manager",
+      "versions": {
+        "IOS": "1.1.0 (READY_FOR_SALE)"
+      },
+      "locales": {
+        "en-US": {
+          "screenshots": {
+            "iphone": 5,
+            "ipad": 5
+          },
+          "previews": [
+            "iphone",
+            "ipad"
+          ],
+          "art": {
+            "header": "MyNASManager-110-en-US-header-f10dc6dc8f-186553",
+            "search": "MyNASManager-110-en-US-search-516b826887-186564"
+          }
+        }
+      }
+    },
+    "lunarv": {
+      "name": "LunarV: Lịch Âm, Lịch Vạn Niên",
+      "versions": {
+        "VISION_OS": "2.1.0 (REJECTED)",
         "MAC_OS": "2.1.0 (WAITING_FOR_REVIEW)",
         "IOS": "2.1.0 (WAITING_FOR_REVIEW)"
       },
       "locales": {
         "en-US": {
           "screenshots": {
-            "vision": 2,
+            "vision": 5,
             "mac": 2,
             "iphone": 8,
             "ipad": 7
@@ -27,7 +74,7 @@
         },
         "vi": {
           "screenshots": {
-            "vision": 2,
+            "vision": 5,
             "mac": 2,
             "iphone": 8,
             "ipad": 7
@@ -43,7 +90,7 @@
         },
         "zh-Hans": {
           "screenshots": {
-            "vision": 2,
+            "vision": 5,
             "mac": 2,
             "iphone": 7,
             "ipad": 6
@@ -55,31 +102,6 @@
           "art": {
             "header": "LunarV-210-zh-Hans-Header-9a781d8f6b",
             "search": "LunarV-210-zh-Hans-Search-Results-cee61e9e8f"
-          }
-        }
-      }
-    },
-    "vtts": {
-      "name": "vTTS: Văn bản thành giọng nói",
-      "versions": {
-        "IOS": "3.1.0 (WAITING_FOR_REVIEW)",
-        "MAC_OS": "3.1.0 (WAITING_FOR_REVIEW)"
-      },
-      "locales": {
-        "en-US": {
-          "screenshots": {
-            "iphone": 6,
-            "ipad": 6,
-            "mac": 6
-          },
-          "previews": [
-            "iphone",
-            "ipad",
-            "mac"
-          ],
-          "art": {
-            "header": "vTTS-105-en-US-Header-27cf8c42bd",
-            "search": "vTTS-105-en-US-Search-Results-9a57b936bf"
           }
         }
       }
@@ -98,8 +120,8 @@
             "mac"
           ],
           "art": {
-            "header": "PHTVKeyboard-en-US-PHTV-AppStore-header-f3c9a9a5db",
-            "search": "PHTVKeyboard-en-US-PHTV-AppStore-search-9153f8dbb0"
+            "header": "PHTVKeyboard-en-US-PHTV-AppStore-header-b0321b0bd1",
+            "search": "PHTVKeyboard-en-US-PHTV-AppStore-search-7f811ccbb8"
           }
         },
         "vi": {
@@ -110,54 +132,8 @@
             "mac"
           ],
           "art": {
-            "header": "PHTVKeyboard-vi-PHTV-AppStore-header-55ec12b468",
-            "search": "PHTVKeyboard-vi-PHTV-AppStore-search-fa61b6237e"
-          }
-        }
-      }
-    },
-    "mynasmanager": {
-      "name": "My NAS Manager",
-      "versions": {
-        "IOS": "1.1.0 (WAITING_FOR_REVIEW)"
-      },
-      "locales": {
-        "en-US": {
-          "screenshots": {
-            "iphone": 5,
-            "ipad": 5
-          },
-          "previews": [
-            "iphone",
-            "ipad"
-          ],
-          "art": {
-            "header": "MyNASManager-110-en-US-header-55656f3c4a",
-            "search": "MyNASManager-110-en-US-search-1b6229c027"
-          }
-        }
-      }
-    },
-    "padnotesai": {
-      "name": "Pad Notes AI: Smart Notebooks",
-      "versions": {
-        "MAC_OS": "2.1.0 (WAITING_FOR_REVIEW)",
-        "IOS": "2.1.0 (WAITING_FOR_REVIEW)"
-      },
-      "locales": {
-        "en-US": {
-          "screenshots": {
-            "mac": 4,
-            "iphone": 4,
-            "ipad": 4
-          },
-          "previews": [
-            "iphone",
-            "ipad"
-          ],
-          "art": {
-            "header": "Pad Notes AI · en-US · header · 2026-10-10",
-            "search": "Pad Notes AI · en-US · search · 2026-10-10"
+            "header": "PHTVKeyboard-vi-PHTV-AppStore-header-38ab6eefc4",
+            "search": "PHTVKeyboard-vi-PHTV-AppStore-search-4de407e2a7"
           }
         }
       }
@@ -181,8 +157,32 @@
             "ipad"
           ],
           "art": {
-            "header": "LunarBlock-1.1.0-en-US-Header-9c5bb684a2",
-            "search": "LunarBlock-1.1.0-en-US-Search-Results-f3ff6f5f47"
+            "header": "LunarBlock-1.1.0-en-US-Header-9fecc3bb83",
+            "search": "LunarBlock-1.1.0-en-US-Search-Results-6f8e222ea1"
+          }
+        }
+      }
+    },
+    "padnotesai": {
+      "name": "Pad Notes AI: Note Taking",
+      "versions": {
+        "MAC_OS": "2.1.0 (WAITING_FOR_REVIEW)",
+        "IOS": "2.1.0 (WAITING_FOR_REVIEW)"
+      },
+      "locales": {
+        "en-US": {
+          "screenshots": {
+            "mac": 4,
+            "iphone": 4,
+            "ipad": 4
+          },
+          "previews": [
+            "iphone",
+            "ipad"
+          ],
+          "art": {
+            "header": "Pad Notes AI · en-US · header · 2026-10-10",
+            "search": "Pad Notes AI · en-US · search · 2026-10-10"
           }
         }
       }
@@ -190,7 +190,7 @@
     "padcodeai": {
       "name": "Pad Code AI: Code Editor & IDE",
       "versions": {
-        "IOS": "3.0.0 (WAITING_FOR_REVIEW)"
+        "IOS": "3.0.0 (DEVELOPER_REJECTED)"
       },
       "locales": {
         "en-US": {
