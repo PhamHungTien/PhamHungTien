@@ -124,7 +124,7 @@ version and art each sync used.
 | Where                  | Uses                                                        |
 | ---------------------- | ----------------------------------------------------------- |
 | Home app cards         | Search results art (3:2)                                    |
-| App page hero          | Product page header art (2.33:1)                            |
+| App page hero          | Product page header art (a 2.33:1 band; whole on phones)    |
 | App page "Screenshots" | Screenshots and App Previews, one row per device            |
 | Structured data        | First eight screenshots as `SoftwareApplication.screenshot` |
 

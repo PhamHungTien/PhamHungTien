@@ -168,10 +168,12 @@ const socials = [
     transform: translateY(3px);
   }
   @media (max-width: 560px) {
-    /* Phones: the hero is as tall as the system needs, so the apps start sooner. */
+    /* Phones: the hero is as tall as the system needs, so the apps start sooner. A square
+       stage keeps the solved layout of every phone width and keeps the caption close to
+       the actions below it. */
     .hero {
       --hero-reserve: 150px;
-      --orbit-max-height: 1.12;
+      --orbit-max-height: 1;
       min-height: 0;
       padding-block: 8px 20px;
     }

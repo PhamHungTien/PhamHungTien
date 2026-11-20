@@ -103,7 +103,7 @@ const platforms = platformGroupsOf(app.platforms)
   </div>
 
   {header && (
-    <div class="app-hero__banner">
+    <div class="app-hero__banner" style={`--art-ratio: ${header.width} / ${header.height}`}>
       <Picture
         src={header}
         alt={`${app.name} — ${title}`}
@@ -249,7 +249,9 @@ const platforms = platformGroupsOf(app.platforms)
     font-weight: 600;
   }
 
-  /* The store's own header art: shown whole, at its native 2.33:1 proportion. */
+  /* The store's own header art as a wide 2.33:1 band, the App Store header proportion.
+     Art made in another proportion is cropped around its centre here and shown whole on
+     phones (below). */
   .app-hero__banner {
     overflow: hidden;
     border: 1px solid var(--line);
@@ -363,6 +365,7 @@ const platforms = platformGroupsOf(app.platforms)
 
     .app-hero__banner {
       border-radius: var(--r-card);
+      aspect-ratio: var(--art-ratio, 3840 / 1646);
     }
 
     .app-hero__main {
