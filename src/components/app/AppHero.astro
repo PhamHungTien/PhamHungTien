@@ -76,7 +76,7 @@ const platforms = platformGroupsOf(app.platforms)
 
     {(app.slug === 'phtv' || app.slug === 'lunarv') && (
       <nav
-        class="language-links"
+        class="language-links glass"
         aria-label={lang === 'vi' ? 'Ngôn ngữ trang' : lang === 'zh' ? '页面语言' : 'Page language'}
       >
         <a
@@ -216,18 +216,23 @@ const platforms = platformGroupsOf(app.platforms)
     font-weight: 500;
   }
 
+  /* A small glass capsule; the current language is a brighter thumb 3px in. */
   .language-links {
     display: flex;
-    gap: 4px;
+    gap: 2px;
+    padding: 3px;
+    border-radius: var(--r-pill);
     font-size: 14px;
   }
 
   .language-links a {
+    position: relative;
+    z-index: 3;
     display: inline-flex;
-    min-height: 32px;
+    min-height: 34px;
     align-items: center;
-    padding: 0 10px;
-    border-radius: var(--r-control);
+    padding: 0 14px;
+    border-radius: var(--r-pill);
     color: var(--muted);
   }
 
@@ -236,16 +241,19 @@ const platforms = platformGroupsOf(app.platforms)
   }
 
   .language-links a[aria-current='page'] {
-    background: var(--surface-2);
+    background: var(--glass-thumb);
+    box-shadow:
+      inset 0 1px 0 var(--glass-rim),
+      0 1px 2px rgb(16 24 40 / 0.08);
     color: var(--ink);
-    font-weight: 500;
+    font-weight: 600;
   }
 
   /* The store's own header art: shown whole, at its native 2.33:1 proportion. */
   .app-hero__banner {
     overflow: hidden;
     border: 1px solid var(--line);
-    border-radius: var(--r-media);
+    border-radius: var(--r-sheet);
     background: var(--surface-2);
     aspect-ratio: 3840 / 1646;
   }
@@ -351,6 +359,10 @@ const platforms = platformGroupsOf(app.platforms)
   @media (max-width: 767.98px) {
     .app-hero__bar {
       margin-bottom: 12px;
+    }
+
+    .app-hero__banner {
+      border-radius: var(--r-card);
     }
 
     .app-hero__main {

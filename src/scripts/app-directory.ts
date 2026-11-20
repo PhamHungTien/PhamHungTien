@@ -22,7 +22,7 @@ export function initAppDirectory() {
   let platform = params.get('platform') ?? '';
   if (!buttons.some((button) => button.dataset.platform === platform)) platform = '';
   if (search) search.value = params.get('q') ?? '';
-  if (tools) tools.hidden = false;
+  tools?.removeAttribute('data-pending');
 
   const apply = () => {
     const query = normalize(search?.value ?? '')

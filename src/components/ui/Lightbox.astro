@@ -13,7 +13,7 @@ const { lang } = Astro.props;
 
 <dialog class="lightbox dialog--fullscreen" data-lightbox aria-label="">
   <form method="dialog">
-    <button class="lightbox__close" aria-label={t(lang, 'app.close')}>
+    <button class="lightbox__close glass" aria-label={t(lang, 'app.close')} data-lens>
       <X size={24} aria-hidden="true" />
     </button>
   </form>
@@ -53,9 +53,19 @@ const { lang } = Astro.props;
     margin: 0;
     padding: 64px 24px 28px;
     border: 0;
-    background: rgb(8 10 15 / 0.94);
+    background: rgb(6 8 12 / 0.78);
+    -webkit-backdrop-filter: blur(28px) saturate(150%);
+    backdrop-filter: blur(28px) saturate(150%);
     color: #fff;
     cursor: zoom-out;
+  }
+
+  @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+    .lightbox {
+      background: rgb(6 8 12 / 0.96);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
   }
 
   .lightbox[open] {
@@ -67,22 +77,28 @@ const { lang } = Astro.props;
     background: transparent;
   }
 
+  /* Always dark glass: it floats over a dimmed image. */
   .lightbox__close {
+    --glass-tint: rgb(40 44 54 / 0.5);
+    --glass-edge: rgb(255 255 255 / 0.14);
+    --glass-rim: rgb(255 255 255 / 0.28);
+    --glass-rim-low: rgb(255 255 255 / 0.08);
+    --glass-shine: rgb(255 255 255 / 0.4);
     position: absolute;
     top: 16px;
     right: 16px;
     display: grid;
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
     place-items: center;
-    border: 1px solid rgb(255 255 255 / 0.25);
-    border-radius: 12px;
-    background: rgb(255 255 255 / 0.1);
+    padding: 0;
+    border: 0;
+    border-radius: var(--r-pill);
     color: #fff;
   }
 
   .lightbox__close:hover {
-    background: rgb(255 255 255 / 0.2);
+    --glass-tint: rgb(60 64 76 / 0.6);
   }
 
   figure {
@@ -97,7 +113,7 @@ const { lang } = Astro.props;
     max-height: 82dvh;
     width: auto;
     object-fit: contain;
-    border-radius: var(--r-image);
+    border-radius: var(--r-media);
   }
 
   figcaption {

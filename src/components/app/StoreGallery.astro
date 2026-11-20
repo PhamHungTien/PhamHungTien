@@ -56,7 +56,13 @@ const rows = await Promise.all(
     <div class="store-gallery__head">
       <h2 id="gallery-heading">{t(lang, 'app.screenshots')}</h2>
       {rows.length > 1 && (
-        <div class="segmented store-gallery__tabs" role="tablist" hidden data-gallery-tabs>
+        <div
+          class="segmented store-gallery__tabs"
+          role="tablist"
+          hidden
+          data-gallery-tabs
+          data-lens
+        >
           {rows.map((row, index) => (
             <button
               type="button"
@@ -120,19 +126,21 @@ const rows = await Promise.all(
           </ul>
           <button
             type="button"
-            class="shots__nav shots__nav--prev"
+            class="shots__nav shots__nav--prev glass"
             aria-label={copy.prev}
             hidden
             data-shots-prev
+            data-lens
           >
             <ChevronLeft size={20} aria-hidden="true" />
           </button>
           <button
             type="button"
-            class="shots__nav shots__nav--next"
+            class="shots__nav shots__nav--next glass"
             aria-label={copy.next}
             hidden
             data-shots-next
+            data-lens
           >
             <ChevronRight size={20} aria-hidden="true" />
           </button>
@@ -256,18 +264,25 @@ const rows = await Promise.all(
     border-color: var(--line-strong);
   }
 
+  /* Glass buttons floating over the screenshots: what they cover shows through. */
   .shots__nav {
     position: absolute;
     top: calc(50% - 26px);
     display: grid;
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
     place-items: center;
-    border: 1px solid var(--line-strong);
-    border-radius: 50%;
-    background: var(--surface);
+    padding: 0;
+    border: 0;
+    border-radius: var(--r-pill);
     color: var(--ink);
-    box-shadow: 0 4px 16px rgb(0 0 0 / 0.18);
+    transition:
+      opacity 150ms ease-out,
+      transform 150ms ease-out;
+  }
+
+  .shots__nav:active {
+    transform: scale(0.94);
   }
 
   .shots__nav--prev {

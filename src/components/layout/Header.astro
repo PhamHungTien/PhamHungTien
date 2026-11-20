@@ -27,51 +27,55 @@ const { lang, nav } = Astro.props;
     {t(lang, 'nav.skip')}
   </a>
 
-  <a class="brand" href={homePath(lang)}>
-    <Logo class="brand__mark" />
-    <span class="sr-only">Phạm Hùng Tiến — {t(lang, 'nav.home')}</span>
-  </a>
+  <div class="site-header__bar glass" data-lens>
+    <a class="brand" href={homePath(lang)}>
+      <Logo class="brand__mark" />
+      <span class="sr-only">Phạm Hùng Tiến — {t(lang, 'nav.home')}</span>
+    </a>
 
-  <nav class="site-nav" aria-label={t(lang, 'nav.main')}>
-    {nav.map((item) => (
-      <a href={item.href} data-tab={item.tab} aria-current={item.current ? 'page' : undefined}>
-        {item.label}
-      </a>
-    ))}
-  </nav>
+    <nav class="site-nav" aria-label={t(lang, 'nav.main')}>
+      {nav.map((item) => (
+        <a href={item.href} data-tab={item.tab} aria-current={item.current ? 'page' : undefined}>
+          {item.label}
+        </a>
+      ))}
+    </nav>
 
-  <div class="header-actions">
-    <button
-      class="icon-button"
-      type="button"
-      data-theme-toggle
-      data-label-dark={t(lang, 'theme.toDark')}
-      data-label-light={t(lang, 'theme.toLight')}
-      aria-label={t(lang, 'theme.toDark')}
-    >
-      <Moon class="theme-icon theme-icon--moon" size={18} aria-hidden="true" />
-      <Sun class="theme-icon theme-icon--sun" size={18} aria-hidden="true" />
-    </button>
-    <button
-      class="icon-button menu-toggle"
-      type="button"
-      aria-expanded="false"
-      aria-controls="mobile-navigation"
-      data-menu-toggle
-      data-label-open={t(lang, 'nav.openMenu')}
-      data-label-close={t(lang, 'nav.closeMenu')}
-      aria-label={t(lang, 'nav.openMenu')}
-    >
-      <Menu class="menu-icon menu-icon--open" size={20} aria-hidden="true" />
-      <X class="menu-icon menu-icon--close" size={20} aria-hidden="true" />
-    </button>
+    <div class="header-actions">
+      <button
+        class="icon-button"
+        type="button"
+        data-theme-toggle
+        data-label-dark={t(lang, 'theme.toDark')}
+        data-label-light={t(lang, 'theme.toLight')}
+        aria-label={t(lang, 'theme.toDark')}
+      >
+        <Moon class="theme-icon theme-icon--moon" size={18} aria-hidden="true" />
+        <Sun class="theme-icon theme-icon--sun" size={18} aria-hidden="true" />
+      </button>
+      <button
+        class="icon-button menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mobile-navigation"
+        data-menu-toggle
+        data-label-open={t(lang, 'nav.openMenu')}
+        data-label-close={t(lang, 'nav.closeMenu')}
+        aria-label={t(lang, 'nav.openMenu')}
+      >
+        <Menu class="menu-icon menu-icon--open" size={20} aria-hidden="true" />
+        <X class="menu-icon menu-icon--close" size={20} aria-hidden="true" />
+      </button>
+    </div>
   </div>
 
+  {/* A sibling of the bar, not a child: its own glass then blurs the page, not the bar. */}
   <nav
-    class="mobile-nav"
+    class="mobile-nav glass"
     id="mobile-navigation"
     aria-label={t(lang, 'nav.main')}
     data-mobile-nav
+    data-lens
     inert
   >
     {nav.map((item) => (
@@ -89,33 +93,21 @@ const { lang, nav } = Astro.props;
 
 <style>
   .site-header {
-    --glass-bg: rgb(247 249 252 / 0.94);
-    --glass-border: rgb(19 26 39 / 0.1);
     position: sticky;
     top: max(12px, env(safe-area-inset-top));
     z-index: 30;
-    display: flex;
     width: min(1200px, calc(100% - 32px));
+    margin: 12px auto 0;
+  }
+  /* A Liquid Glass capsule: 64px tall, so its radius is 32; the 40px controls sit 12px in,
+     so theirs is 20 and the shapes stay concentric. */
+  .site-header__bar {
+    display: flex;
     height: 64px;
     align-items: center;
     gap: 16px;
-    margin: 12px auto 0;
-    padding: 0 12px 0 18px;
-    border: 1px solid var(--glass-border);
-    border-radius: 22px;
-    background: var(--glass-bg);
-    box-shadow:
-      0 12px 36px rgb(16 24 40 / 0.13),
-      inset 0 1px rgb(255 255 255 / 0.8);
-    -webkit-backdrop-filter: saturate(150%) blur(20px);
-    backdrop-filter: saturate(150%) blur(20px);
-  }
-  :global(html[data-theme='dark']) .site-header {
-    --glass-bg: rgb(14 17 23 / 0.94);
-    --glass-border: rgb(255 255 255 / 0.16);
-    box-shadow:
-      0 14px 40px rgb(0 0 0 / 0.4),
-      inset 0 1px rgb(255 255 255 / 0.1);
+    padding: 0 12px 0 14px;
+    border-radius: var(--r-pill);
   }
   :global(html[data-home-header]) .site-header {
     position: fixed;
@@ -123,26 +115,12 @@ const { lang, nav } = Astro.props;
     left: 50%;
     margin-top: 0;
     translate: -50% 0;
-    transition:
-      transform 300ms var(--ease),
-      opacity 250ms ease;
+    transition: transform 320ms var(--ease);
   }
+  /* Slides away rather than fading: a fading parent would flatten the glass mid-way. */
   :global(html[data-home-header='hidden']) .site-header:not(:focus-within) {
     transform: translateY(calc(-100% - 24px - env(safe-area-inset-top)));
-    opacity: 0;
     pointer-events: none;
-  }
-  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    .site-header {
-      background: var(--surface);
-    }
-  }
-  @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
-    .site-header {
-      background: var(--surface);
-      -webkit-backdrop-filter: none;
-      backdrop-filter: none;
-    }
   }
 
   .skip-link {
@@ -150,8 +128,8 @@ const { lang, nav } = Astro.props;
     top: 12px;
     left: 12px;
     z-index: 40;
-    padding: 10px 16px;
-    border-radius: var(--r-control);
+    padding: 10px 18px;
+    border-radius: var(--r-pill);
     background: var(--ink);
     color: var(--paper);
     font-weight: 600;
@@ -167,11 +145,12 @@ const { lang, nav } = Astro.props;
     align-items: center;
     gap: 12px;
     margin-right: auto;
+    border-radius: var(--r-pill);
     font-weight: 600;
   }
 
   .brand :global(.brand__mark) {
-    border-radius: 9px;
+    border-radius: var(--r-icon);
   }
 
   .site-nav {
@@ -181,11 +160,16 @@ const { lang, nav } = Astro.props;
   }
 
   .site-nav a {
-    padding: 8px 12px;
-    border-radius: 14px;
+    display: inline-flex;
+    min-height: 40px;
+    align-items: center;
+    padding: 0 14px;
+    border-radius: var(--r-pill);
     color: var(--muted);
     font-size: 15px;
-    transition: color 160ms ease;
+    transition:
+      color 150ms ease-out,
+      background-color 150ms ease-out;
   }
 
   .site-nav a:hover,
@@ -193,8 +177,15 @@ const { lang, nav } = Astro.props;
     color: var(--ink);
   }
 
+  .site-nav a:hover {
+    background: color-mix(in srgb, var(--ink) 6%, transparent);
+  }
+
   .site-nav a[aria-current='page'] {
-    background: color-mix(in srgb, var(--ink) 9%, transparent);
+    background: var(--glass-thumb);
+    box-shadow:
+      inset 0 1px 0 var(--glass-rim),
+      0 1px 2px rgb(16 24 40 / 0.08);
     font-weight: 600;
   }
 
@@ -202,7 +193,17 @@ const { lang, nav } = Astro.props;
     --header-control-size: 40px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 4px;
+  }
+
+  /* Controls on glass are plain: no glass on glass. */
+  .header-actions :global(.icon-button) {
+    border-color: transparent;
+    background: transparent;
+  }
+
+  .header-actions :global(.icon-button:hover) {
+    background: color-mix(in srgb, var(--ink) 8%, transparent);
   }
 
   /* The new theme's icon spins in during the theme transition. */
@@ -245,28 +246,27 @@ const { lang, nav } = Astro.props;
       display: block;
     }
 
+    /* A glass sheet under the bar: radius 28, rows inset 8px, so rows are 20. */
     .mobile-nav {
+      --glass-tint: var(--glass-tint-strong);
       position: absolute;
       top: calc(100% + 10px);
       right: 0;
       left: 0;
       display: grid;
+      gap: 2px;
       max-height: calc(100dvh - 110px - env(safe-area-inset-top));
       overflow-y: auto;
       overscroll-behavior: contain;
-      padding: 8px 14px;
-      border: 1px solid var(--glass-border);
-      border-radius: 20px;
-      /* Solid: the header's own backdrop filter is the backdrop root, so a nested blur here
-         would sample nothing and the page would show through the links. */
-      background: var(--surface);
-      box-shadow: 0 18px 40px rgb(0 0 0 / 0.25);
+      padding: 8px;
+      border-radius: var(--r-sheet);
       visibility: hidden;
       opacity: 0;
-      transform: translateY(-6px);
+      transform: translateY(-6px) scale(0.98);
+      transform-origin: 50% 0;
       transition:
-        opacity 160ms ease,
-        transform 160ms var(--ease),
+        opacity 160ms ease-out,
+        transform 200ms var(--ease),
         visibility 160ms;
     }
 
@@ -277,19 +277,24 @@ const { lang, nav } = Astro.props;
     }
 
     .mobile-nav a {
+      position: relative;
+      z-index: 3;
       display: flex;
       min-height: 50px;
       align-items: center;
-      border-bottom: 1px solid var(--line);
+      padding: 0 16px;
+      border-radius: calc(var(--r-sheet) - 8px);
       font-size: 17px;
       font-weight: 500;
+      transition: background-color 150ms ease-out;
     }
 
-    .mobile-nav a:last-child {
-      border-bottom: 0;
+    .mobile-nav a:hover {
+      background: color-mix(in srgb, var(--ink) 6%, transparent);
     }
 
     .mobile-nav a[aria-current='page'] {
+      background: var(--glass-thumb);
       color: var(--brand);
       font-weight: 600;
     }

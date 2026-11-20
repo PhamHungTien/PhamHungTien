@@ -166,6 +166,9 @@ const speculationRules = {
     <DonateDialog lang={lang} />
     <script>
       import '../scripts/motion';
+      import { initLiquidGlass } from '../scripts/liquid-glass';
+      // Refraction maps are drawn after the first paint, never in the task that renders it.
+      requestAnimationFrame(() => setTimeout(initLiquidGlass, 0));
     </script>
   </body>
 </html>

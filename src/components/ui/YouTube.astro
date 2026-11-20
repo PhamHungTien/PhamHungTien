@@ -60,7 +60,7 @@ if (!local && import.meta.env.DEV)
       decoding="async"
     />
   )}
-  <span class="youtube__play" aria-hidden="true">
+  <span class="youtube__play glass" aria-hidden="true">
     <Play size={30} fill="currentColor" />
   </span>
 </button>
@@ -118,6 +118,11 @@ if (!local && import.meta.env.DEV)
   }
 
   .youtube__play {
+    --glass-tint: rgb(20 22 28 / 0.42);
+    --glass-edge: rgb(255 255 255 / 0.16);
+    --glass-rim: rgb(255 255 255 / 0.32);
+    --glass-rim-low: rgb(255 255 255 / 0.08);
+    --glass-shine: rgb(255 255 255 / 0.45);
     position: absolute;
     inset: 0;
     display: grid;
@@ -125,8 +130,7 @@ if (!local && import.meta.env.DEV)
     height: 76px;
     margin: auto;
     place-items: center;
-    border-radius: 50%;
-    background: rgb(0 0 0 / 0.65);
+    border-radius: var(--r-pill);
     color: #fff;
     transition: transform 200ms var(--ease);
   }

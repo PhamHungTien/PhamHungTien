@@ -14,7 +14,7 @@ const { lang } = Astro.props;
 ---
 
 <dialog
-  class="donate"
+  class="donate glass"
   aria-labelledby="donate-title"
   aria-describedby="donate-description"
   data-donate-dialog
@@ -84,12 +84,15 @@ const { lang } = Astro.props;
     padding: 32px 28px 24px;
     overflow-y: auto;
     overscroll-behavior: contain;
-    border: 1px solid var(--line);
-    border-radius: 24px;
-    background: var(--surface);
+    border: 0;
+    border-radius: var(--r-sheet);
     color: var(--ink);
-    box-shadow: 0 24px 80px rgb(0 0 0 / 0.25);
     text-align: center;
+    --glass-tint: var(--glass-tint-strong);
+  }
+
+  .donate[open] {
+    position: fixed;
   }
 
   .donate::backdrop {
@@ -107,13 +110,13 @@ const { lang } = Astro.props;
     height: 44px;
     place-items: center;
     border: 0;
-    border-radius: 10px;
+    border-radius: var(--r-pill);
     background: transparent;
     color: var(--muted);
   }
 
   .donate__close:hover {
-    background: var(--surface-2);
+    background: color-mix(in srgb, var(--ink) 8%, transparent);
     color: var(--ink);
   }
 
@@ -151,7 +154,7 @@ const { lang } = Astro.props;
     width: 100%;
     padding: 12px;
     border: 1px solid var(--line);
-    border-radius: 20px;
+    border-radius: var(--r-card);
     background: #fff;
   }
 
