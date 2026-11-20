@@ -9,6 +9,19 @@ export function initStoreGallery(): void {
     const tabs = [...(tablist?.querySelectorAll<HTMLButtonElement>('[role="tab"]') ?? [])];
     const panels = tabs.map((tab) => document.getElementById(tab.getAttribute('aria-controls')!)!);
 
+    // Previous / next paging, only where hovering is possible (touch scrolls natively).
+    const fine = matchMedia('(hover: hover) and (pointer: fine)');
+    function updateNav(scope: Element) {
+      const row = scope.querySelector<HTMLElement>('[data-shots]');
+      const prev = scope.querySelector<HTMLButtonElement>('[data-shots-prev]');
+      const next = scope.querySelector<HTMLButtonElement>('[data-shots-next]');
+      if (!row || !prev || !next) return;
+      const overflow = row.scrollWidth - row.clientWidth > 4;
+      prev.hidden = next.hidden = !(fine.matches && overflow);
+      prev.disabled = row.scrollLeft < 4;
+      next.disabled = row.scrollLeft + row.clientWidth >= row.scrollWidth - 4;
+    }
+
     if (tablist && tabs.length > 1) {
       root.dataset.enhanced = '';
       tablist.hidden = false;
@@ -52,18 +65,6 @@ export function initStoreGallery(): void {
       select(0);
     }
 
-    // Previous / next paging, only where hovering is possible (touch scrolls natively).
-    const fine = matchMedia('(hover: hover) and (pointer: fine)');
-    function updateNav(scope: Element) {
-      const row = scope.querySelector<HTMLElement>('[data-shots]');
-      const prev = scope.querySelector<HTMLButtonElement>('[data-shots-prev]');
-      const next = scope.querySelector<HTMLButtonElement>('[data-shots-next]');
-      if (!row || !prev || !next) return;
-      const overflow = row.scrollWidth - row.clientWidth > 4;
-      prev.hidden = next.hidden = !(fine.matches && overflow);
-      prev.disabled = row.scrollLeft < 4;
-      next.disabled = row.scrollLeft + row.clientWidth >= row.scrollWidth - 4;
-    }
     for (const panel of root.querySelectorAll<HTMLElement>('.store-gallery__panel')) {
       const row = panel.querySelector<HTMLElement>('[data-shots]');
       if (!row) continue;
