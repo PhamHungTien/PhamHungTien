@@ -1,27 +1,31 @@
 ---
-import { Image, Picture, getImage } from 'astro:assets';
+/**
+ * Top of every app page: the App Store product page header art, then the app's icon,
+ * name, promise and download actions. Art comes from src/assets/apps/<slug>/store.
+ */
+import { Image, Picture } from 'astro:assets';
 import { ChevronRight, Download, Heart, Store } from '@lucide/astro';
 import BrandIcon from '../ui/BrandIcon.astro';
-import PlanetSphere from '../ui/PlanetSphere.astro';
 import type { App, Lang } from '../../data/types';
 import { t } from '../../lib/i18n';
 import { appPath, homePath, legalPath } from '../../lib/routes';
 import { storesOf, platformGroupsOf } from '../../data/platforms';
+import { storeMedia } from '../../lib/store-media';
 
 interface Props {
   app: App;
-  lang: Lang;
+  lang: Lang | 'zh';
+  /** Copy for pages in a language the app data does not carry (Chinese LunarV). */
+  copy?: { title: string; subtitle: string; category: string; storeCta: string; privacy: string };
 }
 
-const { app, lang } = Astro.props;
-const heroAlt = `${app.name} — ${app.title[lang]}`;
-const heroCaption =
-  lang === 'vi' ? 'Khám phá giao diện · Nhấn để phóng to' : 'A closer look · Click to enlarge';
-const large = await getImage({
-  src: app.heroImage,
-  width: Math.min(app.heroImage.width, 2000),
-  format: 'webp',
-});
+const { app, lang, copy } = Astro.props;
+/** App data is written in English and Vietnamese; other pages pass their own copy. */
+const dataLang: Lang = lang === 'zh' ? 'en' : lang;
+const title = copy?.title ?? app.title[dataLang];
+const subtitle = copy?.subtitle ?? app.subtitle[dataLang];
+const category = copy?.category ?? app.category[dataLang];
+const header = storeMedia(app.slug, lang).header;
 
 // Download buttons come from data: the install section for direct downloads, then every store.
 const stores = storesOf(app.links.stores);
@@ -31,19 +35,25 @@ const buttons = [
     : []),
   ...stores.map((store) => ({
     href: store.url,
-    label: store.cta[lang],
+    label: copy?.storeCta ?? store.cta[dataLang],
     icon: store.store === 'appStore' ? 'store' : 'download',
     external: true,
   })),
 ];
-const equalStoreButtons = !app.install && stores.length === 2;
 const secondary = app.links.source
   ? { href: app.links.source, label: t(lang, 'app.source'), external: true }
-  : { href: legalPath(app, 'privacy', lang), label: t(lang, 'app.privacy'), external: false };
+  : {
+      href: copy?.privacy ?? legalPath(app, 'privacy', dataLang),
+      label: t(lang, 'app.privacy'),
+      external: false,
+    };
+const platforms = platformGroupsOf(app.platforms)
+  .map((group) => group.label)
+  .join(' · ');
 ---
 
 <section class="app-hero container" aria-labelledby="app-title">
-  <div class="app-hero__copy">
+  <div class="app-hero__bar">
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <ol role="list">
         <li>
@@ -65,7 +75,10 @@ const secondary = app.links.source
     </nav>
 
     {(app.slug === 'phtv' || app.slug === 'lunarv') && (
-      <nav class="language-links" aria-label={lang === 'vi' ? 'Ngôn ngữ trang' : 'Page language'}>
+      <nav
+        class="language-links"
+        aria-label={lang === 'vi' ? 'Ngôn ngữ trang' : lang === 'zh' ? '页面语言' : 'Page language'}
+      >
         <a
           href={appPath(app, 'vi')}
           hreflang="vi"
@@ -81,155 +94,117 @@ const secondary = app.links.source
           English
         </a>
         {app.slug === 'lunarv' && (
-          <a href="/zh/LunarV/" hreflang="zh">
+          <a href="/zh/LunarV/" hreflang="zh" aria-current={lang === 'zh' ? 'page' : undefined}>
             简体中文
           </a>
         )}
       </nav>
     )}
-    <div class="lockup">
-      <Image
-        src={app.icon}
-        alt={`${app.name} ${t(lang, 'app.icon')}`}
-        width={64}
-        height={64}
-        densities={[1, 2]}
-        loading="eager"
-        style={`view-transition-name: app-${app.slug}`}
-      />
-      <div>
-        <p class="lockup__name">{app.name}</p>
-        <p class="lockup__category">{app.category[lang]}</p>
-      </div>
-    </div>
-
-    <div
-      class="app-hero__platforms"
-      aria-label={lang === 'vi' ? 'Nền tảng hỗ trợ' : 'Available platforms'}
-    >
-      {platformGroupsOf(app.platforms).map((group) => (
-        <span>{group.label}</span>
-      ))}
-    </div>
-    <h1 id="app-title">{app.title[lang]}</h1>
-    <p class="app-hero__subtitle">{app.subtitle[lang]}</p>
-
-    <div class="app-hero__actions">
-      {equalStoreButtons ? (
-        <div class="app-hero__store-pair">
-          {buttons.map((button) => (
-            <a class="button button--primary" href={button.href} target="_blank" rel="noopener">
-              <Store size={18} aria-hidden="true" />
-              <span>{button.label}</span>
-            </a>
-          ))}
-        </div>
-      ) : (
-        buttons.map((button, index) => (
-          <a
-            class:list={['button', index === 0 ? 'button--primary' : 'button--secondary']}
-            href={button.href}
-            target={button.external ? '_blank' : undefined}
-            rel={button.external ? 'noopener' : undefined}
-          >
-            {button.icon === 'store' ? (
-              <Store size={18} aria-hidden="true" />
-            ) : (
-              <Download size={18} aria-hidden="true" />
-            )}
-            {button.label}
-          </a>
-        ))
-      )}
-      <a
-        class="button button--secondary"
-        href={secondary.href}
-        target={secondary.external ? '_blank' : undefined}
-        rel={secondary.external ? 'noopener' : undefined}
-      >
-        {app.links.source && <BrandIcon name="github" />}
-        {secondary.label}
-      </a>
-      <button class="link-button" type="button" data-donate aria-haspopup="dialog">
-        <Heart size={16} aria-hidden="true" />
-        {t(lang, 'donate.open')}
-      </button>
-    </div>
   </div>
 
-  <div class="app-hero__stage" data-moon-stage>
-    <span class="app-hero__moon" data-moon>
-      <PlanetSphere slug={app.slug} />
-    </span>
-    <button
-      type="button"
-      class="app-hero__media"
-      data-tilt
-      data-tilt-strength="3"
-      data-spotlight
-      data-lightbox-src={large.src}
-      data-lightbox-alt={heroAlt}
-      aria-label={`${heroCaption}: ${heroAlt}`}
-    >
+  {header && (
+    <div class="app-hero__banner">
       <Picture
-        src={app.heroImage}
-        alt={heroAlt}
-        formats={['avif', 'webp']}
-        widths={[480, 800, 1200, 1600].filter((w) => w <= app.heroImage.width)}
-        sizes="(max-width: 960px) 92vw, 620px"
+        src={header}
+        alt={`${app.name} — ${title}`}
+        formats={['webp']}
+        widths={[720, 1200, 1800, 2560].filter((w) => w <= header.width)}
+        sizes="(max-width: 1248px) calc(100vw - 2 * var(--gutter)), 1200px"
         loading="eager"
         fetchpriority="high"
       />
-      <span class="app-hero__caption">{heroCaption}</span>
-    </button>
+    </div>
+  )}
+
+  <div class="app-hero__main">
+    <Image
+      class="app-hero__icon"
+      src={app.icon}
+      alt={`${app.name} ${t(lang, 'app.icon')}`}
+      width={96}
+      height={96}
+      densities={[1, 2]}
+      loading="eager"
+      style={`view-transition-name: app-${app.slug}`}
+    />
+    <div class="app-hero__copy">
+      <p class="app-hero__name">
+        {app.name}
+        <span>{category}</span>
+      </p>
+      <h1 id="app-title">{title}</h1>
+      <p class="app-hero__subtitle">{subtitle}</p>
+      <p class="app-hero__platforms">
+        <span class="sr-only">
+          {lang === 'vi' ? 'Nền tảng: ' : lang === 'zh' ? '平台：' : 'Platforms: '}
+        </span>
+        {platforms}
+      </p>
+    </div>
+
+    <div class="app-hero__actions">
+      {buttons.map((button, index) => (
+        <a
+          class:list={['button', index === 0 ? 'button--primary' : 'button--secondary']}
+          href={button.href}
+          target={button.external ? '_blank' : undefined}
+          rel={button.external ? 'noopener' : undefined}
+        >
+          {button.icon === 'store' ? (
+            <Store size={18} aria-hidden="true" />
+          ) : (
+            <Download size={18} aria-hidden="true" />
+          )}
+          {button.label}
+        </a>
+      ))}
+      <div class="app-hero__links">
+        <a
+          class="text-link"
+          href={secondary.href}
+          target={secondary.external ? '_blank' : undefined}
+          rel={secondary.external ? 'noopener' : undefined}
+        >
+          {app.links.source && <BrandIcon name="github" size={16} />}
+          {secondary.label}
+        </a>
+        <button class="link-button" type="button" data-donate aria-haspopup="dialog">
+          <Heart size={16} aria-hidden="true" />
+          {t(lang, 'donate.open')}
+        </button>
+      </div>
+    </div>
   </div>
 </section>
 
-<script>
-  import { initAppMoon } from '../../scripts/app-moon';
-  initAppMoon();
-</script>
-
 <style>
   .app-hero {
-    --app-soft: color-mix(in srgb, var(--app, var(--brand)) 14%, var(--surface-2));
-    position: relative;
-    isolation: isolate;
-    display: grid;
-    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
-    align-items: center;
-    gap: clamp(32px, 6vw, 88px);
-    padding-top: clamp(32px, 5vw, 72px);
+    padding-top: clamp(16px, 3vw, 32px);
   }
 
-  /* The page takes on the app's own colour: a soft glow behind the media. */
-  .app-hero::before {
-    position: absolute;
-    z-index: -1;
-    inset: -140px -14% -60px 38%;
-    background:
-      radial-gradient(
-        42% 48% at 58% 46%,
-        color-mix(in srgb, var(--app, var(--brand)) 24%, transparent),
-        transparent 72%
-      ),
-      radial-gradient(
-        26% 30% at 84% 18%,
-        color-mix(in srgb, var(--gold) 16%, transparent),
-        transparent 70%
-      );
-    content: '';
-    pointer-events: none;
+  .app-hero__bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 16px;
+    margin-bottom: 16px;
   }
 
   .breadcrumb ol {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 6px;
-    margin-bottom: 32px;
+    gap: 4px;
+    margin: 0;
     color: var(--muted);
     font-size: 14px;
+  }
+
+  .breadcrumb a {
+    display: inline-flex;
+    min-height: 32px;
+    align-items: center;
   }
 
   .breadcrumb a:hover {
@@ -238,243 +213,179 @@ const secondary = app.links.source
 
   .breadcrumb [aria-current] {
     color: var(--ink);
-    font-weight: 600;
+    font-weight: 500;
   }
 
   .language-links {
     display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin: -12px 0 22px;
-  }
-  .language-links a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 40px;
-    padding: 0 14px;
-    border-radius: 999px;
-    color: var(--muted);
-    border: 1px solid var(--line);
-    font-size: 13px;
-    font-weight: 600;
-  }
-  .language-links a[aria-current='page'] {
-    color: var(--ink);
-    background: var(--surface-2);
-    border-color: var(--line-strong);
-  }
-  .lockup {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+    gap: 4px;
+    font-size: 14px;
   }
 
-  .lockup img {
-    width: 64px;
-    height: 64px;
+  .language-links a {
+    display: inline-flex;
+    min-height: 32px;
+    align-items: center;
+    padding: 0 10px;
+    border-radius: var(--r-control);
+    color: var(--muted);
+  }
+
+  .language-links a:hover {
+    color: var(--ink);
+  }
+
+  .language-links a[aria-current='page'] {
+    background: var(--surface-2);
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* The store's own header art: shown whole, at its native 2.33:1 proportion. */
+  .app-hero__banner {
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--r-media);
+    background: var(--surface-2);
+    aspect-ratio: 3840 / 1646;
+  }
+
+  .app-hero__banner :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .app-hero__main {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 16px 24px;
+    margin-top: 24px;
+  }
+
+  .app-hero__main :global(.app-hero__icon) {
+    width: 96px;
+    height: 96px;
     border-radius: var(--r-icon);
     box-shadow: var(--shadow-icon);
   }
 
-  .lockup__name {
-    font-size: 18px;
+  .app-hero__name {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 2px 10px;
+    font-size: 15px;
     font-weight: 600;
-    line-height: 1.3;
   }
 
-  .lockup__category {
+  .app-hero__name span {
     color: var(--muted);
-    font-size: 15px;
+    font-weight: 400;
   }
 
   h1 {
-    margin-top: 20px;
-    font-size: clamp(34px, 4.4vw, 56px);
-    text-wrap: balance;
-    font-weight: 700;
-    line-height: 1.08;
-    letter-spacing: -0.035em;
+    max-width: 22ch;
+    margin-top: 6px;
+    font-size: var(--text-display);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+  }
+
+  .app-hero__subtitle {
+    max-width: 60ch;
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 17px;
+    line-height: 1.55;
   }
 
   .app-hero__platforms {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 24px;
-  }
-  .app-hero__platforms span {
-    padding: 5px 10px;
-    border: 1px solid var(--line);
-    border-radius: 999px;
+    margin-top: 10px;
     color: var(--muted);
-    font-size: 12px;
-    background: var(--surface);
-  }
-  .app-hero__caption {
-    margin-top: 16px;
-    color: var(--muted);
-    font-size: 12px;
-    line-height: 1.5;
-  }
-  .app-hero__subtitle {
-    max-width: 32em;
-    margin-top: 18px;
-    color: var(--muted);
-    font-size: 18px;
+    font-size: 14px;
   }
 
   .app-hero__actions {
+    display: grid;
+    gap: 10px;
+    justify-items: stretch;
+    min-width: 240px;
+  }
+
+  .app-hero__links {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 12px 16px;
-    margin-top: 32px;
+    justify-content: center;
+    gap: 4px 16px;
+    font-size: 14px;
   }
 
-  .app-hero__store-pair {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-    width: min(100%, 460px);
-  }
-  .app-hero__store-pair .button {
-    min-width: 0;
-    min-height: 56px;
-    padding: 8px 10px;
-  }
-  .app-hero__store-pair svg {
-    flex: none;
-  }
-
-  /* The app's planet circles the screenshot, behind it and in front of it. */
-  .app-hero__stage {
-    position: relative;
-    isolation: isolate;
-  }
-  .app-hero__moon {
-    --sphere-size: clamp(48px, 6vw, 84px);
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    z-index: 3;
-    pointer-events: none;
-    transform: translate(28vw, -16vw) translate(-50%, -50%);
-    filter: brightness(calc(0.82 + (var(--depth, 1) + 1) * 0.09));
-    will-change: transform;
-  }
-  .app-hero__stage:not([data-moon]) .app-hero__moon {
-    display: none;
-  }
-  .app-hero__media {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    width: 100%;
-    place-items: center;
-    padding: clamp(12px, 2vw, 22px);
-    border: 1px solid color-mix(in srgb, var(--app, var(--brand)) 18%, var(--line));
-    border-radius: var(--r-media);
-    background:
-      radial-gradient(120% 90% at 50% 0%, var(--surface) 0%, transparent 70%), var(--app-soft);
-    box-shadow:
-      var(--shadow-media),
-      0 40px 80px -50px color-mix(in srgb, var(--app) 50%, transparent);
-    cursor: zoom-in;
-    transform: perspective(1400px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
-    transition: transform 600ms var(--ease);
-  }
-
-  .app-hero__media:hover {
-    transition-duration: 160ms;
-  }
-
-  .app-hero__media :global(picture) {
-    display: grid;
-    width: 100%;
-    place-items: center;
-  }
-
-  /* Retain the entire image and round its actual edges. */
-  .app-hero__media :global(img) {
-    width: auto;
-    height: auto;
-    max-width: 100%;
-    max-height: min(600px, 66vh);
-    border-radius: var(--r-image);
-    object-fit: contain;
+  .app-hero__links .text-link {
+    display: inline-flex;
+    min-height: 40px;
+    align-items: center;
+    gap: 6px;
   }
 
   @media (max-width: 960px) {
-    .app-hero::before {
-      inset: 45% -10% -40px;
+    .app-hero__main {
+      grid-template-columns: auto minmax(0, 1fr);
     }
-    .app-hero {
-      grid-template-columns: minmax(0, 1fr);
+
+    .app-hero__actions {
+      grid-column: 1 / -1;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      min-width: 0;
+    }
+
+    .app-hero__links {
+      grid-column: 1 / -1;
+      justify-content: flex-start;
     }
   }
 
-  @media (max-width: 560px) {
-    .app-hero__moon {
-      --sphere-size: 44px;
+  @media (max-width: 767.98px) {
+    .app-hero__bar {
+      margin-bottom: 12px;
     }
-    .app-hero__actions .button {
-      flex: 1 1 auto;
-    }
-  }
 
-  /* Entrance: copy settles in line by line and the hero image rises into place. The icon
-     is left alone: it already glides in from the app list as a view transition. */
-  @media (prefers-reduced-motion: no-preference) {
+    .app-hero__main {
+      gap: 12px 14px;
+      margin-top: 16px;
+    }
+
+    .app-hero__main :global(.app-hero__icon) {
+      width: 64px;
+      height: 64px;
+    }
+
+    .app-hero__subtitle {
+      font-size: 15px;
+    }
+
+    h1 {
+      max-width: none;
+    }
+
+    .app-hero__copy {
+      display: contents;
+    }
+
+    .app-hero__name {
+      align-self: center;
+      flex-direction: column;
+      gap: 0;
+    }
+
     h1,
     .app-hero__subtitle,
-    .app-hero__actions {
-      animation: app-hero-in 860ms var(--ease) both;
-    }
-
     .app-hero__platforms {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 24px;
-    }
-    .app-hero__platforms span {
-      padding: 5px 10px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      color: var(--muted);
-      font-size: 12px;
-      background: var(--surface);
-    }
-    .app-hero__caption {
-      margin-top: 16px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.5;
-    }
-    .app-hero__subtitle {
-      animation-delay: 80ms;
-    }
-
-    .app-hero__actions {
-      animation-delay: 160ms;
-    }
-
-    .app-hero__media {
-      animation: app-media-in 1100ms var(--ease) 120ms backwards;
-    }
-
-    @keyframes app-hero-in {
-      from {
-        opacity: 1;
-        transform: translateY(20px);
-      }
-    }
-
-    @keyframes app-media-in {
-      from {
-        opacity: 0.01;
-        transform: translateY(36px) scale(0.97);
-      }
+      grid-column: 1 / -1;
+      margin-top: 0;
     }
   }
 </style>

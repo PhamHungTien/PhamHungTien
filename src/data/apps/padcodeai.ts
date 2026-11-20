@@ -1,13 +1,5 @@
 import type { App } from '../types';
 import icon from '../../assets/apps/padcodeai/app-icon.png';
-import currentV2IpadEditorMockup from '../../assets/apps/padcodeai/current/v2/ipad-editor-mockup.webp';
-import currentV2IphoneEditorMockup from '../../assets/apps/padcodeai/current/v2/iphone-editor-mockup.webp';
-import featureRun from '../../assets/apps/padcodeai/current/v2/feature-run.webp';
-import featureWeb from '../../assets/apps/padcodeai/current/v2/feature-web.webp';
-import featureGit from '../../assets/apps/padcodeai/current/v2/feature-git.webp';
-import featureAi from '../../assets/apps/padcodeai/current/v2/feature-ai.webp';
-import currentV2OnboardingMockup from '../../assets/apps/padcodeai/current/v2/onboarding-mockup.webp';
-import currentV2HeroDevices from '../../assets/apps/padcodeai/current/v2/hero-devices.webp';
 
 const app: App = {
   slug: 'padcodeai',
@@ -15,58 +7,6 @@ const app: App = {
   route: '/PadCodeAI/',
   legalLangs: ['en', 'vi'],
   icon: icon,
-  heroImage: currentV2HeroDevices,
-  gallery: [
-    {
-      src: currentV2IpadEditorMockup,
-      alt: {
-        vi: 'Editor C++ và terminal native trên iPad — bản 2.0',
-        en: 'C++ editor and native terminal on iPad — version 2.0',
-      },
-    },
-    {
-      src: featureRun,
-      alt: {
-        vi: 'Chạy Python ngay trên iPad, kết quả hiện trong terminal',
-        en: 'Running Python on iPad with output in the terminal',
-      },
-    },
-    {
-      src: featureWeb,
-      alt: {
-        vi: 'Xem trước HTML, CSS và JavaScript ngay trong ứng dụng',
-        en: 'Live preview of HTML, CSS and JavaScript inside the app',
-      },
-    },
-    {
-      src: featureGit,
-      alt: {
-        vi: 'Source Control: xem thay đổi, commit và đẩy lên GitHub',
-        en: 'Source Control: review changes, commit and push to GitHub',
-      },
-    },
-    {
-      src: featureAi,
-      alt: {
-        vi: 'Trợ lý AI tuỳ chọn: giải thích, refactor, viết test, sửa lỗi',
-        en: 'Optional AI assistant: explain, refactor, write tests, fix',
-      },
-    },
-    {
-      src: currentV2IphoneEditorMockup,
-      alt: {
-        vi: 'Không gian soạn thảo trên iPhone — bản 2.0',
-        en: 'iPhone coding workspace — version 2.0',
-      },
-    },
-    {
-      src: currentV2OnboardingMockup,
-      alt: {
-        vi: 'Màn hình chào mừng và chọn ngôn ngữ native',
-        en: 'Native welcome and language selection',
-      },
-    },
-  ],
   links: {
     stores: { appStore: 'https://apps.apple.com/us/app/pad-code-ai-code-editor/id6774398897' },
     community: 'https://www.facebook.com/PadCodeAI',
@@ -82,16 +22,16 @@ const app: App = {
   },
   category: { vi: 'IDE cho iPad và iPhone', en: 'IDE for iPad and iPhone' },
   title: {
-    vi: 'Viết và chạy code thật trên iPad và iPhone.',
-    en: 'Write and run real code on iPad and iPhone.',
+    vi: 'Xưởng lập trình hoàn chỉnh trên iPad và iPhone.',
+    en: 'A complete coding studio on iPad and iPhone.',
   },
   subtitle: {
-    vi: 'Trình biên dịch thật chạy offline, terminal tương tác, Git và trợ lý AI.',
-    en: 'Real compilers that run offline, an interactive terminal, Git, and an AI assistant.',
+    vi: 'Trình soạn thảo, môi trường chạy mã ngay trên máy, terminal, Git và một AI cùng bạn xây dựng ứng dụng.',
+    en: 'An editor, on-device runtimes, a terminal, Git and an AI that builds with you.',
   },
   description: {
-    vi: 'Pad Code AI biên dịch và chạy C, C++, Python, JavaScript, TypeScript, Ruby, PHP, Lua và SQL ngay trên thiết bị, không cần máy chủ hay kết nối mạng. Editor hỗ trợ 43 ngôn ngữ, terminal chờ bạn nhập liệu như trên máy tính, kèm Git và trợ lý AI.',
-    en: 'Pad Code AI compiles and runs C, C++, Python, JavaScript, TypeScript, Ruby, PHP, Lua, and SQL right on your device, with no server or internet connection. The editor supports 43 languages, the terminal waits for your input like a computer does, and Git and an AI assistant are built in.',
+    vi: 'Pad Code AI chạy C, C++, Python, JavaScript, TypeScript, Ruby, PHP, Lua và SQLite ngay trên thiết bị với trình biên dịch tích hợp. Kèm agent AI miễn phí, SSH và SFTP, shell cho dự án, LaTeX và Git.',
+    en: 'Pad Code AI runs C, C++, Python, JavaScript, TypeScript, Ruby, PHP, Lua and SQLite on your device with bundled compilers. It adds a free AI agent, SSH and SFTP, a project shell, LaTeX and Git.',
   },
   platforms: ['ios', 'ipados'],
   appCategory: 'DeveloperApplication',
@@ -105,76 +45,69 @@ const app: App = {
       value: { vi: '9 ngôn ngữ', en: '9 languages' },
     },
     {
-      label: { vi: 'Soạn thảo', en: 'Editing' },
-      value: { vi: '43 ngôn ngữ', en: '43 languages' },
+      label: { vi: 'Agent AI', en: 'AI agent' },
+      value: { vi: 'Miễn phí', en: 'Free' },
     },
     {
       label: { vi: 'Giao diện', en: 'Interface' },
-      value: { vi: '20 ngôn ngữ (2.0)', en: '20 languages (2.0)' },
+      value: { vi: '20 ngôn ngữ', en: '20 languages' },
     },
   ],
   features: [
     {
-      title: { vi: 'Cấu hình chạy trực quan', en: 'Visual Run Configuration' },
+      title: { vi: 'Vibe Coding', en: 'Vibe Coding' },
       description: {
-        vi: 'Chọn file khởi chạy, tham số, biến môi trường, thư mục làm việc và thời gian chờ; mở đúng dòng lỗi từ chẩn đoán.',
-        en: 'Choose entry files, arguments, environment variables, working directories, and timeouts; jump to the exact error location from diagnostics.',
+        vi: 'Mô tả ứng dụng hoặc thay đổi bằng lời của bạn. AI lập kế hoạch, viết tệp và chạy mã để tự kiểm tra. Chọn mức Hỏi, Lập kế hoạch, Sửa hoặc Tự động; mọi thay đổi đều xem được dạng diff và hoàn tác được.',
+        en: 'Describe the app or change you want. The AI plans it, writes the files and runs the code to check its work. Pick Ask, Plan, Edit or Auto, and review or undo every change as a diff.',
       },
     },
     {
-      title: { vi: 'Xem trước web trong 2.0', en: 'Web preview in 2.0' },
+      title: { vi: 'AI theo cách của bạn', en: 'AI your way' },
       description: {
-        vi: 'Xem trước HTML, CSS và JavaScript trình duyệt bằng WebKit. Swift/SwiftUI, Metal và OpenGL native chưa hỗ trợ xem trước đồ họa.',
-        en: 'Preview HTML, CSS and browser JavaScript with WebKit. Swift/SwiftUI, Metal and native OpenGL graphical previews are not supported.',
+        vi: 'Apple Intelligence chạy riêng tư trên máy, kể cả tác vụ agent. Hoặc dùng khoá API của bạn với nhà cung cấp bên thứ ba, hay tải mô hình mở như Qwen, Gemma để dùng ngoại tuyến.',
+        en: 'Apple Intelligence runs privately on device, agent tasks included. Or bring your own key for a third-party provider, or download open models such as Qwen and Gemma to use offline.',
       },
     },
     {
-      title: { vi: 'Premium mua một lần từ 2.0', en: 'One-time Premium from 2.0' },
+      title: { vi: 'Trình biên dịch tích hợp', en: 'Bundled compilers' },
       description: {
-        vi: 'Premium mở khóa chia đôi trình soạn thảo và thay thế hàng loạt trong dự án, không đăng ký định kỳ. Soạn thảo, chạy mã được hỗ trợ, xem trước web, Git và xuất tệp vẫn miễn phí. Giá địa phương hiển thị trên App Store trước khi xác nhận.',
-        en: 'Premium unlocks split editing and bulk workspace replacement without a subscription. Editing, supported runners, web preview, Git and export stay free. The App Store shows your local price before confirmation.',
+        vi: 'C, C++, Python, JavaScript, TypeScript, Ruby, PHP, Lua và SQLite chạy ngoại tuyến, có nhập liệu, đối số và tệp dự án. Python có điểm dừng, biểu đồ matplotlib và gói như NumPy, pandas.',
+        en: 'C, C++, Python, JavaScript, TypeScript, Ruby, PHP, Lua and SQLite run offline with input, arguments and project files. Python adds breakpoints, matplotlib plots and packages such as NumPy and pandas.',
       },
     },
     {
-      title: { vi: 'Trình biên dịch thật, chạy offline', en: 'Real compilers, fully offline' },
+      title: { vi: 'Xem trước và LaTeX', en: 'Previews and LaTeX' },
       description: {
-        vi: 'Clang cho C/C++, CPython, Ruby, PHP, Lua, TypeScript, runtime JavaScript kiểu Node.js và SQLite được tích hợp sẵn trong ứng dụng. Không máy chủ, không mô phỏng kết quả.',
-        en: 'Clang for C/C++, CPython, Ruby, PHP, Lua, TypeScript, a Node.js-style JavaScript runtime, and SQLite ship inside the app. No server, and no simulated output.',
+        vi: 'Xem trước HTML, CSS, JavaScript, Markdown và SVG. Dàn trang LaTeX có công thức, bảng, hình; in hoặc lưu mọi bản xem trước thành PDF.',
+        en: 'Preview HTML, CSS, JavaScript, Markdown and SVG. Typeset LaTeX with math, tables and figures, and print or save any preview as PDF.',
       },
     },
     {
-      title: { vi: 'Terminal tương tác', en: 'Interactive terminal' },
+      title: { vi: 'SSH, SFTP và shell', en: 'SSH, SFTP and a shell' },
       description: {
-        vi: 'input(), scanf, cin hay io.read đều chờ bạn nhập như trên máy tính; ^D để kết thúc nhập. Truyền tham số, đọc ghi tệp trong dự án và dừng chương trình ngay lập tức.',
-        en: 'input(), scanf, cin, and io.read wait for you just like on a computer, and ^D ends input. Pass arguments, read and write project files, and stop any program instantly.',
+        vi: 'Terminal SSH đầy đủ màu, chạy được vim, htop, tmux; duyệt và sửa tệp máy chủ qua SFTP. Shell cục bộ có ls, cd, grep, pipe cùng python3, node, gcc và npm.',
+        en: 'A full-color SSH terminal that runs vim, htop and tmux, plus SFTP to browse and edit server files. The local shell has ls, cd, grep and pipes, with python3, node, gcc and npm.',
       },
     },
     {
-      title: { vi: 'Báo lỗi đúng dòng', en: 'Errors on the exact line' },
+      title: { vi: 'Trình soạn thảo thực thụ', en: 'A real editor' },
       description: {
-        vi: 'Lỗi biên dịch và exception được đánh dấu ngay tại dòng gây lỗi trong editor.',
-        en: 'Compiler errors and exceptions are marked on the failing line in the editor.',
+        vi: 'Tô màu cú pháp, gợi ý mã, đi tới định nghĩa, tìm tham chiếu, đổi tên, tìm và thay thế toàn dự án, thu gọn mã, snippet và chia đôi màn hình.',
+        en: 'Syntax highlighting, completion, go to definition, find references, rename, project-wide search and replace, folding, snippets and a split editor.',
       },
     },
     {
-      title: { vi: 'Editor cho cảm ứng và bàn phím', en: 'An editor for touch and keyboard' },
+      title: { vi: 'Git tích hợp', en: 'Git built in' },
       description: {
-        vi: 'Tô màu 43 ngôn ngữ, thanh phím lập trình, gập code, minimap, outline, tìm kiếm trong dự án, thay thế trong tệp, cùng menu bar và phím tắt đầy đủ.',
-        en: 'Highlighting for 43 languages, a coding keyboard bar, folding, a minimap, outlines, workspace search, in-file replacement, and a full menu bar with keyboard shortcuts.',
+        vi: 'Clone qua HTTPS từ GitHub, GitLab, Bitbucket. Xem diff, commit, tạo nhánh, stash, push, pull; đăng nhập GitHub để mở cả kho riêng tư.',
+        en: 'Clone over HTTPS from GitHub, GitLab and Bitbucket. Review diffs, commit, branch, stash, push and pull; sign in to GitHub to open private repositories too.',
       },
     },
     {
-      title: { vi: 'Git và dự án', en: 'Git and projects' },
+      title: { vi: 'Miễn phí là chính', en: 'Free where it counts' },
       description: {
-        vi: 'Mở thư mục từ ứng dụng Tệp, clone từ GitHub, xem thay đổi, commit, push, stash và xuất dự án thành ZIP.',
-        en: 'Open folders from the Files app, clone from GitHub, review changes, commit, push, stash, and export projects as ZIP.',
-      },
-    },
-    {
-      title: { vi: 'Trợ lý AI trong tầm kiểm soát', en: 'An AI assistant you control' },
-      description: {
-        vi: 'Giải thích, refactor, viết test và sửa lỗi bằng một chạm. Thay đổi được hiển thị dạng diff để xem trước khi áp dụng. Dùng model trên máy hoặc API key của riêng bạn; không gửi gì khi bạn chưa đồng ý.',
-        en: 'Explain, refactor, write tests, and fix bugs in one tap. Changes appear as a diff to review before applying. Use the on-device model or your own API key; nothing is sent without your permission.',
+        vi: 'Agent AI và Vibe Coding miễn phí. Chia đôi trình soạn thảo và thay thế toàn dự án có lượt dùng thử mỗi ngày; mua một lần để bỏ giới hạn, không thuê bao.',
+        en: 'The AI agent and Vibe Coding are free. The split editor and project-wide replace have a daily free allowance; a one-time purchase removes the limit, with no subscription.',
       },
     },
   ],

@@ -6,8 +6,8 @@
 import '../styles/global.css';
 import '../styles/motion.css';
 import latin400 from '@fontsource/be-vietnam-pro/files/be-vietnam-pro-latin-400-normal.woff2?url';
-import latin700 from '@fontsource/be-vietnam-pro/files/be-vietnam-pro-latin-700-normal.woff2?url';
-import vietnamese700 from '@fontsource/be-vietnam-pro/files/be-vietnam-pro-vietnamese-700-normal.woff2?url';
+import latin600 from '@fontsource/be-vietnam-pro/files/be-vietnam-pro-latin-600-normal.woff2?url';
+import vietnamese600 from '@fontsource/be-vietnam-pro/files/be-vietnam-pro-vietnamese-600-normal.woff2?url';
 import SpaceBackground from '../components/layout/SpaceBackground.astro';
 import Header, { type NavItem } from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
@@ -119,9 +119,9 @@ const speculationRules = {
     <link rel="manifest" href="/site.webmanifest" />
 
     <link rel="preload" href={latin400} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={latin700} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={latin600} as="font" type="font/woff2" crossorigin />
     {lang === 'vi' && (
-      <link rel="preload" href={vietnamese700} as="font" type="font/woff2" crossorigin />
+      <link rel="preload" href={vietnamese600} as="font" type="font/woff2" crossorigin />
     )}
 
     <meta property="og:type" content={ogType} />

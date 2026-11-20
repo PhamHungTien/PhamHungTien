@@ -9,7 +9,7 @@ interface Props {
 const { app, lang } = Astro.props;
 ---
 
-<dl class="facts container" data-reveal-stagger>
+<dl class="facts container">
   {app.facts.map((fact) => (
     <div>
       <dt>{fact.label[lang]}</dt>
@@ -22,7 +22,7 @@ const { app, lang } = Astro.props;
   .facts {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    margin-top: clamp(48px, 7vw, 88px);
+    margin-top: clamp(24px, 4vw, 40px);
     border: 1px solid var(--line);
     border-radius: var(--r-card);
     background: var(--surface);
@@ -30,7 +30,7 @@ const { app, lang } = Astro.props;
   }
 
   div {
-    padding: 22px 24px;
+    padding: 16px 20px;
   }
 
   div + div {
@@ -39,14 +39,15 @@ const { app, lang } = Astro.props;
 
   dt {
     color: var(--muted);
-    font-size: 12px;
-    line-height: 1.5;
+    font-size: 13px;
+    line-height: 1.4;
   }
 
   dd {
-    margin-top: 8px;
-    font-size: 17px;
+    margin-top: 4px;
+    font-size: 16px;
     font-weight: 600;
+    line-height: 1.35;
     overflow-wrap: anywhere;
   }
 
@@ -56,7 +57,11 @@ const { app, lang } = Astro.props;
     }
 
     div {
-      padding: 20px 16px;
+      padding: 12px 14px;
+    }
+
+    dd {
+      font-size: 15px;
     }
 
     div + div {
@@ -64,7 +69,7 @@ const { app, lang } = Astro.props;
     }
 
     div:nth-child(even) {
-      padding-left: 20px;
+      padding-left: 14px;
       border-left: 1px solid var(--line);
     }
 

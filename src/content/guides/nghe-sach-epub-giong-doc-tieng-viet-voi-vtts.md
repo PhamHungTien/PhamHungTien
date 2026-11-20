@@ -9,7 +9,7 @@ topic: vTTS
 
 When your eyes need a break or your hands are busy, **vTTS** turns EPUB books and documents into Vietnamese or English speech **on your device**. It works without an internet connection and does not send your books to a server. This guide takes you from importing a book to exporting an audiobook you can listen to elsewhere.
 
-![vTTS on iPhone, iPad and Mac](../../assets/apps/vtts/appstore/header-1.jpg)
+![vTTS on iPhone, iPad and Mac](../../assets/apps/vtts/store/en/header.webp)
 
 ## Supported devices
 
@@ -49,7 +49,7 @@ Press Play. The sentence being spoken is highlighted so you can follow the text.
 - vTTS **remembers your place** in each book, letting you resume later.
 - On iPhone, control playback from the **Lock Screen** and **Dynamic Island**. You can also use **widgets** and resume listening with **Siri**.
 
-![The vTTS reading interface on iPad](../../assets/apps/vtts/appstore/ipad-1.jpg)
+![The vTTS reading interface on iPad](../../assets/apps/vtts/store/en/ipad-01.webp)
 
 ## Step 4: Set a sleep timer and background music
 

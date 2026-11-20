@@ -7,6 +7,7 @@ import appStore from '../data/appstore.json';
 import { t } from './i18n';
 import { platformList, storesOf } from '../data/platforms';
 import { appPath, homePath } from './routes';
+import { storeMedia } from './store-media';
 
 /** Bump when the Open Graph cards in public/og are regenerated (npm run og). */
 export const OG_VERSION = 'pht-5';
@@ -125,7 +126,10 @@ export function appJsonLd(app: App, lang: Lang) {
     inLanguage: lang,
     author: { '@id': PERSON_ID },
     featureList: app.features.map((feature) => feature.title[lang]),
-    screenshot: app.gallery.map((image) => absolute((image.localizedSrc?.[lang] ?? image.src).src)),
+    screenshot: storeMedia(app.slug, lang)
+      .devices.flatMap((device) => device.shots)
+      .slice(0, 8)
+      .map((image) => absolute(image.src)),
   };
   const stores = storesOf(app.links.stores);
   if (stores.length) software.downloadUrl = software.installUrl = stores.map((store) => store.url);

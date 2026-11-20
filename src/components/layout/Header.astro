@@ -89,8 +89,8 @@ const { lang, nav } = Astro.props;
 
 <style>
   .site-header {
-    --glass-bg: rgb(247 249 252 / 0.9);
-    --glass-border: rgb(255 255 255 / 0.85);
+    --glass-bg: rgb(247 249 252 / 0.94);
+    --glass-border: rgb(19 26 39 / 0.1);
     position: sticky;
     top: max(12px, env(safe-area-inset-top));
     z-index: 30;
@@ -111,7 +111,7 @@ const { lang, nav } = Astro.props;
     backdrop-filter: saturate(150%) blur(20px);
   }
   :global(html[data-theme='dark']) .site-header {
-    --glass-bg: rgb(17 21 32 / 0.86);
+    --glass-bg: rgb(14 17 23 / 0.94);
     --glass-border: rgb(255 255 255 / 0.16);
     box-shadow:
       0 14px 40px rgb(0 0 0 / 0.4),

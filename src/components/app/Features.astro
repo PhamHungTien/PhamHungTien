@@ -23,9 +23,9 @@ const { app, lang } = Astro.props;
     </div>
   </div>
   <div class="features__layout">
-    <ul class="feature-grid" role="list" data-reveal-stagger>
+    <ul class="feature-grid" role="list">
       {app.features.map((feature) => (
-        <li data-spotlight>
+        <li>
           <h3>{feature.title[lang]}</h3>
           <p>{feature.description[lang]}</p>
         </li>
@@ -76,7 +76,7 @@ const { app, lang } = Astro.props;
   }
 
   .feature-grid li {
-    padding: 28px;
+    padding: 20px 22px;
     border: 1px solid var(--line);
     border-radius: var(--r-card);
     background: var(--surface);
@@ -91,7 +91,7 @@ const { app, lang } = Astro.props;
     );
   }
   .feature-grid li:first-child h3 {
-    font-size: 22px;
+    font-size: 20px;
   }
   /* The first feature spans the row; a last one left alone on its row does too. */
   .feature-grid li:last-child:nth-child(even) {
@@ -172,7 +172,18 @@ const { app, lang } = Astro.props;
 
     .feature-grid li,
     .support {
-      padding: 22px;
+      padding: 16px;
+    }
+
+    .feature-grid h3,
+    .feature-grid li:first-child h3 {
+      font-size: 16px;
+    }
+
+    .feature-grid p {
+      margin-top: 4px;
+      font-size: 14px;
+      line-height: 1.5;
     }
   }
 </style>

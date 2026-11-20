@@ -1,5 +1,5 @@
 ---
-/** Product video (self-hosted) and YouTube tutorial. The tutorial loads YouTube only on click. */
+/** The app's YouTube tutorial; YouTube loads only on click. App Previews live in StoreGallery. */
 import { ExternalLink, Video } from '@lucide/astro';
 import YouTube from '../ui/YouTube.astro';
 import type { App, Lang } from '../../data/types';
@@ -11,29 +11,8 @@ interface Props {
 }
 
 const { app, lang } = Astro.props;
-const videoUrl = app.localizedVideoUrls?.[lang] ?? app.videoUrl;
 const tutorial = app.tutorial;
 ---
-
-{videoUrl && (
-  <section
-    class:list={['video container section defer-render', { 'video--portrait': app.videoPortrait }]}
-    id="demo"
-    aria-labelledby="demo-heading"
-  >
-    <div class="section-head">
-      <div>
-        <h2 id="demo-heading">{t(lang, 'app.video')}</h2>
-        <p>{app.videoDescription?.[lang] ?? t(lang, 'app.videoFallback')}</p>
-      </div>
-    </div>
-    <div class="video__frame" data-reveal>
-      <video src={videoUrl} poster={app.videoPosters?.[lang]} controls playsinline preload="none">
-        {t(lang, 'app.videoUnsupported')}
-      </video>
-    </div>
-  </section>
-)}
 
 {tutorial && (
   <section
@@ -47,7 +26,7 @@ const tutorial = app.tutorial;
         <p>{tutorial.description[lang]}</p>
       </div>
     </div>
-    <div class="video__frame" data-reveal>
+    <div class="video__frame">
       <YouTube id={tutorial.youtubeId} title={tutorial.title[lang]} lang={lang} />
     </div>
     <div class="video__meta">
@@ -79,25 +58,6 @@ const tutorial = app.tutorial;
     box-shadow: var(--shadow-media);
   }
 
-  .video__frame video {
-    display: block;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    border: 0;
-    background: #000;
-  }
-
-  .video--portrait {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(240px, 340px);
-    align-items: center;
-    gap: clamp(24px, 5vw, 72px);
-  }
-
-  .video--portrait video {
-    aspect-ratio: 886 / 1920;
-  }
-
   .video__meta {
     display: flex;
     flex-wrap: wrap;
@@ -113,16 +73,5 @@ const tutorial = app.tutorial;
     display: inline-flex;
     align-items: center;
     gap: 8px;
-  }
-
-  @media (max-width: 720px) {
-    .video--portrait {
-      grid-template-columns: minmax(0, 1fr);
-    }
-
-    .video--portrait .video__frame {
-      width: min(320px, 100%);
-      margin-inline: auto;
-    }
   }
 </style>

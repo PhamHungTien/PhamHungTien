@@ -1,10 +1,5 @@
 import type { App } from '../types';
 import icon from '../../assets/apps/phtv/app-icon.webp';
-import settingBogo from '../../assets/apps/phtv/latest/setting-bogo.jpg';
-import menubar from '../../assets/apps/phtv/latest/menubar.png';
-import picker from '../../assets/apps/phtv/latest/picker.jpg';
-import settingClipboard from '../../assets/apps/phtv/latest/setting-clipboard.jpg';
-import settingPhimtat from '../../assets/apps/phtv/latest/setting-phimtat.jpg';
 
 const app: App = {
   slug: 'phtv',
@@ -14,14 +9,6 @@ const app: App = {
   name: 'PHTV',
   route: '/PHTV/',
   icon,
-  heroImage: settingBogo,
-  gallery: [
-    { src: settingBogo, alt: { vi: 'Thiết lập bộ gõ', en: 'Input settings' } },
-    { src: menubar, alt: { vi: 'Menu bar', en: 'Menu bar' } },
-    { src: picker, alt: { vi: 'PHTV Picker', en: 'PHTV Picker' } },
-    { src: settingClipboard, alt: { vi: 'Lịch sử Clipboard', en: 'Clipboard history' } },
-    { src: settingPhimtat, alt: { vi: 'Phím tắt', en: 'Shortcuts' } },
-  ],
   links: {
     source: 'https://github.com/PhamHungTien/PHTV',
     community: 'https://www.facebook.com/PHTVInput/',

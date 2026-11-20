@@ -21,17 +21,10 @@ const others = apps.filter((other) => other.slug !== app.slug);
       {t(lang, 'nav.allApps')}
     </a>
   </div>
-  <ul class="more__list" role="list" data-reveal-stagger>
+  <ul class="more__list" role="list">
     {others.map((other) => (
       <li>
-        <a
-          class="depth-surface"
-          data-tilt
-          data-tilt-strength="2"
-          data-spotlight
-          style={`--app: ${other.accent}`}
-          href={appPath(other, lang)}
-        >
+        <a style={`--app: ${other.accent}`} href={appPath(other, lang)}>
           <Image
             src={other.icon}
             alt=""

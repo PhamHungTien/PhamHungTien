@@ -1,49 +1,27 @@
 import type { App } from '../types';
 import icon from '../../assets/apps/lunarblock/app-icon.png';
-import ipad1 from '../../assets/apps/lunarblock/appstore/ipad-1.jpg';
-import ipad2 from '../../assets/apps/lunarblock/appstore/ipad-2.jpg';
-import ipad3 from '../../assets/apps/lunarblock/appstore/ipad-3.jpg';
-import iphone1 from '../../assets/apps/lunarblock/appstore/iphone-1.jpg';
-import iphone2 from '../../assets/apps/lunarblock/appstore/iphone-2.jpg';
-import iphone3 from '../../assets/apps/lunarblock/appstore/iphone-3.jpg';
-import mac1 from '../../assets/apps/lunarblock/appstore/mac-1.jpg';
 
 const app: App = {
   slug: 'lunarblock',
   name: 'Lunar Block',
   route: '/LunarBlock/',
   icon: icon,
-  heroImage: ipad1,
-  gallery: [
-    { src: ipad1, alt: { vi: 'Giao diện iPad · 1', en: 'iPad experience · 1' } },
-    { src: ipad2, alt: { vi: 'Giao diện iPad · 2', en: 'iPad experience · 2' } },
-    { src: ipad3, alt: { vi: 'Giao diện iPad · 3', en: 'iPad experience · 3' } },
-    { src: iphone1, alt: { vi: 'Giao diện iPhone · 1', en: 'iPhone experience · 1' } },
-    { src: iphone2, alt: { vi: 'Giao diện iPhone · 2', en: 'iPhone experience · 2' } },
-    { src: iphone3, alt: { vi: 'Giao diện iPhone · 3', en: 'iPhone experience · 3' } },
-    { src: mac1, alt: { vi: 'Giao diện Mac · 1', en: 'Mac experience · 1' } },
-  ],
-  videoUrl: '/LunarBlock/lunarblock-demo.mp4',
-  videoDescription: {
-    vi: 'Xem video gameplay thực tế trải nghiệm xếp khối 3D trên quỹ đạo không gian với hiệu ứng âm thanh và va chạm sống động.',
-    en: 'Watch gameplay action of 3D orbital block stacking with dynamic lighting and synthesized audio.',
-  },
   links: {
     stores: { appStore: 'https://apps.apple.com/us/app/lunar-block-teris-3d/id6773545437' },
   },
   accent: '#f59e0b',
-  category: { vi: 'Game xếp hình 3D', en: '3D puzzle game' },
+  category: { vi: 'Game xếp khối 3D', en: '3D block puzzle' },
   title: {
-    vi: 'Xếp khối không gian 3D trên quỹ đạo ấn tượng.',
-    en: 'Next-gen 3D orbital falling-block puzzle.',
+    vi: 'Xếp khối rơi kinh điển trong đấu trường 3D giữa không gian.',
+    en: 'The classic falling-block puzzle in a 3D arena in deep space.',
   },
   subtitle: {
-    vi: 'SceneKit 3D, khối pha lê, phím D-Pad công thái học, haptic và Line Fracture vật lý.',
-    en: 'SceneKit 3D, crystal blocks, ergonomic D-Pad, haptics & physics line fractures.',
+    vi: 'Khối pha lê phát sáng, vỡ theo vật lý thật, ba chế độ chơi và bảng xếp hạng Game Center.',
+    en: 'Glowing crystal blocks, real physics on every clear, three modes and Game Center leaderboards.',
   },
   description: {
-    vi: 'Lunar Block nâng tầm trải nghiệm xếp khối kinh điển thành một bàn cờ quỹ đạo 3D phát sáng. Tích hợp phím D-Pad công thái học, bóng chiếu khối trực quan (Ghost Piece), hiệu ứng vỡ khối vật lý Line Fracture, 3 chế độ chơi thử thách, hệ thống thăng hạng XP và bảng xếp hạng Game Center toàn cầu.',
-    en: 'Lunar Block transforms classic falling-block puzzles into a glowing 3D orbital console. Built natively with SceneKit, featuring ergonomic D-Pad controls, instant ghost piece projection, physics-driven line fractures, 3 game modes, XP progression ranks, and global Game Center leaderboards.',
+    vi: 'Lunar Block đưa thể loại xếp khối rơi vào một đấu trường 3D điện ảnh. Xếp, xoay, giữ và thả khối pha lê để phá hàng; mỗi lần phá hàng khối vỡ theo vật lý thật. Không quảng cáo, không cần tài khoản.',
+    en: 'Lunar Block turns the falling-block puzzle into a cinematic 3D arena. Stack, spin, hold and drop crystal blocks to clear lines, and every clear shatters with real physics. No ads, no account.',
   },
   platforms: ['ios', 'ipados', 'macos'],
   requirements: 'iOS & iPadOS 16+, macOS 13+',
@@ -51,62 +29,62 @@ const app: App = {
   facts: [
     {
       label: { vi: 'Thể loại', en: 'Genre' },
-      value: { vi: 'Giải đố 3D', en: '3D Arcade Puzzle' },
-    },
-    {
-      label: { vi: 'Đồ họa', en: 'Graphics' },
-      value: { vi: 'SceneKit 60fps', en: 'SceneKit 60fps' },
+      value: { vi: 'Xếp khối 3D', en: '3D block puzzle' },
     },
     {
       label: { vi: 'Chế độ', en: 'Modes' },
       value: { vi: 'Marathon, Sprint, Ultra', en: 'Marathon, Sprint, Ultra' },
     },
     {
-      label: { vi: 'Xếp hạng', en: 'Ranking' },
-      value: { vi: 'XP Ranks & Game Center', en: 'XP Ranks & Game Center' },
+      label: { vi: 'Khung hình', en: 'Frame rate' },
+      value: { vi: 'Tới 120 Hz', en: 'Up to 120 Hz' },
+    },
+    {
+      label: { vi: 'Quảng cáo', en: 'Ads' },
+      value: { vi: 'Không có', en: 'None' },
     },
   ],
   features: [
     {
-      title: { vi: 'Ba chế độ, một thử thách mới', en: 'Three ways to chase your best' },
+      title: { vi: 'Ba cách chơi', en: 'Three ways to play' },
       description: {
-        vi: 'Marathon sinh tồn, Sprint 40 hàng và Ultra 120 giây. Điều khiển bằng cảm ứng, bàn phím hoặc tay cầm; theo dõi kỷ lục qua Game Center.',
-        en: 'Survive in Marathon, clear 40 lines in Sprint, or chase a score in 120-second Ultra. Play with touch, keyboard, or a controller, with Game Center leaderboards.',
+        vi: 'Marathon trụ vững qua 20 cấp tốc độ, Sprint phá 40 hàng nhanh nhất có thể, Ultra ghi điểm cao nhất trong hai phút.',
+        en: 'Survive 20 speed levels in Marathon, clear 40 lines as fast as you can in Sprint, or score as much as possible in two minutes of Ultra.',
       },
     },
     {
-      title: { vi: 'Bàn cờ 3D Quỹ Đạo', en: '3D Orbital Console' },
+      title: { vi: 'Luật chơi hiện đại', en: 'Modern, precise rules' },
       description: {
-        vi: 'Khối pha lê trong suốt, vách ngăn neon phát sáng và góc quay camera điện ảnh linh hoạt theo từng nhịp rơi.',
-        en: 'Crystal blocks, neon-glowing boundary rails, and dynamic cinematic camera tracking every drop.',
+        vi: 'Túi bảy khối, ô giữ, hàng chờ hai khối và bóng chiếu; wall kick, floor kick, thời gian khoá nhạy; combo, T-Spin, Lunar Quad, Back-to-Back và Perfect Clear.',
+        en: 'A seven-piece bag, hold slot, two-piece queue and ghost piece; wall and floor kicks with responsive lock delay; combos, T-Spins, Lunar Quads, Back-to-Back and Perfect Clears.',
       },
     },
     {
-      title: { vi: 'Vật lý vỡ khối Line Fracture', en: 'Physics Line Fracture' },
+      title: { vi: 'Đấu trường 3D điện ảnh', en: 'A cinematic 3D arena' },
       description: {
-        vi: 'Khi xóa hàng, từng khối vỡ vụn với hiệu ứng vật lý chân thực thay vì biến mất đơn điệu, hỗ trợ combo và điểm Tetris back-to-back.',
-        en: 'Simultaneous physics-driven line fractures preserve cleared blocks with visceral impact, combos, and back-to-back Tetris scoring.',
+        vi: 'Khối pha lê phát sáng vỡ tung theo vật lý thật mỗi lần phá hàng, cú thả nhanh có lực và camera chuyển động theo nhịp chơi.',
+        en: 'Glowing crystal blocks shatter with real physics on every clear, hard drops land with weight, and the camera moves with the action.',
       },
     },
     {
-      title: { vi: 'Đa dạng chế độ chơi', en: 'Multiple Game Modes' },
+      title: { vi: 'Điều khiển theo cách của bạn', en: 'Play your way' },
       description: {
-        vi: 'Thử thách sức bền với Marathon vô tận, bứt phá tốc độ với Sprint 40 dòng, hoặc ghi điểm tối đa trong Ultra 2 phút nghẹt thở.',
-        en: 'Endless survival in Marathon mode, race against time in 40-Line Sprint, or chase high scores in intense 2-minute Ultra.',
+        vi: 'Vuốt, chạm hoặc D-pad trên màn hình, bố cục cho người thuận tay trái, cùng bàn phím và tay cầm trên iPhone, iPad và Mac.',
+        en: 'Swipe, tap or an on-screen D-pad, a left-handed layout, plus keyboard and game controller support on iPhone, iPad and Mac.',
       },
     },
     {
-      title: { vi: 'Tiến trình XP & Game Center', en: 'XP Ranks & Leaderboards' },
+      title: { vi: 'Tiến bộ lâu dài', en: 'Progress that lasts' },
       description: {
-        vi: 'Tích lũy điểm kinh nghiệm để thăng hạng danh hiệu từ Novice lên Master, lưu kỷ lục cá nhân và so tài vị trí top 1 Game Center.',
-        en: 'Earn XP to advance through rank tiers, preserve local personal bests, and climb the authenticated global Game Center leaderboard.',
+        vi: 'Tích XP để leo 11 cấp hạng Lunar, giữ kỷ lục cá nhân cho từng chế độ và so tài qua bảng xếp hạng, thành tích Game Center.',
+        en: 'Earn XP to climb 11 lunar ranks, keep personal records for every mode, and compete on Game Center leaderboards and achievements.',
       },
     },
     {
-      title: { vi: 'Điều khiển mượt mà & Tay cầm', en: 'Fluid Controls & Gamepads' },
+      title: { vi: 'Chăm chút từng chi tiết', en: 'Designed with care' },
       description: {
-        vi: 'Cụm D-Pad tròn cùng phím DROP chuyên biệt, hỗ trợ cử chỉ vuốt chạm, bàn phím ngoài và tay cầm chơi game MFi/PlayStation/Xbox.',
-        en: 'Ergonomic circular D-Pad with dedicated DROP and CCW buttons, plus full touch gestures, external keyboard, and MFi/game controller support.',
+        vi: 'Mượt 120 Hz trên ProMotion, âm thanh tổng hợp nguyên bản và nhạc nền ambient phát cùng nhạc của bạn, phản hồi rung, Giảm chuyển động, VoiceOver và tự lưu lượt chơi.',
+        en: 'Smooth 120 Hz on ProMotion, original synthesized sound and an ambient soundtrack that plays alongside your music, haptics, Reduce Motion, VoiceOver and automatic saves.',
       },
     },
   ],

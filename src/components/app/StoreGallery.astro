@@ -1,0 +1,322 @@
+---
+/**
+ * Screenshots and App Preview videos, one row per device, as on the App Store.
+ * Without JavaScript every device row is shown; with it, device tabs switch rows and
+ * arrow buttons page through a row on pointer devices. Videos load only when played.
+ */
+import { Picture, getImage } from 'astro:assets';
+import { ChevronLeft, ChevronRight } from '@lucide/astro';
+import type { App } from '../../data/types';
+import { DEVICE_LABEL, storeMedia, type MediaLang } from '../../lib/store-media';
+import { t } from '../../lib/i18n';
+
+interface Props {
+  app: App;
+  lang: MediaLang;
+}
+
+const { app, lang } = Astro.props;
+const media = storeMedia(app.slug, lang);
+const copy = {
+  en: { of: 'of', preview: 'App Preview', prev: 'Previous screenshots', next: 'More screenshots' },
+  vi: { of: 'trên', preview: 'Video xem trước', prev: 'Ảnh trước', next: 'Xem thêm ảnh' },
+  zh: { of: '/', preview: 'App 预览', prev: '上一组截图', next: '更多截图' },
+}[lang];
+
+const rows = await Promise.all(
+  media.devices.map(async (row) => {
+    const label = DEVICE_LABEL[row.device][lang];
+    const shots = await Promise.all(
+      row.shots.map(async (src, index) => {
+        const large = await getImage({ src, width: Math.min(src.width, 1800), format: 'webp' });
+        const alt =
+          lang === 'vi'
+            ? `${app.name} trên ${label}, ảnh ${index + 1} ${copy.of} ${row.shots.length}`
+            : lang === 'zh'
+              ? `${app.name} · ${label} 截图 ${index + 1}/${row.shots.length}`
+              : `${app.name} on ${label}, screenshot ${index + 1} ${copy.of} ${row.shots.length}`;
+        return { src, alt, large: large.src, ratio: src.width / src.height };
+      }),
+    );
+    const poster = row.preview?.poster
+      ? await getImage({ src: row.preview.poster, width: 900, format: 'webp' })
+      : undefined;
+    return { ...row, label, shots, poster };
+  }),
+);
+---
+
+{rows.length > 0 && (
+  <section
+    class="store-gallery container section"
+    id="gallery"
+    aria-labelledby="gallery-heading"
+    data-store-gallery
+  >
+    <div class="store-gallery__head">
+      <h2 id="gallery-heading">{t(lang, 'app.screenshots')}</h2>
+      {rows.length > 1 && (
+        <div class="segmented store-gallery__tabs" role="tablist" hidden data-gallery-tabs>
+          {rows.map((row, index) => (
+            <button
+              type="button"
+              role="tab"
+              id={`gallery-tab-${row.device}`}
+              aria-controls={`gallery-${row.device}`}
+              aria-selected={index === 0 ? 'true' : 'false'}
+              tabindex={index === 0 ? 0 : -1}
+            >
+              {row.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+
+    {rows.map((row) => (
+      <div class="store-gallery__panel" id={`gallery-${row.device}`} data-device={row.device}>
+        {rows.length > 1 && <h3 class="store-gallery__device">{row.label}</h3>}
+        <div class="store-gallery__viewport">
+          <ul class="shots" role="list" tabindex="0" aria-label={row.label} data-shots>
+            {row.preview && (
+              <li
+                class="shots__item shots__item--video"
+                style={`--ratio: ${row.poster ? `${row.poster.attributes.width} / ${row.poster.attributes.height}` : row.device === 'mac' ? '16 / 9' : '9 / 19.5'}`}
+              >
+                <video
+                  src={row.preview.src}
+                  poster={row.poster?.src}
+                  controls
+                  playsinline
+                  preload="none"
+                  aria-label={`${copy.preview} · ${app.name} · ${row.label}`}
+                />
+              </li>
+            )}
+            {row.shots.map((shot) => (
+              <li class="shots__item" style={`--ratio: ${shot.src.width} / ${shot.src.height}`}>
+                <button
+                  type="button"
+                  class="shots__button"
+                  data-lightbox-src={shot.large}
+                  data-lightbox-alt={shot.alt}
+                  aria-label={`${t(lang, 'app.enlarge')}: ${shot.alt}`}
+                >
+                  <Picture
+                    src={shot.src}
+                    alt={shot.alt}
+                    formats={['webp']}
+                    widths={[360, 720, 1200].filter((w) => w <= shot.src.width)}
+                    sizes={
+                      shot.ratio < 1
+                        ? '(max-width: 767px) 44vw, 260px'
+                        : '(max-width: 767px) 80vw, 620px'
+                    }
+                    loading="lazy"
+                  />
+                </button>
+              </li>
+            ))}
+          </ul>
+          <button
+            type="button"
+            class="shots__nav shots__nav--prev"
+            aria-label={copy.prev}
+            hidden
+            data-shots-prev
+          >
+            <ChevronLeft size={20} aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            class="shots__nav shots__nav--next"
+            aria-label={copy.next}
+            hidden
+            data-shots-next
+          >
+            <ChevronRight size={20} aria-hidden="true" />
+          </button>
+        </div>
+      </div>
+    ))}
+  </section>
+)}
+
+<script>
+  import { initStoreGallery } from '../../scripts/store-gallery';
+  initStoreGallery();
+</script>
+
+<style>
+  .store-gallery__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 24px;
+    margin-bottom: 20px;
+  }
+
+  .store-gallery__head h2 {
+    font-size: var(--text-h2);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .store-gallery__panel + .store-gallery__panel {
+    margin-top: 32px;
+  }
+
+  /* Tabs replace the per-device headings once JavaScript has enhanced the section. */
+  [data-enhanced] .store-gallery__device,
+  [data-enhanced] .store-gallery__panel[hidden] {
+    display: none;
+  }
+
+  [data-enhanced] .store-gallery__panel + .store-gallery__panel {
+    margin-top: 0;
+  }
+
+  .store-gallery__device {
+    margin-bottom: 12px;
+    color: var(--muted);
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .store-gallery__viewport {
+    position: relative;
+  }
+
+  /* One row per device. Every item shares the row height; widths follow each image. */
+  .shots {
+    --h: 520px;
+    display: flex;
+    gap: 16px;
+    margin: 0;
+    padding: 0 0 8px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 0;
+    scrollbar-width: thin;
+    list-style: none;
+  }
+
+  [data-device='ipad'] .shots {
+    --h: 460px;
+  }
+
+  [data-device='mac'] .shots {
+    --h: 380px;
+  }
+
+  [data-device='vision'] .shots {
+    --h: 360px;
+  }
+
+  .shots:focus-visible {
+    outline-offset: 4px;
+  }
+
+  .shots__item {
+    position: relative;
+    flex: none;
+    height: var(--h);
+    aspect-ratio: var(--ratio);
+    scroll-snap-align: start;
+  }
+
+  .shots__button,
+  .shots__item video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--r-media);
+    background: var(--surface-2);
+    cursor: zoom-in;
+  }
+
+  .shots__item video {
+    object-fit: cover;
+    cursor: auto;
+  }
+
+  .shots__button :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .shots__button:hover {
+    border-color: var(--line-strong);
+  }
+
+  .shots__nav {
+    position: absolute;
+    top: calc(50% - 26px);
+    display: grid;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--ink);
+    box-shadow: 0 4px 16px rgb(0 0 0 / 0.18);
+  }
+
+  .shots__nav--prev {
+    left: -14px;
+  }
+
+  .shots__nav--next {
+    right: -14px;
+  }
+
+  .shots__nav:disabled {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @media (max-width: 767.98px) {
+    .shots {
+      --h: 380px;
+      gap: 10px;
+      /* Let the row run to the screen edge so the next shot peeks in. */
+      margin-inline: calc(-1 * var(--gutter));
+      padding-inline: var(--gutter);
+      scroll-padding-inline: var(--gutter);
+      scrollbar-width: none;
+    }
+
+    .shots::-webkit-scrollbar {
+      display: none;
+    }
+
+    [data-device='ipad'] .shots {
+      --h: 300px;
+    }
+
+    [data-device='mac'] .shots {
+      --h: 196px;
+    }
+
+    [data-device='vision'] .shots {
+      --h: 180px;
+    }
+
+    .store-gallery__tabs {
+      width: 100%;
+    }
+
+    .store-gallery__tabs button {
+      flex: 1 1 0;
+      padding-inline: 8px;
+    }
+  }
+</style>

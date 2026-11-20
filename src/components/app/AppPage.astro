@@ -6,7 +6,7 @@ import Facts from './Facts.astro';
 import Install from './Install.astro';
 import Media from './Media.astro';
 import Features from './Features.astro';
-import Gallery from './Gallery.astro';
+import StoreGallery from './StoreGallery.astro';
 import Faq from './Faq.astro';
 import Discussions from './Discussions.astro';
 import MoreApps from './MoreApps.astro';
@@ -65,10 +65,10 @@ const nav: NavItem[] = [
   <div id="overview" data-tab-panel="overview">
     <AppHero app={app} lang={lang} />
     <Facts app={app} lang={lang} />
+    <StoreGallery app={app} lang={lang} />
+    <Features app={app} lang={lang} />
     {app.install && <Install app={app} lang={lang} />}
     <Media app={app} lang={lang} />
-    <Features app={app} lang={lang} />
-    <Gallery app={app} lang={lang} />
     <Faq app={app} lang={lang} />
     {guides.length > 0 && (
       <GuideList

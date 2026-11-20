@@ -46,13 +46,6 @@ export interface AppFeature {
   description: Localized;
 }
 
-export interface AppImage {
-  src: ImageMetadata;
-  /** A screenshot taken in the other interface language, when one exists. */
-  localizedSrc?: Localized<ImageMetadata>;
-  alt: Localized;
-}
-
 export interface AppInstall {
   /** owner/repo whose latest GitHub release provides the downloads. */
   githubRepo: string;
@@ -84,15 +77,10 @@ export interface App {
   /** Languages of the legal documents in src/content/legal/<slug>. Defaults to defaultLang. */
   legalLangs?: Lang[];
   icon: ImageMetadata;
-  heroImage: ImageMetadata;
-  gallery: AppImage[];
+  /** Header art, search art, screenshots and previews come from App Store Connect:
+   *  see src/lib/store-media.ts (npm run sync:media). */
   accent: string;
   links: AppLinks;
-  videoUrl?: string;
-  localizedVideoUrls?: Localized;
-  videoPosters?: Localized;
-  videoPortrait?: boolean;
-  videoDescription?: Localized;
   category: Localized;
   title: Localized;
   subtitle: Localized;

@@ -1,13 +1,6 @@
 import type { App } from '../types';
 import appStore from '../appstore.json';
 import icon from '../../assets/apps/lunarv/app-icon.png';
-import ipad1 from '../../assets/apps/lunarv/appstore/ipad-1.jpg';
-import ipad2 from '../../assets/apps/lunarv/appstore/ipad-2.jpg';
-import ipad3 from '../../assets/apps/lunarv/appstore/ipad-3.jpg';
-import iphone1 from '../../assets/apps/lunarv/appstore/iphone-1.jpg';
-import iphone2 from '../../assets/apps/lunarv/appstore/iphone-2.jpg';
-import iphone3 from '../../assets/apps/lunarv/appstore/iphone-3.jpg';
-import mac1 from '../../assets/apps/lunarv/appstore/mac-1.jpg';
 
 const app: App = {
   slug: 'lunarv',
@@ -16,16 +9,6 @@ const app: App = {
   name: 'LunarV',
   route: '/LunarV/',
   icon: icon,
-  heroImage: ipad1,
-  gallery: [
-    { src: ipad1, alt: { vi: 'Giao diện iPad · 1', en: 'iPad experience · 1' } },
-    { src: ipad2, alt: { vi: 'Giao diện iPad · 2', en: 'iPad experience · 2' } },
-    { src: ipad3, alt: { vi: 'Giao diện iPad · 3', en: 'iPad experience · 3' } },
-    { src: iphone1, alt: { vi: 'Giao diện iPhone · 1', en: 'iPhone experience · 1' } },
-    { src: iphone2, alt: { vi: 'Giao diện iPhone · 2', en: 'iPhone experience · 2' } },
-    { src: iphone3, alt: { vi: 'Giao diện iPhone · 3', en: 'iPhone experience · 3' } },
-    { src: mac1, alt: { vi: 'Giao diện Mac · 1', en: 'Mac experience · 1' } },
-  ],
   links: {
     stores: {
       appStore:
@@ -35,16 +18,16 @@ const app: App = {
   accent: '#6655d9',
   category: { vi: 'Lịch âm Việt Nam', en: 'Vietnamese lunar calendar' },
   title: {
-    vi: 'Lịch âm Việt Nam trên thiết bị Apple.',
-    en: 'Vietnamese lunar calendar for Apple devices.',
+    vi: 'Lịch âm Việt Nam gọn gàng và chính xác.',
+    en: 'A clear, accurate Vietnamese lunar calendar.',
   },
   subtitle: {
-    vi: 'Ngày âm, dịp gia đình, widget và nhắc nhở.',
-    en: 'Lunar dates, family moments, widgets, and reminders.',
+    vi: 'Ngày âm, giờ hoàng đạo, chọn ngày tốt và nhắc giỗ trên iPhone, iPad, Mac và Apple Vision Pro.',
+    en: 'Lunar dates, lucky hours, good-day finder and family reminders on iPhone, iPad, Mac and Apple Vision Pro.',
   },
   description: {
-    vi: 'LunarV gom lịch âm, lịch dương, can chi, tiết khí và nhắc dịp quan trọng vào một trải nghiệm đồng bộ cho iPhone, iPad, Mac và Apple Vision Pro.',
-    en: 'LunarV brings lunar and solar dates, sexagenary cycles, solar terms, and personal reminders into one synced experience for iPhone, iPad, Mac, and Apple Vision Pro.',
+    vi: 'LunarV cho xem ngày âm, Can Chi, tiết khí, giờ hoàng đạo, chọn ngày tốt và ghi nhớ những dịp quan trọng của gia đình. Mọi thứ tính ngay trên thiết bị, không cần tài khoản.',
+    en: 'LunarV shows lunar dates, Can Chi, solar terms and lucky hours, finds good days and remembers the occasions that matter to your family. Everything is computed on device, with no account.',
   },
   platforms: ['ios', 'ipados', 'macos', 'visionos'],
   appCategory: 'LifestyleApplication',
@@ -57,35 +40,53 @@ const app: App = {
       label: { vi: 'Nền tảng', en: 'Platforms' },
       value: { vi: 'iOS & iPadOS, macOS, visionOS', en: 'iOS & iPadOS, macOS, visionOS' },
     },
-    { label: { vi: 'Phát hành', en: 'Release' }, value: { vi: 'App Store', en: 'App Store' } },
+    {
+      label: { vi: 'Ngôn ngữ', en: 'Languages' },
+      value: { vi: 'Việt, Anh, Trung', en: 'Vietnamese, English, Chinese' },
+    },
+    { label: { vi: 'Tài khoản', en: 'Account' }, value: { vi: 'Không cần', en: 'None needed' } },
   ],
   features: [
     {
-      title: { vi: 'Lịch âm được cập nhật', en: 'Updated lunar calendar' },
+      title: { vi: 'Hôm nay trong một cái nhìn', en: 'Today at a glance' },
       description: {
-        vi: 'Tra cứu lịch âm dương, chuyển đổi ngày nhanh chóng và xem widget ngay trên màn hình chính.',
-        en: 'Browse the lunar and solar calendar, convert dates quickly, and check widgets on your Home Screen.',
+        vi: 'Ngày âm, Can Chi ngày, tháng, năm, tiết khí, con giáp và pha trăng; đánh giá ngày, giờ hoàng đạo kế tiếp và việc nên làm, nên tránh.',
+        en: 'Lunar date, Can Chi for day, month and year, solar term, zodiac and moon phase, with a day score, the next lucky hour and what to do or avoid.',
       },
     },
     {
-      title: { vi: 'Âm lịch và dương lịch', en: 'Lunar and solar dates' },
+      title: { vi: 'Chọn ngày tốt', en: 'Good day finder' },
       description: {
-        vi: 'Xem ngày âm, ngày dương, can chi và tiết khí trong cùng một nhịp đọc.',
-        en: 'Read lunar dates, solar dates, cycles, and solar terms in one clear view.',
+        vi: 'Tìm ngày Hoàng đạo trong 30, 60 hoặc 90 ngày cho cưới hỏi, động thổ, khai trương, nhập trạch, xuất hành; tự loại Tam nương, Nguyệt kỵ và ngày xung tuổi.',
+        en: 'Find auspicious days in the next 30, 60 or 90 days for weddings, groundbreaking, openings, moving and travel, skipping Tam nương, Nguyệt kỵ and days that clash with your age.',
       },
     },
     {
-      title: { vi: 'Dịp gia đình', en: 'Family moments' },
+      title: { vi: 'Lịch tháng âm dương', en: 'Solar and lunar month' },
       description: {
-        vi: 'Theo dõi ngày giỗ, sinh nhật và các dịp quan trọng theo âm hoặc dương lịch.',
-        en: 'Track anniversaries, birthdays, and important dates using lunar or solar calendars.',
+        vi: 'Lưới tháng song song dương lịch và âm lịch, có ngày lễ và ghi chú. Đổi ngày, tìm ngày lễ và văn khấn trong tích tắc; có cả lịch Trung Quốc 1901–2100.',
+        en: 'A month grid with Gregorian and lunar dates side by side, holidays and notes. Convert dates and search holidays and prayers in seconds; the Chinese calendar covers 1901–2100.',
       },
     },
     {
-      title: { vi: 'Widget đồng bộ', en: 'Synced widgets' },
+      title: { vi: 'Nhắc giỗ và dịp gia đình', en: 'Family reminders' },
       description: {
-        vi: 'Thông tin ngày hiện tại được trình bày gọn trên màn hình chính và các nền tảng Apple.',
-        en: 'Current-date context stays compact on Home Screen widgets and Apple platforms.',
+        vi: 'Lưu ngày giỗ, sinh nhật, ngày rằm theo âm hoặc dương lịch, lặp hằng năm, tháng hay tuần; nhắc trước và đồng bộ sang Apple Calendar nếu muốn.',
+        en: 'Save memorial days, birthdays and full-moon days by lunar or solar date, repeating yearly, monthly or weekly, with advance reminders and optional Apple Calendar sync.',
+      },
+    },
+    {
+      title: { vi: 'Công cụ văn hoá', en: 'Cultural tools' },
+      description: {
+        vi: 'Thư viện văn khấn, tra tuổi xông đất, xem sao hạn, hợp khắc tuổi, thước Lỗ Ban, la bàn phong thuỷ và gieo quẻ Khổng Minh, mang tính tham khảo.',
+        en: 'A prayer library, first-visitor finder, yearly stars, age compatibility, Lu Ban ruler, feng shui compass and Kongming oracle, offered as cultural reference.',
+      },
+    },
+    {
+      title: { vi: 'Widget và thanh menu', en: 'Widgets and menu bar' },
+      description: {
+        vi: 'Widget màn hình chính, màn hình khoá và Desktop; ngày âm trên thanh menu Mac; phím tắt Siri, Spotlight và giờ quốc tế cập nhật từng phút.',
+        en: 'Home Screen, Lock Screen and desktop widgets, the lunar date in the Mac menu bar, Siri Shortcuts, Spotlight and live world clocks.',
       },
     },
   ],

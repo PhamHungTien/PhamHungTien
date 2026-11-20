@@ -16,13 +16,7 @@ const Heading = headingLevel;
 const app = guide.data.app ? appBySlug.get(guide.data.app as AppSlug) : undefined;
 ---
 
-<a
-  class="guide-card depth-surface"
-  data-tilt
-  data-tilt-strength="4"
-  data-spotlight
-  href={guidePath(guide.id)}
->
+<a class="guide-card" href={guidePath(guide.id)}>
   <span class="guide-card__top">
     {app ? (
       <Image src={app.icon} alt="" width={28} height={28} densities={[1, 2]} loading="lazy" />
@@ -60,18 +54,16 @@ const app = guide.data.app ? appBySlug.get(guide.data.app as AppSlug) : undefine
     align-content: start;
     gap: 10px;
     height: 100%;
-    padding: 24px;
+    padding: 20px;
     border: 1px solid var(--line);
     border-radius: var(--r-card);
     background: var(--surface);
-    transition:
-      border-color 160ms ease,
-      transform 300ms var(--ease);
+    box-shadow: var(--shadow-card);
+    transition: border-color 150ms ease-out;
   }
 
   .guide-card:hover {
     border-color: var(--line-strong);
-    transform: translateY(-2px);
   }
 
   .guide-card__top {
@@ -80,7 +72,7 @@ const app = guide.data.app ? appBySlug.get(guide.data.app as AppSlug) : undefine
     gap: 10px;
     color: var(--muted);
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
   }
 
   .guide-card__top img {
@@ -98,8 +90,8 @@ const app = guide.data.app ? appBySlug.get(guide.data.app as AppSlug) : undefine
   }
 
   .guide-card__title {
-    font-size: 20px;
-    font-weight: 700;
+    font-size: 18px;
+    font-weight: 600;
     line-height: 1.3;
     letter-spacing: -0.015em;
   }
@@ -111,10 +103,29 @@ const app = guide.data.app ? appBySlug.get(guide.data.app as AppSlug) : undefine
   }
 
   .guide-card__meta {
-    margin-top: 12px;
-    padding-top: 16px;
+    margin-top: 8px;
+    padding-top: 12px;
     border-top: 1px solid var(--line);
     color: var(--muted);
     font-size: 13px;
+  }
+
+  @media (max-width: 767.98px) {
+    .guide-card {
+      gap: 8px;
+      padding: 16px;
+    }
+
+    .guide-card__title {
+      font-size: 17px;
+    }
+
+    p {
+      display: -webkit-box;
+      overflow: hidden;
+      font-size: 14px;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
   }
 </style>

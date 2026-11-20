@@ -88,7 +88,7 @@ for (const file of ['index.html', 'privacy.html', 'terms.html']) {
   assert.ok(html.includes('简体中文'), `zh/LunarV/${file} language links`);
 }
 const lunar = await read('LunarV/index.html');
-assert.ok(lunar.includes('Lịch âm Việt Nam trên thiết bị Apple.'));
+assert.ok(lunar.includes('Lịch âm Việt Nam gọn gàng và chính xác.'));
 assert.ok(lunar.includes('Bài viết tiếng Anh'));
 assert.ok(lunar.includes('visionOS'), 'LunarV supports visionOS');
 assert.ok(

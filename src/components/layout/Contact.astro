@@ -13,20 +13,12 @@ const { lang } = Astro.props;
 const [email, ...profiles] = socialProfiles;
 ---
 
-<section
-  class="contact container defer-render"
-  id="contact"
-  aria-labelledby="contact-heading"
-  data-spotlight
->
+<section class="contact container defer-render" id="contact" aria-labelledby="contact-heading">
   <div>
-    <span class="contact__eyebrow">
-      {lang === 'vi' ? 'Kết nối trực tiếp' : lang === 'zh' ? '直接联系' : 'A direct conversation'}
-    </span>
     <h2 id="contact-heading">{t(lang, 'contact.title')}</h2>
     <p>{t(lang, 'contact.body')}</p>
   </div>
-  <div class="contact__links" data-reveal>
+  <div class="contact__links">
     <a class="contact__email" href={email.href}>
       <Mail size={22} aria-hidden="true" />
       <span>{email.handle}</span>
@@ -57,11 +49,10 @@ const [email, ...profiles] = socialProfiles;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 40px clamp(32px, 6vw, 96px);
     margin-top: var(--section-gap);
-    padding: clamp(28px, 5vw, 64px);
+    padding: clamp(20px, 4vw, 48px);
     border: 1px solid var(--contact-line);
-    border-radius: 32px;
-    background:
-      radial-gradient(ellipse at 5% 110%, rgb(122 20 36 / 0.45), transparent 65%), var(--contact-bg);
+    border-radius: var(--r-card);
+    background: var(--contact-bg);
     color: var(--contact-fg);
   }
 
@@ -73,17 +64,9 @@ const [email, ...profiles] = socialProfiles;
     --contact-line-strong: var(--line-strong);
   }
 
-  .contact__eyebrow {
-    display: block;
-    margin-bottom: 20px;
-    font: 11px var(--font-mono);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--contact-muted);
-  }
   h2 {
-    font-size: clamp(30px, 4.2vw, 48px);
-    font-weight: 700;
+    font-size: var(--text-h2);
+    font-weight: 600;
     line-height: 1.1;
     letter-spacing: -0.03em;
   }

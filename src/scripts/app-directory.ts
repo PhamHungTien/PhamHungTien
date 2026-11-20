@@ -38,9 +38,17 @@ export function initAppDirectory() {
       if (match) shown.push(row);
     }
     const visible = shown.length;
-    // An odd last card spans the row (see AppDirectory.astro), whatever the filter.
-    for (const row of rows) delete row.dataset.wide;
-    if (visible % 2 === 1 && visible > 1) shown[visible - 1].dataset.wide = '';
+    // The last cards of an uneven row span it (see AppDirectory.astro), whatever the filter.
+    for (const row of rows) {
+      delete row.dataset.wide;
+      delete row.dataset.half;
+      delete row.dataset.odd;
+    }
+    if (visible > 1) {
+      if (visible % 3 === 1) shown[visible - 1].dataset.wide = '';
+      if (visible % 3 === 2) shown.slice(-2).forEach((row) => (row.dataset.half = ''));
+      if (visible % 2 === 1) shown[visible - 1].dataset.odd = '';
+    }
     for (const button of buttons)
       button.setAttribute('aria-pressed', String(button.dataset.platform === platform));
     if (empty) empty.hidden = visible > 0;
