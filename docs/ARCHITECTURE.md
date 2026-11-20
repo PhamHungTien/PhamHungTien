@@ -49,10 +49,10 @@ src/
   lib/                    Routing, SEO/JSON-LD, Firebase, GitHub releases, legal loader
   pages/                  Routes (see below)
   assets/youtube/         Local posters for embedded YouTube videos (npm run sync:youtube)
-  scripts/                Browser modules: header, orbit engine, filters, tabs, dialogs,
-                          installs, guide contents
-  styles/global.css       Tokens, reset and shared primitives
-public/                   Copied as is: CNAME, robots.txt, icons, Open Graph cards, videos
+  scripts/                Browser modules: header, orbit engine, Liquid Glass refraction,
+                          filters, tabs, dialogs, installs, guide contents
+  styles/global.css       Tokens (colour, radii, glass), reset and shared primitives
+public/                   Copied as is: CNAME, robots.txt, icons, Open Graph cards
 firebase/                 Firestore security rules and their emulator tests
 scripts/                  Build, verification and content tools (Node)
 ```
