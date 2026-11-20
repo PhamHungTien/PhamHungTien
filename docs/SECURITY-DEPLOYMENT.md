@@ -4,7 +4,11 @@ GitHub Pages serves `gh-pages`; Cloudflare proxies the custom domain. `_headers`
 files are **not interpreted** by GitHub Pages or a DNS-only Cloudflare record.
 The build injects a per-document CSP with hashes for existing inline scripts,
 without granting arbitrary inline script execution (`scripts/postbuild.mjs`).
-Inline styles remain enabled because Astro inlines each page's stylesheet. Images can load over HTTPS; network/script
+Inline styles remain enabled because Astro inlines each page's stylesheet.
+Cloudflare adds a few scripts at the edge: Email Address Obfuscation and Speed Brain load
+from `/cdn-cgi/` (same origin), and Web Analytics loads its beacon from
+`static.cloudflareinsights.com` and reports to `cloudflareinsights.com`; both hosts are in
+the policy. Turning one of these features off in Cloudflare needs no change here. Images can load over HTTPS; network/script
 origins are explicitly limited.
 
 ## Cloudflare settings requiring account access

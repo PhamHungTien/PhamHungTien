@@ -66,12 +66,13 @@ function policyFor(html) {
     .map(([, , body]) => sha256(body));
   return [
     "default-src 'self'",
-    `script-src 'self' ${inlineScripts.join(' ')} https://apis.google.com https://www.gstatic.com`,
+    // Cloudflare Web Analytics injects its beacon at the edge; it reports to cloudflareinsights.com.
+    `script-src 'self' ${inlineScripts.join(' ')} https://apis.google.com https://www.gstatic.com https://static.cloudflareinsights.com`,
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: blob: https:",
     "font-src 'self'",
     "media-src 'self'",
-    "connect-src 'self' https://api.github.com https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.firebaseapp.com",
+    "connect-src 'self' https://api.github.com https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.firebaseapp.com https://cloudflareinsights.com",
     'frame-src https://www.youtube-nocookie.com https://*.firebaseapp.com https://accounts.google.com',
     "worker-src 'self'",
     "manifest-src 'self'",
