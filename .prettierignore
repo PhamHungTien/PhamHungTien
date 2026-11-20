@@ -10,3 +10,4 @@ src/content/legal
 # Generated brand kit (scripts/tools/brand-kit.mjs)
 brand/favicon/
 brand/svg/
+docs/provenance/

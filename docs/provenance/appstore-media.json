@@ -1,0 +1,213 @@
+{
+  "synced": "2026-11-20",
+  "apps": {
+    "lunarv": {
+      "name": "LunarV – Lịch Âm Việt Nam",
+      "versions": {
+        "VISION_OS": "2.1.0 (IN_REVIEW)",
+        "MAC_OS": "2.1.0 (WAITING_FOR_REVIEW)",
+        "IOS": "2.1.0 (WAITING_FOR_REVIEW)"
+      },
+      "locales": {
+        "en-US": {
+          "screenshots": {
+            "vision": 2,
+            "mac": 2,
+            "iphone": 8,
+            "ipad": 7
+          },
+          "previews": [
+            "iphone",
+            "ipad"
+          ],
+          "art": {
+            "header": "LunarV-210-en-US-Header-0f6e49eb7c",
+            "search": "LunarV-210-en-US-Search-Results-2f7da99de6"
+          }
+        },
+        "vi": {
+          "screenshots": {
+            "vision": 2,
+            "mac": 2,
+            "iphone": 8,
+            "ipad": 7
+          },
+          "previews": [
+            "iphone",
+            "ipad"
+          ],
+          "art": {
+            "header": "LunarV-210-vi-Header-735a0709d5",
+            "search": "LunarV-210-vi-Search-Results-a0fd00046a"
+          }
+        },
+        "zh-Hans": {
+          "screenshots": {
+            "vision": 2,
+            "mac": 2,
+            "iphone": 7,
+            "ipad": 6
+          },
+          "previews": [
+            "iphone",
+            "ipad"
+          ],
+          "art": {
+            "header": "LunarV-210-zh-Hans-Header-9a781d8f6b",
+            "search": "LunarV-210-zh-Hans-Search-Results-cee61e9e8f"
+          }
+        }
+      }
+    },
+    "vtts": {
+      "name": "vTTS: Văn bản thành giọng nói",
+      "versions": {
+        "IOS": "3.1.0 (WAITING_FOR_REVIEW)",
+        "MAC_OS": "3.1.0 (WAITING_FOR_REVIEW)"
+      },
+      "locales": {
+        "en-US": {
+          "screenshots": {
+            "iphone": 6,
+            "ipad": 6,
+            "mac": 6
+          },
+          "previews": [
+            "iphone",
+            "ipad",
+            "mac"
+          ],
+          "art": {
+            "header": "vTTS-105-en-US-Header-27cf8c42bd",
+            "search": "vTTS-105-en-US-Search-Results-9a57b936bf"
+          }
+        }
+      }
+    },
+    "phtv": {
+      "name": "PHTV Keyboard – Gõ tiếng Việt",
+      "versions": {
+        "MAC_OS": "1.0.0 (WAITING_FOR_REVIEW)"
+      },
+      "locales": {
+        "en-US": {
+          "screenshots": {
+            "mac": 6
+          },
+          "previews": [
+            "mac"
+          ],
+          "art": {
+            "header": "PHTVKeyboard-en-US-PHTV-AppStore-header-f3c9a9a5db",
+            "search": "PHTVKeyboard-en-US-PHTV-AppStore-search-9153f8dbb0"
+          }
+        },
+        "vi": {
+          "screenshots": {
+            "mac": 6
+          },
+          "previews": [
+            "mac"
+          ],
+          "art": {
+            "header": "PHTVKeyboard-vi-PHTV-AppStore-header-55ec12b468",
+            "search": "PHTVKeyboard-vi-PHTV-AppStore-search-fa61b6237e"
+          }
+        }
+      }
+    },
+    "mynasmanager": {
+      "name": "My NAS Manager",
+      "versions": {
+        "IOS": "1.1.0 (WAITING_FOR_REVIEW)"
+      },
+      "locales": {
+        "en-US": {
+          "screenshots": {
+            "iphone": 5,
+            "ipad": 5
+          },
+          "previews": [
+            "iphone",
+            "ipad"
+          ],
+          "art": {
+            "header": "MyNASManager-110-en-US-header-55656f3c4a",
+            "search": "MyNASManager-110-en-US-search-1b6229c027"
+          }
+        }
+      }
+    },
+    "padnotesai": {
+      "name": "Pad Notes AI: Smart Notebooks",
+      "versions": {
+        "MAC_OS": "2.1.0 (WAITING_FOR_REVIEW)",
+        "IOS": "2.1.0 (WAITING_FOR_REVIEW)"
+      },
+      "locales": {
+        "en-US": {
+          "screenshots": {
+            "mac": 4,
+            "iphone": 4,
+            "ipad": 4
+          },
+          "previews": [
+            "iphone",
+            "ipad"
+          ],
+          "art": {
+            "header": "Pad Notes AI · en-US · header · 2026-10-10",
+            "search": "Pad Notes AI · en-US · search · 2026-10-10"
+          }
+        }
+      }
+    },
+    "lunarblock": {
+      "name": "Lunar Block: 3D Block Puzzle",
+      "versions": {
+        "MAC_OS": "1.1.0 (WAITING_FOR_REVIEW)",
+        "IOS": "1.1.0 (WAITING_FOR_REVIEW)"
+      },
+      "locales": {
+        "en-US": {
+          "screenshots": {
+            "mac": 6,
+            "iphone": 6,
+            "ipad": 6
+          },
+          "previews": [
+            "mac",
+            "iphone",
+            "ipad"
+          ],
+          "art": {
+            "header": "LunarBlock-1.1.0-en-US-Header-9c5bb684a2",
+            "search": "LunarBlock-1.1.0-en-US-Search-Results-f3ff6f5f47"
+          }
+        }
+      }
+    },
+    "padcodeai": {
+      "name": "Pad Code AI: Code Editor & IDE",
+      "versions": {
+        "IOS": "3.0.0 (WAITING_FOR_REVIEW)"
+      },
+      "locales": {
+        "en-US": {
+          "screenshots": {
+            "iphone": 6,
+            "ipad": 6
+          },
+          "previews": [
+            "iphone",
+            "ipad"
+          ],
+          "art": {
+            "header": "PadCodeAI-102-en-US-Header-019bd279be",
+            "search": "PadCodeAI-102-en-US-Search-Results-6be51ac24a"
+          }
+        }
+      }
+    }
+  }
+}
