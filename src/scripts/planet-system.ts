@@ -1,67 +1,65 @@
 /**
  * 3D orbit engine for the home hero.
  *
- * The planets live in a real 3D scene seen through a perspective camera: a planet swinging
- * toward the viewer grows, one passing behind the sun shrinks and is hidden by it. All of
- * them sit at evenly spaced angles and turn together, so they are spread around the sun
- * at every moment and can never bunch up or overlap. Their orbit sizes alternate near and
- * far, which keeps the system deep instead of flat.
+ * The app planets share one circular orbit around the brand planet, evenly spaced, and are
+ * seen through a perspective camera: a planet swinging toward the viewer grows, one on the
+ * far side shrinks. The camera angle, the orbit size and the planet and brand-planet sizes
+ * are solved for each screen so that no planet and no name ever crosses the brand planet or
+ * a neighbour, at rest or mid-turn.
  *
- * Everything chases its target with frame-rate independent exponential damping:
- *   time scale  eases to 0 on hover / focus / drag and back to 1 afterwards
- *   camera      pitch + roll follow the pointer (parallax), sway gently on touch screens and
- *               tilt toward edge-on as the hero scrolls away
- *   arrival     planets unfurl from the sun, staggered, when the scene first appears
- *   layout      the camera angle and scale are solved so the system fills any screen
+ * The ring system and the orbit path are drawn on a real 3D plane (a CSS perspective
+ * transform built from the same camera), so they always match the planets. The plane is
+ * drawn twice: its far half behind the brand planet, its near half in front of it.
+ *
+ * The orbit behaves like a carousel. It turns one step, rests with one app in front (its
+ * name and category appear below it), then turns again. Dragging spins it with inertia and
+ * it settles on the nearest app; focusing a planet with the keyboard turns it to the front;
+ * arrow keys move between planets. Pointer movement tilts the camera (parallax).
+ *
+ * Only transforms and opacity change per frame, every write is cached, and the loop sleeps
+ * whenever nothing moves (a timer wakes it for the next turn).
  */
 
-export interface TrackDef {
-  /** Orbit size from 0 (just clear of the sun) to 1 (the outermost orbit). */
-  reach: number;
-  eccentricity: number;
-  /** Orientation of the closest point of the orbit. */
-  argPeriapsis: number;
-}
-
-/** Near and far orbits alternate around the circle, so neighbours never share a lane. */
-export const ORBIT_TRACKS: TrackDef[] = [
-  { reach: 0.55, eccentricity: 0.03, argPeriapsis: 0.2 },
-  { reach: 1, eccentricity: 0.03, argPeriapsis: 1.1 },
-  { reach: 0.2, eccentricity: 0.04, argPeriapsis: 2.0 },
-  { reach: 0.82, eccentricity: 0.03, argPeriapsis: 2.9 },
-  { reach: 0.38, eccentricity: 0.04, argPeriapsis: 3.8 },
-  { reach: 0.96, eccentricity: 0.03, argPeriapsis: 4.6 },
-  { reach: 0.0, eccentricity: 0.04, argPeriapsis: 5.4 },
-];
-
 const TAU = Math.PI * 2;
-/** Seconds for one revolution of the whole system at time scale 1. */
-const PERIOD = 80;
-/** Outer orbit radius in layout units. */
+/** Orbital angle of the point nearest the viewer. */
+const FRONT = -Math.PI / 2;
+/** Orbit radius in layout units. */
 const OUTER = 0.5;
-/** Camera distance in layout units: small enough for strong near/far perspective. */
-const CAMERA_DISTANCE = 1.65;
-/** Layout search resolution: fine enough to be invisible, coarse enough to stay off the main thread. */
-const FIT_SAMPLES = 40;
-const PITCH_STEP = 0.04;
+/** Camera distance in layout units: enough perspective for depth, not enough to distort. */
+const CAMERA_DISTANCE = 2.3;
+/** Half-size of the ring plane in orbit radii; matches the SVG viewBox (-150…150, orbit = 100). */
+const PLANE_EXTENT = 1.5;
+/** Ring artwork is drawn for a brand planet of radius 25 viewBox units. */
+const RING_BASE_RATIO = 0.25;
+/** Seconds an app rests in front before the next turn. */
+const DWELL = 3.6;
+/** Angular frequency of the critically damped turn, in rad/s. */
+const SPRING = 3.4;
+/** Extra size of the app in front. */
+const FEATURE_SCALE = 1.08;
+const SAMPLE_COUNT = 48;
+const SAMPLES = Array.from({ length: SAMPLE_COUNT }, (_, i) => (i / SAMPLE_COUNT) * TAU);
 
 interface Camera {
-  pitch: number; // Angle between the orbital plane and the line of sight (0 = edge-on)
-  roll: number; // In-screen tilt of the whole system
-}
-
-interface Orbit {
-  radius: number;
-  eccentricity: number;
-  argPeriapsis: number;
+  /** Angle between the orbital plane and the line of sight (0 = edge-on). */
+  pitch: number;
+  /** In-screen tilt of the whole system. */
+  roll: number;
 }
 
 interface Projected {
   x: number;
   y: number;
-  /** Depth toward the viewer, in layout units (positive = in front of the sun). */
+  /** Depth toward the viewer, in layout units (positive = in front of the brand planet). */
   z: number;
   scale: number;
+}
+
+interface Box {
+  left: number;
+  right: number;
+  top: number;
+  bottom: number;
 }
 
 /** Frame-rate independent exponential smoothing toward a target. */
@@ -69,21 +67,34 @@ const approach = (value: number, target: number, rate: number, dt: number) =>
   target + (value - target) * Math.exp(-rate * dt);
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
+const smoothstep = (edge0: number, edge1: number, x: number) => {
+  const t = clamp((x - edge0) / (edge1 - edge0), 0, 1);
+  return t * t * (3 - 2 * t);
+};
 const easeOutExpo = (t: number) => (t >= 1 ? 1 : 1 - Math.pow(2, -10 * t));
 const easeOutBack = (t: number) => {
-  const c = 1.3;
+  const c = 1.2;
   const u = t - 1;
   return 1 + (c + 1) * u * u * u + c * u * u;
 };
+/** Wraps an angle to [-π, π). */
+const wrap = (angle: number) => ((((angle + Math.PI) % TAU) + TAU) % TAU) - Math.PI;
 
-/** Projects the point of `orbit` at orbital angle `angle` into scene pixels. */
-function project(angle: number, orbit: Orbit, cam: Camera, unit: number, spread = 1): Projected {
-  const e = orbit.eccentricity;
-  const r = orbit.radius * spread * ((1 - e * e) / (1 + e * Math.cos(angle - orbit.argPeriapsis)));
+const intersects = (a: Box, b: Box) =>
+  a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
 
+/** Distance from the origin to the nearest point of a box. */
+const boxDistance = (box: Box) =>
+  Math.hypot(Math.max(box.left, 0, -box.right), Math.max(box.top, 0, -box.bottom));
+
+/** Planet diameter for an orbit of radius `radius` px. */
+const planetDiameter = (radius: number) => clamp(radius * 0.15, 42, 92);
+
+/** Projects the point at orbital angle `angle` on a circle of `radius` layout units. */
+function project(angle: number, radius: number, cam: Camera, unit: number): Projected {
   // Point on the orbital plane (x right, y away from the viewer).
-  const px = Math.cos(angle) * r;
-  const py = Math.sin(angle) * r;
+  const px = Math.cos(angle) * radius;
+  const py = Math.sin(angle) * radius;
 
   // Tip the plane toward the viewer by `pitch`: far points rise on screen.
   const sy = -py * Math.sin(cam.pitch);
@@ -106,62 +117,74 @@ export function initPlanetSystem(): void {
 
   const root = document.documentElement;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
 
-  const elements = [...scene.querySelectorAll<HTMLElement>('[data-planet]')];
+  const planes = [...scene.querySelectorAll<HTMLElement>('[data-orbit-plane]')];
+  const ringGroups = [...scene.querySelectorAll<SVGGElement>('[data-orbit-rings]')];
+  const caption = scene.querySelector<HTMLAnchorElement>('[data-orbit-caption]');
+  const captionName = caption?.querySelector<HTMLElement>('[data-caption-name]') ?? null;
+  const captionMeta = caption?.querySelector<HTMLElement>('[data-caption-meta]') ?? null;
+
+  const elements = [...scene.querySelectorAll<HTMLAnchorElement>('[data-planet]')];
   const count = Math.max(1, elements.length);
-  const planets = elements.map((el, index) => {
-    const def = ORBIT_TRACKS[index % ORBIT_TRACKS.length];
-    return {
-      el,
-      index,
-      def,
-      orbit: { radius: OUTER, eccentricity: def.eccentricity, argPeriapsis: def.argPeriapsis },
-      /** Fixed angular slot: planets are always 360° / count apart. */
-      slot: -Math.PI / 2 - 0.35 + (index * TAU) / count,
-      trackColor: el.dataset.trackColor || 'var(--gold)',
-      size: Number(el.dataset.size) || 1,
-      crowded: false,
-      labelAlpha: 1,
-      labelBox: { x: 35, y: 155, width: 130, height: 26 },
-      arrivalDelay: 0.15 + index * 0.09,
-      light: el.querySelector<HTMLElement>('.planet__light'),
-      shade: el.querySelector<HTMLElement>('.planet__shade'),
-      name: el.querySelector<SVGElement>('.planet__name'),
-      /** Last values written to the DOM, so unchanged styles are never touched again. */
-      written: {} as Record<string, string>,
-    };
-  });
+  const step = TAU / count;
+  const planets = elements.map((el, index) => ({
+    el,
+    index,
+    name: el.dataset.name ?? '',
+    category: el.dataset.category ?? '',
+    href: el.getAttribute('href') ?? '#',
+    orb: el.querySelector<HTMLElement>('.planet__orb'),
+    glow: el.querySelector<HTMLElement>('.planet__glow'),
+    label: el.querySelector<HTMLElement>('.planet__label'),
+    light: el.querySelector<HTMLElement>('.planet__light'),
+    shade: el.querySelector<HTMLElement>('.planet__shade'),
+    hover: 0,
+    arrivalDelay: 0.25 + index * 0.08,
+    /** Last values written to the DOM, so unchanged styles are never touched again. */
+    written: {} as Record<string, string>,
+  }));
+  type Planet = (typeof planets)[number];
 
   /* ---------------------------------------------------------------- state */
   let width = 1;
   let height = 1;
   let unit = 1;
   let center = { x: 0, y: 0 };
-  let basePitch = 0.5;
-  let baseRoll = -0.12;
-  let planetSize = 60;
-  let sunSize = 120;
+  let basePitch = 0.6;
+  let baseRoll = -0.1;
+  let sunRatio = 0.24;
+  let planetSize = 56;
+  let labelWidth = 110;
+  let labelHeight = 18;
+  let captionWidth = 220;
+  let captionHeight = 46;
+  /** Narrow screens show only the caption of the app in front, not every name. */
+  let compact = false;
 
-  const cam: Camera = { pitch: 0.5, roll: -0.12 };
+  const cam: Camera = { pitch: basePitch, roll: baseRoll };
   const camTarget = { pitchOffset: 0, rollOffset: 0, yaw: 0 };
-  let yaw = 0; // Pointer-driven turn of the system toward the mouse
-  let timeScale = 1;
-  let rotation = 0; // Shared orbital angle of the whole system
-  let openingAngleChosen = false;
-  let velocity = 0; // Extra spin from dragging, decays with inertia
+  let yaw = 0;
+  let rotation = 0;
+  let velocity = 0;
+  let target = 0;
   let arrival = 0;
   let arrived = false;
-  let idleClock = 0;
   let scrollTilt = 0;
   let scrollTiltTarget = 0;
 
   let frame = 0;
   let previous = 0;
   let visible = false;
-  let hoveredTrack = -1;
-  let focused = false;
+  let hovered = -1;
+  let focusedIndex = -1;
+  let captionHovered = false;
+  let featured = -1;
+  let dwellTimer = 0;
+  /** Where the caption was painted before the engine ran (server-rendered, under the orbit). */
+  let captionStart: { x: number; y: number } | null = null;
   let lastCamKey = '';
+  let measuredSize = '';
+  const sceneWritten: Record<string, string> = {};
 
   let gesture: {
     id: number;
@@ -176,269 +199,413 @@ export function initPlanetSystem(): void {
   const transitionNames = new Map<HTMLElement, string>();
 
   const motionEnabled = () => !reduced.matches && root.dataset.motion !== 'off';
-  const paused = () => hoveredTrack >= 0 || focused || !!gesture?.dragging;
   const awake = () => motionEnabled() && visible && !document.hidden;
+  const autoplayAllowed = () =>
+    awake() && arrived && hovered < 0 && focusedIndex < 0 && !captionHovered && !gesture;
+
+  /** Index of the planet nearest the front for a given rotation. */
+  const frontIndex = (rot: number) => ((Math.round(-rot / step) % count) + count) % count;
+  /** Rotation that brings planet `index` to the front, nearest to `near`. */
+  const alignedRotation = (index: number, near: number) => {
+    const base = -index * step;
+    return base + Math.round((near - base) / TAU) * TAU;
+  };
 
   /* --------------------------------------------------------------- layout */
-  /**
-   * Measures how big the system can be drawn with this camera. Projection is linear in
-   * `unit`, so the outer orbit is sampled at unit 1 across the range the camera can move
-   * through (pointer parallax, sway), and the result is scaled to the box.
-   */
-  function fit(pitch: number, roll: number, size: number) {
-    const outer: Orbit = { radius: OUTER * 1.04, eccentricity: 0, argPeriapsis: 0 };
-    let minX = 0;
-    let maxX = 0;
-    let minY = 0;
-    let maxY = 0;
-    let nearScale = 1;
-    for (const p of [pitch - 0.11, pitch + 0.11]) {
-      for (const r of [roll - 0.05, roll + 0.05]) {
-        for (let i = 0; i < FIT_SAMPLES; i++) {
-          const pt = project((i / FIT_SAMPLES) * TAU, outer, { pitch: p, roll: r }, 1);
-          minX = Math.min(minX, pt.x);
-          maxX = Math.max(maxX, pt.x);
-          minY = Math.min(minY, pt.y);
-          maxY = Math.max(maxY, pt.y);
-          nearScale = Math.max(nearScale, pt.scale);
+  /** Screen-space extent of everything at `u` px per layout unit, around the brand planet. */
+  function extent(u: number, points: Projected[], front: boolean[], ratio: number): Box {
+    const radius = OUTER * u;
+    const planet = planetDiameter(radius);
+    const sun = ratio * radius;
+    const box = { left: -sun, right: sun, top: -sun, bottom: sun };
+    points.forEach((p, i) => {
+      const x = p.x * u;
+      const y = p.y * u;
+      const half = (planet / 2) * p.scale * (front[i] ? FEATURE_SCALE : 1);
+      const textHalf = front[i] ? captionWidth / 2 : compact ? 0 : labelWidth / 2;
+      const below = front[i] ? captionHeight + 8 : compact ? 0 : labelHeight + 4;
+      box.left = Math.min(box.left, x - Math.max(half, textHalf));
+      box.right = Math.max(box.right, x + Math.max(half, textHalf));
+      box.top = Math.min(box.top, y - half);
+      box.bottom = Math.max(box.bottom, y + half + below);
+    });
+    return box;
+  }
+
+  /** True when no planet or name touches the brand planet or another planet or name. */
+  function clear(u: number, cam: Camera, ratio: number, points: Projected[], front: boolean[]) {
+    const radius = OUTER * u;
+    const planet = planetDiameter(radius);
+    const sun = ratio * radius;
+    const gap = Math.max(10, radius * 0.035);
+
+    // Every position on the orbit: the planet and the name below it stay off the brand planet.
+    for (let i = 0; i < points.length; i++) {
+      const p = points[i];
+      const x = p.x * u;
+      const y = p.y * u;
+      const half = (planet / 2) * p.scale * (front[i] ? FEATURE_SCALE : 1);
+      if (Math.hypot(x, y) < sun + half + gap) return false;
+      if (compact && !front[i]) continue;
+      const textHalf = (front[i] ? captionWidth : labelWidth) / 2;
+      const top = y + half + 4;
+      const text = {
+        left: x - textHalf,
+        right: x + textHalf,
+        top,
+        bottom: top + (front[i] ? captionHeight : labelHeight),
+      };
+      if (boxDistance(text) < sun + 6) return false;
+    }
+
+    // Neighbours, at rest and halfway through a turn.
+    for (const offset of [0, step / 2]) {
+      const boxes = planets.map((_, i) => {
+        const p = project(FRONT + i * step + offset, OUTER, cam, u);
+        const isFront = offset === 0 && i === 0;
+        const half = (planet / 2) * p.scale * (isFront ? FEATURE_SCALE : 1);
+        const textHalf = isFront ? captionWidth / 2 : compact ? 0 : labelWidth / 2;
+        const top = p.y + half + 4;
+        const textHeight = isFront ? captionHeight : compact ? 0 : labelHeight;
+        return {
+          body: { left: p.x - half, right: p.x + half, top: p.y - half, bottom: p.y + half },
+          text: { left: p.x - textHalf, right: p.x + textHalf, top, bottom: top + textHeight },
+        };
+      });
+      for (let i = 0; i < boxes.length; i++) {
+        for (let j = 0; j < boxes.length; j++) {
+          if (i === j) continue;
+          const a = boxes[i];
+          const b = boxes[j];
+          const padded = {
+            left: b.body.left - 6,
+            right: b.body.right + 6,
+            top: b.body.top - 6,
+            bottom: b.body.bottom + 6,
+          };
+          if (j > i && intersects(a.body, padded)) return false;
+          if (intersects(a.text, b.body)) return false;
+          if (j > i && intersects(a.text, b.text)) return false;
         }
       }
     }
-    // Room for the planet itself (biggest when nearest) and its name below.
-    const near = size * 0.5 * nearScale;
-    const top = size * 0.42 + 8;
-    const bottom = near + Math.max(24, size * 0.4);
-    const side = near + 6;
-    const unitX = (width - side * 2) / (maxX - minX);
-    const unitY = (height - top - bottom) / (maxY - minY);
-    const u = Math.max(40, Math.min(unitX, unitY));
-    const cx = side + -minX * u + (width - side * 2 - (maxX - minX) * u) / 2;
-    const cy = top + -minY * u + (height - top - bottom - (maxY - minY) * u) / 2;
-    return { unit: u, cx, cy };
+    return true;
   }
 
+  /**
+   * Solves the camera angle, orbit size and brand-planet size that show the system largest
+   * on this screen while keeping it clear. Wide screens keep a gentle in-screen tilt; tall
+   * screens may tilt the plane diagonally to use the long diagonal of a phone.
+   */
   function measure() {
     width = scene!.clientWidth || 1;
     height = scene!.clientHeight || 1;
+    measuredSize = `${width}x${height}`;
+    compact = width < 600 || height < 420;
     const portrait = height > width * 0.9;
+    const rolls = portrait ? [0, -0.3, -0.55] : [-0.1];
+    const ratios = [0.27, 0.235, 0.2, 0.17];
+    const margin = 10;
+    const maxW = width - margin * 2;
+    const maxH = height - margin * 2;
 
-    // Search camera angles for the one that shows the system largest. Wide screens keep a
-    // gentle in-screen tilt; tall screens may also tilt the plane diagonally, using the
-    // long diagonal of a phone instead of its narrow width.
-    const rolls = portrait ? [-0.08, -0.28, -0.48, -0.68] : [-0.12];
-    const minPitch = 0.36;
-    const maxPitch = portrait ? 1.2 : 0.9;
-    planetSize = clamp(Math.min(width, height * 1.5) * 0.06, 40, 120);
-    let pitch = minPitch;
-    let roll = rolls[0];
-    let best = fit(pitch, roll, planetSize);
-    for (let attempt = 0; attempt < 2; attempt++) {
-      const candidates: { pitch: number; roll: number; result: ReturnType<typeof fit> }[] = [];
-      let max = 0;
-      for (const r of rolls) {
-        for (let p = minPitch; p <= maxPitch + 1e-6; p += PITCH_STEP) {
-          const result = fit(p, r, planetSize);
-          candidates.push({ pitch: p, roll: r, result });
-          max = Math.max(max, result.unit);
-        }
-      }
-      // Among near-best options take the steepest view (planets spread out the most);
-      // on ties, the smaller tilt.
-      const pick =
-        candidates
-          .filter((c) => c.result.unit >= max * 0.95)
-          .sort((x, y) => y.pitch - x.pitch || Math.abs(x.roll) - Math.abs(y.roll))[0] ??
-        candidates[0];
-      pitch = pick.pitch;
-      roll = pick.roll;
-      best = pick.result;
-      // Planets and sun grow with the system; fit once more with that size.
-      planetSize = clamp(best.unit * 0.078, 40, 120);
-    }
+    type Candidate = { pitch: number; roll: number; ratio: number; unit: number; box: Box };
+    let best: (Candidate & { score: number }) | null = null;
+    let fallback: Candidate | null = null;
 
-    basePitch = pitch;
-    baseRoll = roll;
-    unit = best.unit;
-    center = { x: best.cx, y: best.cy };
-    sunSize = clamp(unit * 0.32, Math.min(width * 0.36, height * 0.3, 145), 480);
-
-    // Innermost orbit clears the sun plus a (near, enlarged) planet; the rest follow.
-    const inner = Math.min(OUTER * 0.82, (sunSize * 0.5 + planetSize * 0.95) / unit);
-    planets.forEach((p) => {
-      p.orbit.radius = inner + (OUTER - inner) * p.def.reach;
-    });
-
-    if (!openingAngleChosen) {
-      // Start with the clearest composition for this screen and camera angle.
-      const camera = { pitch: basePitch, roll: baseRoll };
-      let bestScore = -Infinity;
-      for (let i = 0; i < 144; i++) {
-        const angle = (i * TAU) / 144;
-        const projected = planets.map((p) => project(p.slot + angle, p.orbit, camera, unit));
-        let score = Infinity;
-        projected.forEach((point, index) => {
-          score = Math.min(
-            score,
-            Math.hypot(point.x, point.y) - sunSize * 0.5 - planetSize * point.scale * 0.5,
-          );
-          for (let j = 0; j < index; j++) {
-            const other = projected[j];
-            score = Math.min(
-              score,
-              Math.hypot(point.x - other.x, point.y - other.y) -
-                planetSize * (point.scale + other.scale) * 0.5,
-            );
+    for (const roll of rolls) {
+      for (let pitch = portrait ? 0.66 : 0.34; pitch <= 1.3 + 1e-6; pitch += 0.04) {
+        const camera = { pitch, roll };
+        // Slightly inflated orbit: room for pointer parallax.
+        const points = SAMPLES.map((a) => project(a, OUTER * 1.03, camera, 1));
+        // The caption shows only near the front (it fades out within half a step).
+        const front = SAMPLES.map((a) => Math.abs(wrap(a - FRONT)) < step * 0.22);
+        for (const ratio of ratios) {
+          let lo = 40;
+          let hi = Math.max(width, height) * 4;
+          let box = extent(lo, points, front, ratio);
+          if (box.right - box.left > maxW || box.bottom - box.top > maxH) continue;
+          for (let k = 0; k < 18; k++) {
+            const mid = (lo + hi) / 2;
+            const b = extent(mid, points, front, ratio);
+            if (b.right - b.left <= maxW && b.bottom - b.top <= maxH) {
+              lo = mid;
+              box = b;
+            } else hi = mid;
           }
-        });
-        if (score > bestScore) {
-          bestScore = score;
-          rotation = angle;
+          const candidate = { pitch, roll, ratio, unit: lo, box };
+          if (!fallback || candidate.unit > fallback.unit) fallback = candidate;
+          if (!clear(lo, camera, ratio, points, front)) continue;
+          // Bigger is better, and a bigger brand planet counts. Steeper views must win
+          // clearly, so the most cinematic (shallowest) angle that works is kept.
+          const score = lo * (0.62 + ratio);
+          if (!best || score > best.score * 1.02) best = { ...candidate, score };
         }
       }
-      openingAngleChosen = true;
     }
+
+    const pick = best ?? fallback;
+    if (!pick) return;
+    basePitch = pick.pitch;
+    baseRoll = pick.roll;
+    sunRatio = pick.ratio;
+    unit = pick.unit;
+    const { box } = pick;
+    center = {
+      x: margin + (maxW - (box.right - box.left)) / 2 - box.left,
+      y: margin + (maxH - (box.bottom - box.top)) / 2 - box.top,
+    };
+    const radius = OUTER * unit;
+    planetSize = planetDiameter(radius);
 
     scene!.style.setProperty('--planet-unit', `${planetSize.toFixed(1)}px`);
-    scene!.style.setProperty('--sun-size', `${sunSize.toFixed(1)}px`);
+    scene!.style.setProperty('--sun-size', `${(sunRatio * radius * 2).toFixed(1)}px`);
     scene!.style.setProperty('--sun-x', `${center.x.toFixed(1)}px`);
     scene!.style.setProperty('--sun-y', `${center.y.toFixed(1)}px`);
+    scene!.style.setProperty('--plane-size', `${(radius * PLANE_EXTENT * 2).toFixed(1)}px`);
+    const ringScale = (sunRatio / RING_BASE_RATIO).toFixed(4);
+    ringGroups.forEach((g) => g.setAttribute('transform', `scale(${ringScale})`));
+    lastCamKey = '';
   }
 
-  /* -------------------------------------------------------------- planets */
-  function planetSpread(index: number) {
+  /** Reads the real size of the names and the caption (after web fonts load). */
+  function measureText() {
+    const before = `${labelWidth}|${labelHeight}|${captionWidth}|${captionHeight}`;
+    let w = 0;
+    let h = 0;
+    planets.forEach((p) => {
+      if (!p.label) return;
+      w = Math.max(w, p.label.offsetWidth);
+      h = Math.max(h, p.label.offsetHeight);
+    });
+    if (w && h) {
+      labelWidth = w + 8;
+      labelHeight = h;
+    }
+    if (caption && captionName && captionMeta) {
+      const shown = { name: captionName.textContent, meta: captionMeta.textContent };
+      let cw = 0;
+      let ch = 0;
+      planets.forEach((p) => {
+        captionName.textContent = p.name;
+        captionMeta.textContent = p.category;
+        cw = Math.max(cw, caption.offsetWidth);
+        ch = Math.max(ch, caption.offsetHeight);
+      });
+      captionName.textContent = shown.name;
+      captionMeta.textContent = shown.meta;
+      if (cw && ch) {
+        captionWidth = cw + 8;
+        captionHeight = ch;
+      }
+    }
+    return before !== `${labelWidth}|${labelHeight}|${captionWidth}|${captionHeight}`;
+  }
+
+  /* -------------------------------------------------------------- drawing */
+  function write(cache: Record<string, string>, key: string, value: string, apply: () => void) {
+    if (cache[key] === value) return;
+    cache[key] = value;
+    apply();
+  }
+
+  function planeTransform() {
+    const half = OUTER * unit * PLANE_EXTENT;
+    const tilt = Math.PI / 2 - cam.pitch;
+    const grow = arrived ? 1 : 0.55 + 0.45 * easeOutExpo(clamp(arrival / 1.3, 0, 1));
+    return `translate3d(${(center.x - half).toFixed(1)}px, ${(center.y - half).toFixed(1)}px, 0) rotate(${cam.roll.toFixed(4)}rad) perspective(${(CAMERA_DISTANCE * unit).toFixed(1)}px) rotateX(${tilt.toFixed(4)}rad) scale(${grow.toFixed(4)})`;
+  }
+
+  function drawPlanes() {
+    const transform = planeTransform();
+    const opacity = arrived ? '1' : easeOutExpo(clamp(arrival / 1.1, 0, 1)).toFixed(3);
+    planes.forEach((plane, i) => {
+      write(sceneWritten, `plane${i}`, transform, () => (plane.style.transform = transform));
+      write(sceneWritten, `planeO${i}`, opacity, () => (plane.style.opacity = opacity));
+    });
+  }
+
+  function spread(p: Planet) {
     if (arrived) return 1;
-    const t = clamp((arrival - planets[index].arrivalDelay) / 1.4, 0, 1);
+    const t = clamp((arrival - p.arrivalDelay) / 1.3, 0, 1);
     return 0.3 + 0.7 * easeOutBack(t);
   }
 
-  function drawPlanets(dt: number) {
-    const points = planets.map((p, index) =>
-      project(p.slot + rotation + yaw, p.orbit, cam, unit, planetSpread(index)),
-    );
+  function drawPlanets() {
+    const lead = frontIndex(rotation);
+    const offset = Math.abs(wrap(rotation - alignedRotation(lead, rotation))) / (step / 2);
+    // The first app's name lands with it, early in the intro.
+    // The caption shows only near the front; the small name takes over once it has gone,
+    // so the two never overlap. During the intro it stays up: it was painted with the page
+    // and glides from there to its place under the first app.
+    const holding = !arrived && !!captionStart && !gesture?.dragging;
+    const captionAlpha = holding
+      ? 1
+      : (arrived ? 1 : smoothstep(0.15, 0.7, arrival)) * (1 - smoothstep(0.12, 0.42, offset));
+    const leadNameHidden = 1 - smoothstep(0.42, 0.64, offset);
 
-    // Test the real curved-text bounds against other names and planet bodies. The farther
-    // label yields gently; focus/hover can still reveal it, and accessible names stay intact.
-    const labels = points.map((pt, index) => {
-      const p = planets[index];
-      const size = planetSize * p.size * pt.scale;
-      const svgSize = size * 1.85;
-      const box = p.labelBox;
-      return {
-        left: pt.x + (box.x / 200 - 0.5) * svgSize - 3,
-        right: pt.x + ((box.x + box.width) / 200 - 0.5) * svgSize + 3,
-        top: pt.y + (box.y / 200 - 0.5) * svgSize - 3,
-        bottom: pt.y + ((box.y + box.height) / 200 - 0.5) * svgSize + 3,
-      };
-    });
-    const intersects = (a: (typeof labels)[number], b: (typeof labels)[number]) =>
-      a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
-    planets.forEach((p) => (p.crowded = false));
-    for (let i = 0; i < planets.length; i++) {
-      for (let j = i + 1; j < planets.length; j++) {
-        if (intersects(labels[i], labels[j]))
-          (points[i].z < points[j].z ? planets[i] : planets[j]).crowded = true;
-      }
-      for (let j = 0; j < planets.length; j++) {
-        if (i === j) continue;
-        const half = planetSize * planets[j].size * points[j].scale * 0.5;
-        const body = {
-          left: points[j].x - half,
-          right: points[j].x + half,
-          top: points[j].y - half,
-          bottom: points[j].y + half,
-        };
-        if (intersects(labels[i], body)) planets[i].crowded = true;
+    if (lead !== featured) {
+      featured = lead;
+      const p = planets[lead];
+      if (caption && captionName && captionMeta) {
+        captionName.textContent = p.name;
+        captionMeta.textContent = p.category;
+        caption.href = p.href;
       }
     }
 
     planets.forEach((p, index) => {
-      const pt = points[index];
-      p.labelAlpha = approach(p.labelAlpha, p.crowded ? 0 : 1, 7, dt);
+      const pt = project(FRONT + index * step + rotation + yaw, OUTER * spread(p), cam, unit);
+      const depth = clamp(pt.z / (OUTER * Math.cos(cam.pitch) || 1), -1, 1); // -1 far … 1 near
+      const feature = index === lead ? captionAlpha : 0;
+      const emphasis = Math.max(feature, p.hover);
+      const size = pt.scale * (1 + (FEATURE_SCALE - 1) * emphasis);
+      const appear = arrived ? 1 : easeOutExpo(clamp((arrival - p.arrivalDelay) / 0.6, 0, 1));
+      const x = center.x + pt.x;
+      const y = center.y + pt.y;
 
-      const depth = clamp(pt.z / (OUTER * Math.cos(cam.pitch)), -1, 1); // -1 far … 1 near
-      const appear = arrived ? 1 : easeOutExpo(clamp((arrival - p.arrivalDelay) / 0.5, 0, 1));
-
-      // Only the transform changes every frame, and it stays on the compositor. Perspective
-      // scale is part of it, so neither the planet's shadow nor its curved name re-lays out.
-      p.el.style.transform = `translate3d(${(center.x + pt.x).toFixed(2)}px, ${(center.y + pt.y).toFixed(2)}px, 0) translate(-50%, -50%) scale(${pt.scale.toFixed(4)})`;
-      // Sort strictly by depth: rear planets pass behind the center and its front ring.
+      // Position, size and depth order: transforms only, on the compositor.
+      const position = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) translate(-50%, -50%)`;
+      write(p.written, 'position', position, () => (p.el.style.transform = position));
+      write(p.written, 'scale', size.toFixed(4), () => {
+        if (p.orb) p.orb.style.transform = `scale(${size.toFixed(4)})`;
+      });
+      const labelOffset = ((planetSize / 2) * size + 4).toFixed(1);
+      write(p.written, 'labelY', labelOffset, () => {
+        if (p.label) p.label.style.transform = `translate(-50%, ${labelOffset}px)`;
+      });
+      // Far planets pass behind the brand planet and its near rings.
       write(
-        p,
+        p.written,
         'z',
-        String(pt.z < 0 ? 2 + Math.round((depth + 1) * 3) : 20 + Math.round(depth * 30)),
-        (v) => (p.el.style.zIndex = v),
+        String(pt.z < 0 ? 5 + Math.round((depth + 1) * 1.5) : 20 + Math.round(depth * 30)),
+        () => (p.el.style.zIndex = p.written.z),
       );
-      write(p, 'opacity', appear.toFixed(2), (v) => (p.el.style.opacity = v));
-      // Light comes from the sun: rotate the lit hemisphere toward the centre.
-      const light = Math.round(Math.atan2(-pt.y, -pt.x) * (180 / Math.PI) + 90);
-      write(p, 'light', `rotate(${light}deg)`, (v) => p.light && (p.light.style.transform = v));
-      // Depth fog: planets on the far side of the sun are a little darker.
       write(
-        p,
-        'shade',
-        ((1 - depth) * 0.07).toFixed(3),
-        (v) => p.shade && (p.shade.style.opacity = v),
+        p.written,
+        'opacity',
+        appear.toFixed(2),
+        () => (p.el.style.opacity = p.written.opacity),
       );
-      write(p, 'label', ((0.9 + (depth + 1) * 0.05) * p.labelAlpha).toFixed(2), (v) =>
-        p.name?.style.setProperty('--label-opacity', v),
-      );
+      write(p.written, 'glow', (emphasis * 0.9).toFixed(2), () => {
+        if (p.glow) p.glow.style.opacity = p.written.glow;
+      });
+      // The name under the planet hands over to the caption when the app comes to the front.
+      const labelAlpha = compact
+        ? 0
+        : (0.58 + 0.42 * ((depth + 1) / 2) + 0.4 * p.hover) *
+          (1 - (index === lead ? leadNameHidden : 0));
+      write(p.written, 'label', clamp(labelAlpha, 0, 1).toFixed(2), () => {
+        if (p.label) p.label.style.opacity = p.written.label;
+      });
+      // Light comes from the brand planet: rotate the lit hemisphere toward it.
+      const light = Math.round(Math.atan2(-pt.y, -pt.x) * (180 / Math.PI) + 90);
+      write(p.written, 'light', String(light), () => {
+        if (p.light) p.light.style.transform = `rotate(${light}deg)`;
+      });
+      // Depth fog: planets on the far side are a little darker.
+      write(p.written, 'shade', ((1 - depth) * 0.08).toFixed(3), () => {
+        if (p.shade) p.shade.style.opacity = p.written.shade;
+      });
+
+      if (index === lead && caption) {
+        let cx = x;
+        let top = y + (planetSize / 2) * size + 8;
+        if (holding && captionStart) {
+          // Head for where the app will rest (its full orbit), not where it is mid-unfurl.
+          const rest = project(FRONT + index * step + rotation + yaw, OUTER, cam, unit);
+          const k = easeOutExpo(clamp(arrival / 1.1, 0, 1));
+          cx = captionStart.x + (center.x + rest.x - captionStart.x) * k;
+          const restTop = center.y + rest.y + (planetSize / 2) * rest.scale * FEATURE_SCALE + 8;
+          top = captionStart.y + (restTop - captionStart.y) * k;
+        }
+        const place = `translate3d(${cx.toFixed(1)}px, ${top.toFixed(1)}px, 0) translate(-50%, 0)`;
+        write(sceneWritten, 'captionAt', place, () => (caption.style.transform = place));
+        write(sceneWritten, 'caption', captionAlpha.toFixed(2), () => {
+          caption.style.opacity = sceneWritten.caption;
+          caption.dataset.shown = String(captionAlpha > 0.6);
+        });
+      }
     });
   }
 
-  type Planet = (typeof planets)[number];
-  function write(p: Planet, key: string, value: string, apply: (value: string) => unknown) {
-    if (p.written[key] === value) return;
-    p.written[key] = value;
-    apply(value);
+  function render() {
+    drawPlanes();
+    drawPlanets();
   }
 
   /* ----------------------------------------------------------------- loop */
-  function step(dt: number) {
+  function stepFrame(dt: number) {
     if (!arrived) {
       arrival += dt;
       if (arrival > planets[planets.length - 1].arrivalDelay + 1.5) arrived = true;
     }
 
-    const hold = paused();
-    timeScale = approach(timeScale, hold ? 0 : 1, hold ? 6 : 1.6, dt);
-    const advance = dt * timeScale;
-    rotation += (advance * TAU) / PERIOD;
-
     if (!gesture?.dragging) {
-      rotation += velocity * dt;
-      velocity *= Math.exp(-2.4 * dt);
-      if (Math.abs(velocity) < 0.002) velocity = 0;
+      // Critically damped spring toward the target rotation (sub-stepped for stability).
+      let remaining = dt;
+      while (remaining > 1e-6) {
+        const h = Math.min(remaining, 1 / 120);
+        const accel = -SPRING * SPRING * (rotation - target) - 2 * SPRING * velocity;
+        velocity += accel * h;
+        rotation += velocity * h;
+        remaining -= h;
+      }
+      if (Math.abs(rotation - target) < 5e-4 && Math.abs(velocity) < 3e-3) {
+        rotation = target;
+        velocity = 0;
+      }
+      // Keep the numbers small without changing the picture.
+      if (Math.abs(target) > TAU * 4) {
+        const shift = Math.round(target / TAU) * TAU;
+        target -= shift;
+        rotation -= shift;
+      }
     }
-    rotation %= TAU;
 
-    idleClock += advance;
-    const sway = finePointer.matches ? 0 : Math.sin(idleClock * 0.3) * 0.03;
+    planets.forEach((p) => {
+      p.hover = approach(p.hover, p.index === hovered ? 1 : 0, 10, dt);
+      if (Math.abs(p.hover - (p.index === hovered ? 1 : 0)) < 0.002)
+        p.hover = p.index === hovered ? 1 : 0;
+    });
+
     scrollTilt = approach(scrollTilt, scrollTiltTarget, 6, dt);
-    cam.pitch = approach(
-      cam.pitch,
-      basePitch + camTarget.pitchOffset + sway + scrollTilt * 0.2,
-      3.5,
-      dt,
-    );
+    cam.pitch = approach(cam.pitch, basePitch + camTarget.pitchOffset + scrollTilt * 0.18, 3.5, dt);
     cam.roll = approach(cam.roll, baseRoll + camTarget.rollOffset, 3.5, dt);
     yaw = approach(yaw, camTarget.yaw, 2.8, dt);
 
-    render(dt);
-  }
-
-  function render(dt = 1) {
-    drawPlanets(dt);
+    render();
   }
 
   function cameraMoving() {
-    const key = `${cam.pitch.toFixed(4)}${cam.roll.toFixed(4)}${scrollTilt.toFixed(4)}${yaw.toFixed(4)}`;
+    const key = `${cam.pitch.toFixed(4)}${cam.roll.toFixed(4)}${yaw.toFixed(4)}`;
     const moving = key !== lastCamKey;
     lastCamKey = key;
     return moving;
   }
 
   function settled() {
-    return arrived && paused() && timeScale < 0.002 && velocity === 0 && !cameraMoving();
+    return (
+      arrived &&
+      !gesture?.dragging &&
+      rotation === target &&
+      velocity === 0 &&
+      planets.every((p) => p.hover === 0 || p.hover === 1) &&
+      !cameraMoving()
+    );
+  }
+
+  function schedule() {
+    window.clearTimeout(dwellTimer);
+    dwellTimer = 0;
+    if (!autoplayAllowed()) return;
+    dwellTimer = window.setTimeout(() => {
+      dwellTimer = 0;
+      if (!autoplayAllowed()) return;
+      // Turn forward: the next app comes in from the right.
+      target = alignedRotation(frontIndex(target) + 1, target - step);
+      wake();
+    }, DWELL * 1000);
   }
 
   function tick(now: number) {
@@ -446,15 +613,33 @@ export function initPlanetSystem(): void {
     if (!awake()) return;
     const dt = previous ? Math.min((now - previous) / 1000, 1 / 20) : 1 / 60;
     previous = now;
-    step(dt);
-    // Keep easing until everything has come to rest, then sleep until something changes.
-    if (!settled() || gesture?.dragging) frame = requestAnimationFrame(tick);
+    stepFrame(dt);
+    // The rest starts as soon as the turn looks finished; the last fraction of a degree
+    // keeps easing underneath.
+    if (!dwellTimer && Math.abs(rotation - target) < 0.01 && Math.abs(velocity) < 0.05) schedule();
+    if (!settled()) frame = requestAnimationFrame(tick);
   }
 
   function wake() {
     if (!frame && awake()) {
       previous = 0;
       frame = requestAnimationFrame(tick);
+    }
+  }
+
+  function pause() {
+    window.clearTimeout(dwellTimer);
+    dwellTimer = 0;
+  }
+
+  /** Turns planet `index` to the front. */
+  function bringToFront(index: number) {
+    target = alignedRotation(index, rotation);
+    if (motionEnabled()) wake();
+    else {
+      rotation = target;
+      velocity = 0;
+      render();
     }
   }
 
@@ -477,8 +662,7 @@ export function initPlanetSystem(): void {
   const onOrientation = (event: DeviceOrientationEvent) => {
     if (
       !awake() ||
-      focused ||
-      hoveredTrack >= 0 ||
+      focusedIndex >= 0 ||
       gesture ||
       event.beta == null ||
       event.gamma == null ||
@@ -497,9 +681,9 @@ export function initPlanetSystem(): void {
     const vertical = beta * Math.cos(orientation) - gamma * Math.sin(orientation);
     const x = clamp(horizontal / 25, -1, 1);
     const y = clamp(vertical / 25, -1, 1);
-    camTarget.pitchOffset = y * 0.06;
-    camTarget.rollOffset = x * 0.035;
-    camTarget.yaw = -x * 0.16;
+    camTarget.pitchOffset = y * 0.05;
+    camTarget.rollOffset = x * 0.03;
+    camTarget.yaw = -x * 0.14;
     wake();
   };
   const syncSensor = () => {
@@ -523,43 +707,42 @@ export function initPlanetSystem(): void {
     if (!motionEnabled()) {
       cancelAnimationFrame(frame);
       frame = 0;
+      pause();
       gesture = null;
-      velocity = 0;
       arrived = true;
+      velocity = 0;
+      rotation = target;
       cam.pitch = basePitch;
       cam.roll = baseRoll;
       camTarget.pitchOffset = camTarget.rollOffset = camTarget.yaw = 0;
       yaw = 0;
+      planets.forEach((p) => (p.hover = p.index === hovered ? 1 : 0));
       // Reduced motion keeps the composed, overlap-free layout: one still frame, no loop.
-      render(1);
+      render();
       return;
     }
-    if (!frame) render(1);
+    if (!awake()) {
+      pause();
+      return;
+    }
+    if (!frame) render();
     wake();
   }
 
   /* ---------------------------------------------------------- interaction */
-  const highlight = (index: number, color: string) => {
-    scene.dataset.hoverTrack = String(index);
-    scene.style.setProperty('--active-track-color', color);
-  };
-  const clearHighlight = () => {
-    delete scene.dataset.hoverTrack;
-    scene.style.removeProperty('--active-track-color');
-  };
-
   planets.forEach((p) => {
     p.el.addEventListener('pointerenter', (event) => {
       if (event.pointerType !== 'mouse') return;
-      hoveredTrack = p.index;
-      highlight(p.index, p.trackColor);
-      wake();
+      hovered = p.index;
+      pause();
+      if (motionEnabled()) wake();
+      else sync();
     });
     p.el.addEventListener('pointerleave', (event) => {
       if (event.pointerType !== 'mouse') return;
-      hoveredTrack = -1;
-      clearHighlight();
-      wake();
+      if (hovered === p.index) hovered = -1;
+      if (motionEnabled()) wake();
+      else sync();
     });
     p.el.addEventListener('click', (event) => {
       if (
@@ -582,31 +765,58 @@ export function initPlanetSystem(): void {
       });
       body.style.viewTransitionName = name;
     });
-    p.el.addEventListener('focus', () => highlight(p.index, p.trackColor));
-    p.el.addEventListener('blur', () => {
-      if (hoveredTrack < 0) clearHighlight();
+  });
+
+  if (caption) {
+    caption.addEventListener('pointerenter', () => {
+      captionHovered = true;
+      pause();
     });
+    caption.addEventListener('pointerleave', () => {
+      captionHovered = false;
+      wake();
+      if (!frame) schedule();
+    });
+  }
+
+  // Keyboard: focusing a planet turns it to the front; arrow keys move between planets.
+  scene.addEventListener('focusin', (event) => {
+    const index = planets.findIndex((p) => p.el === event.target);
+    if (index < 0 || !(event.target as HTMLElement).matches(':focus-visible')) return;
+    focusedIndex = index;
+    pause();
+    bringToFront(index);
+  });
+  scene.addEventListener('focusout', () =>
+    queueMicrotask(() => {
+      if (scene.contains(document.activeElement)) return;
+      focusedIndex = -1;
+      if (motionEnabled()) wake();
+      if (!frame) schedule();
+    }),
+  );
+  scene.addEventListener('keydown', (event) => {
+    if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+    const index = planets.findIndex((p) => p.el === document.activeElement);
+    if (index < 0) return;
+    event.preventDefault();
+    const next = (index + (event.key === 'ArrowRight' ? 1 : -1) + count) % count;
+    planets[next].el.focus();
   });
 
   // Pointer parallax across the whole hero.
   const hero = scene.closest('section') ?? scene;
   hero.addEventListener('pointermove', (event) => {
-    if (
-      event.pointerType !== 'mouse' ||
-      !motionEnabled() ||
-      hoveredTrack >= 0 ||
-      focused ||
-      gesture?.dragging
-    )
+    if (event.pointerType !== 'mouse' || !motionEnabled() || hovered >= 0 || gesture?.dragging)
       return;
     const box = scene.getBoundingClientRect();
     const nx = clamp(((event.clientX - box.left) / box.width) * 2 - 1, -1, 1);
     const ny = clamp(((event.clientY - box.top) / box.height) * 2 - 1, -1, 1);
     // Moving the mouse "looks around" the system: up/down tips the orbital plane, left/right
     // turns it toward the pointer and leans it a little, like a camera on a gimbal.
-    camTarget.pitchOffset = ny * 0.1;
-    camTarget.rollOffset = nx * 0.05;
-    camTarget.yaw = -nx * 0.32;
+    camTarget.pitchOffset = ny * 0.06;
+    camTarget.rollOffset = nx * 0.03;
+    camTarget.yaw = -nx * 0.16;
     wake();
   });
   hero.addEventListener('pointerleave', () => {
@@ -628,19 +838,22 @@ export function initPlanetSystem(): void {
         const box = scene.getBoundingClientRect();
         const progress = clamp(-box.top / Math.max(1, box.height), 0, 1);
         scrollTiltTarget = -progress;
-        scene.style.setProperty('--scroll', progress.toFixed(3));
+        write(sceneWritten, 'scroll', progress.toFixed(3), () =>
+          scene.style.setProperty('--scroll', sceneWritten.scroll),
+        );
         wake();
       });
     },
     { passive: true },
   );
 
-  // Drag (mouse or touch) to spin the system, with inertia.
+  // Drag (mouse or touch) to spin the system, with inertia; it settles on the nearest app.
   scene.addEventListener('dragstart', (event) => event.preventDefault());
 
   scene.addEventListener('pointerdown', (event) => {
     if (!event.isPrimary || event.button !== 0 || !motionEnabled()) return;
     suppressClick = false;
+    const top = scene.getBoundingClientRect().top;
     gesture = {
       id: event.pointerId,
       x: event.clientX,
@@ -648,7 +861,8 @@ export function initPlanetSystem(): void {
       lastX: event.clientX,
       time: event.timeStamp,
       dragging: false,
-      side: event.clientY - scene.getBoundingClientRect().top < center.y ? 1 : -1,
+      // Below the centre the near side follows the finger; above it, the far side does.
+      side: event.clientY - top > center.y ? 1 : -1,
     };
   });
 
@@ -666,31 +880,34 @@ export function initPlanetSystem(): void {
       gesture.dragging = true;
       suppressClick = true;
       velocity = 0;
+      pause();
       scene.setPointerCapture(event.pointerId);
       scene.dataset.dragging = 'true';
       wake();
     }
 
-    // Grab the near side and the system follows the finger, like turning a globe.
-    const delta =
-      ((event.clientX - gesture.lastX) / Math.max(200, unit * OUTER * 1.6)) * gesture.side;
+    const delta = ((event.clientX - gesture.lastX) / Math.max(120, OUTER * unit)) * gesture.side;
     const elapsed = Math.max(8, event.timeStamp - gesture.time) / 1000;
     rotation += delta;
-    velocity = clamp(approach(velocity, delta / elapsed, 18, elapsed), -4, 4);
+    target = rotation;
+    velocity = clamp(approach(velocity, delta / elapsed, 18, elapsed), -6, 6);
     gesture.lastX = event.clientX;
     gesture.time = event.timeStamp;
   });
 
   const endGesture = (event: PointerEvent) => {
     if (!gesture || gesture.id !== event.pointerId) return;
+    const wasDragging = gesture.dragging;
     // A pause before release means the user stopped deliberately: no fling.
     if (event.type === 'pointercancel' || event.timeStamp - gesture.time > 90) velocity = 0;
     gesture = null;
     delete scene.dataset.dragging;
     if (scene.hasPointerCapture(event.pointerId)) scene.releasePointerCapture(event.pointerId);
-    if (event.pointerType !== 'mouse') {
-      hoveredTrack = -1;
-      clearHighlight();
+    if (event.pointerType !== 'mouse') hovered = -1;
+    if (wasDragging) {
+      // Where the fling would coast to, rounded to the nearest app.
+      const coast = rotation + velocity * 0.32;
+      target = alignedRotation(frontIndex(coast), coast);
     }
     wake();
   };
@@ -710,17 +927,6 @@ export function initPlanetSystem(): void {
     true,
   );
 
-  scene.addEventListener('focusin', () => {
-    focused = !!scene.querySelector(':focus-visible');
-    wake();
-  });
-  scene.addEventListener('focusout', () =>
-    queueMicrotask(() => {
-      focused = !!scene.querySelector(':focus-visible');
-      wake();
-    }),
-  );
-
   /* ------------------------------------------------------------ lifecycle */
   new IntersectionObserver(([entry]) => {
     visible = entry.isIntersecting;
@@ -733,8 +939,10 @@ export function initPlanetSystem(): void {
   }).observe(scene);
 
   new ResizeObserver(() => {
+    // The first callback reports the size measured at start-up: nothing to redo.
+    if (`${scene.clientWidth || 1}x${scene.clientHeight || 1}` === measuredSize) return;
     measure();
-    if (!frame) render(1);
+    if (!frame) render();
     sync();
   }).observe(scene);
 
@@ -752,26 +960,29 @@ export function initPlanetSystem(): void {
     sync();
   });
 
-  const measureLabels = () => {
-    planets.forEach((p) => {
-      const text = p.el.querySelector<SVGTextElement>('.planet__name text');
-      if (!text) return;
-      const box = text.getBBox();
-      if (box.width && box.height)
-        p.labelBox = { x: box.x, y: box.y, width: box.width, height: box.height };
-    });
-  };
-  measureLabels();
+  if (caption && motionEnabled()) {
+    const box = caption.getBoundingClientRect();
+    const area = scene.getBoundingClientRect();
+    if (box.width)
+      captionStart = { x: box.left + box.width / 2 - area.left, y: box.top - area.top };
+  }
+  measureText();
   document.fonts?.ready.then(() => {
-    measureLabels();
-    if (motionEnabled()) wake();
+    if (!measureText()) return;
+    measure();
+    if (!frame) render();
   });
   measure();
   cam.roll = baseRoll;
-  // The intro starts from a steeper view and settles into place.
-  cam.pitch = motionEnabled() ? basePitch + 0.3 : basePitch;
-  if (!motionEnabled()) arrived = true;
-  render(1);
+  if (motionEnabled()) {
+    // The intro: the system swirls in from a steeper angle and settles on the first app.
+    cam.pitch = basePitch + 0.35;
+    rotation = 0.25;
+  } else {
+    cam.pitch = basePitch;
+    arrived = true;
+  }
+  render();
   scene.dataset.ready = 'true';
   sync();
 }
