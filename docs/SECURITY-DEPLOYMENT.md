@@ -64,10 +64,10 @@ References: https://developers.cloudflare.com/pages/configuration/headers/
 https://firebase.google.com/docs/projects/api-keys
 https://firebase.google.com/support/guides/security-checklist
 
-Production dependencies audit clean after the Firebase/gRPC updates. Build-only
-Firebase CLI dependencies still have advisories requiring a major CLI upgrade
-and Java 21; nonbreaking fixes were applied. Avoid `audit fix --force` without
-checking emulator/deploy behavior. CI uses Java 21 for rules tests.
+The Firestore package still requests the gRPC 1.9 line. The npm override selects
+the patched 1.14 line for this dependency. Remove the override when Firestore's
+own range includes a patched version, then rerun the production audit and the
+Firestore emulator tests. CI uses Java 21 for rules tests.
 
 ## Shared product discussions
 
