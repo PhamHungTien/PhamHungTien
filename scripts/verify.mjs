@@ -32,6 +32,10 @@ function fileFor(urlPath) {
 }
 
 const attr = (tag, name) => tag.match(new RegExp(`${name}="([^"]*)"`))?.[1];
+const alternateLinks = (html) =>
+  [...html.matchAll(/hreflang="([^"]+)" href="([^"]+)"/g)].map(([, lang, href]) => [lang, href]);
+const headAlternates = (html) => alternateLinks(html.match(/<head>([\s\S]*?)<\/head>/)?.[1] ?? '');
+const noindex = (html) => /<meta name="robots" content="noindex/.test(html);
 const metas = (html) =>
   Object.fromEntries(
     [...html.matchAll(/<meta\b[^>]*>/g)]
@@ -84,15 +88,26 @@ for (const [path, html] of pages) {
     }
   }
 
-  // hreflang: every alternate exists and lists this page back.
-  const alternates = [...html.matchAll(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)"/g)];
-  for (const [, lang, href] of alternates) {
-    if (lang === 'x-default') continue;
+  const alternates = headAlternates(html);
+  const group = new Map(alternates);
+  if (alternates.length) {
+    const lang = html.match(/<html lang="([^"]+)"/)?.[1];
+    if (group.size !== alternates.length) fail(path, 'duplicate hreflang');
+    if (group.get(lang) !== canonical) fail(path, 'hreflang group does not include its own URL');
+    if (!group.has('x-default')) fail(path, 'hreflang group needs an x-default URL');
+  }
+  for (const [lang, href] of alternates) {
     const target = new URL(href).pathname;
     const other = pages.get(target);
-    if (!other) fail(path, `hreflang ${lang} points to a missing page ${target}`);
-    else if (!other.includes(`href="${ORIGIN}${path}"`))
-      fail(path, `hreflang ${lang} page ${target} does not link back`);
+    if (!other || href !== `${ORIGIN}${target}`) {
+      fail(path, `hreflang ${lang} points to a missing or noncanonical URL ${href}`);
+      continue;
+    }
+    if (noindex(other) !== noindex(html)) fail(path, `hreflang mixes indexing rules at ${target}`);
+    if (lang !== 'x-default' && !other.includes(`<html lang="${lang}"`))
+      fail(path, `hreflang ${lang} names the wrong language at ${target}`);
+    if (JSON.stringify(headAlternates(other).sort()) !== JSON.stringify(alternates.toSorted()))
+      fail(path, `hreflang group differs at ${target}`);
   }
 
   // Internal links and assets resolve to built files.
@@ -113,10 +128,27 @@ for (const [path, html] of pages) {
 
 // Sitemap lists every indexable page, and nothing else.
 const sitemap = await readFile(join(outDir, 'sitemap.xml'), 'utf8');
-const listed = new Set(
-  [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(([, loc]) => new URL(loc).pathname),
-);
-const noindex = (html) => /<meta name="robots" content="noindex/.test(html);
+const listed = new Set();
+for (const [, entry] of sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)) {
+  const loc = entry.match(/<loc>([^<]+)<\/loc>/)?.[1];
+  if (!loc?.startsWith(`${ORIGIN}/`)) {
+    fail('sitemap.xml', `noncanonical or missing loc ${loc}`);
+    continue;
+  }
+  const path = new URL(loc).pathname;
+  if (listed.has(path)) fail('sitemap.xml', `duplicate loc ${path}`);
+  listed.add(path);
+  const html = pages.get(path);
+  if (
+    html &&
+    JSON.stringify(alternateLinks(entry).sort()) !== JSON.stringify(headAlternates(html).sort())
+  )
+    fail('sitemap.xml', `hreflang group differs from HTML for ${path}`);
+  for (const [, image] of entry.matchAll(/<image:loc>([^<]+)<\/image:loc>/g)) {
+    if (!image.startsWith(`${ORIGIN}/`) || !existsSync(fileFor(new URL(image).pathname)))
+      fail('sitemap.xml', `image is absent for ${path}: ${image}`);
+  }
+}
 for (const [path, html] of pages) {
   if (noindex(html)) {
     if (listed.has(path)) fail('sitemap.xml', `lists noindex page ${path}`);

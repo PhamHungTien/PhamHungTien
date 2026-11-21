@@ -68,6 +68,10 @@ jobs:
       - name: Verify canonical languages and legacy redirects
         run: npm run test:language
 
+      - name: Record the revision for the public deployment check
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        run: printf '%s\n' "$GITHUB_SHA" > dist/site-revision.txt
+
       - name: Keep the built site for the publish job
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v7
@@ -103,3 +107,17 @@ jobs:
           git commit -q -m "deploy: ${GITHUB_SHA::7}"
           # gh-pages holds generated output only; each deploy replaces it wholesale.
           git push --force "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:gh-pages
+
+      - name: Verify the revision on phamhungtien.com
+        run: |
+          set -euo pipefail
+          for attempt in {1..24}; do
+            url="https://phamhungtien.com/site-revision.txt?rev=${GITHUB_SHA}&attempt=${attempt}"
+            if deployed="$(curl --fail --silent --max-time 10 "$url")" && [[ "$deployed" == "$GITHUB_SHA" ]]; then
+              echo "Verified ${GITHUB_SHA} on phamhungtien.com"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "::error::phamhungtien.com did not serve the published revision"
+          exit 1

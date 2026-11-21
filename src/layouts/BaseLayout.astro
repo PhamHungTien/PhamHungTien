@@ -59,6 +59,10 @@ const {
 
 const canonical = absolute(path);
 const escapeJson = (value: unknown) => JSON.stringify(value).replace(/</g, '\\u003c');
+const alternateLinks =
+  alternates.length > 1 && !alternates.some(({ lang }) => lang === 'x-default')
+    ? [...alternates, { lang: 'x-default', path: alternates[0].path }]
+    : alternates;
 
 /** Chromium prerenders a same-site page the moment a visitor shows intent to open it. */
 const speculationRules = {
@@ -97,7 +101,7 @@ const speculationRules = {
       />
     )}
     <link rel="canonical" href={canonical} />
-    {alternates.map((alternate) => (
+    {alternateLinks.map((alternate) => (
       <link rel="alternate" hreflang={alternate.lang} href={absolute(alternate.path)} />
     ))}
     {noindex && <meta name="robots" content="noindex, follow" />}
@@ -127,6 +131,11 @@ const speculationRules = {
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={SITE.name} />
     <meta property="og:locale" content={ogLocale(lang)} />
+    {alternates
+      .filter((alternate) => alternate.lang !== lang && alternate.lang !== 'x-default')
+      .map((alternate) => (
+        <meta property="og:locale:alternate" content={ogLocale(alternate.lang as Lang)} />
+      ))}
     <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />

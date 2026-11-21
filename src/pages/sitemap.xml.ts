@@ -2,7 +2,6 @@ import type { APIRoute } from 'astro';
 import { apps, defaultLangOf } from '../data/apps';
 import { type Locale } from '../i18n/locales';
 import { type Lang } from '../data/types';
-import appStore from '../data/appstore.json';
 import { appPath, homePath } from '../lib/routes';
 import { absolute, ogImage } from '../lib/seo';
 import { getGuides, guideLang, GUIDES_PATH, guidePath } from '../lib/guides';
@@ -14,30 +13,17 @@ import { getGuides, guideLang, GUIDES_PATH, guidePath } from '../lib/guides';
 interface Entry {
   versions: { lang: Locale; path: string }[];
   lastmod?: string;
-  image?: { loc: string; title: string };
+  image?: string;
 }
 
 const escape = (value: string) =>
   value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-
-const releaseDate = (slug: string) =>
-  (appStore.apps as Record<string, { currentVersionReleaseDate?: string }>)[
-    slug
-  ]?.currentVersionReleaseDate?.slice(0, 10);
 
 export const GET: APIRoute = async () => {
   const guides = await getGuides();
   const entries: Entry[] = [
     {
       versions: [{ lang: 'en', path: homePath() }],
-      // The home page lists every app and the newest guides, so it changes when they do.
-      lastmod: [
-        ...apps.map((app) => releaseDate(app.slug)),
-        ...guides.map((g) => g.data.updated ?? g.data.published),
-      ]
-        .filter((date): date is string => !!date)
-        .sort()
-        .at(-1),
     },
     ...apps.map((app) => ({
       versions: [
@@ -47,14 +33,13 @@ export const GET: APIRoute = async () => {
           : []),
         ...(app.slug === 'lunarv' ? [{ lang: 'zh' as const, path: '/zh/LunarV/' }] : []),
       ],
-      lastmod: releaseDate(app.slug),
-      image: { loc: ogImage(app.slug), title: app.name },
+      image: ogImage(app.slug),
     })),
-    { versions: [{ lang: 'en' as Lang, path: GUIDES_PATH }], lastmod: guides[0]?.data.published },
+    { versions: [{ lang: 'en' as Lang, path: GUIDES_PATH }] },
     ...guides.map((g) => ({
       versions: [{ lang: guideLang(g), path: guidePath(g.id) }],
       lastmod: g.data.updated ?? g.data.published,
-      image: { loc: ogImage(`guide-${g.id}`), title: g.data.title },
+      image: ogImage(`guide-${g.id}`),
     })),
     // Privacy policies and terms stay public (and linked) but are noindex: they are not
     // listed here, so crawlers spend their time on the apps and guides.
@@ -75,7 +60,7 @@ export const GET: APIRoute = async () => {
               .join('\n')
           : '';
       const imageBlock = image
-        ? `    <image:image><image:loc>${escape(image.loc)}</image:loc><image:title>${escape(image.title)}</image:title></image:image>`
+        ? `    <image:image><image:loc>${escape(image)}</image:loc></image:image>`
         : '';
       return [
         '  <url>',
