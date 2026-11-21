@@ -5,8 +5,7 @@ import { ArrowLeft } from '@lucide/astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import type { LegalDocument } from '../../lib/legal';
 import { t } from '../../lib/i18n';
-import { appPath, legalPath } from '../../lib/routes';
-import { legalLangsOf } from '../../data/apps';
+import { appPath, legalAlternates, legalPath } from '../../lib/routes';
 import { absolute, ogImage } from '../../lib/seo';
 import { SITE } from '../../data/site';
 
@@ -38,6 +37,7 @@ const jsonLd = {
   title={`${entry.data.title} — ${app.name}`}
   description={entry.data.description}
   path={path}
+  alternates={legalAlternates(app, kind)}
   ogImage={ogImage(`${app.slug}-${kind}`)}
   ogType="article"
   noindex
@@ -58,29 +58,6 @@ const jsonLd = {
   compactFooter
 >
   <article class="legal container">
-    {legalLangsOf(app).length > 1 && (
-      <nav class="legal__languages" aria-label={lang === 'vi' ? 'Ngôn ngữ trang' : 'Page language'}>
-        <a
-          href={legalPath(app, kind, 'vi')}
-          hreflang="vi"
-          aria-current={lang === 'vi' ? 'page' : undefined}
-        >
-          Tiếng Việt
-        </a>
-        <a
-          href={legalPath(app, kind, 'en')}
-          hreflang="en"
-          aria-current={lang === 'en' ? 'page' : undefined}
-        >
-          English
-        </a>
-        {app.slug === 'lunarv' && (
-          <a href={`/zh/LunarV/${kind}.html`} hreflang="zh">
-            简体中文
-          </a>
-        )}
-      </nav>
-    )}
     <a class="legal__back" href={appPath(app, lang)}>
       <ArrowLeft size={16} aria-hidden="true" />
       <Image src={app.icon} alt="" width={28} height={28} densities={[1, 2]} />
@@ -104,27 +81,6 @@ const jsonLd = {
 </BaseLayout>
 
 <style>
-  .legal__languages {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 24px;
-  }
-  .legal__languages a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 40px;
-    padding: 0 14px;
-    border: 1px solid var(--line);
-    border-radius: var(--r-pill);
-    color: var(--muted);
-    font-size: 13px;
-    font-weight: 600;
-  }
-  .legal__languages a[aria-current='page'] {
-    color: var(--ink);
-    background: var(--surface-2);
-    border-color: var(--line-strong);
-  }
   .legal {
     max-width: 760px;
     padding-top: clamp(32px, 5vw, 64px);

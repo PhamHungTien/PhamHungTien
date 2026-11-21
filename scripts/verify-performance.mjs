@@ -4,16 +4,22 @@ import { readFile } from 'node:fs/promises';
 import { gzipSync } from 'node:zlib';
 const routes = [
   'index.html',
+  'vi/index.html',
   'PHTV/index.html',
   'vTTS/index.html',
+  'vi/vTTS/index.html',
   'PadCodeAI/index.html',
+  'vi/PadCodeAI/index.html',
   'PadNotesAI/index.html',
+  'vi/PadNotesAI/index.html',
   'MyNASManager/index.html',
+  'vi/MyNASManager/index.html',
   'LunarV/index.html',
   'en/PHTV/index.html',
   'en/LunarV/index.html',
   'zh/LunarV/index.html',
   'LunarBlock/index.html',
+  'vi/LunarBlock/index.html',
   'guides/index.html',
 ];
 let failed = false;

@@ -8,7 +8,7 @@ import AppHero from '../../../components/app/AppHero.astro';
 import StoreGallery from '../../../components/app/StoreGallery.astro';
 import AppBoard from '../../../components/community/AppBoard';
 import { apps, appBySlug } from '../../../data/apps';
-import { appPath } from '../../../lib/routes';
+import { appAlternates, appPath } from '../../../lib/routes';
 import { platformList } from '../../../data/platforms';
 import { SITE } from '../../../data/site';
 import { absolute, ogImage } from '../../../lib/seo';
@@ -44,11 +44,7 @@ const jsonLd = {
   title="LunarV — 农历与日期提醒 | Phạm Hùng Tiến"
   description="使用 LunarV 在 iPhone、iPad、Mac 和 Apple Vision Pro 上查看农历、公历、干支、节气及重要日子的提醒。"
   path="/zh/LunarV/"
-  alternates={[
-    { lang: 'vi', path: '/LunarV/' },
-    { lang: 'en', path: '/en/LunarV/' },
-    { lang: 'zh', path: '/zh/LunarV/' },
-  ]}
+  alternates={appAlternates(app)}
   ogImage={ogImage('lunarv')}
   jsonLd={jsonLd}
   accent={app.accent}

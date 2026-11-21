@@ -1,8 +1,12 @@
 import type { APIRoute } from 'astro';
-import { apps, defaultLangOf } from '../data/apps';
-import { type Locale } from '../i18n/locales';
+import { apps } from '../data/apps';
 import { type Lang } from '../data/types';
-import { appPath, homePath } from '../lib/routes';
+import {
+  appAlternates,
+  homeAlternates,
+  withDefaultAlternate,
+  type AlternateRoute,
+} from '../lib/routes';
 import { absolute, ogImage } from '../lib/seo';
 import { getGuides, guideLang, GUIDES_PATH, guidePath } from '../lib/guides';
 
@@ -11,7 +15,7 @@ import { getGuides, guideLang, GUIDES_PATH, guidePath } from '../lib/guides';
  * engines understand /vTTS/ and /vi/vTTS/ are translations, not duplicates.
  */
 interface Entry {
-  versions: { lang: Locale; path: string }[];
+  versions: AlternateRoute[];
   lastmod?: string;
   image?: string;
 }
@@ -23,16 +27,10 @@ export const GET: APIRoute = async () => {
   const guides = await getGuides();
   const entries: Entry[] = [
     {
-      versions: [{ lang: 'en', path: homePath() }],
+      versions: homeAlternates,
     },
     ...apps.map((app) => ({
-      versions: [
-        { lang: defaultLangOf(app), path: appPath(app) },
-        ...(['phtv', 'lunarv'].includes(app.slug)
-          ? [{ lang: 'en' as const, path: appPath(app, 'en') }]
-          : []),
-        ...(app.slug === 'lunarv' ? [{ lang: 'zh' as const, path: '/zh/LunarV/' }] : []),
-      ],
+      versions: appAlternates(app),
       image: ogImage(app.slug),
     })),
     { versions: [{ lang: 'en' as Lang, path: GUIDES_PATH }] },
@@ -46,33 +44,29 @@ export const GET: APIRoute = async () => {
   ];
 
   const urls = entries.flatMap(({ versions, lastmod, image }) =>
-    versions.map(({ path }) => {
-      const alternates =
-        versions.length > 1
-          ? versions
-              .map(
-                (v) =>
-                  `    <xhtml:link rel="alternate" hreflang="${v.lang}" href="${escape(absolute(v.path))}"/>`,
-              )
-              .concat(
-                `    <xhtml:link rel="alternate" hreflang="x-default" href="${escape(absolute(versions[0].path))}"/>`,
-              )
-              .join('\n')
+    versions
+      .filter(({ lang }) => lang !== 'x-default')
+      .map(({ path }) => {
+        const alternates = withDefaultAlternate(versions)
+          .map(
+            ({ lang, path }) =>
+              `    <xhtml:link rel="alternate" hreflang="${lang}" href="${escape(absolute(path))}"/>`,
+          )
+          .join('\n');
+        const imageBlock = image
+          ? `    <image:image><image:loc>${escape(image)}</image:loc></image:image>`
           : '';
-      const imageBlock = image
-        ? `    <image:image><image:loc>${escape(image)}</image:loc></image:image>`
-        : '';
-      return [
-        '  <url>',
-        `    <loc>${escape(absolute(path))}</loc>`,
-        lastmod && `    <lastmod>${lastmod}</lastmod>`,
-        alternates,
-        imageBlock,
-        '  </url>',
-      ]
-        .filter(Boolean)
-        .join('\n');
-    }),
+        return [
+          '  <url>',
+          `    <loc>${escape(absolute(path))}</loc>`,
+          lastmod && `    <lastmod>${lastmod}</lastmod>`,
+          alternates,
+          imageBlock,
+          '  </url>',
+        ]
+          .filter(Boolean)
+          .join('\n');
+      }),
   );
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

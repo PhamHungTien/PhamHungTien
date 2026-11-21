@@ -1,5 +1,6 @@
 ---
-import LegacyRedirect from '../../../components/site/LegacyRedirect.astro';
+import SitePage from '../../../components/site/SitePage.astro';
+import { sitePrivacyPath } from '../../../lib/sitePages';
 ---
 
-<LegacyRedirect to="/privacy/" />
+<SitePage name="privacy" lang="vi" pathFor={sitePrivacyPath} />

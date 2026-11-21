@@ -3,6 +3,7 @@ import { getImage } from 'astro:assets';
 import { apps } from '../../data/apps';
 import { planetAppearance } from '../../data/planet-appearance';
 import { appPath } from '../../lib/routes';
+import { t } from '../../lib/i18n';
 import type { Locale } from '../../i18n/locales';
 
 interface Props {
@@ -172,13 +173,13 @@ const rings = [
     </div>
   </div>
 
-  <nav class="orbit__planets" aria-label="Explore the apps">
+  <nav class="orbit__planets" aria-label={t(lang, 'nav.apps')}>
     {apps.map((app, index) => {
       const appearance = planetAppearance[app.slug];
       return (
         <a
           class="planet"
-          href={appPath(app)}
+          href={appPath(app, lang)}
           aria-label={app.name}
           data-planet
           data-app-slug={app.slug}
@@ -220,7 +221,7 @@ const rings = [
 
   <a
     class="orbit__caption"
-    href={appPath(apps[0])}
+    href={appPath(apps[0], lang)}
     tabindex="-1"
     aria-hidden="true"
     data-orbit-caption

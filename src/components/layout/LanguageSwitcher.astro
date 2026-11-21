@@ -1,0 +1,94 @@
+---
+import { Languages } from '@lucide/astro';
+import { LANGUAGE_NAMES, type Locale } from '../../i18n/locales';
+import { t } from '../../lib/i18n';
+import type { AlternateRoute } from '../../lib/routes';
+
+interface Props {
+  lang: Locale;
+  alternates: AlternateRoute[];
+}
+
+const { lang, alternates } = Astro.props;
+const choices = alternates.filter((alternate) => alternate.lang !== 'x-default');
+---
+
+{choices.length > 1 && (
+  <details class="language-switcher">
+    <summary aria-label={`${t(lang, 'nav.language')}: ${LANGUAGE_NAMES[lang]}`}>
+      <Languages size={17} aria-hidden="true" />
+      <span aria-hidden="true">{lang.toUpperCase()}</span>
+    </summary>
+    <nav aria-label={t(lang, 'nav.language')}>
+      {choices.map(
+        ({ lang: language, path }) =>
+          language !== 'x-default' && (
+            <a
+              href={path}
+              lang={language}
+              hreflang={language}
+              aria-current={language === lang ? 'page' : undefined}
+            >
+              {LANGUAGE_NAMES[language]}
+            </a>
+          ),
+      )}
+    </nav>
+  </details>
+)}
+
+<style>
+  .language-switcher {
+    position: relative;
+    color: var(--ink);
+  }
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    gap: 6px;
+    padding-inline: 12px;
+    border-radius: var(--r-pill);
+    cursor: pointer;
+    list-style: none;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary:hover,
+  details[open] summary {
+    background: var(--glass-thumb);
+  }
+  nav {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    z-index: 5;
+    display: grid;
+    min-width: 152px;
+    padding: 5px;
+    border: 1px solid var(--line-strong);
+    border-radius: 18px;
+    background: var(--paper);
+    box-shadow: 0 8px 26px rgb(0 0 0 / 0.2);
+  }
+  a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 12px;
+    border-radius: 12px;
+    font-size: 15px;
+    white-space: nowrap;
+  }
+  a:hover,
+  a[aria-current] {
+    background: var(--surface-2);
+  }
+  a[aria-current] {
+    font-weight: 600;
+  }
+</style>

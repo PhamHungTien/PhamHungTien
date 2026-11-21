@@ -3,24 +3,18 @@ import type { GetStaticPaths } from 'astro';
 import AppPage from '../../../components/app/AppPage.astro';
 import LegacyRedirect from '../../../components/site/LegacyRedirect.astro';
 import { apps, appSegment, defaultLangOf } from '../../../data/apps';
-import { otherLang } from '../../../lib/i18n';
+import { LANGS } from '../../../data/types';
 
-/** Each app in its second language, under a language prefix (e.g. /vi/vTTS/, /en/PHTV/). */
 export const getStaticPaths = (() =>
-  apps.flatMap((app) => {
-    // Preserve the former /vi/LunarV/ redirect as well as the new /en/LunarV/ alias.
-    const languages = app.slug === 'lunarv' ? ['en', 'vi'] : [otherLang(defaultLangOf(app))];
-    return languages.map((lang) => ({
-      params: { lang, app: appSegment(app) },
-      props: { app, lang },
-    }));
-  })) satisfies GetStaticPaths;
+  apps.flatMap((app) =>
+    LANGS.map((lang) => ({ params: { lang, app: appSegment(app) }, props: { app, lang } })),
+  )) satisfies GetStaticPaths;
 
 const { app, lang } = Astro.props;
 ---
 
-{lang === 'en' && (app.slug === 'phtv' || app.slug === 'lunarv') ? (
-  <AppPage app={app} lang="en" />
-) : (
+{lang === defaultLangOf(app) ? (
   <LegacyRedirect to={app.route} />
+) : (
+  <AppPage app={app} lang={lang} />
 )}

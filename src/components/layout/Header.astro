@@ -1,9 +1,10 @@
 ---
 import { Menu, X, Moon, Sun } from '@lucide/astro';
 import Logo from '../ui/Logo.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
 import type { Locale as Lang } from '../../i18n/locales';
 import { t } from '../../lib/i18n';
-import { homePath } from '../../lib/routes';
+import { homePath, type AlternateRoute } from '../../lib/routes';
 
 export interface NavItem {
   href: string;
@@ -17,9 +18,10 @@ export interface NavItem {
 interface Props {
   lang: Lang;
   nav: NavItem[];
+  alternates: AlternateRoute[];
 }
 
-const { lang, nav } = Astro.props;
+const { lang, nav, alternates } = Astro.props;
 ---
 
 <header class="site-header" data-header>
@@ -42,6 +44,7 @@ const { lang, nav } = Astro.props;
     </nav>
 
     <div class="header-actions">
+      <LanguageSwitcher lang={lang} alternates={alternates} />
       <button
         class="icon-button"
         type="button"

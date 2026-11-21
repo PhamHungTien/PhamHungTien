@@ -1,10 +1,12 @@
 ---
 import { ArrowDown, Heart } from '@lucide/astro';
 import BrandIcon from '../ui/BrandIcon.astro';
+import LanguageSwitcher from '../layout/LanguageSwitcher.astro';
 import OrbitScene from './OrbitScene.astro';
 import type { Locale as Lang } from '../../i18n/locales';
 import { SITE } from '../../data/site';
 import { t } from '../../lib/i18n';
+import { homeAlternates } from '../../lib/routes';
 
 interface Props {
   lang: Lang;
@@ -22,8 +24,11 @@ const socials = [
 
 <section class="hero container" aria-labelledby="hero-title">
   <h1 id="hero-title" class="sr-only">
-    Phạm Hùng Tiến — independent apps for Apple devices
+    {t(lang, 'meta.home.title')}
   </h1>
+  <div class="hero__language">
+    <LanguageSwitcher lang={lang} alternates={homeAlternates} />
+  </div>
   <div class="hero__sky" aria-hidden="true">
     <span class="hero__galaxy"></span>
   </div>
@@ -42,7 +47,7 @@ const socials = [
       <Heart size={17} aria-hidden="true" />
       {t(lang, 'donate.open')}
     </button>
-    <ul class="hero__socials glass" aria-label="Social profiles" data-lens>
+    <ul class="hero__socials glass" aria-label={t(lang, 'footer.connect')} data-lens>
       {socials.map((social) => (
         <li>
           <a
@@ -76,6 +81,19 @@ const socials = [
   }
   :global(html:not([data-home-header])) .hero {
     --header-height: 80px;
+  }
+  .hero__language {
+    position: absolute;
+    z-index: 10;
+    top: max(12px, env(safe-area-inset-top));
+    right: 0;
+    display: none;
+    border: 1px solid var(--line);
+    border-radius: var(--r-pill);
+    background: var(--surface-2);
+  }
+  :global(html[data-home-header='hidden']) .hero__language {
+    display: block;
   }
   /* Full-bleed sky behind the universe: a faint band of the galaxy. */
   .hero__sky {

@@ -15,6 +15,7 @@ import DonateDialog from '../components/ui/DonateDialog.astro';
 import type { Locale as Lang } from '../i18n/locales';
 import { SITE } from '../data/site';
 import { htmlLang, ogLocale } from '../lib/i18n';
+import { homePath, withDefaultAlternate, type AlternateRoute } from '../lib/routes';
 import { absolute, OG_SIZE } from '../lib/seo';
 
 export interface Props {
@@ -29,7 +30,7 @@ export interface Props {
   jsonLd?: unknown;
   favicon?: { href: string; type: string };
   nav: NavItem[];
-  alternates?: { lang: string; path: string }[];
+  alternates?: AlternateRoute[];
   noindex?: boolean;
   /** Pages that are not part of the main reading flow (legal, 404) use a quieter footer. */
   compactFooter?: boolean;
@@ -59,10 +60,7 @@ const {
 
 const canonical = absolute(path);
 const escapeJson = (value: unknown) => JSON.stringify(value).replace(/</g, '\\u003c');
-const alternateLinks =
-  alternates.length > 1 && !alternates.some(({ lang }) => lang === 'x-default')
-    ? [...alternates, { lang: 'x-default', path: alternates[0].path }]
-    : alternates;
+const alternateLinks = withDefaultAlternate(alternates);
 
 /** Chromium prerenders a same-site page the moment a visitor shows intent to open it. */
 const speculationRules = {
@@ -85,7 +83,11 @@ const speculationRules = {
 ---
 
 <!doctype html>
-<html lang={htmlLang(lang)} data-theme="dark" data-home={path === '/' ? 'true' : undefined}>
+<html
+  lang={htmlLang(lang)}
+  data-theme="dark"
+  data-home={path === homePath(lang) && !noindex ? 'true' : undefined}
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -131,11 +133,13 @@ const speculationRules = {
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={SITE.name} />
     <meta property="og:locale" content={ogLocale(lang)} />
-    {alternates
-      .filter((alternate) => alternate.lang !== lang && alternate.lang !== 'x-default')
-      .map((alternate) => (
-        <meta property="og:locale:alternate" content={ogLocale(alternate.lang as Lang)} />
-      ))}
+    {alternateLinks.map(
+      ({ lang: alternate }) =>
+        alternate !== lang &&
+        alternate !== 'x-default' && (
+          <meta property="og:locale:alternate" content={ogLocale(alternate)} />
+        ),
+    )}
     <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -167,7 +171,7 @@ const speculationRules = {
   </head>
   <body>
     <SpaceBackground />
-    <Header lang={lang} nav={nav} />
+    <Header lang={lang} nav={nav} alternates={alternates} />
     <main id="main-content" tabindex="-1" style={accent ? `--app: ${accent}` : undefined}>
       <slot />
     </main>

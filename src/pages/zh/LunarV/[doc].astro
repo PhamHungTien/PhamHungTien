@@ -3,16 +3,20 @@ import type { GetStaticPaths } from 'astro';
 import { ArrowLeft } from '@lucide/astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { absolute, ogImage } from '../../../lib/seo';
+import { appBySlug } from '../../../data/apps';
+import { legalAlternates, legalPath, type LegalKind } from '../../../lib/routes';
+
+const app = appBySlug.get('lunarv')!;
 
 export const getStaticPaths = (() =>
-  ['privacy', 'terms'].map((doc) => ({
+  (['privacy', 'terms'] as const).map((doc) => ({
     params: { doc },
     props: { doc },
   }))) satisfies GetStaticPaths;
-const { doc } = Astro.props;
+const doc: LegalKind = Astro.props.doc;
 const privacy = doc === 'privacy';
 const title = privacy ? '隐私政策' : '使用条款';
-const path = `/zh/LunarV/${doc}.html`;
+const path = legalPath(app, doc, 'zh');
 const description = privacy
   ? '了解 LunarV 的隐私政策、数据处理方式，以及如何联系我们。'
   : '了解 LunarV 的使用条款、应用分发、免责声明和联系方式。';
@@ -31,6 +35,7 @@ const jsonLd = {
   title={`${title} — LunarV`}
   description={description}
   path={path}
+  alternates={legalAlternates(app, doc)}
   ogImage={ogImage(`lunarv-${doc}`)}
   ogType="article"
   noindex
@@ -43,17 +48,6 @@ const jsonLd = {
   ]}
 >
   <article class="legal container">
-    <nav class="languages" aria-label="页面语言">
-      <a href={`/LunarV/${doc}.html`} hreflang="vi">
-        Tiếng Việt
-      </a>
-      <a href={`/en/LunarV/${doc}.html`} hreflang="en">
-        English
-      </a>
-      <a href={path} hreflang="zh" aria-current="page">
-        简体中文
-      </a>
-    </nav>
     <a class="back" href="/zh/LunarV/">
       <ArrowLeft size={16} />
       返回 LunarV
@@ -121,28 +115,6 @@ const jsonLd = {
   .legal {
     max-width: 760px;
     padding-top: clamp(32px, 5vw, 64px);
-  }
-  .languages {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 24px;
-  }
-  .languages a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 40px;
-    padding: 0 14px;
-    border: 1px solid var(--line);
-    border-radius: var(--r-pill);
-    color: var(--muted);
-    font-size: 13px;
-    font-weight: 600;
-  }
-  .languages a[aria-current='page'] {
-    color: var(--ink);
-    background: var(--surface-2);
-    border-color: var(--line-strong);
   }
   .back {
     display: inline-flex;

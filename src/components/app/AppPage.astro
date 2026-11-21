@@ -17,7 +17,7 @@ import Lightbox from '../ui/Lightbox.astro';
 import type { NavItem } from '../layout/Header.astro';
 import type { App, Lang } from '../../data/types';
 import { t } from '../../lib/i18n';
-import { appPath, homePath } from '../../lib/routes';
+import { appAlternates, appPath, homePath } from '../../lib/routes';
 import { appJsonLd, metaDescription, ogImage } from '../../lib/seo';
 
 interface Props {
@@ -46,15 +46,7 @@ const nav: NavItem[] = [
   title={`${app.name} — ${app.category[lang]} | Phạm Hùng Tiến`}
   description={metaDescription(app.description[lang])}
   path={appPath(app, lang)}
-  alternates={
-    ['phtv', 'lunarv'].includes(app.slug)
-      ? [
-          { lang: 'vi', path: app.route },
-          { lang: 'en', path: appPath(app, 'en') },
-          ...(app.slug === 'lunarv' ? [{ lang: 'zh', path: '/zh/LunarV/' }] : []),
-        ]
-      : []
-  }
+  alternates={appAlternates(app)}
   ogImage={ogImage(app.slug)}
   ogImageAlt={`${app.name} — ${app.title[lang]}`}
   jsonLd={appJsonLd(app, lang)}
