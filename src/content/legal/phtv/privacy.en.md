@@ -1,12 +1,12 @@
 ---
 title: "Privacy Policy"
-description: "PHTV and PHTV Keyboard process every keystroke on your device and never collect or send your data."
-updated: "November 21, 2026"
+description: "How PHTV handles Vietnamese typing, local clipboard history, permissions, Game Center, and optional GIF and sticker search."
+updated: '2026-11-22'
 lang: en
 ---
 ## Summary
 
-PHTV does not collect, store or send anything you type. Every key is processed on your device and then forgotten. There is no advertising, analytics or tracking.
+PHTV processes keystrokes on your device and keeps no keystroke history. It does not use advertising, analytics, or tracking SDKs. This policy explains local features and the data handled by network services when you use them.
 
 This policy covers every edition:
 
@@ -29,17 +29,17 @@ This policy covers every edition:
 - **PHTV Keyboard for Mac** needs exactly one macOS permission to compose Vietnamese letters in every app: **System & App Protection Override** on macOS 27.3 and later (earlier versions call it Device Control and Data Access or Accessibility). It runs in Apple's App Sandbox and does not read other apps' content.
 - **PHTV Keyboard for iPhone and iPad** types without **Allow Full Access**. That option is only used for key haptics, pasting from the keyboard's clipboard panel, your own background photo and syncing settings and text shortcuts with the PHTV app. The keyboard sends no data anywhere.
 
-The system turns every input method off, including PHTV, when you type a password.
+macOS Secure Event Input prevents PHTV from receiving keystrokes while it is active. On iPhone and iPad, iOS and iPadOS switch to the system keyboard in secure text fields.
 
 ## Network access
 
 - **Typing needs no internet** in every edition.
 - **PHTV Keyboard** (Mac, iPhone, iPad) connects only to Apple's **Game Center**, when you sign in to Game Center to post typing race scores and see leaderboards. Scores and your Game Center name are handled by Apple under [Apple's privacy policy](https://www.apple.com/legal/privacy/). Without signing in you can still race and keep your records on the device.
-- **PHTV** connects only to check for updates, and when you open the GIF or Sticker tab of PHTV Picker (images come from the Klipy service, which receives the search terms, a random install ID and network details such as the IP address). Nothing you type is ever sent.
+- **PHTV** connects only to check for updates, and when you open the GIF or Sticker tab of PHTV Picker (images come from the Klipy service, which receives the search terms, a random install ID and network details such as the IP address). Typing in other apps stays on your device. Your query in the GIF and Sticker picker is sent to Klipy to return results.
 
-## Children
+## Support and children’s privacy
 
-The apps collect no data from anyone, including children.
+If you choose to send us an email or file a bug report, we use the information you share to investigate and reply. Reports can include diagnostic details you choose to attach, and a GitHub issue can be public. The same local processing and optional-service practices apply to all users. Third-party services may have their own age requirements.
 
 ## Changes
 
@@ -47,4 +47,4 @@ When this policy changes, the date at the top of the page changes with it.
 
 ## Contact
 
-Privacy questions: **contact@phamhungtien.com**
+For privacy questions, email [contact@phamhungtien.com](mailto:contact@phamhungtien.com).

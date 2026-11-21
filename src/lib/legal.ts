@@ -1,12 +1,12 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
-import type { App, Lang } from '../data/types';
+import type { App, LegalLang } from '../data/types';
 import { apps, defaultLangOf, legalLangsOf } from '../data/apps';
 import type { LegalKind } from './routes';
 
 export interface LegalDocument {
   app: App;
   kind: LegalKind;
-  lang: Lang;
+  lang: LegalLang;
   entry: CollectionEntry<'legal'>;
 }
 
@@ -18,7 +18,7 @@ function parsePath(filePath: string) {
 
 /**
  * Every legal document. Fails the build when a document is missing, or when the
- * languages on disk disagree with the app's `legalLangs`.
+ * languages on disk disagree with the app's supported legal languages.
  */
 export async function getLegalDocuments(): Promise<LegalDocument[]> {
   const entries = await getCollection('legal');
@@ -42,3 +42,6 @@ export async function getLegalDocuments(): Promise<LegalDocument[]> {
 }
 
 export const isDefaultLegal = (doc: LegalDocument) => doc.lang === defaultLangOf(doc.app);
+
+export const formatDocumentDate = (date: string, lang: LegalLang) =>
+  new Intl.DateTimeFormat(lang, { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(date));

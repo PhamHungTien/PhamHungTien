@@ -3,6 +3,7 @@
 import { getEntry, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { LANGS, type Lang } from '../../data/types';
+import { formatDocumentDate } from '../../lib/legal';
 import { t } from '../../lib/i18n';
 import { homePath } from '../../lib/routes';
 import { absolute, ogImage, WEBSITE_ID } from '../../lib/seo';
@@ -26,6 +27,7 @@ const jsonLd = {
   name: entry.data.title,
   description: entry.data.description,
   inLanguage: lang,
+  dateModified: entry.data.updated,
   isPartOf: { '@id': WEBSITE_ID },
 };
 ---
@@ -47,7 +49,8 @@ const jsonLd = {
     <header>
       <h1>{entry.data.title}</h1>
       <p>
-        {t(lang, 'legal.updated')}: <time>{entry.data.updated}</time>
+        {t(lang, 'legal.updated')}{' '}
+        <time datetime={entry.data.updated}>{formatDocumentDate(entry.data.updated, lang)}</time>
       </p>
     </header>
     <div class="prose">

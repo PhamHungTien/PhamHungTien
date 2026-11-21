@@ -46,13 +46,11 @@ for (const [app, originalLang] of Object.entries({
   for (const [lang, path] of paths) {
     await checkPage(`${path.slice(1)}index.html`, lang, paths);
   }
-  const legalLanguages = ['PHTV', 'LunarV', 'PadCodeAI'].includes(app)
-    ? paths
-    : paths.filter(([lang]) => lang === originalLang);
   for (const kind of ['privacy', 'terms']) {
-    const legal = legalLanguages.map(([lang, path]) => [lang, `${path}${kind}.html`]);
+    const legal = paths.map(([lang, path]) => [lang, `${path}${kind}.html`]);
     for (const [lang, href] of legal) {
-      const html = await checkPage(href.slice(1), lang, legal.length > 1 ? legal : []);
+      const html = await checkPage(href.slice(1), lang, legal);
+      assert.match(html, /<time datetime="\d{4}-\d{2}-\d{2}"/, `${href}: modification date`);
       assert.ok(html.includes('noindex, follow'), `${href}: legal indexing policy`);
     }
   }

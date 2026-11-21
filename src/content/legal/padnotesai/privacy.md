@@ -1,46 +1,34 @@
 ---
-title: "Privacy Policy"
-description: "Pad Notes AI Privacy Policy - AI Note-taking & Handwriting Analyzer. No data collection."
-updated: "June 12, 2026"
+title: 'Privacy Policy'
+description: 'How Pad Notes AI handles notebooks, audio, on-device processing, optional iCloud sync, and user-configured online AI.'
+updated: '2026-11-22'
 lang: en
 ---
-## Overview
 
-Pad Notes AI is a local-first note-taking application for iOS and iPadOS. Your privacy is our top priority. This policy explains how Pad Notes AI handles your notes, drawings, and voice recordings.
+Pad Notes AI is a local-first notebook app for iPad, iPhone, and Mac. The developer does not operate a service that receives your notebooks or recordings. The app does not include advertising or third-party analytics or tracking SDKs.
 
-## Data Collection
+## Notebooks and on-device processing
 
-**Pad Notes AI does not collect, store, or transmit any of your personal data, notes, or recordings.**
+The app stores notebooks, handwriting, typed text, imported documents and images, recordings, transcripts, and chat history on your device. The app processes handwriting and document text recognition, supported transcription and translation, and notebook search on the device. Its local AI options use Apple’s on-device model where available or local text extraction.
 
-- All notebooks, handwritten canvas drawings, OCR recognized text, and audio recordings are stored locally on your device within the app's sandbox.
-- We do not have access to your data, nor do we run external telemetry or analytical SDKs that track your usage.
-- Your handwriting recognition (OCR) and audio transcriptions are processed entirely on-device.
+Pad Notes AI can request use of the camera for document scans, the microphone for audio notes, and speech recognition for supported on-device transcription. On supported devices, you can use system authentication such as Face ID to unlock a locked notebook. You can manage app permissions in system settings.
 
-## Apple Intelligence & Local AI
+## iCloud, backups, and exports
 
-Pad Notes AI utilizes Apple's native on-device Foundation Models (Apple Intelligence) for offline document summaries and analysis. All computation is performed locally on your device. None of your data is sent to external servers for this feature.
+When iCloud Sync is enabled and available, Apple CloudKit syncs notebook data, including recordings and in-app AI conversation records, through your private iCloud database. Some app settings also sync through iCloud. The app enables sync by default where available. You can turn it off in the app. The app can also create encrypted local backups. If you export notebooks or share files, the destination you choose handles those copies. [Apple Privacy Policy](https://www.apple.com/legal/privacy/)
 
-## Network Access & Third-Party APIs
+## Optional online AI
 
-Pad Notes AI only accesses the network under these specific scenarios, driven entirely by your choices:
+You can configure Google Gemini or another compatible AI provider using your own API key. Before the app sends content to an online AI provider, it asks for permission. When you submit an online request, the app sends the prompt, relevant text or transcripts from the pages in scope, and recent chat messages as needed to answer. Requests go directly to the provider you configured. Its processing, retention, billing, and other terms apply.
 
-- **Gemini Online Assistant**: If you choose to configure a personal Gemini API Key, queries and document excerpts are sent directly to Google's APIs to generate responses. This communication occurs directly between your device and Google.
-- **iCloud Synchronization**: If you enable iCloud Sync, your SwiftData notebooks are backed up and synced across your iOS devices using Apple's CloudKit infrastructure. Your data is encrypted in transit and at rest on Apple's servers.
-- **In-App Purchase & Subscriptions**: Apple's StoreKit framework handles transaction states, receipt validation, and package activations safely through Apple's servers.
+The app stores API keys in the device Keychain. You can switch back to local processing, remove saved keys, or revoke online AI consent in the app. The provider's own controls apply to data it has already received. [Google Privacy Policy](https://policies.google.com/privacy)
 
-## In-App Purchases
+## App Store purchases
 
-Pad Notes AI offers subscription and lifetime premium options ("Pad Notes AI Pro") processed entirely by Apple's StoreKit framework. We do not collect or store credit cards or payment info.
+Apple's StoreKit processes purchases and restoration and may contact Apple to check your purchase access. The developer does not receive your payment card details. [Apple Privacy Policy](https://www.apple.com/legal/privacy/)
 
-## Children's Privacy
+## Deletion and support
 
-Since Pad Notes AI does not collect any personal data from anyone, the app is safe for children under 13 and complies fully with privacy regulations.
+You can remove notebooks and delete items from the app’s Trash. Manage exported copies, backups, and iCloud data at their destinations. If you email support, we use the information you supply to respond. We publish changes to this policy on this page with a revised date.
 
-## Changes to This Policy
-
-We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated effective date.
-
-## Contact
-
-If you have questions about this Privacy Policy, please contact us at:  
-**contact@phamhungtien.com**
+For privacy questions, email [contact@phamhungtien.com](mailto:contact@phamhungtien.com).

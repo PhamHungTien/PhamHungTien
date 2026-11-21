@@ -1,28 +1,26 @@
 ---
 title: 'Điều khoản sử dụng'
-description: 'Điều khoản sử dụng của LunarV. Xem thông tin về dữ liệu và quyền sử dụng ứng dụng.'
-updated: '26 tháng 5, 2026'
+description: 'Điều khoản LunarV về kết quả lịch âm, tích hợp Lịch Apple, giao dịch mua Premium và hỗ trợ.'
+updated: '2026-11-22'
 lang: vi
 ---
 
 ## Chấp nhận điều khoản
 
-Khi tải xuống, cài đặt hoặc sử dụng LunarV, bạn đồng ý tuân theo các Điều khoản sử dụng này.
+Khi tải xuống, cài đặt hoặc sử dụng LunarV, bạn đồng ý với các Điều khoản sử dụng này. LunarV được phân phối cho iPhone, iPad, Mac và Apple Vision Pro qua App Store theo các điều khoản áp dụng của Apple. [Thỏa thuận cấp phép người dùng cuối tiêu chuẩn của Apple](https://www.apple.com/legal/internet-services/itunes/dev/stdeula/)
 
-## Phân phối ứng dụng
+## Thông tin lịch
 
-LunarV được phân phối cho iPhone, iPad, Mac và Apple Vision Pro qua App Store, theo các điều khoản áp dụng của Apple và các điều khoản của ứng dụng.
+LunarV cung cấp thông tin lịch, công cụ đổi ngày và lời nhắc. Kết quả có thể phụ thuộc vào hệ lịch và múi giờ bạn chọn. Khi cần độ chính xác cao, hãy kiểm tra ngày và thời hạn với nguồn chính thức có liên quan. Nếu bạn chọn ghi sự kiện vào Lịch của Apple, bạn có thể quản lý sự kiện trong lịch đích.
 
-## Tuyên bố miễn trừ bảo đảm
+## Giao dịch mua Premium
 
-LunarV được cung cấp **“NGUYÊN TRẠNG”**, không có bất kỳ bảo đảm nào, dù rõ ràng hay ngụ ý. Chúng tôi không bảo đảm các phép tính lịch âm chính xác tuyệt đối. Bạn tự chịu rủi ro khi sử dụng ứng dụng này.
+LunarV Premium được cung cấp dưới hình thức mua một lần tại những nơi khả dụng. Apple hiển thị giá và xử lý thanh toán, khôi phục giao dịch, hoàn tiền theo quy định App Store áp dụng.
 
-## Thay đổi ứng dụng
+## Tình trạng cung cấp và bảo đảm
 
-Chúng tôi có quyền thay đổi hoặc ngừng cung cấp ứng dụng (hoặc bất kỳ phần nào của ứng dụng) vào bất kỳ lúc nào mà không cần thông báo.
+LunarV được cung cấp theo nguyên trạng, không kèm bảo đảm trong phạm vi pháp luật áp dụng cho phép. Ứng dụng và các tính năng có thể thay đổi, trong phạm vi các quyền pháp luật áp dụng dành cho bạn.
 
 ## Liên hệ
 
-Nếu có câu hỏi về các điều khoản này, vui lòng liên hệ:
-
-**contact@phamhungtien.com**
+Để đặt câu hỏi hoặc được hỗ trợ, hãy gửi email đến [contact@phamhungtien.com](mailto:contact@phamhungtien.com).

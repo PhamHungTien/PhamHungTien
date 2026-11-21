@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import { render } from 'astro:content';
 import { ArrowLeft } from '@lucide/astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import type { LegalDocument } from '../../lib/legal';
+import { formatDocumentDate, type LegalDocument } from '../../lib/legal';
 import { t } from '../../lib/i18n';
 import { appPath, legalAlternates, legalPath } from '../../lib/routes';
 import { absolute, ogImage } from '../../lib/seo';
@@ -27,6 +27,7 @@ const jsonLd = {
   name: `${app.name} — ${entry.data.title}`,
   description: entry.data.description,
   inLanguage: lang,
+  dateModified: entry.data.updated,
   isPartOf: { '@id': `${SITE.origin}/#website` },
   about: { '@id': `${absolute(app.route)}#app` },
 };
@@ -66,7 +67,8 @@ const jsonLd = {
     <header>
       <h1>{entry.data.title}</h1>
       <p>
-        {t(lang, 'legal.updated')}: <time>{entry.data.updated}</time>
+        {t(lang, 'legal.updated')}{' '}
+        <time datetime={entry.data.updated}>{formatDocumentDate(entry.data.updated, lang)}</time>
       </p>
     </header>
     <div class="prose">

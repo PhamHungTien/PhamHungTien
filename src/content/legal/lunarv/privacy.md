@@ -1,27 +1,26 @@
 ---
 title: 'Chính sách quyền riêng tư'
-description: 'Chính sách riêng tư của LunarV. Xem thông tin về dữ liệu và quyền sử dụng ứng dụng.'
-updated: '26 tháng 5, 2026'
+description: 'Cách LunarV xử lý dịp gia đình, ghi chú ngày, đồng bộ iCloud, quyền truy cập Lịch Apple, thông báo và giao dịch mua.'
+updated: '2026-11-22'
 lang: vi
 ---
 
-## Tổng quan
+LunarV là ứng dụng lịch âm cho iPhone, iPad, Mac và Apple Vision Pro. Các phép tính lịch âm chạy ngay trên thiết bị. Ứng dụng không yêu cầu tài khoản LunarV, không quảng cáo và không tích hợp công cụ phân tích của bên thứ ba. Nhà phát triển không vận hành dịch vụ nhận dữ liệu lịch của bạn.
 
-LunarV là ứng dụng lịch âm dành cho iPhone, iPad, Mac và Apple Vision Pro. Chính sách này giải thích cách LunarV xử lý dữ liệu của bạn.
+## Dữ liệu trên thiết bị và iCloud
 
-## Thu thập dữ liệu
+LunarV dùng cài đặt, ghi chú ngày, dịp gia đình, lời nhắc và thông tin hồ sơ bạn nhập, chẳng hạn như ngày sinh, để cung cấp các tính năng lịch và cá nhân hóa. Các dữ liệu này được lưu trên thiết bị. Khi iCloud khả dụng, ứng dụng còn dùng tài khoản iCloud của bạn để đồng bộ những dữ liệu này giữa các thiết bị. Apple xử lý dữ liệu iCloud theo chính sách riêng. [Chính sách quyền riêng tư của Apple](https://www.apple.com/legal/privacy/)
 
-**LunarV không thu thập, lưu trữ hoặc truyền bất kỳ dữ liệu cá nhân nào.**
+## Quyền truy cập Lịch và thông báo
 
-- LunarV không tích hợp SDK phân tích của bên thứ ba, quảng cáo hoặc công cụ theo dõi.
-- Toàn bộ dữ liệu lịch, dịp gia đình và lời nhắc được xử lý cục bộ trên thiết bị của bạn.
+Nếu bạn cấp quyền truy cập Lịch, LunarV có thể hiển thị các sự kiện sắp tới từ ứng dụng Lịch của Apple và ghi các ngày lễ, lời nhắc gia đình mà bạn chọn đồng bộ. Sự kiện đã lưu có thể được đồng bộ qua tài khoản gắn với lịch đích, chẳng hạn như iCloud. Bạn có thể thu hồi quyền truy cập trong cài đặt hệ thống và xóa các sự kiện đã xuất trong ứng dụng Lịch. Khi bạn bật thông báo và cấp quyền, ứng dụng lên lịch nhắc trên thiết bị.
 
-## Truy cập mạng
+## App Store và liên kết bên ngoài
 
-LunarV không có công cụ tải xuống hoặc cài đặt bản cập nhật trong ứng dụng. Các bản cập nhật được phân phối qua App Store; ứng dụng chỉ mở liên kết bên ngoài khi bạn chọn.
+App Store phân phối bản cập nhật, xử lý giao dịch mua và khôi phục giao dịch. LunarV dùng StoreKit để kiểm tra quyền dùng Premium. Nhà phát triển không nhận thông tin thẻ thanh toán. Khi bạn mở liên kết bên ngoài, chính sách quyền riêng tư của nơi nhận sẽ áp dụng. [Chính sách quyền riêng tư của Apple](https://www.apple.com/legal/privacy/)
 
-## Liên hệ
+## Xóa dữ liệu và liên hệ
 
-Nếu có câu hỏi về chính sách này, vui lòng liên hệ:
+Bạn có thể sửa hoặc xóa ghi chú và dịp gia đình trong ứng dụng, đồng thời quản lý dữ liệu iCloud trong cài đặt Tài khoản Apple. Nếu bạn liên hệ, chúng tôi sử dụng thông tin bạn cung cấp để phản hồi yêu cầu. Trang này hiển thị ngày cập nhật gần nhất.
 
-**contact@phamhungtien.com**
+Nếu có câu hỏi về quyền riêng tư, hãy gửi email đến [contact@phamhungtien.com](mailto:contact@phamhungtien.com).

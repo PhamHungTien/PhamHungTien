@@ -1,7 +1,7 @@
 ---
 title: "Privacy Policy"
-description: "How Pad Code AI handles local projects, optional AI, Git, Python package downloads and App Store purchases."
-updated: "November 3, 2026"
+description: "How Pad Code AI handles local projects, AI, package downloads, Git and GitHub, SSH and SFTP, and App Store purchases."
+updated: '2026-11-22'
 lang: en
 ---
 ## Overview
@@ -33,16 +33,20 @@ Web Preview uses WebKit to display the HTML, CSS and browser JavaScript you choo
 
 You choose whether to use AI and how it works in Settings:
 
-- **Supported on-device model**: prompts and code are processed on your device.
+- **Supported on-device model.** Prompts and code are processed on your device. You can download supported models from the model host or import a model file you choose. The host receives the model request and ordinary connection information. Chat messages and workspace content are processed locally in this mode.
 - **Optional third-party provider**: when you send a message, your prompt goes directly from your device to the provider or compatible endpoint you configured, where available in your App Store region. Active-file content and project file names are included according to the sharing options you enable. If you approve workspace access for an Agent task, relevant file contents and tool results can also be included in that task's conversation.
 
-The app requests permission before sharing with a remote provider. You can change sharing options or withdraw that permission in Settings. Remote AI data goes to your selected provider, not to a developer-operated AI server. That provider's own privacy policy, retention rules and terms apply.
+The app requests permission before sharing with a remote provider. You can change sharing options or withdraw that permission in Settings. Remote AI data goes to your selected provider, not to a developer-operated AI server. That provider's own privacy policy, retention rules and terms apply. If you use the optional OpenRouter sign-in, OpenRouter handles authentication and issues an API key to the app.
 
-## Git and Credentials
+## Git, GitHub, and credentials
 
-Git features communicate directly with the supported HTTPS repository host you choose, including hosts other than GitHub. Clone, fetch and pull request repository data; push uploads the commits and files you choose to publish. Authentication sends credentials required by the repository host. The host receives normal connection information, and its policies apply.
+Git features communicate directly with the supported HTTPS repository host you choose, including hosts other than GitHub. Clone, fetch and pull request repository data; push uploads the commits and files you choose to publish. Authentication sends credentials required by the repository host. The host receives normal connection information, and its policies apply. If you sign in to GitHub in Settings, GitHub handles authorization and the app uses your access token to list and open repositories your account can access.
 
 API keys and saved Git access tokens are stored in the iOS Keychain on your device. The app uses them for the configured services that require them. Keep repository URLs and credentials private, and only connect to services you trust.
+
+## Remote servers over SSH and SFTP
+
+When you connect to a server you configure, your device sends authentication messages, terminal input, and the files you choose to read or write directly to that server. Saved server addresses, usernames, and host fingerprints are stored on your device. Saved passwords, private keys, and key passphrases are stored in the device Keychain. A private key is used on the device for authentication. The app can queue saved edits to remote files locally while disconnected and upload them when the server becomes available again. Remote systems may log access, commands, and files under their own policies.
 
 ## App Store Purchases
 

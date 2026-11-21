@@ -1,26 +1,26 @@
 ---
-title: "Terms of Use"
-description: "Điều khoản sử dụng của LunarV. Xem thông tin về dữ liệu và quyền sử dụng ứng dụng."
-updated: "May 26, 2026"
+title: 'Terms of Use'
+description: 'LunarV terms covering lunar calendar results, Apple Calendar integration, Premium purchases, and support.'
+updated: '2026-11-22'
 lang: en
 ---
-## Acceptance of Terms
 
-By downloading, installing, or using LunarV, you agree to be bound by these Terms of Use.
+## Acceptance of terms
 
-## App Distribution
+By downloading, installing, or using LunarV, you agree to these Terms of Use. LunarV is distributed through the App Store for iPhone, iPad, Mac, and Apple Vision Pro under Apple's applicable terms. [Apple Standard End User License Agreement](https://www.apple.com/legal/internet-services/itunes/dev/stdeula/)
 
-LunarV is distributed for iPhone, iPad, Mac, and Apple Vision Pro through the App Store under Apple's applicable terms and the terms of the app.
+## Calendar information
 
-## Disclaimer of Warranties
+LunarV provides calendar information, date conversion, and reminders. Results can depend on the selected calendar and time zone. Verify dates and deadlines with the relevant official source when accuracy is important. If you choose to write events to Apple Calendar, you can manage those entries in the destination calendar.
 
-LunarV is provided "AS IS", without warranty of any kind, express or implied. We do not guarantee absolute accuracy of the lunar calendar calculations. You use this application at your own risk.
+## Premium purchases
 
-## Modifications to the App
+LunarV Premium is offered as a one-time purchase where available. Apple displays the price and processes payment, restoration, and refunds under the applicable App Store rules.
 
-We reserve the right to modify or discontinue the app (or any part thereof) at any time without notice.
+## Availability and warranty
+
+LunarV is provided as is, without warranty to the extent permitted by applicable law. The app and its features may change, subject to rights you have under applicable law.
 
 ## Contact
 
-If you have any questions about these terms, please contact:  
-**contact@phamhungtien.com**
+For questions or support, email [contact@phamhungtien.com](mailto:contact@phamhungtien.com).

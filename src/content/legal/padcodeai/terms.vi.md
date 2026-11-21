@@ -1,7 +1,7 @@
 ---
 title: "Điều khoản sử dụng"
-description: "Điều khoản sử dụng Pad Code AI: trình soạn thảo mã và IDE cho iPad, iPhone với môi trường chạy trên thiết bị, Git và trợ lý AI."
-updated: "Ngày 3 tháng 11 năm 2026"
+description: "Điều khoản Pad Code AI về chạy mã trên thiết bị, Git, SSH và SFTP, AI tùy chọn và giao dịch Pro trên iPhone, iPad."
+updated: '2026-11-22'
 lang: vi
 ---
 ## 1\. Chấp nhận điều khoản
@@ -10,11 +10,11 @@ Khi tải xuống, cài đặt hoặc sử dụng Pad Code AI ("Ứng dụng"), 
 
 ## 2\. Mô tả dịch vụ
 
-Pad Code AI là trình soạn thảo mã và IDE cho iPad, iPhone. Ứng dụng cho phép viết, sửa, chạy và quản lý mã nguồn, đồng thời cung cấp môi trường chạy ngôn ngữ trên thiết bị, terminal tương tác, tính năng Git và trợ lý lập trình AI tùy chọn.
+Pad Code AI là trình soạn thảo mã và IDE cho iPad, iPhone. Ứng dụng cho phép viết, sửa, chạy và quản lý mã nguồn, đồng thời cung cấp môi trường chạy ngôn ngữ trên thiết bị, terminal, Git, SSH và SFTP trên phiên bản được hỗ trợ, cùng trợ lý lập trình AI tùy chọn.
 
-## Premium tùy chọn từ phiên bản 2.0.0
+## Tính năng trả phí tùy chọn
 
-Các tính năng soạn thảo cơ bản, chạy mã cục bộ được hỗ trợ, xem trước web, Git, nhập/xuất và thay thế trong từng tệp vẫn miễn phí. Premium là giao dịch mua một lần, không tiêu hao, dành cho soạn thảo chia đôi và thay thế hàng loạt trong không gian làm việc, không có đăng ký định kỳ. App Store hiển thị giá và đơn vị tiền tệ áp dụng tại địa phương trước khi xác nhận. Có thể khôi phục giao dịch trong Cài đặt > Premium bằng Tài khoản Apple đã mua. Giao dịch đã hoàn tiền hoặc bị thu hồi không còn cấp quyền đã mua. Người dùng bản phát hành chính thức đã xác minh, ban đầu nhận ứng dụng ở build dưới 26, tiếp tục có quyền dùng công cụ nâng cao độc lập với giao dịch Premium. Phí dịch vụ AI bên thứ ba được tính riêng.
+Các tính năng soạn thảo cơ bản, chạy mã cục bộ được hỗ trợ, xem trước web, Git, nhập/xuất và thay thế trong từng tệp vẫn dùng được khi chưa mua. Tại những nơi khả dụng, Pad Code AI Pro có thể được cung cấp dưới hình thức mua một lần hoặc đăng ký tự gia hạn theo tháng hoặc theo năm. App Store hiển thị tính năng, giá, kỳ thanh toán và thời gian dùng thử, nếu có, trước khi bạn xác nhận. Bạn có thể quản lý gói đăng ký trong phần cài đặt Tài khoản Apple và khôi phục giao dịch đủ điều kiện trong ứng dụng bằng Tài khoản Apple đã mua. Giao dịch đã hoàn tiền hoặc bị thu hồi không còn cấp quyền đã mua. Quyền truy cập được cấp hoặc mua trước đây tiếp tục tuân theo điều khoản áp dụng tại thời điểm cấp quyền. Phí dịch vụ AI bên thứ ba được tính riêng. [Quản lý gói đăng ký và thanh toán Apple](https://support.apple.com/billing)
 
 ## 3\. Nội dung của người dùng
 
@@ -42,6 +42,8 @@ Git clone, fetch, pull và push kết nối với máy chủ kho mã HTTPS đư�
 - Về kho mã bạn clone và mã bạn push.
 - Giữ an toàn cho token truy cập kho mã.
 - Tuân thủ điều khoản dịch vụ của mọi nền tảng bên thứ ba bạn sử dụng.
+
+Bạn chỉ được kết nối SSH hoặc SFTP với hệ thống mà mình có quyền truy cập. Bạn chịu trách nhiệm bảo vệ thông tin đăng nhập, xác thực danh tính máy chủ, và kiểm tra lệnh, tệp truyền và nội dung sửa trên máy chủ. Điều khoản của đơn vị vận hành máy chủ được áp dụng.
 
 ## 7\. Thành phần mã nguồn mở
 

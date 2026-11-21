@@ -1,4 +1,4 @@
-import type { App, AppSlug, Lang } from '../types';
+import { LANGS, type App, type AppSlug, type Lang, type LegalLang } from '../types';
 import phtv from './phtv';
 import vtts from './vtts';
 import padcodeai from './padcodeai';
@@ -18,4 +18,4 @@ export const appSegment = (app: App) => app.route.replaceAll('/', '');
 export const defaultLangOf = (app: App): Lang => app.defaultLang ?? 'en';
 
 /** Languages the privacy policy and terms are written in. */
-export const legalLangsOf = (app: App): Lang[] => app.legalLangs ?? [defaultLangOf(app)];
+export const legalLangsOf = (app: App): LegalLang[] => [...LANGS, ...(app.legalTranslations ?? [])];

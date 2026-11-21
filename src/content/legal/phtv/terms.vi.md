@@ -1,7 +1,7 @@
 ---
-title: "Điều Khoản Sử Dụng"
-description: "Điều khoản sử dụng của PHTV. Xem thông tin về dữ liệu và quyền sử dụng ứng dụng."
-updated: "21 tháng 11, 2026"
+title: "Điều khoản sử dụng"
+description: "Điều khoản PHTV về giấy phép mã nguồn mở, phiên bản App Store, bảo đảm và hỗ trợ trên Mac, iPhone và iPad."
+updated: '2026-11-21'
 lang: vi
 ---
 ## Chấp nhận Điều Khoản

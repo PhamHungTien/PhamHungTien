@@ -4,16 +4,15 @@ import { z } from 'astro/zod';
 
 /**
  * Privacy policies and terms of use, one Markdown file per document:
- *   src/content/legal/<app-slug>/<privacy|terms>.md          (English)
- *   src/content/legal/<app-slug>/<privacy|terms>.<lang>.md   (bilingual apps)
+ *   src/content/legal/<app-slug>/<privacy|terms>[.<lang>].md
  */
 const legal = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/legal' }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    updated: z.string(),
-    lang: z.enum(['en', 'vi']),
+    updated: z.iso.date(),
+    lang: z.enum(['en', 'vi', 'zh']),
   }),
 });
 
@@ -55,7 +54,7 @@ const site = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    updated: z.string(),
+    updated: z.iso.date(),
     lang: z.enum(['en', 'vi']),
   }),
 });

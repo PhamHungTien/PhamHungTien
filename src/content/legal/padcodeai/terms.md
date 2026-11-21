@@ -1,7 +1,7 @@
 ---
 title: "Terms of Use"
-description: "Pad Code AI Terms of Use: code editor and IDE for iPad and iPhone with on-device runtimes, Git, and an AI assistant."
-updated: "November 3, 2026"
+description: "Pad Code AI terms for local code execution, Git, SSH and SFTP, optional AI, and Pro purchases on iPhone and iPad."
+updated: '2026-11-22'
 lang: en
 ---
 ## 1\. Acceptance of Terms
@@ -10,11 +10,11 @@ By downloading, installing, or using Pad Code AI ("the App"), you agree to these
 
 ## 2\. Description of Service
 
-Pad Code AI is a code editor and IDE for iPad and iPhone. It lets you write, edit, run, and manage source code, and includes on-device language runtimes, an interactive terminal, Git features, and an optional AI coding assistant.
+Pad Code AI is a code editor and IDE for iPad and iPhone. It lets you write, edit, run, and manage source code, and includes on-device language runtimes, a terminal, Git, SSH and SFTP on supported versions, and an optional AI coding assistant.
 
-## Optional Premium in Version 2.0.0
+## Optional paid features
 
-Core editing, supported local code execution, web preview, Git, import/export and individual-file replacement remain free. Premium is a non-consumable, one-time purchase for split editing and bulk workspace replacement, with no recurring subscription. The App Store shows the applicable local price and currency before confirmation. Restore Purchases is available in Settings > Premium for the Apple Account used to purchase. Refunded or revoked purchases no longer grant the purchased entitlement. Verified existing production users who originally acquired builds below 26 retain advanced-tool access independently of a Premium purchase. Third-party AI service charges are separate.
+Core editing, supported local code execution, web preview, Git, import/export and individual-file replacement remain available without a purchase. Where available, Pad Code AI Pro can be offered as a one-time purchase or an auto-renewing monthly or annual subscription. The App Store shows the available features, price, billing period, and any trial before confirmation. You can manage a subscription in Apple Account settings and restore eligible purchases in the app with the Apple Account used to purchase. Refunded or revoked purchases no longer grant the purchased entitlement. Previously granted or purchased access remains subject to the terms under which it was granted. Third-party AI service charges are separate. [Apple subscriptions and billing](https://support.apple.com/billing)
 
 ## 3\. User Content
 
@@ -42,6 +42,8 @@ Git clone, fetch, pull and push communicate with the supported HTTPS repository 
 - The repositories you clone and the code you push.
 - Keeping your repository access tokens safe.
 - Following the terms of service of any third-party platform you use.
+
+Only connect over SSH or SFTP to systems you are authorized to access. You are responsible for protecting your sign-in details, verifying server identity, and reviewing commands, file transfers, and edits made on the server. The server operator’s terms apply.
 
 ## 7\. Open-Source Components
 

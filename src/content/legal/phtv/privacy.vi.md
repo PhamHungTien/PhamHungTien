@@ -1,12 +1,12 @@
 ---
-title: "Chính Sách Quyền Riêng Tư"
-description: "PHTV và PHTV Keyboard xử lý mọi phím gõ ngay trên thiết bị của bạn, không thu thập hay gửi dữ liệu của bạn đi đâu."
-updated: "21 tháng 11, 2026"
+title: "Chính sách quyền riêng tư"
+description: "Cách PHTV xử lý phím gõ tiếng Việt, lịch sử clipboard, quyền hệ thống, Game Center và tìm GIF, sticker tùy chọn."
+updated: '2026-11-22'
 lang: vi
 ---
 ## Tóm tắt
 
-PHTV không thu thập, không lưu và không gửi đi bất kỳ nội dung nào bạn gõ. Mọi phím được xử lý ngay trên thiết bị của bạn rồi quên đi. Chúng tôi không dùng quảng cáo, công cụ phân tích hay theo dõi.
+PHTV xử lý phím gõ ngay trên thiết bị và không lưu lịch sử phím gõ. Ứng dụng không dùng SDK quảng cáo, phân tích hay theo dõi. Chính sách này giải thích các tính năng xử lý trên máy và dữ liệu mà dịch vụ mạng xử lý khi bạn dùng các dịch vụ đó.
 
 Chính sách này áp dụng cho các phiên bản:
 
@@ -29,17 +29,17 @@ Chính sách này áp dụng cho các phiên bản:
 - **PHTV Keyboard cho Mac** cần đúng một quyền của macOS để ghép chữ trong mọi ứng dụng: **System & App Protection Override** trên macOS 27.3 trở lên (bản cũ hơn gọi là Device Control and Data Access hoặc Trợ năng). Ứng dụng chạy trong App Sandbox của Apple và không đọc nội dung của ứng dụng khác.
 - **PHTV Keyboard cho iPhone và iPad** gõ được mà không cần **Cho phép truy cập đầy đủ**. Quyền này là tuỳ chọn, chỉ dùng để rung phím, dán từ bảng Clipboard của bàn phím, dùng ảnh nền riêng và đồng bộ cài đặt, gõ tắt với ứng dụng PHTV. Bàn phím không gửi dữ liệu ra ngoài.
 
-Khi bạn nhập mật khẩu, hệ điều hành tự tắt mọi bộ gõ, kể cả PHTV.
+Khi chế độ Nhập liệu bảo mật của macOS hoạt động, PHTV không nhận phím gõ. Trên iPhone và iPad, hệ thống chuyển sang bàn phím mặc định khi bạn nhập trong ô văn bản bảo mật.
 
 ## Kết nối mạng
 
 - **Gõ chữ không cần Internet** ở mọi phiên bản.
 - **PHTV Keyboard** (Mac, iPhone, iPad) chỉ kết nối **Game Center** của Apple khi bạn đăng nhập Game Center để gửi điểm và xem bảng xếp hạng Thi gõ nhanh. Điểm và tên hiển thị Game Center do Apple xử lý theo [chính sách quyền riêng tư của Apple](https://www.apple.com/legal/privacy/). Không đăng nhập vẫn thi và lưu kỷ lục trên máy được.
-- **PHTV** chỉ kết nối mạng để kiểm tra bản cập nhật, và khi bạn mở thẻ GIF hoặc Sticker trong PHTV Picker (tải ảnh từ dịch vụ Klipy, kèm từ khoá tìm kiếm, một mã cài đặt ngẫu nhiên và thông tin mạng như địa chỉ IP). Không có nội dung bạn gõ nào được gửi đi.
+- **PHTV** chỉ kết nối mạng để kiểm tra bản cập nhật, và khi bạn mở thẻ GIF hoặc Sticker trong PHTV Picker (tải ảnh từ dịch vụ Klipy, kèm từ khoá tìm kiếm, một mã cài đặt ngẫu nhiên và thông tin mạng như địa chỉ IP). Nội dung bạn gõ trong các ứng dụng khác ở trên thiết bị. Từ khóa bạn nhập trong trình chọn GIF và sticker được gửi tới Klipy để trả về kết quả.
 
-## Trẻ em
+## Hỗ trợ và quyền riêng tư của trẻ em
 
-Ứng dụng không thu thập dữ liệu của bất kỳ ai, kể cả trẻ em.
+Nếu bạn chọn gửi email hoặc báo lỗi, chúng tôi dùng thông tin bạn chia sẻ để tìm nguyên nhân và phản hồi. Báo lỗi có thể chứa thông tin chẩn đoán bạn chọn đính kèm. Vấn đề bạn tạo trên GitHub có thể được công khai. Cách xử lý trên máy và các dịch vụ tùy chọn áp dụng như nhau cho tất cả người dùng. Dịch vụ bên thứ ba có thể áp dụng yêu cầu riêng về độ tuổi.
 
 ## Thay đổi chính sách
 
@@ -47,4 +47,4 @@ Khi chính sách thay đổi, ngày cập nhật ở đầu trang sẽ đổi th
 
 ## Liên hệ
 
-Câu hỏi về quyền riêng tư: **contact@phamhungtien.com**
+Nếu có câu hỏi về quyền riêng tư, hãy gửi email đến [contact@phamhungtien.com](mailto:contact@phamhungtien.com).

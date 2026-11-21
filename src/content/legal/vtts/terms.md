@@ -1,42 +1,32 @@
 ---
-title: "Terms of Use"
-description: "vTTS Terms of Use - On-device Vietnamese and English Text-to-Speech & EPUB Reader for Android, iOS, iPadOS, and macOS."
-updated: "October 4, 2026"
+title: 'Terms of Use'
+description: 'vTTS terms for local speech, books, personal voices, generated audio, third-party licenses, and Premium purchases.'
+updated: '2026-11-22'
 lang: en
 ---
-Welcome to **vTTS**. By downloading, installing, or using vTTS on Android, iOS, iPadOS, or macOS, you agree to be bound by these Terms of Use.
 
-## 1\. Intellectual Property Rights
+These terms cover vTTS for Android, iPhone, iPad, and Mac. By downloading, installing, or using vTTS, you agree to these Terms of Use. The applicable store terms and any license displayed for your download also apply. [App Store listing](https://apps.apple.com/app/id6817003401), [Google Play Terms of Service](https://play.google.com/about/play-terms/).
 
-The **vTTS** application, including original Swift source code, UI designs, logo, documentation, and assets authored by Pham Hung Tien, is the proprietary property of **Pham Hung Tien** and is protected under applicable intellectual property laws.
+## License and third-party components
 
-Third-party open-source components and models bundled within the app (Kokoro-Vietnamese, Kokoro, SEA-G2P, ONNX Runtime) retain their respective open-source licenses (Apache-2.0, MIT), as credited in full in the in-app Credits & Licenses screen.
+Pham Hung Tien owns the original software, designs, branding, documentation, and other original assets in vTTS. You receive a personal, non-exclusive, non-transferable license to use the app on compatible devices. Copying, modifying, reverse engineering, or distributing the app is permitted only where an applicable license or law allows it.
 
-## 2\. License Grant & Restrictions
+Bundled third-party software, voice models, and assets remain under their own licenses. The app lists those notices under Credits & Licenses. Usage conditions for particular models, including the restrictions for voices distributed under the OpenRAIL-M license, apply when you use those voices and when you create, save, share, or export their audio.
 
-You are granted a personal, non-exclusive, non-transferable license to use vTTS on compatible devices. You may not:
+## Input, personal voices, and generated audio
 
-- Reverse engineer, decompile, or attempt to extract the proprietary source code of the application.
-- Redistribute, resell, sublicense, or rebrand the software without prior written consent from the author.
-- Use the application for any unlawful purpose.
+You are responsible for the input you import or enter, the voices you create, and the audio you generate or distribute. Create or import a personal voice only from your own recording or when the speaker has given you permission. Keep any exported voice files private unless you have permission to share them. You may not use generated speech for fraud, unconsented impersonation, copyright infringement, or other unlawful activity.
 
-## 3\. User Responsibility for Generated Audio
+Import, translation, and speech results depend on the source material, language, and device. Some files and pronunciations may be unsupported or inaccurate. The optional local-network server is off by default. When you use it, you are responsible for devices you allow to connect and for protecting the access token.
 
-You are solely responsible for the input text and the synthesized audio files generated using vTTS. You agree not to use generated audio for fraudulent purposes, malicious impersonation, or copyright infringement.
+## Premium purchases
 
-The app supports text reading, EPUB books, background music, and audio export. Import support depends on file structure and content; not every file or pronunciation can be handled correctly. LAN hosting is optional and off by default; on iPhone/iPad the app must remain in the foreground.
+vTTS Premium is offered as a one-time purchase where available. Google Play or the App Store shows the price before payment and handles purchases, restoration, and refunds under its own rules. [Google Play Terms of Service](https://play.google.com/about/play-terms/), [Apple subscriptions and billing](https://support.apple.com/billing).
 
-## 4\. Disclaimer of Warranties
+## Warranty and changes
 
-vTTS is provided on an **"AS IS"** and **"AS AVAILABLE"** basis, without warranties of any kind, whether express or implied, including merchantability or fitness for a particular purpose.
+vTTS is provided as is and as available, without warranties to the extent permitted by applicable law. Changes to these terms are posted on this page with a revised date, subject to rights you have under applicable law.
 
-## 5\. Changes to Terms
+## Contact
 
-We reserve the right to modify these terms at any time. Changes become effective immediately upon posting to this website.
-
-## 6\. Contact Us
-
-If you have any questions regarding these Terms, please contact us at:
-
-Email: [contact@phamhungtien.com](mailto:contact@phamhungtien.com)  
-Website: [phamhungtien.com](https://phamhungtien.com)
+For questions or support, email [contact@phamhungtien.com](mailto:contact@phamhungtien.com).

@@ -1,34 +1,28 @@
 ---
-title: "Terms of Use"
-description: "Lunar Block Terms of Use - Native 3D falling-block puzzle game for iPhone, iPad, Mac & Apple Vision Pro."
-updated: "October 2, 2026"
+title: 'Terms of Use'
+description: 'Lunar Block terms covering the game license, intellectual property, local progress, Game Center, and support.'
+updated: '2026-11-22'
 lang: en
 ---
-## 1\. Agreement to Terms
 
-By downloading, installing, or playing the Lunar Block mobile application, you agree to be bound by these Terms of Use and Apple’s standard Licensed Application End User License Agreement (EULA).
+## Agreement and license
 
-## 2\. License Grant
+By downloading, installing, or playing Lunar Block, you agree to these Terms of Use and the applicable App Store license. Lunar Block is licensed for personal, non-commercial play on compatible Apple devices you own or control. [Apple Standard End User License Agreement](https://www.apple.com/legal/internet-services/itunes/dev/stdeula/)
 
-We grant you a personal, non-exclusive, non-transferable, revocable license to use Lunar Block on any Apple-branded iPhone, iPad, Mac, or Apple Vision Pro device that you own or control, strictly for personal, non-commercial entertainment purposes.
+## Intellectual property
 
-## 3\. Intellectual Property
+Pham Hung Tien owns the original software, graphics, audio, and other original assets in Lunar Block. Third-party components remain subject to their own licenses. You may copy, modify, reverse engineer, or distribute the game only where the applicable license or law permits it.
 
-All title, ownership, and intellectual property rights in and to Lunar Block (including but not limited to the source code, game mechanics, algorithms, 3D assets, visual UI designs, audio effects, sound synthesis systems, and app icons) are owned solely by Pham Hung Tien. You may not copy, reverse engineer, decompile, modify, or distribute any part of the game.
+## Play, progress, and Game Center
 
-## 4\. Disclaimer of Warranties
+Local progress and settings may be lost if you delete the game or lose access to your device. Game Center records depend on Apple's service and your Apple Account.
 
-Lunar Block is provided on an "AS IS" and "AS AVAILABLE" basis. We make no representations or warranties of any kind, express or implied, regarding the application's performance, stability, or completeness. Your gameplay and score/XP progression are stored solely on your device's memory; we are not responsible for any data loss occurring due to app deletion or device failure.
+Lunar Block is provided as is and as available to the extent permitted by applicable law. To the extent permitted by applicable law, Pham Hung Tien is not liable for indirect, incidental, special, exemplary, or consequential damages arising from your use of the game.
 
-## 5\. Limit of Liability
+## Governing law
 
-To the maximum extent permitted by applicable law, Pham Hung Tien shall not be liable for any indirect, incidental, special, exemplary, or consequential damages arising out of or in connection with your download or use of the application.
+These terms are governed by the laws of Vietnam, subject to mandatory consumer protections that apply where you live.
 
-## 6\. Governing Law
+## Contact
 
-These Terms of Use shall be governed by and construed in accordance with the laws of Vietnam, without giving effect to any principles of conflicts of law.
-
-## 7\. Contact
-
-For support, feature requests, or queries regarding these terms, please contact:  
-**contact@phamhungtien.com**
+For support or questions about these terms, email [contact@phamhungtien.com](mailto:contact@phamhungtien.com).

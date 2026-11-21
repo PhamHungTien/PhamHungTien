@@ -1,7 +1,7 @@
 ---
 title: "Terms of Use"
 description: "PHTV terms of use: licence, disclaimer and contact for the Vietnamese input method for macOS, iPhone and iPad."
-updated: "November 21, 2026"
+updated: '2026-11-21'
 lang: en
 ---
 ## Acceptance of Terms

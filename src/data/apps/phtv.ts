@@ -5,7 +5,6 @@ const app: App = {
   slug: 'phtv',
   // PHTV's audience is Vietnamese, so /PHTV/ stays Vietnamese and English lives at /en/PHTV/.
   defaultLang: 'vi',
-  legalLangs: ['vi', 'en'],
   name: 'PHTV',
   route: '/PHTV/',
   icon,

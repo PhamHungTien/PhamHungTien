@@ -1,37 +1,24 @@
 ---
-title: "Privacy Policy"
-description: "Lunar Block Privacy Policy - Native 3D falling-block puzzle game for iPhone, iPad, Mac & Apple Vision Pro. No data collection."
-updated: "October 2, 2026"
+title: 'Privacy Policy'
+description: 'How Lunar Block stores scores and settings on your device and uses Apple Game Center for leaderboards and achievements.'
+updated: '2026-11-22'
 lang: en
 ---
-## Overview
 
-Lunar Block is a native, offline-first 3D puzzle game for iPhone, iPad, Mac, and Apple Vision Pro. Your privacy is extremely important to us. This policy outlines how Lunar Block handles your data.
+Lunar Block is a 3D puzzle game for iPhone, iPad, and Mac. You can play offline and keep your records on your device.
 
-## Data Collection
+## Data on your device
 
-**Lunar Block does not collect, store, track, or transmit any personal data.**
+The game stores local scores, experience points (XP), ranks, and preferences such as sound and haptics on your device. The in-game reset clears local records, XP, and rank while keeping your settings and Game Center scores.
 
-- **Local Storage**: All game data—including your scores, experience points (XP), player ranks, sound settings, and haptic preferences—is stored locally on your device using Apple's standard UserDefaults system.
-- **No Analytics**: The app contains no third-party analytics frameworks, advertising SDKs, or user tracking systems.
-- **No Telemetry**: No crash logs or gameplay telemetry are sent to our servers or any third-party databases.
+The developer does not run a service that receives gameplay data. Lunar Block does not include advertising, third-party analytics, or tracking SDKs.
 
-## Game Center & GameKit
+## Apple Game Center
 
-Lunar Block integrates optional Apple Game Center connectivity via GameKit:
+When Apple Game Center is signed in and available, Lunar Block uses GameKit to report scores and achievements to Apple. The game can display Game Center player names and scores in its leaderboard interface. The Apple system handles account sign-in, and Lunar Block does not receive your Apple Account password. You can play with local records by signing out of Game Center in your device settings. Apple handles Game Center data under its own policies. [Apple Privacy Policy](https://www.apple.com/legal/privacy/)
 
-- If you sign in to Game Center, your high scores and ranks are submitted securely to Apple's Game Center leaderboards.
-- All Game Center data and authentication are managed strictly by Apple's secure operating system servers. We do not have access to, nor do we store, your Game Center credentials or player profile information.
+## Support and policy changes
 
-## Children's Privacy
+If you email us, we use the information you send to respond to your request. We publish changes to this policy on this page with a revised date.
 
-Lunar Block is designed to be safe for players of all ages. Because the application does not collect or request any personal information from any user, it fully complies with children's online privacy protection regulations (including COPPA).
-
-## Changes to This Policy
-
-We may update this Privacy Policy from time to time. Any changes will be published on this page with an updated effective date.
-
-## Contact
-
-If you have any questions or feedback regarding this Privacy Policy, please reach out to us at:  
-**contact@phamhungtien.com**
+For privacy questions, email [contact@phamhungtien.com](mailto:contact@phamhungtien.com).

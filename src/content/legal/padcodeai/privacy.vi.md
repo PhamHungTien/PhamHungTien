@@ -1,7 +1,7 @@
 ---
 title: "Chính sách quyền riêng tư"
-description: "Cách Pad Code AI xử lý dự án trên thiết bị, AI tùy chọn, Git, tải gói Python và giao dịch App Store."
-updated: "Ngày 3 tháng 11 năm 2026"
+description: "Cách Pad Code AI xử lý dự án, AI, tải gói thư viện, Git và GitHub, SSH và SFTP, và giao dịch App Store."
+updated: '2026-11-22'
 lang: vi
 ---
 ## Tổng quan
@@ -33,16 +33,20 @@ Tính năng xem trước web dùng WebKit để hiển thị HTML, CSS và JavaS
 
 Bạn chọn có dùng AI hay không và cách hoạt động trong Cài đặt:
 
-- **Mô hình trên thiết bị được hỗ trợ**: câu lệnh và mã được xử lý trên thiết bị.
+- **Mô hình trên thiết bị.** Yêu cầu và mã được xử lý trên thiết bị. Bạn có thể tải mô hình được hỗ trợ từ máy chủ phân phối hoặc nhập tệp mô hình do bạn chọn. Máy chủ nhận yêu cầu tải mô hình và thông tin kết nối thông thường. Nội dung trò chuyện và không gian làm việc được xử lý cục bộ ở chế độ này.
 - **Nhà cung cấp bên thứ ba tùy chọn**: khi bạn gửi tin nhắn, câu lệnh được gửi trực tiếp từ thiết bị đến nhà cung cấp hoặc điểm cuối tương thích mà bạn cấu hình, nếu có tại khu vực App Store của bạn. Nội dung tệp đang mở và tên tệp trong dự án được gửi theo tùy chọn chia sẻ bạn bật. Nếu bạn cho phép truy cập không gian làm việc cho một tác vụ Agent, nội dung tệp liên quan và kết quả công cụ cũng có thể được đưa vào hội thoại của tác vụ đó.
 
-Ứng dụng yêu cầu cho phép trước khi chia sẻ với nhà cung cấp từ xa. Bạn có thể đổi tùy chọn chia sẻ hoặc thu hồi quyền trong Cài đặt. Dữ liệu AI từ xa đi đến nhà cung cấp bạn chọn, không qua máy chủ AI do nhà phát triển vận hành. Chính sách quyền riêng tư, quy định lưu giữ dữ liệu và điều khoản của nhà cung cấp đó được áp dụng.
+Ứng dụng yêu cầu cho phép trước khi chia sẻ với nhà cung cấp từ xa. Bạn có thể đổi tùy chọn chia sẻ hoặc thu hồi quyền trong Cài đặt. Dữ liệu AI từ xa đi đến nhà cung cấp bạn chọn, không qua máy chủ AI do nhà phát triển vận hành. Chính sách quyền riêng tư, quy định lưu giữ dữ liệu và điều khoản của nhà cung cấp đó được áp dụng. Nếu bạn chọn đăng nhập OpenRouter, OpenRouter xử lý xác thực và cấp khóa API cho ứng dụng.
 
-## Git và thông tin xác thực
+## Git, GitHub và thông tin xác thực
 
-Các tính năng Git kết nối trực tiếp với máy chủ kho mã HTTPS được hỗ trợ mà bạn chọn, bao gồm cả máy chủ ngoài GitHub. Clone, fetch và pull yêu cầu dữ liệu kho mã; push tải lên các commit và tệp mà bạn chọn công bố. Khi xác thực, thông tin đăng nhập cần thiết được gửi đến máy chủ kho mã. Máy chủ nhận thông tin kết nối thông thường và áp dụng chính sách riêng.
+Các tính năng Git kết nối trực tiếp với máy chủ kho mã HTTPS được hỗ trợ mà bạn chọn, bao gồm cả máy chủ ngoài GitHub. Clone, fetch và pull yêu cầu dữ liệu kho mã; push tải lên các commit và tệp mà bạn chọn công bố. Khi xác thực, thông tin đăng nhập cần thiết được gửi đến máy chủ kho mã. Máy chủ nhận thông tin kết nối thông thường và áp dụng chính sách riêng. Nếu bạn đăng nhập GitHub trong Cài đặt, GitHub xử lý cấp quyền và ứng dụng dùng mã truy cập để liệt kê và mở những kho mã mà tài khoản của bạn có quyền truy cập.
 
 Khóa API và token truy cập Git đã lưu được giữ trong Keychain của iOS trên thiết bị. Ứng dụng dùng chúng cho dịch vụ đã cấu hình có yêu cầu xác thực. Hãy giữ kín URL kho mã, thông tin xác thực và chỉ kết nối với dịch vụ bạn tin cậy.
+
+## Máy chủ từ xa qua SSH và SFTP
+
+Khi bạn kết nối với máy chủ đã cấu hình, thiết bị gửi dữ liệu xác thực, nội dung nhập vào terminal và các tệp bạn chọn đọc hoặc ghi trực tiếp đến máy chủ đó. Địa chỉ máy chủ, tên người dùng và dấu vân tay khóa máy chủ đã lưu được giữ trên thiết bị. Mật khẩu, khóa riêng và cụm mật khẩu đã lưu được giữ trong Keychain. Khóa riêng được dùng trên thiết bị để xác thực. Khi mất kết nối, ứng dụng có thể giữ cục bộ nội dung sửa đã lưu của tệp từ xa rồi tải lên khi kết nối được với máy chủ. Máy chủ từ xa có thể ghi nhận truy cập, lệnh và tệp theo chính sách riêng.
 
 ## Giao dịch App Store
 

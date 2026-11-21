@@ -38,17 +38,14 @@ export function appAlternates(app: App): AlternateRoute[] {
 export type LegalKind = 'privacy' | 'terms';
 
 export function legalPath(app: App, kind: LegalKind, lang: Locale = defaultLangOf(app)) {
-  const translated =
-    (lang === 'zh' && app.slug === 'lunarv') ||
-    ((lang === 'en' || lang === 'vi') && legalLangsOf(app).includes(lang));
-  return `${appPath(app, translated ? lang : defaultLangOf(app))}${kind}.html`;
+  const language = legalLangsOf(app).find((available) => available === lang) ?? defaultLangOf(app);
+  return `${appPath(app, language)}${kind}.html`;
 }
 
 export function legalAlternates(app: App, kind: LegalKind): AlternateRoute[] {
-  const available = legalLangsOf(app);
-  return appLanguages(app)
-    .filter(
-      (lang) => lang === 'zh' || ((lang === 'en' || lang === 'vi') && available.includes(lang)),
-    )
-    .map((lang) => ({ lang, path: legalPath(app, kind, lang) }));
+  const original = defaultLangOf(app);
+  return [original, ...legalLangsOf(app).filter((lang) => lang !== original)].map((lang) => ({
+    lang,
+    path: legalPath(app, kind, lang),
+  }));
 }

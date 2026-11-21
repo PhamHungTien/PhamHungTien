@@ -5,7 +5,6 @@ const app: App = {
   slug: 'padcodeai',
   name: 'Pad Code AI',
   route: '/PadCodeAI/',
-  legalLangs: ['en', 'vi'],
   icon: icon,
   links: {
     stores: { appStore: 'https://apps.apple.com/app/id6774398897' },
