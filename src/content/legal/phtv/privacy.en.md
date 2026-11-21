@@ -1,36 +1,41 @@
 ---
 title: "Privacy Policy"
-description: "PHTV and PHTV Keyboard process every keystroke on your Mac and never collect or send your data."
-updated: "October 27, 2026"
+description: "PHTV and PHTV Keyboard process every keystroke on your device and never collect or send your data."
+updated: "November 21, 2026"
 lang: en
 ---
 ## Summary
 
-PHTV does not collect, store or send anything you type. Every key is processed on your Mac and then forgotten. There is no advertising, analytics or tracking.
+PHTV does not collect, store or send anything you type. Every key is processed on your device and then forgotten. There is no advertising, analytics or tracking.
 
-This policy covers both editions:
+This policy covers every edition:
 
-- **PHTV**: the open-source edition, downloaded from this site, GitHub or Homebrew.
-- **PHTV Keyboard**: the Mac App Store edition.
+- **PHTV**: the open-source Mac edition, downloaded from this site, GitHub or Homebrew.
+- **PHTV Keyboard for Mac**: the Mac App Store edition.
+- **PHTV Keyboard for iPhone and iPad**: the keyboard and its companion app on the App Store.
 
-## Data processed on your Mac
+## Data processed on your device
 
 - **Keystrokes:** used only to form Vietnamese text as you type. No typing history is kept or sent anywhere.
-- **Settings:** your typing method, shortcuts and other options are stored only on your Mac.
-- **Clipboard history** (when you turn on PHTV Clipboard): what you copy is stored in the app's folder on your Mac so you can paste it again. It never leaves your Mac and you can delete it at any time. Content copied from password managers is skipped.
-- **Recently used emoji:** stored on your Mac to show them first in the emoji picker.
+- **Settings and text shortcuts:** your typing method, shortcuts, text shortcuts and other options are stored only on your device.
+- **Clipboard history** (when you turn it on): what you copy is stored on your device so you can paste it again. It never leaves your device and you can delete it at any time. On the Mac, content copied from password managers is skipped.
+- **Recently used emoji:** stored on your device to show them first in the emoji picker.
+- **On iPhone and iPad:** the words the keyboard learns from your typing for better suggestions, and the background photo you choose for the keyboard, stay on the device. You can clear learned words in the keyboard settings.
+- **Typing race:** your records and recent results are stored on your device.
 
 ## Permissions
 
-- **PHTV** needs **Accessibility** access to receive keystrokes and work in every app. It is used only to process keys as you type.
-- **PHTV Keyboard** is a macOS input source (InputMethodKit) that runs in Apple's App Sandbox and does **not** need Accessibility or Input Monitoring access.
+- **PHTV** needs **Accessibility** access to receive keystrokes and work in every app; on macOS 27.3 and later it is listed under **System & App Protection Override**. It is used only to process keys as you type.
+- **PHTV Keyboard for Mac** needs exactly one macOS permission to compose Vietnamese letters in every app: **System & App Protection Override** on macOS 27.3 and later (earlier versions call it Device Control and Data Access or Accessibility). It runs in Apple's App Sandbox and does not read other apps' content.
+- **PHTV Keyboard for iPhone and iPad** types without **Allow Full Access**. That option is only used for key haptics, pasting from the keyboard's clipboard panel, your own background photo and syncing settings and text shortcuts with the PHTV app. The keyboard sends no data anywhere.
 
-macOS turns every input method off, including PHTV, when you type a password.
+The system turns every input method off, including PHTV, when you type a password.
 
 ## Network access
 
-- **PHTV Keyboard** does not connect to the internet.
-- **PHTV** connects only to check for updates, and when you open the GIF or Sticker tab of PHTV Picker (images come from the Klipy service). Nothing you type is ever sent.
+- **Typing needs no internet** in every edition.
+- **PHTV Keyboard** (Mac, iPhone, iPad) connects only to Apple's **Game Center**, when you sign in to Game Center to post typing race scores and see leaderboards. Scores and your Game Center name are handled by Apple under [Apple's privacy policy](https://www.apple.com/legal/privacy/). Without signing in you can still race and keep your records on the device.
+- **PHTV** connects only to check for updates, and when you open the GIF or Sticker tab of PHTV Picker (images come from the Klipy service, which receives the search terms, a random install ID and network details such as the IP address). Nothing you type is ever sent.
 
 ## Children
 
