@@ -1,8 +1,7 @@
 ---
+lang: vi
 title: Cách gõ VNI và nên chọn Telex hay VNI?
 description: Bảng gõ VNI đầy đủ với các phím số từ 1 đến 9, ví dụ cho các từ khó, so sánh ưu nhược điểm của VNI và Telex để chọn kiểu gõ tiếng Việt hợp với bạn.
-titleEn: 'VNI or Telex: choose your typing method'
-descriptionEn: 'Compare the two Vietnamese typing methods and learn VNI letter and tone shortcuts. PHTV tutorial in Vietnamese.'
 published: 2026-10-15
 app: phtv
 topic: Kiến thức
@@ -98,4 +97,4 @@ Thử gõ đoạn sau bằng VNI:
 Ho5c ta65p kho6ng bao gio72 la2 muo65n
 ```
 
-Kết quả: "Học tập không bao giờ là muộn". Nếu bạn muốn thử Telex, xem [Bảng gõ Telex đầy đủ](/huong-dan/bang-go-telex-day-du/).
+Kết quả: "Học tập không bao giờ là muộn". Nếu bạn muốn thử Telex, xem [Bảng gõ Telex đầy đủ](/guides/bang-go-telex-day-du/).

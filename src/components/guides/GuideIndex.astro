@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GuideList from './GuideList.astro';
+import type { Lang } from '../../data/types';
+import { getGuides, guidesPath, guideUrl, guideAlternates } from '../../lib/guides';
+import { homePath } from '../../lib/routes';
+import { absolute, ogImage, PERSON_ID, WEBSITE_ID } from '../../lib/seo';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const vi = lang === 'vi';
+const guides = await getGuides(lang);
+const path = guidesPath(lang);
+const name = vi ? 'Hướng dẫn' : 'Guides';
+const description = vi
+  ? 'Hướng dẫn gõ tiếng Việt với PHTV, nghe sách offline với vTTS, tra âm lịch, dùng NAS, lập trình trên iPad, ghi chú và chơi Lunar Block.'
+  : 'Guides to Vietnamese typing with PHTV, offline reading with vTTS, lunar dates, NAS access, coding on iPad, note-taking and Lunar Block.';
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  '@id': `${absolute(path)}#page`,
+  url: absolute(path),
+  name,
+  description,
+  inLanguage: lang,
+  isPartOf: { '@id': WEBSITE_ID },
+  author: { '@id': PERSON_ID },
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: guides.map((guide, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      url: absolute(guideUrl(guide)),
+      name: guide.data.title,
+    })),
+  },
+};
+---
+
+<BaseLayout
+  lang={lang}
+  title={`${vi ? 'Hướng dẫn sử dụng ứng dụng' : 'App guides and tutorials'} | Phạm Hùng Tiến`}
+  description={description}
+  path={path}
+  alternates={guideAlternates()}
+  ogImage={ogImage(vi ? 'guides' : 'guides-en')}
+  jsonLd={jsonLd}
+  nav={[
+    { href: homePath(lang), label: vi ? 'Trang chủ' : 'Home' },
+    { href: path, label: name, current: true },
+    { href: `${homePath(lang)}#apps`, label: vi ? 'Ứng dụng' : 'Apps' },
+  ]}
+>
+  <GuideList
+    guides={guides}
+    lang={lang}
+    title={name}
+    lead={description}
+    headingLevel="h1"
+    id="all"
+  />
+</BaseLayout>

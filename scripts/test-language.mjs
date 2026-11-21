@@ -1,6 +1,6 @@
 /** Run after build: canonical languages, navigation and static-host legacy redirects. */
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readdir, readFile } from 'node:fs/promises';
 import vm from 'node:vm';
 
 const read = (path) => readFile(new URL(`../dist/${path}`, import.meta.url), 'utf8');
@@ -61,6 +61,43 @@ const privacy = [
 ];
 for (const [lang, path] of privacy) await checkPage(`${path.slice(1)}index.html`, lang, privacy);
 
+const guideIndexes = [
+  ['en', '/guides/'],
+  ['vi', '/huong-dan/'],
+];
+const guideIndexPages = new Map();
+for (const [lang, path] of guideIndexes) {
+  guideIndexPages.set(lang, await checkPage(`${path.slice(1)}index.html`, lang, guideIndexes));
+}
+
+const originalVietnameseGuides = [
+  'bang-go-telex-day-du',
+  'bang-ma-tieng-viet-unicode-tcvn3-vni',
+  'cach-go-vni-telex-hay-vni',
+  'go-tat-tren-mac-voi-phtv',
+  'go-tieng-viet-tren-mac-voi-phtv',
+  'sua-loi-go-tieng-viet-tren-mac',
+];
+const guideFiles = await readdir(new URL('../src/content/guides/', import.meta.url));
+const guideSlugs = new Set(guideFiles.map((file) => file.match(/^(.+)\.(?:en|vi)\.md$/)?.[1]));
+for (const slug of guideSlugs) {
+  if (!slug) continue;
+  const legacyVietnamese = originalVietnameseGuides.includes(slug);
+  const paths = [
+    ['en', `/${legacyVietnamese ? 'en/guides' : 'guides'}/${slug}/`],
+    ['vi', `/${legacyVietnamese ? 'guides' : 'huong-dan'}/${slug}/`],
+  ];
+  for (const [lang, path] of paths) {
+    assert.ok(guideFiles.includes(`${slug}.${lang}.md`), `${slug}: ${lang} Markdown`);
+    const html = await checkPage(`${path.slice(1)}index.html`, lang, paths);
+    assert.match(html, /<article class="guide\b/, `${path}: article body`);
+    assert.ok(
+      guideIndexPages.get(lang).includes(`href="${path}"`),
+      `${path}: link from guide index`,
+    );
+  }
+}
+
 for (const [oldPath, target] of [
   ['en/index.html', '/'],
   ['fr/index.html', '/'],
@@ -68,8 +105,7 @@ for (const [oldPath, target] of [
   ['en/vTTS/index.html', '/vTTS/'],
   ['vi/LunarV/index.html', '/LunarV/'],
   ['vi/PHTV/index.html', '/PHTV/'],
-  ['huong-dan/index.html', '/guides/'],
-  ['huong-dan/bang-go-telex-day-du/index.html', '/guides/bang-go-telex-day-du/'],
+  ...originalVietnameseGuides.map((slug) => [`huong-dan/${slug}/index.html`, `/guides/${slug}/`]),
 ]) {
   const html = await read(oldPath);
   assert.ok(html.includes('http-equiv="refresh"'), `${oldPath}: no-JS redirect`);

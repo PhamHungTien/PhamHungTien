@@ -1,13 +1,15 @@
 ---
+lang: en
 title: Listen to EPUB books and documents with vTTS
 description: Use vTTS on iPhone, iPad and Mac to read EPUB, PDF and Word documents aloud offline, adjust voices, set a sleep timer and export MP3 or M4B audiobooks.
 published: 2026-10-15
+updated: 2026-11-22
 app: vtts
 youtubeId: nWz8zGtZRMo
 topic: vTTS
 ---
 
-When your eyes need a break or your hands are busy, **vTTS** turns EPUB books and documents into Vietnamese or English speech **on your device**. It works without an internet connection and does not send your books to a server. This guide takes you from importing a book to exporting an audiobook you can listen to elsewhere.
+When your eyes need a break or your hands are busy, **vTTS** turns EPUB books and documents into Vietnamese or English speech **on your device**. Speech generation works without an internet connection. This guide takes you from importing a book to exporting an audiobook you can listen to elsewhere.
 
 ![vTTS on iPhone, iPad and Mac](../../assets/apps/vtts/store/en/header.webp)
 
@@ -16,7 +18,7 @@ When your eyes need a break or your hands are busy, **vTTS** turns EPUB books an
 - **iPhone and iPad:** iOS and iPadOS 17 or later.
 - **Mac:** macOS 14 or later.
 
-Download vTTS from the [App Store](https://apps.apple.com/app/id6817003401) or [Google Play](https://play.google.com/store/apps/details?id=com.phamhungtien.vtts). The steps below describe the Apple version. Voices are bundled with the app, so you can listen on first launch, even offline. The video above is narrated in Vietnamese; the written instructions below are in English.
+Download vTTS from the [App Store](https://apps.apple.com/app/id6817003401) or [Google Play](https://play.google.com/store/apps/details?id=com.phamhungtien.vtts). The steps below describe the Apple version. Voices are bundled with the app, so you can listen on first launch, even offline.
 
 ## Step 1: Import books and documents
 
@@ -67,15 +69,15 @@ To listen on another device, in the car or share an audio file, use Export:
 
 ## Correct names and abbreviations
 
-If a voice mispronounces a name, brand or abbreviation, open **Settings › Reading › Pronunciation Dictionary** and add the word with your preferred pronunciation. For example, “PHTV” can be read as “pê hát tê vê.” Changes apply to playback, exports and the LAN server. The dictionary stays on your device.
+If a voice mispronounces a name, brand or abbreviation, open **Settings › Reading › Pronunciation Dictionary** and add the word with your preferred pronunciation. For example, “PHTV” can be read as “pê hát tê vê.” Changes apply to playback, exports and the LAN server. The dictionary is stored locally and can sync if you enable the related iCloud option.
 
 vTTS also handles numbers, dates, times, percentages, currencies, phone numbers and common Vietnamese abbreviations such as “TP.HCM” and “PGS. TS.” It supports Sino-Vietnamese readings of Chinese characters.
 
 ## Privacy
 
 - **Speech generation works offline** on your device.
-- Books, drafts and history stay locally. Files leave the device when you choose to export or share them.
-- The **LAN server**, which provides a text-to-speech API on your local network, is **off by default** and requires a token when enabled. Enable it only on a network you trust.
+- Books, drafts and history are stored locally. If you enable iCloud sync, the categories you select also sync through your personal iCloud. You can export or share files separately.
+- The **LAN server**, which provides a text-to-speech API on your local network, is a Premium feature, is **off by default** and requires a token when enabled. Enable it only on a network you trust.
 
 See the [vTTS privacy policy](/vTTS/privacy.html) for details.
 

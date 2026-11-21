@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import { appBySlug } from '../../data/apps';
 import type { AppSlug } from '../../data/types';
-import { formatDate, guideLang, guidePath, readingMinutes, type Guide } from '../../lib/guides';
+import { formatDate, guideLang, guideUrl, readingMinutes, type Guide } from '../../lib/guides';
 
 interface Props {
   guide: Guide;
@@ -11,38 +11,27 @@ interface Props {
   headingLevel?: 'h2' | 'h3';
 }
 
-const { guide, lang = 'en', headingLevel = 'h3' } = Astro.props;
+const { guide, lang = guideLang(guide), headingLevel = 'h3' } = Astro.props;
+const articleLang = guideLang(guide);
 const Heading = headingLevel;
 const app = guide.data.app ? appBySlug.get(guide.data.app as AppSlug) : undefined;
 ---
 
-<a class="guide-card" href={guidePath(guide.id)}>
+<a class="guide-card" href={guideUrl(guide)} hreflang={articleLang}>
   <span class="guide-card__top">
     {app ? (
       <Image src={app.icon} alt="" width={28} height={28} densities={[1, 2]} loading="lazy" />
     ) : (
       <span class="guide-card__dot" aria-hidden="true" />
     )}
-    <span>
-      {lang === 'en' && guideLang(guide) === 'vi'
-        ? `${app?.name ?? guide.data.topic} · Tiếng Việt`
-        : lang === 'vi' && guideLang(guide) === 'en'
-          ? 'Bài viết tiếng Anh'
-          : guide.data.topic}
-    </span>
+    <span lang={articleLang}>{guide.data.topic}</span>
   </span>
-  <Heading class="guide-card__title">
-    {lang === 'en'
-      ? (guide.data.titleEn ?? guide.data.title)
-      : (guide.data.titleVi ?? guide.data.title)}
+  <Heading class="guide-card__title" lang={articleLang}>
+    {guide.data.title}
   </Heading>
-  <p>
-    {lang === 'en'
-      ? (guide.data.descriptionEn ?? guide.data.description)
-      : (guide.data.descriptionVi ?? guide.data.description)}
-  </p>
+  <p lang={articleLang}>{guide.data.description}</p>
   <span class="guide-card__meta">
-    <time datetime={guide.data.published}>{formatDate(guide.data.published)}</time> ·
+    <time datetime={guide.data.published}>{formatDate(guide.data.published, lang)}</time> ·
     {readingMinutes(guide)} {lang === 'vi' ? 'phút đọc' : 'min read'}
   </span>
 </a>

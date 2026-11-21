@@ -86,6 +86,6 @@ The static frontend does not send automated email. A trusted server-side trigger
 rate limiting and private credentials is needed before enabling email delivery; never
 put such credentials into this repository. No test email was sent.
 
-Pages are English except the Vietnamese-first PHTV and LunarV pages and their
-translations (see [LANGUAGES.md](LANGUAGES.md)). No saved or browser language preference
-changes the canonical page. Historical locale URLs redirect.
+English and Vietnamese pages use separate URLs. LunarV also has Simplified Chinese pages.
+The language switcher links to the equivalent page. See [LANGUAGES.md](LANGUAGES.md)
+for the canonical URLs and retained aliases.

@@ -1,0 +1,14 @@
+---
+import GuidePage from '../../../../components/guides/GuidePage.astro';
+import { getGuides, guideSlug, guideUrl, type Guide } from '../../../../lib/guides';
+
+export async function getStaticPaths() {
+  return (await getGuides('en'))
+    .filter((guide) => guideUrl(guide).startsWith('/en/guides/'))
+    .map((guide) => ({ params: { slug: guideSlug(guide) }, props: { guide } }));
+}
+
+const { guide } = Astro.props as { guide: Guide };
+---
+
+<GuidePage guide={guide} />

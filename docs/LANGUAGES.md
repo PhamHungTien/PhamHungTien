@@ -1,16 +1,22 @@
 # Website languages
 
-Home, other app pages, site privacy and the guide index use English. PHTV and LunarV
-use Vietnamese by default, with language links scoped to those app and legal pages:
+The home page, seven app pages, site privacy policy and guide collection have English and Vietnamese versions. LunarV also has a Simplified Chinese app page and Simplified Chinese legal documents. The language switcher links to translations of the page being read. Each version has a canonical URL and reciprocal `hreflang` links.
 
-- PHTV: `/PHTV/` (Vietnamese), `/en/PHTV/` (English).
-- LunarV: `/LunarV/` (Vietnamese), `/en/LunarV/` (English), `/zh/LunarV/`
-  (Simplified Chinese). Each also has translated `privacy.html` and `terms.html`.
+| Page            | English       | Vietnamese     | Simplified Chinese |
+| --------------- | ------------- | -------------- | ------------------ |
+| Home            | `/`           | `/vi/`         |                    |
+| PHTV            | `/en/PHTV/`   | `/PHTV/`       |                    |
+| LunarV          | `/en/LunarV/` | `/LunarV/`     | `/zh/LunarV/`      |
+| Other apps      | `/<App>/`     | `/vi/<App>/`   |                    |
+| Guide index     | `/guides/`    | `/huong-dan/`  |                    |
+| Website privacy | `/privacy/`   | `/vi/privacy/` |                    |
 
-PHTV typing tutorials are Vietnamese; general guides remain English. A guide card labels
-its language when the article differs from the surrounding app page. There is no automatic
-language detection or global selector. Other historical locale URLs redirect to their
-canonical destinations, retaining query parameters and fragments when JavaScript is enabled.
-The sitemap and application-page hreflang links advertise the available translations.
+Each app has a `privacy.html` and a `terms.html` under its localized app paths. The English and Vietnamese versions share the same coverage, including for apps with a Vietnamese-first URL. App and website legal pages remain publicly accessible and ask search engines to leave them out of search results.
 
-Run `npm run test:language` after building to check the routes and languages.
+## Guides
+
+Write the English and Vietnamese versions as `src/content/guides/<slug>.en.md` and `src/content/guides/<slug>.vi.md`. Use the same slug in both files, give each version a localized title, description and body, and set its `lang` to match the file name. Run `npm run og` to generate each version's social card. Record an `updated` date when revising the published article's content.
+
+New guides use `/guides/<slug>/` for English and `/huong-dan/<slug>/` for Vietnamese. Six original PHTV guides keep their Vietnamese articles at `/guides/<slug>/`. Their English versions use `/en/guides/<slug>/`. The older `/huong-dan/<slug>/` addresses for those PHTV guides still redirect to the Vietnamese articles.
+
+Legacy routes use static redirect documents. The redirect script preserves the query string and fragment when JavaScript is available. `npm run test:language` checks the built routes, language switcher and redirects after `npm run build`.

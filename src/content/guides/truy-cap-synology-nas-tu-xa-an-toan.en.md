@@ -1,7 +1,9 @@
 ---
+lang: en
 title: Access your Synology NAS remotely with iPhone, iPad and Mac
 description: Compare QuickConnect, DDNS and VPN access for a Synology NAS, prepare your security settings and connect with My NAS Manager on iPhone, iPad and Mac.
 published: 2026-10-15
+updated: 2026-11-22
 app: mynasmanager
 topic: My NAS Manager
 ---
@@ -15,7 +17,7 @@ At home, you connect to DSM, Synology's operating system, using a private IP add
 - **5000:** HTTP, without encryption.
 - **5001:** HTTPS, with encryption.
 
-A private `192.168.x.x` address is not reachable directly from the public internet. Away from home, you need a remote-access method.
+A private `192.168.x.x` address is reachable from the local network or via a private route into that network. [Synology’s DSM ports documentation](https://kb.synology.com/en-global/DSM/help/DSM/AdminCenter/system_login_portal_dsm)
 
 ## Three ways to connect remotely
 
@@ -50,7 +52,7 @@ A VPN provides a private route to the NAS without exposing the DSM port publicly
 | NAS management, file transfers and third-party apps | A VPN or Tailscale connection                  |
 | Direct access without a VPN                         | DDNS and carefully restricted HTTPS forwarding |
 
-A private VPN connection reduces the need to expose management services. Configure access rules so only the intended users and devices can reach the NAS. For setup details, see the [official Tailscale Synology guide](https://tailscale.com/docs/integrations/synology).
+A private VPN connection lets you manage DSM without opening its ports to the internet. Configure access rules so only the intended users and devices can reach the NAS. For setup details, see the [official Tailscale Synology guide](https://tailscale.com/docs/integrations/synology).
 
 ## Secure the NAS before enabling remote access
 
@@ -63,13 +65,11 @@ A private VPN connection reduces the need to expose management services. Configu
 7. Keep **DSM and installed packages updated**.
 8. Maintain **a separate backup**. RAID protects against certain disk failures but does not replace a backup. Use snapshots where supported and keep another copy on an external drive or backup service.
 
+[Synology’s guidance on securing a NAS](https://kb.synology.com/en-us/DSM/tutorial/How_to_add_extra_security_to_your_Synology_NAS).
+
 ## Connect with My NAS Manager
 
 My NAS Manager manages Synology devices running **DSM 7 or later** from iPhone, iPad and Mac. It provides resource monitoring, file browsing, package management and SSH controls.
-
-### Try Demo Mode
-
-Choose **Demo Mode** on the sign-in screen to explore the interface with simulated data before entering real NAS credentials.
 
 ### Sign in to your NAS
 
@@ -79,17 +79,18 @@ Enter the connection details:
 - **DSM port:** `5001` with **HTTPS**, or your custom HTTPS port. Port `5000` is the default for unencrypted HTTP.
 - **Username and DSM password:** an account on the NAS. Prefer a dedicated account with only the permissions you need.
 
-If your account uses two-factor authentication, enable **2FA** under security settings and enter the OTP when prompted. **Remember sign-in** retains the session for later use.
+If your account uses two-factor authentication, enable **2FA** under security settings and enter the OTP when prompted. **Remember sign-in** retains the DSM session in Keychain.
 
 When away from home, connect your VPN or Tailscale first. For Tailscale, use its assigned NAS address unless you have configured access to your home subnet.
 
 ### Troubleshooting
 
-| Problem                                | Things to check                                                                  |
-| -------------------------------------- | -------------------------------------------------------------------------------- |
-| Cannot connect to DSM                  | Address, port, VPN connection, HTTPS setting and NAS firewall rules              |
-| DSM rejects sign-in                    | Username, password, missing 2FA code or an Auto Block entry                      |
-| Invalid NAS IP, QuickConnect ID or DNS | Unexpected spaces, an extra `http://` prefix or an incorrectly formatted address |
+| Problem                  | Things to check                                                     |
+| ------------------------ | ------------------------------------------------------------------- |
+| Cannot connect to DSM    | Address, port, VPN connection, HTTPS setting and NAS firewall rules |
+| DSM rejects sign-in      | Username, password, missing 2FA code or an Auto Block entry         |
+| Certificate is untrusted | The DSM hostname, expiry and certificate chain                      |
+| Invalid NAS address      | Unexpected spaces, a typo or an incorrectly formatted port          |
 
 After repeated failed sign-ins, check the block list in DSM's security settings.
 

@@ -73,8 +73,8 @@ Face-recognition smart lock on an **STM32F411 + ESP32-S3/OV3660** dual-MCU archi
 
 This repository also builds [phamhungtien.com](https://phamhungtien.com): one
 [Astro](https://astro.build) site for the portfolio, app pages, guides and legal documents.
-The home page and all seven product pages are available in English and Vietnamese.
-LunarV is also available in Simplified Chinese.
+The home page, seven app pages, guides, and legal documents are available in English and Vietnamese.
+LunarV also has a Simplified Chinese product page, privacy policy, and terms.
 
 ```sh
 nvm use && npm ci

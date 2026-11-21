@@ -1,8 +1,7 @@
 ---
+lang: en
 title: 'The Vietnamese lunar calendar: leap months, zodiac cycles and solar terms'
 description: Understand Vietnam's lunar calendar, leap months, the 60-year stem-branch cycle, solar terms and why Vietnamese and Chinese New Year sometimes differ.
-titleVi: 'Âm lịch Việt Nam: tháng nhuận, can chi và tiết khí'
-descriptionVi: 'Tìm hiểu tháng nhuận, chu kỳ can chi, tiết khí và vì sao Tết Việt Nam đôi khi khác Tết Trung Quốc.'
 published: 2026-10-15
 app: lunarv
 topic: Calendar essentials
@@ -28,7 +27,7 @@ This adjustment keeps Tết in late January or February rather than allowing it 
 
 ## Why can Vietnamese and Chinese New Year differ?
 
-Vietnam and China calculate their calendars using different time zones: **UTC+7** in Vietnam and **UTC+8** in China. Vietnam's modern calendar has used the UTC+7 basis since 1968.
+Vietnam and China calculate their calendars using different time zones: **UTC+7** in Vietnam and **UTC+8** in China. Vietnam's modern calendar uses the UTC+7 basis.
 
 If a new moon occurs between 23:00 and midnight in Hanoi, it is already the following day in Beijing. The first day of the lunar month can therefore differ by one day. The placement of a major solar term near a date boundary can also affect the leap month and produce a larger difference.
 
@@ -38,7 +37,7 @@ If a new moon occurs between 23:00 and midnight in Hanoi, it is already the foll
 | 1985, Ất Sửu   | 21 January 1985     | 20 February 1985 | One lunar month |
 | 2007, Đinh Hợi | 17 February 2007    | 18 February 2007 | One day         |
 
-For Vietnamese anniversaries and celebrations, use a calendar calculated for **Vietnamese time**. A calendar based on Chinese dates can differ in these exceptional years.
+For Vietnamese anniversaries and celebrations, use a calendar calculated for **Vietnamese time**. [Calendar rules and historical examples from Hồ Ngọc Đức](https://www.xemamlich.uhm.vn/calrules_en.html)
 
 ## Heavenly stems and earthly branches
 
@@ -114,12 +113,12 @@ Traditional almanacs classify six periods as **hoàng đạo**, or auspicious ho
 
 ## Use LunarV for dates and reminders
 
-Finding a year's stem and branch is straightforward, but calculating new moons, month lengths and leap months requires astronomical calculations. [LunarV](/LunarV/) is a lunar calendar for iPhone, iPad and Mac using **Vietnamese time, UTC+7**, including years when Vietnamese and Chinese dates differ.
+Finding a year's stem and branch is straightforward, but calculating new moons, month lengths and leap months requires astronomical calculations. [LunarV](/en/LunarV/) is a lunar calendar for iPhone, iPad and Mac using **Vietnamese time, UTC+7**, including years when Vietnamese and Chinese dates differ.
 
 - **See today's lunar date:** use the Mac menu bar or add an iPhone or iPad widget.
 - **Explore a day:** view its stem-branch names, solar term, traditional auspicious hours and both calendars in a month grid.
 - **Convert dates:** switch between Gregorian and lunar dates to plan an anniversary.
-- **Set recurring reminders:** add an ancestral anniversary or family occasion once and receive a reminder each lunar year. Choose the day, advance notice and reminder time. The free edition supports 20 reminders.
+- **Set recurring reminders:** add an ancestral anniversary or family occasion once and receive a reminder each lunar year. Choose the day, advance notice and reminder time.
 - **Sync with Apple Calendar** to see these occasions alongside your other events.
 
 Download [LunarV on the App Store](https://apps.apple.com/app/id6770913893).

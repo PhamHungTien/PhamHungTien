@@ -1,8 +1,7 @@
 ---
+lang: vi
 title: Bảng gõ Telex đầy đủ và cách đặt dấu đúng
 description: Bảng gõ Telex đầy đủ cho chữ â, ă, ê, ô, ơ, ư, đ và năm dấu thanh, cách sửa và bỏ dấu, gõ nhanh phụ âm, kèm ví dụ cho các từ khó như người, được, trường.
-titleEn: 'The complete Telex typing chart'
-descriptionEn: 'Learn Vietnamese letters, tone keys and accent placement with the Telex input method. PHTV tutorial in Vietnamese.'
 published: 2026-10-15
 app: phtv
 topic: Kiến thức
@@ -148,4 +147,4 @@ Truowngf Vieejt Nam ddepj nhaast nawm nay
 
 Kết quả: "Đường đi không khó vì ngăn sông cách núi" và "Trường Việt Nam đẹp nhất năm nay".
 
-Nếu bạn quen bàn phím số hơn, xem thêm bài [Cách gõ VNI và nên chọn Telex hay VNI](/huong-dan/cach-go-vni-telex-hay-vni/).
+Nếu bạn quen bàn phím số hơn, xem thêm bài [Cách gõ VNI và nên chọn Telex hay VNI](/guides/cach-go-vni-telex-hay-vni/).

@@ -1,8 +1,7 @@
 ---
+lang: vi
 title: 'Gõ tắt trên Mac với PHTV: macro, ngày giờ, clipboard và bộ đếm'
 description: Cách tạo gõ tắt (macro) trong PHTV để gõ nhanh câu chào, email, địa chỉ; dùng snippet động cho ngày giờ, clipboard, nội dung ngẫu nhiên và bộ đếm tự tăng.
-titleEn: 'Text expansion on Mac with PHTV'
-descriptionEn: 'Create macros with dates, clipboard content and counters to type repeated text faster. Tutorial in Vietnamese.'
 published: 2026-10-15
 app: phtv
 topic: PHTV
@@ -88,4 +87,4 @@ macOS cũng có tính năng Thay thế văn bản (Cài đặt hệ thống › 
 
 Nếu đã có sẵn danh sách trong macOS, hãy bật **Dùng Text Replacements của macOS** để PHTV nhập chúng vào, rồi để PHTV lo phần thay chữ.
 
-Chưa cài PHTV? Xem [Cách gõ tiếng Việt trên Mac với PHTV](/huong-dan/go-tieng-viet-tren-mac-voi-phtv/).
+Chưa cài PHTV? Xem [Cách gõ tiếng Việt trên Mac với PHTV](/guides/go-tieng-viet-tren-mac-voi-phtv/).

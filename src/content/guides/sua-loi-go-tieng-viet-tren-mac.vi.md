@@ -1,9 +1,9 @@
 ---
+lang: vi
 title: 'Sửa lỗi gõ tiếng Việt trên Mac: lặp chữ, mất dấu, không gõ được'
 description: Cách khắc phục các lỗi gõ tiếng Việt thường gặp trên macOS như lặp chữ, mất dấu trong Chrome, không gõ được sau khi cập nhật, lỗi trong Terminal, VS Code và Excel.
-titleEn: 'Fix Vietnamese typing problems on Mac'
-descriptionEn: 'Troubleshoot repeated letters, missing accents and input conflicts with PHTV. Tutorial in Vietnamese.'
 published: 2026-10-15
+updated: 2026-11-22
 app: phtv
 topic: Khắc phục sự cố
 ---
@@ -21,7 +21,7 @@ Vì vậy, nguyên tắc chung là: **chỉ để một thứ sửa chữ của 
 Trước khi đi vào từng trường hợp, hãy kiểm tra ba điều:
 
 1. **Đang ở chế độ tiếng Việt:** biểu tượng ngôi sao của PHTV trên thanh menu đang chọn Tiếng Việt. Nhấn <kbd>Control</kbd> + <kbd>Shift</kbd> để đổi.
-2. **Quyền nhập liệu đã bật:** vào Cài đặt hệ thống › Quyền riêng tư & Bảo mật, mục **Trợ năng** (macOS 26 trở về trước) hoặc **Điều khiển thiết bị và truy cập dữ liệu** (macOS 27 trở lên), đảm bảo công tắc của PHTV đang bật.
+2. **Quyền nhập liệu đã bật:** mở trình thiết lập của PHTV để kiểm tra đúng quyền cho macOS đang dùng. Xem mục cấp quyền trong [hướng dẫn cài đặt](/guides/go-tieng-viet-tren-mac-voi-phtv/).
 3. **Thử trong Ghi chú hoặc TextEdit:** nếu gõ được ở đó, lỗi nằm ở ứng dụng bạn đang dùng chứ không phải ở bộ gõ.
 
 ## Lỗi 1: Chữ bị lặp, nhảy chữ hoặc tự đổi thành chữ khác
@@ -40,7 +40,7 @@ Trước khi đi vào từng trường hợp, hãy kiểm tra ba điều:
 
 ![Các công tắc tự sửa trong Cài đặt hệ thống › Bàn phím › Nguồn đầu vào](../../assets/guides/macos-ban-phim-nguon-dau-vao.webp)
 
-Trình thiết lập của PHTV có sẵn bước này (Bước 2), với nút mở thẳng đến đúng chỗ. Nếu bạn dùng tính năng Thay thế văn bản (Text Replacements) của macOS, hãy cân nhắc chuyển các mục đó sang [gõ tắt của PHTV](/huong-dan/go-tat-tren-mac-voi-phtv/) để tránh hai bên cùng thay chữ.
+Trình thiết lập của PHTV có sẵn bước này (Bước 2), với nút mở thẳng đến đúng chỗ. Nếu bạn dùng tính năng Thay thế văn bản (Text Replacements) của macOS, hãy cân nhắc chuyển các mục đó sang [gõ tắt của PHTV](/guides/go-tat-tren-mac-voi-phtv/) để tránh hai bên cùng thay chữ.
 
 ## Lỗi 2: Mất dấu hoặc lặp chữ trong thanh địa chỉ trình duyệt
 
@@ -69,15 +69,7 @@ Trong trường hợp thông thường, bạn không cần chạy lệnh Termina
 
 ## Lỗi 4: macOS báo "PHTV bị hỏng" hoặc "không thể mở"
 
-**Nguyên nhân:** khi tải ứng dụng ngoài App Store, macOS gắn cờ "cách ly" (quarantine) cho tệp. Đôi khi cờ này khiến macOS từ chối mở.
-
-**Cách sửa:** mở Terminal và chạy:
-
-```bash
-xattr -cr /Applications/PHTV.app
-```
-
-Sau đó nhấn chuột phải vào PHTV trong Applications và chọn **Mở**. Cài bằng Homebrew (`brew install --cask phtv`) thường tránh được lỗi này.
+Nếu macOS từ chối mở ứng dụng, hãy tải lại bản phù hợp với máy từ [trang phát hành chính thức](https://github.com/PhamHungTien/PHTV/releases/latest) và cài theo [hướng dẫn cài PHTV](/guides/go-tieng-viet-tren-mac-voi-phtv/). Nếu thông báo vẫn xuất hiện, gửi nội dung thông báo cùng phiên bản macOS để được hỗ trợ.
 
 ## Lỗi 5: Gõ lệnh trong Terminal hoặc viết code bị biến thành chữ có dấu
 
@@ -97,7 +89,7 @@ PHTV có sẵn cấu hình tương thích cho Terminal, iTerm2, Warp, terminal c
 
 **Cách sửa:**
 
-- Cập nhật PHTV lên bản mới nhất. Các ứng dụng này được kiểm thử riêng trước mỗi lần phát hành.
+- Cập nhật PHTV lên bản mới nhất rồi thử lại trong ô nhập liệu đang gặp lỗi.
 - Nếu một ứng dụng cụ thể vẫn lỗi, bật **Gửi từng phím** cho riêng ứng dụng đó trong **Cài đặt › Ứng dụng**.
 - Với bảng tính, gõ xong một ô rồi nhấn <kbd>Enter</kbd> hoặc <kbd>Tab</kbd> bình thường. Đừng chuyển ô bằng chuột khi chữ vừa gõ chưa hoàn tất.
 
@@ -105,7 +97,7 @@ PHTV có sẵn cấu hình tương thích cho Terminal, iTerm2, Warp, terminal c
 
 **Nguyên nhân:** văn bản được gõ hoặc lưu bằng một bảng mã khác bảng mã mà ứng dụng đang đọc, ví dụ gõ TCVN3 trong một ứng dụng hiện đại chỉ hiểu Unicode.
 
-**Cách sửa:** trong PHTV, chọn **Bảng mã: Unicode** ở **Cài đặt › Bộ gõ**. Đây là lựa chọn đúng cho gần như mọi ứng dụng ngày nay. Để chuyển văn bản cũ đã bị lỗi, dùng công cụ **Chuyển đổi bảng mã** của PHTV. Bài [Bảng mã tiếng Việt: Unicode, TCVN3, VNI](/huong-dan/bang-ma-tieng-viet-unicode-tcvn3-vni/) giải thích chi tiết.
+**Cách sửa:** trong PHTV, chọn **Bảng mã: Unicode** ở **Cài đặt › Bộ gõ**. Đây là lựa chọn đúng cho gần như mọi ứng dụng ngày nay. Để chuyển văn bản cũ đã bị lỗi, dùng công cụ **Chuyển đổi bảng mã** của PHTV. Bài [Bảng mã tiếng Việt: Unicode, TCVN3, VNI](/guides/bang-ma-tieng-viet-unicode-tcvn3-vni/) giải thích chi tiết.
 
 ## Lỗi 8: Phím tắt Control + Shift không hoạt động
 

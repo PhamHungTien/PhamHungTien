@@ -53,6 +53,7 @@ for await (const file of walk(outDir)) {
 }
 
 const REMOVED_NETWORKS = ['instagram.com', 'threads.net', 'tiktok.com', 'locket.cam', 'cake.me'];
+const uniqueMetadata = { title: new Map(), description: new Map() };
 
 for (const [path, html] of pages) {
   const is404 = path === '/404.html';
@@ -70,6 +71,15 @@ for (const [path, html] of pages) {
   const minDescription = /<html lang="zh"/.test(html) ? 20 : 50;
   if (description.length < minDescription || description.length > 170)
     fail(path, `description is ${description.length} characters (want ${minDescription}–170)`);
+
+  if (!noindex(html)) {
+    const title = html.match(/<title>([^<]+)<\/title>/)?.[1];
+    for (const [name, value] of Object.entries({ title, description })) {
+      const previous = uniqueMetadata[name].get(value);
+      if (previous) fail(path, `duplicate ${name} shared with ${previous}`);
+      else uniqueMetadata[name].set(value, path);
+    }
+  }
 
   const canonical = html.match(/<link rel="canonical" href="([^"]+)"/)?.[1];
   if (!is404 && canonical !== `${ORIGIN}${path}`) fail(path, `canonical is ${canonical}`);
@@ -136,6 +146,7 @@ for (const [, entry] of sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)) {
     continue;
   }
   const path = new URL(loc).pathname;
+  if (loc !== `${ORIGIN}${path}`) fail('sitemap.xml', `noncanonical loc ${loc}`);
   if (listed.has(path)) fail('sitemap.xml', `duplicate loc ${path}`);
   listed.add(path);
   const html = pages.get(path);

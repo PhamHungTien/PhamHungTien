@@ -2,29 +2,15 @@
 /** Build-output budgets; browser runtime checks remain a separate QA step. */
 import { readFile } from 'node:fs/promises';
 import { gzipSync } from 'node:zlib';
-const routes = [
-  'index.html',
-  'vi/index.html',
-  'PHTV/index.html',
-  'vTTS/index.html',
-  'vi/vTTS/index.html',
-  'PadCodeAI/index.html',
-  'vi/PadCodeAI/index.html',
-  'PadNotesAI/index.html',
-  'vi/PadNotesAI/index.html',
-  'MyNASManager/index.html',
-  'vi/MyNASManager/index.html',
-  'LunarV/index.html',
-  'en/PHTV/index.html',
-  'en/LunarV/index.html',
-  'zh/LunarV/index.html',
-  'LunarBlock/index.html',
-  'vi/LunarBlock/index.html',
-  'guides/index.html',
-];
+const dist = new URL('../dist/', import.meta.url);
+const sitemap = await readFile(new URL('sitemap.xml', dist), 'utf8');
+const routes = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(([, loc]) => {
+  const path = new URL(loc).pathname.slice(1);
+  return path.endsWith('/') || !path ? `${path}index.html` : path;
+});
 let failed = false;
 for (const route of routes) {
-  const html = await readFile(new URL(`../dist/${route}`, import.meta.url), 'utf8');
+  const html = await readFile(new URL(route, dist), 'utf8');
   const bytes = Buffer.byteLength(html);
   const gzip = gzipSync(html).length;
   const errors = [];

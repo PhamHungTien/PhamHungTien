@@ -13,7 +13,7 @@ interface Props {
 
 const { lang, compact = false } = Astro.props;
 const year = new Date().getFullYear();
-import { GUIDES_PATH } from '../../lib/guides';
+import { guidesPath } from '../../lib/guides';
 import { sitePrivacyPath } from '../../lib/sitePages';
 ---
 
@@ -35,7 +35,7 @@ import { sitePrivacyPath } from '../../lib/sitePages';
           </li>
         ))}
         <li>
-          <a href={GUIDES_PATH}>{t(lang, 'nav.guides')}</a>
+          <a href={guidesPath(lang === 'vi' ? 'vi' : 'en')}>{t(lang, 'nav.guides')}</a>
         </li>
       </ul>
     </nav>

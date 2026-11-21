@@ -1,6 +1,6 @@
 /**
- * Generates the 1200×630 Open Graph cards in public/og (one per app, per legal page,
- * and the home page). Run `npm run og` after changing an app name, tagline or icon,
+ * Generates the 1200×630 Open Graph cards in public/og. Run `npm run og` after
+ * changing a guide title, app name, tagline or icon,
  * then bump OG_VERSION in src/lib/seo.ts so social networks refetch the images.
  */
 import sharp from 'sharp';
@@ -180,6 +180,13 @@ await card(
   'Tiếng Việt',
 );
 await card(
+  'guides-en',
+  txt(72, 187, 36, 'Guides', 'font-weight="600"') +
+    headline(['App guides', 'and tutorials'], 62, 280) +
+    txt(74, 440, 25, 'Vietnamese typing, offline reading and more.', 'fill="#566074"'),
+  'English',
+);
+await card(
   'privacy',
   txt(72, 187, 36, 'phamhungtien.com', 'font-weight="600"') +
     headline(['Privacy Policy'], 70, 300) +
@@ -195,6 +202,7 @@ for (const file of (await readdir('src/content/guides')).filter((f) => f.endsWit
       .trim()
       .replace(/^(['"])(.*)\1$/, '$2');
   const title = field('title');
+  const label = field('lang') === 'vi' ? 'Hướng dẫn' : 'Guide';
   const app = field('app');
   const i = apps.findIndex((a) => a[0] === app);
   const max = i >= 0 ? 26 : 36;
@@ -206,10 +214,10 @@ for (const file of (await readdir('src/content/guides')).filter((f) => f.endsWit
   }
   await card(
     `guide-${file.replace(/\.md$/, '')}`,
-    txt(72, 187, 30, `Hướng dẫn · ${field('topic')}`, 'font-weight="600" fill="#566074"') +
+    txt(72, 187, 30, `${label} · ${field('topic')}`, 'font-weight="600" fill="#566074"') +
       headline(lines, size, 262) +
       (i >= 0 ? panel(i, apps[i][2]) : ''),
-    'Hướng dẫn',
+    label,
   );
 }
 for (const file of outputs) {

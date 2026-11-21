@@ -1,8 +1,7 @@
 ---
+lang: vi
 title: 'Bảng mã tiếng Việt: Unicode, Unicode tổ hợp, TCVN3, VNI và cách chuyển đổi'
 description: Giải thích các bảng mã tiếng Việt Unicode, Unicode tổ hợp, TCVN3 (ABC), VNI Windows và CP1258, vì sao chữ bị lỗi font và cách chuyển văn bản cũ sang Unicode trên Mac.
-titleEn: 'Vietnamese encodings: Unicode, TCVN3 and VNI'
-descriptionEn: 'Understand Vietnamese character encodings, recognize legacy fonts and convert text with PHTV. Tutorial in Vietnamese.'
 published: 2026-10-15
 app: phtv
 topic: Kiến thức
@@ -79,4 +78,4 @@ Khi gõ, hãy dùng **Unicode (dựng sẵn)**. Đây là dạng được dùng 
 - Chữ bị lỗi font gần như luôn là do lệch bảng mã giữa người gõ và nơi hiển thị.
 - PHTV vừa gõ được mọi bảng mã, vừa có công cụ chuyển văn bản cũ sang Unicode.
 
-Xem thêm: [Sửa lỗi gõ tiếng Việt trên Mac](/huong-dan/sua-loi-go-tieng-viet-tren-mac/).
+Xem thêm: [Sửa lỗi gõ tiếng Việt trên Mac](/guides/sua-loi-go-tieng-viet-tren-mac/).

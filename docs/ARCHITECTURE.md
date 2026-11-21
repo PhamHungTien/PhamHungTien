@@ -1,9 +1,8 @@
 # Architecture
 
 phamhungtien.com is **one [Astro](https://astro.build) project** that builds every page
-of the site: the portfolio, each app's landing page, their privacy policies and terms,
-and the 404 page. All pages share one layout, one design system, one set of interface
-strings and one Firebase module, so a change made once applies everywhere.
+of the portfolio, app landing pages, guides, legal documents and the 404 page.
+Localized pages share a layout and design system. The discussion boards share a Firebase module.
 
 ## Stack
 
@@ -12,7 +11,7 @@ strings and one Firebase module, so a change made once applies everywhere.
 | Framework     | Astro 7, static output (`output: 'static'`)                   |
 | Interactivity | Small TypeScript modules; React 19 only for discussion boards |
 | Styling       | Plain CSS with design tokens; component styles are scoped     |
-| Content       | Typed TypeScript data (apps) and Markdown (legal documents)   |
+| Content       | Typed TypeScript data (apps) and Markdown (guides and legal)  |
 | Images        | `astro:assets` (AVIF + WebP, responsive `srcset`)             |
 | Fonts         | Be Vietnam Pro, self-hosted via Fontsource                    |
 | Backend       | Firebase Auth + Firestore (discussions only)                  |
@@ -37,7 +36,8 @@ src/
     legal/                Privacy/terms template
     community/            Discussion boards (React islands) and their styles
     ui/                   Shared widgets: logo, donate dialog, lightbox, brand icons
-  content/legal/<slug>/   privacy.md, terms.md (or privacy.<lang>.md when translated)
+  content/guides/         One Markdown file per guide and language
+  content/legal/<slug>/   Privacy and terms, localized in the legal collection
   data/
     apps/<slug>.ts        One file per app: everything its page shows
     apps/index.ts         Display order and lookups
@@ -59,23 +59,22 @@ scripts/                  Build, verification and content tools (Node)
 
 ## Routes and languages
 
-The public website is English; PHTV and LunarV default to Vietnamese and provide translated app pages. PHTV tutorials are Vietnamese.
-Each language version has its own canonical URL. See [LANGUAGES.md](LANGUAGES.md).
+The site has English and Vietnamese home, app and guide pages with their own canonical URLs. LunarV also has a Simplified Chinese version. See [LANGUAGES.md](LANGUAGES.md) for translation paths and legacy guide URLs.
 
-| URL                                        | Content                                       |
-| ------------------------------------------ | --------------------------------------------- |
-| `/`                                        | English home                                  |
-| `/vTTS/`                                   | English app page                              |
-| `/PHTV/`, `/LunarV/`                       | Vietnamese app pages                          |
-| `/en/PHTV/`, `/en/LunarV/`                 | English app pages                             |
-| `/zh/LunarV/`                              | Simplified Chinese LunarV page                |
-| `/<App>/privacy.html`, `/<App>/terms.html` | App legal documents                           |
-| `/guides/`                                 | English guide index                           |
-| `/guides/<slug>/`                          | English articles or Vietnamese PHTV tutorials |
-| `/sitemap.xml`, `/404.html`                | Canonical sitemap and error page              |
+| URL                                                            | Content                                                                             |
+| -------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `/`, `/vi/`                                                    | English and Vietnamese home pages                                                   |
+| `/<App>/`, `/vi/<App>/`                                        | English-first app pages and their Vietnamese translations                           |
+| `/PHTV/`, `/LunarV/`                                           | Vietnamese-first app pages                                                          |
+| `/en/PHTV/`, `/en/LunarV/`                                     | English app translations                                                            |
+| `/zh/LunarV/`                                                  | Simplified Chinese LunarV page                                                      |
+| `/<localized app>/privacy.html`, `/<localized app>/terms.html` | App legal documents in English and Vietnamese, and in Simplified Chinese for LunarV |
+| `/privacy/`, `/vi/privacy/`                                    | Site privacy policy in English and Vietnamese                                       |
+| `/guides/`, `/huong-dan/`                                      | English and Vietnamese guide collections                                            |
+| `/guides/<slug>/`, `/en/guides/<slug>/`, `/huong-dan/<slug>/`  | Translated articles, with the original PHTV article URLs preserved                  |
+| `/sitemap.xml`, `/404.html`                                    | Sitemap and error page                                                              |
 
-Other legacy locale-prefixed pages and `/huong-dan/` URLs are static redirect documents.
-`LegacyRedirect.astro` retains search parameters and fragments when JavaScript is enabled.
+`BaseLayout.astro` renders language metadata and links to available translations. `LegacyRedirect.astro` preserves query parameters and fragments when JavaScript is enabled.
 
 ## Adding or changing an app
 
@@ -87,7 +86,7 @@ Other legacy locale-prefixed pages and `/huong-dan/` URLs are static redirect do
 3. List its `platforms` (e.g. `['android', 'windows']`) and `links.stores`
    (`appStore`, `googlePlay`, `microsoftStore`, `flathub`, `snapcraft`, `web`). Download
    buttons, platform filters and structured data are derived from these.
-4. Write `src/content/legal/<slug>/privacy.md` and `terms.md`.
+4. Write privacy and terms documents in English and Vietnamese in `src/content/legal/<slug>/`.
 5. Run `npm run og` for its social cards, then `npm run build`.
 6. If the app page embeds a video (`tutorial.youtubeId`), run `npm run sync:youtube`.
 
@@ -144,17 +143,18 @@ networks fetch the new cards.
 `.github/workflows/deploy.yml` runs on every push and pull request with a read-only token:
 formatting, types, Firestore rules tests, build, `verify` and `test:language`. Optimised
 images are cached between runs (`node_modules/.astro`). Only a
-push to `main` starts the separate publish job, which has write access and force-pushes
-`dist/` to `gh-pages`. Dependabot proposes grouped monthly updates for npm packages and
-actions; each one goes through the same checks.
+push to `main` or a manual dispatch on `main` starts the separate publish job. It publishes
+`dist/` to `gh-pages` and checks that the public domain serves the full commit SHA in
+`/site-revision.txt`. Dependabot proposes grouped monthly updates for npm packages and
+GitHub Actions, which go through the same checks.
 
 ## SEO
 
-- Real HTML for every page and language; no client-side rendering of content.
-- `Person`, `WebSite`, `ProfilePage`, `SoftwareApplication`, `BreadcrumbList` and
-  `FAQPage` structured data, built only from facts that are visible on the page or in
-  the App Store snapshot. Never add unverified ratings or prices.
-- Sitemap with canonical pages and App Store release dates as `lastmod`.
+- Every page and language is rendered to static HTML.
+- Structured data identifies the developer, website, apps, guide collections, articles and
+  breadcrumbs. Product facts come from the page or the App Store snapshot.
+- The sitemap lists indexable canonical pages and their language alternates. Guide
+  `lastmod` entries use the published or updated date recorded in the article.
 - Speculation rules prerender a same-site page when a visitor shows intent to open it,
   and cross-document view transitions animate app icons between pages.
 

@@ -1,36 +1,54 @@
 import type { APIRoute } from 'astro';
 import { apps } from '../data/apps';
+import { LANGS } from '../data/types';
+import { LANGUAGE_NAMES } from '../i18n/locales';
 import { SITE } from '../data/site';
 import { platformList } from '../data/platforms';
-import { appPath, legalPath } from '../lib/routes';
+import { appPath, homePath, legalPath } from '../lib/routes';
 import { absolute } from '../lib/seo';
-import { getGuides, guidePath } from '../lib/guides';
+import { getGuides, guideUrl } from '../lib/guides';
+import { sitePrivacyPath } from '../lib/sitePages';
 
-/**
- * /llms.txt (https://llmstxt.org): a short Markdown map of the site for AI assistants and
- * AI search, generated from the same data as the pages so it never goes stale.
- */
 export const GET: APIRoute = async () => {
-  const guides = await getGuides();
+  const sections = await Promise.all(
+    LANGS.map(async (lang) => {
+      const guides = await getGuides(lang);
+      const vi = lang === 'vi';
+      return [
+        `## ${LANGUAGE_NAMES[lang]}`,
+        '',
+        `- [${vi ? 'Trang chủ' : 'Home'}](${absolute(homePath(lang))})`,
+        ...apps.map((app) => {
+          const platforms = app.requirements ?? platformList(app.platforms).join(', ');
+          return `- [${app.name}](${absolute(appPath(app, lang))}): ${app.description[lang]} (${platforms})`;
+        }),
+        '',
+        `### ${vi ? 'Hướng dẫn' : 'Guides'}`,
+        '',
+        ...guides.map(
+          (guide) =>
+            `- [${guide.data.title}](${absolute(guideUrl(guide))}): ${guide.data.description}`,
+        ),
+        '',
+        `### ${vi ? 'Quyền riêng tư' : 'Privacy'}`,
+        '',
+        `- [${vi ? 'Chính sách quyền riêng tư của website' : 'Website Privacy Policy'}](${absolute(sitePrivacyPath(lang))})`,
+        ...apps.map((app) => `- [${app.name}](${absolute(legalPath(app, 'privacy', lang))})`),
+        '',
+      ];
+    }),
+  );
   const lines = [
     `# ${SITE.name}`,
     '',
-    `> ${SITE.name} (${SITE.asciiName}) is an independent developer from Vietnam who builds private, offline-first apps for iPhone, iPad and Mac.`,
+    `> ${SITE.name} (${SITE.asciiName}) builds apps for Apple devices and Android, with an emphasis on offline features and on-device processing.`,
     '',
-    `Contact: ${SITE.email}.`,
+    `Contact: ${SITE.email}`,
     '',
-    '## Apps',
+    ...sections.flat(),
+    '## 简体中文',
     '',
-    ...apps.map((app) => {
-      const platforms = app.requirements ?? platformList(app.platforms).join(', ');
-      return `- [${app.name}](${absolute(appPath(app))}): ${app.description.en} (${platforms})`;
-    }),
-    '',
-    '## Guides',
-    '',
-    ...guides.map(
-      (g) => `- [${g.data.title}](${absolute(guidePath(g.id))}): ${g.data.description}`,
-    ),
+    `- [LunarV](${absolute('/zh/LunarV/')})`,
     '',
     '## Profiles',
     '',
@@ -38,10 +56,6 @@ export const GET: APIRoute = async () => {
     `- [YouTube](${SITE.youtube})`,
     `- [LinkedIn](${SITE.linkedin})`,
     `- [Facebook](${SITE.facebook})`,
-    '',
-    '## Optional',
-    '',
-    ...apps.map((app) => `- [${app.name} privacy policy](${absolute(legalPath(app, 'privacy'))})`),
     '',
   ];
   return new Response(lines.join('\n'), {

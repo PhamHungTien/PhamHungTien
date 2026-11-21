@@ -11,7 +11,7 @@ const en = {
   'nav.guides': 'Guides',
   'guides.title': 'Guides',
   'guides.lead':
-    'Step-by-step guides for typing Vietnamese on the Mac and getting more from the apps (in Vietnamese).',
+    'Step-by-step guides for Vietnamese typing on Mac, offline listening, writing code, taking notes and more.',
   'guides.all': 'All guides',
   'guides.minutes': 'min read',
   'footer.privacy': 'Website privacy',
@@ -127,7 +127,7 @@ const vi: Record<UiKey, string> = {
   'nav.guides': 'Hướng dẫn',
   'guides.title': 'Hướng dẫn',
   'guides.lead':
-    'Hướng dẫn từng bước: gõ tiếng Việt trên Mac, nghe sách, âm lịch, NAS và dùng các ứng dụng hiệu quả hơn.',
+    'Hướng dẫn từng bước để gõ tiếng Việt trên Mac, nghe sách ngoại tuyến, lập trình, ghi chú và dùng các ứng dụng khác.',
   'guides.all': 'Tất cả hướng dẫn',
   'guides.minutes': 'phút đọc',
   'footer.privacy': 'Quyền riêng tư',
