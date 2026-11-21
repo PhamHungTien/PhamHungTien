@@ -4,7 +4,7 @@
  * Without JavaScript every device row is shown; with it, device tabs switch rows and
  * arrow buttons page through a row on pointer devices. Videos load only when played.
  */
-import { Picture, getImage } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import { ChevronLeft, ChevronRight } from '@lucide/astro';
 import type { App } from '../../data/types';
 import { DEVICE_LABEL, storeMedia, type MediaLang } from '../../lib/store-media';
@@ -108,10 +108,11 @@ const rows = await Promise.all(
                   data-lightbox-alt={shot.alt}
                   aria-label={`${t(lang, 'app.enlarge')}: ${shot.alt}`}
                 >
-                  <Picture
+                  <Image
                     src={shot.src}
                     alt={shot.alt}
-                    formats={['webp']}
+                    format="webp"
+                    width={Math.min(shot.src.width, 1200)}
                     widths={[360, 720, 1200].filter((w) => w <= shot.src.width)}
                     sizes={
                       shot.ratio < 1

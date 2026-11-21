@@ -3,7 +3,7 @@
  * Top of every app page: the App Store product page header art, then the app's icon,
  * name, promise and download actions. Art comes from src/assets/apps/<slug>/store.
  */
-import { Image, Picture } from 'astro:assets';
+import { Image } from 'astro:assets';
 import { ChevronRight, Download, Heart, Store } from '@lucide/astro';
 import BrandIcon from '../ui/BrandIcon.astro';
 import type { App, Lang } from '../../data/types';
@@ -77,10 +77,11 @@ const platforms = platformGroupsOf(app.platforms)
 
   {header && (
     <div class="app-hero__banner" style={`--art-ratio: ${header.width} / ${header.height}`}>
-      <Picture
+      <Image
         src={header}
         alt={`${app.name} — ${title}`}
-        formats={['webp']}
+        format="webp"
+        width={Math.min(header.width, 2560)}
         widths={[720, 1200, 1800, 2560].filter((w) => w <= header.width)}
         sizes="(max-width: 1248px) 92vw, 1200px"
         loading="eager"

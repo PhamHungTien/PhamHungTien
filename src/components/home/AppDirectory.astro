@@ -1,6 +1,6 @@
 ---
 import { appPreviews } from '../../i18n/home-translations';
-import { Image, Picture } from 'astro:assets';
+import { Image } from 'astro:assets';
 import { Search } from '@lucide/astro';
 import type { Locale as Lang } from '../../i18n/locales';
 import { apps } from '../../data/apps';
@@ -98,10 +98,11 @@ const lastOf = (index: number) => {
           <a class="app-card" href={appPath(app, lang)} style={`--app: ${app.accent}`}>
             <div class="app-card__art">
               {art && (
-                <Picture
+                <Image
                   src={art}
                   alt=""
-                  formats={['webp']}
+                  format="webp"
+                  width={Math.min(art.width, 1200)}
                   widths={[480, 800, 1200].filter((w) => w <= art.width)}
                   sizes="(max-width: 767px) 46vw, (max-width: 1099px) 46vw, 384px"
                   loading={index < 3 ? 'eager' : 'lazy'}
