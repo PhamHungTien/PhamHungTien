@@ -22,21 +22,21 @@ const app: App = {
       en: 'Import an EPUB, follow the highlighted sentence, change voice, language and speed, add background music and a sleep timer. Narrated in Vietnamese with subtitles.',
     },
   },
-  category: { vi: 'Đọc sách & văn bản', en: 'Books & text to speech' },
+  category: { vi: 'Văn bản thành giọng nói', en: 'Offline text to speech' },
   title: {
-    vi: 'Để trang sách cất thành lời.',
-    en: 'Let your books speak to you.',
+    vi: 'Nghe sách và tài liệu khi không có mạng',
+    en: 'Listen to books and documents offline',
   },
   subtitle: {
-    vi: 'Nghe sách và văn bản bằng 17 ngôn ngữ, ngay trên thiết bị và không cần mạng.',
-    en: 'Listen to books and text in 17 languages, on your device and offline.',
+    vi: 'Chọn giọng đọc tiếng Việt, tiếng Anh hoặc một trong 15 ngôn ngữ khác. Nghe trên iPhone, iPad, Mac và Android.',
+    en: 'Choose a voice in English, Vietnamese or 15 other languages. Listen on iPhone, iPad, Mac and Android.',
   },
   description: {
-    vi: 'vTTS đọc sách và văn bản trên iPhone, iPad và Mac với giọng đọc có sẵn trong ứng dụng, dùng được khi không có mạng. Nhập EPUB, PDF, DOCX, theo dõi đoạn đang đọc, thêm nhạc nền, dịch sách và xuất sách nói M4B. Có cả bản Android.',
-    en: 'vTTS reads books and text aloud on iPhone, iPad and Mac with voices built into the app and ready offline. Import EPUB, PDF and DOCX, follow the highlighted passage, add background music, translate books and export M4B audiobooks. Also on Android.',
+    vi: 'vTTS đọc EPUB, PDF, DOCX và văn bản bằng giọng có sẵn cho 17 ngôn ngữ. Nghe ngoại tuyến, chỉnh tốc độ, hẹn giờ tắt hoặc xuất âm thanh.',
+    en: 'vTTS reads EPUB, PDF, DOCX and text aloud with built-in voices for 17 languages. Listen offline, change speed, set a sleep timer or export audio.',
   },
   platforms: ['ios', 'ipados', 'macos', 'android'],
-  requirements: 'iOS & iPadOS 17+, macOS 14+; Android',
+  requirements: 'iOS 17+, iPadOS 17+, macOS 14+, Android 8+',
   appCategory: 'UtilitiesApplication',
   facts: [
     {
@@ -67,8 +67,8 @@ const app: App = {
     {
       title: { vi: 'Sách và tài liệu', en: 'Books and documents' },
       description: {
-        vi: 'Dán văn bản hoặc nhập EPUB, PDF, DOCX, TXT và các định dạng khác. Mỗi sách nhớ vị trí, ngôn ngữ, giọng và tốc độ riêng.',
-        en: 'Paste text or import EPUB, PDF, DOCX, TXT and more. Each book remembers its own position, language, voice and speed.',
+        vi: 'Dán văn bản hoặc nhập EPUB, PDF, DOCX và TXT. Có nhận dạng văn bản trên thiết bị cho PDF quét. Mỗi sách lưu vị trí nghe, ngôn ngữ, giọng và tốc độ riêng.',
+        en: 'Paste text or import EPUB, PDF, DOCX and TXT. Use on-device text recognition for scanned PDFs. Each book remembers its own position, language, voice and speed.',
       },
     },
     {
@@ -86,24 +86,31 @@ const app: App = {
       },
     },
     {
+      title: { vi: 'Phòng thu giọng', en: 'Voice Studio' },
+      description: {
+        vi: 'Tạo giọng đọc từ bản thu của bạn ngay trên thiết bị. Khi bạn lưu, vTTS giữ hồ sơ giọng và xóa bản thu tạm của Phòng thu giọng.',
+        en: 'Create a reading voice from your own recording on the device. When you save, vTTS keeps the voice profile and deletes the temporary Voice Studio recording.',
+      },
+    },
+    {
       title: { vi: 'Dịch rồi nghe', en: 'Translate and listen' },
       description: {
-        vi: 'Dịch văn bản và sách ngay trên thiết bị; bản dịch được lưu thành sách mới, giữ nguyên bản gốc. Cần iOS/iPadOS 18 hoặc macOS 15 trở lên.',
-        en: 'Translate text and books on your device; the translation is saved as a new book and the original stays intact. Requires iOS/iPadOS 18 or macOS 15 or later.',
+        vi: 'Bản dịch được xử lý trên thiết bị và lưu thành sách mới. Trên thiết bị Apple, tính năng này cần iOS/iPadOS 18 hoặc macOS 15 trở lên. Android cần tải gói ngôn ngữ cho cặp dịch trước.',
+        en: 'Translations run on the device and save as new books. On Apple devices, translation requires iOS/iPadOS 18 or macOS 15 or later. Android requires a language download for the translation pair first.',
       },
     },
     {
       title: { vi: 'Xuất âm thanh và sách nói', en: 'Audio and audiobook export' },
       description: {
-        vi: 'Xuất M4A, MP3, AAC, WAV hoặc sách nói M4B có chương.',
-        en: 'Export M4A, MP3, AAC or WAV audio, or an M4B audiobook with chapters.',
+        vi: 'Xuất tệp M4A, MP3, AAC, WAV hoặc sách nói M4B kèm mục lục chương.',
+        en: 'Export M4A, MP3, AAC or WAV audio, or save a book as an M4B audiobook with chapter markers.',
       },
     },
     {
       title: { vi: 'Sao lưu và iCloud', en: 'Backup and iCloud' },
       description: {
-        vi: 'Sao lưu thư viện ra tệp và khôi phục khi cần. Tự chọn dữ liệu đồng bộ iCloud: hoạt động, sách và vị trí đọc, bản nháp, lịch sử, từ điển phát âm.',
-        en: 'Back up your library to a file and restore it when needed. Choose what syncs with iCloud: activity, books and positions, drafts, history and your pronunciation dictionary.',
+        vi: 'Sao lưu thư viện ra tệp và khôi phục khi cần. Trên thiết bị Apple, bạn có thể chọn đồng bộ sách, vị trí nghe, hoạt động, bản nháp, lịch sử và từ điển phát âm qua iCloud.',
+        en: 'Back up your library to a file and restore it when needed. On Apple devices, you can choose to sync books, reading positions, activity, drafts, history and your pronunciation dictionary with iCloud.',
       },
     },
     {
@@ -122,9 +129,38 @@ const app: App = {
     },
   ],
   support: {
-    vi: 'Cần hỗ trợ hoặc có đoạn đọc chưa tốt? Gửi mô tả và phiên bản ứng dụng; bạn không cần gửi cả cuốn sách hay tài liệu riêng tư.',
-    en: 'Need help or found a passage that sounds wrong? Send a description and your app version; there is no need to send an entire book or private document.',
+    vi: 'Nếu cần hỗ trợ hoặc gặp lỗi phát âm, hãy gửi mô tả, phiên bản ứng dụng và một ví dụ ngắn mà bạn có thể chia sẻ.',
+    en: 'For help or to report a pronunciation issue, send a description, your app version and a short example that you can share.',
   },
+  faq: [
+    {
+      question: {
+        vi: 'Có cần Internet để nghe sách không?',
+        en: 'Do I need the internet to listen to a book?',
+      },
+      answer: {
+        vi: 'Giọng đọc có sẵn khi cài ứng dụng. Bạn có thể nghe văn bản và sách đã nhập khi không có mạng. Một số tính năng tuỳ chọn như đồng bộ iCloud và tải gói ngôn ngữ dịch cần kết nối.',
+        en: 'Voices come with the app. You can listen to text and imported books offline. Optional features such as iCloud sync and translation language downloads need a connection.',
+      },
+    },
+    {
+      question: {
+        vi: 'Có thể nghe bản PDF chỉ toàn ảnh chụp không?',
+        en: 'Can vTTS read a scanned PDF?',
+      },
+      answer: {
+        vi: 'Khi nhập PDF quét, hãy chọn nhận dạng văn bản. Bạn có thể kiểm tra chữ được nhận dạng trước khi nghe, nhất là với trang mờ hoặc bố cục nhiều cột.',
+        en: 'Choose text recognition when importing a scanned PDF. Review the recognized text before listening, especially on blurry pages or in multi-column layouts.',
+      },
+    },
+    {
+      question: { vi: 'vTTS Premium có thuê bao không?', en: 'Is vTTS Premium a subscription?' },
+      answer: {
+        vi: 'Premium là giao dịch mua một lần qua cửa hàng trên thiết bị. Gói này bỏ giới hạn nghe, lưu sách, xuất âm thanh và mở máy chủ mạng nội bộ.',
+        en: 'Premium is a one-time purchase through your device’s store. It removes limits on listening, library size and exports and unlocks the local-network server.',
+      },
+    },
+  ],
 };
 
 export default app;

@@ -8,7 +8,7 @@ const app: App = {
   legalLangs: ['en', 'vi'],
   icon: icon,
   links: {
-    stores: { appStore: 'https://apps.apple.com/us/app/pad-code-ai-code-editor/id6774398897' },
+    stores: { appStore: 'https://apps.apple.com/app/id6774398897' },
     community: 'https://www.facebook.com/PadCodeAI',
   },
   accent: '#a3162b',
@@ -22,18 +22,19 @@ const app: App = {
   },
   category: { vi: 'IDE cho iPad và iPhone', en: 'IDE for iPad and iPhone' },
   title: {
-    vi: 'Xưởng lập trình hoàn chỉnh trên iPad và iPhone.',
-    en: 'A complete coding studio on iPad and iPhone.',
+    vi: 'Viết, chạy và kiểm tra mã trên iPad và iPhone',
+    en: 'Write, run and debug code on iPad and iPhone',
   },
   subtitle: {
-    vi: 'Trình soạn thảo, môi trường chạy mã ngay trên máy, terminal, Git và một AI cùng bạn xây dựng ứng dụng.',
-    en: 'An editor, on-device runtimes, a terminal, Git and an AI that builds with you.',
+    vi: 'Mở cả dự án, chạy mã ngay trên máy và quản lý thay đổi bằng Git. Dùng terminal, SSH, SFTP hoặc trợ lý AI khi cần.',
+    en: 'Open a project, run code on the device and manage changes with Git. Use the terminal, SSH, SFTP or the optional AI assistant as needed.',
   },
   description: {
-    vi: 'Pad Code AI chạy C, C++, Python, JavaScript, TypeScript, Ruby, PHP, Lua và SQLite ngay trên thiết bị với trình biên dịch tích hợp. Kèm agent AI miễn phí, SSH và SFTP, shell cho dự án, LaTeX và Git.',
-    en: 'Pad Code AI runs C, C++, Python, JavaScript, TypeScript, Ruby, PHP, Lua and SQLite on your device with bundled compilers. It adds a free AI agent, SSH and SFTP, a project shell, LaTeX and Git.',
+    vi: 'Pad Code AI là IDE cho iPad và iPhone. Chạy Python, C, C++ và JavaScript ngoại tuyến, xem trước web và quản lý dự án bằng Git.',
+    en: 'Pad Code AI is an IDE for iPad and iPhone. Run Python, C, C++ and JavaScript offline, preview websites and manage projects with Git.',
   },
   platforms: ['ios', 'ipados'],
+  requirements: 'iOS 17+, iPadOS 17+',
   appCategory: 'DeveloperApplication',
   facts: [
     {
@@ -57,22 +58,22 @@ const app: App = {
     {
       title: { vi: 'Vibe Coding', en: 'Vibe Coding' },
       description: {
-        vi: 'Mô tả ứng dụng hoặc thay đổi bằng lời của bạn. AI lập kế hoạch, viết tệp và chạy mã để tự kiểm tra. Chọn mức Hỏi, Lập kế hoạch, Sửa hoặc Tự động; mọi thay đổi đều xem được dạng diff và hoàn tác được.',
-        en: 'Describe the app or change you want. The AI plans it, writes the files and runs the code to check its work. Pick Ask, Plan, Edit or Auto, and review or undo every change as a diff.',
+        vi: 'Mô tả thay đổi bạn muốn thực hiện. Chọn chế độ Hỏi, Lập kế hoạch, Sửa hoặc Tự động để đặt phạm vi thao tác của AI. Xem bản so sánh và hoàn tác thay đổi của trợ lý khi cần.',
+        en: 'Describe the change you want to make. Choose Ask, Plan, Edit or Auto to control what the assistant can do. Review diffs and undo changes the assistant makes as needed.',
       },
     },
     {
       title: { vi: 'AI theo cách của bạn', en: 'AI your way' },
       description: {
-        vi: 'Apple Intelligence chạy riêng tư trên máy, kể cả tác vụ agent. Hoặc dùng khoá API của bạn với nhà cung cấp bên thứ ba, hay tải mô hình mở như Qwen, Gemma để dùng ngoại tuyến.',
-        en: 'Apple Intelligence runs privately on device, agent tasks included. Or bring your own key for a third-party provider, or download open models such as Qwen and Gemma to use offline.',
+        vi: 'Dùng Apple Intelligence trên thiết bị tương thích hoặc tải mô hình như Qwen và Gemma để dùng ngoại tuyến khi đủ bộ nhớ. Với nhà cung cấp AI trực tuyến, bạn cần khoá API và kết nối mạng.',
+        en: 'Use Apple Intelligence on a compatible device or download a model such as Qwen or Gemma for offline use where memory allows. Online providers require your own API key and an internet connection.',
       },
     },
     {
-      title: { vi: 'Trình biên dịch tích hợp', en: 'Bundled compilers' },
+      title: { vi: 'Chạy mã ngay trên thiết bị', en: 'On-device runtimes' },
       description: {
-        vi: 'C, C++, Python, JavaScript, TypeScript, Ruby, PHP, Lua và SQLite chạy ngoại tuyến, có nhập liệu, đối số và tệp dự án. Python có điểm dừng, biểu đồ matplotlib và gói như NumPy, pandas.',
-        en: 'C, C++, Python, JavaScript, TypeScript, Ruby, PHP, Lua and SQLite run offline with input, arguments and project files. Python adds breakpoints, matplotlib plots and packages such as NumPy and pandas.',
+        vi: 'Chạy C, C++, Python, JavaScript, TypeScript, Ruby, PHP, Lua và câu lệnh SQLite với dữ liệu nhập, đối số và tệp dự án. Python có điểm dừng, biểu đồ matplotlib và các gói tương thích như NumPy, pandas.',
+        en: 'Run C, C++, Python, JavaScript, TypeScript, Ruby, PHP, Lua and SQLite queries with input, arguments and project files. Python supports breakpoints, matplotlib plots and compatible packages such as NumPy and pandas.',
       },
     },
     {
@@ -90,7 +91,7 @@ const app: App = {
       },
     },
     {
-      title: { vi: 'Trình soạn thảo thực thụ', en: 'A real editor' },
+      title: { vi: 'Soạn thảo và điều hướng mã', en: 'Code editing and navigation' },
       description: {
         vi: 'Tô màu cú pháp, gợi ý mã, đi tới định nghĩa, tìm tham chiếu, đổi tên, tìm và thay thế toàn dự án, thu gọn mã, snippet và chia đôi màn hình.',
         en: 'Syntax highlighting, completion, go to definition, find references, rename, project-wide search and replace, folding, snippets and a split editor.',
@@ -104,7 +105,7 @@ const app: App = {
       },
     },
     {
-      title: { vi: 'Miễn phí là chính', en: 'Free where it counts' },
+      title: { vi: 'Gói miễn phí và mua một lần', en: 'Free access and one-time upgrade' },
       description: {
         vi: 'Agent AI và Vibe Coding miễn phí. Chia đôi trình soạn thảo và thay thế toàn dự án có lượt dùng thử mỗi ngày; mua một lần để bỏ giới hạn, không thuê bao.',
         en: 'The AI agent and Vibe Coding are free. The split editor and project-wide replace have a daily free allowance; a one-time purchase removes the limit, with no subscription.',
@@ -115,6 +116,32 @@ const app: App = {
     vi: 'Gửi góp ý, báo lỗi hoặc đề xuất ngôn ngữ mới qua email hoặc fanpage Pad Code AI.',
     en: 'Send feedback, bug reports, or language requests by email or on the Pad Code AI Facebook page.',
   },
+  faq: [
+    {
+      question: { vi: 'Có thể chạy mã khi không có mạng không?', en: 'Can I run code offline?' },
+      answer: {
+        vi: 'Các môi trường chạy tích hợp hoạt động ngoại tuyến. Bạn cần mạng khi tải thêm gói, kết nối máy chủ SSH, lấy mã từ kho Git từ xa hoặc dùng AI trực tuyến.',
+        en: 'The bundled runtimes work offline. You need a connection to download additional packages, connect to an SSH server, fetch from a remote Git repository or use an online AI provider.',
+      },
+    },
+    {
+      question: { vi: 'Pad Code AI có chạy được Swift không?', en: 'Can Pad Code AI run Swift?' },
+      answer: {
+        vi: 'Bạn có thể soạn thảo tệp Swift. Để biên dịch và chạy trong ứng dụng, hãy chọn một ngôn ngữ có môi trường chạy tích hợp, chẳng hạn Python, JavaScript, C hoặc C++.',
+        en: 'You can edit Swift files. To compile and run code in the app, choose a language with a bundled runtime, such as Python, JavaScript, C or C++.',
+      },
+    },
+    {
+      question: {
+        vi: 'Có dùng được GitHub riêng tư không?',
+        en: 'Can I open private GitHub repositories?',
+      },
+      answer: {
+        vi: 'Đăng nhập GitHub trong ứng dụng để duyệt và sao chép kho mà tài khoản của bạn có quyền truy cập. Sau khi sao chép, bạn có thể xem thay đổi và commit trên thiết bị.',
+        en: 'Sign in to GitHub in the app to browse and clone repositories your account can access. After cloning, you can review changes and commit on the device.',
+      },
+    },
+  ],
 };
 
 export default app;

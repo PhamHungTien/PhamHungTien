@@ -7,24 +7,24 @@ const app: App = {
   route: '/LunarBlock/',
   icon: icon,
   links: {
-    stores: { appStore: 'https://apps.apple.com/us/app/lunar-block-teris-3d/id6773545437' },
+    stores: { appStore: 'https://apps.apple.com/app/id6773545437' },
   },
   accent: '#2f9bff',
-  category: { vi: 'Game xếp khối 3D', en: '3D block puzzle' },
+  category: { vi: 'Trò chơi xếp khối 3D', en: '3D block puzzle' },
   title: {
-    vi: 'Xếp khối rơi kinh điển trong đấu trường 3D giữa không gian.',
-    en: 'The classic falling-block puzzle in a 3D arena in deep space.',
+    vi: 'Xếp khối pha lê trong đấu trường 3D',
+    en: 'Stack and clear crystal blocks in a 3D arena',
   },
   subtitle: {
-    vi: 'Khối pha lê phát sáng, vỡ theo vật lý thật, ba chế độ chơi và bảng xếp hạng Game Center.',
-    en: 'Glowing crystal blocks, real physics on every clear, three modes and Game Center leaderboards.',
+    vi: 'Thử ba chế độ Marathon, Sprint và Ultra trên iPhone, iPad hoặc Mac. Điều khiển bằng cảm ứng, bàn phím hoặc tay cầm.',
+    en: 'Play Marathon, Sprint and Ultra on iPhone, iPad or Mac with touch, keyboard or controller input.',
   },
   description: {
-    vi: 'Lunar Block đưa thể loại xếp khối rơi vào một đấu trường 3D điện ảnh. Xếp, xoay, giữ và thả khối pha lê để phá hàng; mỗi lần phá hàng khối vỡ theo vật lý thật. Không quảng cáo, không cần tài khoản.',
-    en: 'Lunar Block turns the falling-block puzzle into a cinematic 3D arena. Stack, spin, hold and drop crystal blocks to clear lines, and every clear shatters with real physics. No ads, no account.',
+    vi: 'Lunar Block là trò chơi xếp khối rơi 3D cho iPhone, iPad và Mac. Xoay, giữ và thả khối pha lê để xoá hàng trong Marathon, Sprint và Ultra.',
+    en: 'Lunar Block is a 3D falling-block puzzle for iPhone, iPad and Mac. Rotate, hold and drop crystal blocks to clear lines in Marathon, Sprint and Ultra.',
   },
   platforms: ['ios', 'ipados', 'macos'],
-  requirements: 'iOS & iPadOS 16+, macOS 13+',
+  requirements: 'iOS 16+, iPadOS 16+, macOS 13+',
   appCategory: 'GameApplication',
   facts: [
     {
@@ -53,17 +53,17 @@ const app: App = {
       },
     },
     {
-      title: { vi: 'Luật chơi hiện đại', en: 'Modern, precise rules' },
+      title: { vi: 'Xoay, giữ và tính trước', en: 'Rotate, hold and plan ahead' },
       description: {
-        vi: 'Túi bảy khối, ô giữ, hàng chờ hai khối và bóng chiếu; wall kick, floor kick, thời gian khoá nhạy; combo, T-Spin, Lunar Quad, Back-to-Back và Perfect Clear.',
-        en: 'A seven-piece bag, hold slot, two-piece queue and ghost piece; wall and floor kicks with responsive lock delay; combos, T-Spins, Lunar Quads, Back-to-Back and Perfect Clears.',
+        vi: 'Xem khối sắp rơi và bóng chiếu vị trí đáp, hoặc giữ một khối để dùng sau. Trò chơi tính điểm cho combo, T-Spin, xoá bốn hàng và xoá sạch bàn.',
+        en: 'Check the next pieces and their landing guide, or hold a piece for later. Score with combos, T-Spins, four-line clears and Perfect Clears.',
       },
     },
     {
-      title: { vi: 'Đấu trường 3D điện ảnh', en: 'A cinematic 3D arena' },
+      title: { vi: 'Đấu trường 3D', en: 'A 3D arena' },
       description: {
-        vi: 'Khối pha lê phát sáng vỡ tung theo vật lý thật mỗi lần phá hàng, cú thả nhanh có lực và camera chuyển động theo nhịp chơi.',
-        en: 'Glowing crystal blocks shatter with real physics on every clear, hard drops land with weight, and the camera moves with the action.',
+        vi: 'Khối pha lê phát sáng vỡ thành mảnh khi bạn xoá hàng. Camera và hiệu ứng va chạm phản hồi theo thao tác trong lúc chơi.',
+        en: 'Glowing crystal blocks shatter when you clear a line. The camera and impact effects respond to the action as you play.',
       },
     },
     {
@@ -89,9 +89,41 @@ const app: App = {
     },
   ],
   support: {
-    vi: 'Có góp ý gameplay hoặc điều khiển? Gửi mình qua email.',
-    en: 'Have gameplay or control feedback? Send it by email.',
+    vi: 'Gửi email nếu bạn có góp ý về cách chơi, điều khiển hoặc khả năng tiếp cận.',
+    en: 'Email feedback about gameplay, controls or accessibility.',
   },
+  faq: [
+    {
+      question: {
+        vi: 'Marathon, Sprint và Ultra khác nhau thế nào?',
+        en: 'What is the difference between Marathon, Sprint and Ultra?',
+      },
+      answer: {
+        vi: 'Marathon tăng tốc dần và chơi đến khi hết chỗ. Sprint tính thời gian để xoá 40 hàng. Ultra tính điểm bạn ghi được trong hai phút.',
+        en: 'Marathon gets faster as you play and ends when you run out of room. Sprint times how quickly you clear 40 lines. Ultra measures your score in two minutes.',
+      },
+    },
+    {
+      question: {
+        vi: 'Có thể chơi ngoại tuyến không?',
+        en: 'Can I play offline?',
+      },
+      answer: {
+        vi: 'Bạn có thể chơi và lưu kỷ lục cá nhân trên thiết bị khi không có mạng. Bảng xếp hạng và thành tích Game Center sử dụng tài khoản Game Center của Apple.',
+        en: 'You can play and keep personal records locally while offline. Game Center leaderboards and achievements use your Apple Game Center account.',
+      },
+    },
+    {
+      question: {
+        vi: 'Làm sao xem các nút điều khiển?',
+        en: 'Where can I find the controls?',
+      },
+      answer: {
+        vi: 'Mở mục Cách chơi để xem thao tác cảm ứng, phím tắt và nút tay cầm. Trong cài đặt, bạn có thể chọn bố cục cho người thuận tay trái.',
+        en: 'Open How to Play for the touch gestures, keyboard shortcuts and controller buttons. A left-handed layout is available in Settings.',
+      },
+    },
+  ],
 };
 
 export default app;

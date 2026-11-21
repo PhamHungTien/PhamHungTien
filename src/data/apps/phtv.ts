@@ -16,19 +16,19 @@ const app: App = {
   accent: '#d71f2a',
   category: { vi: 'Bộ gõ tiếng Việt cho macOS', en: 'Vietnamese input method for macOS' },
   title: {
-    vi: 'Gõ tiếng Việt theo cách của bạn.',
-    en: 'Type Vietnamese your way.',
+    vi: 'Gõ tiếng Việt bằng Telex và VNI trên Mac',
+    en: 'Type Vietnamese on Mac with Telex and VNI',
   },
   subtitle: {
-    vi: 'Bộ gõ macOS viết 100% bằng Swift: nhanh, riêng tư và hoạt động hoàn toàn trên máy. Miễn phí và mã nguồn mở.',
-    en: 'A 100% Swift input method for macOS: fast, private and fully on your Mac. Free and open source.',
+    vi: 'Gõ Telex, VNI hoặc Simple Telex, tạo phím gõ tắt và kiểm tra chính tả ngay trên Mac. PHTV miễn phí và mã nguồn mở.',
+    en: 'Type with Telex, VNI or Simple Telex, create text shortcuts and check spelling on your Mac. PHTV is free and open source.',
   },
   description: {
-    vi: 'PHTV là bộ gõ tiếng Việt mã nguồn mở cho macOS 14+, hỗ trợ Telex, VNI, gõ tắt, kiểm tra chính tả, PHTV Picker và lịch sử Clipboard. PHTV Keyboard là bản trên App Store cho Mac, iPhone và iPad.',
-    en: 'PHTV is an open-source Vietnamese input method for macOS 14+, with Telex, VNI, macros, spell checking, PHTV Picker and clipboard history. PHTV Keyboard is the App Store edition for Mac, iPhone and iPad.',
+    vi: 'PHTV là bộ gõ tiếng Việt miễn phí cho macOS 14+, có Telex, VNI, gõ tắt, kiểm tra chính tả và lịch sử clipboard. Tải cho cả Mac Apple Silicon và Intel.',
+    en: 'PHTV is a free Vietnamese input method for macOS 14+ with Telex, VNI, text shortcuts, spell checking and clipboard history. For Apple Silicon and Intel Macs.',
   },
   platforms: ['macos'],
-  requirements: 'macOS 14.0 or later',
+  requirements: 'macOS 14+',
   appCategory: 'UtilitiesApplication',
   facts: [
     { label: { vi: 'Hệ điều hành', en: 'System' }, value: { vi: 'macOS 14+', en: 'macOS 14+' } },
@@ -48,17 +48,17 @@ const app: App = {
   ],
   features: [
     {
-      title: { vi: 'Offline và riêng tư', en: 'Offline and private' },
+      title: { vi: 'Xử lý phím ngay trên máy', en: 'On-device typing' },
       description: {
-        vi: 'Xử lý hoàn toàn trên máy, không gửi nội dung gõ đi đâu. Chỉ trình chọn GIF và kiểm tra cập nhật cần Internet.',
-        en: 'Everything runs on your Mac and nothing you type leaves it. Only the GIF picker and update checks use the Internet.',
+        vi: 'Bộ gõ xử lý nội dung ngay trên Mac. Khi bạn mở hoặc tìm GIF và sticker, PHTV kết nối dịch vụ Klipy. Kiểm tra cập nhật cũng cần Internet.',
+        en: 'The typing engine processes text on your Mac. PHTV connects to Klipy when you open or search the GIF and sticker picker. Update checks also use the internet.',
       },
     },
     {
-      title: { vi: 'Nhanh và native', en: 'Fast and native' },
+      title: { vi: 'Bộ gõ trên thanh menu', en: 'A native menu bar app' },
       description: {
-        vi: 'Viết 100% bằng Swift, tối ưu cho macOS với độ trễ thấp và hoạt động ổn định trên mọi ứng dụng.',
-        en: 'Written 100% in Swift and tuned for macOS, with low latency in every app.',
+        vi: 'PHTV viết bằng Swift cho macOS. Mở cài đặt, đổi kiểu gõ và chuyển Việt–Anh ngay từ thanh menu.',
+        en: 'PHTV is written in Swift for macOS. Open settings, change your input method and switch between Vietnamese and English from the menu bar.',
       },
     },
     {
@@ -83,10 +83,10 @@ const app: App = {
       },
     },
     {
-      title: { vi: 'PHTV Keyboard trên App Store', en: 'PHTV Keyboard on the App Store' },
+      title: { vi: 'Bản PHTV Keyboard', en: 'The PHTV Keyboard edition' },
       description: {
-        vi: 'Bản cho Mac chạy trong App Sandbox với một quyền duy nhất, có gõ tắt, Clipboard và emoji. Bản cho iPhone và iPad là bàn phím có gợi ý từ, vuốt để gõ, giao diện tuỳ chỉnh và thi gõ nhanh. Sắp có trên App Store.',
-        en: 'The Mac edition runs in the App Sandbox with a single permission, plus text shortcuts, clipboard history and emoji. On iPhone and iPad it is a keyboard with word suggestions, swipe typing, custom themes and a typing race. Coming to the App Store.',
+        vi: 'PHTV Keyboard là bản dành cho App Store. Bản Mac chạy trong App Sandbox, có gõ tắt, clipboard và emoji. Bản iPhone và iPad có gợi ý từ, vuốt để gõ và thi gõ nhanh.',
+        en: 'PHTV Keyboard is the edition designed for the App Store. The sandboxed Mac app includes text shortcuts, clipboard history and emoji. The iPhone and iPad keyboard has word suggestions, swipe typing and a typing race.',
       },
     },
   ],
@@ -103,8 +103,8 @@ const app: App = {
         en: 'Turn off macOS auto-correct.',
       },
       {
-        vi: 'Cấp quyền cho PHTV khi được hỏi (Trợ năng, hoặc System & App Protection Override trên macOS 27.3 trở lên).',
-        en: 'Grant PHTV access when asked (Accessibility, or System & App Protection Override on macOS 27.3 and later).',
+        vi: 'Cấp một quyền theo hướng dẫn của PHTV. Tên mục là System & App Protection Override trên macOS 27.3+, Device Control and Data Access trên 27.0–27.2 hoặc Trợ năng trên các bản cũ hơn.',
+        en: 'Follow the PHTV setup prompt to grant one permission. Look for System & App Protection Override on macOS 27.3+, Device Control and Data Access on 27.0–27.2, or Accessibility on earlier versions.',
       },
       {
         vi: 'Dùng Control + Shift để chuyển giữa tiếng Việt và tiếng Anh.',
@@ -164,18 +164,18 @@ const app: App = {
         en: 'Does PHTV send my typing to the Internet?',
       },
       answer: {
-        vi: 'Không. PHTV hoạt động offline và không thu thập dữ liệu cá nhân; chỉ trình chọn GIF tải ảnh từ Klipy và kiểm tra cập nhật cần Internet. PHTV Keyboard gõ chữ không cần Internet; chỉ phần Thi gõ nhanh kết nối Game Center khi bạn đăng nhập.',
-        en: 'No. PHTV works offline and collects no personal data; only the GIF picker (images from Klipy) and update checks use the Internet. PHTV Keyboard types without the Internet; only its typing race connects to Game Center when you sign in.',
+        vi: 'Nội dung gõ được xử lý trên máy. PHTV dùng Internet để kiểm tra cập nhật và tải GIF, sticker từ Klipy khi bạn dùng trình chọn. PHTV Keyboard có thể kết nối Game Center khi bạn tham gia thi gõ nhanh.',
+        en: 'Typing is processed on the device. PHTV uses the internet for update checks and to load GIFs and stickers from Klipy when you use the picker. PHTV Keyboard can connect to Game Center when you join the typing race.',
       },
     },
     {
       question: {
-        vi: 'Vì sao PHTV cần quyền Accessibility?',
-        en: 'Why does PHTV need Accessibility access?',
+        vi: 'Vì sao PHTV cần quyền trong Cài đặt hệ thống?',
+        en: 'Why does PHTV need a system permission?',
       },
       answer: {
-        vi: 'PHTV nhận phím qua Trợ năng để chuyển ngôn ngữ và hoạt động trên mọi ứng dụng; trên macOS 27.3 trở lên, quyền này nằm trong mục System & App Protection Override. Quyền chỉ dùng để xử lý phím ngay lúc gõ. PHTV Keyboard cho Mac cũng cần quyền này để ghép chữ, nhưng chạy trong App Sandbox và không đọc nội dung của ứng dụng khác.',
-        en: "PHTV reads keystrokes through Accessibility to switch languages and work in every app; on macOS 27.3 and later it is listed under System & App Protection Override. It is used only to process keys as you type. PHTV Keyboard for Mac needs the same permission to compose letters, but runs in the App Sandbox and does not read other apps' content.",
+        vi: 'Quyền này cho phép PHTV nhận phím và đưa chữ đã ghép dấu vào ô đang gõ. Trình thiết lập mở đúng mục theo phiên bản macOS. PHTV Keyboard cho Mac cũng cần quyền ghép chữ và chạy trong App Sandbox.',
+        en: 'The permission lets PHTV receive keystrokes and insert composed Vietnamese text where you are typing. Setup opens the correct settings pane for your macOS version. PHTV Keyboard for Mac also needs permission to compose text and runs in the App Sandbox.',
       },
     },
     {
@@ -184,8 +184,8 @@ const app: App = {
         en: 'How do PHTV and PHTV Keyboard differ?',
       },
       answer: {
-        vi: 'Dùng chung bộ máy gõ. PHTV là bản mã nguồn mở cho Mac, tải từ đây hoặc Homebrew, có thêm GIF, Sticker và nhiều tuỳ chỉnh nâng cao. PHTV Keyboard là bản trên App Store: trên Mac chạy trong App Sandbox, có gõ tắt, Clipboard và emoji; trên iPhone và iPad là bàn phím tiếng Việt có gợi ý từ và vuốt để gõ. Trên Mac chỉ nên chạy một trong hai.',
-        en: 'They share one typing engine. PHTV is the open-source Mac edition, downloaded here or with Homebrew, with GIFs, stickers and many advanced options. PHTV Keyboard is the App Store edition: on the Mac it runs in the App Sandbox with text shortcuts, clipboard history and emoji; on iPhone and iPad it is a Vietnamese keyboard with word suggestions and swipe typing. On a Mac, run only one of them.',
+        vi: 'Hai bản dùng chung bộ máy gõ. Bản PHTV tải trực tiếp có GIF, sticker và tuỳ chỉnh nâng cao. PHTV Keyboard là bản dành cho App Store, với gõ tắt, clipboard và emoji trên Mac, cùng gợi ý từ và vuốt để gõ trên iPhone và iPad. Trên Mac, hãy chạy một bộ gõ tại một thời điểm.',
+        en: 'Both share a typing engine. The direct-download PHTV edition adds GIFs, stickers and advanced settings. PHTV Keyboard is designed for the App Store, with text shortcuts, clipboard history and emoji on Mac, and word suggestions and swipe typing on iPhone and iPad. Run one input method at a time on your Mac.',
       },
     },
   ],

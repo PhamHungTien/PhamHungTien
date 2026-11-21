@@ -6,7 +6,7 @@ import { socialProfiles } from '../data/socials';
 import appStore from '../data/appstore.json';
 import { t } from './i18n';
 import { platformList, storesOf } from '../data/platforms';
-import { appPath, homePath } from './routes';
+import { appPath, homePath, legalPath } from './routes';
 import { storeMedia } from './store-media';
 
 /** Bump when the Open Graph cards in public/og are regenerated (npm run og). */
@@ -113,16 +113,18 @@ export function homeJsonLd(lang: Locale) {
 
 export function appJsonLd(app: App, lang: Lang) {
   const url = absolute(appPath(app, lang));
+  const appId = `${absolute(app.route)}#app`;
+  const breadcrumbsId = `${url}#breadcrumbs`;
   const software: Record<string, unknown> = {
     '@type': 'SoftwareApplication',
-    '@id': `${absolute(app.route)}#app`,
+    '@id': appId,
     name: app.name,
     description: app.description[lang],
     applicationCategory: app.appCategory,
+    applicationSubCategory: app.category[lang],
     operatingSystem: app.requirements ?? platformList(app.platforms).join(', '),
     url,
     image: ogImage(app.slug),
-    inLanguage: lang,
     author: { '@id': PERSON_ID },
     featureList: app.features.map((feature) => feature.title[lang]),
     screenshot: storeMedia(app.slug, lang)
@@ -132,7 +134,8 @@ export function appJsonLd(app: App, lang: Lang) {
   };
   const stores = storesOf(app.links.stores);
   if (stores.length) software.downloadUrl = software.installUrl = stores.map((store) => store.url);
-  if (app.links.source) software.codeRepository = app.links.source;
+  if (app.install)
+    software.downloadUrl = `https://github.com/${app.install.githubRepo}/releases/latest`;
 
   // Only facts confirmed by the App Store lookup (npm run sync:appstore) are published.
   const store = storeApps[app.slug];
@@ -151,9 +154,25 @@ export function appJsonLd(app: App, lang: Lang) {
 
   const graph: unknown[] = [
     personSchema,
+    {
+      '@type': 'WebPage',
+      '@id': `${url}#page`,
+      url,
+      name: `${app.name} — ${app.category[lang]}`,
+      description: metaDescription(app.description[lang]),
+      inLanguage: lang,
+      mainEntity: { '@id': appId },
+      isPartOf: { '@id': WEBSITE_ID },
+      breadcrumb: { '@id': breadcrumbsId },
+      relatedLink: [
+        absolute(legalPath(app, 'privacy', lang)),
+        absolute(legalPath(app, 'terms', lang)),
+      ],
+    },
     software,
     {
       '@type': 'BreadcrumbList',
+      '@id': breadcrumbsId,
       itemListElement: [
         {
           '@type': 'ListItem',
