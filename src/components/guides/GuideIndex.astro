@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import GuideList from './GuideList.astro';
 import { GUIDE_LANGS, LANGUAGE_NAMES, type GuideLang } from '../../i18n/locales';
 import { guideCopy } from '../../i18n/guide-copy';
+import { appBySlug } from '../../data/apps';
 import { t } from '../../lib/i18n';
 import { getGuides, guidesPath, guideUrl, guideIndexAlternates } from '../../lib/guides';
 import { homePath } from '../../lib/routes';
@@ -16,7 +17,12 @@ const { lang } = Astro.props;
 const guides = await getGuides(lang);
 const path = guidesPath(lang);
 const name = t(lang, 'nav.guides');
-const { indexDescription: description, indexTitle } = guideCopy[lang];
+const { indexDescription: description, indexTitle, descriptions } = guideCopy[lang];
+const products = (['padcodeai', 'vtts'] as const).map((slug) => ({
+  name: appBySlug.get(slug)!.name,
+  slug,
+  guides: guides.filter((guide) => guide.data.app === slug),
+}));
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
@@ -53,14 +59,21 @@ const jsonLd = {
     { href: `${homePath(lang)}#apps`, label: t(lang, 'nav.apps') },
   ]}
 >
-  <GuideList
-    guides={guides}
-    lang={lang}
-    title={name}
-    lead={description}
-    headingLevel="h1"
-    id="all"
-  />
+  {descriptions ? (
+    <header class="guide-intro container section">
+      <h1>{indexTitle}</h1>
+      <p>{description}</p>
+    </header>
+  ) : (
+    <GuideList
+      guides={guides}
+      lang={lang}
+      title={name}
+      lead={description}
+      headingLevel="h1"
+      id="all"
+    />
+  )}
   <nav class="guide-languages container" aria-label={t(lang, 'nav.language')}>
     {GUIDE_LANGS.map((language) => (
       <a
@@ -73,9 +86,29 @@ const jsonLd = {
       </a>
     ))}
   </nav>
+  {descriptions &&
+    products.map((product) => (
+      <GuideList
+        guides={product.guides}
+        lang={lang}
+        title={product.name}
+        lead={descriptions[product.slug]}
+        id={`${product.slug}-guides`}
+      />
+    ))}
 </BaseLayout>
 
 <style>
+  .guide-intro h1 {
+    font-size: clamp(30px, 5vw, 54px);
+    line-height: 1.15;
+    font-weight: 600;
+  }
+  .guide-intro p {
+    max-width: 64ch;
+    margin-top: 12px;
+    color: var(--muted);
+  }
   .guide-languages {
     margin-top: 24px;
     display: flex;

@@ -41,6 +41,7 @@ const Heading = headingLevel;
       </a>
     )}
   </div>
+  <slot name="options" />
   <ul class="guides__grid" role="list">
     {guides.map((guide) => (
       <li>

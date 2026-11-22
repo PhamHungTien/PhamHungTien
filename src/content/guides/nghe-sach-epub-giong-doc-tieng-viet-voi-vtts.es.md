@@ -8,7 +8,7 @@ youtubeId: nWz8zGtZRMo
 topic: vTTS
 ---
 
-Si prefieres escuchar un documento mientras viajas o descansas la vista, vTTS puede leerlo en voz alta desde tu dispositivo. Estos pasos corresponden a la versión para iPhone, iPad y Mac.
+Si prefieres escuchar un documento mientras viajas o descansas la vista, vTTS puede leerlo en voz alta desde tu dispositivo. Estos pasos corresponden a iPhone y iPad con iOS o iPadOS 17 o posterior, y a Mac con macOS 14 o posterior.
 
 ## Importa un libro o un documento
 
@@ -24,6 +24,6 @@ Para escuchar antes de dormir, abre el temporizador y elige una duración. En la
 
 ## Guarda un archivo para escucharlo en otro lugar
 
-Usa **Exportar audio** cuando quieras guardar un texto breve. Para conservar los capítulos de un EPUB, abre el libro y elige **Exportar audiolibro**. El archivo M4B puede abrirse en un reproductor compatible. Mantén vTTS abierto mientras termina la exportación.
+Usa **Exportar audio** cuando quieras guardar un texto breve en M4A, MP3, AAC o WAV. Para conservar los capítulos de un EPUB, abre el libro y elige **Exportar audiolibro**. El archivo M4B puede abrirse en un reproductor compatible. Mantén vTTS abierto mientras termina la exportación.
 
-La síntesis funciona sin conexión. Las funciones opcionales, como la sincronización con iCloud, pueden necesitar Internet. Consulta en tu tienda y en la app los requisitos, límites de exportación y opciones de compra de tu versión.
+La síntesis funciona sin conexión. Las funciones opcionales, como la sincronización con iCloud, pueden necesitar Internet. La versión gratuita tiene límites de uso. vTTS Premium se ofrece como compra opcional de pago único en el App Store. Consulta en la app las condiciones de tu versión.

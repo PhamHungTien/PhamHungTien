@@ -45,4 +45,4 @@ Quita el corchete final de `minutes = [18, 25, 12]`, guarda el archivo y vuelve 
 
 Este ejemplo funciona con la biblioteca estándar y no necesita funciones de IA. Algunos paquetes adicionales de Python requieren conexión la primera vez que se usan. La [política de privacidad de Pad Code AI (en inglés)](/PadCodeAI/privacy.html) detalla las funciones que se conectan a otros servicios.
 
-[Descarga Pad Code AI en el App Store](https://apps.apple.com/es/app/id6774398897) y prueba el proyecto en tu dispositivo. Si después quieres funciones adicionales como el editor dividido, consulta en la app qué incluye cada opción y sus condiciones de compra.
+[Descarga Pad Code AI en el App Store](https://apps.apple.com/app/id6774398897) y prueba el proyecto en tu dispositivo. Si después quieres funciones adicionales como el editor dividido, consulta en la app qué incluye cada opción y sus condiciones de compra.

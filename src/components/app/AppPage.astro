@@ -12,11 +12,12 @@ import Discussions from './Discussions.astro';
 import MoreApps from './MoreApps.astro';
 import Contact from '../layout/Contact.astro';
 import GuideList from '../guides/GuideList.astro';
-import { getGuides } from '../../lib/guides';
+import { getGuides, guidesPath } from '../../lib/guides';
 import Lightbox from '../ui/Lightbox.astro';
 import type { NavItem } from '../layout/Header.astro';
 import type { App, Lang } from '../../data/types';
 import { t } from '../../lib/i18n';
+import { LANGUAGE_NAMES } from '../../i18n/locales';
 import { appAlternates, appPath, homePath } from '../../lib/routes';
 import { appJsonLd, metaDescription, ogImage } from '../../lib/seo';
 
@@ -27,6 +28,8 @@ interface Props {
 
 const { app, lang } = Astro.props;
 const guides = (await getGuides(lang)).filter((g) => g.data.app === app.slug);
+const translatedGuideLanguages =
+  app.slug === 'padcodeai' || app.slug === 'vtts' ? (['ja', 'es'] as const) : [];
 
 const favicon = await getImage({ src: app.icon, width: 64, height: 64, format: 'png' });
 
@@ -71,7 +74,21 @@ const nav: NavItem[] = [
         lead={t(lang, 'guides.lead')}
         allLabel={t(lang, 'guides.all')}
         id="app-guides"
-      />
+      >
+        {translatedGuideLanguages.length > 0 && (
+          <nav slot="options" class="app-guide-languages" aria-label={t(lang, 'nav.language')}>
+            {translatedGuideLanguages.map((language) => (
+              <a
+                href={`${guidesPath(language)}#${app.slug}-guides`}
+                lang={language}
+                hreflang={language}
+              >
+                {LANGUAGE_NAMES[language]}
+              </a>
+            ))}
+          </nav>
+        )}
+      </GuideList>
     )}
   </div>
   <Discussions app={app} lang={lang} />
@@ -84,3 +101,20 @@ const nav: NavItem[] = [
   import { initAppTabs } from '../../scripts/app-tabs';
   initAppTabs();
 </script>
+
+<style>
+  .app-guide-languages {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .app-guide-languages a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    padding-inline: 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-pill);
+  }
+</style>

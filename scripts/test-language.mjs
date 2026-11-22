@@ -44,7 +44,15 @@ for (const [app, originalLang] of Object.entries({
     lang === originalLang ? `/${app}/` : `/${lang}/${app}/`,
   ]);
   for (const [lang, path] of paths) {
-    await checkPage(`${path.slice(1)}index.html`, lang, paths);
+    const html = await checkPage(`${path.slice(1)}index.html`, lang, paths);
+    if (app === 'PadCodeAI' || app === 'vTTS') {
+      for (const language of ['ja', 'es']) {
+        assert.ok(
+          html.includes(`href="/${language}/guides/#${app.toLowerCase()}-guides"`),
+          `${path}: link to ${language} app guides`,
+        );
+      }
+    }
   }
   for (const kind of ['privacy', 'terms']) {
     const legal = paths.map(([lang, path]) => [lang, `${path}${kind}.html`]);
@@ -74,7 +82,13 @@ const guideIndexGroups = [
 const guideIndexPages = new Map();
 for (const group of guideIndexGroups) {
   for (const [lang, path] of group) {
-    guideIndexPages.set(lang, await checkPage(`${path.slice(1)}index.html`, lang, group));
+    const html = await checkPage(`${path.slice(1)}index.html`, lang, group);
+    guideIndexPages.set(lang, html);
+    if (lang === 'ja' || lang === 'es') {
+      for (const app of ['padcodeai', 'vtts']) {
+        assert.ok(html.includes(`id="${app}-guides"`), `${path}: section for ${app}`);
+      }
+    }
   }
 }
 
@@ -106,6 +120,27 @@ for (const slug of guideSlugs) {
     assert.ok(guideFiles.includes(`${slug}.${lang}.md`), `${slug}: ${lang} Markdown`);
     const html = await checkPage(`${path.slice(1)}index.html`, lang, paths);
     assert.match(html, /<article class="guide\b/, `${path}: article body`);
+    const contents = await readFile(
+      new URL(`../src/content/guides/${slug}.${lang}.md`, import.meta.url),
+      'utf8',
+    );
+    const app = contents.match(/^app: (padcodeai|vtts)$/m)?.[1];
+    if (app) {
+      const cta = html.match(/<aside class="app-cta"[^>]*>[\s\S]*?<\/aside>/)?.[0];
+      const store = app === 'padcodeai' ? '6774398897' : '6817003401';
+      assert.ok(
+        cta?.includes(`href="https://apps.apple.com/app/id${store}"`),
+        `${path}: App Store CTA`,
+      );
+      if (app === 'vtts') {
+        assert.ok(
+          cta.includes(
+            'href="https://play.google.com/store/apps/details?id=com.phamhungtien.vtts"',
+          ),
+          `${path}: Google Play CTA`,
+        );
+      }
+    }
     assert.ok(
       guideIndexPages.get(lang).includes(`href="${path}"`),
       `${path}: link from guide index`,
