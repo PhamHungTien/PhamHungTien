@@ -105,6 +105,7 @@ const { lang, nav, alternates } = Astro.props;
   /* A Liquid Glass capsule: 64px tall, so its radius is 32; the 40px controls sit 12px in,
      so theirs is 20 and the shapes stay concentric. */
   .site-header__bar {
+    --glass-tint: var(--glass-tint-strong);
     display: flex;
     height: 64px;
     align-items: center;
@@ -155,7 +156,7 @@ const { lang, nav, alternates } = Astro.props;
     align-items: center;
     padding: 0 14px;
     border-radius: var(--r-pill);
-    color: var(--muted);
+    color: color-mix(in srgb, var(--ink) 30%, var(--muted));
     font-size: 15px;
     transition:
       color 150ms ease-out,
