@@ -210,6 +210,7 @@ layers from the `.icon` documents (see [ARCHITECTURE.md](ARCHITECTURE.md#app-ico
 
 Guide cards use one column below 360 px, two from 360 px and three from 860 px.
 Titles stay visible in full and descriptions use a shorter preview on phones.
+Apps with one guide share a row in the guide index when the viewport has room.
 
 At 1180 px and wider, a guide's table of contents becomes a sticky column beside the
 article and marks the section being read (`src/scripts/toc.ts`); below that it stays an

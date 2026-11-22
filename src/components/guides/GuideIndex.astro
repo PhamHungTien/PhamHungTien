@@ -25,6 +25,8 @@ const products = apps
     guides: guides.filter((guide) => guide.data.app === slug),
   }))
   .filter((product) => product.guides.length > 0);
+const collections = products.filter((product) => product.guides.length > 1);
+const individualGuides = products.filter((product) => product.guides.length === 1);
 const general = guides.filter((guide) => !apps.some(({ slug }) => slug === guide.data.app));
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -67,7 +69,7 @@ const jsonLd = {
       <h1>{indexTitle}</h1>
       <p>{description}</p>
     </header>
-    {products.map((product) => (
+    {collections.map((product) => (
       <GuideList
         guides={product.guides}
         lang={lang}
@@ -75,6 +77,18 @@ const jsonLd = {
         id={`${product.slug}-guides`}
       />
     ))}
+    {individualGuides.length > 0 && (
+      <div class="guide-index__individual container section">
+        {individualGuides.map((product) => (
+          <GuideList
+            guides={product.guides}
+            lang={lang}
+            title={product.name}
+            id={`${product.slug}-guides`}
+          />
+        ))}
+      </div>
+    )}
     {general.length > 0 && (
       <GuideList guides={general} lang={lang} title={name} id="general-guides" />
     )}
@@ -99,6 +113,40 @@ const jsonLd = {
     max-width: 64ch;
     margin-top: 12px;
     color: var(--muted);
+  }
+
+  .guide-index__individual {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(12px, 2.5vw, 20px);
+  }
+
+  .guide-index__individual :global(.guides) {
+    display: grid;
+    width: 100%;
+    min-width: 0;
+    grid-template-rows: auto 1fr;
+    padding-top: 0;
+  }
+
+  .guide-index__individual :global(.guides__grid) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .guide-index__individual :global(h2) {
+    font-size: var(--text-h3);
+  }
+
+  @media (width >= 360px) {
+    .guide-index__individual {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (width >= 1100px) {
+    .guide-index__individual {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
   }
 
   @media (max-width: 639.98px) {
