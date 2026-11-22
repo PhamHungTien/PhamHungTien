@@ -50,6 +50,11 @@ async function checkPage(path, lang, alternatePaths = []) {
   const html = await read(path);
   assert.ok(html.includes(`<html lang="${lang}"`), `${path}: ${lang} document`);
   assert.ok(!html.includes('http-equiv="refresh"'), `${path}: real localized page`);
+  assert.equal(
+    html.match(/<details class="language-switcher"/g)?.length,
+    1,
+    `${path}: one language switcher`,
+  );
   for (const [language, href] of alternatePaths) {
     assert.ok(
       html.includes(`hreflang="${language}" href="https://phamhungtien.com${href}"`),
@@ -87,14 +92,6 @@ for (const [app, originalLang] of Object.entries({
   for (const [lang, path] of paths) {
     const html = await checkPage(`${path.slice(1)}index.html`, lang, paths);
     checkStoreBadges(html, app.toLowerCase(), lang);
-    if (app === 'PadCodeAI' || app === 'vTTS') {
-      for (const language of ['ja', 'es']) {
-        assert.ok(
-          html.includes(`href="/${language}/guides/#${app.toLowerCase()}-guides"`),
-          `${path}: link to ${language} app guides`,
-        );
-      }
-    }
   }
   for (const kind of ['privacy', 'terms']) {
     const legal = paths.map(([lang, path]) => [lang, `${path}${kind}.html`]);

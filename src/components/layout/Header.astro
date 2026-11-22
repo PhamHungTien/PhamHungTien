@@ -112,19 +112,6 @@ const { lang, nav, alternates } = Astro.props;
     padding: 0 12px 0 14px;
     border-radius: var(--r-pill);
   }
-  :global(html[data-home-header]) .site-header {
-    position: fixed;
-    top: max(12px, env(safe-area-inset-top));
-    left: 50%;
-    margin-top: 0;
-    translate: -50% 0;
-    transition: transform 320ms var(--ease);
-  }
-  /* Slides away rather than fading: a fading parent would flatten the glass mid-way. */
-  :global(html[data-home-header='hidden']) .site-header:not(:focus-within) {
-    transform: translateY(calc(-100% - 24px - env(safe-area-inset-top)));
-    pointer-events: none;
-  }
 
   .skip-link {
     position: absolute;

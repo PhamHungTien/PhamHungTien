@@ -15,7 +15,7 @@ import DonateDialog from '../components/ui/DonateDialog.astro';
 import type { Locale as Lang } from '../i18n/locales';
 import { SITE } from '../data/site';
 import { htmlLang, ogLocale } from '../lib/i18n';
-import { homePath, withDefaultAlternate, type AlternateRoute } from '../lib/routes';
+import { withDefaultAlternate, type AlternateRoute } from '../lib/routes';
 import { absolute, OG_SIZE } from '../lib/seo';
 
 export interface Props {
@@ -83,11 +83,7 @@ const speculationRules = {
 ---
 
 <!doctype html>
-<html
-  lang={htmlLang(lang)}
-  data-theme="dark"
-  data-home={path === homePath(lang) && !noindex ? 'true' : undefined}
->
+<html lang={htmlLang(lang)} data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -163,8 +159,6 @@ const speculationRules = {
         document.documentElement.dataset.theme = theme;
         if (theme === 'light')
           document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#f3f5f8');
-        if (document.documentElement.dataset.home === 'true')
-          document.documentElement.dataset.homeHeader = window.scrollY > 12 ? 'visible' : 'hidden';
         document.documentElement.dataset.motion = 'on';
       })();
     </script>

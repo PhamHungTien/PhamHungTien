@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import GuideList from './GuideList.astro';
-import { GUIDE_LANGS, LANGUAGE_NAMES, type GuideLang } from '../../i18n/locales';
+import { type GuideLang } from '../../i18n/locales';
 import { guideCopy } from '../../i18n/guide-copy';
 import { appBySlug } from '../../data/apps';
 import { t } from '../../lib/i18n';
@@ -74,18 +74,6 @@ const jsonLd = {
       id="all"
     />
   )}
-  <nav class="guide-languages container" aria-label={t(lang, 'nav.language')}>
-    {GUIDE_LANGS.map((language) => (
-      <a
-        href={guidesPath(language)}
-        hreflang={language}
-        lang={language}
-        aria-current={language === lang ? 'page' : undefined}
-      >
-        {LANGUAGE_NAMES[language]}
-      </a>
-    ))}
-  </nav>
   {descriptions &&
     products.map((product) => (
       <GuideList
@@ -108,24 +96,5 @@ const jsonLd = {
     max-width: 64ch;
     margin-top: 12px;
     color: var(--muted);
-  }
-  .guide-languages {
-    margin-top: 24px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 8px;
-  }
-  .guide-languages a {
-    min-height: 44px;
-    display: inline-flex;
-    align-items: center;
-    padding: 0 12px;
-    border-radius: var(--r-pill);
-    background: var(--surface);
-  }
-  .guide-languages a[aria-current] {
-    font-weight: 600;
-    background: var(--surface-2);
   }
 </style>
