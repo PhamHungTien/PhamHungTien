@@ -49,15 +49,16 @@ const others = apps.filter((other) => other.slug !== app.slug);
 <style>
   .more__list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(8px, 1.5vw, 14px);
   }
 
   .more__list a {
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 14px;
+    height: 100%;
+    gap: clamp(8px, 1.4vw, 14px);
+    padding: clamp(10px, 1.6vw, 16px);
     border: 1px solid var(--glass-edge);
     border-radius: var(--r-card);
     transition: border-color 160ms ease;
@@ -68,25 +69,40 @@ const others = apps.filter((other) => other.slug !== app.slug);
   }
 
   .more__list img {
-    width: 56px;
-    height: 56px;
+    flex: none;
+    width: clamp(34px, 5vw, 52px);
+    height: clamp(34px, 5vw, 52px);
     border-radius: var(--r-icon);
   }
 
   .more__list span {
     display: grid;
+    gap: 2px;
     min-width: 0;
+    overflow-wrap: anywhere;
   }
 
   strong {
+    font-size: clamp(14px, 1.5vw, 16px);
     font-weight: 600;
   }
 
   small {
-    overflow: hidden;
     color: var(--muted);
-    font-size: 14px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    font-size: clamp(12px, 1.4vw, 14px);
+    line-height: 1.4;
+  }
+
+  @media (max-width: 415px) {
+    .more__list a {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  @media (min-width: 690px) {
+    .more__list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
   }
 </style>

@@ -62,32 +62,48 @@ const jsonLd = {
     { href: `${homePath(lang)}#apps`, label: t(lang, 'nav.apps') },
   ]}
 >
-  <header class="guide-intro container section" id="all">
-    <h1>{indexTitle}</h1>
-    <p>{description}</p>
-  </header>
-  {products.map((product) => (
-    <GuideList
-      guides={product.guides}
-      lang={lang}
-      title={product.name}
-      id={`${product.slug}-guides`}
-    />
-  ))}
-  {general.length > 0 && (
-    <GuideList guides={general} lang={lang} title={name} id="general-guides" />
-  )}
+  <div class="guide-index">
+    <header class="guide-intro container section" id="all">
+      <h1>{indexTitle}</h1>
+      <p>{description}</p>
+    </header>
+    {products.map((product) => (
+      <GuideList
+        guides={product.guides}
+        lang={lang}
+        title={product.name}
+        id={`${product.slug}-guides`}
+      />
+    ))}
+    {general.length > 0 && (
+      <GuideList guides={general} lang={lang} title={name} id="general-guides" />
+    )}
+  </div>
 </BaseLayout>
 
 <style>
   .guide-intro h1 {
-    font-size: clamp(30px, 5vw, 54px);
+    font-size: clamp(1.75rem, 5vw, 3.375rem);
     line-height: 1.15;
     font-weight: 600;
+    overflow-wrap: anywhere;
+    text-wrap: balance;
   }
+
+  .guide-intro h1:lang(ja),
+  .guide-intro h1:lang(zh) {
+    line-height: 1.3;
+  }
+
   .guide-intro p {
     max-width: 64ch;
     margin-top: 12px;
     color: var(--muted);
+  }
+
+  @media (max-width: 639.98px) {
+    .guide-index {
+      --section-gap: 34px;
+    }
   }
 </style>

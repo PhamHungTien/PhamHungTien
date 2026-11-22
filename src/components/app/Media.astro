@@ -53,6 +53,10 @@ const youtubeId = app.tutorial?.youtubeId;
 )}
 
 <style>
+  .video .section-head {
+    margin-bottom: clamp(12px, 1.8vw, 20px);
+  }
+
   .video__frame {
     overflow: hidden;
     border: 1px solid var(--line);
@@ -65,8 +69,8 @@ const youtubeId = app.tutorial?.youtubeId;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 12px;
-    margin-top: 14px;
+    gap: 4px 12px;
+    margin-top: 8px;
     color: var(--muted);
     font-size: 14px;
   }
@@ -76,5 +80,34 @@ const youtubeId = app.tutorial?.youtubeId;
     display: inline-flex;
     align-items: center;
     gap: 8px;
+  }
+
+  .video__meta a {
+    min-height: 44px;
+  }
+
+  @media (min-width: 980px) {
+    .video {
+      display: grid;
+      grid-template-columns: minmax(0, 0.46fr) minmax(0, 1fr);
+      grid-template-areas: 'heading player' 'meta player';
+      grid-template-rows: auto 1fr;
+      align-items: start;
+      gap: 6px clamp(24px, 3vw, 40px);
+    }
+
+    .video .section-head {
+      grid-area: heading;
+      margin-bottom: 0;
+    }
+
+    .video__frame {
+      grid-area: player;
+    }
+
+    .video__meta {
+      grid-area: meta;
+      justify-content: flex-start;
+    }
   }
 </style>

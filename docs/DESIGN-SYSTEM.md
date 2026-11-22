@@ -178,13 +178,12 @@ layers from the `.icon` documents (see [ARCHITECTURE.md](ARCHITECTURE.md#app-ico
   [ARCHITECTURE.md](ARCHITECTURE.md#app-store-media)): search results art on home cards,
   product page header art at the top of app pages, screenshots and App Previews in the
   gallery. The site and the store always look the same.
-- **App cards** (`AppDirectory.astro`): art, icon, name, category, a three-line
-  description, platforms and store as plain text. Three a row on wide screens, two below;
-  the last cards of an uneven row widen to fill it. Phones show two compact cards a row
-  (art, icon, name, category) so most of the collection fits on one screen.
-- **App hero** (`AppHero.astro`): breadcrumb and language switch, the header art at its
-  native 2.33:1, then icon, name and category, the promise (`h1`), subtitle, platforms as
-  text, and the download actions. The Chinese LunarV page uses the same component.
+- **App cards** (`AppDirectory.astro`) show store artwork, icon, name, category and
+  platforms in the compact layout. The grid uses one column below 360 px, two through
+  1099 px and three at wider widths. Large cards can also show the description and store.
+- **App hero** (`AppHero.astro`) keeps store artwork at its native aspect ratio. Where
+  artwork is available, it sits beside the app description and download actions from
+  840 px. Narrower layouts stack them below the breadcrumb.
 - **Gallery** (`StoreGallery.astro`): device tabs (iPhone, iPad, Mac, Apple Vision Pro) over
   App Store-style rows of equal height; the App Preview comes first and loads only when
   played. Phones scroll a row edge to edge with the next shot peeking in; pointer devices
@@ -208,6 +207,9 @@ layers from the `.icon` documents (see [ARCHITECTURE.md](ARCHITECTURE.md#app-ico
   visitor picks (the `theme-color` meta follows it).
 
 ## Guides on wide screens
+
+Guide cards use one column below 360 px, two from 360 px and three from 860 px.
+Titles stay visible in full and descriptions use a shorter preview on phones.
 
 At 1180 px and wider, a guide's table of contents becomes a sticky column beside the
 article and marks the section being read (`src/scripts/toc.ts`); below that it stays an

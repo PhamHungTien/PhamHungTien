@@ -30,8 +30,8 @@ const app = guide.data.app ? appBySlug.get(guide.data.app as AppSlug) : undefine
   </h3>
   <p lang={articleLang}>{guide.data.description}</p>
   <span class="guide-card__meta">
-    <time datetime={guide.data.published}>{formatDate(guide.data.published, lang)}</time> ·
-    {guideCopy[lang].readingTime(readingMinutes(guide))}
+    <time datetime={guide.data.published}>{formatDate(guide.data.published, lang)}</time>
+    <span class="guide-card__reading">{guideCopy[lang].readingTime(readingMinutes(guide))}</span>
   </span>
 </a>
 
@@ -45,6 +45,7 @@ const app = guide.data.app ? appBySlug.get(guide.data.app as AppSlug) : undefine
     padding: 20px;
     border: 1px solid var(--glass-edge);
     border-radius: var(--r-card);
+    overflow-wrap: anywhere;
     transition: border-color 150ms ease-out;
   }
 
@@ -62,12 +63,14 @@ const app = guide.data.app ? appBySlug.get(guide.data.app as AppSlug) : undefine
   }
 
   .guide-card__top img {
+    flex: none;
     width: 28px;
     height: 28px;
     border-radius: var(--r-icon);
   }
 
   .guide-card__dot {
+    flex: none;
     width: 10px;
     height: 10px;
     margin: 9px;
@@ -89,29 +92,67 @@ const app = guide.data.app ? appBySlug.get(guide.data.app as AppSlug) : undefine
   }
 
   .guide-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 6px;
     margin-top: 8px;
     padding-top: 12px;
     border-top: 1px solid var(--line);
     color: var(--muted);
     font-size: 13px;
+    line-height: 1.4;
   }
 
-  @media (max-width: 767.98px) {
+  .guide-card__reading::before {
+    margin-inline-end: 6px;
+    content: '·';
+  }
+
+  @media (max-width: 639.98px) {
     .guide-card {
-      gap: 8px;
-      padding: 16px;
+      gap: 7px;
+      padding: 11px;
+      border-radius: var(--r-panel);
+    }
+
+    .guide-card__top {
+      gap: 7px;
+      font-size: 13px;
+      line-height: 1.25;
+    }
+
+    .guide-card__top img {
+      width: 23px;
+      height: 23px;
+    }
+
+    .guide-card__dot {
+      margin: 6px;
     }
 
     .guide-card__title {
-      font-size: 17px;
+      font-size: 1rem;
+      line-height: 1.3;
     }
 
     p {
       display: -webkit-box;
       overflow: hidden;
       font-size: 14px;
+      line-height: 1.45;
       -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
+      -webkit-line-clamp: 3;
+    }
+
+    .guide-card__meta {
+      display: grid;
+      margin-top: 3px;
+      padding-top: 7px;
+      font-size: 12px;
+    }
+
+    .guide-card__reading::before {
+      content: none;
     }
   }
 </style>

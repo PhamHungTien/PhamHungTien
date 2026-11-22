@@ -226,6 +226,7 @@ const jsonLd = {
   .guide {
     max-width: 780px;
     padding-top: clamp(28px, 4vw, 56px);
+    overflow-wrap: anywhere;
   }
 
   .crumbs {
@@ -264,16 +265,23 @@ const jsonLd = {
 
   h1 {
     margin-top: 10px;
-    font-size: clamp(34px, 5vw, 52px);
+    font-size: clamp(1.875rem, 5vw, 3.25rem);
     font-weight: 600;
-    line-height: 1.12;
+    line-height: 1.15;
     letter-spacing: -0.035em;
+    text-wrap: balance;
+  }
+
+  h1:lang(ja),
+  h1:lang(zh) {
+    line-height: 1.3;
+    letter-spacing: normal;
   }
 
   .guide__lead {
     margin-top: 18px;
     color: var(--muted);
-    font-size: 20px;
+    font-size: clamp(1.0625rem, 3.5vw, 1.25rem);
     line-height: 1.55;
   }
 
@@ -287,6 +295,7 @@ const jsonLd = {
   }
 
   .guide__byline :global(svg) {
+    flex: none;
     border-radius: var(--r-icon);
   }
 
@@ -333,6 +342,8 @@ const jsonLd = {
   }
 
   .toc a {
+    display: block;
+    padding-block: 3px;
     font-weight: 500;
   }
 
@@ -344,6 +355,17 @@ const jsonLd = {
 
   .toc a[aria-current='true'] {
     color: var(--brand);
+  }
+
+  .prose {
+    min-width: 0;
+  }
+
+  .prose :global(pre),
+  .prose :global(table) {
+    max-width: 100%;
+    overflow-wrap: normal;
+    overscroll-behavior-inline: contain;
   }
 
   /* Wide screens: the contents move into a sticky column beside the article, so readers
@@ -415,8 +437,8 @@ const jsonLd = {
   }
 
   .app-cta {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
     align-items: center;
     gap: 18px;
     margin-top: 56px;
@@ -433,14 +455,14 @@ const jsonLd = {
 
   .app-cta__copy {
     display: grid;
-    flex: 1 1 220px;
   }
 
   .app-cta__links {
     display: flex;
-    flex: 1 1 100%;
     flex-wrap: wrap;
     align-items: center;
+    grid-column: 1 / -1;
+    min-width: 0;
     gap: 12px;
   }
 
@@ -473,5 +495,74 @@ const jsonLd = {
     color: var(--muted);
     font-size: 15px;
     line-height: 1.6;
+  }
+
+  @media (max-width: 639.98px) {
+    .guide__head {
+      margin-top: 16px;
+    }
+
+    .guide__byline {
+      gap: 10px;
+      margin-top: 18px;
+      padding-bottom: 18px;
+    }
+
+    .guide__video,
+    .toc {
+      margin-top: 22px;
+    }
+
+    .toc {
+      padding: 14px 16px;
+    }
+
+    .toc ol {
+      gap: 2px;
+      margin-top: 6px;
+    }
+
+    .toc a {
+      line-height: 1.45;
+    }
+
+    .prose :global(pre) {
+      padding: 12px;
+    }
+
+    .prose :global(table) {
+      font-size: 15px;
+    }
+
+    .prose :global(th),
+    .prose :global(td) {
+      padding: 7px 10px;
+    }
+
+    .prose :global(th) {
+      white-space: normal;
+    }
+
+    .app-cta,
+    .author {
+      gap: 12px;
+      padding: 12px;
+    }
+
+    .app-cta {
+      margin-top: 36px;
+    }
+
+    .app-cta img,
+    .author :global(svg) {
+      width: 44px;
+      height: 44px;
+    }
+  }
+
+  @media (max-width: 479.98px) {
+    .app-cta__links > .button {
+      width: 100%;
+    }
   }
 </style>

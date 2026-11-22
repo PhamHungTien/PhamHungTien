@@ -122,15 +122,19 @@ const lastOf = (index: number) => {
               </div>
               <p class="app-card__desc">{description}</p>
               <p class="app-card__meta">
-                {platformGroupsOf(app.platforms)
-                  .map((group) => group.label)
-                  .join(' · ')}
-                <span aria-hidden="true"> — </span>
-                {app.links.source
-                  ? t(lang, 'home.apps.openSource')
-                  : storesOf(app.links.stores)
-                      .map((store) => store.name)
-                      .join(', ')}
+                <span>
+                  {platformGroupsOf(app.platforms)
+                    .map((group) => group.label)
+                    .join(' · ')}
+                </span>
+                <span class="app-card__distribution">
+                  <span aria-hidden="true"> — </span>
+                  {app.links.source
+                    ? t(lang, 'home.apps.openSource')
+                    : storesOf(app.links.stores)
+                        .map((store) => store.name)
+                        .join(', ')}
+                </span>
               </p>
             </div>
           </a>
@@ -156,14 +160,19 @@ const lastOf = (index: number) => {
   .apps > .section-head {
     align-items: start;
     flex-direction: column;
-    gap: 28px;
+    gap: clamp(16px, 3vw, 28px);
   }
+
   .apps__tools {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(12rem, 16rem);
+    align-items: center;
+    gap: 12px;
     width: 100%;
-    justify-content: space-between;
-    padding-block: 20px;
+    padding-block: clamp(12px, 2vw, 20px);
     border-block: 1px solid var(--line);
   }
+
   .apps__summary {
     display: flex;
     align-items: center;
@@ -189,11 +198,39 @@ const lastOf = (index: number) => {
     visibility: hidden;
   }
 
-  .apps__tools {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 12px;
+  .segmented {
+    width: fit-content;
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+  }
+
+  .segmented::-webkit-scrollbar {
+    display: none;
+  }
+
+  .segmented button {
+    flex: 1 0 auto;
+    min-height: 44px;
+    padding-inline: clamp(12px, 2vw, 16px);
+  }
+
+  /* Fade only the edge with additional options. Keep the rest of the label legible. */
+  .segmented[data-more]::after {
+    display: none;
+  }
+
+  .segmented[data-more='end'] {
+    mask-image: linear-gradient(90deg, #000 calc(100% - 18px), transparent);
+  }
+
+  .segmented[data-more='start'] {
+    mask-image: linear-gradient(90deg, transparent, #000 18px);
+  }
+
+  .segmented[data-more='both'] {
+    mask-image: linear-gradient(90deg, transparent, #000 18px, #000 calc(100% - 18px), transparent);
   }
 
   /* With JS, one thumb slides between options instead of each button lighting up. */
@@ -232,6 +269,7 @@ const lastOf = (index: number) => {
 
   .search-field {
     display: flex;
+    min-width: 0;
     min-height: 48px;
     align-items: center;
     gap: 10px;
@@ -246,12 +284,12 @@ const lastOf = (index: number) => {
   }
 
   .search-field input {
-    width: 180px;
+    width: 100%;
     min-width: 0;
     border: 0;
     background: transparent;
     color: var(--ink);
-    font-size: 15px;
+    font-size: 16px; /* Prevents iOS focus zoom. */
     outline: none;
   }
 
@@ -313,6 +351,7 @@ const lastOf = (index: number) => {
     align-content: start;
     gap: 10px;
     flex: 1;
+    min-width: 0;
     padding: 16px 18px 18px;
   }
 
@@ -320,6 +359,11 @@ const lastOf = (index: number) => {
     display: flex;
     align-items: center;
     gap: 12px;
+  }
+
+  .app-card__title > div {
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 
   .app-card :global(.app-card__icon) {
@@ -359,7 +403,7 @@ const lastOf = (index: number) => {
   }
 
   /* A card alone on the last row lies down: art beside the text. */
-  @media (min-width: 768px) {
+  @media (min-width: 1100px) {
     li[data-wide] .app-card {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -424,6 +468,14 @@ const lastOf = (index: number) => {
 
   /* Phones: two compact cards a row, so most of the collection fits on one screen. */
   @media (max-width: 767.98px) {
+    .apps__tools {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .segmented {
+      width: 100%;
+    }
+
     .app-list {
       gap: 12px;
     }
@@ -443,7 +495,7 @@ const lastOf = (index: number) => {
     }
 
     h3 {
-      font-size: 15px;
+      font-size: 16px;
     }
 
     .app-card__category {
@@ -452,8 +504,20 @@ const lastOf = (index: number) => {
     }
 
     .app-card__desc,
-    .app-card__meta {
+    .app-card__distribution {
       display: none;
+    }
+
+    .app-card__meta {
+      font-size: 12px;
+      line-height: 1.4;
+      overflow-wrap: anywhere;
+    }
+
+    li[data-odd] .app-card {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+      align-items: center;
     }
 
     li[data-odd] .app-card__desc {
@@ -463,48 +527,19 @@ const lastOf = (index: number) => {
     }
   }
 
-  @media (max-width: 560px) {
-    .apps__tools,
-    .search-field {
-      width: 100%;
+  @media (max-width: 359.98px) {
+    .app-list {
+      grid-template-columns: minmax(0, 1fr);
     }
 
-    .segmented {
-      width: 100%;
-      overflow-x: auto;
-      scrollbar-width: none;
-      overscroll-behavior-x: contain;
+    .app-card {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+      align-items: center;
     }
 
-    .segmented::-webkit-scrollbar {
+    li[data-odd] .app-card__desc {
       display: none;
-    }
-
-    /* The rim would scroll with the options; the inset edge light stays in place. */
-    .segmented::after {
-      display: none;
-    }
-
-    /* More options off to the side fade out at that edge, so it reads as scrollable. */
-    .segmented[data-more='end'] {
-      mask-image: linear-gradient(90deg, #000 78%, transparent);
-    }
-
-    .segmented[data-more='start'] {
-      mask-image: linear-gradient(90deg, transparent, #000 22%);
-    }
-
-    .segmented[data-more='both'] {
-      mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
-    }
-
-    .segmented button {
-      flex: 1 0 auto;
-    }
-
-    .search-field input {
-      width: 100%;
-      font-size: 16px; /* prevents iOS focus zoom */
     }
   }
 </style>

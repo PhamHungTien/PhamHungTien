@@ -35,24 +35,26 @@ const { features, support } = getAppCopy(app, lang);
     <aside class="support glass glass-panel" aria-labelledby="support-heading">
       <h3 id="support-heading">{t(lang, 'app.support')}</h3>
       <p>{support}</p>
-      <a
-        class="button button--primary"
-        href={`mailto:${SITE.email}?subject=${encodeURIComponent(app.name)}`}
-      >
-        <Mail size={17} aria-hidden="true" />
-        {t(lang, 'app.supportCta')}
-      </a>
-      {app.links.community && (
+      <div class="support__actions">
         <a
-          class="button button--secondary"
-          href={app.links.community}
-          target="_blank"
-          rel="noopener noreferrer"
+          class="button button--primary"
+          href={`mailto:${SITE.email}?subject=${encodeURIComponent(app.name)}`}
         >
-          <ExternalLink size={17} aria-hidden="true" />
-          {t(lang, 'app.community')}
+          <Mail size={17} aria-hidden="true" />
+          {t(lang, 'app.supportCta')}
         </a>
-      )}
+        {app.links.community && (
+          <a
+            class="button button--secondary"
+            href={app.links.community}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <ExternalLink size={17} aria-hidden="true" />
+            {t(lang, 'app.community')}
+          </a>
+        )}
+      </div>
       <p class="support__legal">
         <a href={legalPath(app, 'privacy', lang)}>{t(lang, 'app.privacy')}</a>
         <a href={legalPath(app, 'terms', lang)}>{t(lang, 'app.terms')}</a>
@@ -64,19 +66,19 @@ const { features, support } = getAppCopy(app, lang);
 <style>
   .features__layout {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 340px;
+    grid-template-columns: minmax(0, 1fr);
     align-items: start;
-    gap: 24px;
+    gap: clamp(14px, 2.4vw, 24px);
   }
 
   .feature-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(10px, 1.7vw, 16px);
   }
 
   .feature-grid li {
-    padding: 20px 22px;
+    padding: clamp(14px, 1.8vw, 22px);
     border: 1px solid var(--glass-edge);
     border-radius: var(--r-card);
   }
@@ -90,7 +92,7 @@ const { features, support } = getAppCopy(app, lang);
     grid-column: 1 / -1;
   }
   .feature-grid li:first-child h3 {
-    font-size: 20px;
+    font-size: clamp(17px, 2vw, 20px);
   }
   /* The first feature spans the row; a last one left alone on its row does too. */
   .feature-grid li:last-child:nth-child(even) {
@@ -103,17 +105,16 @@ const { features, support } = getAppCopy(app, lang);
   }
 
   .feature-grid p {
-    margin-top: 8px;
+    margin-top: 5px;
     color: var(--muted);
     font-size: 15px;
+    line-height: 1.5;
   }
 
   .support {
-    position: sticky;
-    top: calc(var(--header-height) + 28px);
     display: grid;
-    gap: 12px;
-    padding: 28px;
+    gap: 10px;
+    padding: clamp(16px, 2.2vw, 26px);
     border: 1px solid var(--glass-edge);
     border-radius: var(--r-card);
   }
@@ -124,21 +125,26 @@ const { features, support } = getAppCopy(app, lang);
   }
 
   .support > p {
-    margin-bottom: 8px;
     color: var(--muted);
     font-size: 15px;
   }
 
-  .support .button {
-    width: 100%;
+  .support__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .support__actions .button {
+    flex: 1 1 170px;
   }
 
   .support__legal {
     display: flex;
     gap: 12px 20px;
     flex-wrap: wrap;
-    margin-top: 8px;
-    padding-top: 16px;
+    margin-top: 2px;
+    padding-top: 10px;
     border-top: 1px solid var(--line);
     font-size: 14px;
   }
@@ -151,38 +157,22 @@ const { features, support } = getAppCopy(app, lang);
     color: var(--ink);
   }
 
-  @media (max-width: 1080px) {
-    .features__layout {
-      grid-template-columns: minmax(0, 1fr);
-    }
-
-    .support {
-      position: relative;
-      top: auto;
-      max-width: 560px;
+  @media (min-width: 480px) {
+    .feature-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
-  @media (max-width: 720px) {
-    .feature-grid {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 12px;
+  @media (min-width: 960px) {
+    .features__layout {
+      grid-template-columns: minmax(0, 1fr) clamp(238px, 25vw, 308px);
     }
+  }
 
-    .feature-grid li,
+  @media (min-width: 960px) and (min-height: 680px) {
     .support {
-      padding: 16px;
-    }
-
-    .feature-grid h3,
-    .feature-grid li:first-child h3 {
-      font-size: 16px;
-    }
-
-    .feature-grid p {
-      margin-top: 4px;
-      font-size: 14px;
-      line-height: 1.5;
+      position: sticky;
+      top: calc(var(--header-height) + 20px);
     }
   }
 </style>

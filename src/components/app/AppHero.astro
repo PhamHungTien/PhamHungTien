@@ -36,7 +36,10 @@ const platforms = platformGroupsOf(app.platforms)
   .join(' · ');
 ---
 
-<section class="app-hero container" aria-labelledby="app-title">
+<section
+  class:list={['app-hero', 'container', { 'app-hero--with-art': header }]}
+  aria-labelledby="app-title"
+>
   <div class="app-hero__bar">
     <nav class="breadcrumb" aria-label={t(lang, 'nav.breadcrumb')}>
       <ol role="list">
@@ -66,8 +69,8 @@ const platforms = platformGroupsOf(app.platforms)
         alt={`${app.name} — ${title}`}
         format="webp"
         width={Math.min(header.width, 2560)}
-        widths={[720, 1200, 1800, 2560].filter((w) => w <= header.width)}
-        sizes="(max-width: 1248px) 92vw, 1200px"
+        widths={[480, 720, 1200, 1800, 2560].filter((w) => w <= header.width)}
+        sizes="(min-width: 1300px) 620px, (min-width: 840px) 48vw, 92vw"
         loading="eager"
         fetchpriority="high"
       />
@@ -127,16 +130,13 @@ const platforms = platformGroupsOf(app.platforms)
 
 <style>
   .app-hero {
-    padding-top: clamp(16px, 3vw, 32px);
+    display: grid;
+    gap: clamp(10px, 2vw, 22px);
+    padding-top: clamp(12px, 2vw, 24px);
   }
 
   .app-hero__bar {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px 16px;
-    margin-bottom: 16px;
+    grid-column: 1 / -1;
   }
 
   .breadcrumb ol {
@@ -164,43 +164,44 @@ const platforms = platformGroupsOf(app.platforms)
     font-weight: 500;
   }
 
-  /* The store's own header art as a wide 2.33:1 band, the App Store header proportion.
-     Art made in another proportion is cropped around its centre here and shown whole on
-     phones (below). */
   .app-hero__banner {
     overflow: hidden;
     border: 1px solid var(--line);
-    border-radius: var(--r-sheet);
+    border-radius: clamp(var(--r-card), 3vw, var(--r-sheet));
     background: var(--surface-2);
-    aspect-ratio: 3840 / 1646;
+    aspect-ratio: var(--art-ratio);
   }
 
   .app-hero__banner :global(img) {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
   }
 
   .app-hero__main {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    align-items: start;
-    gap: 16px 24px;
-    margin-top: 24px;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-content: center;
+    gap: clamp(8px, 1.2vw, 14px) clamp(12px, 2vw, 20px);
+    min-width: 0;
   }
 
   .app-hero__main :global(.app-hero__icon) {
-    width: 96px;
-    height: 96px;
+    width: clamp(56px, 7vw, 80px);
+    height: clamp(56px, 7vw, 80px);
     border-radius: var(--r-icon);
     box-shadow: var(--shadow-icon);
   }
 
+  .app-hero__copy {
+    display: contents;
+  }
+
   .app-hero__name {
     display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 2px 10px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
     font-size: 15px;
     font-weight: 600;
   }
@@ -211,8 +212,8 @@ const platforms = platformGroupsOf(app.platforms)
   }
 
   h1 {
-    max-width: 22ch;
-    margin-top: 6px;
+    grid-column: 1 / -1;
+    max-width: 26ch;
     font-size: var(--text-display);
     font-weight: 600;
     line-height: 1.12;
@@ -220,103 +221,48 @@ const platforms = platformGroupsOf(app.platforms)
   }
 
   .app-hero__subtitle {
+    grid-column: 1 / -1;
     max-width: 60ch;
-    margin-top: 10px;
     color: var(--muted);
-    font-size: 17px;
-    line-height: 1.55;
+    font-size: clamp(15px, 1.6vw, 17px);
+    line-height: 1.5;
   }
 
   .app-hero__platforms {
-    margin-top: 10px;
+    grid-column: 1 / -1;
     color: var(--muted);
     font-size: 14px;
   }
 
   .app-hero__actions {
-    --store-downloads-align: center;
     display: grid;
-    gap: 10px;
-    justify-items: stretch;
-    min-width: 240px;
+    grid-column: 1 / -1;
+    gap: 4px;
+    justify-items: start;
+    min-width: 0;
   }
 
   .app-hero__links {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
     gap: 4px 16px;
     font-size: 14px;
   }
 
-  .app-hero__links .text-link {
+  .app-hero__links a,
+  .app-hero__links button {
     display: inline-flex;
-    min-height: 40px;
+    min-height: 44px;
     align-items: center;
     gap: 6px;
   }
 
-  @media (max-width: 960px) {
-    .app-hero__main {
-      grid-template-columns: auto minmax(0, 1fr);
-    }
-
-    .app-hero__actions {
-      --store-downloads-align: flex-start;
-      grid-column: 1 / -1;
-      min-width: 0;
-    }
-
-    .app-hero__links {
-      grid-column: 1 / -1;
-      justify-content: flex-start;
-    }
-  }
-
-  @media (max-width: 767.98px) {
-    .app-hero__bar {
-      margin-bottom: 12px;
-    }
-
-    .app-hero__banner {
-      border-radius: var(--r-card);
-      aspect-ratio: var(--art-ratio, 3840 / 1646);
-    }
-
-    .app-hero__main {
-      gap: 12px 14px;
-      margin-top: 16px;
-    }
-
-    .app-hero__main :global(.app-hero__icon) {
-      width: 64px;
-      height: 64px;
-    }
-
-    .app-hero__subtitle {
-      font-size: 15px;
-    }
-
-    h1 {
-      max-width: none;
-    }
-
-    .app-hero__copy {
-      display: contents;
-    }
-
-    .app-hero__name {
-      align-self: center;
-      flex-direction: column;
-      gap: 0;
-    }
-
-    h1,
-    .app-hero__subtitle,
-    .app-hero__platforms {
-      grid-column: 1 / -1;
-      margin-top: 0;
+  @media (min-width: 840px) {
+    .app-hero--with-art {
+      grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+      align-items: center;
+      column-gap: clamp(24px, 3.2vw, 42px);
     }
   }
 </style>

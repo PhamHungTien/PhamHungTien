@@ -58,7 +58,7 @@ const nav: NavItem[] = [
   nav={nav}
   accent={app.accent}
 >
-  <div id="overview" data-tab-panel="overview">
+  <div class="app-overview" id="overview" data-tab-panel="overview">
     <AppHero app={app} lang={lang} />
     <Facts app={app} lang={lang} />
     <StoreGallery app={app} lang={lang} />
@@ -86,3 +86,9 @@ const nav: NavItem[] = [
   import { initAppTabs } from '../../scripts/app-tabs';
   initAppTabs();
 </script>
+
+<style>
+  .app-overview {
+    --section-gap: clamp(36px, 6vw, 76px);
+  }
+</style>

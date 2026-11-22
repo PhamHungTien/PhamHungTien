@@ -46,17 +46,17 @@ const parts = (text: string) =>
 <style>
   .faq {
     display: grid;
-    grid-template-columns: minmax(0, 0.65fr) minmax(0, 1.35fr);
-    gap: 48px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(12px, 2vw, 20px);
     align-items: start;
   }
   .faq > .section-head {
     margin-bottom: 0;
   }
-  @media (max-width: 900px) {
+  @media (min-width: 960px) {
     .faq {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 24px;
+      grid-template-columns: minmax(0, 0.38fr) minmax(0, 1fr);
+      column-gap: clamp(20px, 3vw, 44px);
     }
   }
   .faq__list {
@@ -64,7 +64,7 @@ const parts = (text: string) =>
     border: 1px solid var(--line);
     border-radius: var(--r-card);
     background: var(--surface);
-    padding-inline: clamp(18px, 3vw, 28px);
+    padding-inline: clamp(14px, 2.5vw, 26px);
   }
 
   details {
@@ -78,9 +78,10 @@ const parts = (text: string) =>
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 24px;
-    padding: 20px 0;
-    font-size: 17px;
+    min-height: 48px;
+    gap: clamp(10px, 2vw, 24px);
+    padding-block: clamp(12px, 1.4vw, 18px);
+    font-size: clamp(15px, 1.6vw, 17px);
     font-weight: 600;
     list-style: none;
     cursor: pointer;
@@ -102,8 +103,9 @@ const parts = (text: string) =>
 
   p {
     max-width: 70ch;
-    padding-bottom: 22px;
+    padding-bottom: clamp(12px, 1.8vw, 20px);
     color: var(--muted);
+    overflow-wrap: anywhere;
   }
 
   code {

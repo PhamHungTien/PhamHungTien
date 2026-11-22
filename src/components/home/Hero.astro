@@ -65,7 +65,7 @@ const socials = [
 <style>
   .hero {
     position: relative;
-    --hero-reserve: 92px;
+    --hero-reserve: 96px;
     --orbit-max-height: 0.95;
     min-height: calc(100svh - var(--header-height));
     display: flex;
@@ -111,6 +111,14 @@ const socials = [
     gap: 14px 16px;
     margin-top: 12px;
   }
+  .hero__actions .button {
+    min-width: 0;
+    padding-block: 6px;
+    overflow-wrap: anywhere;
+  }
+  .hero__actions .button :global(svg) {
+    flex: none;
+  }
   .hero__donate :global(svg) {
     color: #ff5d7a;
     transition: scale 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -118,7 +126,7 @@ const socials = [
   .hero__donate:hover :global(svg) {
     scale: 1.2;
   }
-  /* One glass capsule groups the profiles, like a toolbar group: 4px inset, so the 40px
+  /* One glass capsule groups the profiles, like a toolbar group: 4px inset, so the 44px
      buttons are concentric with it. */
   .hero__socials {
     display: flex;
@@ -135,8 +143,8 @@ const socials = [
   .hero__social {
     display: grid;
     place-items: center;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border-radius: var(--r-pill);
     color: var(--muted);
     transition:
@@ -181,26 +189,22 @@ const socials = [
     .hero__actions .button {
       padding-inline: 12px;
       font-size: 14px;
-      white-space: nowrap;
     }
     .hero__socials {
       grid-column: 1 / -1;
       justify-self: center;
     }
   }
-  @media (max-height: 500px) and (min-width: 480px) {
+  @media (max-height: 520px) and (min-width: 561px) {
     .hero {
-      --hero-reserve: 76px;
+      --hero-reserve: 80px;
       --orbit-max-height: 0.6;
+      min-height: 0;
       padding-block: 10px;
     }
     .hero__actions {
-      display: flex;
       margin-top: 8px;
-      gap: 12px 20px;
-    }
-    .hero__socials {
-      grid-column: auto;
+      gap: 10px 12px;
     }
   }
 </style>

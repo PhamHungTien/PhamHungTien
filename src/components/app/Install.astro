@@ -135,22 +135,23 @@ const withCode = (text: string) =>
 
   .install__grid {
     display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-    gap: clamp(24px, 4vw, 48px);
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(14px, 2.6vw, 32px);
   }
 
   .install__downloads {
     display: grid;
     gap: 12px;
     align-content: start;
+    min-width: 0;
   }
 
   .download {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
-    gap: 16px;
-    padding: 18px 20px;
+    gap: clamp(8px, 1.5vw, 14px);
+    padding: clamp(12px, 1.5vw, 18px);
     border: 1px solid var(--glass-edge);
     border-radius: var(--r-card);
     transition: border-color 160ms ease;
@@ -166,8 +167,8 @@ const withCode = (text: string) =>
 
   .download__icon {
     display: grid;
-    width: 44px;
-    height: 44px;
+    width: clamp(36px, 4vw, 44px);
+    height: clamp(36px, 4vw, 44px);
     place-items: center;
     border-radius: var(--r-control);
     background: var(--surface-2);
@@ -180,10 +181,11 @@ const withCode = (text: string) =>
 
   .download__copy {
     display: grid;
+    overflow-wrap: anywhere;
   }
 
   .download__copy strong {
-    font-size: 17px;
+    font-size: clamp(15px, 1.6vw, 17px);
   }
 
   .download__copy small {
@@ -192,7 +194,8 @@ const withCode = (text: string) =>
   }
 
   .homebrew {
-    margin-top: 8px;
+    grid-column: 1 / -1;
+    min-width: 0;
   }
 
   .homebrew p {
@@ -214,11 +217,13 @@ const withCode = (text: string) =>
 
   .homebrew__command code {
     flex: 1;
+    min-inline-size: 0;
     overflow-x: auto;
     white-space: nowrap;
   }
 
   .homebrew__command .icon-button {
+    flex-shrink: 0;
     border-color: rgb(255 255 255 / 0.18);
     background: transparent;
     color: inherit;
@@ -229,7 +234,7 @@ const withCode = (text: string) =>
   }
 
   .install__steps {
-    padding: 24px;
+    padding: clamp(16px, 2.4vw, 24px);
     border: 1px solid var(--line);
     border-radius: var(--r-card);
     background: var(--surface);
@@ -242,8 +247,8 @@ const withCode = (text: string) =>
 
   ol {
     display: grid;
-    gap: 16px;
-    margin-top: 16px;
+    gap: clamp(10px, 1.6vw, 16px);
+    margin-top: 12px;
   }
 
   li {
@@ -266,11 +271,18 @@ const withCode = (text: string) =>
   li p {
     padding-top: 2px;
     color: var(--muted);
+    overflow-wrap: anywhere;
   }
 
-  @media (max-width: 900px) {
+  @media (480px <= width < 740px) {
+    .install__downloads {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 740px) {
     .install__grid {
-      grid-template-columns: minmax(0, 1fr);
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
     }
   }
 </style>

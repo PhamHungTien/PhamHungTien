@@ -41,7 +41,37 @@ const { guides, title, lead, allLabel, lang = 'en', id = 'guides' } = Astro.prop
 <style>
   .guides__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 16px;
+  }
+
+  .guides .section-head {
+    overflow-wrap: anywhere;
+  }
+
+  @media (max-width: 859.98px) {
+    .guides__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+  }
+
+  @media (max-width: 639.98px) {
+    .guides .section-head {
+      gap: 8px 16px;
+      margin-bottom: 14px;
+    }
+
+    .guides .section-head .text-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+    }
+  }
+
+  @media (max-width: 359.98px) {
+    .guides__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
   }
 </style>
