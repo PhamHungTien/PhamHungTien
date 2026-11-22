@@ -100,7 +100,20 @@ const originalVietnameseGuides = [
   'go-tieng-viet-tren-mac-voi-phtv',
   'sua-loi-go-tieng-viet-tren-mac',
 ];
+const fourLanguageGuides = [
+  'run-python-on-ipad-pad-code-ai',
+  'preview-html-css-javascript-on-ipad',
+  'review-ai-code-changes-on-ipad',
+  'nghe-sach-epub-giong-doc-tieng-viet-voi-vtts',
+  'export-m4b-audiobook-with-vtts',
+  'create-personal-voice-with-vtts',
+];
 const guideFiles = await readdir(new URL('../src/content/guides/', import.meta.url));
+for (const slug of fourLanguageGuides) {
+  for (const lang of ['en', 'vi', 'ja', 'es']) {
+    assert.ok(guideFiles.includes(`${slug}.${lang}.md`), `${slug}: required ${lang} translation`);
+  }
+}
 const guideSlugs = new Set(
   guideFiles.flatMap((file) => {
     const slug = file.match(/^(.+)\.(?:en|vi|ja|es)\.md$/)?.[1];
