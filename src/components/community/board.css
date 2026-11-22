@@ -191,6 +191,22 @@
   line-height: 1.6;
 }
 
+.board-read-toggle {
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--brand);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: start;
+}
+
+.board-read-toggle:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .board-content code {
   padding: 1px 6px;
   border-radius: var(--r-xs);
@@ -472,6 +488,10 @@
   border-radius: var(--r-card);
   color: var(--muted);
   text-align: center;
+}
+
+.board-empty > .board-secondary {
+  margin-top: 12px;
 }
 
 .board-error {

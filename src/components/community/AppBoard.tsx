@@ -2,7 +2,7 @@
  * Discussion board for the App Store apps (Firestore: appDiscussions/{app}/posts).
  * Rendered as an Astro island; see components/app/Discussions.astro.
  */
-import { useEffect, useState, type SubmitEvent } from 'react';
+import { useEffect, useRef, useState, type SubmitEvent } from 'react';
 import { LogOut, MessageCircle, Search, Send, Trash2 } from 'lucide-react';
 import type { User } from 'firebase/auth';
 import type { Locale as Lang } from '../../i18n/locales';
@@ -10,6 +10,8 @@ import { ADMIN_EMAILS, getFirebase } from '../../lib/firebase';
 import { boardText, formatDate } from './strings';
 import BoardSelect from './BoardSelect';
 import BoardComposer from './BoardComposer';
+import BoardEmpty from './BoardEmpty';
+import BoardPostBody from './BoardPostBody';
 import './board.css';
 
 type Category = 'question' | 'bug' | 'idea';
@@ -118,7 +120,7 @@ function Thread({
           </button>
         )}
       </header>
-      <p className="board-content">{post.content}</p>
+      <BoardPostBody content={post.content} lang={lang} />
       <button
         className="board-ghost"
         type="button"
@@ -194,6 +196,7 @@ export default function AppBoard({ app, name, lang }: { app: string; name: strin
   const [search, setSearch] = useState('');
   const [busy, setBusy] = useState(false);
   const [limitCount, setLimitCount] = useState(20);
+  const searchInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     let stopAuth: (() => void) | undefined;
@@ -272,6 +275,12 @@ export default function AppBoard({ app, name, lang }: { app: string; name: strin
     }
   }
 
+  function resetFilters() {
+    setSearch('');
+    setFilter('all');
+    searchInput.current?.focus({ preventScroll: true });
+  }
+
   const query = search.trim().toLowerCase();
   const visible = posts.filter(
     (post) =>
@@ -314,6 +323,7 @@ export default function AppBoard({ app, name, lang }: { app: string; name: strin
         <label className="board-field">
           <Search size={17} aria-hidden="true" />
           <input
+            ref={searchInput}
             type="search"
             aria-label={text.search}
             placeholder={text.search}
@@ -373,7 +383,11 @@ export default function AppBoard({ app, name, lang }: { app: string; name: strin
         </p>
       )}
       {loaded && !error && visible.length === 0 && (
-        <p className="board-empty">{posts.length ? text.noMatches : text.empty}</p>
+        <BoardEmpty
+          lang={lang}
+          filtered={Boolean(query) || filter !== 'all'}
+          onReset={resetFilters}
+        />
       )}
       {visible.map((post) => (
         <Thread key={post.id} app={app} post={post} user={user} lang={lang} />

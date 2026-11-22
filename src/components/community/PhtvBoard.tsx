@@ -39,10 +39,12 @@ import {
 } from 'firebase/firestore';
 import type { Locale as Lang } from '../../i18n/locales';
 import { ADMIN_EMAILS, getFirebase } from '../../lib/firebase';
-import { formatRelative } from './strings';
+import { boardText, formatRelative } from './strings';
 import { phtvText, type PhtvText } from './phtv-strings';
 import BoardSelect from './BoardSelect';
 import BoardComposer from './BoardComposer';
+import BoardEmpty from './BoardEmpty';
+import BoardPostBody from './BoardPostBody';
 import './board.css';
 
 type Label = 'bug' | 'enhancement' | 'feature' | 'question' | 'help' | null;
@@ -174,11 +176,6 @@ function RichText({ content }: { content: string }) {
   );
 }
 
-function preview(content: string, max = 280) {
-  const normalized = content.replace(/\s+/g, ' ').trim();
-  return normalized.length <= max ? content : `${normalized.slice(0, max).trimEnd()}…`;
-}
-
 export default function PhtvBoard({ lang }: { lang: Lang }) {
   const text = phtvText[lang];
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -195,7 +192,7 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
   const [lastPostAt, setLastPostAt] = useState(0);
   const [toast, setToast] = useState('');
   const [postsLimit, setPostsLimit] = useState(POSTS_PER_PAGE);
-  const [hasMore, setHasMore] = useState(true);
+  const [loadFailed, setLoadFailed] = useState(false);
   const [loading, setLoading] = useState(true);
   const [replyTo, setReplyTo] = useState<{
     qId: string;
@@ -209,6 +206,7 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
   const [nameDraft, setNameDraft] = useState('');
   const authDialog = useRef<HTMLDialogElement>(null);
   const nameDialog = useRef<HTMLDialogElement>(null);
+  const searchInput = useRef<HTMLInputElement>(null);
 
   const notify = (message: string) => {
     setToast(message);
@@ -260,10 +258,13 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
           list = list.sort((a, b) => score(b) - score(a));
         }
         setQuestions([...list.filter((q) => q.isPinned), ...list.filter((q) => !q.isPinned)]);
-        setHasMore(snapshot.docs.length >= postsLimit);
+        setLoadFailed(false);
         setLoading(false);
       },
-      () => setLoading(false),
+      () => {
+        setLoadFailed(true);
+        setLoading(false);
+      },
     );
   }, [sortBy, postsLimit]);
 
@@ -273,11 +274,23 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
     [questions],
   );
 
+  const activeFilter =
+    (filterBy === 'mine' && !member) || (filterBy === 'reported' && !member?.isAdmin)
+      ? 'all'
+      : filterBy;
+
+  function resetFilters() {
+    setSearch('');
+    setFilterBy('all');
+    searchInput.current?.focus({ preventScroll: true });
+  }
+
   const visible = useMemo(() => {
     let list = questions;
-    if (filterBy === 'mine' && member) list = list.filter((q) => q.authorId === member.uid);
-    else if (filterBy === 'reported' && member?.isAdmin) list = list.filter((q) => q.isReported);
-    else if (filterBy === 'unanswered') list = list.filter((q) => adminReplies(q).length === 0);
+    if (activeFilter === 'mine' && member) list = list.filter((q) => q.authorId === member.uid);
+    else if (activeFilter === 'reported' && member?.isAdmin)
+      list = list.filter((q) => q.isReported);
+    else if (activeFilter === 'unanswered') list = list.filter((q) => adminReplies(q).length === 0);
     const needle = search.trim().toLowerCase();
     if (needle)
       list = list.filter(
@@ -287,7 +300,7 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
           (q.replies ?? []).some((r) => r.content.toLowerCase().includes(needle)),
       );
     return list;
-  }, [questions, filterBy, search, member]);
+  }, [questions, activeFilter, search, member]);
 
   const requireMember = () => {
     if (member) return true;
@@ -634,6 +647,7 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
         <label className="board-field">
           <Search size={17} aria-hidden="true" />
           <input
+            ref={searchInput}
             type="search"
             aria-label={text.search}
             placeholder={text.search}
@@ -652,11 +666,11 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
         </BoardSelect>
         <BoardSelect
           aria-label={text.filter}
-          value={filterBy}
+          value={activeFilter}
           onChange={(e) => setFilterBy(e.target.value as typeof filterBy)}
         >
           <option value="all">{text.filterAll}</option>
-          <option value="mine">{text.filterMine}</option>
+          {member && <option value="mine">{text.filterMine}</option>}
           <option value="unanswered">{text.filterUnanswered}</option>
           {member?.isAdmin && <option value="reported">{text.filterReported}</option>}
         </BoardSelect>
@@ -695,13 +709,24 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
         </BoardComposer>
       )}
 
+      {loadFailed && (
+        <p className="board-error" role="alert">
+          {boardText[lang].loadFailed}
+        </p>
+      )}
       {loading ? (
         <>
           <div className="board-skeleton" />
           <div className="board-skeleton" />
         </>
       ) : visible.length === 0 ? (
-        <p className="board-empty">{text.empty}</p>
+        !loadFailed && (
+          <BoardEmpty
+            lang={lang}
+            filtered={Boolean(search.trim()) || activeFilter !== 'all'}
+            onReset={resetFilters}
+          />
+        )
       ) : (
         visible.map((question) => {
           const meta = status(question, text);
@@ -811,7 +836,11 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
               {editing?.qId === question.id && !editing.rId ? (
                 editor
               ) : (
-                <RichText content={open ? question.content : preview(question.content)} />
+                <BoardPostBody
+                  content={question.content}
+                  lang={lang}
+                  render={(content) => <RichText content={content} />}
+                />
               )}
 
               <div className="board-footer">
@@ -986,7 +1015,7 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
         })
       )}
 
-      {hasMore && visible.length >= postsLimit && (
+      {!loading && !loadFailed && questions.length >= postsLimit && (
         <button
           className="board-secondary"
           type="button"
