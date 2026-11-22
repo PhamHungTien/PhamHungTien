@@ -332,7 +332,7 @@ export default function AppBoard({ app, name, lang }: { app: string; name: strin
       </div>
 
       {user && (
-        <form className="board-card board-form" onSubmit={submit}>
+        <form className="board-card board-form glass-card" onSubmit={submit}>
           <textarea
             aria-label={text.message}
             placeholder={text.startAbout(name)}

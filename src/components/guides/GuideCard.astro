@@ -16,7 +16,7 @@ const articleLang = guideLang(guide);
 const app = guide.data.app ? appBySlug.get(guide.data.app as AppSlug) : undefined;
 ---
 
-<a class="guide-card" href={guideUrl(guide)} hreflang={articleLang}>
+<a class="guide-card glass-card" href={guideUrl(guide)} hreflang={articleLang}>
   <span class="guide-card__top">
     {app ? (
       <Image src={app.icon} alt="" width={28} height={28} densities={[1, 2]} loading="lazy" />
@@ -43,10 +43,8 @@ const app = guide.data.app ? appBySlug.get(guide.data.app as AppSlug) : undefine
     gap: 10px;
     height: 100%;
     padding: 20px;
-    border: 1px solid var(--line);
+    border: 1px solid var(--glass-edge);
     border-radius: var(--r-card);
-    background: var(--surface);
-    box-shadow: var(--shadow-card);
     transition: border-color 150ms ease-out;
   }
 

@@ -657,7 +657,7 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
         </BoardSelect>
       </div>
 
-      <form className="board-card board-form" onSubmit={ask}>
+      <form className="board-card board-form glass-card" onSubmit={ask}>
         <textarea
           aria-label={text.newPost}
           placeholder={member ? text.askPlaceholder : text.signInPlaceholder}

@@ -70,7 +70,7 @@ const withCode = (text: string) =>
     <div class="install__downloads">
       {choices.map((choice) => (
         <a
-          class:list={['download', { 'download--primary': choice.primary }]}
+          class:list={['download', 'glass-card', { 'download--primary': choice.primary }]}
           href={choice.href}
           data-install-arch={choice.arch}
         >
@@ -151,9 +151,8 @@ const withCode = (text: string) =>
     align-items: center;
     gap: 16px;
     padding: 18px 20px;
-    border: 1px solid var(--line);
+    border: 1px solid var(--glass-edge);
     border-radius: var(--r-card);
-    background: var(--surface);
     transition: border-color 160ms ease;
   }
 

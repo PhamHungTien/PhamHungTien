@@ -89,7 +89,7 @@ const lastOf = (index: number) => {
           data-search={`${app.name} ${category} ${description}`.toLowerCase()}
           {...lastOf(index)}
         >
-          <a class="app-card" href={appPath(app, lang)} style={`--app: ${app.accent}`}>
+          <a class="app-card glass-card" href={appPath(app, lang)} style={`--app: ${app.accent}`}>
             <div class="app-card__art">
               {art && (
                 <Image
@@ -280,10 +280,8 @@ const lastOf = (index: number) => {
     flex-direction: column;
     height: 100%;
     overflow: hidden;
-    border: 1px solid var(--line);
+    border: 1px solid var(--glass-edge);
     border-radius: var(--r-card);
-    background: var(--surface);
-    box-shadow: var(--shadow-card);
     transition: border-color 150ms ease-out;
   }
 

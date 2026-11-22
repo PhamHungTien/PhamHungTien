@@ -25,14 +25,14 @@ const { features, support } = getAppCopy(app, lang);
   <div class="features__layout">
     <ul class="feature-grid" role="list">
       {features.map((feature) => (
-        <li>
+        <li class="glass-card">
           <h3>{feature.title}</h3>
           <p>{feature.description}</p>
         </li>
       ))}
     </ul>
 
-    <aside class="support" aria-labelledby="support-heading">
+    <aside class="support glass glass-panel" aria-labelledby="support-heading">
       <h3 id="support-heading">{t(lang, 'app.support')}</h3>
       <p>{support}</p>
       <a
@@ -77,18 +77,17 @@ const { features, support } = getAppCopy(app, lang);
 
   .feature-grid li {
     padding: 20px 22px;
-    border: 1px solid var(--line);
+    border: 1px solid var(--glass-edge);
     border-radius: var(--r-card);
-    background: var(--surface);
   }
 
   .feature-grid li:first-child {
-    grid-column: 1 / -1;
-    background: linear-gradient(
-      120deg,
-      color-mix(in srgb, var(--app, var(--brand)) 7%, var(--surface)),
-      var(--surface)
+    --glass-card-highlight: color-mix(
+      in srgb,
+      var(--app, var(--brand)) 9%,
+      var(--glass-card-light)
     );
+    grid-column: 1 / -1;
   }
   .feature-grid li:first-child h3 {
     font-size: 20px;
@@ -115,9 +114,8 @@ const { features, support } = getAppCopy(app, lang);
     display: grid;
     gap: 12px;
     padding: 28px;
-    border: 1px solid var(--line);
+    border: 1px solid var(--glass-edge);
     border-radius: var(--r-card);
-    background: var(--surface-2);
   }
 
   .support h3 {
@@ -159,7 +157,7 @@ const { features, support } = getAppCopy(app, lang);
     }
 
     .support {
-      position: static;
+      position: relative;
       max-width: 560px;
     }
   }

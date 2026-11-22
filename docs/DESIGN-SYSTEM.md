@@ -60,17 +60,19 @@ its own shape.
 
 ## Liquid Glass
 
-Apple's material for the layer that floats above content: navigation and controls, never
-the content itself ([HIG: Materials](https://developer.apple.com/design/human-interface-guidelines/materials)).
-On this site that is the header capsule and its menu sheet, segmented controls (app
-filter, device tabs, language switch), the search field, secondary buttons, the profile
-group in the hero, screenshot paging buttons, the lightbox close button, the video play
-button and the dialogs. Cards, sections and text blocks stay opaque.
+The floating controls use Liquid Glass from the header, menus and segmented controls to
+the search field, gallery arrows, video play button and dialogs.
+App tiles, guide cards, feature cards, download choices and discussion composers share the
+same edge light and use a translucent gradient. Standalone support and guide download panels
+use a denser tint over a blurred backdrop. Articles, FAQs and discussion threads use solid
+surfaces for reading.
 
-The material (`.glass`, `.segmented`, `.button--secondary` in `global.css`) is:
+The shared material lives in `global.css`:
 
-- a light tint (`--glass-tint`; `--glass-tint-strong` for menus and dialogs, where text
-  sits on it) over `backdrop-filter: blur(var(--glass-blur)) saturate(180%)`;
+- `.glass`, `.segmented` and `.button--secondary` layer `--glass-tint` over a blurred,
+  saturated backdrop. `.glass-panel` chooses the denser tint for standalone panels;
+- `.glass-card` uses a translucent gradient and the card shadow for grids, leaving the
+  backdrop unfiltered;
 - a hairline edge and inner edge light (inset shadows), plus a specular rim: a 1 px
   gradient border, bright at the top left where light catches the edge and faint at the
   bottom right;
@@ -86,8 +88,8 @@ the blur under it drops to 6 px so the bend shows. Other browsers keep the blur,
 
 Rules:
 
-- No glass on glass: controls on a glass surface are plain (transparent until hovered).
-- Text on glass keeps WCAG AA contrast in both themes (checked with axe on every page).
+- Controls within glass panels use a solid surface or a transparent hover treatment.
+- Text on glass should meet WCAG AA contrast in both themes.
 - `prefers-reduced-transparency` and `prefers-contrast: more` replace the glass with solid
   surfaces and a clear edge, and switch refraction off; without `backdrop-filter` the tint
   is denser.

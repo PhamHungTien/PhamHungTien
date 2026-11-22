@@ -64,10 +64,9 @@
   --r-icon: 22.5%;
   --r-image: var(--r-media);
   /*
-   * Liquid Glass: the floating layer for navigation and controls, never for content
-   * (Apple HIG, Materials). A light tint over a blurred, saturated backdrop, a hairline
-   * edge, a specular rim where light catches the edge, and a soft lift. Chromium also
-   * bends the backdrop at the edges (scripts/liquid-glass.ts).
+   * Liquid Glass for navigation and controls (Apple HIG, Materials). Selected cards
+   * share the tint and specular rim, with backdrop blur reserved for isolated panels.
+   * Chromium also bends the backdrop at the edges of explicitly marked controls.
    */
   --glass-tint: rgb(250 251 253 / 0.62);
   --glass-tint-strong: rgb(250 251 253 / 0.84);
@@ -78,6 +77,8 @@
   --glass-shine: rgb(255 255 255 / 0.85);
   --glass-shadow: 0 1px 2px rgb(16 24 40 / 0.05), 0 12px 32px -8px rgb(16 24 40 / 0.18);
   --glass-blur: 18px;
+  --glass-card-tint: rgb(250 251 253 / 0.86);
+  --glass-card-light: rgb(255 255 255 / 0.68);
   /* Type scale (Be Vietnam Pro 400 / 500 / 600). */
   --text-display: clamp(28px, 4.2vw, 48px);
   --text-h2: clamp(24px, 3.2vw, 36px);
@@ -142,6 +143,8 @@
   --glass-rim-low: rgb(255 255 255 / 0.07);
   --glass-shine: rgb(255 255 255 / 0.36);
   --glass-shadow: 0 1px 2px rgb(0 0 0 / 0.25), 0 14px 36px -10px rgb(0 0 0 / 0.65);
+  --glass-card-tint: rgb(22 27 36 / 0.8);
+  --glass-card-light: rgb(180 199 234 / 0.09);
 }
 
 /* ------------------------------------------------------------------- reset */
@@ -414,19 +417,26 @@ a:not([class]):focus-visible {
 .glass,
 .button--secondary,
 .segmented {
-  isolation: isolate;
   background: var(--glass-tint);
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
   backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+}
+
+.glass,
+.glass-card,
+.button--secondary,
+.segmented {
+  isolation: isolate;
   box-shadow:
     inset 0 0 0 1px var(--glass-edge),
     inset 0 1px 0 var(--glass-rim),
     inset 0 -1px 0 var(--glass-rim-low),
-    var(--glass-shadow);
+    var(--glass-lift, var(--glass-shadow));
 }
 
 /* Specular rim: light catches the top-left edge and, faintly, the bottom-right one. */
 .glass::after,
+.glass-card::after,
 .button--secondary::after,
 .segmented::after {
   position: absolute;
@@ -452,8 +462,35 @@ a:not([class]):focus-visible {
   content: '';
 }
 
-.glass {
+.glass,
+.glass-card {
   position: relative;
+}
+
+.glass-card {
+  --glass-lift: var(--shadow-card);
+  background:
+    linear-gradient(145deg, var(--glass-card-highlight, var(--glass-card-light)), transparent 70%),
+    var(--glass-card-tint);
+}
+
+.glass-panel {
+  --glass-tint: var(--glass-tint-strong);
+}
+
+.glass-panel .button--secondary {
+  background: var(--surface-2);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+}
+
+.glass-panel .button--secondary:hover {
+  background: var(--surface);
+}
+
+.glass-panel .button--secondary::after {
+  display: none;
 }
 
 /* No backdrop filter: a denser tint keeps text readable. */
@@ -468,6 +505,7 @@ a:not([class]):focus-visible {
 /* Reduce transparency or increase contrast: solid surfaces with a clear edge. */
 @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
   .glass,
+  .glass-card,
   .button--secondary,
   .segmented {
     background: var(--surface);
@@ -475,10 +513,11 @@ a:not([class]):focus-visible {
     backdrop-filter: none;
     box-shadow:
       inset 0 0 0 1px var(--line-strong),
-      var(--glass-shadow);
+      var(--glass-lift, var(--glass-shadow));
   }
 
   .glass::after,
+  .glass-card::after,
   .button--secondary::after,
   .segmented::after {
     display: none;
