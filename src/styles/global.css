@@ -47,7 +47,7 @@
   --container: 1200px;
   --gutter: clamp(16px, 4vw, 48px);
   /* Compact on phones so more of each page fits on screen; roomier on large displays. */
-  --section-gap: clamp(48px, 7vw, 96px);
+  --section-gap: clamp(36px, 7vw, 96px);
   --header-height: 80px;
   /*
    * Corner radii. Nested shapes are concentric: an inner radius is the outer radius minus
@@ -165,7 +165,6 @@ html {
 }
 
 body {
-  min-width: 320px;
   min-height: 100dvh;
   margin: 0;
   background: var(--paper);
@@ -176,6 +175,12 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@media (width <= 600px) {
+  :root {
+    --header-height: 72px;
+  }
 }
 
 h1,
@@ -301,8 +306,12 @@ a:not([class]):focus-visible {
   flex-wrap: wrap;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 20px 32px;
-  margin-bottom: 24px;
+  gap: clamp(10px, 2vw, 20px) clamp(14px, 4vw, 32px);
+  margin-bottom: clamp(16px, 3vw, 24px);
+}
+
+.section-head > * {
+  min-width: 0;
 }
 
 .section-head h2 {
@@ -531,25 +540,24 @@ a:not([class]):focus-visible {
 
 /* Long-form text: legal documents, guides and site pages rendered from Markdown. */
 .prose {
-  font-size: 17px;
+  font-size: clamp(16px, 1rem + 0.1vw, 17px);
   line-height: 1.75;
+  overflow-wrap: anywhere;
 }
 
 .prose h2 {
-  margin-top: 40px;
+  margin-top: clamp(28px, 5vw, 40px);
   font-size: clamp(22px, 2.6vw, 26px);
   font-weight: 600;
   line-height: 1.25;
   letter-spacing: -0.02em;
-  scroll-margin-top: calc(var(--header-height) + 20px);
 }
 
 .prose h3 {
-  margin-top: 32px;
+  margin-top: clamp(24px, 4vw, 32px);
   font-size: 20px;
   font-weight: 600;
   line-height: 1.35;
-  scroll-margin-top: calc(var(--header-height) + 20px);
 }
 
 .prose p,
@@ -598,7 +606,8 @@ a:not([class]):focus-visible {
 
 .prose pre {
   overflow-x: auto;
-  padding: 16px 20px;
+  overflow-wrap: normal;
+  padding: 14px clamp(12px, 3vw, 20px);
   border-radius: var(--r-panel);
   background: #10141c;
   color: #e6ebf3;
@@ -632,7 +641,7 @@ a:not([class]):focus-visible {
 
 .prose th,
 .prose td {
-  padding: 10px 14px;
+  padding: 10px clamp(9px, 2.5vw, 14px);
   border-bottom: 1px solid var(--line);
   text-align: left;
   vertical-align: top;

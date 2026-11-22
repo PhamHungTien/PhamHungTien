@@ -74,8 +74,10 @@ function initMenu() {
   const menu = document.querySelector<HTMLElement>('[data-mobile-nav]');
   const header = document.querySelector<HTMLElement>('[data-header]');
   if (!toggle || !menu || !header) return;
+  const languageMenu = header.querySelector<HTMLDetailsElement>('[data-language-switcher]');
 
   const setOpen = (open: boolean, restoreFocus = false) => {
+    if (open && languageMenu) languageMenu.open = false;
     toggle.setAttribute('aria-expanded', String(open));
     toggle.setAttribute(
       'aria-label',
@@ -97,8 +99,11 @@ function initMenu() {
     if (menu.classList.contains('is-open') && !header.contains(event.target as Node))
       setOpen(false);
   });
-  matchMedia('(min-width: 961px)').addEventListener('change', (event) => {
-    if (event.matches) setOpen(false);
+  languageMenu?.addEventListener('toggle', () => {
+    if (languageMenu.open) setOpen(false);
+  });
+  window.addEventListener('resize', () => {
+    if (menu.classList.contains('is-open') && !toggle.getClientRects().length) setOpen(false);
   });
 }
 

@@ -81,7 +81,7 @@ const { lang } = Astro.props;
     width: min(420px, calc(100% - 32px));
     max-height: calc(100dvh - 32px);
     margin: auto;
-    padding: 32px 28px 24px;
+    padding: clamp(20px, 5dvh, 32px) clamp(16px, 5vw, 28px) 18px;
     overflow-y: auto;
     overscroll-behavior: contain;
     border: 0;
@@ -146,8 +146,8 @@ const { lang } = Astro.props;
   }
 
   .donate__qr {
-    width: min(260px, 100%);
-    margin: 22px auto 16px;
+    width: min(260px, 100%, max(160px, 45dvh));
+    margin: clamp(12px, 3dvh, 22px) auto 12px;
   }
 
   .donate__qr img {

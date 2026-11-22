@@ -87,12 +87,19 @@ function badgeFor(store: (typeof links)[number]['store']) {
   }
   .store-badge {
     display: inline-flex;
+    min-height: 44px;
     align-items: center;
     border-radius: 8px;
   }
   .store-badge img {
     display: block;
     width: auto;
-    height: 44px;
+    height: var(--store-badge-height, 44px);
+  }
+
+  @media (width < 360px) {
+    .store-downloads {
+      --store-badge-height: 40px;
+    }
   }
 </style>

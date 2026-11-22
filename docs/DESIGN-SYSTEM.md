@@ -31,7 +31,7 @@ Defined once at the top of `src/styles/global.css`.
 | `--brand`     | `#7a1424` | `#f0c04e` | Primary buttons, links, focus         |
 
 Container 1200 px, gutter `clamp(16px, 4vw, 48px)`, section spacing
-`clamp(48px, 7vw, 96px)` (tight on phones so more of each page fits). Content depth comes
+`clamp(36px, 7vw, 96px)` (tight on phones so more of each page fits). Content depth comes
 from a 1 px border first; shadows stay soft (`--shadow-card`, alpha under 0.08 in light
 mode; a faint top highlight in dark mode).
 
@@ -48,7 +48,11 @@ mode; a faint top highlight in dark mode).
 | `--r-xs`      | 6 px   | Inline code, keyboard keys                              |
 | `--r-icon`    | 22.5 % | App icons and the brand mark                            |
 
-Download buttons for App Store and Google Play use the original, localized SVG artwork at the same 44 px height. The row wraps on narrow screens, with App Store first and clear space between badges. `StoreDownloads.astro` renders them on app pages and guide download cards. [Apple badge guidelines](https://developer.apple.com/app-store/marketing/guidelines/) · [Google Play badge guidelines](https://partnermarketinghub.withgoogle.com/brands/google-play/google-play/lockups-icons-badges/)
+App Store and Google Play badges use the original, localized SVG artwork at the same height.
+Artwork is 44 px tall by default and 40 px on windows narrower than 360 px, with 44 px touch
+targets. The row wraps as space requires, with App Store first and clear space between badges.
+`StoreDownloads.astro` renders the badges on app pages and in guide download cards.
+[Apple badge guidelines](https://developer.apple.com/app-store/marketing/guidelines/) · [Google Play badge guidelines](https://partnermarketinghub.withgoogle.com/brands/google-play/google-play/lockups-icons-badges/)
 
 Nested shapes are **concentric**, as in Apple's design language: an inner radius is the
 outer radius minus the inset between the two edges, so corners never look pinched or

@@ -24,7 +24,7 @@ interface Props {
 const { lang, nav, alternates } = Astro.props;
 ---
 
-<header class="site-header" data-header>
+<header class="site-header" data-header data-wide-nav={nav.length > 4 ? '' : undefined}>
   <a class="skip-link" href="#main-content">
     {t(lang, 'nav.skip')}
   </a>
@@ -145,7 +145,7 @@ const { lang, nav, alternates } = Astro.props;
   }
 
   .site-nav {
-    display: flex;
+    display: var(--desktop-nav-display, flex);
     align-items: center;
     gap: 2px;
   }
@@ -154,10 +154,11 @@ const { lang, nav, alternates } = Astro.props;
     display: inline-flex;
     min-height: 40px;
     align-items: center;
-    padding: 0 14px;
+    padding-inline: clamp(8px, 0.75vw, 11px);
     border-radius: var(--r-pill);
     color: color-mix(in srgb, var(--ink) 30%, var(--muted));
     font-size: 15px;
+    white-space: nowrap;
     transition:
       color 150ms ease-out,
       background-color 150ms ease-out;
@@ -185,6 +186,7 @@ const { lang, nav, alternates } = Astro.props;
     display: flex;
     align-items: center;
     gap: 4px;
+    flex: none;
   }
 
   /* Controls on glass are plain: no glass on glass. */
@@ -214,80 +216,108 @@ const { lang, nav, alternates } = Astro.props;
     display: none;
   }
 
-  .menu-toggle,
-  .menu-icon--close,
-  .mobile-nav {
+  .menu-toggle {
+    display: var(--menu-toggle-display, none);
+  }
+
+  .menu-icon--close {
     display: none;
   }
 
-  @media (max-width: 960px) {
-    .site-nav {
-      display: none;
+  .menu-toggle[aria-expanded='true'] .menu-icon--open {
+    display: none;
+  }
+
+  .menu-toggle[aria-expanded='true'] .menu-icon--close {
+    display: block;
+  }
+
+  /* A separate glass sheet sits below the header. */
+  .mobile-nav {
+    --glass-tint: var(--glass-tint-strong);
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    left: 0;
+    display: var(--mobile-nav-display, none);
+    gap: 2px;
+    max-height: calc(100dvh - var(--header-height) - 24px - env(safe-area-inset-top));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 8px;
+    border-radius: var(--r-sheet);
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+    transform-origin: 50% 0;
+    transition:
+      opacity 160ms ease-out,
+      transform 200ms var(--ease),
+      visibility 160ms;
+  }
+
+  .mobile-nav.is-open {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+  }
+
+  .mobile-nav a {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+    padding: 4px 14px;
+    border-radius: calc(var(--r-sheet) - 8px);
+    font-size: 16px;
+    font-weight: 500;
+    overflow-wrap: anywhere;
+    transition: background-color 150ms ease-out;
+  }
+
+  .mobile-nav a:hover {
+    background: color-mix(in srgb, var(--ink) 6%, transparent);
+  }
+
+  .mobile-nav a[aria-current='page'] {
+    background: var(--glass-thumb);
+    color: var(--brand);
+    font-weight: 600;
+  }
+
+  @media (width < 1200px) {
+    .site-header[data-wide-nav] {
+      --desktop-nav-display: none;
+      --menu-toggle-display: inline-grid;
+      --mobile-nav-display: grid;
+    }
+  }
+
+  @media (width < 720px) {
+    .site-header {
+      --desktop-nav-display: none;
+      --menu-toggle-display: inline-grid;
+      --mobile-nav-display: grid;
+    }
+  }
+
+  @media (width >= 520px) {
+    .site-header[data-wide-nav] .mobile-nav {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (width <= 600px) {
+    .site-header__bar {
+      height: 56px;
+      gap: 8px;
+      padding-inline: 10px 6px;
     }
 
-    .menu-toggle {
-      display: inline-grid;
-    }
-
-    .menu-toggle[aria-expanded='true'] .menu-icon--open {
-      display: none;
-    }
-
-    .menu-toggle[aria-expanded='true'] .menu-icon--close {
-      display: block;
-    }
-
-    /* A glass sheet under the bar: radius 28, rows inset 8px, so rows are 20. */
-    .mobile-nav {
-      --glass-tint: var(--glass-tint-strong);
-      position: absolute;
-      top: calc(100% + 10px);
-      right: 0;
-      left: 0;
-      display: grid;
+    .header-actions {
+      --header-control-size: 44px;
       gap: 2px;
-      max-height: calc(100dvh - 110px - env(safe-area-inset-top));
-      overflow-y: auto;
-      overscroll-behavior: contain;
-      padding: 8px;
-      border-radius: var(--r-sheet);
-      visibility: hidden;
-      opacity: 0;
-      transform: translateY(-6px) scale(0.98);
-      transform-origin: 50% 0;
-      transition:
-        opacity 160ms ease-out,
-        transform 200ms var(--ease),
-        visibility 160ms;
-    }
-
-    .mobile-nav.is-open {
-      visibility: visible;
-      opacity: 1;
-      transform: none;
-    }
-
-    .mobile-nav a {
-      position: relative;
-      z-index: 3;
-      display: flex;
-      min-height: 50px;
-      align-items: center;
-      padding: 0 16px;
-      border-radius: calc(var(--r-sheet) - 8px);
-      font-size: 17px;
-      font-weight: 500;
-      transition: background-color 150ms ease-out;
-    }
-
-    .mobile-nav a:hover {
-      background: color-mix(in srgb, var(--ink) 6%, transparent);
-    }
-
-    .mobile-nav a[aria-current='page'] {
-      background: var(--glass-thumb);
-      color: var(--brand);
-      font-weight: 600;
     }
   }
 </style>
