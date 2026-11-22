@@ -4,12 +4,13 @@
  */
 .board {
   display: grid;
-  gap: 16px;
-  max-width: 880px;
+  gap: 12px;
+  width: min(100%, 960px);
+  margin-inline: auto;
 }
 
 .board h2 {
-  font-size: clamp(30px, 4.2vw, 48px);
+  font-size: clamp(27px, 3.4vw, 40px);
   font-weight: 600;
   line-height: 1.1;
   letter-spacing: -0.03em;
@@ -18,14 +19,14 @@
 .board-header {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
-  gap: 16px 24px;
-  margin-bottom: 8px;
+  gap: 10px 16px;
+  margin-bottom: 4px;
 }
 
 .board-header p {
-  margin-top: 8px;
+  margin-top: 5px;
 }
 
 .board-muted {
@@ -62,13 +63,17 @@
 
 .board-toolbar {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) repeat(var(--board-selects, 1), 190px);
-  gap: 12px;
+  grid-template-columns: minmax(0, 1fr) minmax(165px, 190px);
+  gap: 8px;
+}
+
+.board-toolbar--sort {
+  grid-template-columns: minmax(0, 1fr) repeat(2, minmax(165px, 190px));
 }
 
 .board-field {
   display: flex;
-  height: 46px;
+  height: 44px;
   align-items: center;
   gap: 10px;
   padding: 0 14px;
@@ -101,7 +106,7 @@
 .board-select select {
   display: block;
   inline-size: 100%;
-  min-block-size: 46px;
+  min-block-size: 44px;
   appearance: none;
   padding-block: 0;
   padding-inline: 16px 44px;
@@ -139,8 +144,8 @@
 
 .board-card {
   display: grid;
-  gap: 12px;
-  padding: 24px;
+  gap: 10px;
+  padding: 18px 20px;
   border: 1px solid var(--line);
   border-radius: var(--r-card);
 }
@@ -183,7 +188,7 @@
 .board-content {
   overflow-wrap: anywhere;
   white-space: pre-wrap;
-  line-height: 1.7;
+  line-height: 1.6;
 }
 
 .board-content code {
@@ -395,6 +400,22 @@
   gap: 12px;
 }
 
+.board-composer > summary {
+  display: flex;
+  width: fit-content;
+  margin-inline-start: auto;
+  list-style: none;
+  cursor: pointer;
+}
+
+.board-composer > summary::-webkit-details-marker {
+  display: none;
+}
+
+.board-composer > form {
+  margin-top: 8px;
+}
+
 .board textarea,
 .board-modal input {
   display: block;
@@ -446,7 +467,7 @@
 }
 
 .board-empty {
-  padding: 40px 24px;
+  padding: 24px 16px;
   border: 1px dashed var(--line-strong);
   border-radius: var(--r-card);
   color: var(--muted);
@@ -558,7 +579,7 @@
 }
 
 .board-skeleton {
-  height: 140px;
+  height: 112px;
   border-radius: var(--r-card);
   background: linear-gradient(90deg, var(--surface) 0%, var(--surface-2) 50%, var(--surface) 100%);
   background-size: 200% 100%;
@@ -577,6 +598,16 @@
   }
 
   .board-card {
-    padding: 18px;
+    padding: 14px;
+  }
+}
+
+@media (min-width: 360px) and (max-width: 640px) {
+  .board-toolbar--sort {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .board-toolbar--sort .board-field {
+    grid-column: 1 / -1;
   }
 }

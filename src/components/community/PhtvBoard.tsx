@@ -42,6 +42,7 @@ import { ADMIN_EMAILS, getFirebase } from '../../lib/firebase';
 import { formatRelative } from './strings';
 import { phtvText, type PhtvText } from './phtv-strings';
 import BoardSelect from './BoardSelect';
+import BoardComposer from './BoardComposer';
 import './board.css';
 
 type Label = 'bug' | 'enhancement' | 'feature' | 'question' | 'help' | null;
@@ -338,10 +339,12 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
     notify(text.nameSaved);
   }
 
-  async function ask(event: SubmitEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (!requireMember() || !member || !draft.trim() || busy) return;
-    if (Date.now() - lastPostAt < 10_000 && !member.isAdmin) return notify(text.slowDown);
+  async function publish() {
+    if (!requireMember() || !member || !draft.trim() || busy) return false;
+    if (Date.now() - lastPostAt < 10_000 && !member.isAdmin) {
+      notify(text.slowDown);
+      return false;
+    }
     setBusy(true);
     try {
       await addDoc(collection(getFirebase().db, 'questions'), {
@@ -363,8 +366,10 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
       setLabel(null);
       setLastPostAt(Date.now());
       notify(text.posted);
+      return true;
     } catch {
       notify(text.postFailed);
+      return false;
     } finally {
       setBusy(false);
     }
@@ -625,7 +630,7 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
         )}
       </header>
 
-      <div className="board-toolbar" style={{ ['--board-selects' as string]: 2 }}>
+      <div className="board-toolbar board-toolbar--sort">
         <label className="board-field">
           <Search size={17} aria-hidden="true" />
           <input
@@ -657,37 +662,38 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
         </BoardSelect>
       </div>
 
-      <form className="board-card board-form glass-card" onSubmit={ask}>
-        <textarea
-          aria-label={text.newPost}
-          placeholder={member ? text.askPlaceholder : text.signInPlaceholder}
-          value={draft}
-          onChange={(e) => setDraft(e.target.value)}
-          onFocus={() => !member && authDialog.current?.showModal()}
-          disabled={busy}
-          maxLength={5000}
-          required
-        />
-        <div className="board-form__row">
-          <BoardSelect
-            aria-label={text.label}
-            value={label ?? ''}
-            onChange={(e) => setLabel((e.target.value || null) as Label)}
-          >
-            <option value="">{text.label}</option>
-            {LABELS.map((id) => (
-              <option key={id} value={id}>
-                {text.labels[id]}
-              </option>
-            ))}
-          </BoardSelect>
-          <button className="board-primary" disabled={busy || !draft.trim()}>
-            <Send size={16} aria-hidden="true" />
-            {text.post}
-          </button>
-        </div>
-        <small className="board-muted">{text.publicNotice}</small>
-      </form>
+      {member && (
+        <BoardComposer title={text.newPost} publish={publish}>
+          <textarea
+            aria-label={text.newPost}
+            placeholder={text.askPlaceholder}
+            value={draft}
+            onChange={(e) => setDraft(e.target.value)}
+            disabled={busy}
+            maxLength={5000}
+            required
+          />
+          <div className="board-form__row">
+            <BoardSelect
+              aria-label={text.label}
+              value={label ?? ''}
+              onChange={(e) => setLabel((e.target.value || null) as Label)}
+            >
+              <option value="">{text.label}</option>
+              {LABELS.map((id) => (
+                <option key={id} value={id}>
+                  {text.labels[id]}
+                </option>
+              ))}
+            </BoardSelect>
+            <button className="board-primary" disabled={busy || !draft.trim()}>
+              <Send size={16} aria-hidden="true" />
+              {text.post}
+            </button>
+          </div>
+          <small className="board-muted">{text.publicNotice}</small>
+        </BoardComposer>
+      )}
 
       {loading ? (
         <>

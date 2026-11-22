@@ -9,6 +9,7 @@ import type { Locale as Lang } from '../../i18n/locales';
 import { ADMIN_EMAILS, getFirebase } from '../../lib/firebase';
 import { boardText, formatDate } from './strings';
 import BoardSelect from './BoardSelect';
+import BoardComposer from './BoardComposer';
 import './board.css';
 
 type Category = 'question' | 'bug' | 'idea';
@@ -248,9 +249,8 @@ export default function AppBoard({ app, name, lang }: { app: string; name: strin
     await signOut(getFirebase().auth);
   }
 
-  async function submit(event: SubmitEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (!user || busy || !content.trim()) return;
+  async function publish() {
+    if (!user || busy || !content.trim()) return false;
     setBusy(true);
     setError('');
     try {
@@ -263,8 +263,10 @@ export default function AppBoard({ app, name, lang }: { app: string; name: strin
         createdAt: Date.now(),
       });
       setContent('');
+      return true;
     } catch {
       setError(text.postFailed);
+      return false;
     } finally {
       setBusy(false);
     }
@@ -332,7 +334,7 @@ export default function AppBoard({ app, name, lang }: { app: string; name: strin
       </div>
 
       {user && (
-        <form className="board-card board-form glass-card" onSubmit={submit}>
+        <BoardComposer title={text.newPost} publish={publish}>
           <textarea
             aria-label={text.message}
             placeholder={text.startAbout(name)}
@@ -357,7 +359,7 @@ export default function AppBoard({ app, name, lang }: { app: string; name: strin
             </button>
           </div>
           <small className="board-muted">{text.publicNotice}</small>
-        </form>
+        </BoardComposer>
       )}
 
       {error && (

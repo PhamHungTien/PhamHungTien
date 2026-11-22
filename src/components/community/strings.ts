@@ -3,6 +3,7 @@ import type { Locale } from '../../i18n/locales';
 /** Strings for both discussion boards. Kept beside the islands so they ship only with them. */
 export const boardText = {
   en: {
+    newPost: 'New post',
     title: 'Discussions',
     about: (name: string) => `Questions, ideas and feedback about ${name}.`,
     startAbout: (name: string) => `Start a conversation about ${name}…`,
@@ -39,6 +40,7 @@ export const boardText = {
     deleteFailed: 'The message was not deleted.',
   },
   zh: {
+    newPost: '新帖子',
     title: '讨论',
     about: (name: string) => `关于 ${name} 的问题、想法与反馈。`,
     startAbout: (name: string) => `开始讨论 ${name}…`,
@@ -75,6 +77,7 @@ export const boardText = {
     deleteFailed: '删除失败。',
   },
   vi: {
+    newPost: 'Bài viết mới',
     title: 'Thảo luận',
     about: (name: string) => `Câu hỏi, ý tưởng và góp ý về ${name}.`,
     startAbout: (name: string) => `Bắt đầu thảo luận về ${name}…`,
@@ -111,6 +114,7 @@ export const boardText = {
     deleteFailed: 'Chưa xoá được nội dung.',
   },
   ja: {
+    newPost: '新規投稿',
     title: 'ディスカッション',
     member: 'メンバー',
     signIn: 'Googleでログイン',
@@ -147,6 +151,7 @@ export const boardText = {
     categories: { question: '質問', bug: '不具合の報告', idea: '提案' },
   },
   es: {
+    newPost: 'Nueva publicación',
     title: 'Debates',
     member: 'Miembro',
     signIn: 'Iniciar sesión con Google',
