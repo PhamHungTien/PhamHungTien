@@ -12,8 +12,6 @@ interface GuideCopy {
   author: string;
   bio: string;
   explore: (appName: string) => string;
-  appStore: string;
-  googlePlay: string;
   descriptions?: { padcodeai: string; vtts: string };
 }
 
@@ -31,8 +29,6 @@ export const guideCopy: Record<GuideLang, GuideCopy> = {
     author: 'Author',
     bio: 'Independent app developer from Bến Tre, Vietnam.',
     explore: (name) => `Explore ${name}`,
-    appStore: 'Download on the App Store',
-    googlePlay: 'Get it on Google Play',
   },
   vi: {
     indexTitle: 'Hướng dẫn sử dụng ứng dụng',
@@ -47,8 +43,6 @@ export const guideCopy: Record<GuideLang, GuideCopy> = {
     author: 'Tác giả',
     bio: 'Nhà phát triển ứng dụng độc lập đến từ Bến Tre, Việt Nam.',
     explore: (name) => `Xem ${name}`,
-    appStore: 'Tải trên App Store',
-    googlePlay: 'Tải trên Google Play',
   },
   ja: {
     indexTitle: 'Pad Code AI と vTTS の使い方',
@@ -63,8 +57,6 @@ export const guideCopy: Record<GuideLang, GuideCopy> = {
     author: '著者',
     bio: 'ベトナムのベンチェ出身の個人アプリ開発者です。',
     explore: (name) => `${name} の詳細（英語）`,
-    appStore: 'App Storeでダウンロード',
-    googlePlay: 'Google Playで入手',
     descriptions: {
       padcodeai: 'iPadとiPhoneでコードを書いて実行できる開発環境です。',
       vtts: '書籍や文書を端末上で読み上げるアプリです。',
@@ -83,8 +75,6 @@ export const guideCopy: Record<GuideLang, GuideCopy> = {
     author: 'Autor',
     bio: 'Desarrollador independiente de aplicaciones de Bến Tre, Vietnam.',
     explore: (name) => `Conoce ${name} (en inglés)`,
-    appStore: 'Descargar en App Store',
-    googlePlay: 'Descargar en Google Play',
     descriptions: {
       padcodeai: 'Un entorno para escribir y ejecutar código en iPad y iPhone.',
       vtts: 'Una app que lee libros y documentos en voz alta en tu dispositivo.',

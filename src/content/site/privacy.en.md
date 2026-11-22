@@ -60,3 +60,7 @@ If the way the website handles data changes, this policy will be updated and the
 ## Contact
 
 For any privacy question, email [contact@phamhungtien.com](mailto:contact@phamhungtien.com).
+
+## Trademark notices
+
+Apple, the Apple logo, Apple Pencil, Apple Vision Pro, iPhone, iPad, Mac, macOS and Siri are trademarks of Apple Inc. App Store is a service mark of Apple Inc. Android, Google Play and the Google Play logo are trademarks of Google LLC.

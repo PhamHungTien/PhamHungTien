@@ -6,7 +6,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import GuideList from './GuideList.astro';
 import YouTube from '../ui/YouTube.astro';
 import Logo from '../ui/Logo.astro';
+import StoreDownloads from '../ui/StoreDownloads.astro';
 import { appBySlug } from '../../data/apps';
+import { storesOf } from '../../data/platforms';
 import type { AppSlug } from '../../data/types';
 import { SITE } from '../../data/site';
 import { guideCopy } from '../../i18n/guide-copy';
@@ -38,9 +40,10 @@ const copy = guideCopy[lang];
 const app = data.app ? appBySlug.get(data.app as AppSlug) : undefined;
 const product = app?.slug === 'padcodeai' || app?.slug === 'vtts' ? app.slug : undefined;
 const appPageLanguage = lang === 'vi' ? 'vi' : 'en';
-const subtitle = (product && copy.descriptions?.[product]) || app?.subtitle[appPageLanguage];
-const appStore = product ? app?.links.stores?.appStore : undefined;
-const googlePlay = product ? app?.links.stores?.googlePlay : undefined;
+const translatedSubtitle = product && copy.descriptions?.[product];
+const subtitle = translatedSubtitle || app?.subtitle[appPageLanguage];
+const stores = app?.links.stores;
+const hasStores = storesOf(stores).length > 0;
 const path = guideUrl(guide);
 const indexPath = guidesPath(lang);
 const socialImage = ogImage(guideOgKey(guide));
@@ -177,26 +180,14 @@ const jsonLd = {
     {app && (
       <aside class="app-cta" aria-label={app.name}>
         <Image src={app.icon} alt="" width={64} height={64} densities={[1, 2]} loading="lazy" />
-        <div>
+        <div class="app-cta__copy">
           <strong>{app.name}</strong>
-          <span>{subtitle}</span>
+          <span lang={translatedSubtitle ? lang : appPageLanguage}>{subtitle}</span>
         </div>
         <div class="app-cta__links">
-          {appStore && (
-            <a class="button button--primary" href={appStore}>
-              {copy.appStore}
-            </a>
-          )}
-          {googlePlay && (
-            <a class="button button--primary" href={googlePlay}>
-              {copy.googlePlay}
-            </a>
-          )}
+          <StoreDownloads stores={stores} lang={lang} />
           <a
-            class:list={[
-              'button',
-              appStore || googlePlay ? 'button--secondary' : 'button--primary',
-            ]}
+            class:list={['button', hasStores ? 'button--secondary' : 'button--primary']}
             href={appPath(app, appPageLanguage)}
             hreflang={appPageLanguage}
           >
@@ -443,16 +434,17 @@ const jsonLd = {
     border-radius: var(--r-icon);
   }
 
-  .app-cta div {
+  .app-cta__copy {
     display: grid;
     flex: 1 1 220px;
   }
 
-  .app-cta .app-cta__links {
+  .app-cta__links {
     display: flex;
     flex: 1 1 100%;
     flex-wrap: wrap;
-    gap: 10px;
+    align-items: center;
+    gap: 12px;
   }
 
   .app-cta span {

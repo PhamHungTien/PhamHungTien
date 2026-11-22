@@ -48,6 +48,8 @@ mode; a faint top highlight in dark mode).
 | `--r-xs`      | 6 px   | Inline code, keyboard keys                              |
 | `--r-icon`    | 22.5 % | App icons and the brand mark                            |
 
+Download buttons for App Store and Google Play use the original, localized SVG artwork at the same 44 px height. The row wraps on narrow screens, with App Store first and clear space between badges. `StoreDownloads.astro` renders them on app pages and guide download cards. [Apple badge guidelines](https://developer.apple.com/app-store/marketing/guidelines/) · [Google Play badge guidelines](https://partnermarketinghub.withgoogle.com/brands/google-play/google-play/lockups-icons-badges/)
+
 Nested shapes are **concentric**, as in Apple's design language: an inner radius is the
 outer radius minus the inset between the two edges, so corners never look pinched or
 flared. Examples: the 64 px header capsule (radius 32) holds 40 px controls 12 px in

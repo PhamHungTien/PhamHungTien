@@ -4,19 +4,20 @@
  * name, promise and download actions. Art comes from src/assets/apps/<slug>/store.
  */
 import { Image } from 'astro:assets';
-import { ChevronRight, Download, Heart, Store } from '@lucide/astro';
+import { ChevronRight, Download, Heart } from '@lucide/astro';
 import BrandIcon from '../ui/BrandIcon.astro';
+import StoreDownloads from '../ui/StoreDownloads.astro';
 import type { App, Lang } from '../../data/types';
 import { t } from '../../lib/i18n';
 import { homePath, legalPath } from '../../lib/routes';
-import { storesOf, platformGroupsOf } from '../../data/platforms';
+import { platformGroupsOf } from '../../data/platforms';
 import { storeMedia } from '../../lib/store-media';
 
 interface Props {
   app: App;
   lang: Lang | 'zh';
   /** Copy for pages in a language the app data does not carry (Chinese LunarV). */
-  copy?: { title: string; subtitle: string; category: string; storeCta: string; privacy: string };
+  copy?: { title: string; subtitle: string; category: string; privacy: string };
 }
 
 const { app, lang, copy } = Astro.props;
@@ -27,19 +28,6 @@ const subtitle = copy?.subtitle ?? app.subtitle[dataLang];
 const category = copy?.category ?? app.category[dataLang];
 const header = storeMedia(app.slug, lang).header;
 
-// Download buttons come from data: the install section for direct downloads, then every store.
-const stores = storesOf(app.links.stores);
-const buttons = [
-  ...(app.install
-    ? [{ href: '#install', label: t(lang, 'app.download'), icon: 'download', external: false }]
-    : []),
-  ...stores.map((store) => ({
-    href: store.url,
-    label: copy?.storeCta ?? store.cta[dataLang],
-    icon: store.store === 'appStore' ? 'store' : 'download',
-    external: true,
-  })),
-];
 const secondary = app.links.source
   ? { href: app.links.source, label: t(lang, 'app.source'), external: true }
   : {
@@ -117,21 +105,13 @@ const platforms = platformGroupsOf(app.platforms)
     </div>
 
     <div class="app-hero__actions">
-      {buttons.map((button, index) => (
-        <a
-          class:list={['button', index === 0 ? 'button--primary' : 'button--secondary']}
-          href={button.href}
-          target={button.external ? '_blank' : undefined}
-          rel={button.external ? 'noopener' : undefined}
-        >
-          {button.icon === 'store' ? (
-            <Store size={18} aria-hidden="true" />
-          ) : (
-            <Download size={18} aria-hidden="true" />
-          )}
-          {button.label}
+      {app.install && (
+        <a class="button button--primary" href="#install">
+          <Download size={18} aria-hidden="true" />
+          {t(lang, 'app.download')}
         </a>
-      ))}
+      )}
+      <StoreDownloads stores={app.links.stores} lang={lang} openInNewTab />
       <div class="app-hero__links">
         <a
           class="text-link"
@@ -260,6 +240,7 @@ const platforms = platformGroupsOf(app.platforms)
   }
 
   .app-hero__actions {
+    --store-downloads-align: center;
     display: grid;
     gap: 10px;
     justify-items: stretch;
@@ -288,8 +269,8 @@ const platforms = platformGroupsOf(app.platforms)
     }
 
     .app-hero__actions {
+      --store-downloads-align: flex-start;
       grid-column: 1 / -1;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       min-width: 0;
     }
 

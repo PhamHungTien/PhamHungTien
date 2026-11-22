@@ -60,3 +60,7 @@ Khi website thay đổi cách xử lý dữ liệu, chính sách này sẽ đư�
 ## Liên hệ
 
 Nếu bạn có câu hỏi về quyền riêng tư, hãy email [contact@phamhungtien.com](mailto:contact@phamhungtien.com).
+
+## Thông báo nhãn hiệu
+
+Apple, logo Apple, Apple Pencil, Apple Vision Pro, iPhone, iPad, Mac, macOS và Siri là các nhãn hiệu của Apple Inc. App Store là nhãn hiệu dịch vụ của Apple Inc. Android, Google Play và logo Google Play là các nhãn hiệu của Google LLC.

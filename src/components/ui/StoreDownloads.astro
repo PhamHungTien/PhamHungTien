@@ -1,0 +1,101 @@
+---
+import { Download } from '@lucide/astro';
+import { storesOf } from '../../data/platforms';
+import type { AppLinks } from '../../data/types';
+import type { Locale } from '../../i18n/locales';
+
+interface Props {
+  stores: AppLinks['stores'];
+  lang: Locale;
+  openInNewTab?: boolean;
+}
+
+const { stores, lang, openInNewTab = false } = Astro.props;
+const links = storesOf(stores);
+
+// Store artwork is shipped as provided by the brand's marketing tools.
+const appleBadges = {
+  en: { width: 120, label: 'Download on the App Store' },
+  vi: { width: 120, label: 'Tải trên App Store' },
+  ja: { width: 109, label: 'App Storeでダウンロード' },
+  es: { width: 120, label: 'Descargar en App Store' },
+  zh: { width: 109, label: '在 App Store 下载' },
+};
+
+const playBadges = {
+  en: 'Get it on Google Play',
+  vi: 'Tải trên Google Play',
+  ja: 'Google Playで入手',
+  es: 'Descargar en Google Play',
+};
+
+function badgeFor(store: (typeof links)[number]['store']) {
+  if (store === 'appStore') {
+    const locale = lang === 'fr' ? 'en' : lang;
+    return {
+      src: `/assets/store-badges/app-store-${locale}.svg`,
+      height: 40,
+      ...appleBadges[locale],
+      locale,
+    };
+  }
+  if (store === 'googlePlay') {
+    const locale = lang === 'fr' || lang === 'zh' ? 'en' : lang;
+    return {
+      src: `/assets/store-badges/google-play-${locale}.svg`,
+      width: 135,
+      height: 40,
+      label: playBadges[locale],
+      locale,
+    };
+  }
+}
+---
+
+{links.length > 0 && (
+  <div class="store-downloads">
+    {links.map((link, index) => {
+      const badge = badgeFor(link.store);
+      const target = openInNewTab ? '_blank' : undefined;
+      const rel = openInNewTab ? 'noopener' : undefined;
+      if (badge) {
+        return (
+          <a class="store-badge" href={link.url} target={target} rel={rel} lang={badge.locale}>
+            <img src={badge.src} width={badge.width} height={badge.height} alt={badge.label} />
+          </a>
+        );
+      }
+      return (
+        <a
+          class:list={['button', index === 0 ? 'button--primary' : 'button--secondary']}
+          href={link.url}
+          target={target}
+          rel={rel}
+        >
+          <Download size={18} aria-hidden="true" />
+          {link.cta[lang === 'vi' ? 'vi' : 'en']}
+        </a>
+      );
+    })}
+  </div>
+)}
+
+<style>
+  .store-downloads {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: var(--store-downloads-align, flex-start);
+    gap: 12px;
+  }
+  .store-badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 8px;
+  }
+  .store-badge img {
+    display: block;
+    width: auto;
+    height: 44px;
+  }
+</style>

@@ -4,6 +4,47 @@ import { readdir, readFile } from 'node:fs/promises';
 import vm from 'node:vm';
 
 const read = (path) => readFile(new URL(`../dist/${path}`, import.meta.url), 'utf8');
+const storeIds = {
+  vtts: '6817003401',
+  padcodeai: '6774398897',
+  padnotesai: '6779363432',
+  mynasmanager: '6780180564',
+  lunarv: '6770913893',
+  lunarblock: '6773545437',
+};
+
+function checkStoreBadges(html, slug, lang) {
+  const badgeLinks = [...html.matchAll(/<a class="store-badge"[^>]*>([\s\S]*?)<\/a>/g)].map(
+    ([link]) => link,
+  );
+  const id = storeIds[slug];
+  if (!id) {
+    assert.equal(badgeLinks.length, 0, `${slug}: no store badge for a direct download`);
+    return;
+  }
+  assert.equal(badgeLinks.length, slug === 'vtts' ? 2 : 1, `${slug}: store badge count`);
+  assert.ok(
+    badgeLinks[0].includes(`href="https://apps.apple.com/app/id${id}"`),
+    `${slug}: App Store link`,
+  );
+  assert.ok(
+    badgeLinks[0].includes(`src="/assets/store-badges/app-store-${lang}.svg"`),
+    `${slug}: localized Apple badge`,
+  );
+  if (slug === 'vtts') {
+    const playLang = lang === 'zh' ? 'en' : lang;
+    assert.ok(
+      badgeLinks[1].includes(
+        'href="https://play.google.com/store/apps/details?id=com.phamhungtien.vtts"',
+      ),
+      'vTTS: Google Play link',
+    );
+    assert.ok(
+      badgeLinks[1].includes(`src="/assets/store-badges/google-play-${playLang}.svg"`),
+      'vTTS: localized Google Play badge',
+    );
+  }
+}
 
 async function checkPage(path, lang, alternatePaths = []) {
   const html = await read(path);
@@ -45,6 +86,7 @@ for (const [app, originalLang] of Object.entries({
   ]);
   for (const [lang, path] of paths) {
     const html = await checkPage(`${path.slice(1)}index.html`, lang, paths);
+    checkStoreBadges(html, app.toLowerCase(), lang);
     if (app === 'PadCodeAI' || app === 'vTTS') {
       for (const language of ['ja', 'es']) {
         assert.ok(
@@ -137,23 +179,8 @@ for (const slug of guideSlugs) {
       new URL(`../src/content/guides/${slug}.${lang}.md`, import.meta.url),
       'utf8',
     );
-    const app = contents.match(/^app: (padcodeai|vtts)$/m)?.[1];
-    if (app) {
-      const cta = html.match(/<aside class="app-cta"[^>]*>[\s\S]*?<\/aside>/)?.[0];
-      const store = app === 'padcodeai' ? '6774398897' : '6817003401';
-      assert.ok(
-        cta?.includes(`href="https://apps.apple.com/app/id${store}"`),
-        `${path}: App Store CTA`,
-      );
-      if (app === 'vtts') {
-        assert.ok(
-          cta.includes(
-            'href="https://play.google.com/store/apps/details?id=com.phamhungtien.vtts"',
-          ),
-          `${path}: Google Play CTA`,
-        );
-      }
-    }
+    const app = contents.match(/^app: ([a-z]+)$/m)?.[1];
+    if (app) checkStoreBadges(html, app, lang);
     assert.ok(
       guideIndexPages.get(lang).includes(`href="${path}"`),
       `${path}: link from guide index`,
