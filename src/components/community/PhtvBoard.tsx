@@ -41,6 +41,7 @@ import type { Locale as Lang } from '../../i18n/locales';
 import { ADMIN_EMAILS, getFirebase } from '../../lib/firebase';
 import { formatRelative } from './strings';
 import { phtvText, type PhtvText } from './phtv-strings';
+import BoardSelect from './BoardSelect';
 import './board.css';
 
 type Label = 'bug' | 'enhancement' | 'feature' | 'question' | 'help' | null;
@@ -635,8 +636,7 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
             onChange={(e) => setSearch(e.target.value)}
           />
         </label>
-        <select
-          className="board-select"
+        <BoardSelect
           aria-label={text.sort}
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
@@ -644,9 +644,8 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
           <option value="newest">{text.sortNewest}</option>
           <option value="trending">{text.sortTrending}</option>
           <option value="popular">{text.sortPopular}</option>
-        </select>
-        <select
-          className="board-select"
+        </BoardSelect>
+        <BoardSelect
           aria-label={text.filter}
           value={filterBy}
           onChange={(e) => setFilterBy(e.target.value as typeof filterBy)}
@@ -655,7 +654,7 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
           <option value="mine">{text.filterMine}</option>
           <option value="unanswered">{text.filterUnanswered}</option>
           {member?.isAdmin && <option value="reported">{text.filterReported}</option>}
-        </select>
+        </BoardSelect>
       </div>
 
       <form className="board-card board-form" onSubmit={ask}>
@@ -670,8 +669,7 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
           required
         />
         <div className="board-form__row">
-          <select
-            className="board-select"
+          <BoardSelect
             aria-label={text.label}
             value={label ?? ''}
             onChange={(e) => setLabel((e.target.value || null) as Label)}
@@ -682,7 +680,7 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
                 {text.labels[id]}
               </option>
             ))}
-          </select>
+          </BoardSelect>
           <button className="board-primary" disabled={busy || !draft.trim()}>
             <Send size={16} aria-hidden="true" />
             {text.post}

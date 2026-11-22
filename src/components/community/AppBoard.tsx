@@ -8,6 +8,7 @@ import type { User } from 'firebase/auth';
 import type { Locale as Lang } from '../../i18n/locales';
 import { ADMIN_EMAILS, getFirebase } from '../../lib/firebase';
 import { boardText, formatDate } from './strings';
+import BoardSelect from './BoardSelect';
 import './board.css';
 
 type Category = 'question' | 'bug' | 'idea';
@@ -318,8 +319,7 @@ export default function AppBoard({ app, name, lang }: { app: string; name: strin
             onChange={(event) => setSearch(event.target.value)}
           />
         </label>
-        <select
-          className="board-select"
+        <BoardSelect
           aria-label={text.filter}
           value={filter}
           onChange={(event) => setFilter(event.target.value as typeof filter)}
@@ -328,7 +328,7 @@ export default function AppBoard({ app, name, lang }: { app: string; name: strin
           <option value="question">{text.categories.question}</option>
           <option value="bug">{text.categories.bug}</option>
           <option value="idea">{text.categories.idea}</option>
-        </select>
+        </BoardSelect>
       </div>
 
       {user && (
@@ -342,8 +342,7 @@ export default function AppBoard({ app, name, lang }: { app: string; name: strin
             required
           />
           <div className="board-form__row">
-            <select
-              className="board-select"
+            <BoardSelect
               aria-label={text.category}
               value={category}
               onChange={(event) => setCategory(event.target.value as Category)}
@@ -351,7 +350,7 @@ export default function AppBoard({ app, name, lang }: { app: string; name: strin
               <option value="question">{text.categories.question}</option>
               <option value="bug">{text.categories.bug}</option>
               <option value="idea">{text.categories.idea}</option>
-            </select>
+            </BoardSelect>
             <button className="board-primary" disabled={busy || !content.trim()}>
               <Send size={16} aria-hidden="true" />
               {text.post}

@@ -92,12 +92,49 @@
 }
 
 .board-select {
-  height: 46px;
-  padding: 0 12px;
+  position: relative;
+  display: block;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+
+.board-select select {
+  display: block;
+  inline-size: 100%;
+  min-block-size: 46px;
+  appearance: none;
+  padding-block: 0;
+  padding-inline: 16px 44px;
   border: 1px solid var(--line);
   border-radius: var(--r-control);
   background: var(--surface);
   color: var(--ink);
+  cursor: pointer;
+  text-overflow: ellipsis;
+}
+
+.board-select select:hover {
+  border-color: var(--line-strong);
+}
+
+.board-select__chevron {
+  position: absolute;
+  inset-inline-end: 15px;
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  pointer-events: none;
+}
+
+@media (forced-colors: active) {
+  .board-select select {
+    appearance: auto;
+    padding-inline-end: 16px;
+  }
+
+  .board-select__chevron {
+    display: none;
+  }
 }
 
 .board-card {
