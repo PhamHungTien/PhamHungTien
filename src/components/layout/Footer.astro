@@ -1,5 +1,6 @@
 ---
 import type { Locale as Lang } from '../../i18n/locales';
+import { isGuideLang } from '../../i18n/locales';
 import { apps } from '../../data/apps';
 import { socialProfiles } from '../../data/socials';
 import { SITE } from '../../data/site';
@@ -35,7 +36,7 @@ import { sitePrivacyPath } from '../../lib/sitePages';
           </li>
         ))}
         <li>
-          <a href={guidesPath(lang === 'vi' ? 'vi' : 'en')}>{t(lang, 'nav.guides')}</a>
+          <a href={guidesPath(isGuideLang(lang) ? lang : 'en')}>{t(lang, 'nav.guides')}</a>
         </li>
       </ul>
     </nav>

@@ -61,13 +61,21 @@ const privacy = [
 ];
 for (const [lang, path] of privacy) await checkPage(`${path.slice(1)}index.html`, lang, privacy);
 
-const guideIndexes = [
-  ['en', '/guides/'],
-  ['vi', '/huong-dan/'],
+const guideIndexGroups = [
+  [
+    ['en', '/guides/'],
+    ['vi', '/huong-dan/'],
+  ],
+  [
+    ['es', '/es/guides/'],
+    ['ja', '/ja/guides/'],
+  ],
 ];
 const guideIndexPages = new Map();
-for (const [lang, path] of guideIndexes) {
-  guideIndexPages.set(lang, await checkPage(`${path.slice(1)}index.html`, lang, guideIndexes));
+for (const group of guideIndexGroups) {
+  for (const [lang, path] of group) {
+    guideIndexPages.set(lang, await checkPage(`${path.slice(1)}index.html`, lang, group));
+  }
 }
 
 const originalVietnameseGuides = [
@@ -79,13 +87,20 @@ const originalVietnameseGuides = [
   'sua-loi-go-tieng-viet-tren-mac',
 ];
 const guideFiles = await readdir(new URL('../src/content/guides/', import.meta.url));
-const guideSlugs = new Set(guideFiles.map((file) => file.match(/^(.+)\.(?:en|vi)\.md$/)?.[1]));
+const guideSlugs = new Set(
+  guideFiles.flatMap((file) => {
+    const slug = file.match(/^(.+)\.(?:en|vi|ja|es)\.md$/)?.[1];
+    return slug ? [slug] : [];
+  }),
+);
 for (const slug of guideSlugs) {
-  if (!slug) continue;
   const legacyVietnamese = originalVietnameseGuides.includes(slug);
   const paths = [
     ['en', `/${legacyVietnamese ? 'en/guides' : 'guides'}/${slug}/`],
     ['vi', `/${legacyVietnamese ? 'guides' : 'huong-dan'}/${slug}/`],
+    ...['ja', 'es']
+      .filter((lang) => guideFiles.includes(`${slug}.${lang}.md`))
+      .map((lang) => [lang, `/${lang}/guides/${slug}/`]),
   ];
   for (const [lang, path] of paths) {
     assert.ok(guideFiles.includes(`${slug}.${lang}.md`), `${slug}: ${lang} Markdown`);

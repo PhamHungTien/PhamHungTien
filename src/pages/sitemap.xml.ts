@@ -1,6 +1,5 @@
 import type { APIRoute } from 'astro';
 import { apps } from '../data/apps';
-import { LANGS } from '../data/types';
 import {
   appAlternates,
   homeAlternates,
@@ -8,7 +7,14 @@ import {
   type AlternateRoute,
 } from '../lib/routes';
 import { absolute, ogImage } from '../lib/seo';
-import { getGuides, guideAlternates, guideOgKey, guideSlug, guideUrl } from '../lib/guides';
+import {
+  getGuides,
+  guideAlternates,
+  guideIndexAlternates,
+  guideOgKey,
+  guideSlug,
+  guideUrl,
+} from '../lib/guides';
 
 interface Entry {
   path: string;
@@ -26,14 +32,15 @@ const pagesIn = (versions: AlternateRoute[], image?: string): Entry[] =>
     .map(({ path }) => ({ path, versions, image }));
 
 export const GET: APIRoute = async () => {
-  const guides = (await Promise.all(LANGS.map(getGuides))).flat();
+  const guides = await getGuides();
   const entries: Entry[] = [
     ...pagesIn(homeAlternates),
     ...apps.flatMap((app) => pagesIn(appAlternates(app), ogImage(app.slug))),
-    ...pagesIn(guideAlternates()),
+    ...pagesIn(guideIndexAlternates('en')),
+    ...pagesIn(guideIndexAlternates('es')),
     ...guides.map((guide) => ({
       path: guideUrl(guide),
-      versions: guideAlternates(guideSlug(guide)),
+      versions: guideAlternates(guideSlug(guide), guides),
       lastmod: guide.data.updated ?? guide.data.published,
       image: ogImage(guideOgKey(guide)),
     })),

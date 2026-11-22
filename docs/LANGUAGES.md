@@ -17,6 +17,8 @@ Each app has a `privacy.html` and a `terms.html` under its localized app paths. 
 
 Write the English and Vietnamese versions as `src/content/guides/<slug>.en.md` and `src/content/guides/<slug>.vi.md`. Use the same slug in both files, give each version a localized title, description and body, and set its `lang` to match the file name. Run `npm run og` to generate each version's social card. Record an `updated` date when revising the published article's content.
 
+Pad Code AI and vTTS guides can also carry `.ja.md` and `.es.md` versions. These articles are listed at `/ja/guides/` and `/es/guides/`. Article language links and sitemap alternates come from the published files. The Japanese and Spanish collections cover those two apps and link to the full English and Vietnamese collections.
+
 New guides use `/guides/<slug>/` for English and `/huong-dan/<slug>/` for Vietnamese. Six original PHTV guides keep their Vietnamese articles at `/guides/<slug>/`. Their English versions use `/en/guides/<slug>/`. The older `/huong-dan/<slug>/` addresses for those PHTV guides still redirect to the Vietnamese articles.
 
 Legacy routes use static redirect documents. The redirect script preserves the query string and fragment when JavaScript is available. `npm run test:language` checks the built routes, language switcher and redirects after `npm run build`.

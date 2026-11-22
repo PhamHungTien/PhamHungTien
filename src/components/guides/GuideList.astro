@@ -1,12 +1,13 @@
 ---
 /** A grid of guide cards with a section heading; used on the home page, app pages and /huong-dan/. */
 import GuideCard from './GuideCard.astro';
+import type { GuideLang } from '../../i18n/locales';
 import type { Guide } from '../../lib/guides';
 import { guidesPath } from '../../lib/guides';
 
 interface Props {
   guides: Guide[];
-  lang?: 'en' | 'vi';
+  lang?: GuideLang;
   title: string;
   lead?: string;
   allLabel?: string;

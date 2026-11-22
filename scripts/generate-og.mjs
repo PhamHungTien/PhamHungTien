@@ -160,6 +160,21 @@ const wrap = (text, max) => {
   }
   return lines;
 };
+const japaneseWords = new Intl.Segmenter('ja', { granularity: 'word' });
+function wrapJapanese(text, max) {
+  const lines = [''];
+  const width = (value) =>
+    [...value].reduce((sum, char) => sum + (char.codePointAt(0) < 128 ? 0.55 : 1), 0);
+  for (const { segment } of japaneseWords.segment(text)) {
+    const current = lines.at(-1);
+    if (current && width(current + segment) > max && !/^[、。）」！？]/u.test(segment)) {
+      lines.push(segment.trimStart());
+    } else {
+      lines[lines.length - 1] = current + segment;
+    }
+  }
+  return lines.map((line) => line.trim());
+}
 const headline = (lines, size, top = 230) =>
   lines
     .map((line, j) =>
@@ -187,6 +202,18 @@ await card(
   'English',
 );
 await card(
+  'guides-ja',
+  txt(72, 187, 36, 'アプリガイド', 'font-weight="600"') +
+    headline(['Pad Code AI と vTTS', '使い方ガイド'], 60, 280),
+  '日本語',
+);
+await card(
+  'guides-es',
+  txt(72, 187, 36, 'Guías de aplicaciones', 'font-weight="600"') +
+    headline(['Pad Code AI y vTTS', 'Guías paso a paso'], 60, 280),
+  'Español',
+);
+await card(
   'privacy',
   txt(72, 187, 36, 'phamhungtien.com', 'font-weight="600"') +
     headline(['Privacy Policy'], 70, 300) +
@@ -202,15 +229,16 @@ for (const file of (await readdir('src/content/guides')).filter((f) => f.endsWit
       .trim()
       .replace(/^(['"])(.*)\1$/, '$2');
   const title = field('title');
-  const label = field('lang') === 'vi' ? 'Hướng dẫn' : 'Guide';
+  const lang = field('lang');
+  const label = { en: 'Guide', vi: 'Hướng dẫn', ja: 'ガイド', es: 'Guía' }[lang];
   const app = field('app');
   const i = apps.findIndex((a) => a[0] === app);
   const max = i >= 0 ? 26 : 36;
   let size = 54;
-  let lines = wrap(title, max);
+  let lines = lang === 'ja' ? wrapJapanese(title, 13) : wrap(title, max);
   if (lines.length > 3) {
     size = 44;
-    lines = wrap(title, Math.round(max * 1.2));
+    lines = lang === 'ja' ? wrapJapanese(title, 16) : wrap(title, Math.round(max * 1.2));
   }
   await card(
     `guide-${file.replace(/\.md$/, '')}`,

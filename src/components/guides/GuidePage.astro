@@ -9,6 +9,8 @@ import Logo from '../ui/Logo.astro';
 import { appBySlug } from '../../data/apps';
 import type { AppSlug } from '../../data/types';
 import { SITE } from '../../data/site';
+import { guideCopy } from '../../i18n/guide-copy';
+import { t } from '../../lib/i18n';
 import { appPath, homePath } from '../../lib/routes';
 import { absolute, ogImage, PERSON_ID, WEBSITE_ID } from '../../lib/seo';
 import {
@@ -32,15 +34,22 @@ const { guide } = Astro.props;
 const { Content, headings } = await render(guide);
 const data = guide.data;
 const lang = guideLang(guide);
-const vi = lang === 'vi';
+const copy = guideCopy[lang];
 const app = data.app ? appBySlug.get(data.app as AppSlug) : undefined;
+const product = app?.slug === 'padcodeai' || app?.slug === 'vtts' ? app.slug : undefined;
+const appPageLanguage = lang === 'vi' ? 'vi' : 'en';
+const subtitle = (product && copy.descriptions?.[product]) || app?.subtitle[appPageLanguage];
+const appStore = product ? app?.links.stores?.appStore : undefined;
+const googlePlay = product ? app?.links.stores?.googlePlay : undefined;
 const path = guideUrl(guide);
 const indexPath = guidesPath(lang);
 const socialImage = ogImage(guideOgKey(guide));
 const toc = headings.filter((h) => h.depth === 2);
 
 // Related: same app first, then the newest others; never the guide itself.
-const others = (await getGuides(lang)).filter((g) => g.id !== guide.id);
+const allGuides = await getGuides();
+const alternates = guideAlternates(guideSlug(guide), allGuides);
+const others = allGuides.filter((g) => g.data.lang === lang && g.id !== guide.id);
 const related = [
   ...others.filter((g) => app && g.data.app === data.app),
   ...others.filter((g) => !app || g.data.app !== data.app),
@@ -71,13 +80,13 @@ const jsonLd = {
         {
           '@type': 'ListItem',
           position: 1,
-          name: vi ? 'Trang chủ' : 'Home',
+          name: t(lang, 'nav.home'),
           item: absolute(homePath(lang)),
         },
         {
           '@type': 'ListItem',
           position: 2,
-          name: vi ? 'Hướng dẫn' : 'Guides',
+          name: t(lang, 'nav.guides'),
           item: absolute(indexPath),
         },
         { '@type': 'ListItem', position: 3, name: data.title, item: absolute(path) },
@@ -92,22 +101,22 @@ const jsonLd = {
   title={`${data.title} | Phạm Hùng Tiến`}
   description={data.description}
   path={path}
-  alternates={guideAlternates(guideSlug(guide))}
+  alternates={alternates}
   ogImage={socialImage}
   ogType="article"
   jsonLd={jsonLd}
   ads
   nav={[
-    { href: homePath(lang), label: vi ? 'Trang chủ' : 'Home' },
-    { href: indexPath, label: vi ? 'Hướng dẫn' : 'Guides', current: true },
+    { href: homePath(lang), label: t(lang, 'nav.home') },
+    { href: indexPath, label: t(lang, 'nav.guides'), current: true },
     ...(app ? [{ href: appPath(app, lang), label: app.name }] : []),
   ]}
 >
   <article class="guide container" data-has-toc={toc.length > 2 ? '' : undefined}>
-    <nav class="crumbs" aria-label={vi ? 'Đường dẫn' : 'Breadcrumb'}>
-      <a href={homePath(lang)}>{vi ? 'Trang chủ' : 'Home'}</a>
+    <nav class="crumbs" aria-label={copy.breadcrumb}>
+      <a href={homePath(lang)}>{t(lang, 'nav.home')}</a>
       <ChevronRight size={14} aria-hidden="true" />
-      <a href={indexPath}>{vi ? 'Hướng dẫn' : 'Guides'}</a>
+      <a href={indexPath}>{t(lang, 'nav.guides')}</a>
     </nav>
 
     <header class="guide__head">
@@ -123,11 +132,11 @@ const jsonLd = {
             {data.updated && data.updated !== data.published && (
               <>
                 {' '}
-                · {vi ? 'Cập nhật' : 'Updated'}{' '}
+                · {copy.updated}{' '}
                 <time datetime={data.updated}>{formatDate(data.updated, lang)}</time>
               </>
             )}{' '}
-            · {readingMinutes(guide)} {vi ? 'phút đọc' : 'min read'}
+            · {copy.readingTime(readingMinutes(guide))}
           </small>
         </span>
       </div>
@@ -142,13 +151,13 @@ const jsonLd = {
           sizes="(max-width: 820px) 92vw, 760px"
           priority
         />
-        {!vi && <p class="guide__video-language">Video in Vietnamese</p>}
+        {lang !== 'vi' && <p class="guide__video-language">{copy.videoInVietnamese}</p>}
       </div>
     )}
 
     {toc.length > 2 && (
       <nav class="toc" aria-labelledby="toc-heading">
-        <h2 id="toc-heading">{vi ? 'Trong bài này' : 'On this page'}</h2>
+        <h2 id="toc-heading">{copy.onThisPage}</h2>
         <ol>
           {toc.map((h) => (
             <li>
@@ -170,27 +179,41 @@ const jsonLd = {
         <Image src={app.icon} alt="" width={64} height={64} densities={[1, 2]} loading="lazy" />
         <div>
           <strong>{app.name}</strong>
-          <span>{app.subtitle[lang]}</span>
+          <span>{subtitle}</span>
         </div>
-        <a class="button button--primary" href={appPath(app, lang)}>
-          {vi ? 'Xem' : 'Explore'} {app.name}
-        </a>
+        <div class="app-cta__links">
+          {appStore && (
+            <a class="button button--primary" href={appStore}>
+              {copy.appStore}
+            </a>
+          )}
+          {googlePlay && (
+            <a class="button button--primary" href={googlePlay}>
+              {copy.googlePlay}
+            </a>
+          )}
+          <a
+            class:list={[
+              'button',
+              appStore || googlePlay ? 'button--secondary' : 'button--primary',
+            ]}
+            href={appPath(app, appPageLanguage)}
+            hreflang={appPageLanguage}
+          >
+            {copy.explore(app.name)}
+          </a>
+        </div>
       </aside>
     )}
 
-    <aside class="author" aria-label={vi ? 'Tác giả' : 'Author'}>
+    <aside class="author" aria-label={copy.author}>
       <Logo size={56} />
       <div>
         <strong>{SITE.name}</strong>
-        <p>
-          {vi
-            ? 'Nhà phát triển ứng dụng đến từ Bến Tre, tác giả của PHTV, vTTS và các ứng dụng chạy ngay trên máy, tôn trọng quyền riêng tư. Xem thêm video hướng dẫn trên '
-            : 'Independent developer from Bến Tre, creating PHTV, vTTS and apps that work on your device and respect your privacy. Find more tutorials on '}
-          <a href={SITE.youtube} target="_blank" rel="noopener noreferrer">
-            {vi ? 'kênh YouTube' : 'YouTube'}
-          </a>
-          .
-        </p>
+        <p>{copy.bio}</p>
+        <a href={SITE.youtube} target="_blank" rel="noopener noreferrer">
+          YouTube
+        </a>
       </div>
     </aside>
   </article>
@@ -203,8 +226,8 @@ const jsonLd = {
     <GuideList
       guides={related}
       lang={lang}
-      title={vi ? 'Đọc tiếp' : 'Keep reading'}
-      allLabel={vi ? 'Tất cả hướng dẫn' : 'All guides'}
+      title={copy.keepReading}
+      allLabel={t(lang, 'guides.all')}
       id="related"
     />
   )}
@@ -423,6 +446,13 @@ const jsonLd = {
   .app-cta div {
     display: grid;
     flex: 1 1 220px;
+  }
+
+  .app-cta .app-cta__links {
+    display: flex;
+    flex: 1 1 100%;
+    flex-wrap: wrap;
+    gap: 10px;
   }
 
   .app-cta span {

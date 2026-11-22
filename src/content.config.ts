@@ -1,6 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { GUIDE_LANGS } from './i18n/locales';
 
 /**
  * Privacy policies and terms of use, one Markdown file per document:
@@ -24,12 +25,12 @@ const isoDate = z
 
 const guides = defineCollection({
   loader: glob({
-    pattern: '*.{en,vi}.md',
+    pattern: `*.{${GUIDE_LANGS.join(',')}}.md`,
     base: './src/content/guides',
     generateId: ({ entry }) => entry.replace(/\.md$/, ''),
   }),
   schema: z.object({
-    lang: z.enum(['en', 'vi']),
+    lang: z.enum(GUIDE_LANGS),
     title: z.string(),
     description: z.string().min(50).max(170),
     published: isoDate,

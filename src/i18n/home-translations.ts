@@ -110,8 +110,37 @@ export const homeTranslations = {
     'donate.paypal': 'PayPalで支援する',
     'donate.note': '支援は任意です。金額は自由にお選びいただけます。',
     'app.close': '閉じる',
+    'app.tutorial.play': '動画を再生',
   },
-} satisfies Record<'fr' | 'ja', Partial<Record<UiKey, string>>>;
+  es: {
+    'nav.main': 'Navegación principal',
+    'nav.skip': 'Saltar al contenido',
+    'nav.home': 'Inicio',
+    'nav.apps': 'Aplicaciones',
+    'nav.guides': 'Guías',
+    'nav.openMenu': 'Abrir menú',
+    'nav.closeMenu': 'Cerrar menú',
+    'nav.language': 'Idioma',
+    'theme.toDark': 'Usar tema oscuro',
+    'theme.toLight': 'Usar tema claro',
+    'footer.tagline': 'Aplicaciones con funciones sin conexión y procesamiento en tu dispositivo.',
+    'footer.apps': 'Aplicaciones',
+    'footer.connect': 'Contacto y redes',
+    'footer.source': 'Código fuente del sitio',
+    'footer.copyright': 'Todos los derechos reservados.',
+    'footer.privacy': 'Privacidad del sitio (en inglés)',
+    'guides.all': 'Todas las guías',
+    'donate.open': 'Apoyar',
+    'donate.title': 'Apoya mi trabajo',
+    'donate.description': 'Gracias por apoyar mi trabajo y las aplicaciones que desarrollo.',
+    'donate.scan': 'Escanea con tu aplicación bancaria o MoMo',
+    'donate.save': 'Guardar código QR',
+    'donate.paypal': 'Apoyar mediante PayPal',
+    'donate.note': 'El apoyo es voluntario. Tú eliges el importe.',
+    'app.close': 'Cerrar',
+    'app.tutorial.play': 'Reproducir vídeo',
+  },
+} satisfies Record<'fr' | 'ja' | 'es', Partial<Record<UiKey, string>>>;
 
 export const appPreviews = {
   fr: {

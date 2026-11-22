@@ -1,12 +1,13 @@
 import type { APIRoute } from 'astro';
 import { apps } from '../data/apps';
 import { LANGS } from '../data/types';
-import { LANGUAGE_NAMES } from '../i18n/locales';
+import { GUIDE_LANGS, LANGUAGE_NAMES } from '../i18n/locales';
 import { SITE } from '../data/site';
 import { platformList } from '../data/platforms';
 import { appPath, homePath, legalPath } from '../lib/routes';
 import { absolute } from '../lib/seo';
-import { getGuides, guideUrl } from '../lib/guides';
+import { getGuides, guidesPath, guideUrl } from '../lib/guides';
+import { t } from '../lib/i18n';
 import { sitePrivacyPath } from '../lib/sitePages';
 
 export const GET: APIRoute = async () => {
@@ -38,6 +39,18 @@ export const GET: APIRoute = async () => {
       ];
     }),
   );
+  const additionalGuides = await Promise.all(
+    GUIDE_LANGS.filter((lang) => lang !== 'en' && lang !== 'vi').map(async (lang) => [
+      `## ${LANGUAGE_NAMES[lang]}`,
+      '',
+      `- [${t(lang, 'nav.guides')}](${absolute(guidesPath(lang))})`,
+      ...(await getGuides(lang)).map(
+        (guide) =>
+          `- [${guide.data.title}](${absolute(guideUrl(guide))}): ${guide.data.description}`,
+      ),
+      '',
+    ]),
+  );
   const lines = [
     `# ${SITE.name}`,
     '',
@@ -46,6 +59,7 @@ export const GET: APIRoute = async () => {
     `Contact: ${SITE.email}`,
     '',
     ...sections.flat(),
+    ...additionalGuides.flat(),
     '## 简体中文',
     '',
     `- [LunarV](${absolute('/zh/LunarV/')})`,

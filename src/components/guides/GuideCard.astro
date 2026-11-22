@@ -2,11 +2,13 @@
 import { Image } from 'astro:assets';
 import { appBySlug } from '../../data/apps';
 import type { AppSlug } from '../../data/types';
+import type { GuideLang } from '../../i18n/locales';
+import { guideCopy } from '../../i18n/guide-copy';
 import { formatDate, guideLang, guideUrl, readingMinutes, type Guide } from '../../lib/guides';
 
 interface Props {
   guide: Guide;
-  lang?: 'en' | 'vi';
+  lang?: GuideLang;
   /** One level below the list's own heading, so the outline never skips a level. */
   headingLevel?: 'h2' | 'h3';
 }
@@ -32,7 +34,7 @@ const app = guide.data.app ? appBySlug.get(guide.data.app as AppSlug) : undefine
   <p lang={articleLang}>{guide.data.description}</p>
   <span class="guide-card__meta">
     <time datetime={guide.data.published}>{formatDate(guide.data.published, lang)}</time> ·
-    {readingMinutes(guide)} {lang === 'vi' ? 'phút đọc' : 'min read'}
+    {guideCopy[lang].readingTime(readingMinutes(guide))}
   </span>
 </a>
 

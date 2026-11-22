@@ -1,0 +1,11 @@
+---
+import GuideIndex from '../../../components/guides/GuideIndex.astro';
+
+export function getStaticPaths() {
+  return (['ja', 'es'] as const).map((lang) => ({ params: { lang }, props: { lang } }));
+}
+
+const { lang } = Astro.props;
+---
+
+<GuideIndex lang={lang} />

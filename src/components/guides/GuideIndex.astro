@@ -1,23 +1,22 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import GuideList from './GuideList.astro';
-import type { Lang } from '../../data/types';
-import { getGuides, guidesPath, guideUrl, guideAlternates } from '../../lib/guides';
+import { GUIDE_LANGS, LANGUAGE_NAMES, type GuideLang } from '../../i18n/locales';
+import { guideCopy } from '../../i18n/guide-copy';
+import { t } from '../../lib/i18n';
+import { getGuides, guidesPath, guideUrl, guideIndexAlternates } from '../../lib/guides';
 import { homePath } from '../../lib/routes';
 import { absolute, ogImage, PERSON_ID, WEBSITE_ID } from '../../lib/seo';
 
 interface Props {
-  lang: Lang;
+  lang: GuideLang;
 }
 
 const { lang } = Astro.props;
-const vi = lang === 'vi';
 const guides = await getGuides(lang);
 const path = guidesPath(lang);
-const name = vi ? 'Hướng dẫn' : 'Guides';
-const description = vi
-  ? 'Hướng dẫn gõ tiếng Việt với PHTV, nghe sách offline với vTTS, tra âm lịch, dùng NAS, lập trình trên iPad, ghi chú và chơi Lunar Block.'
-  : 'Guides to Vietnamese typing with PHTV, offline reading with vTTS, lunar dates, NAS access, coding on iPad, note-taking and Lunar Block.';
+const name = t(lang, 'nav.guides');
+const { indexDescription: description, indexTitle } = guideCopy[lang];
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
@@ -42,16 +41,16 @@ const jsonLd = {
 
 <BaseLayout
   lang={lang}
-  title={`${vi ? 'Hướng dẫn sử dụng ứng dụng' : 'App guides and tutorials'} | Phạm Hùng Tiến`}
+  title={`${indexTitle} | Phạm Hùng Tiến`}
   description={description}
   path={path}
-  alternates={guideAlternates()}
-  ogImage={ogImage(vi ? 'guides' : 'guides-en')}
+  alternates={guideIndexAlternates(lang)}
+  ogImage={ogImage(lang === 'vi' ? 'guides' : `guides-${lang}`)}
   jsonLd={jsonLd}
   nav={[
-    { href: homePath(lang), label: vi ? 'Trang chủ' : 'Home' },
+    { href: homePath(lang), label: t(lang, 'nav.home') },
     { href: path, label: name, current: true },
-    { href: `${homePath(lang)}#apps`, label: vi ? 'Ứng dụng' : 'Apps' },
+    { href: `${homePath(lang)}#apps`, label: t(lang, 'nav.apps') },
   ]}
 >
   <GuideList
@@ -62,4 +61,38 @@ const jsonLd = {
     headingLevel="h1"
     id="all"
   />
+  <nav class="guide-languages container" aria-label={t(lang, 'nav.language')}>
+    {GUIDE_LANGS.map((language) => (
+      <a
+        href={guidesPath(language)}
+        hreflang={language}
+        lang={language}
+        aria-current={language === lang ? 'page' : undefined}
+      >
+        {LANGUAGE_NAMES[language]}
+      </a>
+    ))}
+  </nav>
 </BaseLayout>
+
+<style>
+  .guide-languages {
+    margin-top: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+  }
+  .guide-languages a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 12px;
+    border-radius: var(--r-pill);
+    background: var(--surface);
+  }
+  .guide-languages a[aria-current] {
+    font-weight: 600;
+    background: var(--surface-2);
+  }
+</style>
