@@ -13,6 +13,7 @@ import type { AppSlug } from '../../data/types';
 import { SITE } from '../../data/site';
 import { guideCopy } from '../../i18n/guide-copy';
 import { t } from '../../lib/i18n';
+import { getAppCopy } from '../../lib/app-copy';
 import { appPath, homePath } from '../../lib/routes';
 import { absolute, ogImage, PERSON_ID, WEBSITE_ID } from '../../lib/seo';
 import {
@@ -38,10 +39,7 @@ const data = guide.data;
 const lang = guideLang(guide);
 const copy = guideCopy[lang];
 const app = data.app ? appBySlug.get(data.app as AppSlug) : undefined;
-const product = app?.slug === 'padcodeai' || app?.slug === 'vtts' ? app.slug : undefined;
-const appPageLanguage = lang === 'vi' ? 'vi' : 'en';
-const translatedSubtitle = product && copy.descriptions?.[product];
-const subtitle = translatedSubtitle || app?.subtitle[appPageLanguage];
+const subtitle = app ? getAppCopy(app, lang).subtitle : undefined;
 const stores = app?.links.stores;
 const hasStores = storesOf(stores).length > 0;
 const path = guideUrl(guide);
@@ -182,14 +180,14 @@ const jsonLd = {
         <Image src={app.icon} alt="" width={64} height={64} densities={[1, 2]} loading="lazy" />
         <div class="app-cta__copy">
           <strong>{app.name}</strong>
-          <span lang={translatedSubtitle ? lang : appPageLanguage}>{subtitle}</span>
+          <span>{subtitle}</span>
         </div>
         <div class="app-cta__links">
           <StoreDownloads stores={stores} lang={lang} />
           <a
             class:list={['button', hasStores ? 'button--secondary' : 'button--primary']}
-            href={appPath(app, appPageLanguage)}
-            hreflang={appPageLanguage}
+            href={appPath(app, lang)}
+            hreflang={lang}
           >
             {copy.explore(app.name)}
           </a>

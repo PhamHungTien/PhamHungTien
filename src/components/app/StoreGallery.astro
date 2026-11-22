@@ -7,34 +7,29 @@
 import { Image, getImage } from 'astro:assets';
 import { ChevronLeft, ChevronRight } from '@lucide/astro';
 import type { App } from '../../data/types';
-import { DEVICE_LABEL, storeMedia, type MediaLang } from '../../lib/store-media';
+import { DEVICE_LABEL, storeMedia } from '../../lib/store-media';
 import { t } from '../../lib/i18n';
+import type { Locale } from '../../i18n/locales';
 
 interface Props {
   app: App;
-  lang: MediaLang;
+  lang: Locale;
 }
 
 const { app, lang } = Astro.props;
 const media = storeMedia(app.slug, lang);
-const copy = {
-  en: { of: 'of', preview: 'App Preview', prev: 'Previous screenshots', next: 'More screenshots' },
-  vi: { of: 'trên', preview: 'Video xem trước', prev: 'Ảnh trước', next: 'Xem thêm ảnh' },
-  zh: { of: '/', preview: 'App 预览', prev: '上一组截图', next: '更多截图' },
-}[lang];
 
 const rows = await Promise.all(
   media.devices.map(async (row) => {
-    const label = DEVICE_LABEL[row.device][lang];
+    const label = DEVICE_LABEL[row.device];
     const shots = await Promise.all(
       row.shots.map(async (src, index) => {
         const large = await getImage({ src, width: Math.min(src.width, 1800), format: 'webp' });
-        const alt =
-          lang === 'vi'
-            ? `${app.name} trên ${label}, ảnh ${index + 1} ${copy.of} ${row.shots.length}`
-            : lang === 'zh'
-              ? `${app.name} · ${label} 截图 ${index + 1}/${row.shots.length}`
-              : `${app.name} on ${label}, screenshot ${index + 1} ${copy.of} ${row.shots.length}`;
+        const alt = t(lang, 'app.screenshotAlt')
+          .replace('{app}', app.name)
+          .replace('{device}', label)
+          .replace('{index}', String(index + 1))
+          .replace('{total}', String(row.shots.length));
         return { src, alt, large: large.src, ratio: src.width / src.height };
       }),
     );
@@ -95,7 +90,7 @@ const rows = await Promise.all(
                   controls
                   playsinline
                   preload="none"
-                  aria-label={`${copy.preview} · ${app.name} · ${row.label}`}
+                  aria-label={`${t(lang, 'app.gallery.preview')} · ${app.name} · ${row.label}`}
                 />
               </li>
             )}
@@ -128,7 +123,7 @@ const rows = await Promise.all(
           <button
             type="button"
             class="shots__nav shots__nav--prev glass"
-            aria-label={copy.prev}
+            aria-label={t(lang, 'app.gallery.prev')}
             hidden
             data-shots-prev
             data-lens
@@ -138,7 +133,7 @@ const rows = await Promise.all(
           <button
             type="button"
             class="shots__nav shots__nav--next glass"
-            aria-label={copy.next}
+            aria-label={t(lang, 'app.gallery.next')}
             hidden
             data-shots-next
             data-lens

@@ -1,0 +1,427 @@
+{
+  "phtv": {
+    "category": "Método de entrada vietnamita para macOS",
+    "title": "Escribe en vietnamita en Mac con Telex y VNI",
+    "subtitle": "Usa Telex, VNI o Simple Telex, crea abreviaturas y revisa la ortografía en tu Mac. PHTV es gratuito y de código abierto.",
+    "description": "PHTV es un método de entrada vietnamita gratuito para macOS 14+. Incluye Telex, VNI, abreviaturas, corrección ortográfica e historial del portapapeles.",
+    "support": "Comunica un error o comparte una idea en Debates, en GitHub o por correo.",
+    "facts": [
+      { "label": "Sistema", "value": "macOS 14+" },
+      { "label": "Arquitectura", "value": "Apple Silicon e Intel" },
+      { "label": "Precio", "value": "Gratis" },
+      { "label": "Licencia", "value": "Código abierto (AGPLv3)" },
+      { "label": "Ediciones", "value": "PHTV · PHTV Keyboard" }
+    ],
+    "features": [
+      {
+        "title": "Escritura en el dispositivo",
+        "description": "El motor de escritura procesa el texto en tu Mac. PHTV se conecta a Klipy al abrir el selector de GIF y stickers o buscar en él. La comprobación de actualizaciones también usa internet."
+      },
+      {
+        "title": "Aplicación nativa en la barra de menús",
+        "description": "PHTV está escrito en Swift para macOS. Abre los ajustes, cambia el método de entrada o alterna entre vietnamita e inglés desde la barra de menús."
+      },
+      {
+        "title": "Ayudas para escribir",
+        "description": "Revisión ortográfica, Quick Telex, restauración automática de palabras en inglés, macros y ajustes para la escritura bilingüe."
+      },
+      {
+        "title": "Telex, VNI y Simple Telex",
+        "description": "Usa el método que ya conoces. Alterna entre vietnamita e inglés con Control + Mayús o desde la barra de menús."
+      },
+      {
+        "title": "PHTV Picker y portapapeles",
+        "description": "Inserta emojis, stickers y GIF, o recupera elementos del historial del portapapeles."
+      },
+      {
+        "title": "La edición PHTV Keyboard",
+        "description": "PHTV Keyboard es la edición para el App Store. La app aislada de Mac incluye abreviaturas, historial del portapapeles y emojis. El teclado de iPhone y iPad ofrece sugerencias, escritura por deslizamiento y una carrera de escritura."
+      }
+    ],
+    "faq": [
+      {
+        "question": "¿Qué versiones de macOS admite PHTV?",
+        "answer": "macOS 14 Sonoma y versiones posteriores, con compilaciones separadas para Apple Silicon e Intel."
+      },
+      {
+        "question": "¿Cómo instalo y actualizo PHTV?",
+        "answer": "Usa Homebrew con `brew install --cask phtv` para instalar, `brew upgrade --cask --greedy phtv` para actualizar y `brew uninstall --cask phtv` para desinstalar. Si lo descargas manualmente, elige la versión para Apple Silicon o Intel."
+      },
+      {
+        "question": "¿Cómo alterno entre vietnamita e inglés?",
+        "answer": "Pulsa el atajo configurado, Control + Mayús de forma predeterminada, o selecciona el idioma desde el icono de la barra de menús."
+      },
+      {
+        "question": "¿Qué método de entrada conviene usar?",
+        "answer": "Telex es el más habitual (ow = ơ, uw = ư, aa = â). VNI usa los números del 1 al 9 para los signos. Simple Telex ofrece variantes simplificadas de Telex."
+      },
+      {
+        "question": "¿PHTV envía a internet lo que escribo?",
+        "answer": "La escritura se procesa en el dispositivo. PHTV usa internet para comprobar actualizaciones y cargar GIF y stickers de Klipy cuando abres el selector. PHTV Keyboard puede conectarse a Game Center si participas en la carrera de escritura."
+      },
+      {
+        "question": "¿Por qué PHTV necesita un permiso del sistema?",
+        "answer": "El permiso permite recibir pulsaciones e insertar el texto vietnamita compuesto donde escribes. La configuración abre el panel que corresponde a tu versión de macOS. PHTV Keyboard para Mac también necesita permiso para componer texto y se ejecuta en App Sandbox."
+      },
+      {
+        "question": "¿Qué diferencia hay entre PHTV y PHTV Keyboard?",
+        "answer": "Ambos comparten el motor de escritura. La descarga directa de PHTV añade GIF, stickers y ajustes avanzados. PHTV Keyboard para el App Store incluye abreviaturas, historial del portapapeles y emojis en Mac, y sugerencias y escritura por deslizamiento en iPhone y iPad. Usa un solo método de entrada a la vez en Mac."
+      }
+    ],
+    "installSteps": [
+      "Desactiva la corrección automática de macOS.",
+      "Sigue la configuración de PHTV para conceder un permiso. Busca System & App Protection Override en macOS 27.3 o posterior, Device Control and Data Access en 27.0–27.2 o Accesibilidad en versiones anteriores.",
+      "Pulsa Control + Mayús para alternar entre vietnamita e inglés."
+    ],
+    "tutorial": {
+      "title": "Instala PHTV y escribe en vietnamita",
+      "description": "Instala con Homebrew o el DMG, sigue los seis pasos de configuración, concede el permiso y escribe con Telex. Narración en vietnamita con subtítulos."
+    }
+  },
+  "vtts": {
+    "category": "Texto a voz sin conexión",
+    "title": "Escucha libros y documentos sin conexión",
+    "subtitle": "Elige una voz en español, vietnamita, inglés u otro de los 17 idiomas. Escucha en iPhone, iPad, Mac y Android.",
+    "description": "vTTS lee EPUB, PDF, DOCX y texto en 17 idiomas. Escucha sin conexión, cambia la velocidad, configura un temporizador o exporta el audio.",
+    "support": "Para pedir ayuda o avisar de un problema de pronunciación, envía una descripción, la versión de la app y un ejemplo breve que puedas compartir.",
+    "facts": [
+      { "label": "Idiomas de lectura", "value": "17 idiomas" },
+      { "label": "Generación de voz", "value": "En el dispositivo" },
+      { "label": "Formatos", "value": "EPUB, PDF, DOCX, TXT" },
+      { "label": "Premium", "value": "Compra única" }
+    ],
+    "features": [
+      {
+        "title": "Escucha a tu ritmo",
+        "description": "Voces e interfaz en 17 idiomas, incluidos español, inglés y vietnamita. El fragmento en lectura se resalta. Toca cualquier frase para continuar desde ahí."
+      },
+      {
+        "title": "Libros y documentos",
+        "description": "Pega texto o importa archivos EPUB, PDF, DOCX y TXT. Reconoce texto en PDF escaneados en el dispositivo. Cada libro conserva su posición, idioma, voz y velocidad."
+      },
+      {
+        "title": "Música y temporizador",
+        "description": "Cambia la velocidad mientras escuchas, añade música de fondo y configura un temporizador de reposo."
+      },
+      {
+        "title": "Marcadores, notas y estadísticas",
+        "description": "Busca dentro de los libros, añade marcadores y notas y consulta el tiempo de escucha, las metas diarias, las rachas y los logros."
+      },
+      {
+        "title": "Estudio de voz",
+        "description": "Crea una voz de lectura en el dispositivo a partir de tu grabación. Al guardar, vTTS conserva el perfil de voz y elimina la grabación temporal del estudio."
+      },
+      {
+        "title": "Traduce y escucha",
+        "description": "Las traducciones se procesan en el dispositivo y se guardan como libros nuevos. Requieren iOS/iPadOS 18 o macOS 15 en adelante. En Android, descarga primero el paquete del par de idiomas."
+      },
+      {
+        "title": "Exporta audio y audiolibros",
+        "description": "Exporta audio M4A, MP3, AAC o WAV, o guarda un libro como audiolibro M4B con marcadores de capítulo."
+      },
+      {
+        "title": "Copias de seguridad e iCloud",
+        "description": "Guarda una copia de la biblioteca en un archivo y restáurala cuando la necesites. En Apple, elige si quieres sincronizar libros, posiciones, actividad, borradores, historial y diccionario de pronunciación por iCloud."
+      },
+      {
+        "title": "Lectura privada y sin conexión",
+        "description": "La voz se genera en el dispositivo sin recurrir a un servicio en la nube. El servidor LAN es opcional, está desactivado inicialmente y se protege con un token de acceso."
+      },
+      {
+        "title": "Prueba gratuita",
+        "description": "La versión gratuita tiene límites de uso. Una compra única de vTTS Premium elimina los límites de escucha, biblioteca y exportación y habilita el servidor LAN. No hay suscripción."
+      }
+    ],
+    "faq": [
+      {
+        "question": "¿Necesito internet para escuchar un libro?",
+        "answer": "La app incluye las voces. Puedes escuchar texto y libros importados sin conexión. Funciones opcionales como iCloud y la descarga de recursos de traducción requieren conexión."
+      },
+      {
+        "question": "¿vTTS puede leer un PDF escaneado?",
+        "answer": "Activa el reconocimiento de texto al importar el PDF. Revisa el texto reconocido antes de escucharlo, en especial si las páginas están borrosas o tienen varias columnas."
+      },
+      {
+        "question": "¿vTTS Premium es una suscripción?",
+        "answer": "Premium es una compra única en la tienda del dispositivo. Elimina los límites de escucha, tamaño de biblioteca y exportación, y activa el servidor de red local."
+      }
+    ],
+    "tutorial": {
+      "title": "Escucha libros con vTTS",
+      "description": "Importa un EPUB, sigue las frases resaltadas y cambia voz, idioma y velocidad. Añade música de fondo y configura el temporizador. Narración en vietnamita con subtítulos."
+    }
+  },
+  "padcodeai": {
+    "category": "IDE para iPad y iPhone",
+    "title": "Escribe, ejecuta y depura código en iPad y iPhone",
+    "subtitle": "Abre proyectos, ejecuta código en el dispositivo y gestiona cambios con Git. Usa la terminal, SSH, SFTP o el asistente de IA opcional cuando te haga falta.",
+    "description": "Pad Code AI es un IDE para iPad y iPhone. Ejecuta Python, C, C++ y JavaScript sin conexión, previsualiza sitios y gestiona proyectos con Git.",
+    "support": "Envía sugerencias, errores o solicitudes de idiomas por correo o en la página de Facebook de Pad Code AI.",
+    "facts": [
+      { "label": "Plataformas", "value": "iPad, iPhone" },
+      { "label": "Ejecución local", "value": "9 lenguajes" },
+      { "label": "Agente de IA", "value": "Gratis" },
+      { "label": "Interfaz", "value": "20 idiomas" }
+    ],
+    "features": [
+      {
+        "title": "Vibe Coding",
+        "description": "Describe el cambio que quieres hacer. Elige Preguntar, Planificar, Editar o Automático para controlar qué puede hacer el asistente. Revisa las diferencias y deshaz sus cambios cuando lo necesites."
+      },
+      {
+        "title": "Usa la IA que prefieras",
+        "description": "Usa Apple Intelligence en un dispositivo y una región compatibles o descarga un modelo como Qwen o Gemma para trabajar sin conexión si el dispositivo tiene memoria suficiente. Un proveedor en línea requiere tu propia clave de API y conexión a internet."
+      },
+      {
+        "title": "Ejecución en el dispositivo",
+        "description": "Ejecuta C, C++, Python, JavaScript, TypeScript, Ruby, PHP, Lua y consultas SQLite con argumentos, datos de entrada y archivos del proyecto. Python admite puntos de interrupción, gráficos de matplotlib y paquetes compatibles como NumPy y pandas."
+      },
+      {
+        "title": "Vistas previas y LaTeX",
+        "description": "Previsualiza HTML, CSS, JavaScript, Markdown y SVG. Compón documentos LaTeX con fórmulas, tablas y figuras. Imprime o guarda la vista previa como PDF."
+      },
+      {
+        "title": "SSH, SFTP e intérprete de comandos",
+        "description": "Abre una terminal SSH a color para usar vim, htop o tmux y accede por SFTP a los archivos del servidor. El intérprete local incluye ls, cd, grep y tuberías, además de python3, node, gcc y npm."
+      },
+      {
+        "title": "Edición y navegación de código",
+        "description": "Resaltado de sintaxis, autocompletado, navegación a definiciones, búsqueda de referencias, cambio de nombres, búsqueda y reemplazo en todo el proyecto, plegado, fragmentos y editor dividido."
+      },
+      {
+        "title": "Git integrado",
+        "description": "Clona por HTTPS desde GitHub, GitLab y Bitbucket. Revisa diferencias, registra cambios, crea ramas, usa stash y sincroniza con push o pull. Inicia sesión en GitHub para abrir también repositorios privados."
+      },
+      {
+        "title": "Herramientas gratuitas y Pro opcional",
+        "description": "Editar, ejecutar código compatible, usar Git y abrir vistas previas web es gratuito. Las herramientas Pro, como el editor dividido y el reemplazo en todo el proyecto, tienen un cupo gratuito diario. Consulta las opciones de mejora en la app."
+      }
+    ],
+    "faq": [
+      {
+        "question": "¿Puedo ejecutar código sin conexión?",
+        "answer": "Los entornos incluidos funcionan sin conexión. Necesitas internet para descargar paquetes, conectarte a un servidor SSH, traer cambios de un repositorio remoto o usar IA en línea."
+      },
+      {
+        "question": "¿Pad Code AI puede ejecutar Swift?",
+        "answer": "Puedes editar archivos Swift. Para compilar y ejecutar código dentro de la app, elige un lenguaje con entorno incluido, como Python, JavaScript, C o C++."
+      },
+      {
+        "question": "¿Puedo abrir repositorios privados de GitHub?",
+        "answer": "Inicia sesión en GitHub desde la app para ver y clonar los repositorios a los que tiene acceso tu cuenta. Después podrás revisar y registrar cambios en el dispositivo."
+      }
+    ],
+    "tutorial": {
+      "title": "Pad Code AI en un minuto",
+      "description": "Autocompletado inteligente, ejecución en el dispositivo, vista previa web, sincronización con GitHub y un asistente de IA opcional. Subtítulos en inglés y vietnamita."
+    }
+  },
+  "padnotesai": {
+    "category": "Escritura a mano y notas en PDF",
+    "title": "Escribe a mano, anota PDF y estudia en un cuaderno",
+    "subtitle": "Escribe con Apple Pencil, tapa respuestas para ponerte a prueba y crea preguntas a partir de las páginas que elijas. En iPhone, iPad y Mac.",
+    "description": "Pad Notes AI reúne escritura a mano, anotaciones en PDF, grabación de audio y cinta para memorizar en iPhone, iPad y Mac. Hasta 20 cuadernos gratis.",
+    "support": "Si necesitas ayuda con PDF, reconocimiento de texto o sincronización, envía por correo la versión de la app y una descripción del problema.",
+    "facts": [
+      { "label": "Plataformas", "value": "iOS, iPadOS y macOS" },
+      { "label": "Entrada", "value": "Apple Pencil y pantalla táctil" },
+      { "label": "Plantillas de página", "value": "19 plantillas" },
+      { "label": "Acceso gratuito", "value": "20 cuadernos" }
+    ],
+    "features": [
+      {
+        "title": "Cinta para memorizar",
+        "description": "Cubre definiciones, fórmulas y respuestas con cinta recta, rectangular o de trazo libre en ocho diseños. Intenta recordar y toca para destapar. Cubre o revela toda la página para repasar."
+      },
+      {
+        "title": "Escribe y crea",
+        "description": "Usa Apple Pencil en un iPad compatible o dibuja con los dedos. Ajusta la tinta y el grosor, resalta y añade texto e imágenes. Mantén un trazo para convertirlo en una figura editable y borra trazos enteros o parciales."
+      },
+      {
+        "title": "Cuadernos a tu manera",
+        "description": "Elige entre 15 portadas, 19 plantillas y 12 colores de papel, con formatos como Cornell y diario de lectura. Ordena cuadernos por carpetas, fija favoritos y busca por palabra clave."
+      },
+      {
+        "title": "Importa, anota y exporta PDF",
+        "description": "Importa un PDF y escribe o resalta directamente sobre la página. La app conserva sus dimensiones originales. Puedes exportar páginas seleccionadas o el cuaderno completo."
+      },
+      {
+        "title": "Un asistente para las notas",
+        "description": "Graba mientras escribes, transcribe el audio y toca una marca de tiempo para volver a escuchar. El asistente puede resumir, explicar o generar preguntas a partir de las páginas que elijas."
+      }
+    ],
+    "faq": [
+      {
+        "question": "¿Necesito un Apple Pencil para usar Pad Notes AI?",
+        "answer": "Puedes escribir con teclado, importar PDF y dibujar en pantalla con el dedo. Apple Pencil es opcional para escribir a mano en modelos de iPad compatibles."
+      },
+      {
+        "question": "¿Dónde procesa mis notas el asistente de IA?",
+        "answer": "Para procesarlas en el dispositivo, usa el modo básico sin conexión o Apple Intelligence en un equipo compatible. Si eliges un proveedor en línea, tú aportas la clave de API y el contenido seleccionado se envía a ese proveedor."
+      },
+      {
+        "question": "¿Cómo sincronizo mis cuadernos?",
+        "answer": "Activa iCloud y usa la misma cuenta de Apple en tus equipos. Con iCloud desactivado, los cuadernos se guardan en el dispositivo y puedes hacer una copia de seguridad."
+      }
+    ]
+  },
+  "mynasmanager": {
+    "category": "Gestor para NAS Synology",
+    "title": "Gestiona tu NAS Synology desde iPhone y iPad",
+    "subtitle": "Comprueba el estado de los discos, explora archivos en File Station y gestiona tareas de Download Station.",
+    "description": "My NAS Manager es un cliente de Synology DSM para iPhone y iPad. Supervisa CPU, memoria y discos, explora File Station y gestiona descargas.",
+    "support": "Para pedir ayuda, envía por correo las versiones de DSM y de la app y el mensaje de error. Mantén en privado tus contraseñas y códigos de verificación.",
+    "facts": [
+      { "label": "Plataformas", "value": "iPhone, iPad" },
+      { "label": "Servidor", "value": "Synology DSM 7" },
+      { "label": "Interfaz", "value": "15 idiomas" },
+      { "label": "Seguimiento", "value": "Ninguno" }
+    ],
+    "features": [
+      {
+        "title": "Vista general en tiempo real",
+        "description": "Consulta CPU, memoria, red y temperatura con gráficos actualizados, procesos principales, información del sistema y actividad reciente."
+      },
+      {
+        "title": "File Station",
+        "description": "Explora carpetas compartidas, carga y descarga con indicadores de progreso, reintenta y cancela. Renombra, copia, mueve y elimina varios elementos, previsualiza archivos y crea enlaces para compartir."
+      },
+      {
+        "title": "Almacenamiento",
+        "description": "Consulta grupos de almacenamiento, volúmenes y discos, con el uso, estado, temperatura e indicadores S.M.A.R.T."
+      },
+      {
+        "title": "Download Station",
+        "description": "Añade enlaces HTTP, FTP o magnet. Pausa, reanuda, elimina y filtra las tareas."
+      },
+      {
+        "title": "Gestión de DSM",
+        "description": "Inicia y detén paquetes y consulta el Asesor de seguridad, los registros y las interfaces de red. La compra única añade controles para el servicio SSH y una vista de diagnóstico con formato de terminal."
+      },
+      {
+        "title": "Acceso directo a DSM",
+        "description": "Inicia sesión con tu cuenta NAS en la dirección DSM que indiques. La app admite HTTPS y códigos de dos factores, y guarda la sesión DSM en el llavero de Apple."
+      }
+    ],
+    "faq": [
+      {
+        "question": "¿Qué NAS admite My NAS Manager?",
+        "answer": "La app está pensada para NAS Synology con DSM 7. Necesitas una dirección DSM accesible y una cuenta con permisos para las tareas que quieras realizar."
+      },
+      {
+        "question": "¿Por qué no aparece una función como Download Station?",
+        "answer": "Depende de la versión de DSM, los paquetes instalados y los permisos de tu cuenta. Revisa el paquete en el Centro de paquetes y el acceso de tu cuenta en DSM."
+      },
+      {
+        "question": "¿Qué puedo hacer con la función SSH?",
+        "answer": "Puedes activar o desactivar el servicio SSH de DSM, cambiar su puerto y ver diagnósticos. La vista de terminal de la app incluye un conjunto de diagnósticos integrados."
+      }
+    ]
+  },
+  "lunarv": {
+    "category": "Calendario lunar vietnamita",
+    "title": "Fechas lunares y recordatorios familiares",
+    "subtitle": "Consulta fechas lunares, horas propicias y días favorables. Guarda recordatorios familiares en iPhone, iPad, Mac y Apple Vision Pro.",
+    "description": "LunarV es un calendario lunar vietnamita para iPhone, iPad, Mac y Apple Vision Pro. Convierte fechas, consulta Can Chi y guarda aniversarios lunares.",
+    "support": "Si necesitas ayuda con una conversión, envía por correo la fecha que introdujiste y el calendario que elegiste.",
+    "facts": [
+      { "label": "Plataformas", "value": "iOS, iPadOS, macOS y visionOS" },
+      { "label": "Idiomas", "value": "Vietnamita, inglés y chino simplificado y tradicional" },
+      { "label": "Cuenta", "value": "No se requiere" },
+      { "label": "Precio", "value": "Gratis con opción Premium de compra única" }
+    ],
+    "features": [
+      {
+        "title": "El día de un vistazo",
+        "description": "Consulta la fecha lunar, el Can Chi del día, mes y año, el término solar, el animal del zodiaco y la fase lunar. Incluye una valoración del día, la próxima hora propicia y las actividades aconsejadas por tradición."
+      },
+      {
+        "title": "Buscador de días favorables",
+        "description": "Consulta los próximos 30, 60 o 90 días para bodas, obras, inauguraciones, mudanzas y viajes. El buscador omite los días Tam nương, Nguyệt kỵ y los que se consideran incompatibles con tu edad."
+      },
+      {
+        "title": "Mes solar y lunar",
+        "description": "Ve las fechas gregorianas y lunares junto con festivos y notas. Convierte fechas con el calendario vietnamita o consulta fechas lunares chinas de 1901 a 2100."
+      },
+      {
+        "title": "Recordatorios familiares",
+        "description": "Guarda conmemoraciones, cumpleaños y días de luna llena con fecha lunar o solar. Repite cada año, mes o semana, configura un aviso previo y sincroniza con el Calendario de Apple si quieres."
+      },
+      {
+        "title": "Herramientas culturales",
+        "description": "Consulta oraciones, el primer visitante del año, las estrellas anuales, la compatibilidad por edad, la regla Lu Ban, la brújula de feng shui y el oráculo de Kongming como referencia cultural."
+      },
+      {
+        "title": "Widgets y barra de menús",
+        "description": "Usa widgets en la pantalla de inicio, la pantalla de bloqueo y el escritorio. También tienes la fecha lunar en la barra de menús del Mac, Atajos de Siri, Spotlight y relojes mundiales."
+      }
+    ],
+    "faq": [
+      {
+        "question": "¿Qué zona horaria usa LunarV para las fechas lunares vietnamitas?",
+        "answer": "El calendario vietnamita usa UTC+7. LunarV también incluye un calendario chino separado. Comprueba cuál elegiste, en especial cerca del inicio de un mes lunar o si hay un mes intercalado."
+      },
+      {
+        "question": "¿Puedo programar un recordatorio anual de una conmemoración lunar?",
+        "answer": "Al crear una ocasión familiar, elige una fecha lunar, configura la repetición anual y decide con cuánta antelación quieres recibir el aviso. También puedes sincronizarla con el Calendario de Apple."
+      },
+      {
+        "question": "¿Qué incluye LunarV Premium?",
+        "answer": "El calendario, la conversión de fechas, la búsqueda y las herramientas son gratuitos. La compra única de Premium elimina los límites de ocasiones familiares y notas de fechas."
+      }
+    ]
+  },
+  "lunarblock": {
+    "category": "Rompecabezas de bloques en 3D",
+    "title": "Apila y elimina bloques de cristal en una arena 3D",
+    "subtitle": "Juega Marathon, Sprint y Ultra en iPhone, iPad o Mac con controles táctiles, teclado o mando.",
+    "description": "Lunar Block es un rompecabezas 3D de bloques que caen para iPhone, iPad y Mac. Gira, reserva y suelta piezas en Marathon, Sprint o Ultra.",
+    "support": "Envía por correo tus comentarios sobre el juego, los controles o la accesibilidad.",
+    "facts": [
+      { "label": "Género", "value": "Rompecabezas de bloques en 3D" },
+      { "label": "Modos", "value": "Marathon, Sprint, Ultra" },
+      { "label": "Frecuencia de actualización", "value": "Hasta 120 Hz" },
+      { "label": "Publicidad", "value": "Ninguna" }
+    ],
+    "features": [
+      {
+        "title": "Tres formas de jugar",
+        "description": "Supera 20 niveles de velocidad en Marathon, elimina 40 líneas lo más rápido posible en Sprint o consigue la mayor puntuación en dos minutos en Ultra."
+      },
+      {
+        "title": "Gira, reserva y anticipa",
+        "description": "Consulta las piezas que vienen y la guía de aterrizaje, o reserva una para más tarde. Suma puntos con combos, T-Spins, cuatro líneas y limpiezas perfectas."
+      },
+      {
+        "title": "Una arena en 3D",
+        "description": "Los bloques de cristal brillan y se rompen al eliminar una línea. La cámara y los efectos de impacto responden a lo que haces en el juego."
+      },
+      {
+        "title": "Controles a tu medida",
+        "description": "Desliza, toca o usa la cruceta en pantalla. Hay un diseño para zurdos y compatibilidad con teclado y mando en iPhone, iPad y Mac."
+      },
+      {
+        "title": "Progreso y récords",
+        "description": "Gana experiencia y sube por 11 rangos lunares. Guarda tus marcas por modo y participa en las clasificaciones y los logros de Game Center."
+      },
+      {
+        "title": "Sonido y accesibilidad",
+        "description": "Hasta 120 Hz en ProMotion, sonido sintetizado original y música ambiental que puede sonar junto a la tuya. Incluye respuesta háptica, Reducir movimiento, VoiceOver y guardado automático."
+      }
+    ],
+    "faq": [
+      {
+        "question": "¿Qué diferencia hay entre Marathon, Sprint y Ultra?",
+        "answer": "Marathon acelera a medida que juegas y acaba al quedarte sin espacio. Sprint mide cuánto tardas en eliminar 40 líneas. Ultra mide tu puntuación en dos minutos."
+      },
+      {
+        "question": "¿Puedo jugar sin conexión?",
+        "answer": "Puedes jugar y guardar récords personales en el dispositivo sin conexión. Las clasificaciones y los logros de Game Center usan tu cuenta de Apple en ese servicio."
+      },
+      {
+        "question": "¿Dónde puedo consultar los controles?",
+        "answer": "Abre Cómo jugar para ver los gestos táctiles, los atajos de teclado y los botones del mando. En Ajustes encontrarás un diseño para zurdos."
+      }
+    ]
+  }
+}

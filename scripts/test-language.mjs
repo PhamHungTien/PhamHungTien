@@ -32,7 +32,6 @@ function checkStoreBadges(html, slug, lang) {
     `${slug}: localized Apple badge`,
   );
   if (slug === 'vtts') {
-    const playLang = lang === 'zh' ? 'en' : lang;
     assert.ok(
       badgeLinks[1].includes(
         'href="https://play.google.com/store/apps/details?id=com.phamhungtien.vtts"',
@@ -40,7 +39,7 @@ function checkStoreBadges(html, slug, lang) {
       'vTTS: Google Play link',
     );
     assert.ok(
-      badgeLinks[1].includes(`src="/assets/store-badges/google-play-${playLang}.svg"`),
+      badgeLinks[1].includes(`src="/assets/store-badges/google-play-${lang}.svg"`),
       'vTTS: localized Google Play badge',
     );
   }
@@ -51,7 +50,7 @@ async function checkPage(path, lang, alternatePaths = []) {
   assert.ok(html.includes(`<html lang="${lang}"`), `${path}: ${lang} document`);
   assert.ok(!html.includes('http-equiv="refresh"'), `${path}: real localized page`);
   assert.equal(
-    html.match(/<details class="language-switcher"/g)?.length,
+    html.match(/<details class="language-switcher"(?=[ >])/g)?.length,
     1,
     `${path}: one language switcher`,
   );
@@ -65,12 +64,14 @@ async function checkPage(path, lang, alternatePaths = []) {
   return html;
 }
 
-const home = [
-  ['en', '/'],
-  ['vi', '/vi/'],
-];
-const homeEn = await checkPage('index.html', 'en', home);
-const homeVi = await checkPage('vi/index.html', 'vi', home);
+const languages = ['en', 'vi', 'ja', 'es', 'zh'];
+const home = languages.map((lang) => [lang, lang === 'en' ? '/' : `/${lang}/`]);
+const homePages = new Map();
+for (const [lang, path] of home) {
+  homePages.set(lang, await checkPage(`${path.slice(1)}index.html`, lang, home));
+}
+const homeEn = homePages.get('en');
+const homeVi = homePages.get('vi');
 assert.ok(homeEn.includes('href="/en/PHTV/"'), 'English home links to English PHTV');
 assert.ok(homeVi.includes('href="/vi/vTTS/"'), 'Vietnamese home links to Vietnamese vTTS');
 assert.ok(homeVi.includes('href="/PHTV/"'), 'Vietnamese home links to canonical Vietnamese PHTV');
@@ -84,7 +85,6 @@ for (const [app, originalLang] of Object.entries({
   MyNASManager: 'en',
   LunarBlock: 'en',
 })) {
-  const languages = app === 'LunarV' ? ['en', 'vi', 'zh'] : ['en', 'vi'];
   const paths = languages.map((lang) => [
     lang,
     lang === originalLang ? `/${app}/` : `/${lang}/${app}/`,
@@ -92,6 +92,10 @@ for (const [app, originalLang] of Object.entries({
   for (const [lang, path] of paths) {
     const html = await checkPage(`${path.slice(1)}index.html`, lang, paths);
     checkStoreBadges(html, app.toLowerCase(), lang);
+    assert.ok(homePages.get(lang).includes(`href="${path}"`), `${lang}: home links to ${app}`);
+    for (const kind of ['privacy', 'terms']) {
+      assert.ok(html.includes(`href="${path}${kind}.html"`), `${path}: ${kind} link`);
+    }
   }
   for (const kind of ['privacy', 'terms']) {
     const legal = paths.map(([lang, path]) => [lang, `${path}${kind}.html`]);
@@ -102,32 +106,25 @@ for (const [app, originalLang] of Object.entries({
     }
   }
 }
-const privacy = [
-  ['en', '/privacy/'],
-  ['vi', '/vi/privacy/'],
-];
-for (const [lang, path] of privacy) await checkPage(`${path.slice(1)}index.html`, lang, privacy);
+const privacy = home.map(([lang, path]) => [lang, `${path}privacy/`]);
+for (const [lang, path] of privacy) {
+  const html = await checkPage(`${path.slice(1)}index.html`, lang, privacy);
+  assert.ok(html.includes('noindex, follow'), `${path}: legal indexing policy`);
+  assert.ok(homePages.get(lang).includes(`href="${path}"`), `${lang}: home links to privacy`);
+}
 
-const guideIndexGroups = [
-  [
-    ['en', '/guides/'],
-    ['vi', '/huong-dan/'],
-  ],
-  [
-    ['es', '/es/guides/'],
-    ['ja', '/ja/guides/'],
-  ],
-];
+const indexPaths = languages.map((lang) => [
+  lang,
+  lang === 'en' ? '/guides/' : lang === 'vi' ? '/huong-dan/' : `/${lang}/guides/`,
+]);
 const guideIndexPages = new Map();
-for (const group of guideIndexGroups) {
-  for (const [lang, path] of group) {
-    const html = await checkPage(`${path.slice(1)}index.html`, lang, group);
-    guideIndexPages.set(lang, html);
-    if (lang === 'ja' || lang === 'es') {
-      for (const app of ['padcodeai', 'vtts']) {
-        assert.ok(html.includes(`id="${app}-guides"`), `${path}: section for ${app}`);
-      }
-    }
+for (const [lang, path] of indexPaths) {
+  const html = await checkPage(`${path.slice(1)}index.html`, lang, indexPaths);
+  guideIndexPages.set(lang, html);
+  assert.ok(html.includes('id="all"'), `${path}: legacy guide index anchor`);
+  assert.ok(homePages.get(lang).includes(`href="${path}"`), `${lang}: home links to guides`);
+  for (const app of ['padcodeai', 'vtts']) {
+    assert.ok(html.includes(`id="${app}-guides"`), `${path}: section for ${app}`);
   }
 }
 
@@ -139,23 +136,10 @@ const originalVietnameseGuides = [
   'go-tieng-viet-tren-mac-voi-phtv',
   'sua-loi-go-tieng-viet-tren-mac',
 ];
-const fourLanguageGuides = [
-  'run-python-on-ipad-pad-code-ai',
-  'preview-html-css-javascript-on-ipad',
-  'review-ai-code-changes-on-ipad',
-  'nghe-sach-epub-giong-doc-tieng-viet-voi-vtts',
-  'export-m4b-audiobook-with-vtts',
-  'create-personal-voice-with-vtts',
-];
 const guideFiles = await readdir(new URL('../src/content/guides/', import.meta.url));
-for (const slug of fourLanguageGuides) {
-  for (const lang of ['en', 'vi', 'ja', 'es']) {
-    assert.ok(guideFiles.includes(`${slug}.${lang}.md`), `${slug}: required ${lang} translation`);
-  }
-}
 const guideSlugs = new Set(
   guideFiles.flatMap((file) => {
-    const slug = file.match(/^(.+)\.(?:en|vi|ja|es)\.md$/)?.[1];
+    const slug = file.match(/^(.+)\.(?:en|vi|ja|es|zh)\.md$/)?.[1];
     return slug ? [slug] : [];
   }),
 );
@@ -164,9 +148,7 @@ for (const slug of guideSlugs) {
   const paths = [
     ['en', `/${legacyVietnamese ? 'en/guides' : 'guides'}/${slug}/`],
     ['vi', `/${legacyVietnamese ? 'guides' : 'huong-dan'}/${slug}/`],
-    ...['ja', 'es']
-      .filter((lang) => guideFiles.includes(`${slug}.${lang}.md`))
-      .map((lang) => [lang, `/${lang}/guides/${slug}/`]),
+    ...languages.slice(2).map((lang) => [lang, `/${lang}/guides/${slug}/`]),
   ];
   for (const [lang, path] of paths) {
     assert.ok(guideFiles.includes(`${slug}.${lang}.md`), `${slug}: ${lang} Markdown`);
@@ -188,14 +170,20 @@ for (const slug of guideSlugs) {
 for (const [oldPath, target] of [
   ['en/index.html', '/'],
   ['fr/index.html', '/'],
-  ['ja/index.html', '/'],
   ['en/vTTS/index.html', '/vTTS/'],
   ['vi/LunarV/index.html', '/LunarV/'],
   ['vi/PHTV/index.html', '/PHTV/'],
   ...originalVietnameseGuides.map((slug) => [`huong-dan/${slug}/index.html`, `/guides/${slug}/`]),
 ]) {
   const html = await read(oldPath);
-  assert.ok(html.includes('http-equiv="refresh"'), `${oldPath}: no-JS redirect`);
+  assert.ok(
+    html.includes(`http-equiv="refresh" content="0;url=${target}"`),
+    `${oldPath}: no-JS redirect to ${target}`,
+  );
+  assert.ok(
+    html.includes(`rel="canonical" href="https://phamhungtien.com${target}"`),
+    `${oldPath}: legacy canonical`,
+  );
   assert.ok(html.includes('noindex, follow'), `${oldPath}: noindex`);
   const script = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)]
     .map((m) => m[1])

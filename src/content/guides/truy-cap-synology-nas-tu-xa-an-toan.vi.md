@@ -1,7 +1,7 @@
 ---
 lang: vi
-title: Truy cập Synology NAS từ xa với iPhone, iPad và Mac
-description: So sánh QuickConnect, DDNS và VPN cho Synology NAS, thiết lập bảo mật DSM và kết nối với My NAS Manager trên iPhone, iPad hoặc Mac.
+title: Truy cập Synology NAS từ xa với iPhone và iPad
+description: So sánh QuickConnect, DDNS và VPN cho Synology NAS, thiết lập bảo mật DSM và kết nối với My NAS Manager trên iPhone hoặc iPad.
 published: 2026-11-22
 app: mynasmanager
 topic: My NAS Manager

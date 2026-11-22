@@ -5,7 +5,7 @@
 import { useEffect, useState, type SubmitEvent } from 'react';
 import { LogOut, MessageCircle, Search, Send, Trash2 } from 'lucide-react';
 import type { User } from 'firebase/auth';
-import type { DiscussionLang as Lang } from './strings';
+import type { Locale as Lang } from '../../i18n/locales';
 import { ADMIN_EMAILS, getFirebase } from '../../lib/firebase';
 import { boardText, formatDate } from './strings';
 import './board.css';

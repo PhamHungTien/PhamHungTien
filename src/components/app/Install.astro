@@ -1,16 +1,19 @@
 ---
 import { ArrowRight, Copy, Cpu, Download } from '@lucide/astro';
-import type { App, Lang } from '../../data/types';
+import type { App } from '../../data/types';
+import type { Locale } from '../../i18n/locales';
+import { getAppCopy } from '../../lib/app-copy';
 import { t } from '../../lib/i18n';
 import { getReleaseLinks } from '../../lib/github';
 
 interface Props {
   app: App;
-  lang: Lang;
+  lang: Locale;
 }
 
 const { app, lang } = Astro.props;
 const install = app.install!;
+const { installSteps = [] } = getAppCopy(app, lang);
 const links = await getReleaseLinks(install.githubRepo);
 const choices = [
   {
@@ -104,11 +107,11 @@ const withCode = (text: string) =>
     <div class="install__steps">
       <h3>{t(lang, 'app.install.before')}</h3>
       <ol role="list">
-        {install.steps.map((step, index) => (
+        {installSteps.map((step, index) => (
           <li>
             <span aria-hidden="true">{index + 1}</span>
             <p>
-              {withCode(step[lang]).map((part) =>
+              {withCode(step).map((part) =>
                 'code' in part ? <code>{part.code}</code> : part.text,
               )}
             </p>

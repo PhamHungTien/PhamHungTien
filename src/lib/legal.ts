@@ -1,12 +1,13 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
-import type { App, LegalLang } from '../data/types';
-import { apps, defaultLangOf, legalLangsOf } from '../data/apps';
+import type { App } from '../data/types';
+import { apps, defaultLangOf } from '../data/apps';
+import { LOCALES, type Locale } from '../i18n/locales';
 import type { LegalKind } from './routes';
 
 export interface LegalDocument {
   app: App;
   kind: LegalKind;
-  lang: LegalLang;
+  lang: Locale;
   entry: CollectionEntry<'legal'>;
 }
 
@@ -30,7 +31,7 @@ export async function getLegalDocuments(): Promise<LegalDocument[]> {
         return parsed.slug === app.slug && parsed.kind === kind;
       });
       const found = variants.map((entry) => entry.data.lang).sort();
-      const expected = [...legalLangsOf(app)].sort();
+      const expected = [...LOCALES].sort();
       if (found.join() !== expected.join())
         throw new Error(
           `${app.slug}/${kind}: found languages [${found}] but expected [${expected}]`,
@@ -43,5 +44,5 @@ export async function getLegalDocuments(): Promise<LegalDocument[]> {
 
 export const isDefaultLegal = (doc: LegalDocument) => doc.lang === defaultLangOf(doc.app);
 
-export const formatDocumentDate = (date: string, lang: LegalLang) =>
+export const formatDocumentDate = (date: string, lang: Locale) =>
   new Intl.DateTimeFormat(lang, { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(date));

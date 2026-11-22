@@ -4,7 +4,6 @@ import icon from '../../assets/apps/lunarv/app-icon.png';
 const app: App = {
   slug: 'lunarv',
   defaultLang: 'vi',
-  legalTranslations: ['zh'],
   name: 'LunarV',
   route: '/LunarV/',
   icon: icon,

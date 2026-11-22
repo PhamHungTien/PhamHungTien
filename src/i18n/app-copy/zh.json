@@ -1,0 +1,427 @@
+{
+  "phtv": {
+    "category": "macOS 越南语输入法",
+    "title": "在 Mac 上用 Telex 和 VNI 输入越南语",
+    "subtitle": "支持 Telex、VNI 和简易 Telex，还可在 Mac 上设置快捷短语并检查拼写。PHTV 免费开源。",
+    "description": "PHTV 是适用于 macOS 14 及以上版本的免费越南语输入法，支持 Telex、VNI、快捷短语、拼写检查和剪贴板历史记录，兼容 Apple 芯片和 Intel 芯片的 Mac。",
+    "support": "如需报告问题或分享建议，请通过讨论区、GitHub 或电子邮件联系我们。",
+    "facts": [
+      { "label": "系统", "value": "macOS 14 或更高版本" },
+      { "label": "芯片", "value": "Apple 芯片和 Intel 芯片" },
+      { "label": "价格", "value": "免费" },
+      { "label": "许可证", "value": "开源（AGPLv3）" },
+      { "label": "版本", "value": "PHTV · PHTV Keyboard" }
+    ],
+    "features": [
+      {
+        "title": "在设备上处理输入",
+        "description": "输入引擎在 Mac 上处理文字。打开 GIF 或贴纸选择器、在其中搜索或检查更新时，PHTV 会联网。GIF 和贴纸来自 Klipy。"
+      },
+      {
+        "title": "原生菜单栏应用",
+        "description": "PHTV 使用 Swift 为 macOS 编写。可从菜单栏打开设置、更改输入方式，以及在越南语和英语之间切换。"
+      },
+      {
+        "title": "智能输入",
+        "description": "提供拼写检查、快速 Telex、自动恢复英文、宏和双语输入细节设置。"
+      },
+      {
+        "title": "Telex、VNI 和简易 Telex",
+        "description": "选择熟悉的输入方式。按 Control + Shift 或使用菜单栏，在越南语和英语之间切换。"
+      },
+      {
+        "title": "PHTV 选择器与剪贴板",
+        "description": "插入表情符号、贴纸和 GIF，或找回剪贴板历史记录中的内容。"
+      },
+      {
+        "title": "PHTV Keyboard 版",
+        "description": "PHTV Keyboard 是面向 App Store 的版本。沙盒中的 Mac 版支持快捷短语、剪贴板历史记录和表情符号；iPhone 和 iPad 版支持词语建议、滑动输入和打字竞速。"
+      }
+    ],
+    "installSteps": [
+      "关闭 macOS 的自动纠正功能。",
+      "按 PHTV 的设置提示授予一项权限。macOS 27.3 及以上版本请查找 System & App Protection Override，27.0–27.2 请查找 Device Control and Data Access，较早版本请查找「辅助功能」。",
+      "按 Control + Shift 在越南语与英语之间切换。"
+    ],
+    "tutorial": {
+      "title": "安装 PHTV 并输入越南语",
+      "description": "用 Homebrew 或 DMG 安装，完成六步设置、授予权限并用 Telex 输入。视频为越南语讲解，配有字幕。"
+    },
+    "faq": [
+      {
+        "question": "PHTV 支持哪些 macOS 版本？",
+        "answer": "支持 macOS 14 Sonoma 及更高版本，分别提供 Apple 芯片和 Intel 芯片版本。"
+      },
+      {
+        "question": "怎样安装和更新 PHTV 最方便？",
+        "answer": "使用 Homebrew：用 `brew install --cask phtv` 安装，用 `brew upgrade --cask --greedy phtv` 更新，用 `brew uninstall --cask phtv` 卸载。手动下载时，请选择对应 Apple 芯片或 Intel 芯片的版本。"
+      },
+      {
+        "question": "如何在越南语和英语之间切换？",
+        "answer": "按已配置的快捷键（默认 Control + Shift），或通过菜单栏图标选择语言。"
+      },
+      {
+        "question": "我该选哪种输入方式？",
+        "answer": "Telex 最常用（ow = ơ、uw = ư、aa = â）。VNI 用数字 1–9 添加符号。简易 Telex 提供更简洁的 Telex 输入方式。"
+      },
+      {
+        "question": "PHTV 会把我输入的文字发送到网上吗？",
+        "answer": "输入内容在设备上处理。PHTV 在检查更新以及使用选择器加载 Klipy 的 GIF 和贴纸时联网。参加打字竞速时，PHTV Keyboard 可以连接 Game Center。"
+      },
+      {
+        "question": "为什么 PHTV 需要系统权限？",
+        "answer": "这项权限让 PHTV 接收按键，并在当前输入位置插入已组合好的越南语文字。设置向导会打开适合当前 macOS 版本的设置页面。PHTV Keyboard 的 Mac 版也需要权限来组合文字，并在 App 沙盒中运行。"
+      },
+      {
+        "question": "PHTV 和 PHTV Keyboard 有什么区别？",
+        "answer": "两者共用输入引擎。直接下载的 PHTV 提供 GIF、贴纸和高级设置。PHTV Keyboard 面向 App Store，Mac 版提供快捷短语、剪贴板历史记录和表情符号，iPhone 和 iPad 版提供词语建议和滑动输入。Mac 上请一次只运行一种输入法。"
+      }
+    ]
+  },
+  "vtts": {
+    "category": "离线文字转语音",
+    "title": "离线听书和朗读文档",
+    "subtitle": "在英语、越南语及其他 15 种语言中挑选语音，可在 iPhone、iPad、Mac 和 Android 上收听。",
+    "description": "vTTS 内置 17 种语言的语音，可朗读 EPUB、PDF、DOCX 和纯文本。支持离线收听、调节语速、设置睡眠定时器和导出音频。",
+    "support": "如需帮助或反馈发音问题，请附上问题描述、应用版本和一段可分享的简短示例。",
+    "facts": [
+      { "label": "朗读语言", "value": "17 种语言" },
+      { "label": "语音生成", "value": "在设备上完成" },
+      { "label": "格式", "value": "EPUB、PDF、DOCX、TXT" },
+      { "label": "Premium", "value": "一次性购买" }
+    ],
+    "features": [
+      {
+        "title": "按自己的习惯收听",
+        "description": "语音和界面支持 17 种语言，包括英语和越南语。正在朗读的内容会高亮显示，轻点任意句子即可从该处播放。"
+      },
+      {
+        "title": "电子书和文档",
+        "description": "粘贴文字或导入 EPUB、PDF、DOCX 和 TXT 文件。扫描版 PDF 可在设备上识别文字。每本书分别记住播放位置、语言、语音和语速。"
+      },
+      {
+        "title": "背景音乐与睡眠定时器",
+        "description": "可在播放时调节语速、添加背景音乐和设置睡眠定时器。"
+      },
+      {
+        "title": "书签、笔记和统计",
+        "description": "搜索书中内容，添加书签和笔记，并查看收听时长、每日目标、连续收听天数和成就。"
+      },
+      {
+        "title": "声音工作室",
+        "description": "用自己的录音在设备上创建朗读语音。保存时，vTTS 保留声音档案并删除声音工作室中的临时录音。"
+      },
+      {
+        "title": "翻译后收听",
+        "description": "在设备上翻译，并将译文保存为新书。Apple 设备上的翻译需要 iOS 或 iPadOS 18、macOS 15 或更高版本。Android 需要先下载对应语言对的资源包。"
+      },
+      {
+        "title": "导出音频和有声书",
+        "description": "导出 M4A、MP3、AAC 或 WAV 音频，也可将整本书保存为带章节标记的 M4B 有声书。"
+      },
+      {
+        "title": "备份与 iCloud",
+        "description": "将书库备份为文件，需要时还原。在 Apple 设备上可选择通过 iCloud 同步书籍、收听位置、活动、草稿、历史记录和发音词典。"
+      },
+      {
+        "title": "离线生成语音，保护隐私",
+        "description": "语音在设备上生成，无需云端服务。可选的局域网服务器默认关闭，并由访问令牌保护。"
+      },
+      {
+        "title": "可免费体验",
+        "description": "免费版有使用限制。一次性购买 vTTS Premium 后，可解除收听、书籍数量和音频导出限制，并使用局域网服务器。无需订阅。"
+      }
+    ],
+    "tutorial": {
+      "title": "用 vTTS 收听电子书",
+      "description": "导入 EPUB，查看高亮显示的句子，更改语音、语言和语速，并添加背景音乐和睡眠定时器。视频为越南语讲解，配有字幕。"
+    },
+    "faq": [
+      {
+        "question": "听书时需要联网吗？",
+        "answer": "语音随应用安装。没有网络时也可朗读文字和已导入的书籍。iCloud 同步和翻译语言包下载等可选功能需要联网。"
+      },
+      {
+        "question": "vTTS 能读扫描版 PDF 吗？",
+        "answer": "在导入扫描版 PDF 时，选择文字识别。收听前可检查识别结果，尤其是模糊页面和多栏排版。"
+      },
+      {
+        "question": "vTTS Premium 是订阅吗？",
+        "answer": "Premium 是通过设备应用商店进行的一次性购买。它会解除收听、书库大小和导出限制，并解锁局域网服务器。"
+      }
+    ]
+  },
+  "padcodeai": {
+    "category": "iPad 和 iPhone 上的 IDE",
+    "title": "在 iPad 和 iPhone 上编写、运行和调试代码",
+    "subtitle": "打开项目、在设备上运行代码，并用 Git 管理改动。按需使用终端、SSH、SFTP 或可选的 AI 助手。",
+    "description": "Pad Code AI 是适用于 iPad 和 iPhone 的 IDE。离线运行 Python、C、C++ 和 JavaScript，预览网页，并用 Git 管理项目。",
+    "support": "如需反馈、报告问题或建议支持新语言，请通过电子邮件或 Pad Code AI 的 Facebook 页面联系我们。",
+    "facts": [
+      { "label": "平台", "value": "iPad、iPhone" },
+      { "label": "本地运行", "value": "9 种语言" },
+      { "label": "AI 智能体", "value": "免费" },
+      { "label": "界面", "value": "20 种语言" }
+    ],
+    "features": [
+      {
+        "title": "Vibe Coding",
+        "description": "描述想实现的改动，选择询问、计划、编辑或自动模式，控制助手的操作范围。查看差异，并按需撤销助手所做的改动。"
+      },
+      {
+        "title": "按需选择 AI",
+        "description": "可在受支持的设备和地区使用 Apple 智能，也可在内存足够时下载 Qwen、Gemma 等模型离线使用。在线服务需要你自己的 API 密钥和网络连接。"
+      },
+      {
+        "title": "在设备上运行代码",
+        "description": "使用输入、参数和项目文件运行 C、C++、Python、JavaScript、TypeScript、Ruby、PHP、Lua 和 SQLite 查询。Python 支持断点、matplotlib 绘图和 NumPy、pandas 等兼容的包。"
+      },
+      {
+        "title": "预览和 LaTeX",
+        "description": "预览 HTML、CSS、JavaScript、Markdown 和 SVG。用 LaTeX 排版公式、表格和图片，并可打印预览或保存为 PDF。"
+      },
+      {
+        "title": "SSH、SFTP 和 Shell",
+        "description": "彩色 SSH 终端可运行 vim、htop 和 tmux。通过 SFTP 浏览和编辑服务器文件。本地 Shell 支持 ls、cd、grep 和管道，也支持 python3、node、gcc 和 npm。"
+      },
+      {
+        "title": "代码编辑和导航",
+        "description": "提供语法高亮、自动补全、跳转到定义、查找引用、重命名、全项目查找替换、代码折叠、代码片段和分栏编辑。"
+      },
+      {
+        "title": "内置 Git",
+        "description": "通过 HTTPS 从 GitHub、GitLab 或 Bitbucket 克隆仓库。查看差异，提交、创建分支、暂存、推送和拉取。登录 GitHub 后也可打开有权限的私有仓库。"
+      },
+      {
+        "title": "免费工具与可选的 Pro",
+        "description": "代码编辑、运行支持的代码、Git 和网页预览均可免费使用。分栏编辑、全项目替换等 Pro 工具每天有免费使用额度。可在应用中查看当前升级选项。"
+      }
+    ],
+    "tutorial": {
+      "title": "一分钟了解 Pad Code AI",
+      "description": "了解智能补全、本地运行代码、即时网页预览、GitHub 同步和可选 AI 助手。配有英语和越南语字幕。"
+    },
+    "faq": [
+      {
+        "question": "没有网络时能运行代码吗？",
+        "answer": "内置运行环境支持离线使用。下载额外的包、连接 SSH 服务器、从远程 Git 仓库获取代码或使用在线 AI 时，需要网络连接。"
+      },
+      {
+        "question": "Pad Code AI 可以运行 Swift 吗？",
+        "answer": "可以编辑 Swift 文件。如果要在应用中编译并运行代码，请选择内置运行环境支持的语言，如 Python、JavaScript、C 或 C++。"
+      },
+      {
+        "question": "可以打开 GitHub 私有仓库吗？",
+        "answer": "在应用中登录 GitHub，即可浏览并克隆你有权访问的仓库。克隆后可以在设备上查看改动并提交。"
+      }
+    ]
+  },
+  "padnotesai": {
+    "category": "手写与 PDF 批注",
+    "title": "在同一笔记本里手写、批注 PDF 和复习",
+    "subtitle": "用 Apple Pencil 书写，遮住答案进行自测，还可根据选定页面生成复习题。适用于 iPhone、iPad 和 Mac。",
+    "description": "Pad Notes AI 为 iPhone、iPad 和 Mac 提供手写、PDF 批注、录音和记忆胶带功能。可免费创建最多 20 本笔记本。",
+    "support": "如需帮助解决 PDF 导入、文字识别或同步问题，请发邮件说明应用版本和问题。",
+    "facts": [
+      { "label": "平台", "value": "iOS、iPadOS、macOS" },
+      { "label": "输入方式", "value": "Apple Pencil、触控" },
+      { "label": "页面模板", "value": "19 种" },
+      { "label": "免费额度", "value": "20 本笔记本" }
+    ],
+    "features": [
+      {
+        "title": "记忆胶带",
+        "description": "用直线、方框或自由形状的胶带盖住定义、公式或答案，有八种图案可选。先回忆，再轻点揭开。使用全部遮盖和全部揭开，即可把一页变成自测题。"
+      },
+      {
+        "title": "书写和创作",
+        "description": "在兼容 iPad 上使用 Apple Pencil，也可用触控绘图。调整墨水和线宽、添加高亮、文字及图片。长按笔画可生成可编辑的形状，也可擦除整笔或局部。"
+      },
+      {
+        "title": "按自己的方式整理笔记",
+        "description": "可选 15 款封面、19 种页面模板和 12 种纸张颜色，包括康奈尔笔记和阅读日记版式。按文件夹整理、固定常用笔记本并按关键词查找内容。"
+      },
+      {
+        "title": "导入、批注和导出 PDF",
+        "description": "导入 PDF，在页面上直接书写或高亮标记。应用保留 PDF 的原始页面尺寸。可导出指定页面或整本笔记本用于分享。"
+      },
+      {
+        "title": "笔记助手",
+        "description": "边写边录音，自动转录语音，并跳到指定时间点重听。助手可基于你选定的页面总结、讲解或生成复习题。"
+      }
+    ],
+    "faq": [
+      {
+        "question": "使用 Pad Notes AI 必须有 Apple Pencil 吗？",
+        "answer": "可以打字记笔记、导入 PDF，也可以触控绘图。在兼容 iPad 上手写时，可自行选择是否使用 Apple Pencil。"
+      },
+      {
+        "question": "AI 助手在哪里处理我的笔记？",
+        "answer": "可选基础离线模式，或在兼容设备上使用 Apple 智能进行本地处理。若选择在线服务，需提供自己的 API 密钥，选定内容会发送给你选择的服务提供方。"
+      },
+      {
+        "question": "如何同步笔记本？",
+        "answer": "开启 iCloud 同步，并在各设备上使用同一 Apple 账户。关闭 iCloud 后，笔记本保存在设备上，也可自行备份。"
+      }
+    ]
+  },
+  "mynasmanager": {
+    "category": "群晖 NAS 管理",
+    "title": "在 iPhone 和 iPad 上管理群晖 NAS",
+    "subtitle": "检查硬盘健康状态，在 File Station 中浏览文件并管理 Download Station 下载任务。",
+    "description": "My NAS Manager 是适用于 iPhone 和 iPad 的群晖 DSM 客户端。可监控 CPU、内存和硬盘健康，浏览 File Station 并管理下载。",
+    "support": "如需支持，请通过电子邮件提供 DSM 版本、应用版本和错误信息。请勿发送密码或验证码。",
+    "facts": [
+      { "label": "平台", "value": "iPhone、iPad" },
+      { "label": "服务器", "value": "Synology DSM 7" },
+      { "label": "界面", "value": "15 种语言" },
+      { "label": "跟踪", "value": "无" }
+    ],
+    "features": [
+      {
+        "title": "实时概览",
+        "description": "查看 CPU、内存、网络和温度的实时图表，以及进程排行、系统信息和最近活动。"
+      },
+      {
+        "title": "File Station",
+        "description": "浏览共享文件夹、上传或下载并查看进度、重试或取消任务。支持批量重命名、复制、移动和删除，也可预览文件及创建分享链接。"
+      },
+      {
+        "title": "存储",
+        "description": "查看存储池、存储空间和硬盘的用量、健康状态、温度和 S.M.A.R.T. 状态。"
+      },
+      {
+        "title": "Download Station",
+        "description": "添加 HTTP、FTP 或磁力链接，暂停、继续、删除和筛选任务。"
+      },
+      {
+        "title": "DSM 管理",
+        "description": "启动或停止套件，查看安全顾问、日志和网络接口。一次性购买可解锁 SSH 服务设置以及类似终端的诊断视图。"
+      },
+      {
+        "title": "直接登录 DSM",
+        "description": "用 NAS 账户登录你输入的 DSM 地址。应用支持 HTTPS 和两步验证码，并在 Apple 钥匙串中保存 DSM 会话。"
+      }
+    ],
+    "faq": [
+      {
+        "question": "My NAS Manager 支持哪些 NAS？",
+        "answer": "适用于运行 DSM 7 的群晖 NAS。你需要一个可访问的 DSM 地址，以及有权限执行相应操作的账户。"
+      },
+      {
+        "question": "为什么 Download Station 等功能不可用？",
+        "answer": "这取决于 DSM 版本、已安装的套件和账户权限。请在套件中心检查对应套件，并在 DSM 中确认账户权限。"
+      },
+      {
+        "question": "应用里的 SSH 功能可以做什么？",
+        "answer": "可以启用或关闭 DSM 的 SSH 服务、更改端口和查看诊断信息。应用内的终端视图提供一组内置诊断功能。"
+      }
+    ]
+  },
+  "lunarv": {
+    "category": "越南农历",
+    "title": "查询越南农历，设置家庭纪念日提醒",
+    "subtitle": "在 iPhone、iPad、Mac 和 Apple Vision Pro 上查农历日期、吉时和吉日，并设置家庭提醒。",
+    "description": "LunarV 是适用于 iPhone、iPad、Mac 和 Apple Vision Pro 的越南农历应用。支持公历与农历转换、查询干支和设置农历纪念日提醒。",
+    "support": "如需协助核对日期，请发邮件提供输入的日期和所选历法。",
+    "facts": [
+      { "label": "平台", "value": "iOS、iPadOS、macOS、visionOS" },
+      { "label": "语言", "value": "越南语、英语、简体中文和繁体中文" },
+      { "label": "账户", "value": "无需账户" },
+      { "label": "价格", "value": "免费，可一次性购买 Premium" }
+    ],
+    "features": [
+      {
+        "title": "一览今日",
+        "description": "查看农历日期、日月年干支、节气、生肖和月相，以及当日评分、下一个吉时和宜忌。"
+      },
+      {
+        "title": "择吉日",
+        "description": "在未来 30、60 或 90 天内查找适合婚礼、动土、开业、搬家或出行的吉日，避开三娘日、月忌日和与你生肖相冲的日期。"
+      },
+      {
+        "title": "公历与农历月历",
+        "description": "在同一视图查看公历、农历、节日和备注。可按越南历换算日期，也可查询 1901 至 2100 年的中国农历日期。"
+      },
+      {
+        "title": "家庭提醒",
+        "description": "按公历或农历保存忌日、生日和满月日，可每年、每月或每周重复，提前提醒，也可选择同步到 Apple 日历。"
+      },
+      {
+        "title": "传统文化工具",
+        "description": "提供祝祷文库、新年首位访客建议、流年星曜、生肖配对、鲁班尺、风水罗盘及孔明神数，供传统文化参考。"
+      },
+      {
+        "title": "小组件和菜单栏",
+        "description": "提供主屏幕、锁定屏幕和桌面小组件，支持 Mac 菜单栏农历、Siri 快捷指令、聚焦搜索和实时世界时钟。"
+      }
+    ],
+    "faq": [
+      {
+        "question": "LunarV 的越南农历使用哪个时区？",
+        "answer": "越南农历使用 UTC+7。LunarV 另有独立的中国农历模式。请确认当前所选历法，尤其是农历月初或闰月附近。"
+      },
+      {
+        "question": "可以按农历每年提醒家庭纪念日吗？",
+        "answer": "创建家庭纪念日时，选择农历日期，设为每年重复，并选定提前提醒的时间。也可以将纪念日同步到 Apple 日历。"
+      },
+      {
+        "question": "LunarV Premium 解锁哪些功能？",
+        "answer": "日历、日期转换、搜索和工具均可免费使用。一次性购买 Premium 可解除家庭纪念日和日期备注的数量限制。"
+      }
+    ]
+  },
+  "lunarblock": {
+    "category": "3D 方块益智游戏",
+    "title": "在 3D 场景中堆叠和消除水晶方块",
+    "subtitle": "在 iPhone、iPad 或 Mac 上玩马拉松、冲刺和极限模式，支持触控、键盘和游戏手柄。",
+    "description": "Lunar Block 是适用于 iPhone、iPad 和 Mac 的 3D 下落方块益智游戏。旋转、暂存和下落水晶方块，在马拉松、冲刺和极限模式中消行。",
+    "support": "欢迎通过电子邮件反馈玩法、操作或辅助功能。",
+    "facts": [
+      { "label": "类型", "value": "3D 方块益智游戏" },
+      { "label": "模式", "value": "马拉松、冲刺、极限" },
+      { "label": "刷新率", "value": "最高 120 Hz" },
+      { "label": "广告", "value": "无" }
+    ],
+    "features": [
+      {
+        "title": "三种玩法",
+        "description": "马拉松模式挑战 20 个速度等级，冲刺模式比拼消除 40 行的速度，极限模式则争取在两分钟内获得尽可能高的分数。"
+      },
+      {
+        "title": "旋转、暂存和提前规划",
+        "description": "查看接下来的方块和落点提示，或将方块暂存以备后用。通过连击、T-Spin、四行消除和全消获得分数。"
+      },
+      {
+        "title": "3D 游戏场景",
+        "description": "消行时发光的水晶方块会碎裂。镜头和撞击效果会随游戏操作作出响应。"
+      },
+      {
+        "title": "选择适合自己的操作方式",
+        "description": "支持滑动、轻点、屏幕方向键和左手布局，也可在 iPhone、iPad 和 Mac 上使用键盘或游戏手柄。"
+      },
+      {
+        "title": "持续积累游戏进度",
+        "description": "获取经验值，提升 11 个等级，保留各模式的个人纪录，并通过 Game Center 比拼排行榜和成就。"
+      },
+      {
+        "title": "兼顾流畅度和辅助功能",
+        "description": "ProMotion 设备上可达 120 Hz，提供原创合成音效、可与个人音乐同时播放的环境配乐、触觉反馈、减弱动态效果、旁白和自动保存。"
+      }
+    ],
+    "faq": [
+      {
+        "question": "马拉松、冲刺和极限模式有什么区别？",
+        "answer": "马拉松模式会逐渐加速，直到没有空间可放方块。冲刺模式计时，看多快能消除 40 行。极限模式计算两分钟内获得的分数。"
+      },
+      {
+        "question": "可以离线玩吗？",
+        "answer": "无需联网即可玩游戏，并在设备上保存个人纪录。Game Center 排行榜和成就使用 Apple 的 Game Center 账户。"
+      },
+      {
+        "question": "在哪里能查看操作方法？",
+        "answer": "打开玩法说明，即可查看触控手势、键盘快捷键和手柄按键。也可在设置中选择左手布局。"
+      }
+    ]
+  }
+}

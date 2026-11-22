@@ -98,6 +98,6 @@ updateProgress();
 
 Trang hiện chữ nhưng thiếu định dạng? Kiểm tra tên tệp và đường dẫn `href="./styles.css"`, kể cả chữ hoa và chữ thường. Nếu giao diện đúng mà số đếm đứng yên, mở **Bảng điều khiển** trong bản xem trước. So lại `src="./app.js"` và kiểm tra thuộc tính `data-progress` có khớp với bộ chọn trong JavaScript. Thêm tạm `console.log("checklist ready")` vào cuối tệp rồi **Tải lại** để biết mã có chạy tới cuối không. Xoá dòng log sau khi kiểm tra.
 
-Bản xem trước phục vụ việc kiểm tra các tệp ngay trong ứng dụng. Để người khác mở trang qua một URL công khai, bạn cần đưa các tệp lên dịch vụ lưu trữ web. Nếu thường xuyên sửa HTML và CSS cùng lúc, bạn có thể thử chia đôi trình soạn thảo trong lượt dùng miễn phí mỗi ngày. Chi tiết mua một lần có trên [trang App Store](https://apps.apple.com/app/id6774398897).
+Bản xem trước phục vụ việc kiểm tra các tệp ngay trong ứng dụng. Để người khác mở trang qua một URL công khai, bạn cần đưa các tệp lên dịch vụ lưu trữ web. Nếu thường xuyên sửa HTML và CSS cùng lúc, bạn có thể thử chia đôi trình soạn thảo trong lượt dùng miễn phí mỗi ngày. Xem các lựa chọn Pro hiện có trong ứng dụng hoặc trên [trang App Store](https://apps.apple.com/app/id6774398897).
 
 Khi danh sách đã chạy, bạn có thể [nhờ AI thêm nút bỏ đánh dấu và tự kiểm tra phần mã thay đổi](/huong-dan/review-ai-code-changes-on-ipad/).

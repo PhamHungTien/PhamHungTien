@@ -88,7 +88,7 @@ Some English words contain the same letters Telex uses for accents. PHTV can res
 ## Try two sentences
 
 ```text
-Dduwowngf ddi khoong khos vif ngawn sooong caasch nuis
+Dduwowngf ddi khoong khos vif ngawn soong cachs nuis
 Truowngf Vieejt Nam ddepj nhaast nawm nay
 ```
 

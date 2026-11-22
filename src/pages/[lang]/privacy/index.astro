@@ -1,0 +1,13 @@
+---
+import SitePage from '../../../components/site/SitePage.astro';
+import { PREFIXED_LOCALES } from '../../../i18n/locales';
+import { sitePrivacyPath } from '../../../lib/sitePages';
+
+export function getStaticPaths() {
+  return PREFIXED_LOCALES.map((lang) => ({ params: { lang }, props: { lang } }));
+}
+
+const { lang } = Astro.props;
+---
+
+<SitePage name="privacy" lang={lang} pathFor={sitePrivacyPath} />

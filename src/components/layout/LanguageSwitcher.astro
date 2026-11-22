@@ -14,7 +14,7 @@ const choices = alternates.filter((alternate) => alternate.lang !== 'x-default')
 ---
 
 {choices.length > 1 && (
-  <details class="language-switcher">
+  <details class="language-switcher" data-language-switcher>
     <summary aria-label={`${t(lang, 'nav.language')}: ${LANGUAGE_NAMES[lang]}`}>
       <Languages size={17} aria-hidden="true" />
       <span aria-hidden="true">{lang.toUpperCase()}</span>

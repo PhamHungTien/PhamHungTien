@@ -1,28 +1,31 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import GuideList from './GuideList.astro';
-import { type GuideLang } from '../../i18n/locales';
+import { type Locale } from '../../i18n/locales';
 import { guideCopy } from '../../i18n/guide-copy';
-import { appBySlug } from '../../data/apps';
+import { apps } from '../../data/apps';
 import { t } from '../../lib/i18n';
 import { getGuides, guidesPath, guideUrl, guideIndexAlternates } from '../../lib/guides';
 import { homePath } from '../../lib/routes';
 import { absolute, ogImage, PERSON_ID, WEBSITE_ID } from '../../lib/seo';
 
 interface Props {
-  lang: GuideLang;
+  lang: Locale;
 }
 
 const { lang } = Astro.props;
 const guides = await getGuides(lang);
 const path = guidesPath(lang);
 const name = t(lang, 'nav.guides');
-const { indexDescription: description, indexTitle, descriptions } = guideCopy[lang];
-const products = (['padcodeai', 'vtts'] as const).map((slug) => ({
-  name: appBySlug.get(slug)!.name,
-  slug,
-  guides: guides.filter((guide) => guide.data.app === slug),
-}));
+const { indexDescription: description, indexTitle } = guideCopy[lang];
+const products = apps
+  .map(({ name, slug }) => ({
+    name,
+    slug,
+    guides: guides.filter((guide) => guide.data.app === slug),
+  }))
+  .filter((product) => product.guides.length > 0);
+const general = guides.filter((guide) => !apps.some(({ slug }) => slug === guide.data.app));
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
@@ -50,7 +53,7 @@ const jsonLd = {
   title={`${indexTitle} | Phạm Hùng Tiến`}
   description={description}
   path={path}
-  alternates={guideIndexAlternates(lang)}
+  alternates={guideIndexAlternates}
   ogImage={ogImage(lang === 'vi' ? 'guides' : `guides-${lang}`)}
   jsonLd={jsonLd}
   nav={[
@@ -59,31 +62,21 @@ const jsonLd = {
     { href: `${homePath(lang)}#apps`, label: t(lang, 'nav.apps') },
   ]}
 >
-  {descriptions ? (
-    <header class="guide-intro container section">
-      <h1>{indexTitle}</h1>
-      <p>{description}</p>
-    </header>
-  ) : (
+  <header class="guide-intro container section" id="all">
+    <h1>{indexTitle}</h1>
+    <p>{description}</p>
+  </header>
+  {products.map((product) => (
     <GuideList
-      guides={guides}
+      guides={product.guides}
       lang={lang}
-      title={name}
-      lead={description}
-      headingLevel="h1"
-      id="all"
+      title={product.name}
+      id={`${product.slug}-guides`}
     />
+  ))}
+  {general.length > 0 && (
+    <GuideList guides={general} lang={lang} title={name} id="general-guides" />
   )}
-  {descriptions &&
-    products.map((product) => (
-      <GuideList
-        guides={product.guides}
-        lang={lang}
-        title={product.name}
-        lead={descriptions[product.slug]}
-        id={`${product.slug}-guides`}
-      />
-    ))}
 </BaseLayout>
 
 <style>

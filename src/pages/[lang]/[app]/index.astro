@@ -3,11 +3,11 @@ import type { GetStaticPaths } from 'astro';
 import AppPage from '../../../components/app/AppPage.astro';
 import LegacyRedirect from '../../../components/site/LegacyRedirect.astro';
 import { apps, appSegment, defaultLangOf } from '../../../data/apps';
-import { LANGS } from '../../../data/types';
+import { LOCALES } from '../../../i18n/locales';
 
 export const getStaticPaths = (() =>
   apps.flatMap((app) =>
-    LANGS.map((lang) => ({ params: { lang, app: appSegment(app) }, props: { app, lang } })),
+    LOCALES.map((lang) => ({ params: { lang, app: appSegment(app) }, props: { app, lang } })),
   )) satisfies GetStaticPaths;
 
 const { app, lang } = Astro.props;

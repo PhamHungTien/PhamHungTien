@@ -1,9 +1,10 @@
 ---
 import GuidePage from '../../../../components/guides/GuidePage.astro';
+import { PREFIXED_LOCALES } from '../../../../i18n/locales';
 import { getGuides, guideLang, guideSlug, type Guide } from '../../../../lib/guides';
 
 export async function getStaticPaths() {
-  const guides = (await Promise.all([getGuides('ja'), getGuides('es')])).flat();
+  const guides = (await Promise.all(PREFIXED_LOCALES.map(getGuides))).flat();
   return guides.map((guide) => ({
     params: { lang: guideLang(guide), slug: guideSlug(guide) },
     props: { guide },

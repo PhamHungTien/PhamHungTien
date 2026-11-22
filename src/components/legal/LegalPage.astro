@@ -62,7 +62,7 @@ const jsonLd = {
     <a class="legal__back" href={appPath(app, lang)}>
       <ArrowLeft size={16} aria-hidden="true" />
       <Image src={app.icon} alt="" width={28} height={28} densities={[1, 2]} />
-      {t(lang, 'legal.backToApp')} {app.name}
+      {t(lang, 'legal.backToApp').replace('{app}', app.name)}
     </a>
     <header>
       <h1>{entry.data.title}</h1>

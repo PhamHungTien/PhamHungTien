@@ -1,19 +1,22 @@
 ---
-import type { App, Lang } from '../../data/types';
+import type { App } from '../../data/types';
+import type { Locale } from '../../i18n/locales';
+import { getAppCopy } from '../../lib/app-copy';
 
 interface Props {
   app: App;
-  lang: Lang;
+  lang: Locale;
 }
 
 const { app, lang } = Astro.props;
+const { facts } = getAppCopy(app, lang);
 ---
 
 <dl class="facts container">
-  {app.facts.map((fact) => (
+  {facts.map((fact) => (
     <div>
-      <dt>{fact.label[lang]}</dt>
-      <dd>{fact.value[lang]}</dd>
+      <dt>{fact.label}</dt>
+      <dd>{fact.value}</dd>
     </div>
   ))}
 </dl>

@@ -1,16 +1,17 @@
-import { type Locale } from '../i18n/locales';
-import type { App, Lang } from '../data/types';
+import { LOCALES, type Locale } from '../i18n/locales';
+import type { App } from '../data/types';
 import { SITE } from '../data/site';
 import { apps } from '../data/apps';
 import { socialProfiles } from '../data/socials';
 import appStore from '../data/appstore.json';
 import { t } from './i18n';
+import { getAppCopy } from './app-copy';
 import { platformList, storesOf } from '../data/platforms';
 import { appPath, homePath, legalPath } from './routes';
 import { storeMedia } from './store-media';
 
 /** Bump when the Open Graph cards in public/og are regenerated (npm run og). */
-export const OG_VERSION = 'pht-6';
+export const OG_VERSION = 'pht-7';
 export const OG_SIZE = { width: 1200, height: 630 } as const;
 
 export const absolute = (path: string) => new URL(path, SITE.origin).href;
@@ -20,11 +21,14 @@ export const ogImage = (name: string) => absolute(`/og/${name}.png?v=${OG_VERSIO
 export function metaDescription(text: string, max = 158) {
   if (text.length <= max) return text;
   let out = '';
-  for (const sentence of text.match(/[^.!?]+[.!?]+/g) ?? []) {
+  for (const sentence of text.match(/[^.!?。！？]+[.!?。！？]+/g) ?? []) {
     if ((out + sentence).trim().length > max) break;
     out += sentence;
   }
-  return out.trim() || `${text.slice(0, max - 1).replace(/\s+\S*$/, '')}…`;
+  if (out) return out.trim();
+  const excerpt = text.slice(0, max - 1);
+  const boundary = excerpt.lastIndexOf(' ');
+  return `${boundary > max * 0.8 ? excerpt.slice(0, boundary) : excerpt}…`;
 }
 
 type StoreRecord = {
@@ -78,7 +82,7 @@ const websiteSchema = (lang: Locale) => ({
   name: SITE.name,
   alternateName: SITE.asciiName,
   publisher: { '@id': PERSON_ID },
-  inLanguage: ['en', 'vi'],
+  inLanguage: LOCALES,
   description: t(lang, 'meta.home.description'),
 });
 
@@ -111,7 +115,8 @@ export function homeJsonLd(lang: Locale) {
   };
 }
 
-export function appJsonLd(app: App, lang: Lang) {
+export function appJsonLd(app: App, lang: Locale) {
+  const copy = getAppCopy(app, lang);
   const url = absolute(appPath(app, lang));
   const appId = `${absolute(app.route)}#app`;
   const breadcrumbsId = `${url}#breadcrumbs`;
@@ -119,14 +124,14 @@ export function appJsonLd(app: App, lang: Lang) {
     '@type': 'SoftwareApplication',
     '@id': appId,
     name: app.name,
-    description: app.description[lang],
+    description: copy.description,
     applicationCategory: app.appCategory,
-    applicationSubCategory: app.category[lang],
+    applicationSubCategory: copy.category,
     operatingSystem: app.requirements ?? platformList(app.platforms).join(', '),
     url,
     image: ogImage(app.slug),
     author: { '@id': PERSON_ID },
-    featureList: app.features.map((feature) => feature.title[lang]),
+    featureList: copy.features.map((feature) => feature.title),
     screenshot: storeMedia(app.slug, lang)
       .devices.flatMap((device) => device.shots)
       .slice(0, 8)
@@ -158,8 +163,8 @@ export function appJsonLd(app: App, lang: Lang) {
       '@type': 'WebPage',
       '@id': `${url}#page`,
       url,
-      name: `${app.name} — ${app.category[lang]}`,
-      description: metaDescription(app.description[lang]),
+      name: `${app.name} — ${copy.category}`,
+      description: metaDescription(copy.description),
       inLanguage: lang,
       mainEntity: { '@id': appId },
       isPartOf: { '@id': WEBSITE_ID },
@@ -185,15 +190,15 @@ export function appJsonLd(app: App, lang: Lang) {
     },
   ];
 
-  if (app.faq?.length) {
+  if (copy.faq.length) {
     graph.push({
       '@type': 'FAQPage',
       '@id': `${url}#faq`,
       inLanguage: lang,
-      mainEntity: app.faq.map((item) => ({
+      mainEntity: copy.faq.map((item) => ({
         '@type': 'Question',
-        name: item.question[lang],
-        acceptedAnswer: { '@type': 'Answer', text: item.answer[lang].replaceAll('`', '') },
+        name: item.question,
+        acceptedAnswer: { '@type': 'Answer', text: item.answer.replaceAll('`', '') },
       })),
     });
   }

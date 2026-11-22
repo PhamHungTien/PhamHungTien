@@ -7,7 +7,9 @@ import { Image } from 'astro:assets';
 import { ChevronRight, Download, Heart } from '@lucide/astro';
 import BrandIcon from '../ui/BrandIcon.astro';
 import StoreDownloads from '../ui/StoreDownloads.astro';
-import type { App, Lang } from '../../data/types';
+import type { App } from '../../data/types';
+import type { Locale } from '../../i18n/locales';
+import { getAppCopy } from '../../lib/app-copy';
 import { t } from '../../lib/i18n';
 import { homePath, legalPath } from '../../lib/routes';
 import { platformGroupsOf } from '../../data/platforms';
@@ -15,23 +17,17 @@ import { storeMedia } from '../../lib/store-media';
 
 interface Props {
   app: App;
-  lang: Lang | 'zh';
-  /** Copy for pages in a language the app data does not carry (Chinese LunarV). */
-  copy?: { title: string; subtitle: string; category: string; privacy: string };
+  lang: Locale;
 }
 
-const { app, lang, copy } = Astro.props;
-/** App data is written in English and Vietnamese; other pages pass their own copy. */
-const dataLang: Lang = lang === 'zh' ? 'en' : lang;
-const title = copy?.title ?? app.title[dataLang];
-const subtitle = copy?.subtitle ?? app.subtitle[dataLang];
-const category = copy?.category ?? app.category[dataLang];
+const { app, lang } = Astro.props;
+const { title, subtitle, category } = getAppCopy(app, lang);
 const header = storeMedia(app.slug, lang).header;
 
 const secondary = app.links.source
   ? { href: app.links.source, label: t(lang, 'app.source'), external: true }
   : {
-      href: copy?.privacy ?? legalPath(app, 'privacy', dataLang),
+      href: legalPath(app, 'privacy', lang),
       label: t(lang, 'app.privacy'),
       external: false,
     };
@@ -42,7 +38,7 @@ const platforms = platformGroupsOf(app.platforms)
 
 <section class="app-hero container" aria-labelledby="app-title">
   <div class="app-hero__bar">
-    <nav class="breadcrumb" aria-label="Breadcrumb">
+    <nav class="breadcrumb" aria-label={t(lang, 'nav.breadcrumb')}>
       <ol role="list">
         <li>
           <a href={homePath(lang)}>{t(lang, 'nav.home')}</a>
@@ -97,9 +93,7 @@ const platforms = platformGroupsOf(app.platforms)
       <h1 id="app-title">{title}</h1>
       <p class="app-hero__subtitle">{subtitle}</p>
       <p class="app-hero__platforms">
-        <span class="sr-only">
-          {lang === 'vi' ? 'Nền tảng: ' : lang === 'zh' ? '平台：' : 'Platforms: '}
-        </span>
+        <span class="sr-only">{t(lang, 'app.platforms')} </span>
         {platforms}
       </p>
     </div>

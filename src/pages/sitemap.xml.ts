@@ -36,8 +36,7 @@ export const GET: APIRoute = async () => {
   const entries: Entry[] = [
     ...pagesIn(homeAlternates),
     ...apps.flatMap((app) => pagesIn(appAlternates(app), ogImage(app.slug))),
-    ...pagesIn(guideIndexAlternates('en')),
-    ...pagesIn(guideIndexAlternates('es')),
+    ...pagesIn(guideIndexAlternates),
     ...guides.map((guide) => ({
       path: guideUrl(guide),
       versions: guideAlternates(guideSlug(guide), guides),

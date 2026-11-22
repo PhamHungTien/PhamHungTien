@@ -37,7 +37,7 @@ import {
   updateDoc,
   where,
 } from 'firebase/firestore';
-import type { Lang } from '../../data/types';
+import type { Locale as Lang } from '../../i18n/locales';
 import { ADMIN_EMAILS, getFirebase } from '../../lib/firebase';
 import { formatRelative } from './strings';
 import { phtvText, type PhtvText } from './phtv-strings';

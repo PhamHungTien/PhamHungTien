@@ -11,7 +11,7 @@ import type { AppSlug } from '../data/types';
  *   <device>-NN.webp screenshots, device = iphone | ipad | mac | vision
  *   preview-<device>.mp4 / .webp   App Preview video and its poster frame
  */
-export type MediaLang = 'en' | 'vi' | 'zh';
+import type { Locale } from '../i18n/locales';
 export type Device = 'iphone' | 'ipad' | 'mac' | 'vision';
 
 export interface DeviceMedia {
@@ -37,7 +37,7 @@ const videos = import.meta.glob<string>('../assets/apps/*/store/*/*.mp4', {
 
 const DEVICE_ORDER: Device[] = ['iphone', 'ipad', 'mac', 'vision'];
 
-function collect(slug: AppSlug, lang: MediaLang): StoreMedia | undefined {
+function collect(slug: AppSlug, lang: Locale): StoreMedia | undefined {
   const prefix = `../assets/apps/${slug}/store/${lang}/`;
   const files = Object.keys(images).filter((path) => path.startsWith(prefix));
   if (!files.length) return undefined;
@@ -58,13 +58,13 @@ function collect(slug: AppSlug, lang: MediaLang): StoreMedia | undefined {
 }
 
 /** Media in the page language, falling back to English (the store's primary listing). */
-export function storeMedia(slug: AppSlug, lang: MediaLang): StoreMedia {
+export function storeMedia(slug: AppSlug, lang: Locale): StoreMedia {
   return collect(slug, lang) ?? collect(slug, 'en') ?? { devices: [] };
 }
 
-export const DEVICE_LABEL: Record<Device, Record<MediaLang, string>> = {
-  iphone: { en: 'iPhone', vi: 'iPhone', zh: 'iPhone' },
-  ipad: { en: 'iPad', vi: 'iPad', zh: 'iPad' },
-  mac: { en: 'Mac', vi: 'Mac', zh: 'Mac' },
-  vision: { en: 'Apple Vision Pro', vi: 'Apple Vision Pro', zh: 'Apple Vision Pro' },
+export const DEVICE_LABEL: Record<Device, string> = {
+  iphone: 'iPhone',
+  ipad: 'iPad',
+  mac: 'Mac',
+  vision: 'Apple Vision Pro',
 };

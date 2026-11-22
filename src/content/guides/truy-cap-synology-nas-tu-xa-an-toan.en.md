@@ -1,14 +1,14 @@
 ---
 lang: en
-title: Access your Synology NAS remotely with iPhone, iPad and Mac
-description: Compare QuickConnect, DDNS and VPN access for a Synology NAS, prepare your security settings and connect with My NAS Manager on iPhone, iPad and Mac.
+title: Access your Synology NAS remotely with iPhone and iPad
+description: Compare QuickConnect, DDNS and VPN access for a Synology NAS, prepare your security settings and connect with My NAS Manager on iPhone and iPad.
 published: 2026-10-15
 updated: 2026-11-22
 app: mynasmanager
 topic: My NAS Manager
 ---
 
-A Synology NAS keeps family photos, documents and media in one place. Accessing it away from home requires a connection method that also protects those files. This guide compares remote-access options, explains the security settings to review and shows how to connect with [My NAS Manager](/MyNASManager/) on iPhone, iPad and Mac.
+A Synology NAS keeps family photos, documents and media in one place. Accessing it away from home requires a connection method that also protects those files. This guide compares remote-access options, explains the security settings to review and shows how to connect with [My NAS Manager](/MyNASManager/) on iPhone and iPad.
 
 ## Where does your NAS accept connections?
 
@@ -69,7 +69,7 @@ A private VPN connection lets you manage DSM without opening its ports to the in
 
 ## Connect with My NAS Manager
 
-My NAS Manager manages Synology devices running **DSM 7 or later** from iPhone, iPad and Mac. It provides resource monitoring, file browsing, package management and SSH controls.
+My NAS Manager manages Synology devices running **DSM 7 or later** from iPhone and iPad. It provides resource monitoring, file browsing, package management and SSH controls.
 
 ### Sign in to your NAS
 

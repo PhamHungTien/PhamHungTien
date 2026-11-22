@@ -41,17 +41,17 @@ checks (plus the rules tests) on every pull request; only `main` is published.
 
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the full layout. In short:
 
-- **App content** (text, platforms, store links): `src/data/apps/<slug>.ts`
+- **App content** (English and Vietnamese copy, platforms, store links): `src/data/apps/<slug>.ts`. Additional translations are in `src/i18n/app-copy/`.
 - **App media** (store header and search art, screenshots, App Previews):
   `src/assets/apps/<slug>/store/<lang>/`, filled by `npm run sync:media`
-- **Interface text** in both languages: `src/i18n/ui.ts`
+- **Interface text** in the five site languages: `src/i18n/ui.ts`
 - **Legal documents**: `src/content/legal/<slug>/*.md`
 - **Design tokens**: top of `src/styles/global.css` ([design system](docs/DESIGN-SYSTEM.md))
 
 ## Conventions
 
-- Interface strings live in `src/i18n/ui.ts` in English and Vietnamese (plus Simplified
-  Chinese for LunarV). See [docs/LANGUAGES.md](docs/LANGUAGES.md) for which pages use which.
+- Maintain all five site languages when changing interface text or publishing guides. See
+  [docs/LANGUAGES.md](docs/LANGUAGES.md) for translation files and routes.
 - Prefer HTML and CSS; add browser JavaScript only for real interaction, as a small module
   in `src/scripts`. Use React only for complex, data-driven islands.
 - Use native elements (`<a>`, `<button>`, `<dialog>`, `<details>`), accessible names,

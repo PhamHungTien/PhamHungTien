@@ -1,10 +1,8 @@
 import type { ImageMetadata } from 'astro';
 
 export type Lang = 'vi' | 'en';
-export const LANGS: readonly Lang[] = ['en', 'vi'];
-export type LegalLang = Lang | 'zh';
 
-/** Every user-facing string is written in both languages. */
+/** The two source languages for app data. */
 export type Localized<T = string> = Record<Lang, T>;
 
 export type AppSlug =
@@ -75,8 +73,6 @@ export interface App {
   route: string;
   /** Language of the canonical page. The other language is served under /<lang>/. */
   defaultLang?: Lang;
-  /** Optional additional language for legal documents beyond English and Vietnamese. */
-  legalTranslations?: Exclude<LegalLang, Lang>[];
   icon: ImageMetadata;
   /** Header art, search art, screenshots and previews come from App Store Connect:
    *  see src/lib/store-media.ts (npm run sync:media). */

@@ -1,38 +1,26 @@
 ---
 /** A grid of guide cards with a section heading; used on the home page, app pages and /huong-dan/. */
 import GuideCard from './GuideCard.astro';
-import type { GuideLang } from '../../i18n/locales';
+import type { Locale } from '../../i18n/locales';
 import type { Guide } from '../../lib/guides';
 import { guidesPath } from '../../lib/guides';
 
 interface Props {
   guides: Guide[];
-  lang?: GuideLang;
+  lang?: Locale;
   title: string;
   lead?: string;
   allLabel?: string;
   id?: string;
-  headingLevel?: 'h1' | 'h2';
 }
 
-const {
-  guides,
-  title,
-  lead,
-  allLabel,
-  lang = 'en',
-  id = 'guides',
-  headingLevel = 'h2',
-} = Astro.props;
-const Heading = headingLevel;
+const { guides, title, lead, allLabel, lang = 'en', id = 'guides' } = Astro.props;
 ---
 
 <section class="guides container section" id={id} aria-labelledby={`${id}-heading`}>
   <div class="section-head">
     <div>
-      <Heading id={`${id}-heading`} class:list={{ guides__h1: headingLevel === 'h1' }}>
-        {title}
-      </Heading>
+      <h2 id={`${id}-heading`}>{title}</h2>
       {lead && <p>{lead}</p>}
     </div>
     {allLabel && (
@@ -41,11 +29,10 @@ const Heading = headingLevel;
       </a>
     )}
   </div>
-  <slot name="options" />
   <ul class="guides__grid" role="list">
     {guides.map((guide) => (
       <li>
-        <GuideCard guide={guide} lang={lang} headingLevel={headingLevel === 'h1' ? 'h2' : 'h3'} />
+        <GuideCard guide={guide} lang={lang} />
       </li>
     ))}
   </ul>
@@ -56,12 +43,5 @@ const Heading = headingLevel;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
     gap: 16px;
-  }
-
-  .guides__h1 {
-    font-size: clamp(36px, 5vw, 56px);
-    font-weight: 600;
-    line-height: 1.08;
-    letter-spacing: -0.035em;
   }
 </style>

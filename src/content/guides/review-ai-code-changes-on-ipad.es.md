@@ -7,13 +7,13 @@ app: padcodeai
 topic: Pad Code AI
 ---
 
-Si quieres probar un asistente de programación en el iPad, empieza con un cambio fácil de comprobar. En este ejercicio, [Pad Code AI](/PadCodeAI/) añade un botón para restablecer una lista de lectura. Vas a acotar la tarea, revisar qué líneas ha cambiado el agente y verificar el resultado en la vista previa.
+Si quieres probar un asistente de programación en el iPad, empieza con un cambio fácil de comprobar. En este ejercicio, [Pad Code AI](/es/PadCodeAI/) añade un botón para restablecer una lista de lectura. Vas a acotar la tarea, revisar qué líneas ha cambiado el agente y verificar el resultado en la vista previa.
 
 ## Prepara una copia y elige cómo se procesa la solicitud
 
 Abre el proyecto de la [guía de HTML, CSS y JavaScript](/es/guides/preview-html-css-javascript-on-ipad/) o prepara una copia de una lista que ya tengas. Guarda los archivos y marca una casilla en la vista previa. Si el contador muestra `1 / 3`, ya tienes un punto de partida con el que comparar.
 
-En los ajustes de **Asistente de IA**, elige el proveedor. Apple Intelligence requiere un dispositivo compatible con la función activada. Con modelos descargados, los modos disponibles dependen del modelo y de los recursos del dispositivo. Si eliges un proveedor en línea, tu clave de API se utiliza para enviar el mensaje y el contexto autorizado a ese proveedor. Durante la tarea, el agente puede solicitar más contexto del proyecto. Revisa el contenido que vas a compartir y practica con archivos que no contengan claves ni datos privados. Puedes consultar la [política de privacidad de Pad Code AI](/PadCodeAI/privacy.html).
+En los ajustes de **Asistente de IA**, elige el proveedor. Para usar Apple Intelligence como proveedor necesitas iOS o iPadOS 26 o posterior y un dispositivo compatible con la función activada. Consulta los [requisitos de dispositivo y región de Apple](https://support.apple.com/en-us/121115). Los modelos descargados requieren espacio y memoria. Los modos Plan, Editar y Automático requieren un modelo capaz de llamar a herramientas. Si eliges un proveedor en línea, tu clave de API se utiliza para enviar el mensaje y el contexto autorizado a ese proveedor. Durante la tarea, el agente puede solicitar más contexto del proyecto. Revisa el contenido que vas a compartir y practica con archivos que no contengan claves ni datos privados. Puedes consultar la [política de privacidad de Pad Code AI](/es/PadCodeAI/privacy.html).
 
 ## Pide primero un plan de trabajo
 

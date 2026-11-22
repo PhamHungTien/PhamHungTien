@@ -160,14 +160,17 @@ const wrap = (text, max) => {
   }
   return lines;
 };
-const japaneseWords = new Intl.Segmenter('ja', { granularity: 'word' });
-function wrapJapanese(text, max) {
+const eastAsianWords = {
+  ja: new Intl.Segmenter('ja', { granularity: 'word' }),
+  zh: new Intl.Segmenter('zh', { granularity: 'word' }),
+};
+function wrapEastAsian(text, max, lang) {
   const lines = [''];
   const width = (value) =>
     [...value].reduce((sum, char) => sum + (char.codePointAt(0) < 128 ? 0.55 : 1), 0);
-  for (const { segment } of japaneseWords.segment(text)) {
+  for (const { segment } of eastAsianWords[lang].segment(text)) {
     const current = lines.at(-1);
-    if (current && width(current + segment) > max && !/^[、。）」！？]/u.test(segment)) {
+    if (current && width(current + segment) > max && !/^[、。，：；）」！？]/u.test(segment)) {
       lines.push(segment.trimStart());
     } else {
       lines[lines.length - 1] = current + segment;
@@ -204,14 +207,21 @@ await card(
 await card(
   'guides-ja',
   txt(72, 187, 36, 'アプリガイド', 'font-weight="600"') +
-    headline(['Pad Code AI と vTTS', '使い方ガイド'], 60, 280),
+    headline(['アプリの使い方と', 'チュートリアル'], 60, 280),
   '日本語',
 );
 await card(
   'guides-es',
   txt(72, 187, 36, 'Guías de aplicaciones', 'font-weight="600"') +
-    headline(['Pad Code AI y vTTS', 'Guías paso a paso'], 60, 280),
+    headline(['Guías paso a paso', 'para tus aplicaciones'], 60, 280),
   'Español',
+);
+await card(
+  'guides-zh',
+  txt(72, 187, 36, '应用使用指南', 'font-weight="600"') +
+    headline(['应用指南与教程'], 60, 280) +
+    txt(74, 384, 25, '越南语输入、离线听书、编程、记笔记等', 'fill="#566074"'),
+  '简体中文',
 );
 await card(
   'privacy',
@@ -230,15 +240,19 @@ for (const file of (await readdir('src/content/guides')).filter((f) => f.endsWit
       .replace(/^(['"])(.*)\1$/, '$2');
   const title = field('title');
   const lang = field('lang');
-  const label = { en: 'Guide', vi: 'Hướng dẫn', ja: 'ガイド', es: 'Guía' }[lang];
+  const label = { en: 'Guide', vi: 'Hướng dẫn', ja: 'ガイド', es: 'Guía', zh: '指南' }[lang];
   const app = field('app');
   const i = apps.findIndex((a) => a[0] === app);
   const max = i >= 0 ? 26 : 36;
   let size = 54;
-  let lines = lang === 'ja' ? wrapJapanese(title, 13) : wrap(title, max);
+  const linesFor = (scale) =>
+    Object.hasOwn(eastAsianWords, lang)
+      ? wrapEastAsian(title, Math.round((i >= 0 ? 13 : 18) * scale), lang)
+      : wrap(title, Math.round(max * scale));
+  let lines = linesFor(1);
   if (lines.length > 3) {
     size = 44;
-    lines = lang === 'ja' ? wrapJapanese(title, 16) : wrap(title, Math.round(max * 1.2));
+    lines = linesFor(1.23);
   }
   await card(
     `guide-${file.replace(/\.md$/, '')}`,

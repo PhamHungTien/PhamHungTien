@@ -98,6 +98,6 @@ updateProgress();
 
 If the preview shows unstyled text, check that the filename and `href="./styles.css"` match, including capitalization. If the checklist looks right but the count stays still, open the preview’s **Console**. Confirm the script is linked as `src="./app.js"` and compare the HTML’s `data-progress` attribute with the selector in JavaScript. To verify that the console is working, put `console.log("checklist ready")` at the end of the script and use **Reload**. Remove the log once the behavior is confirmed.
 
-This preview opens files inside Pad Code AI. Publishing a public URL takes a separate hosting step. If you use the split editor to keep HTML and CSS visible while editing, the [App Store listing](https://apps.apple.com/app/id6774398897) describes its daily free usage and optional one-time upgrade.
+This preview opens files inside Pad Code AI. Publishing a public URL takes a separate hosting step. The split editor has a daily free allowance for keeping HTML and CSS visible while editing. The [App Store listing](https://apps.apple.com/app/id6774398897) and the app show current Pro options.
 
 Once the checklist works, try [reviewing an AI change to add a reset button](/guides/review-ai-code-changes-on-ipad/).

@@ -1,55 +1,43 @@
 import type { APIRoute } from 'astro';
 import { apps } from '../data/apps';
-import { LANGS } from '../data/types';
-import { GUIDE_LANGS, LANGUAGE_NAMES } from '../i18n/locales';
+import { LOCALES, LANGUAGE_NAMES } from '../i18n/locales';
 import { SITE } from '../data/site';
 import { platformList } from '../data/platforms';
 import { appPath, homePath, legalPath } from '../lib/routes';
 import { absolute } from '../lib/seo';
 import { getGuides, guidesPath, guideUrl } from '../lib/guides';
 import { t } from '../lib/i18n';
+import { getAppCopy } from '../lib/app-copy';
 import { sitePrivacyPath } from '../lib/sitePages';
 
 export const GET: APIRoute = async () => {
   const sections = await Promise.all(
-    LANGS.map(async (lang) => {
+    LOCALES.map(async (lang) => {
       const guides = await getGuides(lang);
-      const vi = lang === 'vi';
       return [
         `## ${LANGUAGE_NAMES[lang]}`,
         '',
-        `- [${vi ? 'Trang chủ' : 'Home'}](${absolute(homePath(lang))})`,
+        `- [${t(lang, 'nav.home')}](${absolute(homePath(lang))})`,
         ...apps.map((app) => {
           const platforms = app.requirements ?? platformList(app.platforms).join(', ');
-          return `- [${app.name}](${absolute(appPath(app, lang))}): ${app.description[lang]} (${platforms})`;
+          return `- [${app.name}](${absolute(appPath(app, lang))}): ${getAppCopy(app, lang).description} (${platforms})`;
         }),
         '',
-        `### ${vi ? 'Hướng dẫn' : 'Guides'}`,
+        `### ${t(lang, 'nav.guides')}`,
         '',
+        `- [${t(lang, 'guides.all')}](${absolute(guidesPath(lang))})`,
         ...guides.map(
           (guide) =>
             `- [${guide.data.title}](${absolute(guideUrl(guide))}): ${guide.data.description}`,
         ),
         '',
-        `### ${vi ? 'Quyền riêng tư' : 'Privacy'}`,
+        `### ${t(lang, 'legal.privacy')}`,
         '',
-        `- [${vi ? 'Chính sách quyền riêng tư của website' : 'Website Privacy Policy'}](${absolute(sitePrivacyPath(lang))})`,
+        `- [${t(lang, 'footer.privacy')}](${absolute(sitePrivacyPath(lang))})`,
         ...apps.map((app) => `- [${app.name}](${absolute(legalPath(app, 'privacy', lang))})`),
         '',
       ];
     }),
-  );
-  const additionalGuides = await Promise.all(
-    GUIDE_LANGS.filter((lang) => lang !== 'en' && lang !== 'vi').map(async (lang) => [
-      `## ${LANGUAGE_NAMES[lang]}`,
-      '',
-      `- [${t(lang, 'nav.guides')}](${absolute(guidesPath(lang))})`,
-      ...(await getGuides(lang)).map(
-        (guide) =>
-          `- [${guide.data.title}](${absolute(guideUrl(guide))}): ${guide.data.description}`,
-      ),
-      '',
-    ]),
   );
   const lines = [
     `# ${SITE.name}`,
@@ -59,11 +47,6 @@ export const GET: APIRoute = async () => {
     `Contact: ${SITE.email}`,
     '',
     ...sections.flat(),
-    ...additionalGuides.flat(),
-    '## 简体中文',
-    '',
-    `- [LunarV](${absolute('/zh/LunarV/')})`,
-    '',
     '## Profiles',
     '',
     `- [GitHub](${SITE.github})`,

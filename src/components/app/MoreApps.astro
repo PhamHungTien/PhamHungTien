@@ -1,13 +1,15 @@
 ---
 import { Image } from 'astro:assets';
-import type { App, Lang } from '../../data/types';
+import type { App } from '../../data/types';
+import type { Locale } from '../../i18n/locales';
+import { getAppCopy } from '../../lib/app-copy';
 import { apps } from '../../data/apps';
 import { t } from '../../lib/i18n';
 import { appPath, homePath } from '../../lib/routes';
 
 interface Props {
   app: App;
-  lang: Lang;
+  lang: Locale;
 }
 
 const { app, lang } = Astro.props;
@@ -36,7 +38,7 @@ const others = apps.filter((other) => other.slug !== app.slug);
           />
           <span>
             <strong>{other.name}</strong>
-            <small>{other.category[lang]}</small>
+            <small>{getAppCopy(other, lang).category}</small>
           </span>
         </a>
       </li>

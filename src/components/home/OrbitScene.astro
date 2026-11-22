@@ -3,6 +3,7 @@ import { getImage } from 'astro:assets';
 import { apps } from '../../data/apps';
 import { planetAppearance } from '../../data/planet-appearance';
 import { appPath } from '../../lib/routes';
+import { getAppCopy } from '../../lib/app-copy';
 import { t } from '../../lib/i18n';
 import type { Locale } from '../../i18n/locales';
 
@@ -11,7 +12,7 @@ interface Props {
 }
 
 const { lang } = Astro.props;
-const textLang = lang === 'vi' ? 'vi' : 'en';
+const categories = apps.map((app) => getAppCopy(app, lang).category);
 
 const artworkSources = import.meta.glob<{ default: ImageMetadata }>(
   '../../assets/planet-artwork/*.png',
@@ -184,7 +185,7 @@ const rings = [
           data-planet
           data-app-slug={app.slug}
           data-name={app.name}
-          data-category={app.category[textLang]}
+          data-category={categories[index]}
           style={`--fx: ${fallback[index].x}%; --fy: ${fallback[index].y}%; --planet-color: ${appearance.base}; --planet-pole: ${appearance.pole}; --planet-glow: ${appearance.glow}; --glyph-start: ${appearance.glyphStart}; --glyph-end: ${appearance.glyphEnd}; --artwork-size: ${appearance.artworkSize}%; --art-dx: ${appearance.artOffsetX}%; --art-dy: ${appearance.artOffsetY}%; --spin-duration: ${9 + index * 2.7}s; --spin-delay: ${index * -2.3}s; --spin-direction: ${index % 2 ? 'reverse' : 'normal'};`}
         >
           <span class="planet__orb">
@@ -230,7 +231,7 @@ const rings = [
       {apps[0].name}
     </span>
     <span class="orbit__caption-meta" data-caption-meta>
-      {apps[0].category[textLang]}
+      {categories[0]}
     </span>
   </a>
 

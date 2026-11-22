@@ -64,8 +64,8 @@ const app: App = {
     {
       title: { vi: 'AI theo cách của bạn', en: 'AI your way' },
       description: {
-        vi: 'Dùng Apple Intelligence trên thiết bị tương thích hoặc tải mô hình như Qwen và Gemma để dùng ngoại tuyến khi đủ bộ nhớ. Với nhà cung cấp AI trực tuyến, bạn cần khoá API và kết nối mạng.',
-        en: 'Use Apple Intelligence on a compatible device or download a model such as Qwen or Gemma for offline use where memory allows. Online providers require your own API key and an internet connection.',
+        vi: 'Dùng Apple Intelligence trên thiết bị và khu vực được hỗ trợ, hoặc tải mô hình như Qwen và Gemma để dùng ngoại tuyến khi đủ bộ nhớ. Với nhà cung cấp AI trực tuyến, bạn cần khoá API và kết nối mạng.',
+        en: 'Use Apple Intelligence on a supported device and in an eligible region, or download a model such as Qwen or Gemma for offline use where memory allows. Online providers require your own API key and an internet connection.',
       },
     },
     {
@@ -104,10 +104,10 @@ const app: App = {
       },
     },
     {
-      title: { vi: 'Gói miễn phí và mua một lần', en: 'Free access and one-time upgrade' },
+      title: { vi: 'Tính năng miễn phí và Pro', en: 'Free tools and optional Pro' },
       description: {
-        vi: 'Agent AI và Vibe Coding miễn phí. Chia đôi trình soạn thảo và thay thế toàn dự án có lượt dùng thử mỗi ngày; mua một lần để bỏ giới hạn, không thuê bao.',
-        en: 'The AI agent and Vibe Coding are free. The split editor and project-wide replace have a daily free allowance; a one-time purchase removes the limit, with no subscription.',
+        vi: 'Trình soạn thảo, chạy mã được hỗ trợ, Git và xem trước web dùng miễn phí. Bạn có thể thử các công cụ Pro như chia đôi trình soạn thảo và thay thế toàn dự án theo lượt mỗi ngày. Ứng dụng hiển thị các lựa chọn nâng cấp hiện có.',
+        en: 'Editing, supported code execution, Git and web previews are free. Pro tools such as the split editor and project-wide replace have daily free allowances. The app shows the available upgrade options.',
       },
     },
   ],

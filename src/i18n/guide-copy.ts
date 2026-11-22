@@ -1,4 +1,4 @@
-import type { GuideLang } from './locales';
+import type { Locale } from './locales';
 
 interface GuideCopy {
   indexTitle: string;
@@ -12,10 +12,9 @@ interface GuideCopy {
   author: string;
   bio: string;
   explore: (appName: string) => string;
-  descriptions?: { padcodeai: string; vtts: string };
 }
 
-export const guideCopy: Record<GuideLang, GuideCopy> = {
+export const guideCopy: Record<Locale, GuideCopy> = {
   en: {
     indexTitle: 'App guides and tutorials',
     indexDescription:
@@ -45,9 +44,9 @@ export const guideCopy: Record<GuideLang, GuideCopy> = {
     explore: (name) => `Xem ${name}`,
   },
   ja: {
-    indexTitle: 'Pad Code AI と vTTS の使い方',
+    indexTitle: 'アプリの使い方とチュートリアル',
     indexDescription:
-      'iPadでコードを書いて実行する方法や、vTTSで電子書籍を読み上げて音声に書き出す手順を、日本語のガイドで紹介します。',
+      'Macでのベトナム語入力、vTTSでの読み上げ、iPadでのプログラミング、ノート、NAS、旧暦、Lunar Blockの使い方を紹介します。',
     readingTime: (n) => `約${n}分`,
     updated: '更新',
     breadcrumb: 'パンくずリスト',
@@ -56,16 +55,12 @@ export const guideCopy: Record<GuideLang, GuideCopy> = {
     videoInVietnamese: '動画の音声はベトナム語です',
     author: '著者',
     bio: 'ベトナムのベンチェ出身の個人アプリ開発者です。',
-    explore: (name) => `${name} の詳細（英語）`,
-    descriptions: {
-      padcodeai: 'iPadとiPhoneでコードを書いて実行できる開発環境です。',
-      vtts: '書籍や文書を端末上で読み上げるアプリです。',
-    },
+    explore: (name) => `${name} の詳細`,
   },
   es: {
-    indexTitle: 'Guías de Pad Code AI y vTTS',
+    indexTitle: 'Guías y tutoriales de las aplicaciones',
     indexDescription:
-      'Aprende a programar en iPad con Pad Code AI y a escuchar libros, crear voces y exportar audiolibros con vTTS. Guías prácticas en español.',
+      'Aprende a escribir en vietnamita en Mac, escuchar libros con vTTS, programar en iPad, tomar notas, usar un NAS, consultar el calendario lunar y jugar a Lunar Block.',
     readingTime: (n) => `${n} min de lectura`,
     updated: 'Actualizado',
     breadcrumb: 'Ruta de navegación',
@@ -74,10 +69,20 @@ export const guideCopy: Record<GuideLang, GuideCopy> = {
     videoInVietnamese: 'Vídeo narrado en vietnamita',
     author: 'Autor',
     bio: 'Desarrollador independiente de aplicaciones de Bến Tre, Vietnam.',
-    explore: (name) => `Conoce ${name} (en inglés)`,
-    descriptions: {
-      padcodeai: 'Un entorno para escribir y ejecutar código en iPad y iPhone.',
-      vtts: 'Una app que lee libros y documentos en voz alta en tu dispositivo.',
-    },
+    explore: (name) => `Conoce ${name}`,
+  },
+  zh: {
+    indexTitle: '应用指南与教程',
+    indexDescription:
+      '了解如何在 Mac 上输入越南语、用 vTTS 离线听书、在 iPad 上编程和记笔记，以及远程访问 NAS、查询农历和玩 Lunar Block。',
+    readingTime: (n) => `约 ${n} 分钟阅读`,
+    updated: '更新于',
+    breadcrumb: '面包屑导航',
+    onThisPage: '本文目录',
+    keepReading: '继续阅读',
+    videoInVietnamese: '视频语言为越南语',
+    author: '作者',
+    bio: '来自越南槟椥的独立应用开发者。',
+    explore: (name) => `了解 ${name}`,
   },
 };

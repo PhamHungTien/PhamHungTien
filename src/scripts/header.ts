@@ -102,7 +102,23 @@ function initMenu() {
   });
 }
 
+function initLanguageMenu() {
+  const menu = document.querySelector<HTMLDetailsElement>('[data-language-switcher]');
+  if (!menu) return;
+
+  menu.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape' || !menu.open) return;
+    event.stopPropagation();
+    menu.open = false;
+    menu.querySelector('summary')?.focus({ preventScroll: true });
+  });
+  document.addEventListener('pointerdown', (event) => {
+    if (!menu.contains(event.target as Node)) menu.open = false;
+  });
+}
+
 export function initHeader() {
   initTheme();
   initMenu();
+  initLanguageMenu();
 }

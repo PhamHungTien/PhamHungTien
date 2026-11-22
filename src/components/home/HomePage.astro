@@ -5,13 +5,13 @@ import AppDirectory from './AppDirectory.astro';
 import Contact from '../layout/Contact.astro';
 import GuideList from '../guides/GuideList.astro';
 import { getGuides, guidesPath } from '../../lib/guides';
-import type { Lang } from '../../data/types';
+import type { Locale } from '../../i18n/locales';
 import { t } from '../../lib/i18n';
 import { homeAlternates, homePath } from '../../lib/routes';
 import { homeJsonLd, ogImage } from '../../lib/seo';
 
 interface Props {
-  lang: Lang;
+  lang: Locale;
 }
 
 const { lang } = Astro.props;

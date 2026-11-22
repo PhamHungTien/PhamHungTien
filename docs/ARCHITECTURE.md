@@ -39,12 +39,13 @@ src/
   content/guides/         One Markdown file per guide and language
   content/legal/<slug>/   Privacy and terms, localized in the legal collection
   data/
-    apps/<slug>.ts        One file per app: everything its page shows
+    apps/<slug>.ts        One file per app: configuration and EN/VI source copy
     apps/index.ts         Display order and lookups
     platforms.ts          Platform and store names (iOS, Android, Windows, Google Play…)
     site.ts, socials.ts   Identity and public contact channels
     appstore.json         App Store snapshot (npm run sync:appstore)
-  i18n/ui.ts              Interface strings in English and Vietnamese
+  i18n/ui.ts              Interface strings for all site languages
+  i18n/app-copy/          Additional app descriptions and features (JA, ES, ZH)
   layouts/BaseLayout.astro  The one HTML document shell
   lib/                    Routing, SEO/JSON-LD, Firebase, GitHub releases, legal loader
   pages/                  Routes (see below)
@@ -59,20 +60,17 @@ scripts/                  Build, verification and content tools (Node)
 
 ## Routes and languages
 
-The site has English and Vietnamese home, app and guide pages with their own canonical URLs. LunarV also has a Simplified Chinese version. See [LANGUAGES.md](LANGUAGES.md) for translation paths and legacy guide URLs.
+The site publishes canonical home, app, guide and legal pages in English, Vietnamese, Japanese, Spanish and Simplified Chinese. See [LANGUAGES.md](LANGUAGES.md) for translation paths and legacy URLs.
 
-| URL                                                            | Content                                                                             |
-| -------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `/`, `/vi/`                                                    | English and Vietnamese home pages                                                   |
-| `/<App>/`, `/vi/<App>/`                                        | English-first app pages and their Vietnamese translations                           |
-| `/PHTV/`, `/LunarV/`                                           | Vietnamese-first app pages                                                          |
-| `/en/PHTV/`, `/en/LunarV/`                                     | English app translations                                                            |
-| `/zh/LunarV/`                                                  | Simplified Chinese LunarV page                                                      |
-| `/<localized app>/privacy.html`, `/<localized app>/terms.html` | App legal documents in English and Vietnamese, and in Simplified Chinese for LunarV |
-| `/privacy/`, `/vi/privacy/`                                    | Site privacy policy in English and Vietnamese                                       |
-| `/guides/`, `/huong-dan/`                                      | English and Vietnamese guide collections                                            |
-| `/guides/<slug>/`, `/en/guides/<slug>/`, `/huong-dan/<slug>/`  | Translated articles, with the original PHTV article URLs preserved                  |
-| `/sitemap.xml`, `/404.html`                                    | Sitemap and error page                                                              |
+| URL                                                                                     | Content                                                               |
+| --------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| `/`, `/vi/`, `/ja/`, `/es/`, `/zh/`                                                     | Localized home pages                                                  |
+| `/<App>/`, `/<lang>/<App>/`                                                             | App landing pages. PHTV and LunarV use Vietnamese at their root URLs. |
+| `/<localized app>/privacy.html`, `/<localized app>/terms.html`                          | App privacy policies and terms                                        |
+| `/privacy/`, `/<lang>/privacy/`                                                         | Website privacy policy                                                |
+| `/guides/`, `/huong-dan/`, `/<lang>/guides/`                                            | Localized guide collections                                           |
+| `/guides/<slug>/`, `/en/guides/<slug>/`, `/huong-dan/<slug>/`, `/<lang>/guides/<slug>/` | Translated articles                                                   |
+| `/sitemap.xml`, `/404.html`                                                             | Sitemap and error page                                                |
 
 `BaseLayout.astro` renders language metadata and links to available translations. `LegacyRedirect.astro` preserves query parameters and fragments when JavaScript is enabled.
 
@@ -86,7 +84,7 @@ The site has English and Vietnamese home, app and guide pages with their own can
 3. List its `platforms` (e.g. `['android', 'windows']`) and `links.stores`
    (`appStore`, `googlePlay`, `microsoftStore`, `flathub`, `snapcraft`, `web`). Download
    buttons, platform filters and structured data are derived from these.
-4. Write privacy and terms documents in English and Vietnamese in `src/content/legal/<slug>/`.
+4. Add the Japanese, Spanish and Simplified Chinese app copy in `src/i18n/app-copy/`. Write privacy and terms documents in all five site languages under `src/content/legal/<slug>/`.
 5. Run `npm run og` for its social cards, then `npm run build`.
 6. If the app page embeds a video (`tutorial.youtubeId`), run `npm run sync:youtube`.
 

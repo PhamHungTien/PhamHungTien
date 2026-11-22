@@ -2,7 +2,7 @@
 /** A site-wide Markdown page (src/content/site/<name>.<lang>.md), e.g. the website privacy policy. */
 import { getEntry, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { LANGS, type Lang } from '../../data/types';
+import { LOCALES, type Locale } from '../../i18n/locales';
 import { formatDocumentDate } from '../../lib/legal';
 import { t } from '../../lib/i18n';
 import { homePath } from '../../lib/routes';
@@ -10,8 +10,8 @@ import { absolute, ogImage, WEBSITE_ID } from '../../lib/seo';
 
 interface Props {
   name: 'privacy';
-  lang: Lang;
-  pathFor: (lang: Lang) => string;
+  lang: Locale;
+  pathFor: (lang: Locale) => string;
 }
 
 const { name, lang, pathFor } = Astro.props;
@@ -37,7 +37,7 @@ const jsonLd = {
   title={`${entry.data.title} | Phạm Hùng Tiến`}
   description={entry.data.description}
   path={path}
-  alternates={LANGS.map((language) => ({ lang: language, path: pathFor(language) }))}
+  alternates={LOCALES.map((language) => ({ lang: language, path: pathFor(language) }))}
   ogImage={ogImage(name)}
   noindex
   ogType="article"

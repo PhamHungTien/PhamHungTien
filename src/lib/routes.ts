@@ -1,6 +1,6 @@
-import { defaultLangOf, legalLangsOf } from '../data/apps';
-import { LANGS, type App } from '../data/types';
-import type { Locale } from '../i18n/locales';
+import { defaultLangOf } from '../data/apps';
+import type { App } from '../data/types';
+import { LOCALES, type Locale } from '../i18n/locales';
 
 export interface AlternateRoute {
   lang: Locale | 'x-default';
@@ -13,22 +13,16 @@ export function withDefaultAlternate(routes: AlternateRoute[]): AlternateRoute[]
   return [...routes, { lang: 'x-default', path: routes[0].path }];
 }
 
-export const homePath = (lang: Locale = 'en') => (lang === 'vi' ? '/vi/' : '/');
-export const homeAlternates = LANGS.map((lang) => ({ lang, path: homePath(lang) }));
+export const homePath = (lang: Locale = 'en') => (lang === 'en' ? '/' : `/${lang}/`);
+export const homeAlternates = LOCALES.map((lang) => ({ lang, path: homePath(lang) }));
 
 export function appPath(app: App, lang: Locale = defaultLangOf(app)) {
-  if (lang === 'zh' && app.slug === 'lunarv') return `/zh${app.route}`;
-  if ((lang === 'en' || lang === 'vi') && lang !== defaultLangOf(app))
-    return `/${lang}${app.route}`;
-  return app.route;
+  return lang === defaultLangOf(app) ? app.route : `/${lang}${app.route}`;
 }
 
 function appLanguages(app: App): Locale[] {
-  return [
-    defaultLangOf(app),
-    ...LANGS.filter((lang) => lang !== defaultLangOf(app)),
-    ...(app.slug === 'lunarv' ? ['zh' as const] : []),
-  ];
+  const original = defaultLangOf(app);
+  return [original, ...LOCALES.filter((lang) => lang !== original)];
 }
 
 export function appAlternates(app: App): AlternateRoute[] {
@@ -38,14 +32,9 @@ export function appAlternates(app: App): AlternateRoute[] {
 export type LegalKind = 'privacy' | 'terms';
 
 export function legalPath(app: App, kind: LegalKind, lang: Locale = defaultLangOf(app)) {
-  const language = legalLangsOf(app).find((available) => available === lang) ?? defaultLangOf(app);
-  return `${appPath(app, language)}${kind}.html`;
+  return `${appPath(app, lang)}${kind}.html`;
 }
 
 export function legalAlternates(app: App, kind: LegalKind): AlternateRoute[] {
-  const original = defaultLangOf(app);
-  return [original, ...legalLangsOf(app).filter((lang) => lang !== original)].map((lang) => ({
-    lang,
-    path: legalPath(app, kind, lang),
-  }));
+  return appLanguages(app).map((lang) => ({ lang, path: legalPath(app, kind, lang) }));
 }

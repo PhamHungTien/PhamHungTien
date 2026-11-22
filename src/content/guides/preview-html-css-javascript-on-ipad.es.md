@@ -7,7 +7,7 @@ app: padcodeai
 topic: Pad Code AI
 ---
 
-Con [Pad Code AI](/PadCodeAI/) puedes editar una página web sencilla y probarla desde el iPad o el iPhone. Vamos a crear una lista de lectura que cuenta las tareas marcadas. Los tres archivos se guardan en el proyecto, así que puedes seguir el ejercicio sin conexión una vez instalada la aplicación.
+Con [Pad Code AI](/es/PadCodeAI/) puedes editar una página web sencilla y probarla desde el iPad o el iPhone. Vamos a crear una lista de lectura que cuenta las tareas marcadas. Los tres archivos se guardan en el proyecto, así que puedes seguir el ejercicio sin conexión una vez instalada la aplicación.
 
 ## Prepara los tres archivos
 
@@ -98,6 +98,6 @@ updateProgress();
 
 Si ves el texto sin estilos, revisa `href="./styles.css"` y el nombre exacto del archivo. Si el diseño se ve bien pero el contador no cambia, abre la **Consola** de la vista previa. Comprueba que `src="./app.js"` apunte al archivo correcto y que `data-progress` coincida con el selector del script. Para saber si el código llega al final, añade `console.log("checklist ready")` como última línea y toca **Recargar**. Puedes retirar el mensaje después de probarlo.
 
-La vista previa sirve para revisar una página local. Para compartir una URL pública, tendrás que subir los archivos a un alojamiento web. Si te resulta más cómodo editar HTML y CSS en paralelo, puedes probar el editor dividido con su cupo gratuito diario. La [ficha de App Store](https://apps.apple.com/app/id6774398897) describe la opción de compra única.
+La vista previa sirve para revisar una página local. Para compartir una URL pública, tendrás que subir los archivos a un alojamiento web. Si te resulta más cómodo editar HTML y CSS en paralelo, puedes probar el editor dividido con su cupo gratuito diario. Consulta las opciones actuales de Pro en la app o en la [ficha de App Store](https://apps.apple.com/app/id6774398897).
 
 Cuando funcione la lista, prueba a [añadir un botón para desmarcar las tareas y revisar el cambio propuesto por la IA](/es/guides/review-ai-code-changes-on-ipad/).

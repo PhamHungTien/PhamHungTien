@@ -1,5 +1,4 @@
-import type { Lang } from '../../data/types';
-export type DiscussionLang = Lang | 'zh';
+import type { Locale } from '../../i18n/locales';
 
 /** Strings for both discussion boards. Kept beside the islands so they ship only with them. */
 export const boardText = {
@@ -111,21 +110,95 @@ export const boardText = {
     repliesFailed: 'Không tải được phản hồi. Hãy thử lại.',
     deleteFailed: 'Chưa xoá được nội dung.',
   },
-} satisfies Record<DiscussionLang, unknown>;
+  ja: {
+    title: 'ディスカッション',
+    member: 'メンバー',
+    signIn: 'Googleでログイン',
+    signOut: 'ログアウト',
+    search: 'ディスカッションを検索',
+    filter: '絞り込み',
+    category: 'カテゴリ',
+    allTopics: 'すべてのトピック',
+    message: 'メッセージ',
+    post: '投稿する',
+    publicNotice: '投稿は公開されます。個人情報は書き込まないでください。',
+    loading: 'ディスカッションを読み込み中…',
+    empty: 'まだディスカッションはありません。最初の投稿をしてみましょう。',
+    noMatches: '検索条件に一致するディスカッションがありません。',
+    loadMore: 'もっと見る',
+    replies: '返信',
+    noReplies: 'まだ返信はありません。',
+    yourReply: '返信内容',
+    writeReply: '返信を書く…',
+    send: '返信する',
+    signInToReply: '返信するにはログインしてください。',
+    deletePost: '投稿を削除',
+    deleteReply: '返信を削除',
+    confirmDelete: 'このメッセージを削除しますか？',
+    loadFailed: '現在ディスカッションを読み込めません。しばらくしてからお試しください。',
+    connectFailed: 'ディスカッションに接続できませんでした。',
+    signInFailed: 'ログインが完了しませんでした。ログインウィンドウを許可してからお試しください。',
+    postFailed: '投稿できませんでした。もう一度お試しください。',
+    replyFailed: '返信を送信できませんでした。もう一度お試しください。',
+    repliesFailed: '返信を読み込めませんでした。もう一度お試しください。',
+    deleteFailed: 'メッセージを削除できませんでした。',
+    about: (name: string) => `${name}について質問や提案を共有しましょう。`,
+    startAbout: (name: string) => `${name}について話し合う…`,
+    categories: { question: '質問', bug: '不具合の報告', idea: '提案' },
+  },
+  es: {
+    title: 'Debates',
+    member: 'Miembro',
+    signIn: 'Iniciar sesión con Google',
+    signOut: 'Cerrar sesión',
+    search: 'Buscar debates',
+    filter: 'Filtrar',
+    category: 'Categoría',
+    allTopics: 'Todos los temas',
+    message: 'Tu mensaje',
+    post: 'Publicar',
+    publicNotice: 'Las publicaciones son públicas. Evita incluir datos personales.',
+    loading: 'Cargando debates…',
+    empty: 'Todavía no hay debates. Inicia el primero.',
+    noMatches: 'Ningún debate coincide con tu búsqueda.',
+    loadMore: 'Cargar más',
+    replies: 'Respuestas',
+    noReplies: 'Aún no hay respuestas.',
+    yourReply: 'Tu respuesta',
+    writeReply: 'Escribe una respuesta…',
+    send: 'Responder',
+    signInToReply: 'Inicia sesión para responder.',
+    deletePost: 'Eliminar publicación',
+    deleteReply: 'Eliminar respuesta',
+    confirmDelete: '¿Eliminar este mensaje?',
+    loadFailed: 'Los debates no están disponibles ahora. Inténtalo más tarde.',
+    connectFailed: 'No se pudo conectar al servicio de debates.',
+    signInFailed:
+      'No se completó el inicio de sesión. Permite la ventana de acceso y vuelve a intentarlo.',
+    postFailed: 'La publicación no se envió. Inténtalo de nuevo.',
+    replyFailed: 'No se pudo enviar la respuesta. Inténtalo de nuevo.',
+    repliesFailed: 'No se pudieron cargar las respuestas. Inténtalo de nuevo.',
+    deleteFailed: 'No se pudo eliminar el mensaje.',
+    about: (name: string) => `Preguntas, ideas y comentarios sobre ${name}.`,
+    startAbout: (name: string) => `Inicia un debate sobre ${name}…`,
+    categories: { question: 'Pregunta', bug: 'Notificación de error', idea: 'Idea' },
+  },
+} satisfies Record<Locale, unknown>;
 
-export const formatDate = (time: number, lang: DiscussionLang) =>
-  new Intl.DateTimeFormat(lang === 'vi' ? 'vi-VN' : lang === 'zh' ? 'zh-CN' : 'en', {
+export const formatDate = (time: number, lang: Locale) =>
+  new Intl.DateTimeFormat(lang, {
     dateStyle: 'medium',
   }).format(time);
 
 /** "3 min", "2 h", "5 days" or a date, for activity timestamps. */
-export function formatRelative(time: number, lang: DiscussionLang) {
+export function formatRelative(time: number, lang: Locale) {
   const minutes = Math.floor((Date.now() - time) / 60_000);
-  const rtf = new Intl.RelativeTimeFormat(lang === 'vi' ? 'vi' : lang === 'zh' ? 'zh-CN' : 'en', {
+  const rtf = new Intl.RelativeTimeFormat(lang, {
     numeric: 'auto',
     style: 'short',
   });
-  if (minutes < 1) return lang === 'vi' ? 'Vừa xong' : lang === 'zh' ? '刚刚' : 'Just now';
+  if (minutes < 1)
+    return { en: 'Just now', vi: 'Vừa xong', ja: 'たった今', es: 'Ahora mismo', zh: '刚刚' }[lang];
   if (minutes < 60) return rtf.format(-minutes, 'minute');
   if (minutes < 60 * 24) return rtf.format(-Math.floor(minutes / 60), 'hour');
   if (minutes < 60 * 24 * 7) return rtf.format(-Math.floor(minutes / 1440), 'day');

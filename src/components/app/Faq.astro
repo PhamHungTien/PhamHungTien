@@ -1,37 +1,39 @@
 ---
 import { Plus } from '@lucide/astro';
-import type { App, Lang } from '../../data/types';
+import type { App } from '../../data/types';
+import type { Locale } from '../../i18n/locales';
+import { getAppCopy } from '../../lib/app-copy';
 import { t } from '../../lib/i18n';
 
 interface Props {
   app: App;
-  lang: Lang;
+  lang: Locale;
 }
 
 const { app, lang } = Astro.props;
+const { faq } = getAppCopy(app, lang);
 const parts = (text: string) =>
   text
     .split(/(`[^`]+`)/g)
     .map((part) => (part.startsWith('`') ? { code: part.slice(1, -1) } : { text: part }));
 ---
 
-{app.faq?.length && (
+{faq.length > 0 && (
   <section class="faq container section defer-render" id="faq" aria-labelledby="faq-heading">
     <div class="section-head">
       <div>
-        <span class="section-kicker">{lang === 'vi' ? 'Thông tin cần biết' : 'Good to know'}</span>
         <h2 id="faq-heading">{t(lang, 'app.faq')}</h2>
       </div>
     </div>
     <div class="faq__list">
-      {app.faq.map((item) => (
+      {faq.map((item) => (
         <details name="faq">
           <summary>
-            <span>{item.question[lang]}</span>
+            <span>{item.question}</span>
             <Plus size={20} aria-hidden="true" />
           </summary>
           <p>
-            {parts(item.answer[lang]).map((part) =>
+            {parts(item.answer).map((part) =>
               'code' in part ? <code>{part.code}</code> : part.text,
             )}
           </p>

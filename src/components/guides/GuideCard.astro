@@ -2,20 +2,17 @@
 import { Image } from 'astro:assets';
 import { appBySlug } from '../../data/apps';
 import type { AppSlug } from '../../data/types';
-import type { GuideLang } from '../../i18n/locales';
+import type { Locale } from '../../i18n/locales';
 import { guideCopy } from '../../i18n/guide-copy';
 import { formatDate, guideLang, guideUrl, readingMinutes, type Guide } from '../../lib/guides';
 
 interface Props {
   guide: Guide;
-  lang?: GuideLang;
-  /** One level below the list's own heading, so the outline never skips a level. */
-  headingLevel?: 'h2' | 'h3';
+  lang?: Locale;
 }
 
-const { guide, lang = guideLang(guide), headingLevel = 'h3' } = Astro.props;
+const { guide, lang = guideLang(guide) } = Astro.props;
 const articleLang = guideLang(guide);
-const Heading = headingLevel;
 const app = guide.data.app ? appBySlug.get(guide.data.app as AppSlug) : undefined;
 ---
 
@@ -28,9 +25,9 @@ const app = guide.data.app ? appBySlug.get(guide.data.app as AppSlug) : undefine
     )}
     <span lang={articleLang}>{guide.data.topic}</span>
   </span>
-  <Heading class="guide-card__title" lang={articleLang}>
+  <h3 class="guide-card__title" lang={articleLang}>
     {guide.data.title}
-  </Heading>
+  </h3>
   <p lang={articleLang}>{guide.data.description}</p>
   <span class="guide-card__meta">
     <time datetime={guide.data.published}>{formatDate(guide.data.published, lang)}</time> ·

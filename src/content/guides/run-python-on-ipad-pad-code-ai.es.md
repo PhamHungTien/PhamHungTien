@@ -7,7 +7,7 @@ app: padcodeai
 topic: Pad Code AI
 ---
 
-[Pad Code AI](/PadCodeAI/) permite ejecutar Python en el iPad o el iPhone. Para empezar, crearás un proyecto con un programa sencillo de la biblioteca estándar. El código suma el tiempo de varias sesiones de lectura y crea un archivo de texto que puedes revisar antes de guardarlo.
+[Pad Code AI](/es/PadCodeAI/) permite ejecutar Python en el iPad o el iPhone. Para empezar, crearás un proyecto con un programa sencillo de la biblioteca estándar. El código suma el tiempo de varias sesiones de lectura y crea un archivo de texto que puedes revisar antes de guardarlo.
 
 ![Editor de código de Pad Code AI en el iPad](../../assets/apps/padcodeai/store/en/ipad-02.webp)
 
@@ -43,6 +43,6 @@ Quita el corchete final de `minutes = [18, 25, 12]`, guarda el archivo y vuelve 
 
 ## Uso sin conexión y descarga
 
-Este ejemplo funciona con la biblioteca estándar y no necesita funciones de IA. Algunos paquetes adicionales de Python requieren conexión la primera vez que se usan. La [política de privacidad de Pad Code AI (en inglés)](/PadCodeAI/privacy.html) detalla las funciones que se conectan a otros servicios.
+Este ejemplo funciona con la biblioteca estándar y no necesita funciones de IA. Algunos paquetes adicionales de Python requieren conexión la primera vez que se usan. La [política de privacidad de Pad Code AI](/es/PadCodeAI/privacy.html) detalla las funciones que se conectan a otros servicios.
 
 [Descarga Pad Code AI en el App Store](https://apps.apple.com/app/id6774398897) y prueba el proyecto en tu dispositivo. Si después quieres funciones adicionales como el editor dividido, consulta en la app qué incluye cada opción y sus condiciones de compra.

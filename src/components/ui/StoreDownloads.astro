@@ -27,26 +27,23 @@ const playBadges = {
   vi: 'Tải trên Google Play',
   ja: 'Google Playで入手',
   es: 'Descargar en Google Play',
+  zh: '在 Google Play 获取',
 };
 
 function badgeFor(store: (typeof links)[number]['store']) {
   if (store === 'appStore') {
-    const locale = lang === 'fr' ? 'en' : lang;
     return {
-      src: `/assets/store-badges/app-store-${locale}.svg`,
+      src: `/assets/store-badges/app-store-${lang}.svg`,
       height: 40,
-      ...appleBadges[locale],
-      locale,
+      ...appleBadges[lang],
     };
   }
   if (store === 'googlePlay') {
-    const locale = lang === 'fr' || lang === 'zh' ? 'en' : lang;
     return {
-      src: `/assets/store-badges/google-play-${locale}.svg`,
+      src: `/assets/store-badges/google-play-${lang}.svg`,
       width: 135,
       height: 40,
-      label: playBadges[locale],
-      locale,
+      label: playBadges[lang],
     };
   }
 }
@@ -60,7 +57,7 @@ function badgeFor(store: (typeof links)[number]['store']) {
       const rel = openInNewTab ? 'noopener' : undefined;
       if (badge) {
         return (
-          <a class="store-badge" href={link.url} target={target} rel={rel} lang={badge.locale}>
+          <a class="store-badge" href={link.url} target={target} rel={rel} lang={lang}>
             <img src={badge.src} width={badge.width} height={badge.height} alt={badge.label} />
           </a>
         );

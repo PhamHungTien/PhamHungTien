@@ -141,7 +141,7 @@ Vì `s, f, r, x, j, w` vừa là chữ cái vừa là phím dấu, các từ ti�
 Thử gõ các câu sau, bạn sẽ dùng gần hết quy tắc trong bài:
 
 ```text
-Dduwowngf ddi khoong khos vif ngawn sooong caasch nuis
+Dduwowngf ddi khoong khos vif ngawn soong cachs nuis
 Truowngf Vieejt Nam ddepj nhaast nawm nay
 ```
 

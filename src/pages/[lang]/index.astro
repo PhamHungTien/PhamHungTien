@@ -1,8 +1,16 @@
 ---
+import HomePage from '../../components/home/HomePage.astro';
 import LegacyRedirect from '../../components/site/LegacyRedirect.astro';
+import { PREFIXED_LOCALES } from '../../i18n/locales';
+
 export function getStaticPaths() {
-  return ['en', 'fr', 'ja'].map((lang) => ({ params: { lang } }));
+  return [
+    ...PREFIXED_LOCALES.map((lang) => ({ params: { lang }, props: { lang } })),
+    ...['en', 'fr'].map((lang) => ({ params: { lang }, props: { lang: undefined } })),
+  ];
 }
+
+const { lang } = Astro.props;
 ---
 
-<LegacyRedirect to="/" />
+{lang ? <HomePage lang={lang} /> : <LegacyRedirect to="/" />}

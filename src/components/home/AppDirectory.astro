@@ -1,5 +1,5 @@
 ---
-import { appPreviews } from '../../i18n/home-translations';
+import { getAppCopy } from '../../lib/app-copy';
 import { Image } from 'astro:assets';
 import { Search } from '@lucide/astro';
 import type { Locale as Lang } from '../../i18n/locales';
@@ -14,16 +14,10 @@ interface Props {
 }
 
 const { lang } = Astro.props;
-const previews = lang === 'fr' || lang === 'ja' ? appPreviews[lang] : undefined;
-const category = (app: (typeof apps)[number]) =>
-  previews?.[app.slug][0] ?? app.category[lang === 'vi' ? 'vi' : 'en'];
-const description = (app: (typeof apps)[number]) =>
-  previews?.[app.slug][1] ?? app.description[lang === 'vi' ? 'vi' : 'en'];
 // Only platforms that at least one app supports get a filter button.
 const groups = PLATFORM_GROUPS.filter((group) =>
   apps.some((app) => platformGroupsOf(app.platforms).includes(group)),
 );
-const artLang = lang === 'vi' ? 'vi' : 'en';
 // Rows of three on wide screens and two below: the last card of an uneven row spans it.
 const lastOf = (index: number) => {
   const remaining = apps.length - index;
@@ -66,7 +60,6 @@ const lastOf = (index: number) => {
     </div>
   </div>
 
-  {previews && <p class="apps__translation-note">{t(lang, 'home.translationNote')}</p>}
   <div class="apps__summary">
     <p
       class="apps__count"
@@ -85,14 +78,15 @@ const lastOf = (index: number) => {
 
   <ul id="app-results" class="app-list" role="list">
     {apps.map((app, index) => {
-      const art = storeMedia(app.slug, artLang).search;
+      const art = storeMedia(app.slug, lang).search;
+      const { category, description } = getAppCopy(app, lang);
       return (
         <li
           data-app
           data-platforms={platformGroupsOf(app.platforms)
             .map((group) => group.id)
             .join(' ')}
-          data-search={`${app.name} ${category(app)} ${description(app)}`.toLowerCase()}
+          data-search={`${app.name} ${category} ${description}`.toLowerCase()}
           {...lastOf(index)}
         >
           <a class="app-card" href={appPath(app, lang)} style={`--app: ${app.accent}`}>
@@ -123,11 +117,10 @@ const lastOf = (index: number) => {
                 />
                 <div>
                   <h3>{app.name}</h3>
-                  <p class="app-card__category">{category(app)}</p>
+                  <p class="app-card__category">{category}</p>
                 </div>
               </div>
-              <p class="app-card__desc">{description(app)}</p>
-              {previews && <p class="app-card__meta">{t(lang, 'home.detailsLanguage')}</p>}
+              <p class="app-card__desc">{description}</p>
               <p class="app-card__meta">
                 {platformGroupsOf(app.platforms)
                   .map((group) => group.label)
@@ -170,12 +163,6 @@ const lastOf = (index: number) => {
     justify-content: space-between;
     padding-block: 20px;
     border-block: 1px solid var(--line);
-  }
-  .apps__translation-note {
-    color: var(--muted);
-    max-width: 70ch;
-    margin-bottom: 16px;
-    font-size: 14px;
   }
   .apps__summary {
     display: flex;
