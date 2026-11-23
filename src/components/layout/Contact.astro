@@ -135,11 +135,9 @@ const [email, ...profiles] = socialProfiles;
 
   .contact__profiles small {
     grid-column: 2;
-    overflow: hidden;
     color: var(--contact-muted);
     font-size: 13px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    overflow-wrap: anywhere;
   }
 
   .contact :focus-visible {

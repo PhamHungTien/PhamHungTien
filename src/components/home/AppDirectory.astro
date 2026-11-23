@@ -399,13 +399,9 @@ const lastOf = (index: number) => {
   }
 
   .app-card__desc {
-    display: -webkit-box;
-    overflow: hidden;
     color: color-mix(in srgb, var(--ink) 80%, var(--muted));
     font-size: 15px;
     line-height: 1.55;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
   }
 
   .app-card__meta {
@@ -430,10 +426,6 @@ const lastOf = (index: number) => {
 
     li[data-wide] .app-card__details {
       align-content: center;
-    }
-
-    li[data-wide] .app-card__desc {
-      -webkit-line-clamp: 5;
     }
   }
 
@@ -538,9 +530,8 @@ const lastOf = (index: number) => {
     }
 
     li[data-odd] .app-card__desc {
-      display: -webkit-box;
+      display: block;
       font-size: 14px;
-      -webkit-line-clamp: 2;
     }
   }
 
