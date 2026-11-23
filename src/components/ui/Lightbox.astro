@@ -55,9 +55,9 @@ const { lang } = Astro.props;
       max(var(--gutter), env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom))
       max(var(--gutter), env(safe-area-inset-left));
     border: 0;
-    background: rgb(6 8 12 / 0.78);
-    -webkit-backdrop-filter: blur(28px) saturate(150%);
-    backdrop-filter: blur(28px) saturate(150%);
+    background: rgb(6 8 12 / 0.72);
+    -webkit-backdrop-filter: blur(22px) saturate(150%);
+    backdrop-filter: blur(22px) saturate(150%);
     color: #fff;
     cursor: zoom-out;
   }
@@ -88,7 +88,7 @@ const { lang } = Astro.props;
 
   /* Always dark glass: it floats over a dimmed image. */
   .lightbox__close {
-    --glass-tint: rgb(40 44 54 / 0.5);
+    --glass-tint: rgb(40 44 54 / 0.4);
     --glass-edge: rgb(255 255 255 / 0.14);
     --glass-rim: rgb(255 255 255 / 0.28);
     --glass-rim-low: rgb(255 255 255 / 0.08);
@@ -97,7 +97,7 @@ const { lang } = Astro.props;
   }
 
   .lightbox__close:hover {
-    --glass-tint: rgb(60 64 76 / 0.6);
+    --glass-tint: rgb(60 64 76 / 0.53);
   }
 
   figure {

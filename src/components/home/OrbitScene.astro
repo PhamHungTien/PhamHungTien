@@ -388,7 +388,7 @@ const fallback = apps.map((_, index) => {
     flex: none;
   }
   .orbit__quick-link:hover {
-    background: var(--surface-2);
+    --glass-tint: color-mix(in srgb, var(--ink) 10%, var(--glass-tint-strong));
   }
 
   @media (prefers-reduced-motion: no-preference) {

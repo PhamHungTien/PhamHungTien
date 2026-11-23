@@ -13,7 +13,11 @@ export default function BoardEmpty({ lang, filtered, onReset }: Props) {
     <div className="board-empty glass-card">
       <p role="status">{filtered ? text.noMatches : text.empty}</p>
       {filtered && (
-        <button type="button" className="board-secondary" onClick={onReset}>
+        <button
+          type="button"
+          className="button button--secondary board-secondary"
+          onClick={onReset}
+        >
           {text.clearFilters}
         </button>
       )}

@@ -171,11 +171,12 @@ const withCode = (text: string) =>
     height: clamp(36px, 4vw, 44px);
     place-items: center;
     border-radius: var(--r-control);
-    background: var(--surface-2);
+    background: var(--glass-tint);
+    box-shadow: inset 0 1px 0 var(--glass-rim);
   }
 
   .download--primary .download__icon {
-    background: var(--brand);
+    background: var(--glass-brand-tint);
     color: var(--on-brand);
   }
 

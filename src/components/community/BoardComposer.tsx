@@ -19,7 +19,7 @@ export default function BoardComposer({ title, publish, children }: Props) {
 
   return (
     <details className="board-composer" ref={details}>
-      <summary className="board-primary">
+      <summary className="button button--primary board-primary">
         <PenLine size={16} aria-hidden="true" />
         {title}
       </summary>

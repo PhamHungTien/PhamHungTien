@@ -13,8 +13,8 @@
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const MAX_MAP_PIXELS = 90_000;
-const surfaceSelector = '[data-lens], .glass-card';
-const reflectionSelector = '.glass, .glass-card, .segmented, .button--secondary';
+const surfaceSelector = '[data-lens], .glass-card, .button--primary';
+const reflectionSelector = '.glass, .glass-card, .segmented, .button--primary, .button--secondary';
 
 function supported() {
   const ua = navigator.userAgent;

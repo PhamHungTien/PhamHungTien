@@ -526,10 +526,14 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
         autoFocus
       />
       <div className="board-actions">
-        <button className="board-primary" type="button" onClick={saveEdit}>
+        <button className="button button--primary board-primary" type="button" onClick={saveEdit}>
           {text.save}
         </button>
-        <button className="board-secondary" type="button" onClick={() => setEditing(null)}>
+        <button
+          className="button button--secondary board-secondary"
+          type="button"
+          onClick={() => setEditing(null)}
+        >
           {text.cancel}
         </button>
       </div>
@@ -634,7 +638,7 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
           </div>
         ) : (
           <button
-            className="board-primary"
+            className="button button--primary board-primary"
             type="button"
             onClick={() => authDialog.current?.showModal()}
           >
@@ -700,7 +704,10 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
                 </option>
               ))}
             </BoardSelect>
-            <button className="board-primary" disabled={busy || !draft.trim()}>
+            <button
+              className="button button--primary board-primary"
+              disabled={busy || !draft.trim()}
+            >
               <Send size={16} aria-hidden="true" />
               {text.post}
             </button>
@@ -981,7 +988,7 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
                       />
                       <div className="board-actions">
                         <button
-                          className="board-primary"
+                          className="button button--primary board-primary"
                           type="button"
                           disabled={!replyDraft.trim()}
                           onClick={() => sendReply(question.id)}
@@ -990,7 +997,7 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
                           {text.send}
                         </button>
                         <button
-                          className="board-secondary"
+                          className="button button--secondary board-secondary"
                           type="button"
                           onClick={() => setReplyTo(null)}
                         >
@@ -1017,7 +1024,7 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
 
       {!loading && !loadFailed && questions.length >= postsLimit && (
         <button
-          className="board-secondary"
+          className="button button--secondary board-secondary"
           type="button"
           onClick={() => setPostsLimit((n) => n + POSTS_PER_PAGE)}
         >
@@ -1032,11 +1039,11 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
         aria-labelledby="phtv-auth-title"
       >
         <h3 id="phtv-auth-title">{text.signInTitle}</h3>
-        <button className="board-primary" type="button" onClick={signIn}>
+        <button className="button button--primary board-primary" type="button" onClick={signIn}>
           {text.continueGoogle}
         </button>
         <button
-          className="board-secondary"
+          className="button button--secondary board-secondary"
           type="button"
           onClick={() => authDialog.current?.close()}
         >
@@ -1057,7 +1064,7 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
             aria-label={text.displayName}
             maxLength={60}
           />
-          <button className="board-primary" disabled={!nameDraft.trim()}>
+          <button className="button button--primary board-primary" disabled={!nameDraft.trim()}>
             {text.save}
           </button>
         </form>

@@ -164,7 +164,10 @@ function Thread({
                 maxLength={5000}
                 required
               />
-              <button className="board-primary" disabled={busy || !content.trim()}>
+              <button
+                className="button button--primary board-primary"
+                disabled={busy || !content.trim()}
+              >
                 <Send size={16} aria-hidden="true" />
                 {text.send}
               </button>
@@ -309,7 +312,7 @@ export default function AppBoard({ app, name, lang }: { app: string; name: strin
           </div>
         ) : (
           <button
-            className="board-primary"
+            className="button button--primary board-primary"
             type="button"
             disabled={!ready || busy}
             onClick={signIn}
@@ -363,7 +366,10 @@ export default function AppBoard({ app, name, lang }: { app: string; name: strin
               <option value="bug">{text.categories.bug}</option>
               <option value="idea">{text.categories.idea}</option>
             </BoardSelect>
-            <button className="board-primary" disabled={busy || !content.trim()}>
+            <button
+              className="button button--primary board-primary"
+              disabled={busy || !content.trim()}
+            >
               <Send size={16} aria-hidden="true" />
               {text.post}
             </button>

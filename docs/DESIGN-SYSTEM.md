@@ -87,8 +87,9 @@ an SVG displacement map inside `backdrop-filter`, which only Chromium renders (F
 accepts the value and draws nothing; Safari ignores it). `src/scripts/liquid-glass.ts`
 therefore enables it for Chromium alone. Cards and `[data-lens]` controls near the viewport
 get a size-matched map with a curved edge. The backdrop is softened before refraction so
-the rim can bend visible detail. The reflection on the rim follows a mouse when motion and
-transparency preferences allow it. Other browsers keep the blur, tint and responsive rim.
+the rim can bend visible detail. The reflection follows a mouse and eases back to its
+resting position when the pointer leaves. Other browsers keep the blur, tint and responsive
+rim.
 
 Rules:
 
@@ -99,14 +100,14 @@ Rules:
   preserve native select controls.
 - Platform filters, screenshot device tabs and the app navigation share the sliding
   selection indicator. Each control keeps its own keyboard behavior and selected state.
-  On app pages the selected section follows fragment links and manual scrolling below
-  the sticky header.
+  On the home and app pages the selected section follows fragment links and manual
+  scrolling below the sticky header.
 - Text on glass should meet WCAG AA contrast in both themes.
 - Reduced transparency, increased contrast and forced colors replace the glass with solid
   surfaces and a clear edge, and switch refraction off; without `backdrop-filter` the tint
   is denser.
-- Primary buttons are solid tints with a specular edge, so their contrast never depends on
-  what is behind them.
+- Primary buttons use a translucent brand tint with the same rim and refraction as other
+  controls. The stronger brand tint keeps labels legible over light and dark backdrops.
 
 ## Type
 
