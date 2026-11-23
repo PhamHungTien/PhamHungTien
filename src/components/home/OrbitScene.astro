@@ -398,7 +398,9 @@ const fallback = apps.map((_, index) => {
 
   @media (prefers-reduced-motion: no-preference) {
     :global(html:not([data-motion='off'])) .orbit__core {
-      animation: sun-arrival 1100ms cubic-bezier(0.34, 1.4, 0.64, 1) both;
+      animation:
+        sun-arrival 1100ms cubic-bezier(0.34, 1.4, 0.64, 1) both,
+        sun-float 8s ease-in-out 1100ms infinite alternate;
     }
     :global(html:not([data-motion='off'])) .orbit__core::before {
       animation: sun-reflection 9s ease-in-out infinite alternate;
@@ -410,6 +412,11 @@ const fallback = apps.map((_, index) => {
       from {
         opacity: 0;
         scale: 0.4;
+      }
+    }
+    @keyframes sun-float {
+      to {
+        transform: translateY(-3px);
       }
     }
     @keyframes sun-reflection {
