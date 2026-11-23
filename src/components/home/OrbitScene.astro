@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import { Cpu, Download } from '@lucide/astro';
 import Logo from '../ui/Logo.astro';
 import StoreDownloads from '../ui/StoreDownloads.astro';
-import { apps } from '../../data/apps';
+import { apps as catalog } from '../../data/apps';
 import { appPath } from '../../lib/routes';
 import { getAppCopy } from '../../lib/app-copy';
 import { getReleaseLinks } from '../../lib/github';
@@ -15,6 +15,8 @@ interface Props {
 }
 
 const { lang } = Astro.props;
+const first = Math.max(0, catalog.findIndex((app) => app.slug === 'vtts'));
+const apps = [...catalog.slice(first), ...catalog.slice(0, first)];
 const categories = apps.map((app) => getAppCopy(app, lang).category);
 const downloads = await Promise.all(
   apps.map(async (app) => {
