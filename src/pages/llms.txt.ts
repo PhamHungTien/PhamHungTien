@@ -53,6 +53,7 @@ export const GET: APIRoute = async () => {
     `- [YouTube](${SITE.youtube})`,
     `- [LinkedIn](${SITE.linkedin})`,
     `- [Facebook](${SITE.facebook})`,
+    `- [TikTok](${SITE.tiktok})`,
     '',
   ];
   return new Response(lines.join('\n'), {

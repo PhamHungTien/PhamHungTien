@@ -1,4 +1,6 @@
-export type SocialProfileId = 'email' | 'github' | 'youtube' | 'linkedin';
+import { SITE } from './site';
+
+export type SocialProfileId = 'email' | 'github' | 'youtube' | 'linkedin' | 'tiktok';
 
 export interface SocialProfile {
   id: SocialProfileId;
@@ -7,30 +9,35 @@ export interface SocialProfile {
   href: string;
 }
 
-/** Only professional channels are published: email for support, GitHub, YouTube tutorials and LinkedIn. */
-export const socialProfiles: SocialProfile[] = [
+export const socialProfiles = [
   {
     id: 'email',
     label: 'Email',
-    handle: 'contact@phamhungtien.com',
-    href: 'mailto:contact@phamhungtien.com',
+    handle: SITE.email,
+    href: `mailto:${SITE.email}`,
   },
   {
     id: 'github',
     label: 'GitHub',
     handle: 'PhamHungTien',
-    href: 'https://github.com/PhamHungTien',
+    href: SITE.github,
   },
   {
     id: 'youtube',
     label: 'YouTube',
     handle: '@phamhungtien14',
-    href: 'https://www.youtube.com/@phamhungtien14',
+    href: SITE.youtube,
   },
   {
     id: 'linkedin',
     label: 'LinkedIn',
     handle: 'Phạm Hùng Tiến',
-    href: 'https://www.linkedin.com/in/ph%E1%BA%A1m-h%C3%B9ng-ti%E1%BA%BFn-a1b405327/',
+    href: SITE.linkedin,
   },
-];
+  {
+    id: 'tiktok',
+    label: 'TikTok',
+    handle: '@phamhungtien14',
+    href: SITE.tiktok,
+  },
+] as const satisfies readonly SocialProfile[];

@@ -52,7 +52,7 @@ for await (const file of walk(outDir)) {
   pages.set(rel, html);
 }
 
-const REMOVED_NETWORKS = ['instagram.com', 'threads.net', 'tiktok.com', 'locket.cam', 'cake.me'];
+const REMOVED_NETWORKS = ['instagram.com', 'threads.net', 'locket.cam', 'cake.me'];
 const uniqueMetadata = { title: new Map(), description: new Map() };
 
 for (const [path, html] of pages) {

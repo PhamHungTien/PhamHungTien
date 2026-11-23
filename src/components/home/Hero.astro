@@ -4,6 +4,7 @@ import BrandIcon from '../ui/BrandIcon.astro';
 import OrbitScene from './OrbitScene.astro';
 import type { Locale as Lang } from '../../i18n/locales';
 import { SITE } from '../../data/site';
+import { socialProfiles } from '../../data/socials';
 import { t } from '../../lib/i18n';
 
 interface Props {
@@ -12,12 +13,8 @@ interface Props {
 
 const { lang } = Astro.props;
 
-const socials = [
-  { name: 'github', label: 'GitHub', href: SITE.github },
-  { name: 'youtube', label: 'YouTube', href: SITE.youtube },
-  { name: 'linkedin', label: 'LinkedIn', href: SITE.linkedin },
-  { name: 'facebook', label: 'Facebook', href: SITE.facebook },
-] as const;
+const [, ...profiles] = socialProfiles;
+const socials = [...profiles, { id: 'facebook', label: 'Facebook', href: SITE.facebook }] as const;
 ---
 
 <section class="hero container" aria-labelledby="hero-title" data-home-hero>
@@ -52,9 +49,9 @@ const socials = [
             rel="noopener noreferrer me"
             aria-label={social.label}
             title={social.label}
-            data-brand={social.name}
+            data-brand={social.id}
           >
-            <BrandIcon name={social.name} size={19} />
+            <BrandIcon name={social.id} size={19} />
           </a>
         </li>
       ))}
