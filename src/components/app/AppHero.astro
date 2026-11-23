@@ -4,9 +4,9 @@
  * name, promise and download actions. Art comes from src/assets/apps/<slug>/store.
  */
 import { Image } from 'astro:assets';
-import { ChevronRight, Download, Heart } from '@lucide/astro';
-import BrandIcon from '../ui/BrandIcon.astro';
+import { ChevronRight, Download } from '@lucide/astro';
 import StoreDownloads from '../ui/StoreDownloads.astro';
+import UtilityAction from '../ui/UtilityAction.astro';
 import type { App } from '../../data/types';
 import type { Locale } from '../../i18n/locales';
 import { getAppCopy } from '../../lib/app-copy';
@@ -24,13 +24,6 @@ const { app, lang } = Astro.props;
 const { title, subtitle, category } = getAppCopy(app, lang);
 const header = storeMedia(app.slug, lang).header;
 
-const secondary = app.links.source
-  ? { href: app.links.source, label: t(lang, 'app.source'), external: true }
-  : {
-      href: legalPath(app, 'privacy', lang),
-      label: t(lang, 'app.privacy'),
-      external: false,
-    };
 const platforms = platformGroupsOf(app.platforms)
   .map((group) => group.label)
   .join(' · ');
@@ -110,19 +103,20 @@ const platforms = platformGroupsOf(app.platforms)
       )}
       <StoreDownloads stores={app.links.stores} lang={lang} openInNewTab />
       <div class="app-hero__links">
-        <a
-          class="text-link"
-          href={secondary.href}
-          target={secondary.external ? '_blank' : undefined}
-          rel={secondary.external ? 'noopener' : undefined}
-        >
-          {app.links.source && <BrandIcon name="github" size={16} />}
-          {secondary.label}
-        </a>
-        <button class="link-button" type="button" data-donate aria-haspopup="dialog">
-          <Heart size={16} aria-hidden="true" />
-          {t(lang, 'donate.open')}
-        </button>
+        {app.links.source && (
+          <UtilityAction
+            kind="source"
+            href={app.links.source}
+            label={t(lang, 'app.source')}
+            external
+          />
+        )}
+        <UtilityAction
+          kind="privacy"
+          href={legalPath(app, 'privacy', lang)}
+          label={t(lang, 'app.privacy')}
+        />
+        <UtilityAction kind="donate" label={t(lang, 'donate.open')} />
       </div>
     </div>
   </div>
@@ -237,7 +231,7 @@ const platforms = platformGroupsOf(app.platforms)
   .app-hero__actions {
     display: grid;
     grid-column: 1 / -1;
-    gap: 4px;
+    gap: 10px;
     justify-items: start;
     min-width: 0;
   }
@@ -245,17 +239,7 @@ const platforms = platformGroupsOf(app.platforms)
   .app-hero__links {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    gap: 4px 16px;
-    font-size: 14px;
-  }
-
-  .app-hero__links a,
-  .app-hero__links button {
-    display: inline-flex;
-    min-height: 44px;
-    align-items: center;
-    gap: 6px;
+    gap: 8px;
   }
 
   @media (min-width: 840px) {

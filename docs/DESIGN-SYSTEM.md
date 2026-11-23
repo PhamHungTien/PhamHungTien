@@ -145,10 +145,9 @@ as the app pages. A perspective camera scales the icon links by depth.
   Wide screens keep a slight in-screen tilt; portrait screens may tilt the plane
   diagonally to use a phone's long diagonal. Narrow screens show only the caption of the
   app in front instead of every name.
-- **Carousel.** The orbit turns one step, rests about 3.6 s with an app in front (its name
-  and category below it), then turns again. A critically damped spring makes every turn
-  and stop smooth. Hovering over the scene or focusing an icon pauses it. Dragging
-  spins it with inertia and settles on the nearest app; focusing a planet with the
+- **Carousel.** One app stays in front with its name, category and downloads below it.
+  A critically damped spring makes every turn and stop smooth. Dragging spins it with
+  inertia and settles on the nearest app; focusing a planet with the
   keyboard turns it to the front, and arrow keys move between planets. Selecting an icon
   brings its download shortcuts forward. The active icon and its name open the app page.
   The PHTV shortcuts share the architecture-specific release links used by its install
@@ -159,14 +158,14 @@ as the app pages. A perspective camera scales the icon links by depth.
   behind it while the system swings into place. The caption is part of the page's first
   paint and glides to its place under the first app, so the hero has content immediately.
 - **Performance.** Only transforms and opacity change per frame, every DOM write is cached,
-  and the loop sleeps whenever nothing moves (a timer wakes it for the next turn). It stops
+  and the loop sleeps whenever nothing moves. It stops
   off-screen and in hidden tabs. The scene initialises after the first paint.
 - **Background.** On the home hero, a soft highlight follows a mouse and the two star
   layers move slightly at different speeds. The highlight fades when the mouse leaves.
   Twinkling and occasional meteors play while the hero is visible. Reading pages use a
   still star field.
-- **Reduced motion.** The home toolbar can pause and resume decorative motion. The OS
-  preference uses the same still composition automatically. Without JavaScript the icons
+- **Reduced motion.** The OS preference uses the same still composition automatically.
+  Without JavaScript the icons
   appear around the brand mark in a flat arrangement.
 
 ## App imagery and pages

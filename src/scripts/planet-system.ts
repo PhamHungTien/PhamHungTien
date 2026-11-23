@@ -7,13 +7,12 @@
  * are solved for each screen so that no planet and no name ever crosses the brand planet or
  * a neighbour, at rest or mid-turn.
  *
- * The orbit behaves like a carousel. It turns one step, rests with one app in front (its
- * name and category appear below it), then turns again. Dragging spins it with inertia and
+ * The orbit presents one app and its download links in front. Dragging spins it with inertia and
  * it settles on the nearest app; focusing a planet with the keyboard turns it to the front;
  * arrow keys move between planets. Pointer movement tilts the camera (parallax).
  *
  * Only transforms and opacity change per frame, every write is cached, and the loop sleeps
- * whenever nothing moves (a timer wakes it for the next turn).
+ * whenever nothing moves.
  */
 
 const TAU = Math.PI * 2;
@@ -23,8 +22,6 @@ const FRONT = -Math.PI / 2;
 const OUTER = 0.5;
 /** Camera distance in layout units: enough perspective for depth, not enough to distort. */
 const CAMERA_DISTANCE = 2.3;
-/** Seconds an app rests in front before the next turn. */
-const DWELL = 3.6;
 /** Angular frequency of the critically damped turn, in rad/s. */
 const SPRING = 3.4;
 /** Extra size of the app in front. */
@@ -172,9 +169,7 @@ export function initPlanetSystem(): void {
   let visible = false;
   let hovered = -1;
   let focusedIndex = -1;
-  let sceneHovered = false;
   let featured = -1;
-  let dwellTimer = 0;
   /** Where the caption was painted before the engine ran (server-rendered, under the orbit). */
   let captionStart: { x: number; y: number } | null = null;
   let lastCamKey = '';
@@ -195,8 +190,6 @@ export function initPlanetSystem(): void {
 
   const motionEnabled = () => !reduced.matches && root.dataset.motion !== 'off';
   const awake = () => motionEnabled() && visible && !document.hidden;
-  const autoplayAllowed = () =>
-    awake() && arrived && !sceneHovered && !scene.contains(document.activeElement) && !gesture;
 
   /** Index of the planet nearest the front for a given rotation. */
   const frontIndex = (rot: number) => ((Math.round(-rot / step) % count) + count) % count;
@@ -562,28 +555,12 @@ export function initPlanetSystem(): void {
     );
   }
 
-  function schedule() {
-    window.clearTimeout(dwellTimer);
-    dwellTimer = 0;
-    if (!autoplayAllowed()) return;
-    dwellTimer = window.setTimeout(() => {
-      dwellTimer = 0;
-      if (!autoplayAllowed()) return;
-      // Turn forward: the next app comes in from the right.
-      target = alignedRotation(frontIndex(target) + 1, target - step);
-      wake();
-    }, DWELL * 1000);
-  }
-
   function tick(now: number) {
     frame = 0;
     if (!awake()) return;
     const dt = previous ? Math.min((now - previous) / 1000, 1 / 20) : 1 / 60;
     previous = now;
     stepFrame(dt);
-    // The rest starts as soon as the turn looks finished; the last fraction of a degree
-    // keeps easing underneath.
-    if (!dwellTimer && Math.abs(rotation - target) < 0.01 && Math.abs(velocity) < 0.05) schedule();
     if (!settled()) frame = requestAnimationFrame(tick);
   }
 
@@ -592,11 +569,6 @@ export function initPlanetSystem(): void {
       previous = 0;
       frame = requestAnimationFrame(tick);
     }
-  }
-
-  function pause() {
-    window.clearTimeout(dwellTimer);
-    dwellTimer = 0;
   }
 
   /** Turns planet `index` to the front. */
@@ -674,7 +646,6 @@ export function initPlanetSystem(): void {
     if (!motionEnabled()) {
       cancelAnimationFrame(frame);
       frame = 0;
-      pause();
       gesture = null;
       arrived = true;
       velocity = 0;
@@ -688,10 +659,7 @@ export function initPlanetSystem(): void {
       render();
       return;
     }
-    if (!awake()) {
-      pause();
-      return;
-    }
+    if (!awake()) return;
     if (!frame) render();
     wake();
   }
@@ -701,7 +669,6 @@ export function initPlanetSystem(): void {
     p.el.addEventListener('pointerenter', (event) => {
       if (event.pointerType !== 'mouse') return;
       hovered = p.index;
-      pause();
       if (motionEnabled()) wake();
       else sync();
     });
@@ -749,24 +716,11 @@ export function initPlanetSystem(): void {
     });
   });
 
-  scene.addEventListener('pointerenter', (event) => {
-    if (event.pointerType !== 'mouse') return;
-    sceneHovered = true;
-    pause();
-  });
-  scene.addEventListener('pointerleave', (event) => {
-    if (event.pointerType !== 'mouse') return;
-    sceneHovered = false;
-    if (!frame) schedule();
-  });
-
   // Keyboard: focusing a planet turns it to the front; arrow keys move between planets.
   scene.addEventListener('focusin', (event) => {
-    if (caption?.contains(event.target as Node)) pause();
     const index = planets.findIndex((p) => p.el === event.target);
     if (index < 0 || !(event.target as HTMLElement).matches(':focus-visible')) return;
     focusedIndex = index;
-    pause();
     bringToFront(index);
   });
   scene.addEventListener('focusout', () =>
@@ -774,7 +728,6 @@ export function initPlanetSystem(): void {
       if (scene.contains(document.activeElement)) return;
       focusedIndex = -1;
       if (motionEnabled()) wake();
-      if (!frame) schedule();
     }),
   );
   scene.addEventListener('keydown', (event) => {
@@ -874,7 +827,6 @@ export function initPlanetSystem(): void {
       gesture.dragging = true;
       suppressClick = true;
       velocity = 0;
-      pause();
       scene.setPointerCapture(event.pointerId);
       scene.dataset.dragging = 'true';
       wake();

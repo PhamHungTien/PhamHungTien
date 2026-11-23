@@ -5,23 +5,14 @@
 const scenes = document.querySelectorAll<HTMLElement>('[data-motion-scene]');
 const root = document.documentElement;
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-const toggle = document.querySelector<HTMLButtonElement>('[data-motion-toggle]');
 const visible = new Set<Element>();
 const updateScenes = () => {
-  const paused = root.dataset.motion === 'off';
-  const enabled = !paused && !reduced.matches && !document.hidden;
+  const enabled = !reduced.matches && !document.hidden;
+  const preference = reduced.matches ? 'off' : 'on';
+  if (root.dataset.motion !== preference) root.dataset.motion = preference;
   scenes.forEach((scene) => {
     scene.dataset.running = String(visible.has(scene) && enabled);
   });
-  if (toggle) {
-    toggle.hidden = reduced.matches;
-    toggle.dataset.paused = String(paused);
-    const label = paused ? toggle.dataset.labelPlay : toggle.dataset.labelPause;
-    if (label) {
-      toggle.setAttribute('aria-label', label);
-      toggle.title = label;
-    }
-  }
 };
 
 if (scenes.length && 'IntersectionObserver' in window) {
@@ -35,8 +26,4 @@ if (scenes.length && 'IntersectionObserver' in window) {
 }
 document.addEventListener('visibilitychange', updateScenes);
 reduced.addEventListener('change', updateScenes);
-toggle?.addEventListener('click', () => {
-  root.dataset.motion = root.dataset.motion === 'off' ? 'on' : 'off';
-  updateScenes();
-});
 updateScenes();

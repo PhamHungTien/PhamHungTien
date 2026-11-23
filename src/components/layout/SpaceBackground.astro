@@ -154,13 +154,13 @@ const stars = Array.from({ length: 110 }, (_, i) => ({
   }
   @media (prefers-reduced-motion: no-preference) {
     .space[data-hero-visible='true'] .space__near {
-      animation: starlight 9s ease-in-out infinite alternate;
+      animation: starlight 4.6s ease-in-out;
     }
     .space[data-hero-visible='true'] .space__distant {
-      animation: starlight 15s ease-in-out -6s infinite alternate-reverse;
+      animation: starlight 4.6s ease-in-out -1s;
     }
     @keyframes starlight {
-      to {
+      50% {
         opacity: 0.24;
       }
     }

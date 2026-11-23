@@ -161,7 +161,10 @@ const speculationRules = {
         document.documentElement.dataset.theme = theme;
         if (theme === 'light')
           document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#f3f5f8');
-        document.documentElement.dataset.motion = 'on';
+        document.documentElement.dataset.motion = matchMedia('(prefers-reduced-motion: reduce)')
+          .matches
+          ? 'off'
+          : 'on';
       })();
     </script>
   </head>

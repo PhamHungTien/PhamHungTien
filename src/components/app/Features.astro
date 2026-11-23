@@ -1,5 +1,6 @@
 ---
 import { ExternalLink, Mail } from '@lucide/astro';
+import UtilityAction from '../ui/UtilityAction.astro';
 import type { App } from '../../data/types';
 import type { Locale } from '../../i18n/locales';
 import { getAppCopy } from '../../lib/app-copy';
@@ -55,10 +56,18 @@ const { features, support } = getAppCopy(app, lang);
           </a>
         )}
       </div>
-      <p class="support__legal">
-        <a href={legalPath(app, 'privacy', lang)}>{t(lang, 'app.privacy')}</a>
-        <a href={legalPath(app, 'terms', lang)}>{t(lang, 'app.terms')}</a>
-      </p>
+      <div class="support__legal">
+        <UtilityAction
+          kind="privacy"
+          href={legalPath(app, 'privacy', lang)}
+          label={t(lang, 'app.privacy')}
+        />
+        <UtilityAction
+          kind="terms"
+          href={legalPath(app, 'terms', lang)}
+          label={t(lang, 'app.terms')}
+        />
+      </div>
     </aside>
   </div>
 </section>
@@ -141,20 +150,11 @@ const { features, support } = getAppCopy(app, lang);
 
   .support__legal {
     display: flex;
-    gap: 12px 20px;
+    gap: 8px;
     flex-wrap: wrap;
     margin-top: 2px;
     padding-top: 10px;
     border-top: 1px solid var(--line);
-    font-size: 14px;
-  }
-
-  .support__legal a {
-    color: var(--muted);
-  }
-
-  .support__legal a:hover {
-    color: var(--ink);
   }
 
   @media (min-width: 480px) {

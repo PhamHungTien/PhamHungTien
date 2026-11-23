@@ -1,5 +1,5 @@
 ---
-import { ArrowDown, Heart, Pause, Play } from '@lucide/astro';
+import { ArrowDown, Heart } from '@lucide/astro';
 import BrandIcon from '../ui/BrandIcon.astro';
 import OrbitScene from './OrbitScene.astro';
 import type { Locale as Lang } from '../../i18n/locales';
@@ -42,38 +42,23 @@ const socials = [
       <Heart size={17} aria-hidden="true" />
       {t(lang, 'donate.open')}
     </button>
-    <div class="hero__tools">
-      <ul class="hero__socials glass" aria-label={t(lang, 'footer.connect')} data-lens>
-        {socials.map((social) => (
-          <li>
-            <a
-              class="hero__social"
-              href={social.href}
-              target="_blank"
-              rel="noopener noreferrer me"
-              aria-label={social.label}
-              title={social.label}
-              data-brand={social.name}
-            >
-              <BrandIcon name={social.name} size={19} />
-            </a>
-          </li>
-        ))}
-      </ul>
-      <button
-        class="hero__motion glass"
-        type="button"
-        aria-label={t(lang, 'home.motion.pause')}
-        title={t(lang, 'home.motion.pause')}
-        data-motion-toggle
-        data-label-pause={t(lang, 'home.motion.pause')}
-        data-label-play={t(lang, 'home.motion.play')}
-        hidden
-      >
-        <Pause size={17} aria-hidden="true" class="hero__pause" />
-        <Play size={17} aria-hidden="true" class="hero__play" />
-      </button>
-    </div>
+    <ul class="hero__socials glass" aria-label={t(lang, 'footer.connect')} data-lens>
+      {socials.map((social) => (
+        <li>
+          <a
+            class="hero__social"
+            href={social.href}
+            target="_blank"
+            rel="noopener noreferrer me"
+            aria-label={social.label}
+            title={social.label}
+            data-brand={social.name}
+          >
+            <BrandIcon name={social.name} size={19} />
+          </a>
+        </li>
+      ))}
+    </ul>
   </div>
 </section>
 
@@ -143,12 +128,6 @@ const socials = [
   .hero__donate:hover :global(svg) {
     scale: 1.2;
   }
-  .hero__tools {
-    display: flex;
-    align-items: stretch;
-    justify-content: center;
-    gap: 8px;
-  }
   /* One glass capsule groups the profiles, like a toolbar group: 4px inset, so the 44px
      buttons are concentric with it. */
   .hero__socials {
@@ -176,28 +155,9 @@ const socials = [
       background-color 150ms ease-out;
   }
   .hero__social:hover,
-  .hero__social:focus-visible,
-  .hero__motion:hover,
-  .hero__motion:focus-visible {
+  .hero__social:focus-visible {
     color: var(--ink);
     background: color-mix(in srgb, var(--ink) 8%, transparent);
-  }
-  .hero__motion {
-    display: grid;
-    place-items: center;
-    inline-size: var(--hero-control-height);
-    min-block-size: var(--hero-control-height);
-    flex: none;
-    padding: 0;
-    border: 0;
-    color: var(--muted);
-    border-radius: var(--r-pill);
-    cursor: pointer;
-  }
-  .hero__motion[hidden],
-  .hero__motion:not([data-paused='true']) .hero__play,
-  .hero__motion[data-paused='true'] .hero__pause {
-    display: none;
   }
   .hero__social[data-brand='youtube']:hover {
     color: #ff3d3d;
@@ -233,7 +193,7 @@ const socials = [
       padding-inline: 12px;
       font-size: 14px;
     }
-    .hero__tools {
+    .hero__socials {
       grid-column: 1 / -1;
       justify-self: center;
     }
