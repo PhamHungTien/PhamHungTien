@@ -28,7 +28,11 @@ const guides = (await getGuides(lang)).slice(0, 3);
   jsonLd={homeJsonLd(lang)}
   nav={[
     { href: '#apps', label: t(lang, 'nav.apps') },
-    { href: guidesPath(lang), label: t(lang, 'nav.guides') },
+    {
+      href: guidesPath(lang),
+      label: t(lang, 'nav.guides'),
+      section: guides.length ? 'guides' : undefined,
+    },
     { href: '#contact', label: t(lang, 'nav.contact') },
   ]}
 >
@@ -45,3 +49,8 @@ const guides = (await getGuides(lang)).slice(0, 3);
   )}
   <Contact lang={lang} />
 </BaseLayout>
+
+<script>
+  import { initSectionNavigation } from '../../scripts/section-navigation';
+  initSectionNavigation();
+</script>

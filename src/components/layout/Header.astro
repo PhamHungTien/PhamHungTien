@@ -13,6 +13,8 @@ export interface NavItem {
   current?: boolean;
   /** Tab id for app pages, so the client script can keep aria-current in sync. */
   tab?: string;
+  /** Section on the current page associated with a link to a separate page. */
+  section?: string;
 }
 
 interface Props {
@@ -22,7 +24,7 @@ interface Props {
 }
 
 const { lang, nav, alternates } = Astro.props;
-const switchesAppView = nav.some((item) => item.tab);
+const followsSections = nav.some((item) => item.section || item.href.startsWith('#'));
 ---
 
 <header class="site-header" data-header data-wide-nav={nav.length > 4 ? '' : undefined}>
@@ -36,10 +38,15 @@ const switchesAppView = nav.some((item) => item.tab);
     <nav
       class="site-nav"
       aria-label={t(lang, 'nav.main')}
-      data-sliding-thumb={switchesAppView ? '' : undefined}
+      data-sliding-thumb={followsSections ? '' : undefined}
     >
       {nav.map((item) => (
-        <a href={item.href} data-tab={item.tab} aria-current={item.current ? 'page' : undefined}>
+        <a
+          href={item.href}
+          data-tab={item.tab}
+          data-nav-section={item.section}
+          aria-current={item.current ? 'page' : undefined}
+        >
           {item.label}
         </a>
       ))}
@@ -79,12 +86,17 @@ const switchesAppView = nav.some((item) => item.tab);
     id="mobile-navigation"
     aria-label={t(lang, 'nav.main')}
     data-mobile-nav
-    data-sliding-thumb={switchesAppView ? '' : undefined}
+    data-sliding-thumb={followsSections ? '' : undefined}
     data-lens
     inert
   >
     {nav.map((item) => (
-      <a href={item.href} data-tab={item.tab} aria-current={item.current ? 'page' : undefined}>
+      <a
+        href={item.href}
+        data-tab={item.tab}
+        data-nav-section={item.section}
+        aria-current={item.current ? 'page' : undefined}
+      >
         {item.label}
       </a>
     ))}

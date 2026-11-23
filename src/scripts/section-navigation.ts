@@ -1,26 +1,33 @@
 /**
- * Keep the overview, Discussions board, and header selection in step with fragment
- * navigation and the section visible below the sticky header.
+ * Keep the header selection in step with the section visible below the sticky header.
+ * App pages also switch between the overview and Discussions when the fragment changes.
  */
 const COMMUNITY_HASHES = new Set(['#community', '#qa', '#discussions']);
 
-export function initAppTabs() {
+export function initSectionNavigation() {
   const overview = document.querySelector<HTMLElement>('[data-tab-panel="overview"]');
   const community = document.querySelector<HTMLElement>('[data-tab-panel="community"]');
+  const content = overview ?? document.querySelector('main');
   const header = document.querySelector<HTMLElement>('[data-header]');
-  if (!overview || !community || !header) return;
+  if (!content || !header) return;
 
   const links = [
-    ...header.querySelectorAll<HTMLAnchorElement>('[data-sliding-thumb] a[href^="#"]'),
-  ];
-  const hashes = new Set(links.map((link) => link.hash));
+    ...header.querySelectorAll<HTMLAnchorElement>(
+      '[data-sliding-thumb] a:is([href^="#"], [data-nav-section])',
+    ),
+  ].map((link) => ({
+    link,
+    hash: link.dataset.navSection ? `#${link.dataset.navSection}` : link.hash,
+  }));
+  const hashes = new Set(links.map(({ hash }) => hash));
   // The reading order can differ from the order of the links in the navbar.
-  const sections = [...overview.querySelectorAll<HTMLElement>('[id]')]
+  const sections = [...content.querySelectorAll<HTMLElement>('[id]')]
     .filter((section) => hashes.has(`#${section.id}`))
     .reverse();
   const targets = new Map(sections.map((section) => [`#${section.id}`, section]));
-  targets.set('#overview', overview);
-  targets.set('#community', community);
+  if (overview) targets.set('#overview', overview);
+  if (community) targets.set('#community', community);
+  const start = overview ? '#overview' : '';
 
   let active = '';
   let frame = 0;
@@ -29,8 +36,8 @@ export function initAppTabs() {
   function mark(hash: string) {
     if (hash === active) return;
     active = hash;
-    for (const link of links) {
-      if (link.hash === hash) {
+    for (const { link, hash: section } of links) {
+      if (section === hash) {
         link.setAttribute('aria-current', link.dataset.tab ? 'page' : 'location');
       } else {
         link.removeAttribute('aria-current');
@@ -52,7 +59,7 @@ export function initAppTabs() {
 
   const readPosition = () => {
     frame = 0;
-    if (overview.hidden) return;
+    if (overview?.hidden) return;
     const offset = headerOffset();
     if (destination) {
       // Keep intermediate sections from stealing the selected pill during a smooth jump.
@@ -65,26 +72,28 @@ export function initAppTabs() {
     const section = atBottom
       ? sections[0]
       : sections.find((element) => element.getBoundingClientRect().top <= offset + 5);
-    mark(section ? `#${section.id}` : '#overview');
+    mark(section ? `#${section.id}` : start);
   };
 
   function queueRead() {
     if (!frame) frame = requestAnimationFrame(readPosition);
   }
 
-  const sync = (hash: string, jump: boolean, focus = false) => {
-    const showCommunity = COMMUNITY_HASHES.has(hash);
-    const changed = community.hidden === showCommunity;
-    overview.hidden = showCommunity;
-    community.hidden = !showCommunity;
+  const sync = (hash: string, behavior?: ScrollBehavior, focus = false) => {
+    const showCommunity = !!community && COMMUNITY_HASHES.has(hash);
+    const changed = community?.hidden === showCommunity;
+    if (overview && community) {
+      overview.hidden = showCommunity;
+      community.hidden = !showCommunity;
+    }
 
-    const selected = showCommunity ? '#community' : hash || '#overview';
+    const selected = showCommunity ? '#community' : hash || start;
     const target = targets.get(selected);
     if (target) mark(selected);
-    if (target && (jump || changed)) {
+    if (target && (behavior || changed)) {
       const top = scrollPosition(target, headerOffset());
       destination = showCommunity ? null : { target, until: performance.now() + 1200 };
-      window.scrollTo({ top, behavior: changed ? 'instant' : 'auto' });
+      window.scrollTo({ top, behavior: changed ? 'instant' : behavior });
       if (focus) {
         const heading = target.querySelector<HTMLElement>('h1, h2') ?? target;
         heading.tabIndex = -1;
@@ -94,7 +103,8 @@ export function initAppTabs() {
     queueRead();
   };
 
-  for (const link of links) {
+  for (const { link } of links) {
+    if (!link.getAttribute('href')?.startsWith('#')) continue;
     link.addEventListener('click', (event) => {
       if (
         event.defaultPrevented ||
@@ -108,7 +118,7 @@ export function initAppTabs() {
         return;
       event.preventDefault();
       if (location.hash !== link.hash) history.pushState(history.state, '', link.hash);
-      sync(link.hash, true, event.detail === 0);
+      sync(link.hash, 'auto', event.detail === 0);
     });
   }
 
@@ -121,8 +131,14 @@ export function initAppTabs() {
   window.addEventListener('resize', queueRead);
   window.addEventListener('scrollend', release);
   window.addEventListener('wheel', release, { passive: true });
-  window.addEventListener('pointerdown', release, { passive: true });
-  window.addEventListener('hashchange', () => sync(location.hash, true));
-  window.addEventListener('pageshow', () => sync(location.hash, false));
-  sync(location.hash, targets.has(location.hash));
+  window.addEventListener(
+    'pointerdown',
+    (event) => {
+      if (event.target instanceof Node && !header.contains(event.target)) release();
+    },
+    { passive: true },
+  );
+  window.addEventListener('hashchange', () => sync(location.hash, 'auto'));
+  window.addEventListener('pageshow', () => sync(location.hash));
+  sync(location.hash, targets.has(location.hash) ? 'instant' : undefined);
 }
