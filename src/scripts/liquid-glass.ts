@@ -91,8 +91,10 @@ function initReflection(mayReflect: () => boolean, onSurface: (element: HTMLElem
   let y = 0;
 
   const reset = () => {
-    active?.style.removeProperty('--glass-light-x');
-    active?.style.removeProperty('--glass-light-y');
+    if (!active) return;
+    delete active.dataset.glassReflecting;
+    active.style.removeProperty('--glass-light-x');
+    active.style.removeProperty('--glass-light-y');
     active = null;
   };
 
@@ -113,7 +115,10 @@ function initReflection(mayReflect: () => boolean, onSurface: (element: HTMLElem
         if (pending !== active) {
           reset();
           active = pending;
-          if (active) onSurface(active);
+          if (active) {
+            active.dataset.glassReflecting = '';
+            onSurface(active);
+          }
         }
         if (!active) return;
         const box = active.getBoundingClientRect();
