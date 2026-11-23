@@ -1,4 +1,6 @@
 /** Platform filter and search for the app list on the home page. Works on server-rendered rows. */
+import { initSlidingThumb } from './sliding-thumb';
+
 export function initAppDirectory() {
   const root = document.querySelector<HTMLElement>('[data-app-directory]');
   if (!root) return;
@@ -65,14 +67,9 @@ export function initAppDirectory() {
       count.textContent = `${visible} ${visible === 1 ? count.dataset.one : count.dataset.other}`;
   };
 
-  // Sliding thumb behind the pressed platform button.
   const segmented = root.querySelector<HTMLElement>('.segmented');
-  const moveThumb = () => {
-    const pressed = buttons.find((button) => button.dataset.platform === platform);
-    if (!segmented || !pressed) return;
-    segmented.style.setProperty('--thumb-x', `${pressed.offsetLeft}px`);
-    segmented.style.setProperty('--thumb-w', `${pressed.offsetWidth}px`);
-  };
+  apply();
+  const moveThumb = segmented ? initSlidingThumb(segmented) : undefined;
   // On narrow screens the options scroll sideways; mark which edges have more to show.
   const markOverflow = () => {
     if (!segmented) return;
@@ -84,30 +81,25 @@ export function initAppDirectory() {
   if (segmented) {
     segmented.addEventListener('scroll', markOverflow, { passive: true });
     new ResizeObserver(markOverflow).observe(segmented);
-    segmented.classList.add('has-thumb');
-    moveThumb();
-    requestAnimationFrame(() => segmented.classList.add('is-ready'));
-    new ResizeObserver(moveThumb).observe(segmented);
-    document.fonts?.ready.then(moveThumb);
   }
 
   // Filter changes animate as a view transition where supported: rows glide into place.
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
   const update = () => {
+    // Start the thumb's motion independently of the app cards' view transition.
+    moveThumb?.(buttons.find((button) => button.dataset.platform === platform));
     if (
       !document.startViewTransition ||
       reduce.matches ||
       document.documentElement.dataset.motion === 'off'
     ) {
       apply();
-      moveThumb();
       return;
     }
     rows.forEach((row, index) => {
       row.style.viewTransitionName = `app-row-${index}`;
       row.style.setProperty('view-transition-class', 'app-row-vt');
     });
-    moveThumb();
     const transition = document.startViewTransition(apply);
     transition.finished.finally(() => {
       for (const row of rows) {
@@ -134,5 +126,4 @@ export function initAppDirectory() {
   };
   clear?.addEventListener('click', clearFilters);
   reset?.addEventListener('click', clearFilters);
-  apply();
 }

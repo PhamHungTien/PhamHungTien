@@ -96,6 +96,8 @@ Rules:
 - The header's glass layer sits behind its controls, so the language and mobile menus
   can blur the page through their own sheets. Discussion filters use the denser tint and
   preserve native select controls.
+- Platform filters, screenshot device tabs and the app navigation share the sliding
+  selection indicator. Each control keeps its own keyboard behavior and selected state.
 - Text on glass should meet WCAG AA contrast in both themes.
 - `prefers-reduced-transparency` and `prefers-contrast: more` replace the glass with solid
   surfaces and a clear edge, and switch refraction off; without `backdrop-filter` the tint

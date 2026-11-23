@@ -22,6 +22,7 @@ interface Props {
 }
 
 const { lang, nav, alternates } = Astro.props;
+const switchesAppView = nav.some((item) => item.tab);
 ---
 
 <header class="site-header" data-header data-wide-nav={nav.length > 4 ? '' : undefined}>
@@ -36,7 +37,11 @@ const { lang, nav, alternates } = Astro.props;
       <span class="sr-only">Phạm Hùng Tiến — {t(lang, 'nav.home')}</span>
     </a>
 
-    <nav class="site-nav" aria-label={t(lang, 'nav.main')}>
+    <nav
+      class="site-nav"
+      aria-label={t(lang, 'nav.main')}
+      data-sliding-thumb={switchesAppView ? '' : undefined}
+    >
       {nav.map((item) => (
         <a href={item.href} data-tab={item.tab} aria-current={item.current ? 'page' : undefined}>
           {item.label}
@@ -78,6 +83,7 @@ const { lang, nav, alternates } = Astro.props;
     id="mobile-navigation"
     aria-label={t(lang, 'nav.main')}
     data-mobile-nav
+    data-sliding-thumb={switchesAppView ? '' : undefined}
     data-lens
     inert
   >
@@ -255,6 +261,7 @@ const { lang, nav, alternates } = Astro.props;
   /* A separate glass sheet sits below the header. */
   .mobile-nav {
     --glass-tint: var(--glass-tint-strong);
+    --thumb-radius: calc(var(--r-sheet) - 8px);
     position: absolute;
     top: calc(100% + var(--header-menu-gap));
     right: 0;
@@ -304,6 +311,11 @@ const { lang, nav, alternates } = Astro.props;
     background: var(--glass-thumb);
     color: var(--brand);
     font-weight: 600;
+  }
+
+  [data-thumb-active] a[aria-current='page'] {
+    background: transparent;
+    box-shadow: none;
   }
 
   @media (width < 1200px) {

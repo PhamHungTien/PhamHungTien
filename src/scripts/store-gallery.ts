@@ -3,6 +3,8 @@
  * script (all rows visible, native horizontal scrolling); this adds the tab pattern
  * (arrow keys, roving tabindex) and previous/next buttons for pointer devices.
  */
+import { initSlidingThumb } from './sliding-thumb';
+
 export function initStoreGallery(): void {
   for (const root of document.querySelectorAll<HTMLElement>('[data-store-gallery]')) {
     const tablist = root.querySelector<HTMLElement>('[data-gallery-tabs]');
@@ -63,6 +65,7 @@ export function initStoreGallery(): void {
         });
       });
       select(0);
+      initSlidingThumb(tablist);
     }
 
     for (const panel of root.querySelectorAll<HTMLElement>('.store-gallery__panel')) {

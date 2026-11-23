@@ -36,7 +36,13 @@ const lastOf = (index: number) => {
       <p>{t(lang, 'home.apps.lead')}</p>
     </div>
     <div class="apps__tools" data-app-tools data-pending>
-      <div class="segmented" role="group" aria-label={t(lang, 'home.apps.filter')} data-lens>
+      <div
+        class="segmented"
+        role="group"
+        aria-label={t(lang, 'home.apps.filter')}
+        data-sliding-thumb
+        data-lens
+      >
         <button type="button" aria-pressed="true" data-platform="">
           {t(lang, 'home.apps.all')}
         </button>
@@ -233,40 +239,6 @@ const lastOf = (index: number) => {
 
   .segmented[data-more='both'] {
     mask-image: linear-gradient(90deg, transparent, #000 18px, #000 calc(100% - 18px), transparent);
-  }
-
-  /* With JS, one thumb slides between options instead of each button lighting up. */
-  /* The thumb is a brighter glass capsule, inset 4px so it is concentric with the track. */
-  .segmented.has-thumb::before {
-    position: absolute;
-    top: 4px;
-    bottom: 4px;
-    left: 0;
-    width: var(--thumb-w, 0);
-    border-radius: var(--r-pill);
-    background: var(--glass-thumb);
-    box-shadow:
-      inset 0 1px 0 var(--glass-rim),
-      0 1px 2px rgb(16 24 40 / 0.08),
-      0 4px 12px -4px rgb(16 24 40 / 0.18);
-    content: '';
-    transform: translateX(var(--thumb-x, 0));
-  }
-
-  .segmented.has-thumb.is-ready::before {
-    transition:
-      transform 480ms var(--spring),
-      width 480ms var(--spring);
-  }
-
-  .segmented.has-thumb button {
-    position: relative;
-    transition: color 200ms ease;
-  }
-
-  .segmented.has-thumb button[aria-pressed='true'] {
-    background: transparent;
-    box-shadow: none;
   }
 
   .search-field {

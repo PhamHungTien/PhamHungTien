@@ -1,4 +1,5 @@
 /** Theme toggle and navigation menus. Imported once by Header.astro. */
+import { initSlidingThumb } from './sliding-thumb';
 
 const root = document.documentElement;
 
@@ -135,4 +136,7 @@ function initMenus() {
 export function initHeader() {
   initTheme();
   initMenus();
+  document
+    .querySelectorAll<HTMLElement>('[data-header] [data-sliding-thumb]')
+    .forEach(initSlidingThumb);
 }
