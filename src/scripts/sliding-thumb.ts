@@ -1,7 +1,7 @@
 /** Paint one shared thumb behind a single selected option. The controls own their ARIA state. */
 export function initSlidingThumb(group: HTMLElement) {
   const selected =
-    ':scope > :is([aria-pressed="true"], [aria-selected="true"], [aria-current="page"])';
+    ':scope > :is([aria-pressed="true"], [aria-selected="true"], [aria-current="page"], [aria-current="location"])';
   const move = (option = group.querySelector<HTMLElement>(selected)) => {
     if (!option?.offsetWidth || !option.offsetHeight) {
       delete group.dataset.thumbActive;

@@ -35,9 +35,9 @@ const favicon = await getImage({ src: app.icon, width: 64, height: 64, format: '
 
 const nav: NavItem[] = [
   { href: '#overview', label: t(lang, 'nav.overview'), tab: 'overview', current: true },
+  { href: '#gallery', label: t(lang, 'nav.screenshots') },
   { href: '#features', label: t(lang, 'nav.features') },
   ...(app.install ? [{ href: '#install', label: t(lang, 'nav.install') }] : []),
-  { href: '#gallery', label: t(lang, 'nav.screenshots') },
   ...(app.faq?.length ? [{ href: '#faq', label: t(lang, 'nav.faq') }] : []),
   ...(guides.length ? [{ href: '#app-guides', label: t(lang, 'nav.guides') }] : []),
   { href: '#community', label: t(lang, 'nav.discussions'), tab: 'community' },

@@ -95,6 +95,13 @@ function initMenus() {
     );
     menu.classList.toggle('is-open', open);
     menu.inert = !open;
+    const current = open ? menu.querySelector<HTMLElement>('[aria-current]') : null;
+    if (current) {
+      const top = current.offsetTop;
+      const bottom = top + current.offsetHeight;
+      if (top < menu.scrollTop) menu.scrollTop = top;
+      if (bottom > menu.scrollTop + menu.clientHeight) menu.scrollTop = bottom - menu.clientHeight;
+    }
     if (!open && restoreFocus) toggle.focus({ preventScroll: true });
   };
 

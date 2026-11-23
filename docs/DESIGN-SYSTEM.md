@@ -99,6 +99,8 @@ Rules:
   preserve native select controls.
 - Platform filters, screenshot device tabs and the app navigation share the sliding
   selection indicator. Each control keeps its own keyboard behavior and selected state.
+  On app pages the selected section follows fragment links and manual scrolling below
+  the sticky header.
 - Text on glass should meet WCAG AA contrast in both themes.
 - Reduced transparency, increased contrast and forced colors replace the glass with solid
   surfaces and a clear edge, and switch refraction off; without `backdrop-filter` the tint
