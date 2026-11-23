@@ -1,9 +1,9 @@
 ---
 import { Image } from 'astro:assets';
-import { AppWindow, Cpu, Download, Play } from '@lucide/astro';
+import { Cpu, Download } from '@lucide/astro';
 import Logo from '../ui/Logo.astro';
+import StoreDownloads from '../ui/StoreDownloads.astro';
 import { apps } from '../../data/apps';
-import { storesOf } from '../../data/platforms';
 import { appPath } from '../../lib/routes';
 import { getAppCopy } from '../../lib/app-copy';
 import { getReleaseLinks } from '../../lib/github';
@@ -18,29 +18,22 @@ const { lang } = Astro.props;
 const categories = apps.map((app) => getAppCopy(app, lang).category);
 const downloads = await Promise.all(
   apps.map(async (app) => {
-    if (app.install) {
-      const links = await getReleaseLinks(app.install.githubRepo);
-      return [
-        {
-          arch: 'arm64',
-          title: t(lang, 'app.install.silicon'),
-          url: links.arm64 ?? links.universal ?? links.releaseUrl,
-          icon: Download,
-        },
-        {
-          arch: 'intel',
-          title: t(lang, 'app.install.intel'),
-          url: links.intel ?? links.universal ?? links.releaseUrl,
-          icon: Cpu,
-        },
-      ];
-    }
-    return storesOf(app.links.stores).map(({ name, store, url }) => ({
-      arch: undefined,
-      title: name,
-      url,
-      icon: store === 'appStore' ? AppWindow : store === 'googlePlay' ? Play : Download,
-    }));
+    if (!app.install) return [];
+    const links = await getReleaseLinks(app.install.githubRepo);
+    return [
+      {
+        arch: 'arm64',
+        title: t(lang, 'app.install.silicon'),
+        url: links.arm64 ?? links.universal ?? links.releaseUrl,
+        icon: Download,
+      },
+      {
+        arch: 'intel',
+        title: t(lang, 'app.install.intel'),
+        url: links.intel ?? links.universal ?? links.releaseUrl,
+        icon: Cpu,
+      },
+    ];
   }),
 );
 
@@ -116,6 +109,7 @@ const fallback = apps.map((_, index) => {
               {title}
             </a>
           ))}
+          <StoreDownloads stores={app.links.stores} lang={lang} />
         </div>
       ))}
     </div>
@@ -136,6 +130,7 @@ const fallback = apps.map((_, index) => {
      scale that fill it, so the system fits every size and orientation. */
   .orbit {
     --orbit-width: min(100vw - 40px, 2600px);
+    --orbit-caption-room: 52px;
     position: relative;
     /* Break out of the page container: the universe is allowed to be wider than text. */
     width: var(--orbit-width);
@@ -144,7 +139,7 @@ const fallback = apps.map((_, index) => {
     height: clamp(
       272px,
       calc(100svh - var(--header-height) - var(--hero-reserve)),
-      calc(var(--orbit-width) * var(--orbit-max-height, 1.05) + 52px)
+      calc(var(--orbit-width) * var(--orbit-max-height, 1.05) + var(--orbit-caption-room))
     );
     flex-shrink: 0;
     /* The brand and halo share a fallback center until the layout engine measures the stage. */
@@ -347,6 +342,9 @@ const fallback = apps.map((_, index) => {
     min-inline-size: 0;
   }
   .orbit__quick-group {
+    --store-downloads-align: center;
+    --store-downloads-gap: 6px;
+    --store-badge-height: 40px;
     display: flex;
     grid-area: 1 / 1;
     align-items: stretch;
@@ -418,7 +416,11 @@ const fallback = apps.map((_, index) => {
     }
   }
 
-  @media (max-width: 360px) {
+  @media (max-width: 320px) {
+    .orbit {
+      --orbit-caption-room: 100px;
+      min-block-size: 360px;
+    }
     .orbit__caption {
       max-inline-size: min(13rem, 100cqw - 36px);
     }

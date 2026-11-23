@@ -83,7 +83,7 @@ function badgeFor(store: (typeof links)[number]['store']) {
     flex-wrap: wrap;
     align-items: center;
     justify-content: var(--store-downloads-align, flex-start);
-    gap: 12px;
+    gap: var(--store-downloads-gap, 12px);
   }
   .store-badge {
     display: inline-flex;
