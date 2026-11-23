@@ -104,23 +104,25 @@ const lastOf = (index: number) => {
               )}
             </div>
             <div class="app-card__body text-column">
-              <div class="app-card__title">
-                <Image
-                  class="app-card__icon"
-                  src={app.icon}
-                  alt=""
-                  width={48}
-                  height={48}
-                  densities={[1, 2]}
-                  loading="lazy"
-                  style={`view-transition-name: app-${app.slug}`}
-                />
-                <div>
-                  <h3>{app.name}</h3>
-                  <p class="app-card__category">{category}</p>
+              <div class="app-card__details">
+                <div class="app-card__title">
+                  <Image
+                    class="app-card__icon"
+                    src={app.icon}
+                    alt=""
+                    width={48}
+                    height={48}
+                    densities={[1, 2]}
+                    loading="lazy"
+                    style={`view-transition-name: app-${app.slug}`}
+                  />
+                  <div>
+                    <h3>{app.name}</h3>
+                    <p class="app-card__category">{category}</p>
+                  </div>
                 </div>
+                <p class="app-card__desc text-justify">{description}</p>
               </div>
-              <p class="app-card__desc text-justify">{description}</p>
               <p class="app-card__meta">
                 <span>
                   {platformGroupsOf(app.platforms)
@@ -166,7 +168,7 @@ const lastOf = (index: number) => {
   .apps__tools {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(12rem, 16rem);
-    align-items: center;
+    align-items: stretch;
     gap: 12px;
     width: 100%;
     padding-block: clamp(12px, 2vw, 20px);
@@ -329,6 +331,7 @@ const lastOf = (index: number) => {
 
   .app-card__art {
     aspect-ratio: 3 / 2;
+    flex: none;
     overflow: hidden;
     background: color-mix(in srgb, var(--app) 18%, var(--surface-2));
   }
@@ -347,17 +350,25 @@ const lastOf = (index: number) => {
   }
 
   .app-card__body {
+    --card-body-gap: 10px;
     display: grid;
-    align-content: start;
-    gap: 10px;
+    grid-template-rows: 1fr auto;
+    align-self: stretch;
+    gap: var(--card-body-gap);
     flex: 1;
     min-width: 0;
     padding: 16px 18px 18px;
   }
 
+  .app-card__details {
+    display: grid;
+    align-content: start;
+    gap: var(--card-body-gap);
+  }
+
   .app-card__title {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 12px;
   }
 
@@ -414,8 +425,11 @@ const lastOf = (index: number) => {
     }
 
     li[data-wide] .app-card__body {
-      align-content: center;
       padding: 24px 28px;
+    }
+
+    li[data-wide] .app-card__details {
+      align-content: center;
     }
 
     li[data-wide] .app-card__desc {
@@ -461,8 +475,11 @@ const lastOf = (index: number) => {
     }
 
     li[data-odd] .app-card__body {
-      align-content: center;
       padding: 24px;
+    }
+
+    li[data-odd] .app-card__details {
+      align-content: center;
     }
   }
 
@@ -481,7 +498,7 @@ const lastOf = (index: number) => {
     }
 
     .app-card__body {
-      gap: 6px;
+      --card-body-gap: 6px;
       padding: 10px 12px 12px;
     }
 

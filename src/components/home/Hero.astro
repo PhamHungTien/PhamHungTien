@@ -118,16 +118,18 @@ const socials = [
     opacity: 0.5;
   }
   .hero__actions {
+    --hero-control-height: 52px;
     position: relative;
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
     gap: 14px 16px;
     margin-top: 12px;
   }
   .hero__actions .button {
     min-width: 0;
+    min-block-size: var(--hero-control-height);
     padding-block: 6px;
     overflow-wrap: anywhere;
   }
@@ -143,7 +145,7 @@ const socials = [
   }
   .hero__tools {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
     gap: 8px;
   }
@@ -151,6 +153,7 @@ const socials = [
      buttons are concentric with it. */
   .hero__socials {
     display: flex;
+    align-items: center;
     gap: 2px;
     margin: 0;
     padding: 4px;
@@ -182,8 +185,8 @@ const socials = [
   .hero__motion {
     display: grid;
     place-items: center;
-    inline-size: 44px;
-    block-size: 44px;
+    inline-size: var(--hero-control-height);
+    min-block-size: var(--hero-control-height);
     flex: none;
     padding: 0;
     border: 0;
