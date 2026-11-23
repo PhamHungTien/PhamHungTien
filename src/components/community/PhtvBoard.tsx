@@ -557,7 +557,7 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
                 {unread > 0 && <span className="board-count">{unread}</span>}
               </button>
               {showNotices && (
-                <div className="board-popover">
+                <div className="board-popover glass glass-panel">
                   <div className="board-popover__head">
                     <span>{text.notifications}</span>
                     <button
@@ -601,7 +601,7 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
                 </div>
               )}
             </div>
-            <div className="board-account">
+            <div className="board-account glass glass-panel">
               <Avatar
                 name={member.username}
                 photo={member.photoURL}
@@ -737,7 +737,7 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
           return (
             <article
               key={question.id}
-              className={`board-card${question.isPinned ? ' board-card--pinned' : ''}`}
+              className={`board-card glass-card${question.isPinned ? ' board-card--pinned' : ''}`}
             >
               <header className="board-card__head">
                 <div className="board-author">
@@ -1026,7 +1026,11 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
         </button>
       )}
 
-      <dialog ref={authDialog} className="board-modal" aria-labelledby="phtv-auth-title">
+      <dialog
+        ref={authDialog}
+        className="board-modal dialog-sheet glass glass-panel"
+        aria-labelledby="phtv-auth-title"
+      >
         <h3 id="phtv-auth-title">{text.signInTitle}</h3>
         <button className="board-primary" type="button" onClick={signIn}>
           {text.continueGoogle}
@@ -1040,7 +1044,11 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
         </button>
       </dialog>
 
-      <dialog ref={nameDialog} className="board-modal" aria-labelledby="phtv-name-title">
+      <dialog
+        ref={nameDialog}
+        className="board-modal dialog-sheet glass glass-panel"
+        aria-labelledby="phtv-name-title"
+      >
         <form onSubmit={saveName}>
           <h3 id="phtv-name-title">{text.displayName}</h3>
           <input

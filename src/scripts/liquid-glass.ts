@@ -1,5 +1,5 @@
 /**
- * Refraction for Liquid Glass surfaces ([data-lens]).
+ * Edge refraction and pointer reflections for glass surfaces.
  *
  * Apple's material bends what is behind it at its curved edges. On the web that needs an SVG
  * filter inside backdrop-filter: a displacement map shifts backdrop pixels near the edge, as
@@ -12,8 +12,9 @@
  */
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
-/** Map resolution relative to CSS pixels: smooth gradients need little detail. */
-const MAP_SCALE = 0.5;
+const MAX_MAP_PIXELS = 90_000;
+const surfaceSelector = '[data-lens], .glass-card';
+const reflectionSelector = '.glass, .glass-card, .segmented, .button--secondary';
 
 function supported() {
   const ua = navigator.userAgent;
@@ -31,8 +32,9 @@ function supported() {
  * 128 is no shift.
  */
 function drawMap(width: number, height: number, radius: number, bezel: number) {
-  const w = Math.max(2, Math.round(width * MAP_SCALE));
-  const h = Math.max(2, Math.round(height * MAP_SCALE));
+  const scale = Math.min(0.65, Math.sqrt(MAX_MAP_PIXELS / (width * height)));
+  const w = Math.max(2, Math.round(width * scale));
+  const h = Math.max(2, Math.round(height * scale));
   const canvas = document.createElement('canvas');
   canvas.width = w;
   canvas.height = h;
@@ -45,9 +47,9 @@ function drawMap(width: number, height: number, radius: number, bezel: number) {
   const halfH = height / 2;
 
   for (let j = 0; j < h; j++) {
-    const y = (j + 0.5) / MAP_SCALE;
+    const y = ((j + 0.5) * height) / h;
     for (let i = 0; i < w; i++) {
-      const x = (i + 0.5) / MAP_SCALE;
+      const x = ((i + 0.5) * width) / w;
       const dx = x - halfW;
       const dy = y - halfH;
       // Signed distance to the rounded rectangle (negative inside).
@@ -66,8 +68,8 @@ function drawMap(width: number, height: number, radius: number, bezel: number) {
           ny = (qy / len) * Math.sign(dy);
         } else if (qx > qy) nx = Math.sign(dx);
         else ny = Math.sign(dy);
-        // A rounded rim: steep at the very edge, flat by the end of the bezel.
-        strength = Math.pow(1 - depth / bezel, 2.4);
+        // A curved edge rolls off smoothly into a flat centre.
+        strength = Math.cos((depth / bezel) * (Math.PI / 2)) ** 2;
       }
       const k = (j * w + i) * 4;
       // Sample inward, so the rim shows the backdrop pulled from inside the shape.
@@ -81,11 +83,65 @@ function drawMap(width: number, height: number, radius: number, bezel: number) {
   return canvas.toDataURL('image/png');
 }
 
-export function initLiquidGlass(): void {
-  if (!supported()) return;
-  const lessTransparency = matchMedia(
-    '(prefers-reduced-transparency: reduce), (prefers-contrast: more)',
+function initReflection(mayReflect: () => boolean, onSurface: (element: HTMLElement) => void) {
+  let active: HTMLElement | null = null;
+  let pending: HTMLElement | null = null;
+  let frame = 0;
+  let x = 0;
+  let y = 0;
+
+  const reset = () => {
+    active?.style.removeProperty('--glass-light-x');
+    active?.style.removeProperty('--glass-light-y');
+    active = null;
+  };
+
+  document.addEventListener(
+    'pointermove',
+    (event) => {
+      if (event.pointerType !== 'mouse' || !mayReflect() || !(event.target instanceof Element)) {
+        pending = null;
+        reset();
+        return;
+      }
+      pending = event.target.closest<HTMLElement>(reflectionSelector);
+      x = event.clientX;
+      y = event.clientY;
+      if (frame || (!pending && !active)) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        if (pending !== active) {
+          reset();
+          active = pending;
+          if (active) onSurface(active);
+        }
+        if (!active) return;
+        const box = active.getBoundingClientRect();
+        active.style.setProperty('--glass-light-x', `${Math.round(x - box.left)}px`);
+        active.style.setProperty('--glass-light-y', `${Math.round(y - box.top)}px`);
+      });
+    },
+    { passive: true },
   );
+
+  const leave = () => {
+    pending = null;
+    reset();
+  };
+  document.documentElement.addEventListener('pointerleave', leave);
+  window.addEventListener('blur', leave);
+}
+
+export function initLiquidGlass(): void {
+  const lessTransparency = matchMedia(
+    '(prefers-reduced-transparency: reduce), (prefers-contrast: more), (forced-colors: active)',
+  );
+  const motion = matchMedia('(prefers-reduced-motion: no-preference) and (hover: hover)');
+  const mayReflect = () => motion.matches && !lessTransparency.matches;
+  if (!supported()) {
+    initReflection(mayReflect, () => {});
+    return;
+  }
 
   const svg = document.createElementNS(SVG_NS, 'svg');
   svg.setAttribute('aria-hidden', 'true');
@@ -95,7 +151,7 @@ export function initLiquidGlass(): void {
   svg.style.pointerEvents = 'none';
   document.body.append(svg);
 
-  const surfaces = new Map<HTMLElement, { id: string; key: string }>();
+  const surfaces = new Map<HTMLElement, { id: string; key: string; visible: boolean }>();
   let counter = 0;
 
   function apply(el: HTMLElement) {
@@ -103,7 +159,7 @@ export function initLiquidGlass(): void {
     if (!entry) return;
     const width = el.offsetWidth;
     const height = el.offsetHeight;
-    if (lessTransparency.matches || !width || !height) {
+    if (lessTransparency.matches || !entry.visible || !width || !height) {
       el.style.removeProperty('backdrop-filter');
       return;
     }
@@ -113,7 +169,7 @@ export function initLiquidGlass(): void {
       height / 2,
     );
     // A narrow rim, like Apple's: the bend lives in the last few pixels of the edge.
-    const bezel = Math.max(6, Math.min(radius * 0.5, height * 0.22, 14));
+    const bezel = Math.max(7, Math.min(radius * 0.58, height * 0.25, 18));
     const key = `${width}x${height}r${radius.toFixed(1)}`;
     if (entry.key !== key) {
       entry.key = key;
@@ -153,22 +209,40 @@ export function initLiquidGlass(): void {
       map.setAttribute('href', drawMap(width, height, radius, bezel));
       filter
         .querySelector('feDisplacementMap')!
-        .setAttribute('scale', String(Math.round(bezel * 1.1)));
+        .setAttribute('scale', String(Math.round(bezel * 1.65)));
     }
     el.style.setProperty(
       'backdrop-filter',
-      `url(#${entry.id}) blur(var(--glass-lens-blur, 6px)) saturate(180%)`,
+      `blur(var(--glass-lens-blur, 4px)) saturate(165%) url(#${entry.id})`,
     );
   }
 
   const resized = new ResizeObserver((entries) => {
     for (const { target } of entries) apply(target as HTMLElement);
   });
+  const nearby = new IntersectionObserver(
+    (entries) => {
+      for (const { target, isIntersecting } of entries) {
+        const element = target as HTMLElement;
+        const entry = surfaces.get(element);
+        if (!entry) continue;
+        entry.visible = isIntersecting;
+        apply(element);
+      }
+    },
+    { rootMargin: '96px' },
+  );
 
-  for (const el of document.querySelectorAll<HTMLElement>('[data-lens]')) {
-    surfaces.set(el, { id: `liquid-glass-${counter++}`, key: '' });
+  const observe = (el: HTMLElement) => {
+    if (surfaces.has(el)) return;
+    surfaces.set(el, { id: `liquid-glass-${counter++}`, key: '', visible: false });
     resized.observe(el);
-  }
+    nearby.observe(el);
+  };
+  document.querySelectorAll<HTMLElement>(surfaceSelector).forEach(observe);
+  initReflection(mayReflect, (el) => {
+    if (el.matches(surfaceSelector)) observe(el);
+  });
 
   document.documentElement.classList.add('liquid-glass');
   lessTransparency.addEventListener('change', () => {

@@ -13,7 +13,11 @@ const { lang } = Astro.props;
 const [email, ...profiles] = socialProfiles;
 ---
 
-<section class="contact container defer-render" id="contact" aria-labelledby="contact-heading">
+<section
+  class="contact container defer-render glass-card"
+  id="contact"
+  aria-labelledby="contact-heading"
+>
   <div class="text-column">
     <h2 id="contact-heading">{t(lang, 'contact.title')}</h2>
     <p class="text-justify">{t(lang, 'contact.body')}</p>
@@ -39,29 +43,13 @@ const [email, ...profiles] = socialProfiles;
 
 <style>
   .contact {
-    --contact-bg: #131a27;
-    --contact-fg: #f3f5f8;
-    --contact-muted: #aab3c3;
-    --contact-line: transparent;
-    --contact-line-strong: rgb(243 245 248 / 0.24);
-
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: clamp(18px, 4vw, 40px) clamp(24px, 5vw, 96px);
     margin-top: var(--section-gap);
     padding: clamp(16px, 4vw, 48px);
-    border: 1px solid var(--contact-line);
+    border: 1px solid var(--glass-edge);
     border-radius: var(--r-card);
-    background: var(--contact-bg);
-    color: var(--contact-fg);
-  }
-
-  :root[data-theme='dark'] .contact {
-    --contact-bg: var(--surface);
-    --contact-fg: var(--ink);
-    --contact-muted: var(--muted);
-    --contact-line: var(--line);
-    --contact-line-strong: var(--line-strong);
   }
 
   h2 {
@@ -74,7 +62,7 @@ const [email, ...profiles] = socialProfiles;
   p {
     max-width: 28em;
     margin-top: 10px;
-    color: var(--contact-muted);
+    color: var(--muted);
     font-size: 17px;
   }
 
@@ -96,13 +84,13 @@ const [email, ...profiles] = socialProfiles;
     letter-spacing: -0.02em;
     overflow-wrap: anywhere;
     text-decoration: underline;
-    text-decoration-color: var(--contact-line-strong);
+    text-decoration-color: var(--line-strong);
     text-decoration-thickness: 2px;
     text-underline-offset: 6px;
   }
 
   .contact__email:hover {
-    text-decoration-color: var(--gold);
+    text-decoration-color: var(--brand);
   }
 
   .contact__profiles {
@@ -119,13 +107,13 @@ const [email, ...profiles] = socialProfiles;
     align-items: center;
     column-gap: clamp(8px, 1.5vw, 12px);
     padding: 9px clamp(8px, 2vw, 16px);
-    border: 1px solid var(--contact-line-strong);
+    border: 1px solid var(--line-strong);
     border-radius: var(--r-panel);
     transition: border-color 160ms ease;
   }
 
   .contact__profiles a:hover {
-    border-color: var(--contact-fg);
+    border-color: var(--ink);
   }
 
   .contact__profiles span {
@@ -135,13 +123,9 @@ const [email, ...profiles] = socialProfiles;
 
   .contact__profiles small {
     grid-column: 2;
-    color: var(--contact-muted);
+    color: var(--muted);
     font-size: 13px;
     overflow-wrap: anywhere;
-  }
-
-  .contact :focus-visible {
-    outline-color: var(--gold);
   }
 
   @media (width < 740px) {

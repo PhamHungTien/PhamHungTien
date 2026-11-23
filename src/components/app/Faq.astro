@@ -25,7 +25,7 @@ const parts = (text: string) =>
         <h2 id="faq-heading">{t(lang, 'app.faq')}</h2>
       </div>
     </div>
-    <div class="faq__list text-column">
+    <div class="faq__list glass-card text-column">
       {faq.map((item) => (
         <details name="faq">
           <summary>
@@ -61,9 +61,8 @@ const parts = (text: string) =>
   }
   .faq__list {
     max-width: 860px;
-    border: 1px solid var(--line);
+    border: 1px solid var(--glass-edge);
     border-radius: var(--r-card);
-    background: var(--surface);
     padding-inline: clamp(14px, 2.5vw, 26px);
   }
 

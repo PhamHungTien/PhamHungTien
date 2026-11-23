@@ -13,7 +13,7 @@ const { lang } = Astro.props;
 
 <dialog class="lightbox dialog--fullscreen" data-lightbox aria-label="">
   <form method="dialog">
-    <button class="lightbox__close glass" aria-label={t(lang, 'app.close')} data-lens>
+    <button class="lightbox__close dialog-close glass" aria-label={t(lang, 'app.close')} data-lens>
       <X size={24} aria-hidden="true" />
     </button>
   </form>
@@ -93,13 +93,6 @@ const { lang } = Astro.props;
     --glass-rim: rgb(255 255 255 / 0.28);
     --glass-rim-low: rgb(255 255 255 / 0.08);
     --glass-shine: rgb(255 255 255 / 0.4);
-    display: grid;
-    width: 48px;
-    height: 48px;
-    place-items: center;
-    padding: 0;
-    border: 0;
-    border-radius: var(--r-pill);
     color: #fff;
   }
 

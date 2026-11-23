@@ -10,7 +10,7 @@ interface Props {
 export default function BoardEmpty({ lang, filtered, onReset }: Props) {
   const text = boardText[lang];
   return (
-    <div className="board-empty">
+    <div className="board-empty glass-card">
       <p role="status">{filtered ? text.noMatches : text.empty}</p>
       {filtered && (
         <button type="button" className="board-secondary" onClick={onReset}>

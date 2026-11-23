@@ -101,7 +101,7 @@ function Thread({
   const canDelete = (authorId: string) => user?.uid === authorId || isAdmin(user);
 
   return (
-    <article className="board-card">
+    <article className="board-card glass-card">
       <header className="board-card__head">
         <div>
           <strong>{post.author}</strong>
@@ -296,7 +296,7 @@ export default function AppBoard({ app, name, lang }: { app: string; name: strin
           <p className="board-muted">{text.about(name)}</p>
         </div>
         {user ? (
-          <div className="board-account">
+          <div className="board-account glass glass-panel">
             <strong>{user.displayName || text.member}</strong>
             <button
               className="board-icon"

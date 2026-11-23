@@ -66,17 +66,16 @@ its own shape.
 
 The floating controls use Liquid Glass from the header, menus and segmented controls to
 the search field, gallery arrows, video play button and dialogs.
-App tiles, guide cards, feature cards, download choices and discussion composers share the
-same edge light and use a translucent gradient. Standalone support and guide download panels
-use a denser tint over a blurred backdrop. Articles, FAQs and discussion threads use solid
-surfaces for reading.
+App tiles, guide cards, fact panels, download choices and discussions all use a translucent
+tint over a blurred backdrop. Support panels, menus and dialogs use a denser tint for longer
+labels and actions. Articles sit directly on the page.
 
 The shared material lives in `global.css`:
 
 - `.glass`, `.segmented` and `.button--secondary` layer `--glass-tint` over a blurred,
   saturated backdrop. `.glass-panel` chooses the denser tint for standalone panels;
-- `.glass-card` uses a translucent gradient and the card shadow for grids, leaving the
-  backdrop unfiltered;
+- `.glass-card` blurs the page behind the card and adds a translucent tint, a soft edge
+  highlight and the card shadow;
 - a hairline edge and inner edge light (inset shadows), plus a specular rim: a 1 px
   gradient border, bright at the top left where light catches the edge and faint at the
   bottom right;
@@ -86,20 +85,22 @@ The shared material lives in `global.css`:
 Refraction: Apple's glass bends what is behind it at its curved edge. On the web that takes
 an SVG displacement map inside `backdrop-filter`, which only Chromium renders (Firefox
 accepts the value and draws nothing; Safari ignores it). `src/scripts/liquid-glass.ts`
-therefore enables it for Chromium alone: every `[data-lens]` surface gets a map drawn for
-its own size and corner radius (a narrow rim, strongest at the edge), redrawn on resize, and
-the blur under it drops to 6 px so the bend shows. Other browsers keep the blur, tint and rim.
+therefore enables it for Chromium alone. Cards and `[data-lens]` controls near the viewport
+get a size-matched map with a curved edge. The backdrop is softened before refraction so
+the rim can bend visible detail. The reflection on the rim follows a mouse when motion and
+transparency preferences allow it. Other browsers keep the blur, tint and responsive rim.
 
 Rules:
 
-- Controls within glass panels use a solid surface or a transparent hover treatment.
+- Secondary controls in glass panels use a light tint over the panel's blurred surface.
+  Dialogs share sheet geometry, edge lighting and a dimmed backdrop.
 - The header's glass layer sits behind its controls, so the language and mobile menus
   can blur the page through their own sheets. Discussion filters use the denser tint and
   preserve native select controls.
 - Platform filters, screenshot device tabs and the app navigation share the sliding
   selection indicator. Each control keeps its own keyboard behavior and selected state.
 - Text on glass should meet WCAG AA contrast in both themes.
-- `prefers-reduced-transparency` and `prefers-contrast: more` replace the glass with solid
+- Reduced transparency, increased contrast and forced colors replace the glass with solid
   surfaces and a clear edge, and switch refraction off; without `backdrop-filter` the tint
   is denser.
 - Primary buttons are solid tints with a specular edge, so their contrast never depends on

@@ -14,13 +14,14 @@ const { lang } = Astro.props;
 ---
 
 <dialog
-  class="donate glass"
+  class="donate dialog-sheet glass glass-panel"
   aria-labelledby="donate-title"
   aria-describedby="donate-description"
   data-donate-dialog
+  data-lens
 >
   <form method="dialog">
-    <button class="donate__close" aria-label={t(lang, 'app.close')}>
+    <button class="donate__close dialog-close" aria-label={t(lang, 'app.close')}>
       <X size={20} aria-hidden="true" />
     </button>
   </form>
@@ -40,23 +41,16 @@ const { lang } = Astro.props;
     />
     <figcaption>{t(lang, 'donate.scan')}</figcaption>
   </figure>
-  <a
-    class="button button--secondary donate__action"
-    href={qr.src}
-    download="pham-hung-tien-vietqr.jpg"
-  >
-    <Download size={16} aria-hidden="true" />
-    {t(lang, 'donate.save')}
-  </a>
-  <a
-    class="button button--primary donate__action"
-    href={SITE.paypal}
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    {t(lang, 'donate.paypal')}
-    <ArrowUpRight size={18} aria-hidden="true" />
-  </a>
+  <div class="donate__actions">
+    <a class="button button--secondary" href={qr.src} download="pham-hung-tien-vietqr.jpg">
+      <Download size={16} aria-hidden="true" />
+      {t(lang, 'donate.save')}
+    </a>
+    <a class="button button--primary" href={SITE.paypal} target="_blank" rel="noopener noreferrer">
+      {t(lang, 'donate.paypal')}
+      <ArrowUpRight size={18} aria-hidden="true" />
+    </a>
+  </div>
   <p class="donate__note">{t(lang, 'donate.note')}</p>
 </dialog>
 
@@ -78,40 +72,15 @@ const { lang } = Astro.props;
 
 <style>
   .donate {
-    width: min(420px, calc(100% - 32px));
-    max-height: calc(100dvh - 32px);
-    margin: auto;
-    padding: clamp(20px, 5dvh, 32px) clamp(16px, 5vw, 28px) 18px;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    border: 0;
-    border-radius: var(--r-sheet);
-    color: var(--ink);
+    container-type: inline-size;
     text-align: center;
-    --glass-tint: var(--glass-tint-strong);
-  }
-
-  .donate[open] {
-    position: fixed;
-  }
-
-  .donate::backdrop {
-    background: rgb(8 11 18 / 0.5);
-    -webkit-backdrop-filter: blur(6px);
-    backdrop-filter: blur(6px);
   }
 
   .donate__close {
     position: absolute;
     top: 12px;
     right: 12px;
-    display: grid;
-    width: 44px;
-    height: 44px;
-    place-items: center;
-    border: 0;
-    border-radius: var(--r-pill);
-    background: transparent;
+    background: color-mix(in srgb, var(--ink) 6%, transparent);
     color: var(--muted);
   }
 
@@ -164,26 +133,30 @@ const { lang } = Astro.props;
     font-size: 13px;
   }
 
-  .donate__action {
-    width: 100%;
-    margin-top: 10px;
+  .donate__actions {
+    display: grid;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .donate__actions .button {
+    min-inline-size: 0;
+    padding: 6px 12px;
+    overflow-wrap: anywhere;
+  }
+
+  .donate__actions .button :global(svg) {
+    flex: none;
+  }
+
+  @container (width >= 275px) {
+    .donate__actions {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 
   .donate__note {
     margin-top: 16px;
     font-size: 13px;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .donate[open] {
-      animation: rise 200ms var(--ease);
-    }
-
-    @keyframes rise {
-      from {
-        opacity: 0;
-        transform: translateY(8px);
-      }
-    }
   }
 </style>

@@ -39,9 +39,8 @@
   align-items: center;
   gap: 10px;
   padding: 4px 4px 4px 12px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--glass-edge);
   border-radius: var(--r-control);
-  background: var(--surface);
 }
 
 .board-account__meta {
@@ -151,12 +150,8 @@
   display: grid;
   gap: 10px;
   padding: 18px 20px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--glass-edge);
   border-radius: var(--r-card);
-}
-
-.board-card:not(.glass-card) {
-  background: var(--surface);
 }
 
 .board-card--pinned {
@@ -479,12 +474,13 @@
   display: grid;
   gap: 8px;
   padding: 16px;
+  border: 1px solid var(--glass-edge);
   border-radius: var(--r-control);
-  background: var(--surface-2);
+  background: color-mix(in srgb, var(--glass-tint) 66%, transparent);
 }
 
 .board-reply--admin {
-  background: color-mix(in srgb, var(--brand) 8%, var(--surface-2));
+  background: color-mix(in srgb, var(--brand) 8%, var(--glass-tint));
 }
 
 .board-empty {
@@ -495,6 +491,10 @@
   text-align: center;
 }
 
+.board-empty.glass-card {
+  border: 1px solid var(--glass-edge);
+}
+
 .board-empty > .board-secondary {
   margin-top: 12px;
 }
@@ -503,17 +503,15 @@
   color: var(--danger);
 }
 
-.board-popover {
+.board-popover.glass {
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
   z-index: 20;
   width: min(340px, calc(100vw - 32px));
   overflow: hidden;
-  border: 1px solid var(--line);
+  border: 1px solid var(--glass-edge);
   border-radius: var(--r-card);
-  background: var(--surface);
-  box-shadow: var(--shadow-media);
 }
 
 .board-popover__head {
@@ -551,30 +549,7 @@
 }
 
 .board-modal {
-  width: min(400px, calc(100% - 32px));
-  padding: 28px;
-  border: 0;
-  border-radius: var(--r-sheet);
-  background: var(--glass-tint-strong);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
-  backdrop-filter: blur(var(--glass-blur)) saturate(180%);
-  box-shadow:
-    inset 0 0 0 1px var(--glass-edge),
-    inset 0 1px 0 var(--glass-rim),
-    var(--glass-shadow);
-  color: var(--ink);
-}
-
-@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
-  .board-modal {
-    background: var(--surface);
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-  }
-}
-
-.board-modal::backdrop {
-  background: rgb(8 11 18 / 0.5);
+  --dialog-width: 400px;
 }
 
 .board-modal h3 {
