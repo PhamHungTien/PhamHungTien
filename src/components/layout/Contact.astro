@@ -13,11 +13,7 @@ const { lang } = Astro.props;
 const [email, ...profiles] = socialProfiles;
 ---
 
-<section
-  class="contact container defer-render glass-card"
-  id="contact"
-  aria-labelledby="contact-heading"
->
+<section class="contact container" id="contact" aria-labelledby="contact-heading">
   <div class="text-column">
     <h2 id="contact-heading">{t(lang, 'contact.title')}</h2>
     <p class="text-justify">{t(lang, 'contact.body')}</p>
@@ -28,7 +24,7 @@ const [email, ...profiles] = socialProfiles;
       {profiles.map((profile) => (
         <li>
           <a
-            class="glass glass-link"
+            class="glass-card glass-link"
             href={profile.href}
             target="_blank"
             rel="noopener noreferrer me"
@@ -88,7 +84,6 @@ const [email, ...profiles] = socialProfiles;
   }
 
   .contact__profiles a {
-    --glass-tint: color-mix(in srgb, var(--surface) 14%, transparent);
     --glass-lift: 0 2px 12px -8px rgb(0 0 0 / 0.3);
     display: grid;
     height: 100%;
@@ -98,8 +93,6 @@ const [email, ...profiles] = socialProfiles;
     column-gap: clamp(8px, 1.5vw, 12px);
     padding: 9px clamp(8px, 2vw, 16px);
     border-radius: var(--r-panel);
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
   }
 
   .contact__profiles span {

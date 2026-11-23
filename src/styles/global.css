@@ -78,7 +78,6 @@
   --glass-edge-shade: rgb(25 31 45 / 0.22);
   --glass-shadow: 0 1px 2px rgb(16 24 40 / 0.05), 0 12px 32px -8px rgb(16 24 40 / 0.18);
   --glass-blur: 14px;
-  --glass-card-blur: 6px;
   --glass-card-tint: rgb(250 251 253 / 0.3);
   --glass-card-light: rgb(255 255 255 / 0.16);
   /* Type scale (Be Vietnam Pro 400 / 500 / 600). */
@@ -528,13 +527,18 @@ a:not([class]):focus-visible {
 }
 
 .glass-card {
-  --glass-lens-blur: 3px;
+  --glass-lens-base: saturate(165%);
   --glass-lift: var(--shadow-card);
   background:
     linear-gradient(145deg, var(--glass-card-highlight, var(--glass-card-light)), transparent 70%),
     var(--glass-card-tint);
-  -webkit-backdrop-filter: blur(var(--glass-card-blur)) saturate(155%);
-  backdrop-filter: blur(var(--glass-card-blur)) saturate(155%);
+  -webkit-backdrop-filter: saturate(155%);
+  backdrop-filter: saturate(155%);
+}
+
+.glass-card.glass-link {
+  --glass-card-tint: color-mix(in srgb, var(--surface) 14%, transparent);
+  --glass-card-highlight: transparent;
 }
 
 .glass-panel {

@@ -5,8 +5,8 @@
  * filter inside backdrop-filter: a displacement map shifts backdrop pixels near the edge, as
  * if seen through the rim of a lens. Only Chromium renders url() in backdrop-filter (Firefox
  * accepts the value and draws nothing, Safari ignores it), so it is enabled for Chromium
- * alone; everywhere else the CSS material (blur, saturation, tint, specular rim) is the look.
- * Reduced transparency and increased contrast turn it off, along with the blur.
+ * alone; everywhere else the CSS material supplies tint and a specular rim.
+ * Cards keep the backdrop sharp. Reduced transparency and increased contrast turn the lens off.
  *
  * Each surface gets a map drawn for its own size and corner radius, redrawn when it resizes.
  */
@@ -218,7 +218,7 @@ export function initLiquidGlass(): void {
     }
     el.style.setProperty(
       'backdrop-filter',
-      `blur(var(--glass-lens-blur, 4px)) saturate(165%) url(#${entry.id})`,
+      `var(--glass-lens-base, blur(4px) saturate(165%)) url(#${entry.id})`,
     );
   }
 
