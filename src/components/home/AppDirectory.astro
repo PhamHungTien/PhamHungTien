@@ -1,6 +1,6 @@
 ---
 import { getAppCopy } from '../../lib/app-copy';
-import { Image } from 'astro:assets';
+import { getImage, Image } from 'astro:assets';
 import { Search } from '@lucide/astro';
 import type { Locale as Lang } from '../../i18n/locales';
 import { apps } from '../../data/apps';
@@ -14,6 +14,10 @@ interface Props {
 }
 
 const { lang } = Astro.props;
+const lunarPortrait = storeMedia('lunarblock', lang).devices.find(
+  ({ device }) => device === 'iphone',
+)?.shots[0];
+const lunarCompactArt = lunarPortrait && (await getImage({ src: lunarPortrait, width: 480 }));
 // Only platforms that at least one app supports get a filter button.
 const groups = PLATFORM_GROUPS.filter((group) =>
   apps.some((app) => platformGroupsOf(app.platforms).includes(group)),
@@ -96,17 +100,25 @@ const lastOf = (index: number) => {
           {...lastOf(index)}
         >
           <a class="app-card glass-card" href={appPath(app, lang)} style={`--app: ${app.accent}`}>
-            <div class="app-card__art">
+            <div
+              class="app-card__art"
+              data-portrait={app.slug === 'lunarblock' && lunarCompactArt ? '' : undefined}
+            >
               {art && (
-                <Image
-                  src={art}
-                  alt=""
-                  format="webp"
-                  width={Math.min(art.width, 1200)}
-                  widths={[480, 800, 1200].filter((w) => w <= art.width)}
-                  sizes="(max-width: 767px) 46vw, (max-width: 1099px) 46vw, 384px"
-                  loading={index < 3 ? 'eager' : 'lazy'}
-                />
+                <picture>
+                  {app.slug === 'lunarblock' && lunarCompactArt && (
+                    <source media="(width < 768px)" srcset={lunarCompactArt.src} />
+                  )}
+                  <Image
+                    src={art}
+                    alt=""
+                    format="webp"
+                    width={Math.min(art.width, 1200)}
+                    widths={[480, 800, 1200].filter((w) => w <= art.width)}
+                    sizes="(max-width: 767px) 46vw, (max-width: 1099px) 46vw, 384px"
+                    loading={index < 3 ? 'eager' : 'lazy'}
+                  />
+                </picture>
               )}
             </div>
             <div class="app-card__body text-column">
@@ -302,13 +314,20 @@ const lastOf = (index: number) => {
   }
 
   .app-card__art {
-    aspect-ratio: 3 / 2;
+    position: relative;
+    aspect-ratio: var(--app-art-ratio, 3 / 2);
+    align-self: stretch;
+    justify-self: stretch;
+    min-block-size: var(--app-art-min-height, 0px);
+    min-inline-size: 0;
     flex: none;
     overflow: hidden;
     background: color-mix(in srgb, var(--app) 18%, var(--surface-2));
   }
 
   .app-card__art :global(img) {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -496,14 +515,20 @@ const lastOf = (index: number) => {
     }
 
     li[data-odd] .app-card {
+      --app-art-ratio: auto;
+      --app-art-min-height: 84px;
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
-      align-items: center;
+      align-items: stretch;
     }
 
     li[data-odd] .app-card__desc {
       display: block;
       font-size: 14px;
+    }
+
+    .app-card__art[data-portrait] :global(img) {
+      object-position: center 73%;
     }
   }
 
@@ -513,9 +538,11 @@ const lastOf = (index: number) => {
     }
 
     .app-card {
+      --app-art-ratio: auto;
+      --app-art-min-height: 84px;
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
-      align-items: center;
+      align-items: stretch;
     }
 
     li[data-odd] .app-card__desc {
