@@ -7,9 +7,10 @@
  * are solved for each screen so that no planet and no name ever crosses the brand planet or
  * a neighbour, at rest or mid-turn.
  *
- * The orbit presents one app and its download links in front. Dragging spins it with inertia and
- * it settles on the nearest app; focusing a planet with the keyboard turns it to the front;
- * arrow keys move between planets. Pointer movement tilts the camera (parallax).
+ * The orbit drifts past the front app and its download links before turning to the next app.
+ * Dragging spins it with inertia and settles on the nearest app; focusing a planet with the
+ * keyboard turns it to the front; arrow keys move between planets. Pointer movement tilts
+ * the camera (parallax).
  *
  * Only transforms and opacity change per frame, every write is cached, and the loop sleeps
  * whenever nothing moves.
@@ -23,7 +24,10 @@ const OUTER = 0.5;
 /** Camera distance in layout units: enough perspective for depth, not enough to distort. */
 const CAMERA_DISTANCE = 2.3;
 /** Angular frequency of the critically damped turn, in rad/s. */
-const SPRING = 3.4;
+const SPRING = 8;
+/** Time and fraction of an app's arc to drift before featuring the next one. */
+const IDLE_SECONDS = 6;
+const IDLE_SWEEP = 0.09;
 /** Extra size of the app in front. */
 const FEATURE_SCALE = 1.08;
 const SAMPLE_COUNT = 48;
@@ -159,6 +163,8 @@ export function initPlanetSystem(): void {
   let rotation = 0;
   let velocity = 0;
   let target = 0;
+  let idleTime = 0;
+  let autoTurning = false;
   let arrival = 0;
   let arrived = false;
   let scrollTilt = 0;
@@ -168,7 +174,8 @@ export function initPlanetSystem(): void {
   let previous = 0;
   let visible = false;
   let hovered = -1;
-  let focusedIndex = -1;
+  let captionHovered = false;
+  let sceneHasFocus = scene.contains(document.activeElement);
   let featured = -1;
   /** Where the caption was painted before the engine ran (server-rendered, under the orbit). */
   let captionStart: { x: number; y: number } | null = null;
@@ -190,6 +197,7 @@ export function initPlanetSystem(): void {
 
   const motionEnabled = () => !reduced.matches && root.dataset.motion !== 'off';
   const awake = () => motionEnabled() && visible && !document.hidden;
+  const interacting = () => hovered >= 0 || captionHovered || sceneHasFocus || gesture !== null;
 
   /** Index of the planet nearest the front for a given rotation. */
   const frontIndex = (rot: number) => ((Math.round(-rot / step) % count) + count) % count;
@@ -411,7 +419,7 @@ export function initPlanetSystem(): void {
     const holding = !arrived && !!captionStart && !gesture?.dragging;
     const captionAlpha = holding
       ? 1
-      : (arrived ? 1 : smoothstep(0.15, 0.7, arrival)) * (1 - smoothstep(0.12, 0.42, offset));
+      : (arrived ? 1 : smoothstep(0.15, 0.7, arrival)) * (1 - smoothstep(0.2, 0.42, offset));
     const leadNameHidden = 1 - smoothstep(0.42, 0.64, offset);
 
     if (lead !== featured) {
@@ -496,12 +504,13 @@ export function initPlanetSystem(): void {
 
   /* ----------------------------------------------------------------- loop */
   function stepFrame(dt: number) {
+    const engaged = interacting();
     if (!arrived) {
       arrival += dt;
       if (arrival > planets[planets.length - 1].arrivalDelay + 1.5) arrived = true;
     }
 
-    if (!gesture?.dragging) {
+    if (!gesture?.dragging && !(autoTurning && engaged)) {
       // Critically damped spring toward the target rotation (sub-stepped for stability).
       let remaining = dt;
       while (remaining > 1e-6) {
@@ -514,6 +523,20 @@ export function initPlanetSystem(): void {
       if (Math.abs(rotation - target) < 5e-4 && Math.abs(velocity) < 3e-3) {
         rotation = target;
         velocity = 0;
+        autoTurning = false;
+
+        if (arrived && count > 1 && !engaged) {
+          idleTime += dt;
+          if (idleTime >= IDLE_SECONDS) {
+            idleTime = 0;
+            autoTurning = true;
+            target = alignedRotation(frontIndex(rotation), rotation) - step;
+          } else {
+            const drift = (step * IDLE_SWEEP * dt) / IDLE_SECONDS;
+            target -= drift;
+            rotation = target;
+          }
+        }
       }
       // Keep the numbers small without changing the picture.
       if (Math.abs(target) > TAU * 4) {
@@ -529,10 +552,17 @@ export function initPlanetSystem(): void {
         p.hover = p.index === hovered ? 1 : 0;
     });
 
-    scrollTilt = approach(scrollTilt, scrollTiltTarget, 6, dt);
-    cam.pitch = approach(cam.pitch, basePitch + camTarget.pitchOffset + scrollTilt * 0.18, 3.5, dt);
-    cam.roll = approach(cam.roll, baseRoll + camTarget.rollOffset, 3.5, dt);
-    yaw = approach(yaw, camTarget.yaw, 2.8, dt);
+    if (!engaged) {
+      scrollTilt = approach(scrollTilt, scrollTiltTarget, 6, dt);
+      cam.pitch = approach(
+        cam.pitch,
+        basePitch + camTarget.pitchOffset + scrollTilt * 0.18,
+        3.5,
+        dt,
+      );
+      cam.roll = approach(cam.roll, baseRoll + camTarget.rollOffset, 3.5, dt);
+      yaw = approach(yaw, camTarget.yaw, 2.8, dt);
+    }
 
     render();
   }
@@ -545,13 +575,14 @@ export function initPlanetSystem(): void {
   }
 
   function settled() {
+    const engaged = interacting();
     return (
       arrived &&
       !gesture?.dragging &&
-      rotation === target &&
-      velocity === 0 &&
+      (engaged || count < 2) &&
+      ((autoTurning && engaged) || (rotation === target && velocity === 0)) &&
       planets.every((p) => p.hover === 0 || p.hover === 1) &&
-      !cameraMoving()
+      (engaged || !cameraMoving())
     );
   }
 
@@ -573,6 +604,8 @@ export function initPlanetSystem(): void {
 
   /** Turns planet `index` to the front. */
   function bringToFront(index: number) {
+    idleTime = 0;
+    autoTurning = false;
     target = alignedRotation(index, rotation);
     if (motionEnabled()) wake();
     else {
@@ -601,8 +634,7 @@ export function initPlanetSystem(): void {
   const onOrientation = (event: DeviceOrientationEvent) => {
     if (
       !awake() ||
-      focusedIndex >= 0 ||
-      gesture ||
+      interacting() ||
       event.beta == null ||
       event.gamma == null ||
       !Number.isFinite(event.beta) ||
@@ -641,14 +673,25 @@ export function initPlanetSystem(): void {
   coarsePointer.addEventListener('change', syncSensor);
 
   function sync() {
-    scene!.dataset.motion = motionEnabled() ? 'live' : 'still';
+    const enabled = motionEnabled();
+    scene!.dataset.motion = enabled ? 'live' : 'still';
     syncSensor();
-    if (!motionEnabled()) {
+    if (!awake()) {
       cancelAnimationFrame(frame);
       frame = 0;
+      previous = 0;
+    }
+    if (!enabled) {
+      const captured = gesture?.id;
       gesture = null;
+      delete scene!.dataset.dragging;
+      if (captured !== undefined && scene!.hasPointerCapture(captured))
+        scene!.releasePointerCapture(captured);
       arrived = true;
       velocity = 0;
+      idleTime = 0;
+      autoTurning = false;
+      target = alignedRotation(frontIndex(target), target);
       rotation = target;
       cam.pitch = basePitch;
       cam.roll = baseRoll;
@@ -716,18 +759,26 @@ export function initPlanetSystem(): void {
     });
   });
 
+  caption?.addEventListener('pointerenter', (event) => {
+    if (event.pointerType === 'mouse') captionHovered = true;
+  });
+  caption?.addEventListener('pointerleave', (event) => {
+    if (event.pointerType !== 'mouse') return;
+    captionHovered = false;
+    wake();
+  });
+
   // Keyboard: focusing a planet turns it to the front; arrow keys move between planets.
   scene.addEventListener('focusin', (event) => {
+    sceneHasFocus = true;
     const index = planets.findIndex((p) => p.el === event.target);
     if (index < 0 || !(event.target as HTMLElement).matches(':focus-visible')) return;
-    focusedIndex = index;
     bringToFront(index);
   });
   scene.addEventListener('focusout', () =>
     queueMicrotask(() => {
-      if (scene.contains(document.activeElement)) return;
-      focusedIndex = -1;
-      if (motionEnabled()) wake();
+      sceneHasFocus = scene.contains(document.activeElement);
+      if (!sceneHasFocus) wake();
     }),
   );
   scene.addEventListener('keydown', (event) => {
@@ -742,14 +793,7 @@ export function initPlanetSystem(): void {
   // Pointer parallax across the whole hero.
   const hero = scene.closest('section') ?? scene;
   hero.addEventListener('pointermove', (event) => {
-    if (
-      event.pointerType !== 'mouse' ||
-      !motionEnabled() ||
-      hovered >= 0 ||
-      gesture?.dragging ||
-      caption?.contains(event.target as Node)
-    )
-      return;
+    if (event.pointerType !== 'mouse' || !motionEnabled() || interacting()) return;
     const box = scene.getBoundingClientRect();
     const nx = clamp(((event.clientX - box.left) / box.width) * 2 - 1, -1, 1);
     const ny = clamp(((event.clientY - box.top) / box.height) * 2 - 1, -1, 1);
@@ -792,14 +836,9 @@ export function initPlanetSystem(): void {
   scene.addEventListener('dragstart', (event) => event.preventDefault());
 
   scene.addEventListener('pointerdown', (event) => {
-    if (
-      !event.isPrimary ||
-      event.button !== 0 ||
-      !motionEnabled() ||
-      caption?.contains(event.target as Node)
-    )
-      return;
+    if (!event.isPrimary || event.button !== 0 || !motionEnabled()) return;
     suppressClick = false;
+    if (caption?.contains(event.target as Node)) return;
     const top = scene.getBoundingClientRect().top;
     gesture = {
       id: event.pointerId,
@@ -822,10 +861,13 @@ export function initPlanetSystem(): void {
       if (Math.max(Math.abs(dx), Math.abs(dy)) < 7) return;
       if (Math.abs(dy) > Math.abs(dx) * 1.2) {
         gesture = null; // Vertical swipe: let the page scroll
+        wake();
         return;
       }
       gesture.dragging = true;
       suppressClick = true;
+      idleTime = 0;
+      autoTurning = false;
       velocity = 0;
       scene.setPointerCapture(event.pointerId);
       scene.dataset.dragging = 'true';
@@ -857,8 +899,8 @@ export function initPlanetSystem(): void {
     }
     wake();
   };
-  scene.addEventListener('pointerup', endGesture);
-  scene.addEventListener('pointercancel', endGesture);
+  window.addEventListener('pointerup', endGesture);
+  window.addEventListener('pointercancel', endGesture);
   scene.addEventListener('lostpointercapture', endGesture);
 
   scene.addEventListener(
@@ -876,11 +918,6 @@ export function initPlanetSystem(): void {
   /* ------------------------------------------------------------ lifecycle */
   new IntersectionObserver(([entry]) => {
     visible = entry.isIntersecting;
-    if (!visible) {
-      cancelAnimationFrame(frame);
-      frame = 0;
-      previous = 0;
-    }
     sync();
   }).observe(scene);
 

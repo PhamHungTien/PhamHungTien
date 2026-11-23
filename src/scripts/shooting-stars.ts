@@ -1,27 +1,26 @@
 /**
- * The home hero's sky reacts to the mouse and occasionally plays a shooting-star animation.
- * Background effects sleep once the hero leaves view, when the tab is hidden, or when
- * visitors turn off decorative motion.
+ * The shared sky follows the mouse. The home hero also plays shooting stars while visible.
+ * Both effects respect visibility and reduced-motion preferences.
  */
 export function initShootingStars(): void {
   const sky = document.querySelector<HTMLElement>('[data-sky]');
   const space = sky?.closest<HTMLElement>('.space');
   const hero = document.querySelector<HTMLElement>('[data-home-hero]');
-  if (!sky || !space || !hero) return;
+  if (!sky || !space) return;
 
   const root = document.documentElement;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
+  const finePointer = matchMedia('(any-hover: hover) and (any-pointer: fine)');
   let timer = 0;
-  let visible = false;
+  let heroVisible = false;
   let first = true;
   let frame = 0;
   let x = 0;
   let y = 0;
   const activeMeteors = new Set<Animation>();
 
-  const enabled = () =>
-    visible && !document.hidden && !reduced.matches && root.dataset.motion !== 'off';
+  const motionEnabled = () => !document.hidden && !reduced.matches && root.dataset.motion !== 'off';
+  const meteorsEnabled = () => heroVisible && motionEnabled();
   const random = (min: number, max: number) => min + Math.random() * (max - min);
 
   function launch() {
@@ -71,32 +70,39 @@ export function initShootingStars(): void {
 
   function schedule() {
     clearTimeout(timer);
-    if (!enabled()) {
+    if (!meteorsEnabled()) {
       activeMeteors.forEach((animation) => animation.cancel());
-      resetPointer();
       return;
     }
     if (typeof sky!.animate !== 'function') return;
-    const wait = first ? 4200 : random(9000, 17000);
+    const wait = first ? 1100 : random(1400, 3200);
     first = false;
     timer = window.setTimeout(() => {
-      if (enabled()) launch();
+      if (meteorsEnabled()) launch();
       schedule();
     }, wait);
   }
 
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      visible = entry.isIntersecting && entry.intersectionRatio >= 0.25;
-      space.dataset.heroVisible = String(visible);
-      schedule();
-    },
-    { threshold: 0.25 },
-  );
-  observer.observe(hero);
-  document.addEventListener('visibilitychange', schedule);
-  reduced.addEventListener('change', schedule);
-  new MutationObserver(schedule).observe(root, {
+  if (hero) {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        heroVisible = entry.isIntersecting && entry.intersectionRatio >= 0.25;
+        space.dataset.heroVisible = String(heroVisible);
+        schedule();
+      },
+      { threshold: 0.25 },
+    );
+    observer.observe(hero);
+  }
+
+  function syncMotion() {
+    if (!motionEnabled()) resetPointer();
+    if (hero) schedule();
+  }
+
+  document.addEventListener('visibilitychange', syncMotion);
+  reduced.addEventListener('change', syncMotion);
+  new MutationObserver(syncMotion).observe(root, {
     attributes: true,
     attributeFilter: ['data-motion'],
   });
@@ -111,10 +117,13 @@ export function initShootingStars(): void {
   }
 
   // Coalesce pointer movement into one transform update per frame.
-  hero.addEventListener(
+  window.addEventListener(
     'pointermove',
     (event) => {
-      if (event.pointerType !== 'mouse' || !finePointer.matches || !enabled()) return;
+      if (event.pointerType !== 'mouse' || !finePointer.matches || !motionEnabled()) {
+        resetPointer();
+        return;
+      }
       x = Math.round(event.clientX);
       y = Math.round(event.clientY);
       if (frame) return;
@@ -127,9 +136,9 @@ export function initShootingStars(): void {
         space.dataset.pointer = 'active';
       });
     },
-    { passive: true },
+    { passive: true, capture: true },
   );
-  hero.addEventListener('pointerleave', resetPointer);
+  root.addEventListener('pointerleave', resetPointer);
   window.addEventListener('blur', resetPointer);
   finePointer.addEventListener('change', resetPointer);
 }
