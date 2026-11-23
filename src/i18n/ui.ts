@@ -48,6 +48,7 @@ const en = {
 
   'contact.title': 'Get in touch',
   'contact.body': 'Email me for feedback, support or collaboration.',
+  'contact.email': 'Email',
 
   'footer.tagline': 'Offline-first apps that keep your data private.',
   'footer.apps': 'Apps',
@@ -156,6 +157,7 @@ const vi: Record<UiKey, string> = {
 
   'contact.title': 'Liên hệ',
   'contact.body': 'Gửi email để góp ý, báo lỗi hoặc hợp tác.',
+  'contact.email': 'Email',
 
   'footer.tagline': 'Ứng dụng offline, tôn trọng quyền riêng tư.',
   'footer.apps': 'Ứng dụng',
@@ -259,6 +261,7 @@ const ja: Record<UiKey, string> = {
   'home.apps.openSource': 'オープンソース',
   'contact.title': 'お問い合わせ',
   'contact.body': 'ご意見、サポート、共同開発のご相談はメールでどうぞ。',
+  'contact.email': 'メール',
   'footer.tagline': 'オフライン機能とプライバシーを大切にしたアプリ。',
   'footer.apps': 'アプリ',
   'footer.connect': '連絡先とリンク',
@@ -358,6 +361,7 @@ const es: Record<UiKey, string> = {
   'contact.title': 'Contacto',
   'contact.body':
     'Escríbeme por correo si tienes sugerencias, necesitas ayuda o quieres colaborar.',
+  'contact.email': 'Correo electrónico',
   'footer.tagline': 'Apps con funciones sin conexión que respetan tu privacidad.',
   'footer.apps': 'Aplicaciones',
   'footer.connect': 'Contacto y redes',
@@ -455,6 +459,7 @@ const zh: Record<UiKey, string> = {
   'home.apps.openSource': '开源',
   'contact.title': '联系我',
   'contact.body': '欢迎通过电子邮件提出建议、寻求帮助或洽谈合作。',
+  'contact.email': '电子邮件',
   'footer.tagline': '支持离线功能并注重隐私的应用。',
   'footer.apps': '应用',
   'footer.connect': '联系与社交账号',
