@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import UtilityAction from '../ui/UtilityAction.astro';
 import type { App } from '../../data/types';
 import type { Locale } from '../../i18n/locales';
 import { getAppCopy } from '../../lib/app-copy';
@@ -19,9 +20,7 @@ const others = apps.filter((other) => other.slug !== app.slug);
 <section class="more container section" aria-labelledby="more-heading">
   <div class="section-head">
     <h2 id="more-heading">{t(lang, 'app.more')}</h2>
-    <a class="text-link" href={`${homePath(lang)}#apps`}>
-      {t(lang, 'nav.allApps')}
-    </a>
+    <UtilityAction kind="catalog" href={`${homePath(lang)}#apps`} label={t(lang, 'nav.allApps')} />
   </div>
   <ul class="more__list" role="list">
     {others.map((other) => (

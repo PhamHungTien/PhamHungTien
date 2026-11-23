@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import { render } from 'astro:content';
 import { ArrowLeft } from '@lucide/astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import UtilityAction from '../ui/UtilityAction.astro';
 import { formatDocumentDate, type LegalDocument } from '../../lib/legal';
 import { t } from '../../lib/i18n';
 import { appPath, legalAlternates, legalPath } from '../../lib/routes';
@@ -75,9 +76,11 @@ const jsonLd = {
       <Content />
     </div>
     <p class="legal__other">
-      <a class="text-link" href={legalPath(app, other, lang)}>
-        {t(lang, other === 'privacy' ? 'legal.privacy' : 'legal.terms')}
-      </a>
+      <UtilityAction
+        kind={other}
+        href={legalPath(app, other, lang)}
+        label={t(lang, other === 'privacy' ? 'legal.privacy' : 'legal.terms')}
+      />
     </p>
   </article>
 </BaseLayout>

@@ -1,15 +1,22 @@
 ---
-import { FileText, Heart, ShieldCheck } from '@lucide/astro';
+import { ArrowRight, FileText, Heart, Mail, ShieldCheck } from '@lucide/astro';
 import BrandIcon from './BrandIcon.astro';
 
 type Props = { label: string } & (
   | { kind: 'donate'; href?: never; external?: never }
-  | { kind: 'privacy' | 'terms' | 'source'; href: string; external?: boolean }
+  | { kind: 'privacy' | 'terms' | 'source' | 'catalog' | 'email'; href: string; external?: boolean }
 );
 
 const { kind, label, href, external } = Astro.props;
 const Tag = kind === 'donate' ? 'button' : 'a';
-const Icon = kind === 'privacy' ? ShieldCheck : kind === 'terms' ? FileText : Heart;
+const icons = {
+  catalog: ArrowRight,
+  donate: Heart,
+  email: Mail,
+  privacy: ShieldCheck,
+  terms: FileText,
+};
+const Icon = kind === 'source' ? null : icons[kind];
 ---
 
 <Tag
@@ -21,10 +28,13 @@ const Icon = kind === 'privacy' ? ShieldCheck : kind === 'terms' ? FileText : He
   aria-haspopup={kind === 'donate' ? 'dialog' : undefined}
   data-donate={kind === 'donate' ? '' : undefined}
 >
-  {kind === 'source' ? (
-    <BrandIcon name="github" size={16} />
-  ) : (
-    <Icon size={16} aria-hidden="true" />
+  {kind === 'source' && <BrandIcon name="github" size={16} />}
+  {Icon && (
+    <Icon
+      class={kind === 'catalog' ? 'utility-action__arrow' : undefined}
+      size={16}
+      aria-hidden="true"
+    />
   )}
   <span>{label}</span>
 </Tag>
@@ -41,5 +51,9 @@ const Icon = kind === 'privacy' ? ShieldCheck : kind === 'terms' ? FileText : He
 
   .utility-action :global(svg) {
     flex: none;
+  }
+
+  .utility-action :global(.utility-action__arrow) {
+    order: 1;
   }
 </style>
