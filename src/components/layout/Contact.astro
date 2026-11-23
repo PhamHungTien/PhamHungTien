@@ -1,5 +1,5 @@
 ---
-import { ArrowRight, ArrowUpRight, Mail } from '@lucide/astro';
+import { ArrowRight, ArrowUpRight } from '@lucide/astro';
 import BrandIcon from '../ui/BrandIcon.astro';
 import type { Locale as Lang } from '../../i18n/locales';
 import { socialProfiles } from '../../data/socials';
@@ -38,7 +38,22 @@ const [mailbox, domain] = socialProfiles[0].handle.split('@');
             rel={isEmail ? undefined : 'noopener noreferrer me'}
           >
             <span class="contact__icon">
-              {isEmail ? <Mail size={18} aria-hidden="true" /> : <BrandIcon name={profile.id} />}
+              {isEmail ? (
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M5 4.5h14a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3v-9a3 3 0 0 1 3-3Zm.66 3.1a1 1 0 0 0-1.2 1.6l6.94 5.2a1 1 0 0 0 1.2 0l6.94-5.2a1 1 0 0 0-1.2-1.6L12 12.35 5.66 7.6Z"
+                  />
+                </svg>
+              ) : (
+                <BrandIcon name={profile.id} />
+              )}
             </span>
             <span class="contact__copy">
               <strong>{isEmail ? t(lang, 'contact.email') : profile.label}</strong>
@@ -93,14 +108,10 @@ const [mailbox, domain] = socialProfiles[0].handle.split('@');
     box-shadow: inset 0 1px 0 var(--glass-rim-low);
   }
 
-  .contact__action--email .contact__icon {
-    background: color-mix(in srgb, var(--brand) 12%, transparent);
-    color: var(--brand);
-  }
-
   .contact__copy {
     display: grid;
     grid-area: copy;
+    align-self: start;
     gap: 3px;
     overflow-wrap: anywhere;
   }
@@ -137,7 +148,7 @@ const [mailbox, domain] = socialProfiles[0].handle.split('@');
   @media (360px <= width < 620px) {
     .contact__action {
       grid-template-areas: 'icon . arrow' 'copy copy copy';
-      align-content: center;
+      align-content: start;
     }
 
     .contact__icon {
