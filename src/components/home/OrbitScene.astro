@@ -1,7 +1,6 @@
 ---
-import { getImage } from 'astro:assets';
+import { Image } from 'astro:assets';
 import { apps } from '../../data/apps';
-import { planetAppearance } from '../../data/planet-appearance';
 import { appPath } from '../../lib/routes';
 import { getAppCopy } from '../../lib/app-copy';
 import { t } from '../../lib/i18n';
@@ -14,22 +13,7 @@ interface Props {
 const { lang } = Astro.props;
 const categories = apps.map((app) => getAppCopy(app, lang).category);
 
-const artworkSources = import.meta.glob<{ default: ImageMetadata }>(
-  '../../assets/planet-artwork/*.png',
-  { eager: true },
-);
-
-const artwork = await Promise.all(
-  apps.map((app) =>
-    getImage({
-      src: artworkSources[`../../assets/planet-artwork/${app.slug}.png`].default,
-      width: 320,
-      format: 'webp',
-    }),
-  ),
-);
-
-// Without JavaScript the planets sit on the same orbit, drawn flat; the engine takes over.
+// Lay out the app links around the brand before the engine positions them.
 const fallback = apps.map((_, index) => {
   const angle = -Math.PI / 2 + (index * Math.PI * 2) / apps.length;
   return {
@@ -37,121 +21,10 @@ const fallback = apps.map((_, index) => {
     y: (44 - Math.sin(angle) * 30).toFixed(1),
   };
 });
-
-// Ring system around the brand planet, drawn for a planet of radius 25 (the engine scales
-// it to the real size): a faint inner ring, a bright and finely banded main ring, a dark
-// gap, an outer ring with a thin gap of its own, and a hairline beyond. Radius, width and
-// opacity of each band, inside to outside.
-const rings = [
-  { r: 31.5, w: 2.2, o: 0.1, tone: 'inner' },
-  { r: 34.2, w: 2.6, o: 0.16, tone: 'inner' },
-  { r: 37.4, w: 2.4, o: 0.34, tone: 'main' },
-  { r: 40, w: 2.8, o: 0.5, tone: 'main' },
-  { r: 42.8, w: 2.6, o: 0.62, tone: 'main' },
-  { r: 45.4, w: 2.2, o: 0.46, tone: 'main' },
-  { r: 47.1, w: 0.9, o: 0.28, tone: 'main' },
-  { r: 50.6, w: 2.4, o: 0.34, tone: 'outer' },
-  { r: 53.2, w: 2.2, o: 0.38, tone: 'outer' },
-  { r: 55.9, w: 1.6, o: 0.26, tone: 'outer' },
-  { r: 58.6, w: 0.45, o: 0.55, tone: 'line' },
-];
 ---
 
 <div class="orbit" data-planet-system data-motion-scene>
   <div class="orbit__halo" aria-hidden="true"></div>
-
-  {['back', 'front'].map((side) => {
-    const plane = (
-      <div class={`orbit__plane orbit__plane--${side}`} data-orbit-plane aria-hidden="true">
-        <svg viewBox="-150 -150 300 300" focusable="false">
-          <defs>
-            <linearGradient
-              id={`orbit-belt-${side}`}
-              gradientUnits="userSpaceOnUse"
-              x1="0"
-              y1="-150"
-              x2="0"
-              y2="150"
-            >
-              <stop offset="0" class="orbit__stop orbit__stop--belt" stop-opacity="0.75" />
-              <stop offset="0.45" class="orbit__stop orbit__stop--belt" stop-opacity="0.3" />
-              <stop offset="0.72" class="orbit__stop orbit__stop--belt" stop-opacity="0" />
-            </linearGradient>
-            <linearGradient
-              id={`orbit-track-${side}`}
-              gradientUnits="userSpaceOnUse"
-              x1="0"
-              y1="-100"
-              x2="0"
-              y2="100"
-            >
-              <stop offset="0" class="orbit__stop orbit__stop--track" stop-opacity="0.3" />
-              <stop offset="1" class="orbit__stop orbit__stop--track" stop-opacity="0.9" />
-            </linearGradient>
-            <radialGradient id={`orbit-stage-${side}`}>
-              <stop offset="0" class="orbit__stop orbit__stop--stage" stop-opacity="0.32" />
-              <stop offset="1" class="orbit__stop orbit__stop--stage" stop-opacity="0" />
-            </radialGradient>
-            {/* The brand planet's shadow on the far side of its rings (light from the front left). */}
-            <filter id={`orbit-soft-${side}`} x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="2.5" />
-            </filter>
-            <mask
-              id={`orbit-shadow-${side}`}
-              maskUnits="userSpaceOnUse"
-              x="-80"
-              y="-80"
-              width="160"
-              height="160"
-            >
-              <rect x="-80" y="-80" width="160" height="160" fill="#fff" />
-              <rect
-                x="-23"
-                y="-82"
-                width="46"
-                height="82"
-                fill="#000"
-                fill-opacity="0.62"
-                transform="rotate(26)"
-                filter={`url(#orbit-soft-${side})`}
-              />
-            </mask>
-          </defs>
-          {/* A soft pool of light where the app in front rests. */}
-          <ellipse cx="0" cy="100" rx="21" ry="21" fill={`url(#orbit-stage-${side})`} />
-          <g class="orbit__belt" fill="none" stroke={`url(#orbit-belt-${side})`}>
-            <circle r="121" stroke-width="9" opacity="0.32" />
-            <circle r="133" stroke-width="14" opacity="0.2" />
-            <circle r="127.5" stroke-width="0.7" opacity="0.6" />
-            <circle r="142" stroke-width="0.5" opacity="0.4" />
-          </g>
-          <circle
-            class="orbit__track"
-            r="100"
-            fill="none"
-            stroke={`url(#orbit-track-${side})`}
-            stroke-width="1.4"
-            vector-effect="non-scaling-stroke"
-          />
-          <g class="orbit__rings" data-orbit-rings fill="none">
-            <g mask={`url(#orbit-shadow-${side})`}>
-              {rings.map((ring) => (
-                <circle
-                  class={`orbit__ring orbit__ring--${ring.tone}`}
-                  r={ring.r}
-                  stroke-width={ring.w}
-                  stroke-opacity={ring.o}
-                />
-              ))}
-            </g>
-          </g>
-        </svg>
-      </div>
-    );
-    // The back plane draws every ring; the front one redraws only the near half, and only
-    // where it crosses the brand planet, so nothing is drawn twice and no seam shows.
-    return side === 'back' ? plane : <div class="orbit__front">{plane}</div>;
-  })}
 
   <div class="orbit__core" aria-hidden="true">
     <div class="orbit__sun">
@@ -175,49 +48,33 @@ const rings = [
   </div>
 
   <nav class="orbit__planets" aria-label={t(lang, 'nav.apps')}>
-    {apps.map((app, index) => {
-      const appearance = planetAppearance[app.slug];
-      return (
-        <a
-          class="planet"
-          href={appPath(app, lang)}
-          aria-label={app.name}
-          data-planet
-          data-app-slug={app.slug}
-          data-name={app.name}
-          data-category={categories[index]}
-          style={`--fx: ${fallback[index].x}%; --fy: ${fallback[index].y}%; --planet-color: ${appearance.base}; --planet-pole: ${appearance.pole}; --planet-glow: ${appearance.glow}; --glyph-start: ${appearance.glyphStart}; --glyph-end: ${appearance.glyphEnd}; --artwork-size: ${appearance.artworkSize}%; --art-dx: ${appearance.artOffsetX}%; --art-dy: ${appearance.artOffsetY}%; --spin-duration: ${9 + index * 2.7}s; --spin-delay: ${index * -2.3}s; --spin-direction: ${index % 2 ? 'reverse' : 'normal'};`}
-        >
-          <span class="planet__orb">
-            <span class="planet__glow" aria-hidden="true" />
-            <span class="planet__body">
-              {['vtts', 'lunarblock'].includes(app.slug) ? (
-                <img
-                  class="planet__artwork"
-                  src={artwork[index].src}
-                  alt=""
-                  width="160"
-                  height="160"
-                  loading="eager"
-                  decoding="async"
-                />
-              ) : (
-                <span
-                  class={`planet__artwork planet__glyph planet__glyph--${app.slug}`}
-                  style={`--glyph: url('${artwork[index].src}');`}
-                  aria-hidden="true"
-                />
-              )}
-              <span class="planet__light" aria-hidden="true" />
-              <span class="planet__shade" aria-hidden="true" />
-            </span>
-          </span>
-          <span class="planet__label" aria-hidden="true">
-            {app.name}
-          </span>
-        </a>
-      );
-    })}
+    {apps.map((app, index) => (
+      <a
+        class="planet"
+        href={appPath(app, lang)}
+        aria-label={app.name}
+        data-planet
+        data-app-slug={app.slug}
+        data-name={app.name}
+        data-category={categories[index]}
+        style={`--fx: ${fallback[index].x}%; --fy: ${fallback[index].y}%;`}
+      >
+        <span class="planet__orb">
+          <Image
+            class="planet__body"
+            src={app.icon}
+            alt=""
+            width={96}
+            height={96}
+            densities={[1, 2]}
+            loading="eager"
+          />
+        </span>
+        <span class="planet__label" aria-hidden="true">
+          {app.name}
+        </span>
+      </a>
+    ))}
   </nav>
 
   <a
@@ -234,14 +91,6 @@ const rings = [
       {categories[0]}
     </span>
   </a>
-
-  <div class="orbit__dust" aria-hidden="true">
-    {Array.from({ length: 22 }, (_, i) => (
-      <i
-        style={`--x: ${6 + ((i * 37) % 88)}%; --y: ${8 + ((i * 23) % 80)}%; --delay: ${i * -0.7}s; --size: ${i % 5 === 0 ? 3 : 2}px;`}
-      />
-    ))}
-  </div>
 </div>
 
 <script>
@@ -256,13 +105,6 @@ const rings = [
      scale that fill it, so the system fits every size and orientation. */
   .orbit {
     --orbit-width: min(100vw - 40px, 2600px);
-    --belt: #e2b47c;
-    --track: #f3d29b;
-    --ring-inner: #a98a66;
-    --ring-main: #f5dcae;
-    --ring-outer: #e2bf8c;
-    --ring-line: #f8e7c6;
-    --stage: #ffd9a0;
     position: relative;
     /* Break out of the page container: the universe is allowed to be wider than text. */
     width: var(--orbit-width);
@@ -274,8 +116,7 @@ const rings = [
       calc(var(--orbit-width) * var(--orbit-max-height, 1.05))
     );
     flex-shrink: 0;
-    /* Lets the brand planet sit at 50cqw/48cqh before the engine measures, and lets every
-       layer follow it with translate (no layout shift) once it has. */
+    /* The brand and halo share a fallback center until the layout engine measures the stage. */
     container-type: size;
     isolation: isolate;
     touch-action: pan-y pinch-zoom;
@@ -283,15 +124,6 @@ const rings = [
     -webkit-user-select: none;
     -webkit-tap-highlight-color: transparent;
     cursor: grab;
-  }
-  :global([data-theme='light']) .orbit {
-    --belt: #b98547;
-    --track: #a8702f;
-    --ring-inner: #8a6a45;
-    --ring-main: #a77a42;
-    --ring-outer: #b58a55;
-    --ring-line: #8f6633;
-    --stage: #c98a3c;
   }
   .orbit[data-dragging='true'] {
     cursor: grabbing;
@@ -308,7 +140,7 @@ const rings = [
     width: calc(var(--sun-size, 160px) * 4.2);
     max-width: 100%;
     aspect-ratio: 1.6;
-    translate: calc(var(--sun-x, 50cqw) - 50%) calc(var(--sun-y, 48cqh) - 50%);
+    translate: calc(var(--sun-x, 50cqw) - 50%) calc(var(--sun-y, 44cqh) - 50%);
     border-radius: 50%;
     background: radial-gradient(
       closest-side,
@@ -329,73 +161,6 @@ const rings = [
     );
   }
 
-  /* The orbital plane: rings, orbit path and outer belt, in real 3D. The engine sets the
-     transform from its camera; this one is the look without JavaScript. */
-  .orbit__plane {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: var(--plane-size, 150cqw);
-    height: var(--plane-size, 150cqw);
-    transform: translate(calc(50cqw - 50%), calc(44cqh - 50%)) rotate(-0.1rad) perspective(1600px)
-      rotateX(1rad);
-    transform-origin: 50% 50%;
-    pointer-events: none;
-    backface-visibility: hidden;
-  }
-  :global(html[data-motion]) .orbit:not([data-ready]) .orbit__plane {
-    opacity: 0;
-  }
-  .orbit[data-ready][data-motion='live'] .orbit__plane {
-    will-change: transform;
-  }
-  .orbit__plane svg {
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-  }
-  /* Every ring behind the brand planet; above it, only the near half where it crosses the
-     planet's disc (clipped to the disc in screen space). */
-  .orbit__plane--back {
-    z-index: 4;
-  }
-  .orbit__front {
-    position: absolute;
-    inset: 0;
-    z-index: 12;
-    clip-path: circle(
-      calc(var(--sun-size, 160px) / 2 - 0.5px) at var(--sun-x, 50cqw) var(--sun-y, 44cqh)
-    );
-    pointer-events: none;
-  }
-  .orbit__plane--front {
-    clip-path: inset(50% 0 0 0);
-  }
-  .orbit__stop--belt {
-    stop-color: var(--belt);
-  }
-  .orbit__stop--track {
-    stop-color: var(--track);
-  }
-  .orbit__stop--stage {
-    stop-color: var(--stage);
-  }
-  .orbit__ring--inner {
-    stroke: var(--ring-inner);
-  }
-  .orbit__ring--main {
-    stroke: var(--ring-main);
-  }
-  .orbit__ring--outer {
-    stroke: var(--ring-outer);
-  }
-  .orbit__ring--line {
-    stroke: var(--ring-line);
-  }
-  :global([data-theme='light']) .orbit__rings {
-    opacity: 0.8;
-  }
-
   .orbit__core {
     position: absolute;
     left: 0;
@@ -405,6 +170,7 @@ const rings = [
     translate: calc(var(--sun-x, 50cqw) - 50%) calc(var(--sun-y, 44cqh) - 50%);
     z-index: 10;
     border-radius: 50%;
+    pointer-events: none;
   }
   /* An earth-toned, softly lit planet with a matte mineral surface. */
   .orbit__sun {
@@ -471,7 +237,7 @@ const rings = [
     height: var(--planet-unit, clamp(44px, 5.6vw, 62px));
     min-width: 40px;
     min-height: 40px;
-    border-radius: 50%;
+    border-radius: var(--r-icon);
     transform: translate(-50%, -50%);
     z-index: 20;
     touch-action: pan-y pinch-zoom;
@@ -495,68 +261,14 @@ const rings = [
   .planet__orb {
     position: absolute;
     inset: 0;
-    border-radius: 50%;
   }
-  .planet__glow {
-    position: absolute;
-    inset: -45%;
-    border-radius: 50%;
-    background: radial-gradient(closest-side, var(--planet-glow), transparent 72%);
-    opacity: 0;
-    pointer-events: none;
-  }
-  .planet__body {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    place-items: center;
-    border-radius: 50%;
-    overflow: hidden;
-    background: radial-gradient(
-      circle at 50% 40%,
-      color-mix(in srgb, var(--planet-pole) 70%, #fff) 0%,
-      var(--planet-color) 50%,
-      color-mix(in srgb, var(--planet-color) 58%, #14101b) 100%
-    );
-    box-shadow:
-      0 10px 20px -8px rgb(0 0 0 / 0.6),
-      inset 0 0 0 1px rgb(255 255 255 / 0.08);
-  }
-  .planet__artwork {
-    position: relative;
-    z-index: 1;
-    width: var(--artwork-size);
-    height: var(--artwork-size);
+  .planet :global(.planet__body) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--r-icon);
     object-fit: contain;
-    pointer-events: none;
-    filter: drop-shadow(0 3px 2px rgb(15 7 22 / 0.45));
-    translate: var(--art-dx, 0) var(--art-dy, 0);
-  }
-  .planet__glyph {
-    background: linear-gradient(165deg, var(--glyph-start) 12%, var(--glyph-end) 85%);
-    mask: var(--glyph) center / contain no-repeat;
-    -webkit-mask: var(--glyph) center / contain no-repeat;
-  }
-  /* Day side faces the brand planet: the engine rotates the whole light layer toward it. */
-  .planet__light {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    border-radius: 50%;
-    background:
-      radial-gradient(circle at 50% 6%, rgb(255 244 228 / 0.5), transparent 46%),
-      linear-gradient(180deg, transparent 38%, rgb(5 3 12 / 0.32) 100%);
-    transform: rotate(315deg);
-    pointer-events: none;
-  }
-  /* Depth fog: planets on the far side are a little darker. */
-  .planet__shade {
-    position: absolute;
-    inset: 0;
-    z-index: 3;
-    border-radius: 50%;
-    background: #05030c;
-    opacity: 0;
+    box-shadow: var(--shadow-icon);
     pointer-events: none;
   }
   /* Straight, horizontal names: readable at any angle. */
@@ -585,7 +297,7 @@ const rings = [
     z-index: 100 !important;
     opacity: 1 !important;
   }
-  .planet:focus-visible .planet__body {
+  .planet:focus-visible :global(.planet__body) {
     outline: 2px solid var(--focus);
     outline-offset: 5px;
   }
@@ -636,30 +348,11 @@ const rings = [
     line-height: 1.35;
   }
 
-  .orbit__dust {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 2;
-  }
-  .orbit__dust i {
-    position: absolute;
-    left: var(--x);
-    top: var(--y);
-    width: var(--size);
-    height: var(--size);
-    border-radius: 50%;
-    background: var(--gold);
-    box-shadow: 0 0 6px var(--gold);
-    opacity: 0.5;
-  }
-
   @media (prefers-reduced-motion: no-preference) {
     :global(html:not([data-motion='off'])) .orbit__core {
       animation: sun-arrival 1100ms cubic-bezier(0.34, 1.4, 0.64, 1) both;
     }
-    :global(html:not([data-motion='off'])) .orbit__halo,
-    :global(html:not([data-motion='off'])) .orbit__dust {
+    :global(html:not([data-motion='off'])) .orbit__halo {
       animation: fade-in 1600ms ease 200ms both;
     }
     .orbit__sun::before {
@@ -668,23 +361,6 @@ const rings = [
     @keyframes sun-churn {
       to {
         rotate: 360deg;
-      }
-    }
-    .planet__artwork {
-      animation: planet-drift var(--spin-duration) ease-in-out var(--spin-delay) infinite
-        var(--spin-direction);
-    }
-    .orbit__dust i {
-      animation: dust-twinkle 5s ease-in-out var(--delay) infinite;
-    }
-    /* A slow sway around the optical centre: alive, but never off-centre. */
-    @keyframes planet-drift {
-      0%,
-      100% {
-        rotate: -3deg;
-      }
-      50% {
-        rotate: 3deg;
       }
     }
     @keyframes sun-arrival {
@@ -696,11 +372,6 @@ const rings = [
     @keyframes fade-in {
       from {
         opacity: 0;
-      }
-    }
-    @keyframes dust-twinkle {
-      50% {
-        opacity: 0.12;
       }
     }
   }
@@ -722,6 +393,20 @@ const rings = [
     }
     .orbit__caption-meta {
       font-size: 12px;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .orbit__caption {
+      max-inline-size: min(13rem, 100cqw - 36px);
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+  }
+
+  @media (max-height: 520px) and (min-width: 561px) {
+    .orbit {
+      min-block-size: 270px;
     }
   }
 </style>

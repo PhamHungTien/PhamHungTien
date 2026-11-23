@@ -9,6 +9,7 @@ const stars = Array.from({ length: 110 }, (_, i) => ({
 
 <div class="space" aria-hidden="true" data-motion-scene>
   <div class="space__nebula"></div>
+  <div class="space__pointer"></div>
   <svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" focusable="false">
     <g class="space__distant">
       {stars
@@ -48,6 +49,25 @@ const stars = Array.from({ length: 110 }, (_, i) => ({
       radial-gradient(ellipse at 14% 26%, rgb(58 58 145 / 0.22), transparent 48%),
       radial-gradient(ellipse at 86% 65%, rgb(107 30 88 / 0.17), transparent 48%),
       radial-gradient(ellipse at 57% 5%, rgb(32 83 113 / 0.14), transparent 42%);
+  }
+  .space__pointer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: clamp(280px, 56vw, 660px);
+    aspect-ratio: 1;
+    background: radial-gradient(circle, rgb(126 150 218 / 0.14), transparent 68%);
+    opacity: 0;
+    transform: translate3d(var(--pointer-x, 50vw), var(--pointer-y, 50vh), 0) translate(-50%, -50%);
+    transition:
+      opacity 260ms ease-out,
+      transform 360ms var(--ease);
+  }
+  .space[data-pointer='active'] .space__pointer {
+    opacity: 1;
+  }
+  :global(html[data-theme='light']) .space__pointer {
+    background: radial-gradient(circle, rgb(102 120 204 / 0.12), transparent 68%);
   }
   svg {
     width: 100%;
@@ -133,10 +153,10 @@ const stars = Array.from({ length: 110 }, (_, i) => ({
     opacity: 0.22;
   }
   @media (prefers-reduced-motion: no-preference) {
-    .space__near {
+    .space[data-hero-visible='true'] .space__near {
       animation: starlight 9s ease-in-out infinite alternate;
     }
-    .space__distant {
+    .space[data-hero-visible='true'] .space__distant {
       animation: starlight 15s ease-in-out -6s infinite alternate-reverse;
     }
     @keyframes starlight {
@@ -147,5 +167,21 @@ const stars = Array.from({ length: 110 }, (_, i) => ({
   }
   .space:not([data-running='true']) * {
     animation-play-state: paused;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .space__pointer {
+      display: none;
+    }
+    :is(.space__distant, .space__near) {
+      translate: none;
+      transition: none;
+    }
+  }
+  :global(html[data-motion='off']) .space__pointer {
+    display: none;
+  }
+  :global(html[data-motion='off']) :is(.space__distant, .space__near) {
+    translate: none;
+    transition: none;
   }
 </style>

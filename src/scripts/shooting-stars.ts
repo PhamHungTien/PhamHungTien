@@ -1,30 +1,30 @@
 /**
- * Occasional shooting stars across the shared space background (often on the home page,
- * rarely on reading pages so they never distract), plus a slight parallax of the star field
- * that follows the mouse. Nothing renders in a loop: each meteor is one Web Animation that
- * removes itself, and the scheduler sleeps while the tab is hidden or motion is turned off.
+ * The home hero's sky reacts to the mouse and occasionally plays a shooting-star animation.
+ * Background effects sleep once the hero leaves view, when the tab is hidden, or when
+ * visitors turn off decorative motion.
  */
 export function initShootingStars(): void {
   const sky = document.querySelector<HTMLElement>('[data-sky]');
-  if (!sky || typeof sky.animate !== 'function') return;
+  const space = sky?.closest<HTMLElement>('.space');
+  const hero = document.querySelector<HTMLElement>('[data-home-hero]');
+  if (!sky || !space || !hero) return;
 
   const root = document.documentElement;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
-  const space = document.querySelector<HTMLElement>('.space');
-
-  // The home universe gets a lively sky; every other page a calm one.
-  const universe = !!document.querySelector('[data-planet-system]');
-  const lively = () => universe && scrollY < innerHeight * 0.8;
   let timer = 0;
   let visible = false;
   let first = true;
+  let frame = 0;
+  let x = 0;
+  let y = 0;
   const activeMeteors = new Set<Animation>();
 
-  const enabled = () => !reduced.matches && root.dataset.motion !== 'off';
+  const enabled = () =>
+    visible && !document.hidden && !reduced.matches && root.dataset.motion !== 'off';
   const random = (min: number, max: number) => min + Math.random() * (max - min);
 
-  function launch(delay = 0) {
+  function launch() {
     const w = sky!.clientWidth;
     const h = sky!.clientHeight;
     if (!w || !h) return;
@@ -36,7 +36,7 @@ export function initShootingStars(): void {
     const distance = random(0.35, 0.6) * Math.max(w, h);
     const duration = random(850, 1500);
     const startX = random(0.25, 1.02) * w;
-    const startY = random(-0.05, lively() ? 0.55 : 0.4) * h;
+    const startY = random(-0.05, 0.45) * h;
     meteor.style.width = `${length}px`;
     meteor.style.left = `${startX}px`;
     meteor.style.top = `${startY}px`;
@@ -58,7 +58,7 @@ export function initShootingStars(): void {
         },
         { transform: `${base} translateX(${-distance}px) scaleX(0.3)`, opacity: 0 },
       ],
-      { duration, delay, easing: 'cubic-bezier(0.3, 0, 0.6, 1)', fill: 'both' },
+      { duration, easing: 'cubic-bezier(0.3, 0, 0.6, 1)', fill: 'both' },
     );
     activeMeteors.add(animation);
     animation.finished
@@ -71,34 +71,29 @@ export function initShootingStars(): void {
 
   function schedule() {
     clearTimeout(timer);
-    if (!enabled() || !visible || document.hidden) {
+    if (!enabled()) {
       activeMeteors.forEach((animation) => animation.cancel());
-      if (!enabled()) {
-        space?.style.removeProperty('--px');
-        space?.style.removeProperty('--py');
-      }
+      resetPointer();
       return;
     }
-    // The first one comes soon after the intro so visitors notice it.
-    const wait = first
-      ? lively()
-        ? 2600
-        : 6000
-      : lively()
-        ? random(2400, 6400)
-        : random(9000, 18000);
+    if (typeof sky!.animate !== 'function') return;
+    const wait = first ? 4200 : random(9000, 17000);
     first = false;
     timer = window.setTimeout(() => {
-      launch();
-      if (lively() && Math.random() < 0.22) launch(random(160, 420)); // Now and then, a pair
+      if (enabled()) launch();
       schedule();
     }, wait);
   }
 
-  new IntersectionObserver(([entry]) => {
-    visible = entry.isIntersecting;
-    schedule();
-  }).observe(sky);
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      visible = entry.isIntersecting && entry.intersectionRatio >= 0.25;
+      space.dataset.heroVisible = String(visible);
+      schedule();
+    },
+    { threshold: 0.25 },
+  );
+  observer.observe(hero);
   document.addEventListener('visibilitychange', schedule);
   reduced.addEventListener('change', schedule);
   new MutationObserver(schedule).observe(root, {
@@ -106,26 +101,35 @@ export function initShootingStars(): void {
     attributeFilter: ['data-motion'],
   });
 
-  // Depth parallax: near stars drift more than far ones as the mouse moves.
-  if (space) {
-    let queued = false;
-    let nx = 0;
-    let ny = 0;
-    window.addEventListener(
-      'pointermove',
-      (event) => {
-        if (event.pointerType !== 'mouse' || !finePointer.matches || !enabled()) return;
-        nx = event.clientX / innerWidth - 0.5;
-        ny = event.clientY / innerHeight - 0.5;
-        if (queued) return;
-        queued = true;
-        requestAnimationFrame(() => {
-          queued = false;
-          space.style.setProperty('--px', nx.toFixed(3));
-          space.style.setProperty('--py', ny.toFixed(3));
-        });
-      },
-      { passive: true },
-    );
+  function resetPointer() {
+    if (frame) cancelAnimationFrame(frame);
+    frame = 0;
+    if (!space!.dataset.pointer) return;
+    delete space!.dataset.pointer;
+    space!.style.removeProperty('--px');
+    space!.style.removeProperty('--py');
   }
+
+  // Coalesce pointer movement into one transform update per frame.
+  hero.addEventListener(
+    'pointermove',
+    (event) => {
+      if (event.pointerType !== 'mouse' || !finePointer.matches || !enabled()) return;
+      x = Math.round(event.clientX);
+      y = Math.round(event.clientY);
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        space.style.setProperty('--px', (x / innerWidth - 0.5).toFixed(3));
+        space.style.setProperty('--py', (y / innerHeight - 0.5).toFixed(3));
+        space.style.setProperty('--pointer-x', `${x}px`);
+        space.style.setProperty('--pointer-y', `${y}px`);
+        space.dataset.pointer = 'active';
+      });
+    },
+    { passive: true },
+  );
+  hero.addEventListener('pointerleave', resetPointer);
+  window.addEventListener('blur', resetPointer);
+  finePointer.addEventListener('change', resetPointer);
 }

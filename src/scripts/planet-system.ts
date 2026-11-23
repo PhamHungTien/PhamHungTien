@@ -7,10 +7,6 @@
  * are solved for each screen so that no planet and no name ever crosses the brand planet or
  * a neighbour, at rest or mid-turn.
  *
- * The ring system and the orbit path are drawn on a real 3D plane (a CSS perspective
- * transform built from the same camera), so they always match the planets. The plane is
- * drawn twice: its far half behind the brand planet, its near half in front of it.
- *
  * The orbit behaves like a carousel. It turns one step, rests with one app in front (its
  * name and category appear below it), then turns again. Dragging spins it with inertia and
  * it settles on the nearest app; focusing a planet with the keyboard turns it to the front;
@@ -27,10 +23,6 @@ const FRONT = -Math.PI / 2;
 const OUTER = 0.5;
 /** Camera distance in layout units: enough perspective for depth, not enough to distort. */
 const CAMERA_DISTANCE = 2.3;
-/** Half-size of the ring plane in orbit radii; matches the SVG viewBox (-150…150, orbit = 100). */
-const PLANE_EXTENT = 1.5;
-/** Ring artwork is drawn for a brand planet of radius 25 viewBox units. */
-const RING_BASE_RATIO = 0.25;
 /** Seconds an app rests in front before the next turn. */
 const DWELL = 3.6;
 /** Angular frequency of the critically damped turn, in rad/s. */
@@ -118,8 +110,6 @@ export function initPlanetSystem(): void {
   const root = document.documentElement;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 
-  const planes = [...scene.querySelectorAll<HTMLElement>('[data-orbit-plane]')];
-  const ringGroups = [...scene.querySelectorAll<SVGGElement>('[data-orbit-rings]')];
   const caption = scene.querySelector<HTMLAnchorElement>('[data-orbit-caption]');
   const captionName = caption?.querySelector<HTMLElement>('[data-caption-name]') ?? null;
   const captionMeta = caption?.querySelector<HTMLElement>('[data-caption-meta]') ?? null;
@@ -134,10 +124,7 @@ export function initPlanetSystem(): void {
     category: el.dataset.category ?? '',
     href: el.getAttribute('href') ?? '#',
     orb: el.querySelector<HTMLElement>('.planet__orb'),
-    glow: el.querySelector<HTMLElement>('.planet__glow'),
     label: el.querySelector<HTMLElement>('.planet__label'),
-    light: el.querySelector<HTMLElement>('.planet__light'),
-    shade: el.querySelector<HTMLElement>('.planet__shade'),
     hover: 0,
     arrivalDelay: 0.25 + index * 0.08,
     /** Last values written to the DOM, so unchanged styles are never touched again. */
@@ -177,7 +164,7 @@ export function initPlanetSystem(): void {
   let visible = false;
   let hovered = -1;
   let focusedIndex = -1;
-  let captionHovered = false;
+  let sceneHovered = false;
   let featured = -1;
   let dwellTimer = 0;
   /** Where the caption was painted before the engine ran (server-rendered, under the orbit). */
@@ -200,8 +187,7 @@ export function initPlanetSystem(): void {
 
   const motionEnabled = () => !reduced.matches && root.dataset.motion !== 'off';
   const awake = () => motionEnabled() && visible && !document.hidden;
-  const autoplayAllowed = () =>
-    awake() && arrived && hovered < 0 && focusedIndex < 0 && !captionHovered && !gesture;
+  const autoplayAllowed = () => awake() && arrived && !sceneHovered && focusedIndex < 0 && !gesture;
 
   /** Index of the planet nearest the front for a given rotation. */
   const frontIndex = (rot: number) => ((Math.round(-rot / step) % count) + count) % count;
@@ -245,7 +231,8 @@ export function initPlanetSystem(): void {
       const x = p.x * u;
       const y = p.y * u;
       const half = (planet / 2) * p.scale * (front[i] ? FEATURE_SCALE : 1);
-      if (Math.hypot(x, y) < sun + half + gap) return false;
+      const body = { left: x - half, right: x + half, top: y - half, bottom: y + half };
+      if (boxDistance(body) < sun + gap) return false;
       if (compact && !front[i]) continue;
       const textHalf = (front[i] ? captionWidth : labelWidth) / 2;
       const top = y + half + 4;
@@ -362,9 +349,6 @@ export function initPlanetSystem(): void {
     scene!.style.setProperty('--sun-size', `${(sunRatio * radius * 2).toFixed(1)}px`);
     scene!.style.setProperty('--sun-x', `${center.x.toFixed(1)}px`);
     scene!.style.setProperty('--sun-y', `${center.y.toFixed(1)}px`);
-    scene!.style.setProperty('--plane-size', `${(radius * PLANE_EXTENT * 2).toFixed(1)}px`);
-    const ringScale = (sunRatio / RING_BASE_RATIO).toFixed(4);
-    ringGroups.forEach((g) => g.setAttribute('transform', `scale(${ringScale})`));
     lastCamKey = '';
   }
 
@@ -409,29 +393,13 @@ export function initPlanetSystem(): void {
     apply();
   }
 
-  function planeTransform() {
-    const half = OUTER * unit * PLANE_EXTENT;
-    const tilt = Math.PI / 2 - cam.pitch;
-    const grow = arrived ? 1 : 0.55 + 0.45 * easeOutExpo(clamp(arrival / 1.3, 0, 1));
-    return `translate3d(${(center.x - half).toFixed(1)}px, ${(center.y - half).toFixed(1)}px, 0) rotate(${cam.roll.toFixed(4)}rad) perspective(${(CAMERA_DISTANCE * unit).toFixed(1)}px) rotateX(${tilt.toFixed(4)}rad) scale(${grow.toFixed(4)})`;
-  }
-
-  function drawPlanes() {
-    const transform = planeTransform();
-    const opacity = arrived ? '1' : easeOutExpo(clamp(arrival / 1.1, 0, 1)).toFixed(3);
-    planes.forEach((plane, i) => {
-      write(sceneWritten, `plane${i}`, transform, () => (plane.style.transform = transform));
-      write(sceneWritten, `planeO${i}`, opacity, () => (plane.style.opacity = opacity));
-    });
-  }
-
   function spread(p: Planet) {
     if (arrived) return 1;
     const t = clamp((arrival - p.arrivalDelay) / 1.3, 0, 1);
     return 0.3 + 0.7 * easeOutBack(t);
   }
 
-  function drawPlanets() {
+  function render() {
     const lead = frontIndex(rotation);
     const offset = Math.abs(wrap(rotation - alignedRotation(lead, rotation))) / (step / 2);
     // The first app's name lands with it, early in the intro.
@@ -474,7 +442,7 @@ export function initPlanetSystem(): void {
       write(p.written, 'labelY', labelOffset, () => {
         if (p.label) p.label.style.transform = `translate(-50%, ${labelOffset}px)`;
       });
-      // Far planets pass behind the brand planet and its near rings.
+      // Far apps pass behind the brand planet.
       write(
         p.written,
         'z',
@@ -487,9 +455,6 @@ export function initPlanetSystem(): void {
         appear.toFixed(2),
         () => (p.el.style.opacity = p.written.opacity),
       );
-      write(p.written, 'glow', (emphasis * 0.9).toFixed(2), () => {
-        if (p.glow) p.glow.style.opacity = p.written.glow;
-      });
       // The name under the planet hands over to the caption when the app comes to the front.
       const labelAlpha = compact
         ? 0
@@ -497,15 +462,6 @@ export function initPlanetSystem(): void {
           (1 - (index === lead ? leadNameHidden : 0));
       write(p.written, 'label', clamp(labelAlpha, 0, 1).toFixed(2), () => {
         if (p.label) p.label.style.opacity = p.written.label;
-      });
-      // Light comes from the brand planet: rotate the lit hemisphere toward it.
-      const light = Math.round(Math.atan2(-pt.y, -pt.x) * (180 / Math.PI) + 90);
-      write(p.written, 'light', String(light), () => {
-        if (p.light) p.light.style.transform = `rotate(${light}deg)`;
-      });
-      // Depth fog: planets on the far side are a little darker.
-      write(p.written, 'shade', ((1 - depth) * 0.08).toFixed(3), () => {
-        if (p.shade) p.shade.style.opacity = p.written.shade;
       });
 
       if (index === lead && caption) {
@@ -527,11 +483,6 @@ export function initPlanetSystem(): void {
         });
       }
     });
-  }
-
-  function render() {
-    drawPlanes();
-    drawPlanets();
   }
 
   /* ----------------------------------------------------------------- loop */
@@ -767,17 +718,16 @@ export function initPlanetSystem(): void {
     });
   });
 
-  if (caption) {
-    caption.addEventListener('pointerenter', () => {
-      captionHovered = true;
-      pause();
-    });
-    caption.addEventListener('pointerleave', () => {
-      captionHovered = false;
-      wake();
-      if (!frame) schedule();
-    });
-  }
+  scene.addEventListener('pointerenter', (event) => {
+    if (event.pointerType !== 'mouse') return;
+    sceneHovered = true;
+    pause();
+  });
+  scene.addEventListener('pointerleave', (event) => {
+    if (event.pointerType !== 'mouse') return;
+    sceneHovered = false;
+    if (!frame) schedule();
+  });
 
   // Keyboard: focusing a planet turns it to the front; arrow keys move between planets.
   scene.addEventListener('focusin', (event) => {

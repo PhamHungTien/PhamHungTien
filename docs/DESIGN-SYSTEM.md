@@ -132,10 +132,9 @@ classes from `src/components/community/board.css` on the same tokens.
 
 ## Home orbit
 
-`src/components/home/OrbitScene.astro` and `src/scripts/planet-system.ts`. The brand planet
-sits at the centre with a ring system; the seven apps share one circular orbit around it,
-evenly spaced, seen through a perspective camera (near planets grow, far ones recede and
-darken slightly). There is no WebGL: planets are links positioned by transforms.
+`src/components/home/OrbitScene.astro` and `src/scripts/planet-system.ts` arrange seven
+rounded-square app icons around the brand mark. They use the same Icon Composer renders
+as the app pages. A perspective camera scales the icon links by depth.
 
 - **Layout solver.** For each screen the engine searches camera pitch and roll, the orbit
   size and the brand planet's size, and keeps the largest system in which no planet and
@@ -143,36 +142,27 @@ darken slightly). There is no WebGL: planets are links positioned by transforms.
   Wide screens keep a slight in-screen tilt; portrait screens may tilt the plane
   diagonally to use a phone's long diagonal. Narrow screens show only the caption of the
   app in front instead of every name.
-- **Rings in real 3D.** The rings, the orbit path, a faint outer belt and a soft pool of
-  light under the app in front are drawn on one SVG plane transformed with
-  `perspective() rotateX()` from the same camera, so they always match the planets. The
-  plane is drawn behind the brand planet, then its near half is redrawn above it, clipped
-  to the planet's disc in screen space: nothing is drawn twice and no seam shows. The brand
-  planet casts a soft shadow on the far side of its rings (a mask). The banding is a
-  visual interpretation of [Saturn's rings](https://science.nasa.gov/mission/cassini/science/rings/), not a
-  scientific model.
 - **Carousel.** The orbit turns one step, rests about 3.6 s with an app in front (its name
-  and category below it, on the light pool), then turns again; a critically damped spring
-  makes every turn and stop smooth. Hovering a planet or the caption pauses it. Dragging
+  and category below it), then turns again. A critically damped spring makes every turn
+  and stop smooth. Hovering over the scene or focusing an icon pauses it. Dragging
   spins it with inertia and settles on the nearest app; focusing a planet with the
   keyboard turns it to the front, and arrow keys move between planets. Clicking opens the
   app (with a view transition from the planet to the app page icon). Pointer movement
   tilts the camera (parallax); on phones that expose it without a permission prompt,
   device orientation does the same.
-- **Intro.** The brand planet grows in, the ring plane opens, and the planets unfurl from
+- **Intro.** The brand planet grows in and the app icons unfurl from
   behind it while the system swings into place. The caption is part of the page's first
   paint and glides to its place under the first app, so the hero has content immediately.
 - **Performance.** Only transforms and opacity change per frame, every DOM write is cached,
   and the loop sleeps whenever nothing moves (a timer wakes it for the next turn). It stops
   off-screen and in hidden tabs. The scene initialises after the first paint.
-- **Reduced motion** keeps the solved, overlap-free composition as one still frame with no
-  loop. Without JavaScript the planets sit on a flat version of the orbit.
-
-Planet colours and glyph gradients come from each app's Icon Composer icon
-(`src/data/planet-appearance.ts`); the transparent artwork layers live in
-`src/assets/planet-artwork`. Monochrome glyphs are CSS masks with a gradient; vTTS and
-Lunar Block keep their original colours. `npm run icons` rebuilds the app icons and these
-layers from the `.icon` documents (see [ARCHITECTURE.md](ARCHITECTURE.md#app-icons)).
+- **Background.** On the home hero, a soft highlight follows a mouse and the two star
+  layers move slightly at different speeds. The highlight fades when the mouse leaves.
+  Twinkling and occasional meteors play while the hero is visible. Reading pages use a
+  still star field.
+- **Reduced motion.** The home toolbar can pause and resume decorative motion. The OS
+  preference uses the same still composition automatically. Without JavaScript the icons
+  appear around the brand mark in a flat arrangement.
 
 ## App imagery and pages
 

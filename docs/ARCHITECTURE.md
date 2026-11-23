@@ -129,10 +129,9 @@ version and art each sync used.
 
 `npm run icons` (`scripts/tools/app-icons.mjs`, on a Mac with Xcode 26) renders each app's
 Icon Composer document with Apple's `ictool`, so the site shows the same Liquid Glass icon
-as the store build: 1024 px, saved at 512 px as `src/assets/apps/<slug>/app-icon.png`. It
-also cuts the document's layers into the transparent artwork of the home orbit planets
-(`src/assets/planet-artwork/<slug>.png`) and prints the planet colours for
-`src/data/planet-appearance.ts`. With `--from <dir>` it works from renders made elsewhere.
+as the store build: 1024 px, saved at 512 px as `src/assets/apps/<slug>/app-icon.png`.
+The home scene and app pages share these renders. With `--from <dir>` the script accepts
+`<slug>.png` renders made elsewhere.
 After an icon changes, run `npm run og` and bump `OG_VERSION` in `src/lib/seo.ts` so social
 networks fetch the new cards.
 
