@@ -3,6 +3,8 @@
  * App pages also switch between the overview and Discussions when the fragment changes.
  */
 const COMMUNITY_HASHES = new Set(['#community', '#qa', '#discussions']);
+const SCROLL_KEYS = new Set([' ', 'ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End']);
+const DESTINATION_WINDOW = 1200;
 
 export function initSectionNavigation() {
   const overview = document.querySelector<HTMLElement>('[data-tab-panel="overview"]');
@@ -27,6 +29,7 @@ export function initSectionNavigation() {
   let active = '';
   let frame = 0;
   let destination: { target: HTMLElement; until: number } | null = null;
+  let stopInitialAlignment: (() => void) | undefined;
 
   function mark(hash: string) {
     if (hash === active) return;
@@ -87,7 +90,9 @@ export function initSectionNavigation() {
     if (target) mark(selected);
     if (target && (behavior || changed)) {
       const top = scrollPosition(target, headerOffset());
-      destination = showCommunity ? null : { target, until: performance.now() + 1200 };
+      destination = showCommunity
+        ? null
+        : { target, until: performance.now() + DESTINATION_WINDOW };
       window.scrollTo({ top, behavior: changed ? 'instant' : behavior });
       if (focus) {
         const heading = target.querySelector<HTMLElement>('h1, h2') ?? target;
@@ -111,6 +116,7 @@ export function initSectionNavigation() {
       )
         return;
       event.preventDefault();
+      stopInitialAlignment?.();
       if (location.hash !== link.hash) history.pushState(history.state, '', link.hash);
       sync(link.hash, 'auto', event.detail === 0);
     });
@@ -124,15 +130,47 @@ export function initSectionNavigation() {
   window.addEventListener('scroll', queueRead, { passive: true });
   window.addEventListener('resize', queueRead);
   window.addEventListener('scrollend', release);
-  window.addEventListener('wheel', release, { passive: true });
+  window.addEventListener(
+    'wheel',
+    () => {
+      stopInitialAlignment?.();
+      release();
+    },
+    { passive: true },
+  );
   window.addEventListener(
     'pointerdown',
     (event) => {
+      stopInitialAlignment?.();
       if (event.target instanceof Node && !header.contains(event.target)) release();
     },
     { passive: true },
   );
-  window.addEventListener('hashchange', () => sync(location.hash, 'auto'));
+  window.addEventListener('keydown', (event) => {
+    if (!event.defaultPrevented && SCROLL_KEYS.has(event.key)) stopInitialAlignment?.();
+  });
+  window.addEventListener('hashchange', () => {
+    stopInitialAlignment?.();
+    sync(location.hash, 'auto');
+  });
   window.addEventListener('pageshow', () => sync(location.hash));
-  sync(location.hash, targets.has(location.hash) ? 'instant' : undefined);
+
+  const initialHash = location.hash;
+  const initialTarget = targets.get(initialHash);
+  sync(initialHash, initialTarget ? 'instant' : undefined);
+
+  if (initialTarget && initialTarget !== overview && initialTarget !== community) {
+    // Fonts and deferred sections above a deep link can move it after the first scroll.
+    const observer = new ResizeObserver(() => {
+      if (Math.abs(scrollY - scrollPosition(initialTarget, headerOffset())) > 3)
+        sync(initialHash, 'instant');
+    });
+    const timeout = window.setTimeout(() => stopInitialAlignment?.(), DESTINATION_WINDOW);
+    stopInitialAlignment = () => {
+      observer.disconnect();
+      window.clearTimeout(timeout);
+      stopInitialAlignment = undefined;
+    };
+    observer.observe(content);
+  }
 }
