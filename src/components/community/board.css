@@ -77,9 +77,8 @@
   align-items: center;
   gap: 10px;
   padding: 0 14px;
-  border: 1px solid var(--line);
+  border: 1px solid transparent;
   border-radius: var(--r-control);
-  background: var(--surface);
   color: var(--muted);
 }
 
@@ -101,6 +100,7 @@
   display: block;
   min-inline-size: 0;
   max-inline-size: 100%;
+  border-radius: var(--r-control);
 }
 
 .board-select select {
@@ -110,16 +110,16 @@
   appearance: none;
   padding-block: 0;
   padding-inline: 16px 44px;
-  border: 1px solid var(--line);
-  border-radius: var(--r-control);
-  background: var(--surface);
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
   color: var(--ink);
   cursor: pointer;
   text-overflow: ellipsis;
 }
 
 .board-select select:hover {
-  border-color: var(--line-strong);
+  background: color-mix(in srgb, var(--ink) 5%, transparent);
 }
 
 .board-select__chevron {
@@ -132,6 +132,11 @@
 }
 
 @media (forced-colors: active) {
+  .board-field,
+  .board-select {
+    border: 1px solid ButtonText;
+  }
+
   .board-select select {
     appearance: auto;
     padding-inline-end: 16px;

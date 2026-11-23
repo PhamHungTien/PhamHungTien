@@ -1,4 +1,4 @@
-/** Theme toggle and the mobile menu. Imported once by Header.astro. */
+/** Theme toggle and navigation menus. Imported once by Header.astro. */
 
 const root = document.documentElement;
 
@@ -69,15 +69,24 @@ function initTheme() {
   });
 }
 
-function initMenu() {
-  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
-  const menu = document.querySelector<HTMLElement>('[data-mobile-nav]');
+function initMenus() {
   const header = document.querySelector<HTMLElement>('[data-header]');
-  if (!toggle || !menu || !header) return;
+  if (!header) return;
+  const toggle = header.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = header.querySelector<HTMLElement>('[data-mobile-nav]');
+  if (!toggle || !menu) return;
   const languageMenu = header.querySelector<HTMLDetailsElement>('[data-language-switcher]');
+  const languageToggle = languageMenu?.querySelector('summary');
+  const isMobileMenuOpen = () => menu.classList.contains('is-open');
 
-  const setOpen = (open: boolean, restoreFocus = false) => {
-    if (open && languageMenu) languageMenu.open = false;
+  const closeLanguageMenu = (restoreFocus = false) => {
+    if (!languageMenu?.open) return;
+    languageMenu.open = false;
+    if (restoreFocus) languageToggle?.focus({ preventScroll: true });
+  };
+
+  const setMobileMenuOpen = (open: boolean, restoreFocus = false) => {
+    if (open) closeLanguageMenu();
     toggle.setAttribute('aria-expanded', String(open));
     toggle.setAttribute(
       'aria-label',
@@ -88,42 +97,42 @@ function initMenu() {
     if (!open && restoreFocus) toggle.focus({ preventScroll: true });
   };
 
-  toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+  toggle.addEventListener('click', () => setMobileMenuOpen(!isMobileMenuOpen()));
   menu.addEventListener('click', (event) => {
-    if ((event.target as Element).closest('a')) setOpen(false);
-  });
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && menu.classList.contains('is-open')) setOpen(false, true);
-  });
-  document.addEventListener('pointerdown', (event) => {
-    if (menu.classList.contains('is-open') && !header.contains(event.target as Node))
-      setOpen(false);
+    if (event.target instanceof Element && event.target.closest('a')) setMobileMenuOpen(false);
   });
   languageMenu?.addEventListener('toggle', () => {
-    if (languageMenu.open) setOpen(false);
+    if (languageMenu.open && isMobileMenuOpen()) setMobileMenuOpen(false);
   });
-  window.addEventListener('resize', () => {
-    if (menu.classList.contains('is-open') && !toggle.getClientRects().length) setOpen(false);
+  languageMenu?.addEventListener('focusout', (event) => {
+    if (event.relatedTarget instanceof Node && !languageMenu.contains(event.relatedTarget))
+      closeLanguageMenu();
   });
-}
+  header.addEventListener('focusout', (event) => {
+    if (
+      isMobileMenuOpen() &&
+      event.relatedTarget instanceof Node &&
+      !header.contains(event.relatedTarget)
+    )
+      setMobileMenuOpen(false);
+  });
 
-function initLanguageMenu() {
-  const menu = document.querySelector<HTMLDetailsElement>('[data-language-switcher]');
-  if (!menu) return;
-
-  menu.addEventListener('keydown', (event) => {
-    if (event.key !== 'Escape' || !menu.open) return;
-    event.stopPropagation();
-    menu.open = false;
-    menu.querySelector('summary')?.focus({ preventScroll: true });
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape' || event.defaultPrevented) return;
+    if (languageMenu?.open) closeLanguageMenu(true);
+    else if (isMobileMenuOpen()) setMobileMenuOpen(false, true);
   });
   document.addEventListener('pointerdown', (event) => {
-    if (!menu.contains(event.target as Node)) menu.open = false;
+    if (!(event.target instanceof Node)) return;
+    if (!languageMenu?.contains(event.target)) closeLanguageMenu();
+    if (isMobileMenuOpen() && !header.contains(event.target)) setMobileMenuOpen(false);
+  });
+  window.addEventListener('resize', () => {
+    if (isMobileMenuOpen() && !toggle.getClientRects().length) setMobileMenuOpen(false);
   });
 }
 
 export function initHeader() {
   initTheme();
-  initMenu();
-  initLanguageMenu();
+  initMenus();
 }

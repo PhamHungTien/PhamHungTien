@@ -29,7 +29,8 @@ const { lang, nav, alternates } = Astro.props;
     {t(lang, 'nav.skip')}
   </a>
 
-  <div class="site-header__bar glass" data-lens>
+  <div class="site-header__bar">
+    <div class="site-header__material glass glass-panel" aria-hidden="true" data-lens></div>
     <a class="brand" href={homePath(lang)}>
       <Logo class="brand__mark" />
       <span class="sr-only">Phạm Hùng Tiến — {t(lang, 'nav.home')}</span>
@@ -72,7 +73,6 @@ const { lang, nav, alternates } = Astro.props;
     </div>
   </div>
 
-  {/* A sibling of the bar, not a child: its own glass then blurs the page, not the bar. */}
   <nav
     class="mobile-nav glass"
     id="mobile-navigation"
@@ -96,8 +96,18 @@ const { lang, nav, alternates } = Astro.props;
 
 <style>
   .site-header {
+    --header-top: max(12px, env(safe-area-inset-top));
+    --header-bar-height: 64px;
+    --header-menu-gap: 8px;
+    --header-menu-height: max(
+      0px,
+      calc(
+        100dvh - var(--header-top) - var(--header-bar-height) - var(--header-menu-gap) -
+          max(12px, env(safe-area-inset-bottom))
+      )
+    );
     position: sticky;
-    top: max(12px, env(safe-area-inset-top));
+    top: var(--header-top);
     z-index: 30;
     width: min(1200px, calc(100% - 32px));
     margin: 12px auto 0;
@@ -105,13 +115,23 @@ const { lang, nav, alternates } = Astro.props;
   /* A Liquid Glass capsule: 64px tall, so its radius is 32; the 40px controls sit 12px in,
      so theirs is 20 and the shapes stay concentric. */
   .site-header__bar {
-    --glass-tint: var(--glass-tint-strong);
+    --header-action-inset: 12px;
+    position: relative;
+    isolation: isolate;
     display: flex;
-    height: 64px;
+    height: var(--header-bar-height);
     align-items: center;
     gap: 16px;
-    padding: 0 12px 0 14px;
+    padding: 0 var(--header-action-inset) 0 14px;
     border-radius: var(--r-pill);
+  }
+
+  .site-header__bar .site-header__material {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
   }
 
   .skip-link {
@@ -236,12 +256,12 @@ const { lang, nav, alternates } = Astro.props;
   .mobile-nav {
     --glass-tint: var(--glass-tint-strong);
     position: absolute;
-    top: calc(100% + 8px);
+    top: calc(100% + var(--header-menu-gap));
     right: 0;
     left: 0;
     display: var(--mobile-nav-display, none);
     gap: 2px;
-    max-height: calc(100dvh - var(--header-height) - 24px - env(safe-area-inset-top));
+    max-height: var(--header-menu-height);
     overflow-y: auto;
     overscroll-behavior: contain;
     padding: 8px;
@@ -309,10 +329,14 @@ const { lang, nav, alternates } = Astro.props;
   }
 
   @media (width <= 600px) {
+    .site-header {
+      --header-bar-height: 56px;
+    }
+
     .site-header__bar {
-      height: 56px;
+      --header-action-inset: 6px;
       gap: 8px;
-      padding-inline: 10px 6px;
+      padding-inline: 10px var(--header-action-inset);
     }
 
     .header-actions {

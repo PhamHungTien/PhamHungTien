@@ -644,7 +644,7 @@ export default function PhtvBoard({ lang }: { lang: Lang }) {
       </header>
 
       <div className="board-toolbar board-toolbar--sort">
-        <label className="board-field">
+        <label className="board-field glass glass-panel">
           <Search size={17} aria-hidden="true" />
           <input
             ref={searchInput}

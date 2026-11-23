@@ -93,6 +93,9 @@ the blur under it drops to 6 px so the bend shows. Other browsers keep the blur,
 Rules:
 
 - Controls within glass panels use a solid surface or a transparent hover treatment.
+- The header's glass layer sits behind its controls, so the language and mobile menus
+  can blur the page through their own sheets. Discussion filters use the denser tint and
+  preserve native select controls.
 - Text on glass should meet WCAG AA contrast in both themes.
 - `prefers-reduced-transparency` and `prefers-contrast: more` replace the glass with solid
   surfaces and a clear edge, and switch refraction off; without `backdrop-filter` the tint
