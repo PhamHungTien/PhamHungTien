@@ -1,30 +1,59 @@
 ---
 // Deterministic, decorative star layers: no image downloads or canvas render loop.
-const stars = Array.from({ length: 110 }, (_, i) => ({
-  x: (i * 173 + i * i * 29) % 1600,
-  y: (i * 97 + i * i * 13) % 1000,
-  radius: i % 11 === 0 ? 1.6 : i % 3 === 0 ? 1 : 0.55,
-}));
+let seed = 1729;
+const random = () => {
+  seed = (Math.imul(1664525, seed) + 1013904223) >>> 0;
+  return seed / 2 ** 32;
+};
+const depths = ['distant', 'near'] as const;
+const stars = Array.from({ length: 112 }, (_, index) => {
+  const near = index % 4 === 0;
+  const bright = index % 20 === 0;
+  const x = random();
+  // A loose diagonal of dust adds depth without a repeating pattern across the sky.
+  const y = index % 5 === 1 ? 0.64 - x * 0.25 + (random() + random() - 1) * 0.22 : random();
+  const radius = (bright ? 1.2 : near ? 0.7 : 0.32) + random() * (near ? 0.45 : 0.34);
+  return {
+    depth: near ? 'near' : 'distant',
+    bright,
+    warm: bright && index % 40 === 0,
+    x: Math.round(x * 1600),
+    y: Math.round(y * 1000),
+    radius: Number(radius.toFixed(2)),
+    opacity: near ? (bright ? 0.92 : 0.38 + random() * 0.47).toFixed(2) : undefined,
+  };
+});
 ---
 
 <div class="space" aria-hidden="true" data-motion-scene>
   <div class="space__nebula"></div>
   <div class="space__pointer"></div>
   <svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" focusable="false">
-    <g class="space__distant">
-      {stars
-        .filter((_, i) => i % 3 !== 0)
-        .map((star) => (
-          <circle cx={star.x} cy={star.y} r={star.radius} />
-        ))}
-    </g>
-    <g class="space__near">
-      {stars
-        .filter((_, i) => i % 3 === 0)
-        .map((star) => (
-          <circle cx={star.x} cy={star.y} r={star.radius} />
-        ))}
-    </g>
+    {depths.map((depth) => (
+      <g class={`space__${depth}`}>
+        {stars
+          .filter((star) => star.depth === depth)
+          .map((star) => (
+            <>
+              {star.bright && (
+                <circle
+                  class="space__halo"
+                  cx={star.x}
+                  cy={star.y}
+                  r={(star.radius * 2.4).toFixed(2)}
+                />
+              )}
+              <circle
+                class:list={{ 'space__star--bright': star.bright, 'space__star--warm': star.warm }}
+                cx={star.x}
+                cy={star.y}
+                r={star.radius}
+                opacity={star.opacity}
+              />
+            </>
+          ))}
+      </g>
+    ))}
   </svg>
   <div class="space__sky" data-sky></div>
 </div>
@@ -46,28 +75,36 @@ const stars = Array.from({ length: 110 }, (_, i) => ({
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse at 12% 28%, rgb(90 113 211 / 0.3), transparent 55%),
-      radial-gradient(ellipse at 88% 68%, rgb(146 64 115 / 0.26), transparent 58%),
-      radial-gradient(ellipse at 58% 7%, rgb(37 122 154 / 0.21), transparent 48%);
+      radial-gradient(ellipse at 7% 71%, rgb(41 59 109 / 0.35), transparent 49%),
+      radial-gradient(ellipse at 65% 13%, rgb(29 47 76 / 0.32), transparent 43%),
+      radial-gradient(ellipse at 92% 58%, rgb(72 22 42 / 0.22), transparent 47%);
   }
   .space__pointer {
+    --pointer-center: 54%;
+    --pointer-shoulder: 24%;
     position: absolute;
     top: 0;
     left: 0;
     width: clamp(280px, 56vw, 660px);
     aspect-ratio: 1;
-    background: radial-gradient(circle, rgb(126 150 218 / 0.18), transparent 68%);
+    background: radial-gradient(
+      circle,
+      color-mix(in srgb, var(--logo-background) var(--pointer-center), transparent),
+      color-mix(in srgb, var(--logo-background) var(--pointer-shoulder), transparent) 29%,
+      transparent 68%
+    );
     opacity: 0;
     transform: translate3d(var(--pointer-x, 50vw), var(--pointer-y, 50vh), 0) translate(-50%, -50%);
     transition:
-      opacity 260ms ease-out,
+      opacity 340ms ease-out,
       transform 360ms var(--ease);
   }
   .space[data-pointer='active'] .space__pointer {
     opacity: 1;
   }
   :global(html[data-theme='light']) .space__pointer {
-    background: radial-gradient(circle, rgb(102 120 204 / 0.15), transparent 68%);
+    --pointer-center: 10%;
+    --pointer-shoulder: 4%;
   }
   svg {
     width: 100%;
@@ -76,10 +113,13 @@ const stars = Array.from({ length: 110 }, (_, i) => ({
     opacity: 0.58;
   }
   .space__distant {
-    opacity: 0.48;
+    opacity: 0.28;
   }
   .space__near {
     opacity: 0.8;
+  }
+  .space__halo {
+    opacity: 0.08;
   }
   /* Depth parallax: near stars follow the mouse more than far ones. */
   .space__distant,
@@ -140,7 +180,11 @@ const stars = Array.from({ length: 110 }, (_, i) => ({
     box-shadow: 0 0 6px 1px rgb(90 102 153 / 0.5);
   }
   :global(html[data-theme='dark']) svg {
-    fill: #dce0e8;
+    fill: #dfe7f8;
+    opacity: 0.82;
+  }
+  :global(html[data-theme='dark']) .space__star--warm {
+    fill: #f3ddc9;
   }
   :global(html[data-theme='light']) .space__nebula {
     background:
@@ -152,16 +196,19 @@ const stars = Array.from({ length: 110 }, (_, i) => ({
     fill: #697da3;
     opacity: 0.22;
   }
+  :global(html[data-theme='light']) .space__halo {
+    display: none;
+  }
   @media (prefers-reduced-motion: no-preference) {
-    .space[data-hero-visible='true'] .space__near {
-      animation: starlight 4.6s ease-in-out;
+    .space[data-hero-visible='true'] .space__star--bright {
+      animation: starlight 4.8s ease-in-out;
     }
-    .space[data-hero-visible='true'] .space__distant {
-      animation: starlight 4.6s ease-in-out -1s;
+    .space[data-hero-visible='true'] .space__star--warm {
+      animation-delay: 1.4s;
     }
     @keyframes starlight {
       50% {
-        opacity: 0.24;
+        opacity: 0.58;
       }
     }
   }

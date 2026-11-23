@@ -66,15 +66,15 @@ its own shape.
 
 The floating controls use Liquid Glass from the header, menus and segmented controls to
 the search field, gallery arrows, video play button and dialogs.
-App tiles, guide cards, fact panels, download choices and discussions all use a translucent
-tint over a blurred backdrop. Support panels, menus and dialogs use a denser tint for longer
+App tiles, guide cards, fact panels, contact links, download choices and discussions all use
+a translucent tint over a sharp backdrop. Menus and dialogs use a denser tint for longer
 labels and actions. Articles sit directly on the page.
 
 The shared material lives in `global.css`:
 
 - `.glass`, `.segmented` and `.button--secondary` layer `--glass-tint` over a blurred,
   saturated backdrop. `.glass-panel` chooses the denser tint for standalone panels;
-- `.glass-card` blurs the page behind the card and adds a translucent tint, a soft edge
+- `.glass-card` saturates the page behind the card and adds a translucent tint, a soft edge
   highlight and the card shadow;
 - a hairline edge and inner edge light (inset shadows), plus a specular rim: a 1 px
   gradient border, bright at the top left where light catches the edge and faint at the
@@ -86,10 +86,9 @@ Refraction: Apple's glass bends what is behind it at its curved edge. On the web
 an SVG displacement map inside `backdrop-filter`, which only Chromium renders (Firefox
 accepts the value and draws nothing; Safari ignores it). `src/scripts/liquid-glass.ts`
 therefore enables it for Chromium alone. Cards and `[data-lens]` controls near the viewport
-get a size-matched map with a curved edge. The backdrop is softened before refraction so
-the rim can bend visible detail. The reflection follows a mouse and eases back to its
-resting position when the pointer leaves. Other browsers keep the blur, tint and responsive
-rim.
+get a size-matched map with a curved edge. The center of a card keeps the backdrop sharp.
+The page background carries a glow in the logo's burgundy that follows the mouse and fades
+when it leaves the page. The specular rim is stationary in every browser.
 
 Rules:
 

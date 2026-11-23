@@ -28,7 +28,8 @@
   --muted: #566074;
   --line: #dfe3ea;
   --line-strong: #c3cad5;
-  --brand: #7a1424;
+  --logo-background: #7a1424;
+  --brand: var(--logo-background);
   --brand-hover: #5f0e1b;
   --on-brand: #ffffff;
   --gold: #c38f22;
