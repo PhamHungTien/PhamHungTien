@@ -15,7 +15,10 @@ interface Props {
 }
 
 const { lang } = Astro.props;
-const first = Math.max(0, catalog.findIndex((app) => app.slug === 'vtts'));
+const first = Math.max(
+  0,
+  catalog.findIndex((app) => app.slug === 'vtts'),
+);
 const apps = [...catalog.slice(first), ...catalog.slice(0, first)];
 const categories = apps.map((app) => getAppCopy(app, lang).category);
 const downloads = await Promise.all(
