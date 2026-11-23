@@ -18,11 +18,11 @@ import { sitePrivacyPath } from '../../lib/sitePages';
 ---
 
 <footer class:list={['site-footer container', { 'site-footer--compact': compact }]}>
-  <div class="site-footer__brand">
+  <div class="site-footer__brand text-column">
     <a href={homePath(lang)} class="site-footer__name">
       {SITE.name}
     </a>
-    <p>{t(lang, 'footer.tagline')}</p>
+    <p class="text-justify">{t(lang, 'footer.tagline')}</p>
   </div>
 
   {!compact && (

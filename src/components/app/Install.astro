@@ -104,13 +104,13 @@ const withCode = (text: string) =>
       )}
     </div>
 
-    <div class="install__steps">
+    <div class="install__steps text-column">
       <h3>{t(lang, 'app.install.before')}</h3>
       <ol role="list">
         {installSteps.map((step, index) => (
           <li>
             <span aria-hidden="true">{index + 1}</span>
-            <p>
+            <p class="text-justify">
               {withCode(step).map((part) =>
                 'code' in part ? <code>{part.code}</code> : part.text,
               )}

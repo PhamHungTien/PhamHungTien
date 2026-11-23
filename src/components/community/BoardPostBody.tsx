@@ -30,9 +30,9 @@ export default function BoardPostBody({ content, lang, render }: Props) {
     <div className="board-post-body">
       <div id={contentId}>
         {preview && !expanded ? (
-          <p className="board-content">{preview}</p>
+          <p className="board-content text-justify">{preview}</p>
         ) : (
-          (render?.(content) ?? <p className="board-content">{content}</p>)
+          (render?.(content) ?? <p className="board-content text-justify">{content}</p>)
         )}
       </div>
       {preview && (

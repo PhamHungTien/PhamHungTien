@@ -25,16 +25,16 @@ const { features, support } = getAppCopy(app, lang);
   <div class="features__layout">
     <ul class="feature-grid" role="list">
       {features.map((feature) => (
-        <li class="glass-card">
+        <li class="glass-card text-column">
           <h3>{feature.title}</h3>
-          <p>{feature.description}</p>
+          <p class="text-justify">{feature.description}</p>
         </li>
       ))}
     </ul>
 
-    <aside class="support glass glass-panel" aria-labelledby="support-heading">
+    <aside class="support glass glass-panel text-column" aria-labelledby="support-heading">
       <h3 id="support-heading">{t(lang, 'app.support')}</h3>
-      <p>{support}</p>
+      <p class="text-justify">{support}</p>
       <div class="support__actions">
         <a
           class="button button--primary"

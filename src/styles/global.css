@@ -538,6 +538,32 @@ a:not([class]):focus-visible {
   box-shadow: var(--shadow-icon);
 }
 
+/* Align reading copy on both sides when the line has room for natural spacing. */
+.text-column,
+.prose {
+  container: text-column / inline-size;
+}
+
+:where(.text-justify, .section-head p, .prose p, .prose li) {
+  text-align: justify;
+  text-align-last: start;
+}
+
+:where(.text-justify, .section-head p, .prose p, .prose li):where(:lang(en), :lang(es)) {
+  hyphens: auto;
+}
+
+@container text-column (inline-size < 16rem) {
+  :where(.text-justify, .section-head p, .prose p, .prose li) {
+    text-align: start;
+    hyphens: manual;
+  }
+}
+
+:where(.text-justify, .prose) :where(a, code, kbd) {
+  hyphens: manual;
+}
+
 /* Long-form text: legal documents, guides and site pages rendered from Markdown. */
 .prose {
   font-size: clamp(16px, 1rem + 0.1vw, 17px);
@@ -612,6 +638,8 @@ a:not([class]):focus-visible {
   background: #10141c;
   color: #e6ebf3;
   line-height: 1.6;
+  text-align: start;
+  hyphens: manual;
 }
 
 .prose pre code {
@@ -645,6 +673,11 @@ a:not([class]):focus-visible {
   border-bottom: 1px solid var(--line);
   text-align: left;
   vertical-align: top;
+}
+
+.prose :where(th, td) p {
+  text-align: start;
+  hyphens: manual;
 }
 
 .prose th {

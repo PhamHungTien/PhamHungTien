@@ -151,7 +151,7 @@ function Thread({
                   </button>
                 )}
               </header>
-              <p className="board-content">{item.content}</p>
+              <p className="board-content text-justify">{item.content}</p>
             </div>
           ))}
           {user ? (

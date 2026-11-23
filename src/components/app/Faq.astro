@@ -25,14 +25,14 @@ const parts = (text: string) =>
         <h2 id="faq-heading">{t(lang, 'app.faq')}</h2>
       </div>
     </div>
-    <div class="faq__list">
+    <div class="faq__list text-column">
       {faq.map((item) => (
         <details name="faq">
           <summary>
             <span>{item.question}</span>
             <Plus size={20} aria-hidden="true" />
           </summary>
-          <p>
+          <p class="text-justify">
             {parts(item.answer).map((part) =>
               'code' in part ? <code>{part.code}</code> : part.text,
             )}

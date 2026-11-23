@@ -154,7 +154,7 @@ function Avatar({
 function RichText({ content }: { content: string }) {
   const parts = content.split(/(`[^`]+`|@[\p{L}\p{N}_]+|https?:\/\/[^\s]+)/gu);
   return (
-    <p className="board-content">
+    <p className="board-content text-justify">
       {parts.map((part, index) => {
         if (part.startsWith('`') && part.endsWith('`') && part.length > 1)
           return <code key={index}>{part.slice(1, -1)}</code>;

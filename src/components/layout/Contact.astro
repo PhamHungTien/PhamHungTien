@@ -14,9 +14,9 @@ const [email, ...profiles] = socialProfiles;
 ---
 
 <section class="contact container defer-render" id="contact" aria-labelledby="contact-heading">
-  <div>
+  <div class="text-column">
     <h2 id="contact-heading">{t(lang, 'contact.title')}</h2>
-    <p>{t(lang, 'contact.body')}</p>
+    <p class="text-justify">{t(lang, 'contact.body')}</p>
   </div>
   <div class="contact__links">
     <a class="contact__email" href={email.href}>

@@ -108,6 +108,8 @@ diacritics in "Phạm Hùng Tiến" stay clean at display sizes. Hierarchy comes
 secondary 14–15 px, meta 13 px. A metric-matched fallback face prevents layout shift while
 it loads; the Latin 600 file (and Vietnamese 600 on Vietnamese pages) is preloaded.
 Headings use `text-wrap: balance`, paragraphs `text-wrap: pretty`.
+Reading paragraphs align to both margins and the final line starts at the leading edge.
+Text columns narrower than 16 rem use start alignment to keep word spacing even.
 
 ## Section headings
 

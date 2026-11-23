@@ -123,7 +123,7 @@ const jsonLd = {
     <header class="guide__head">
       <p class="guide__topic">{data.topic}</p>
       <h1>{data.title}</h1>
-      <p class="guide__lead">{data.description}</p>
+      <p class="guide__lead text-justify">{data.description}</p>
       <div class="guide__byline">
         <Logo size={40} />
         <span>
@@ -178,9 +178,9 @@ const jsonLd = {
     {app && (
       <aside class="app-cta glass glass-panel" aria-label={app.name}>
         <Image src={app.icon} alt="" width={64} height={64} densities={[1, 2]} loading="lazy" />
-        <div class="app-cta__copy">
+        <div class="app-cta__copy text-column">
           <strong>{app.name}</strong>
-          <span>{subtitle}</span>
+          <span class="text-justify">{subtitle}</span>
         </div>
         <div class="app-cta__links">
           <StoreDownloads stores={stores} lang={lang} />

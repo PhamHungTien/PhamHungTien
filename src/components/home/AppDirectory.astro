@@ -103,7 +103,7 @@ const lastOf = (index: number) => {
                 />
               )}
             </div>
-            <div class="app-card__body">
+            <div class="app-card__body text-column">
               <div class="app-card__title">
                 <Image
                   class="app-card__icon"
@@ -120,7 +120,7 @@ const lastOf = (index: number) => {
                   <p class="app-card__category">{category}</p>
                 </div>
               </div>
-              <p class="app-card__desc">{description}</p>
+              <p class="app-card__desc text-justify">{description}</p>
               <p class="app-card__meta">
                 <span>
                   {platformGroupsOf(app.platforms)

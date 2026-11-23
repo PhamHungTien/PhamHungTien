@@ -77,7 +77,7 @@ const platforms = platformGroupsOf(app.platforms)
     </div>
   )}
 
-  <div class="app-hero__main">
+  <div class="app-hero__main text-column">
     <Image
       class="app-hero__icon"
       src={app.icon}
@@ -94,7 +94,7 @@ const platforms = platformGroupsOf(app.platforms)
         <span>{category}</span>
       </p>
       <h1 id="app-title">{title}</h1>
-      <p class="app-hero__subtitle">{subtitle}</p>
+      <p class="app-hero__subtitle text-justify">{subtitle}</p>
       <p class="app-hero__platforms">
         <span class="sr-only">{t(lang, 'app.platforms')} </span>
         {platforms}

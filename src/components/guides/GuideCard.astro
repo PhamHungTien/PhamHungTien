@@ -16,7 +16,7 @@ const articleLang = guideLang(guide);
 const app = guide.data.app ? appBySlug.get(guide.data.app as AppSlug) : undefined;
 ---
 
-<a class="guide-card glass-card" href={guideUrl(guide)} hreflang={articleLang}>
+<a class="guide-card glass-card text-column" href={guideUrl(guide)} hreflang={articleLang}>
   <span class="guide-card__top">
     {app ? (
       <Image src={app.icon} alt="" width={28} height={28} densities={[1, 2]} loading="lazy" />
@@ -28,7 +28,9 @@ const app = guide.data.app ? appBySlug.get(guide.data.app as AppSlug) : undefine
   <h3 class="guide-card__title" lang={articleLang}>
     {guide.data.title}
   </h3>
-  <p lang={articleLang}>{guide.data.description}</p>
+  <p class="text-justify" lang={articleLang}>
+    {guide.data.description}
+  </p>
   <span class="guide-card__meta">
     <time datetime={guide.data.published}>{formatDate(guide.data.published, lang)}</time>
     <span class="guide-card__reading">{guideCopy[lang].readingTime(readingMinutes(guide))}</span>
