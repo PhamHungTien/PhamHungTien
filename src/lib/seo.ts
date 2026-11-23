@@ -66,13 +66,9 @@ export const personSchema = {
     'STM32',
     'ESP32',
   ],
-  sameAs: [
-    ...new Set(
-      [...socialProfiles.map((p) => p.href), SITE.facebook, SITE.youtube, SITE.github].filter(
-        (href) => href.startsWith('https://'),
-      ),
-    ),
-  ],
+  sameAs: socialProfiles
+    .map((profile) => profile.href)
+    .filter((href) => href.startsWith('https://')),
 };
 
 const websiteSchema = (lang: Locale) => ({

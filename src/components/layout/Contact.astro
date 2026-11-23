@@ -99,6 +99,10 @@ const [email, ...profiles] = socialProfiles;
     gap: clamp(8px, 2vw, 12px);
   }
 
+  .contact__profiles > li:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+
   .contact__profiles a {
     display: grid;
     height: 100%;

@@ -1,6 +1,6 @@
 import { SITE } from './site';
 
-export type SocialProfileId = 'email' | 'github' | 'youtube' | 'linkedin' | 'tiktok';
+export type SocialProfileId = 'email' | 'github' | 'youtube' | 'linkedin' | 'tiktok' | 'facebook';
 
 export interface SocialProfile {
   id: SocialProfileId;
@@ -39,5 +39,11 @@ export const socialProfiles = [
     label: 'TikTok',
     handle: '@phamhungtien14',
     href: SITE.tiktok,
+  },
+  {
+    id: 'facebook',
+    label: 'Facebook',
+    handle: '@phamhungtien1404',
+    href: SITE.facebook,
   },
 ] as const satisfies readonly SocialProfile[];

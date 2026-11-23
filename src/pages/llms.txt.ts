@@ -2,6 +2,7 @@ import type { APIRoute } from 'astro';
 import { apps } from '../data/apps';
 import { LOCALES, LANGUAGE_NAMES } from '../i18n/locales';
 import { SITE } from '../data/site';
+import { socialProfiles } from '../data/socials';
 import { platformList } from '../data/platforms';
 import { appPath, homePath, legalPath } from '../lib/routes';
 import { absolute } from '../lib/seo';
@@ -49,11 +50,9 @@ export const GET: APIRoute = async () => {
     ...sections.flat(),
     '## Profiles',
     '',
-    `- [GitHub](${SITE.github})`,
-    `- [YouTube](${SITE.youtube})`,
-    `- [LinkedIn](${SITE.linkedin})`,
-    `- [Facebook](${SITE.facebook})`,
-    `- [TikTok](${SITE.tiktok})`,
+    ...socialProfiles
+      .filter(({ id }) => id !== 'email')
+      .map(({ label, href }) => `- [${label}](${href})`),
     '',
   ];
   return new Response(lines.join('\n'), {
