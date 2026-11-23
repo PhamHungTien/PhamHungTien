@@ -110,9 +110,16 @@ export function initPlanetSystem(): void {
   const root = document.documentElement;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 
-  const caption = scene.querySelector<HTMLAnchorElement>('[data-orbit-caption]');
+  const caption = scene.querySelector<HTMLElement>('[data-orbit-caption]');
+  const captionLink = caption?.querySelector<HTMLAnchorElement>('[data-caption-link]');
   const captionName = caption?.querySelector<HTMLElement>('[data-caption-name]') ?? null;
   const captionMeta = caption?.querySelector<HTMLElement>('[data-caption-meta]') ?? null;
+  const downloadGroups = new Map(
+    [...scene.querySelectorAll<HTMLElement>('[data-downloads-for]')].map((group) => [
+      group.dataset.downloadsFor,
+      group,
+    ]),
+  );
 
   const elements = [...scene.querySelectorAll<HTMLAnchorElement>('[data-planet]')];
   const count = Math.max(1, elements.length);
@@ -123,6 +130,7 @@ export function initPlanetSystem(): void {
     name: el.dataset.name ?? '',
     category: el.dataset.category ?? '',
     href: el.getAttribute('href') ?? '#',
+    downloads: downloadGroups.get(el.dataset.appSlug),
     orb: el.querySelector<HTMLElement>('.planet__orb'),
     label: el.querySelector<HTMLElement>('.planet__label'),
     hover: 0,
@@ -187,7 +195,8 @@ export function initPlanetSystem(): void {
 
   const motionEnabled = () => !reduced.matches && root.dataset.motion !== 'off';
   const awake = () => motionEnabled() && visible && !document.hidden;
-  const autoplayAllowed = () => awake() && arrived && !sceneHovered && focusedIndex < 0 && !gesture;
+  const autoplayAllowed = () =>
+    awake() && arrived && !sceneHovered && !scene.contains(document.activeElement) && !gesture;
 
   /** Index of the planet nearest the front for a given rotation. */
   const frontIndex = (rot: number) => ((Math.round(-rot / step) % count) + count) % count;
@@ -413,12 +422,19 @@ export function initPlanetSystem(): void {
     const leadNameHidden = 1 - smoothstep(0.42, 0.64, offset);
 
     if (lead !== featured) {
+      if (featured >= 0) {
+        const previous = planets[featured];
+        previous.el.removeAttribute('aria-current');
+        if (previous.downloads) previous.downloads.inert = true;
+      }
       featured = lead;
       const p = planets[lead];
-      if (caption && captionName && captionMeta) {
+      p.el.setAttribute('aria-current', 'true');
+      if (p.downloads) p.downloads.inert = false;
+      if (captionLink && captionName && captionMeta) {
         captionName.textContent = p.name;
         captionMeta.textContent = p.category;
-        caption.href = p.href;
+        captionLink.href = p.href;
       }
     }
 
@@ -479,7 +495,7 @@ export function initPlanetSystem(): void {
         write(sceneWritten, 'captionAt', place, () => (caption.style.transform = place));
         write(sceneWritten, 'caption', captionAlpha.toFixed(2), () => {
           caption.style.opacity = sceneWritten.caption;
-          caption.dataset.shown = String(captionAlpha > 0.6);
+          caption.inert = captionAlpha <= 0.6;
         });
       }
     });
@@ -697,6 +713,21 @@ export function initPlanetSystem(): void {
     });
     p.el.addEventListener('click', (event) => {
       if (
+        !suppressClick &&
+        !event.defaultPrevented &&
+        event.detail > 0 &&
+        !event.metaKey &&
+        !event.ctrlKey &&
+        !event.shiftKey &&
+        !event.altKey &&
+        p.index !== featured &&
+        p.downloads?.childElementCount
+      ) {
+        event.preventDefault();
+        bringToFront(p.index);
+        return;
+      }
+      if (
         suppressClick ||
         event.defaultPrevented ||
         !motionEnabled() ||
@@ -731,6 +762,7 @@ export function initPlanetSystem(): void {
 
   // Keyboard: focusing a planet turns it to the front; arrow keys move between planets.
   scene.addEventListener('focusin', (event) => {
+    if (caption?.contains(event.target as Node)) pause();
     const index = planets.findIndex((p) => p.el === event.target);
     if (index < 0 || !(event.target as HTMLElement).matches(':focus-visible')) return;
     focusedIndex = index;
@@ -757,7 +789,13 @@ export function initPlanetSystem(): void {
   // Pointer parallax across the whole hero.
   const hero = scene.closest('section') ?? scene;
   hero.addEventListener('pointermove', (event) => {
-    if (event.pointerType !== 'mouse' || !motionEnabled() || hovered >= 0 || gesture?.dragging)
+    if (
+      event.pointerType !== 'mouse' ||
+      !motionEnabled() ||
+      hovered >= 0 ||
+      gesture?.dragging ||
+      caption?.contains(event.target as Node)
+    )
       return;
     const box = scene.getBoundingClientRect();
     const nx = clamp(((event.clientX - box.left) / box.width) * 2 - 1, -1, 1);
@@ -801,7 +839,13 @@ export function initPlanetSystem(): void {
   scene.addEventListener('dragstart', (event) => event.preventDefault());
 
   scene.addEventListener('pointerdown', (event) => {
-    if (!event.isPrimary || event.button !== 0 || !motionEnabled()) return;
+    if (
+      !event.isPrimary ||
+      event.button !== 0 ||
+      !motionEnabled() ||
+      caption?.contains(event.target as Node)
+    )
+      return;
     suppressClick = false;
     const top = scene.getBoundingClientRect().top;
     gesture = {
@@ -891,6 +935,7 @@ export function initPlanetSystem(): void {
   new ResizeObserver(() => {
     // The first callback reports the size measured at start-up: nothing to redo.
     if (`${scene.clientWidth || 1}x${scene.clientHeight || 1}` === measuredSize) return;
+    measureText();
     measure();
     if (!frame) render();
     sync();

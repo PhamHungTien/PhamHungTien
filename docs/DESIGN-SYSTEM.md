@@ -149,8 +149,10 @@ as the app pages. A perspective camera scales the icon links by depth.
   and category below it), then turns again. A critically damped spring makes every turn
   and stop smooth. Hovering over the scene or focusing an icon pauses it. Dragging
   spins it with inertia and settles on the nearest app; focusing a planet with the
-  keyboard turns it to the front, and arrow keys move between planets. Clicking opens the
-  app (with a view transition from the planet to the app page icon). Pointer movement
+  keyboard turns it to the front, and arrow keys move between planets. Selecting an icon
+  brings its download shortcuts forward. The active icon and its name open the app page.
+  The PHTV shortcuts share the architecture-specific release links used by its install
+  section. Pointer movement
   tilts the camera (parallax); on phones that expose it without a permission prompt,
   device orientation does the same.
 - **Intro.** The brand planet grows in and the app icons unfurl from

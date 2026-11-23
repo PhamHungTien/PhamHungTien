@@ -1,8 +1,11 @@
 ---
 import { Image } from 'astro:assets';
+import { AppWindow, Cpu, Download, Play } from '@lucide/astro';
 import { apps } from '../../data/apps';
+import { storesOf } from '../../data/platforms';
 import { appPath } from '../../lib/routes';
 import { getAppCopy } from '../../lib/app-copy';
+import { getReleaseLinks } from '../../lib/github';
 import { t } from '../../lib/i18n';
 import type { Locale } from '../../i18n/locales';
 
@@ -12,6 +15,33 @@ interface Props {
 
 const { lang } = Astro.props;
 const categories = apps.map((app) => getAppCopy(app, lang).category);
+const downloads = await Promise.all(
+  apps.map(async (app) => {
+    if (app.install) {
+      const links = await getReleaseLinks(app.install.githubRepo);
+      return [
+        {
+          arch: 'arm64',
+          title: t(lang, 'app.install.silicon'),
+          url: links.arm64 ?? links.universal ?? links.releaseUrl,
+          icon: Download,
+        },
+        {
+          arch: 'intel',
+          title: t(lang, 'app.install.intel'),
+          url: links.intel ?? links.universal ?? links.releaseUrl,
+          icon: Cpu,
+        },
+      ];
+    }
+    return storesOf(app.links.stores).map(({ name, store, url }) => ({
+      arch: undefined,
+      title: name,
+      url,
+      icon: store === 'appStore' ? AppWindow : store === 'googlePlay' ? Play : Download,
+    }));
+  }),
+);
 
 // Lay out the app links around the brand before the engine positions them.
 const fallback = apps.map((_, index) => {
@@ -77,24 +107,41 @@ const fallback = apps.map((_, index) => {
     ))}
   </nav>
 
-  <a
-    class="orbit__caption"
-    href={appPath(apps[0], lang)}
-    tabindex="-1"
-    aria-hidden="true"
-    data-orbit-caption
-  >
-    <span class="orbit__caption-name" data-caption-name>
-      {apps[0].name}
-    </span>
-    <span class="orbit__caption-meta" data-caption-meta>
-      {categories[0]}
-    </span>
-  </a>
+  <div class="orbit__caption" data-orbit-caption>
+    <a class="orbit__caption-link" href={appPath(apps[0], lang)} data-caption-link>
+      <span class="orbit__caption-name" data-caption-name>
+        {apps[0].name}
+      </span>
+      <span class="orbit__caption-meta" data-caption-meta>
+        {categories[0]}
+      </span>
+    </a>
+    <div class="orbit__quick">
+      {apps.map((app, index) => (
+        <div
+          class="orbit__quick-group"
+          role="group"
+          aria-label={`${t(lang, 'home.downloads')} · ${app.name}`}
+          data-downloads-for={app.slug}
+          data-install={app.install?.githubRepo}
+          inert={index !== 0}
+        >
+          {downloads[index].map(({ arch, icon: Icon, title, url }) => (
+            <a class="orbit__quick-link glass glass-panel" href={url} data-install-arch={arch}>
+              <Icon size={14} aria-hidden="true" />
+              {title}
+            </a>
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>
 </div>
 
 <script>
+  import { initInstall } from '../../scripts/install';
   import { initPlanetSystem } from '../../scripts/planet-system';
+  initInstall();
   // Start after the first paint: the page is laid out by then, so measuring is cheap and
   // the engine's set-up never lengthens the task that renders the hero.
   requestAnimationFrame(() => setTimeout(initPlanetSystem, 0));
@@ -111,9 +158,9 @@ const fallback = apps.map((_, index) => {
     margin-left: 50%;
     translate: -50% 0;
     height: clamp(
-      220px,
+      272px,
       calc(100svh - var(--header-height) - var(--hero-reserve)),
-      calc(var(--orbit-width) * var(--orbit-max-height, 1.05))
+      calc(var(--orbit-width) * var(--orbit-max-height, 1.05) + 52px)
     );
     flex-shrink: 0;
     /* The brand and halo share a fallback center until the layout engine measures the stage. */
@@ -268,7 +315,6 @@ const fallback = apps.map((_, index) => {
     height: 100%;
     border-radius: var(--r-icon);
     object-fit: contain;
-    box-shadow: var(--shadow-icon);
     pointer-events: none;
   }
   /* Straight, horizontal names: readable at any angle. */
@@ -312,13 +358,14 @@ const fallback = apps.map((_, index) => {
     z-index: 60;
     display: grid;
     justify-items: center;
-    gap: 2px;
-    padding: 2px 8px;
+    gap: 6px;
+    width: max-content;
+    max-inline-size: min(21rem, 100cqw - 36px);
+    padding: 2px 4px;
     color: var(--ink);
     text-align: center;
-    white-space: nowrap;
+    overflow-wrap: anywhere;
     transform: translateX(-50%);
-    pointer-events: none;
     text-shadow:
       0 1px 2px rgb(0 0 0 / 0.75),
       0 0 14px rgb(0 0 0 / 0.55);
@@ -328,8 +375,8 @@ const fallback = apps.map((_, index) => {
       0 0 2px var(--paper),
       0 0 12px var(--paper);
   }
-  .orbit__caption[data-shown='true'] {
-    pointer-events: auto;
+  .orbit__caption[inert] {
+    pointer-events: none;
   }
   .orbit[data-ready] .orbit__caption {
     top: 0;
@@ -342,10 +389,54 @@ const fallback = apps.map((_, index) => {
     line-height: 1.25;
     letter-spacing: -0.01em;
   }
+  .orbit__caption-link {
+    display: grid;
+    gap: 2px;
+    border-radius: 8px;
+  }
+  .orbit__caption-link:hover .orbit__caption-name {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
   .orbit__caption-meta {
     color: var(--muted);
     font-size: 13px;
     line-height: 1.35;
+  }
+  .orbit__quick {
+    display: grid;
+    min-inline-size: 0;
+  }
+  .orbit__quick-group {
+    display: flex;
+    grid-area: 1 / 1;
+    align-items: stretch;
+    justify-content: center;
+    gap: 5px;
+  }
+  .orbit__quick-group[inert] {
+    visibility: hidden;
+  }
+  .orbit__quick-link {
+    display: inline-flex;
+    min-block-size: 44px;
+    min-inline-size: 44px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 4px 9px;
+    border-radius: var(--r-pill);
+    color: var(--ink);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-shadow: none;
+  }
+  .orbit__quick-link :global(svg) {
+    flex: none;
+  }
+  .orbit__quick-link:hover {
+    background: var(--surface-2);
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -399,14 +490,12 @@ const fallback = apps.map((_, index) => {
   @media (max-width: 360px) {
     .orbit__caption {
       max-inline-size: min(13rem, 100cqw - 36px);
-      white-space: normal;
-      overflow-wrap: anywhere;
     }
   }
 
   @media (max-height: 520px) and (min-width: 561px) {
     .orbit {
-      min-block-size: 270px;
+      min-block-size: 322px;
     }
   }
 </style>
