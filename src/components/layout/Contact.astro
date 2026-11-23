@@ -27,7 +27,12 @@ const [email, ...profiles] = socialProfiles;
     <ul class="contact__profiles" role="list">
       {profiles.map((profile) => (
         <li>
-          <a class="glass" href={profile.href} target="_blank" rel="noopener noreferrer me">
+          <a
+            class="glass glass-link"
+            href={profile.href}
+            target="_blank"
+            rel="noopener noreferrer me"
+          >
             <BrandIcon name={profile.id} />
             <span>{profile.label}</span>
             <small>{profile.handle}</small>
@@ -83,7 +88,7 @@ const [email, ...profiles] = socialProfiles;
   }
 
   .contact__profiles a {
-    --glass-tint: color-mix(in srgb, var(--surface) 22%, transparent);
+    --glass-tint: color-mix(in srgb, var(--surface) 14%, transparent);
     --glass-lift: 0 2px 12px -8px rgb(0 0 0 / 0.3);
     display: grid;
     height: 100%;
@@ -92,15 +97,9 @@ const [email, ...profiles] = socialProfiles;
     align-items: center;
     column-gap: clamp(8px, 1.5vw, 12px);
     padding: 9px clamp(8px, 2vw, 16px);
-    border: 1px solid var(--glass-edge);
     border-radius: var(--r-panel);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
-    transition: border-color 160ms ease;
-  }
-
-  .contact__profiles a:hover {
-    border-color: var(--ink);
   }
 
   .contact__profiles span {

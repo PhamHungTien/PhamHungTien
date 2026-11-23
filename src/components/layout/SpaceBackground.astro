@@ -46,9 +46,9 @@ const stars = Array.from({ length: 110 }, (_, i) => ({
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse at 14% 26%, rgb(58 58 145 / 0.22), transparent 48%),
-      radial-gradient(ellipse at 86% 65%, rgb(107 30 88 / 0.17), transparent 48%),
-      radial-gradient(ellipse at 57% 5%, rgb(32 83 113 / 0.14), transparent 42%);
+      radial-gradient(ellipse at 12% 28%, rgb(90 113 211 / 0.3), transparent 55%),
+      radial-gradient(ellipse at 88% 68%, rgb(146 64 115 / 0.26), transparent 58%),
+      radial-gradient(ellipse at 58% 7%, rgb(37 122 154 / 0.21), transparent 48%);
   }
   .space__pointer {
     position: absolute;
@@ -56,7 +56,7 @@ const stars = Array.from({ length: 110 }, (_, i) => ({
     left: 0;
     width: clamp(280px, 56vw, 660px);
     aspect-ratio: 1;
-    background: radial-gradient(circle, rgb(126 150 218 / 0.14), transparent 68%);
+    background: radial-gradient(circle, rgb(126 150 218 / 0.18), transparent 68%);
     opacity: 0;
     transform: translate3d(var(--pointer-x, 50vw), var(--pointer-y, 50vh), 0) translate(-50%, -50%);
     transition:
@@ -67,7 +67,7 @@ const stars = Array.from({ length: 110 }, (_, i) => ({
     opacity: 1;
   }
   :global(html[data-theme='light']) .space__pointer {
-    background: radial-gradient(circle, rgb(102 120 204 / 0.12), transparent 68%);
+    background: radial-gradient(circle, rgb(102 120 204 / 0.15), transparent 68%);
   }
   svg {
     width: 100%;
@@ -139,14 +139,14 @@ const stars = Array.from({ length: 110 }, (_, i) => ({
     background: #5a6699;
     box-shadow: 0 0 6px 1px rgb(90 102 153 / 0.5);
   }
-  :global(html[data-theme='dark']) .space__nebula {
-    opacity: 0.55;
-  }
   :global(html[data-theme='dark']) svg {
     fill: #dce0e8;
   }
   :global(html[data-theme='light']) .space__nebula {
-    opacity: 0.22;
+    background:
+      radial-gradient(ellipse at 12% 28%, rgb(151 166 235 / 0.29), transparent 55%),
+      radial-gradient(ellipse at 88% 68%, rgb(214 155 198 / 0.22), transparent 58%),
+      radial-gradient(ellipse at 58% 7%, rgb(132 204 221 / 0.18), transparent 48%);
   }
   :global(html[data-theme='light']) svg {
     fill: #697da3;
