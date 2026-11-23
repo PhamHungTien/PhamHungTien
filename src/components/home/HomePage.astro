@@ -28,11 +28,7 @@ const guides = (await getGuides(lang)).slice(0, 3);
   jsonLd={homeJsonLd(lang)}
   nav={[
     { href: '#apps', label: t(lang, 'nav.apps') },
-    {
-      href: guidesPath(lang),
-      label: t(lang, 'nav.guides'),
-      section: guides.length ? 'guides' : undefined,
-    },
+    { href: guides.length ? '#guides' : guidesPath(lang), label: t(lang, 'nav.guides') },
     { href: '#contact', label: t(lang, 'nav.contact') },
   ]}
 >

@@ -12,14 +12,9 @@ export function initSectionNavigation() {
   if (!content || !header) return;
 
   const links = [
-    ...header.querySelectorAll<HTMLAnchorElement>(
-      '[data-sliding-thumb] a:is([href^="#"], [data-nav-section])',
-    ),
-  ].map((link) => ({
-    link,
-    hash: link.dataset.navSection ? `#${link.dataset.navSection}` : link.hash,
-  }));
-  const hashes = new Set(links.map(({ hash }) => hash));
+    ...header.querySelectorAll<HTMLAnchorElement>('[data-sliding-thumb] a[href^="#"]'),
+  ];
+  const hashes = new Set(links.map((link) => link.hash));
   // The reading order can differ from the order of the links in the navbar.
   const sections = [...content.querySelectorAll<HTMLElement>('[id]')]
     .filter((section) => hashes.has(`#${section.id}`))
@@ -36,8 +31,8 @@ export function initSectionNavigation() {
   function mark(hash: string) {
     if (hash === active) return;
     active = hash;
-    for (const { link, hash: section } of links) {
-      if (section === hash) {
+    for (const link of links) {
+      if (link.hash === hash) {
         link.setAttribute('aria-current', link.dataset.tab ? 'page' : 'location');
       } else {
         link.removeAttribute('aria-current');
@@ -103,8 +98,7 @@ export function initSectionNavigation() {
     queueRead();
   };
 
-  for (const { link } of links) {
-    if (!link.getAttribute('href')?.startsWith('#')) continue;
+  for (const link of links) {
     link.addEventListener('click', (event) => {
       if (
         event.defaultPrevented ||
