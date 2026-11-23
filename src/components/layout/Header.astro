@@ -26,10 +26,6 @@ const switchesAppView = nav.some((item) => item.tab);
 ---
 
 <header class="site-header" data-header data-wide-nav={nav.length > 4 ? '' : undefined}>
-  <a class="skip-link" href="#main-content">
-    {t(lang, 'nav.skip')}
-  </a>
-
   <div class="site-header__bar">
     <div class="site-header__material glass glass-panel" aria-hidden="true" data-lens></div>
     <a class="brand" href={homePath(lang)}>
@@ -138,23 +134,6 @@ const switchesAppView = nav.some((item) => item.tab);
     z-index: -1;
     border-radius: inherit;
     pointer-events: none;
-  }
-
-  .skip-link {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    z-index: 40;
-    padding: 10px 18px;
-    border-radius: var(--r-pill);
-    background: var(--ink);
-    color: var(--paper);
-    font-weight: 600;
-    transform: translateY(-200%);
-  }
-
-  .skip-link:focus {
-    transform: none;
   }
 
   .brand {

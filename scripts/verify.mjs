@@ -65,7 +65,7 @@ for (const [path, html] of pages) {
   if (!/<html lang="(en|vi|fr|ja|es|zh)"/.test(html)) fail(path, 'missing html lang');
   if (!html.includes('data-site-security'))
     fail(path, 'missing Content-Security-Policy (run postbuild)');
-  if (!html.includes('id="main-content"')) fail(path, 'missing skip-link target');
+  if (!html.includes('id="main-content"')) fail(path, 'missing main content landmark');
 
   const description = meta.description ?? '';
   const minDescription = /<html lang="zh"/.test(html) ? 20 : 50;
