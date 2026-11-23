@@ -422,18 +422,6 @@ a:not([class]):focus-visible {
 
 /* ------------------------------------------------------------ Liquid Glass */
 
-@property --glass-reflection-x {
-  syntax: '<length-percentage>';
-  inherits: false;
-  initial-value: 15%;
-}
-
-@property --glass-reflection-y {
-  syntax: '<length-percentage>';
-  inherits: false;
-  initial-value: 0%;
-}
-
 .glass,
 .button--primary,
 .button--secondary,
@@ -448,8 +436,6 @@ a:not([class]):focus-visible {
 .button--primary,
 .button--secondary,
 .segmented {
-  --glass-light-x: 15%;
-  --glass-light-y: 0%;
   isolation: isolate;
   box-shadow:
     inset 0 0 0 1px var(--glass-edge),
@@ -464,19 +450,13 @@ a:not([class]):focus-visible {
 .button--primary::after,
 .button--secondary::after,
 .segmented::after {
-  --glass-reflection-x: var(--glass-light-x);
-  --glass-reflection-y: var(--glass-light-y);
   position: absolute;
   inset: 0;
   z-index: 2;
   padding: 1px;
   border-radius: inherit;
   background:
-    radial-gradient(
-      ellipse 110px 72px at var(--glass-reflection-x) var(--glass-reflection-y),
-      var(--glass-shine),
-      transparent
-    ),
+    radial-gradient(ellipse 110px 72px at 15% 0%, var(--glass-shine), transparent),
     linear-gradient(
       150deg,
       color-mix(in srgb, var(--glass-shine) 56%, transparent),
@@ -493,16 +473,6 @@ a:not([class]):focus-visible {
     linear-gradient(#000 0 0);
   pointer-events: none;
   content: '';
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  :is(.glass, .glass-card, .button--primary, .button--secondary, .segmented):not(
-      [data-glass-reflecting]
-    )::after {
-    transition:
-      --glass-reflection-x 420ms var(--ease),
-      --glass-reflection-y 420ms var(--ease);
-  }
 }
 
 .glass,

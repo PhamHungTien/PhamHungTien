@@ -1,5 +1,5 @@
 /**
- * Edge refraction and pointer reflections for glass surfaces.
+ * Edge refraction for glass surfaces.
  *
  * Apple's material bends what is behind it at its curved edges. On the web that needs an SVG
  * filter inside backdrop-filter: a displacement map shifts backdrop pixels near the edge, as
@@ -14,7 +14,6 @@
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const MAX_MAP_PIXELS = 90_000;
 const surfaceSelector = '[data-lens], .glass-card, .button--primary';
-const reflectionSelector = '.glass, .glass-card, .segmented, .button--primary, .button--secondary';
 
 function supported() {
   const ua = navigator.userAgent;
@@ -83,70 +82,12 @@ function drawMap(width: number, height: number, radius: number, bezel: number) {
   return canvas.toDataURL('image/png');
 }
 
-function initReflection(mayReflect: () => boolean, onSurface: (element: HTMLElement) => void) {
-  let active: HTMLElement | null = null;
-  let pending: HTMLElement | null = null;
-  let frame = 0;
-  let x = 0;
-  let y = 0;
-
-  const reset = () => {
-    if (!active) return;
-    delete active.dataset.glassReflecting;
-    active.style.removeProperty('--glass-light-x');
-    active.style.removeProperty('--glass-light-y');
-    active = null;
-  };
-
-  document.addEventListener(
-    'pointermove',
-    (event) => {
-      if (event.pointerType !== 'mouse' || !mayReflect() || !(event.target instanceof Element)) {
-        pending = null;
-        reset();
-        return;
-      }
-      pending = event.target.closest<HTMLElement>(reflectionSelector);
-      x = event.clientX;
-      y = event.clientY;
-      if (frame || (!pending && !active)) return;
-      frame = requestAnimationFrame(() => {
-        frame = 0;
-        if (pending !== active) {
-          reset();
-          active = pending;
-          if (active) {
-            active.dataset.glassReflecting = '';
-            onSurface(active);
-          }
-        }
-        if (!active) return;
-        const box = active.getBoundingClientRect();
-        active.style.setProperty('--glass-light-x', `${Math.round(x - box.left)}px`);
-        active.style.setProperty('--glass-light-y', `${Math.round(y - box.top)}px`);
-      });
-    },
-    { passive: true },
-  );
-
-  const leave = () => {
-    pending = null;
-    reset();
-  };
-  document.documentElement.addEventListener('pointerleave', leave);
-  window.addEventListener('blur', leave);
-}
-
 export function initLiquidGlass(): void {
+  if (!supported()) return;
+
   const lessTransparency = matchMedia(
     '(prefers-reduced-transparency: reduce), (prefers-contrast: more), (forced-colors: active)',
   );
-  const motion = matchMedia('(prefers-reduced-motion: no-preference) and (hover: hover)');
-  const mayReflect = () => motion.matches && !lessTransparency.matches;
-  if (!supported()) {
-    initReflection(mayReflect, () => {});
-    return;
-  }
 
   const svg = document.createElementNS(SVG_NS, 'svg');
   svg.setAttribute('aria-hidden', 'true');
@@ -245,9 +186,30 @@ export function initLiquidGlass(): void {
     nearby.observe(el);
   };
   document.querySelectorAll<HTMLElement>(surfaceSelector).forEach(observe);
-  initReflection(mayReflect, (el) => {
-    if (el.matches(surfaceSelector)) observe(el);
-  });
+
+  const community = document.querySelector('[data-tab-panel="community"]');
+  if (community) {
+    // Discussions render after hydration and replace cards when a filter changes.
+    new MutationObserver((changes) => {
+      for (const { addedNodes } of changes) {
+        for (const node of addedNodes) {
+          if (!(node instanceof HTMLElement) || !node.isConnected) continue;
+          if (node.matches(surfaceSelector)) observe(node);
+          node.querySelectorAll<HTMLElement>(surfaceSelector).forEach(observe);
+        }
+      }
+      if (changes.some(({ removedNodes }) => removedNodes.length > 0)) {
+        surfaces.forEach((entry, el) => {
+          if (el.isConnected) return;
+          resized.unobserve(el);
+          nearby.unobserve(el);
+          svg.querySelector(`#${entry.id}`)?.remove();
+          el.style.removeProperty('backdrop-filter');
+          surfaces.delete(el);
+        });
+      }
+    }).observe(community, { childList: true, subtree: true });
+  }
 
   document.documentElement.classList.add('liquid-glass');
   lessTransparency.addEventListener('change', () => {
