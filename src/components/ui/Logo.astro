@@ -3,9 +3,10 @@
 interface Props {
   size?: number;
   class?: string;
+  background?: boolean;
 }
 
-const { size = 34, class: className } = Astro.props;
+const { size = 34, class: className, background = true } = Astro.props;
 ---
 
 <svg
@@ -16,10 +17,12 @@ const { size = 34, class: className } = Astro.props;
   aria-hidden="true"
   focusable="false"
 >
-  <path
-    d="M20 0h24c14 0 20 6 20 20v24c0 14-6 20-20 20H20C6 64 0 58 0 44V20C0 6 6 0 20 0Z"
-    fill="#7a1424"
-  ></path>
+  {background && (
+    <path
+      d="M20 0h24c14 0 20 6 20 20v24c0 14-6 20-20 20H20C6 64 0 58 0 44V20C0 6 6 0 20 0Z"
+      fill="#7a1424"
+    ></path>
+  )}
   <path
     d="M17.5 31h29M32 31v20"
     stroke="#fff"
