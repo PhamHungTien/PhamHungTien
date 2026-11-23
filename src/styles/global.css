@@ -812,8 +812,7 @@ a:not([class]):focus-visible {
 /* ---------------------------------------------------------------- motion */
 
 /*
- * Cross-document view transitions (Chromium, Safari 18.2+): pages cross-fade and an
- * app icon glides from the list into the app page header. Others simply navigate.
+ * Cross-document view transitions animate the page, shared app icons, and the active nav pill.
  */
 @media (prefers-reduced-motion: no-preference) {
   @view-transition {
@@ -828,6 +827,15 @@ a:not([class]):focus-visible {
   ::view-transition-group(*) {
     animation-duration: 320ms;
     animation-timing-function: var(--ease);
+  }
+
+  ::view-transition-group(site-nav-selection) {
+    z-index: 1;
+    animation-duration: 420ms;
+  }
+
+  ::view-transition-group(site-nav-labels) {
+    z-index: 2;
   }
 }
 
