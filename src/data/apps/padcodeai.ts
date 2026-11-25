@@ -45,8 +45,8 @@ const app: App = {
       value: { vi: '9 ngôn ngữ', en: '9 languages' },
     },
     {
-      label: { vi: 'Agent AI', en: 'AI agent' },
-      value: { vi: 'Miễn phí', en: 'Free' },
+      label: { vi: 'Giá', en: 'Price' },
+      value: { vi: 'Miễn phí, có gói Pro', en: 'Free, with optional Pro' },
     },
     {
       label: { vi: 'Giao diện', en: 'Interface' },
@@ -106,8 +106,8 @@ const app: App = {
     {
       title: { vi: 'Tính năng miễn phí và Pro', en: 'Free tools and optional Pro' },
       description: {
-        vi: 'Trình soạn thảo, chạy mã được hỗ trợ, Git và xem trước web dùng miễn phí. Bạn có thể thử các công cụ Pro như chia đôi trình soạn thảo và thay thế toàn dự án theo lượt mỗi ngày. Ứng dụng hiển thị các lựa chọn nâng cấp hiện có.',
-        en: 'Editing, supported code execution, Git and web previews are free. Pro tools such as the split editor and project-wide replace have daily free allowances. The app shows the available upgrade options.',
+        vi: 'Trình soạn thảo, chạy mã, terminal, Git, xem trước web và chat AI dùng miễn phí. Pad Code AI Pro bỏ giới hạn mỗi ngày của agent AI và Vibe Coding, notebook, trình gỡ lỗi, SSH và SFTP, trình soạn thảo chia đôi và thay thế toàn dự án; công cụ nào cũng dùng thử miễn phí được mỗi ngày. Chọn gói năm có dùng thử miễn phí, gói tháng hoặc mua một lần.',
+        en: 'The editor, running code, the terminal, Git, web previews and AI chat are free. Pad Code AI Pro removes the daily limits on the AI agent and Vibe Coding, notebooks, the debugger, SSH and SFTP, the split editor and project-wide replace; each can be tried free every day. Choose yearly with a free trial, monthly or a one-time purchase.',
       },
     },
   ],
