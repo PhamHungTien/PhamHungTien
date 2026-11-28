@@ -1,0 +1,233 @@
+# Phạm Hùng Tiến
+
+> Phạm Hùng Tiến (Pham Hung Tien) builds apps for Apple devices and Android, with an emphasis on offline features and on-device processing.
+
+Contact: contact@phamhungtien.com
+
+## English
+
+- [Home](https://phamhungtien.com/)
+- [PHTV](https://phamhungtien.com/en/PHTV/): PHTV is a free Vietnamese input method for macOS 14+ with Telex, VNI, text shortcuts, spell checking and clipboard history. For Apple Silicon and Intel Macs. (macOS 14+)
+- [vTTS](https://phamhungtien.com/vTTS/): vTTS reads EPUB, PDF, DOCX and text aloud with built-in voices for 17 languages. Listen offline, change speed, set a sleep timer or export audio. (iOS 17+, iPadOS 17+, macOS 14+, Android 8+)
+- [Pad Code AI](https://phamhungtien.com/PadCodeAI/): Pad Code AI is an IDE for iPad and iPhone that runs real Ubuntu Linux on the device: Python, C, C++, JavaScript, Go, Rust, Java and more, a terminal with apt, offline. (iOS 17+, iPadOS 17+)
+- [Pad Notes AI](https://phamhungtien.com/PadNotesAI/): Pad Notes AI combines handwriting, PDF annotation, audio recording and memorization tape on iPhone, iPad and Mac. Start with up to 20 free notebooks. (iOS 17+, iPadOS 17+, macOS 14+)
+- [My NAS Manager](https://phamhungtien.com/MyNASManager/): My NAS Manager is a Synology DSM client for iPhone and iPad. Monitor CPU, memory and drive health, browse File Station and manage downloads. (iOS 17+, iPadOS 17+)
+- [LunarV](https://phamhungtien.com/en/LunarV/): LunarV is a Vietnamese lunar calendar for iPhone, iPad, Mac and Apple Vision Pro. Convert dates, look up Can Chi and set lunar anniversary reminders. (iOS 17+, iPadOS 17+, macOS 14+, visionOS 2+)
+- [Lunar Block](https://phamhungtien.com/LunarBlock/): Lunar Block is a 3D falling-block puzzle for iPhone, iPad and Mac. Rotate, hold and drop crystal blocks to clear lines in Marathon, Sprint and Ultra. (iOS 16+, iPadOS 16+, macOS 13+)
+
+### Guides
+
+- [All guides](https://phamhungtien.com/guides/)
+- [Debug Python on iPad with breakpoints in Pad Code AI](https://phamhungtien.com/guides/debug-python-on-ipad-pad-code-ai/): Use Pad Code AI to pause a Python script on iPad, inspect local variables, step through a calculation and verify a fix for an incorrect discount.
+- [Translate an EPUB and listen offline with vTTS](https://phamhungtien.com/guides/translate-epub-books-offline-with-vtts/): Translate an EPUB on iPhone, iPad, Mac or Android, save a separate copy in vTTS, and check the reading language before going offline.
+- [Install PHTV and type Vietnamese on Mac](https://phamhungtien.com/en/guides/go-tieng-viet-tren-mac-voi-phtv/): Install PHTV with Homebrew or a DMG, grant the macOS permission it requests, set up Telex or VNI, and type your first Vietnamese sentence.
+- [Vietnamese Telex typing chart and accent placement](https://phamhungtien.com/en/guides/bang-go-telex-day-du/): Learn Vietnamese Telex letter and tone keys, how to correct an accent, and how to type words such as người, được and Nguyễn with PHTV on Mac.
+- [Vietnamese encodings and how to convert TCVN3 or VNI to Unicode](https://phamhungtien.com/en/guides/bang-ma-tieng-viet-unicode-tcvn3-vni/): Recognize Vietnamese text in TCVN3, VNI Windows or CP1258, understand composed and decomposed Unicode, and convert legacy text with PHTV on Mac.
+- [VNI typing chart and how to choose between VNI and Telex](https://phamhungtien.com/en/guides/cach-go-vni-telex-hay-vni/): Learn which number keys add Vietnamese letters and tones in VNI, practice common words, and compare VNI with Telex when typing on Mac.
+- [Create a personal reading voice in vTTS Voice Studio](https://phamhungtien.com/guides/create-personal-voice-with-vtts/): Make a personal reading voice with vTTS Voice Studio. Record or import an authorized sample, listen to a new sentence and save the profile on your device.
+- [Export an EPUB as a chaptered M4B audiobook with vTTS](https://phamhungtien.com/guides/export-m4b-audiobook-with-vtts/): Convert an EPUB to an M4B audiobook with chapters in vTTS. Check the book voice and speed, save the export, and test chapter navigation in your player.
+- [Text expansion on Mac with PHTV macros and dynamic snippets](https://phamhungtien.com/en/guides/go-tat-tren-mac-voi-phtv/): Set up PHTV text expansion on Mac. Create shortcuts for reusable replies and add dates, clipboard text, random phrases or counters as you type.
+- [How to play Lunar Block on iPhone, iPad and Mac](https://phamhungtien.com/guides/lunar-block-controls-and-modes/): Learn the Lunar Block controls, use hold and the ghost piece, and choose between Marathon, the 40-line Sprint and the two-minute Ultra on iPhone, iPad or Mac.
+- [Preview HTML, CSS and JavaScript on iPad with Pad Code AI](https://phamhungtien.com/guides/preview-html-css-javascript-on-ipad/): Build a reading checklist in three files, preview it on iPad or iPhone, test narrow layouts and use the browser console to fix JavaScript errors.
+- [How to review AI code changes on iPad with Pad Code AI](https://phamhungtien.com/guides/review-ai-code-changes-on-ipad/): Use Pad Code AI to plan a small JavaScript change, read the agent diff, test the result in Web Preview and undo the operation if needed.
+- [Run your first Python project on iPad with Pad Code AI](https://phamhungtien.com/guides/run-python-on-ipad-pad-code-ai/): Create a local Python project in Pad Code AI, run it on iPad or iPhone, fix a syntax error and save a generated text file from the run output.
+- [Study a PDF with memorization tape in Pad Notes AI](https://phamhungtien.com/guides/study-pdf-memorization-tape-pad-notes-ai/): Import a PDF into Pad Notes AI, annotate it on iPad, hide answers with memorization tape, and export a study copy as a PDF.
+- [Fix missing accents and repeated letters in Vietnamese typing on Mac](https://phamhungtien.com/en/guides/sua-loi-go-tieng-viet-tren-mac/): Fix dropped accents, repeated letters and input conflicts in PHTV on Mac. Check permissions, keyboard settings, encodings and per-app typing rules.
+- [Listen to EPUB books and documents with vTTS](https://phamhungtien.com/guides/nghe-sach-epub-giong-doc-tieng-viet-voi-vtts/): Use vTTS on iPhone, iPad and Mac to read EPUB, PDF and Word documents aloud offline, adjust voices, set a sleep timer and export MP3 or M4B audiobooks.
+- [The Vietnamese lunar calendar: leap months, zodiac cycles and solar terms](https://phamhungtien.com/guides/am-lich-viet-nam-cach-tinh-can-chi-tiet-khi/): Understand Vietnam's lunar calendar, leap months, the 60-year stem-branch cycle, solar terms and why Vietnamese and Chinese New Year sometimes differ.
+- [Access your Synology NAS remotely with iPhone and iPad](https://phamhungtien.com/guides/truy-cap-synology-nas-tu-xa-an-toan/): Compare QuickConnect, DDNS and VPN access for a Synology NAS, prepare your security settings and connect with My NAS Manager on iPhone and iPad.
+
+### Privacy Policy
+
+- [Website privacy](https://phamhungtien.com/privacy/)
+- [PHTV](https://phamhungtien.com/en/PHTV/privacy.html)
+- [vTTS](https://phamhungtien.com/vTTS/privacy.html)
+- [Pad Code AI](https://phamhungtien.com/PadCodeAI/privacy.html)
+- [Pad Notes AI](https://phamhungtien.com/PadNotesAI/privacy.html)
+- [My NAS Manager](https://phamhungtien.com/MyNASManager/privacy.html)
+- [LunarV](https://phamhungtien.com/en/LunarV/privacy.html)
+- [Lunar Block](https://phamhungtien.com/LunarBlock/privacy.html)
+
+## Tiếng Việt
+
+- [Trang chủ](https://phamhungtien.com/vi/)
+- [PHTV](https://phamhungtien.com/PHTV/): PHTV là bộ gõ tiếng Việt miễn phí cho macOS 14+, có Telex, VNI, gõ tắt, kiểm tra chính tả và lịch sử clipboard. Tải cho cả Mac Apple Silicon và Intel. (macOS 14+)
+- [vTTS](https://phamhungtien.com/vi/vTTS/): vTTS đọc EPUB, PDF, DOCX và văn bản bằng giọng có sẵn cho 17 ngôn ngữ. Nghe ngoại tuyến, chỉnh tốc độ, hẹn giờ tắt hoặc xuất âm thanh. (iOS 17+, iPadOS 17+, macOS 14+, Android 8+)
+- [Pad Code AI](https://phamhungtien.com/vi/PadCodeAI/): Pad Code AI là IDE cho iPad và iPhone chạy Ubuntu Linux thật ngay trên máy: Python, C, C++, JavaScript, Go, Rust, Java và nhiều hơn, terminal có apt, dùng ngoại tuyến. (iOS 17+, iPadOS 17+)
+- [Pad Notes AI](https://phamhungtien.com/vi/PadNotesAI/): Pad Notes AI giúp bạn viết tay, chú thích PDF, ghi âm và ôn bài bằng băng dính che đáp án trên iPhone, iPad và Mac. Dùng miễn phí tới 20 sổ tay. (iOS 17+, iPadOS 17+, macOS 14+)
+- [My NAS Manager](https://phamhungtien.com/vi/MyNASManager/): My NAS Manager là ứng dụng Synology DSM cho iPhone và iPad. Theo dõi CPU, RAM và ổ đĩa, duyệt File Station và quản lý tác vụ tải xuống. (iOS 17+, iPadOS 17+)
+- [LunarV](https://phamhungtien.com/LunarV/): LunarV là lịch âm Việt Nam trên iPhone, iPad, Mac và Apple Vision Pro. Đổi ngày âm dương, tra Can Chi, xem giờ hoàng đạo và đặt nhắc giỗ. (iOS 17+, iPadOS 17+, macOS 14+, visionOS 2+)
+- [Lunar Block](https://phamhungtien.com/vi/LunarBlock/): Lunar Block là trò chơi xếp khối rơi 3D cho iPhone, iPad và Mac. Xoay, giữ và thả khối pha lê để xoá hàng trong Marathon, Sprint và Ultra. (iOS 16+, iPadOS 16+, macOS 13+)
+
+### Hướng dẫn
+
+- [Tất cả hướng dẫn](https://phamhungtien.com/huong-dan/)
+- [Gỡ lỗi Python trên iPad bằng điểm dừng trong Pad Code AI](https://phamhungtien.com/huong-dan/debug-python-on-ipad-pad-code-ai/): Đặt điểm dừng, xem biến cục bộ và chạy từng bước trong Pad Code AI trên iPad để tìm và sửa lỗi tính số tiền giảm giá bằng Python.
+- [Dịch sách EPUB và nghe bản dịch ngoại tuyến với vTTS](https://phamhungtien.com/huong-dan/translate-epub-books-offline-with-vtts/): Dùng vTTS để dịch sách EPUB trên iPhone, iPad, Mac hay Android, lưu bản dịch riêng và chọn giọng đọc trước khi nghe ngoại tuyến.
+- [Nghe sách EPUB và tài liệu bằng giọng Việt với vTTS](https://phamhungtien.com/huong-dan/nghe-sach-epub-giong-doc-tieng-viet-voi-vtts/): Dùng vTTS để nghe sách EPUB, PDF và Word bằng giọng Việt hoặc tiếng Anh ngay trên máy, đặt hẹn giờ tắt và xuất sách nói MP3 hoặc M4B.
+- [Âm lịch Việt Nam: tháng nhuận, can chi và tiết khí](https://phamhungtien.com/huong-dan/am-lich-viet-nam-cach-tinh-can-chi-tiet-khi/): Tìm hiểu cách tính tháng âm lịch Việt Nam, tháng nhuận, chu kỳ can chi, 24 tiết khí và vì sao ngày Tết Việt Nam có lúc khác ngày Tết Trung Quốc.
+- [Tạo giọng đọc của bạn bằng Phòng thu giọng vTTS](https://phamhungtien.com/huong-dan/create-personal-voice-with-vtts/): Tạo giọng đọc bằng Phòng thu giọng vTTS. Thu hoặc nhập mẫu có quyền sử dụng, nghe thử một câu mới rồi lưu hồ sơ giọng trên thiết bị.
+- [Xuất sách EPUB thành sách nói M4B có chương với vTTS](https://phamhungtien.com/huong-dan/export-m4b-audiobook-with-vtts/): Cách chuyển EPUB thành sách nói M4B có chương bằng vTTS, kiểm tra giọng và tốc độ, lưu tệp rồi thử chuyển chương trên trình phát tương thích.
+- [Cách chơi Lunar Block trên iPhone, iPad và Mac](https://phamhungtien.com/huong-dan/lunar-block-controls-and-modes/): Tìm hiểu cách xoay, thả và giữ khối trong Lunar Block, dùng bóng chiếu và hàng chờ, rồi chọn giữa Marathon, Sprint 40 hàng và Ultra hai phút.
+- [Xem trước HTML, CSS và JavaScript trên iPad bằng Pad Code AI](https://phamhungtien.com/huong-dan/preview-html-css-javascript-on-ipad/): Tạo danh sách đọc sách với HTML, CSS và JavaScript trên iPad hoặc iPhone, rồi kiểm tra giao diện hẹp và tìm lỗi bằng bảng điều khiển.
+- [Cách xem và kiểm tra mã do AI sửa trên iPad với Pad Code AI](https://phamhungtien.com/huong-dan/review-ai-code-changes-on-ipad/): Dùng Pad Code AI để lập kế hoạch cho một thay đổi JavaScript, đối chiếu các dòng mã đã sửa, thử trong bản xem trước và hoàn tác khi cần.
+- [Chạy dự án Python đầu tiên trên iPad với Pad Code AI](https://phamhungtien.com/huong-dan/run-python-on-ipad-pad-code-ai/): Tạo dự án Python cục bộ trong Pad Code AI trên iPad hoặc iPhone, chạy chương trình, tìm lỗi cú pháp và xem trước tệp kết quả trước khi lưu.
+- [Ôn bài từ PDF bằng băng dính trong Pad Notes AI](https://phamhungtien.com/huong-dan/study-pdf-memorization-tape-pad-notes-ai/): Nhập PDF vào Pad Notes AI, ghi chú trên iPad, che đáp án bằng băng dính ghi nhớ, rồi xuất bản ôn tập dưới dạng PDF.
+- [Truy cập Synology NAS từ xa với iPhone và iPad](https://phamhungtien.com/huong-dan/truy-cap-synology-nas-tu-xa-an-toan/): So sánh QuickConnect, DDNS và VPN cho Synology NAS, thiết lập bảo mật DSM và kết nối với My NAS Manager trên iPhone hoặc iPad.
+- [Cách gõ tiếng Việt trên Mac với PHTV (hướng dẫn đầy đủ)](https://phamhungtien.com/guides/go-tieng-viet-tren-mac-voi-phtv/): Cài PHTV bằng Homebrew hoặc file DMG, đi qua trình thiết lập 6 bước, cấp quyền nhập liệu và bắt đầu gõ Telex trên macOS. Có video và ảnh từng bước.
+- [Bảng gõ Telex đầy đủ và cách đặt dấu đúng](https://phamhungtien.com/guides/bang-go-telex-day-du/): Bảng gõ Telex đầy đủ cho chữ â, ă, ê, ô, ơ, ư, đ và năm dấu thanh, cách sửa và bỏ dấu, gõ nhanh phụ âm, kèm ví dụ cho các từ khó như người, được, trường.
+- [Bảng mã tiếng Việt: Unicode, Unicode tổ hợp, TCVN3, VNI và cách chuyển đổi](https://phamhungtien.com/guides/bang-ma-tieng-viet-unicode-tcvn3-vni/): Giải thích các bảng mã tiếng Việt Unicode, Unicode tổ hợp, TCVN3 (ABC), VNI Windows và CP1258, vì sao chữ bị lỗi font và cách chuyển văn bản cũ sang Unicode trên Mac.
+- [Cách gõ VNI và nên chọn Telex hay VNI?](https://phamhungtien.com/guides/cach-go-vni-telex-hay-vni/): Bảng gõ VNI đầy đủ với các phím số từ 1 đến 9, ví dụ cho các từ khó, so sánh ưu nhược điểm của VNI và Telex để chọn kiểu gõ tiếng Việt hợp với bạn.
+- [Gõ tắt trên Mac với PHTV: macro, ngày giờ, clipboard và bộ đếm](https://phamhungtien.com/guides/go-tat-tren-mac-voi-phtv/): Cách tạo gõ tắt (macro) trong PHTV để gõ nhanh câu chào, email, địa chỉ; dùng snippet động cho ngày giờ, clipboard, nội dung ngẫu nhiên và bộ đếm tự tăng.
+- [Sửa lỗi gõ tiếng Việt trên Mac: lặp chữ, mất dấu, không gõ được](https://phamhungtien.com/guides/sua-loi-go-tieng-viet-tren-mac/): Cách khắc phục các lỗi gõ tiếng Việt thường gặp trên macOS như lặp chữ, mất dấu trong Chrome, không gõ được sau khi cập nhật, lỗi trong Terminal, VS Code và Excel.
+
+### Chính sách quyền riêng tư
+
+- [Quyền riêng tư](https://phamhungtien.com/vi/privacy/)
+- [PHTV](https://phamhungtien.com/PHTV/privacy.html)
+- [vTTS](https://phamhungtien.com/vi/vTTS/privacy.html)
+- [Pad Code AI](https://phamhungtien.com/vi/PadCodeAI/privacy.html)
+- [Pad Notes AI](https://phamhungtien.com/vi/PadNotesAI/privacy.html)
+- [My NAS Manager](https://phamhungtien.com/vi/MyNASManager/privacy.html)
+- [LunarV](https://phamhungtien.com/LunarV/privacy.html)
+- [Lunar Block](https://phamhungtien.com/vi/LunarBlock/privacy.html)
+
+## 日本語
+
+- [ホーム](https://phamhungtien.com/ja/)
+- [PHTV](https://phamhungtien.com/ja/PHTV/): PHTVはmacOS 14以降向けの無料ベトナム語入力アプリです。Telex、VNI、定型文展開、スペルチェック、クリップボード履歴に対応。AppleシリコンとIntel搭載のMacで使えます。 (macOS 14+)
+- [vTTS](https://phamhungtien.com/ja/vTTS/): vTTSはEPUB、PDF、DOCX、テキストを17言語の内蔵音声で読み上げます。オフライン再生、速度調整、スリープタイマー、音声ファイルの書き出しに対応しています。 (iOS 17+, iPadOS 17+, macOS 14+, Android 8+)
+- [Pad Code AI](https://phamhungtien.com/ja/PadCodeAI/): Pad Code AIは、本物のUbuntu Linuxを端末上で動かすiPad・iPhone向けIDEです。Python、C、C++、JavaScript、Go、Rust、Javaなどを実行でき、aptが使えるターミナルをオフラインで利用できます。 (iOS 17+, iPadOS 17+)
+- [Pad Notes AI](https://phamhungtien.com/ja/PadNotesAI/): Pad Notes AIはiPhone、iPad、Macで、手書き、PDFへの書き込み、録音、暗記テープをまとめて使えるノートアプリです。ノートは20冊まで無料で作成できます。 (iOS 17+, iPadOS 17+, macOS 14+)
+- [My NAS Manager](https://phamhungtien.com/ja/MyNASManager/): My NAS ManagerはiPhoneとiPadでSynology DSMを操作するアプリです。CPU、メモリ、ドライブの状態を確認し、File Stationでファイルを参照したり、ダウンロードを管理したりできます。 (iOS 17+, iPadOS 17+)
+- [LunarV](https://phamhungtien.com/ja/LunarV/): LunarVはiPhone、iPad、Mac、Apple Vision Pro向けのベトナム旧暦カレンダーです。新暦と旧暦の日付を変換し、干支を調べ、旧暦で法事や記念日の通知を設定できます。 (iOS 17+, iPadOS 17+, macOS 14+, visionOS 2+)
+- [Lunar Block](https://phamhungtien.com/ja/LunarBlock/): Lunar BlockはiPhone、iPad、Mac向けの3D落ちものパズルです。クリスタルのブロックを回転、保持、落下させ、Marathon、Sprint、Ultraでラインを消しましょう。 (iOS 16+, iPadOS 16+, macOS 13+)
+
+### ガイド
+
+- [すべてのガイド](https://phamhungtien.com/ja/guides/)
+- [Pad Code AIのブレークポイントでiPad上のPythonをデバッグする](https://phamhungtien.com/ja/guides/debug-python-on-ipad-pad-code-ai/): iPadのPad Code AIでPythonを一時停止し、ローカル変数とステップ実行で割引計算の誤りを見つけ、修正後の出力を確認します。
+- [vTTSでEPUBを翻訳し、オフラインで読み上げる方法](https://phamhungtien.com/ja/guides/translate-epub-books-offline-with-vtts/): iPhone、iPad、Mac、AndroidのvTTSでEPUBを翻訳し、別の本として保存します。言語データの準備や、声を選んでオフラインで聞く手順も紹介します。
+- [PHTVをインストールしてMacでベトナム語を入力する](https://phamhungtien.com/ja/guides/go-tieng-viet-tren-mac-voi-phtv/): MacにHomebrewまたはDMGでPHTVを導入し、必要な権限を設定します。TelexやVNIを選び、最初のベトナム語の文を入力します。
+- [vTTSでEPUBやPDFをオフラインで読み上げる方法](https://phamhungtien.com/ja/guides/nghe-sach-epub-giong-doc-tieng-viet-voi-vtts/): iPhone、iPad、MacのvTTSにEPUB、PDF、Word文書を取り込み、端末上で読み上げる方法を紹介します。声や速度の変更、スリープタイマー、音声の書き出しも解説します。
+- [ベトナムの旧暦の仕組みと閏月・干支・二十四節気](https://phamhungtien.com/ja/guides/am-lich-viet-nam-cach-tinh-can-chi-tiet-khi/): ベトナムの旧暦で閏月が入る理由、60年周期の干支の求め方、二十四節気を解説します。中国の旧正月と日付がずれる理由も説明します。
+- [ベトナム語Telexの入力表と声調記号の付け方](https://phamhungtien.com/ja/guides/bang-go-telex-day-du/): MacのPHTVでベトナム語を入力するためのTelex早見表です。母音と声調のキー、記号の修正、ngườiやNguyễnなどの入力例を紹介します。
+- [TCVN3・VNIのベトナム語文書をUnicodeに変換する方法](https://phamhungtien.com/ja/guides/bang-ma-tieng-viet-unicode-tcvn3-vni/): TCVN3、VNI Windows、CP1258の文書を見分け、MacのPHTVでUnicodeへ変換します。合成済み文字と結合文字の違いも説明します。
+- [ベトナム語VNI入力表とTelexとの使い分け](https://phamhungtien.com/ja/guides/cach-go-vni-telex-hay-vni/): 数字キーでベトナム語の母音や声調を入力するVNIの早見表です。MacのPHTVでよく使う語を練習し、Telexとの違いを確認します。
+- [vTTSのボイススタジオで自分の読み上げ音声を作る方法](https://phamhungtien.com/ja/guides/create-personal-voice-with-vtts/): vTTSのボイススタジオで自分の声を録音し、読み上げ音声を作る手順。別の文章で試聴し、声のプロファイルを端末に保存できます。
+- [vTTSでEPUBをチャプター付きM4Bに書き出す方法](https://phamhungtien.com/ja/guides/export-m4b-audiobook-with-vtts/): vTTSでEPUBをチャプター付きM4Bに書き出す手順を紹介。目次と読み上げ音声を確認し、保存したファイルを対応プレーヤーで再生します。
+- [MacのPHTVで定型文と動的スニペットを展開する](https://phamhungtien.com/ja/guides/go-tat-tren-mac-voi-phtv/): MacのPHTVに短い入力から定型文を呼び出すマクロを設定します。日付、クリップボード、ランダム文、連番のスニペットも扱います。
+- [iPhone・iPad・MacでLunar Blockを遊ぶ方法](https://phamhungtien.com/ja/guides/lunar-block-controls-and-modes/): Lunar Blockのブロックを動かし、ゴーストとホールドを使う練習をします。Marathon、40ラインのSprint、2分間のUltraの違いも紹介します。
+- [iPadでHTML・CSS・JavaScriptを作成してプレビューする方法](https://phamhungtien.com/ja/guides/preview-html-css-javascript-on-ipad/): Pad Code AIで読書用チェックリストを作ります。iPadやiPhoneでHTML、CSS、JavaScriptを編集し、画面幅を変えて表示を確認します。
+- [iPadでAIが書き換えたコードを差分で確認する方法](https://phamhungtien.com/ja/guides/review-ai-code-changes-on-ipad/): Pad Code AIの計画モードでJavaScriptの変更を考え、差分を確認します。iPadのWebプレビューで動作を試し、必要に応じて操作を元に戻します。
+- [Pad Code AIでiPad上のPythonを実行する方法](https://phamhungtien.com/ja/guides/run-python-on-ipad-pad-code-ai/): iPadやiPhoneでPad Code AIのPythonを実行する入門ガイド。ローカルプロジェクトを作り、構文エラーを直し、生成したテキストファイルを確認して保存します。
+- [Pad Notes AIの暗記テープでPDFを復習する方法](https://phamhungtien.com/ja/guides/study-pdf-memorization-tape-pad-notes-ai/): iPadのPad Notes AIでPDFを読み込んで書き込み、暗記テープで答えを隠して練習します。復習用のPDFの書き出し方も紹介します。
+- [Macのベトナム語入力で声調が消える、文字が重複するときの対処](https://phamhungtien.com/ja/guides/sua-loi-go-tieng-viet-tren-mac/): PHTVで記号が消えたり、文字が二重に入ったりする場合に、macOSの権限、入力ソース、文字コード、アプリ別設定を順に確認します。
+- [iPhoneとiPadからSynology NASへ安全にリモート接続する](https://phamhungtien.com/ja/guides/truy-cap-synology-nas-tu-xa-an-toan/): Synology NASのQuickConnect、DDNS、VPNを比較し、外出先から接続する前の保護設定とMy NAS Managerの使い方を説明します。
+
+### プライバシーポリシー
+
+- [サイトのプライバシー](https://phamhungtien.com/ja/privacy/)
+- [PHTV](https://phamhungtien.com/ja/PHTV/privacy.html)
+- [vTTS](https://phamhungtien.com/ja/vTTS/privacy.html)
+- [Pad Code AI](https://phamhungtien.com/ja/PadCodeAI/privacy.html)
+- [Pad Notes AI](https://phamhungtien.com/ja/PadNotesAI/privacy.html)
+- [My NAS Manager](https://phamhungtien.com/ja/MyNASManager/privacy.html)
+- [LunarV](https://phamhungtien.com/ja/LunarV/privacy.html)
+- [Lunar Block](https://phamhungtien.com/ja/LunarBlock/privacy.html)
+
+## Español
+
+- [Inicio](https://phamhungtien.com/es/)
+- [PHTV](https://phamhungtien.com/es/PHTV/): PHTV es un método de entrada vietnamita gratuito para macOS 14+. Incluye Telex, VNI, abreviaturas, corrección ortográfica e historial del portapapeles. (macOS 14+)
+- [vTTS](https://phamhungtien.com/es/vTTS/): vTTS lee EPUB, PDF, DOCX y texto en 17 idiomas. Escucha sin conexión, cambia la velocidad, configura un temporizador o exporta el audio. (iOS 17+, iPadOS 17+, macOS 14+, Android 8+)
+- [Pad Code AI](https://phamhungtien.com/es/PadCodeAI/): Pad Code AI es un IDE para iPad y iPhone que ejecuta Ubuntu Linux real en el dispositivo: Python, C, C++, JavaScript, Go, Rust, Java y más, una terminal con apt, sin conexión. (iOS 17+, iPadOS 17+)
+- [Pad Notes AI](https://phamhungtien.com/es/PadNotesAI/): Pad Notes AI reúne escritura a mano, anotaciones en PDF, grabación de audio y cinta para memorizar en iPhone, iPad y Mac. Hasta 20 cuadernos gratis. (iOS 17+, iPadOS 17+, macOS 14+)
+- [My NAS Manager](https://phamhungtien.com/es/MyNASManager/): My NAS Manager es un cliente de Synology DSM para iPhone y iPad. Supervisa CPU, memoria y discos, explora File Station y gestiona descargas. (iOS 17+, iPadOS 17+)
+- [LunarV](https://phamhungtien.com/es/LunarV/): LunarV es un calendario lunar vietnamita para iPhone, iPad, Mac y Apple Vision Pro. Convierte fechas, consulta Can Chi y guarda aniversarios lunares. (iOS 17+, iPadOS 17+, macOS 14+, visionOS 2+)
+- [Lunar Block](https://phamhungtien.com/es/LunarBlock/): Lunar Block es un rompecabezas 3D de bloques que caen para iPhone, iPad y Mac. Gira, reserva y suelta piezas en Marathon, Sprint o Ultra. (iOS 16+, iPadOS 16+, macOS 13+)
+
+### Guías
+
+- [Todas las guías](https://phamhungtien.com/es/guides/)
+- [Cómo depurar Python en el iPad con Pad Code AI](https://phamhungtien.com/es/guides/debug-python-on-ipad-pad-code-ai/): Pon un punto de interrupción, revisa las variables locales y ejecuta Python paso a paso en Pad Code AI para corregir un cálculo en el iPad.
+- [Cómo traducir un EPUB y escucharlo sin conexión con vTTS](https://phamhungtien.com/es/guides/translate-epub-books-offline-with-vtts/): Traduce un EPUB con vTTS en iPhone, iPad, Mac o Android, guarda otra copia del libro y verifica el idioma y la voz antes de escucharlo sin conexión.
+- [Cómo instalar PHTV y escribir en vietnamita en Mac](https://phamhungtien.com/es/guides/go-tieng-viet-tren-mac-voi-phtv/): Instala PHTV con Homebrew o un DMG, concede el permiso de macOS, configura Telex o VNI y escribe tu primera frase en vietnamita.
+- [Escucha libros EPUB y documentos sin conexión con vTTS](https://phamhungtien.com/es/guides/nghe-sach-epub-giong-doc-tieng-viet-voi-vtts/): Importa archivos EPUB, PDF y Word en vTTS para iPhone, iPad y Mac. Elige una voz, ajusta la velocidad y exporta el audio para escucharlo después.
+- [Calendario lunar vietnamita: meses intercalares, Can Chi y términos solares](https://phamhungtien.com/es/guides/am-lich-viet-nam-cach-tinh-can-chi-tiet-khi/): Aprende cómo se calcula el calendario lunar vietnamita, cómo funciona el ciclo Can Chi y por qué el Tết a veces cae en una fecha distinta del Año Nuevo chino.
+- [Cómo escribir en vietnamita con Telex y colocar las tildes](https://phamhungtien.com/es/guides/bang-go-telex-day-du/): Consulta las teclas de Telex para las letras y los tonos del vietnamita. Aprende a corregir signos y a escribir người, được o Nguyễn con PHTV en Mac.
+- [Cómo convertir texto vietnamita de TCVN3 o VNI a Unicode](https://phamhungtien.com/es/guides/bang-ma-tieng-viet-unicode-tcvn3-vni/): Reconoce las codificaciones vietnamitas TCVN3, VNI Windows y CP1258, distingue las formas Unicode y convierte documentos antiguos con PHTV para Mac.
+- [Tabla de escritura VNI y diferencias con Telex](https://phamhungtien.com/es/guides/cach-go-vni-telex-hay-vni/): Aprende a escribir los tonos y las letras vietnamitas con las teclas numéricas de VNI y elige entre VNI y Telex al usar PHTV en Mac.
+- [Cómo crear tu voz de lectura en el Estudio de voz de vTTS](https://phamhungtien.com/es/guides/create-personal-voice-with-vtts/): Crea una voz de lectura en el Estudio de voz de vTTS. Graba o importa una muestra autorizada, prueba una frase nueva y guarda el perfil en el dispositivo.
+- [Cómo exportar un EPUB a M4B con capítulos en vTTS](https://phamhungtien.com/es/guides/export-m4b-audiobook-with-vtts/): Convierte un EPUB en un audiolibro M4B con capítulos en vTTS. Revisa la voz y la velocidad, guarda el archivo y prueba la navegación en tu reproductor.
+- [Cómo crear macros de texto y fragmentos dinámicos con PHTV en Mac](https://phamhungtien.com/es/guides/go-tat-tren-mac-voi-phtv/): Configura PHTV para sustituir abreviaturas por respuestas, fechas, texto del portapapeles o contadores que se actualizan al escribir.
+- [Cómo jugar a Lunar Block en iPhone, iPad y Mac](https://phamhungtien.com/es/guides/lunar-block-controls-and-modes/): Aprende a mover, girar y reservar piezas en Lunar Block, usa la pieza fantasma y elige entre Marathon, Sprint de 40 líneas y Ultra de dos minutos.
+- [Cómo previsualizar HTML, CSS y JavaScript en el iPad](https://phamhungtien.com/es/guides/preview-html-css-javascript-on-ipad/): Crea una lista de lectura con HTML, CSS y JavaScript en Pad Code AI. Prueba la vista previa en iPad o iPhone y localiza errores con la consola.
+- [Cómo revisar en iPad los cambios que hace la IA en tu código](https://phamhungtien.com/es/guides/review-ai-code-changes-on-ipad/): Planifica una mejora de JavaScript con Pad Code AI, comprueba las líneas modificadas, prueba el resultado y deshaz la operación si hace falta.
+- [Cómo ejecutar Python en iPad con Pad Code AI](https://phamhungtien.com/es/guides/run-python-on-ipad-pad-code-ai/): Crea un proyecto de Python en el iPad o iPhone, ejecútalo en el dispositivo, corrige un error de sintaxis y revisa el archivo generado antes de guardarlo.
+- [Cómo estudiar un PDF con la cinta para memorizar de Pad Notes AI](https://phamhungtien.com/es/guides/study-pdf-memorization-tape-pad-notes-ai/): Importa un PDF en Pad Notes AI, anótalo en iPad, tapa las respuestas con cinta para memorizar y exporta una copia de estudio en PDF.
+- [Cómo corregir tildes ausentes y letras repetidas en PHTV para Mac](https://phamhungtien.com/es/guides/sua-loi-go-tieng-viet-tren-mac/): Soluciona la pérdida de tildes, las letras repetidas y los conflictos de escritura vietnamita en Mac. Revisa permisos, codificación y ajustes por app.
+- [Cómo acceder a tu NAS Synology a distancia desde iPhone o iPad](https://phamhungtien.com/es/guides/truy-cap-synology-nas-tu-xa-an-toan/): Compara QuickConnect, DDNS y VPN para un NAS Synology, protege el acceso a DSM y conecta tu iPhone o iPad con My NAS Manager.
+
+### Política de privacidad
+
+- [Privacidad del sitio](https://phamhungtien.com/es/privacy/)
+- [PHTV](https://phamhungtien.com/es/PHTV/privacy.html)
+- [vTTS](https://phamhungtien.com/es/vTTS/privacy.html)
+- [Pad Code AI](https://phamhungtien.com/es/PadCodeAI/privacy.html)
+- [Pad Notes AI](https://phamhungtien.com/es/PadNotesAI/privacy.html)
+- [My NAS Manager](https://phamhungtien.com/es/MyNASManager/privacy.html)
+- [LunarV](https://phamhungtien.com/es/LunarV/privacy.html)
+- [Lunar Block](https://phamhungtien.com/es/LunarBlock/privacy.html)
+
+## 简体中文
+
+- [首页](https://phamhungtien.com/zh/)
+- [PHTV](https://phamhungtien.com/zh/PHTV/): PHTV 是适用于 macOS 14 及以上版本的免费越南语输入法，支持 Telex、VNI、快捷短语、拼写检查和剪贴板历史记录，兼容 Apple 芯片和 Intel 芯片的 Mac。 (macOS 14+)
+- [vTTS](https://phamhungtien.com/zh/vTTS/): vTTS 内置 17 种语言的语音，可朗读 EPUB、PDF、DOCX 和纯文本。支持离线收听、调节语速、设置睡眠定时器和导出音频。 (iOS 17+, iPadOS 17+, macOS 14+, Android 8+)
+- [Pad Code AI](https://phamhungtien.com/zh/PadCodeAI/): Pad Code AI 是一款在设备上运行真正 Ubuntu Linux 的 iPad 和 iPhone IDE：Python、C、C++、JavaScript、Go、Rust、Java 等，带 apt 的终端，可离线使用。 (iOS 17+, iPadOS 17+)
+- [Pad Notes AI](https://phamhungtien.com/zh/PadNotesAI/): Pad Notes AI 为 iPhone、iPad 和 Mac 提供手写、PDF 批注、录音和记忆胶带功能。可免费创建最多 20 本笔记本。 (iOS 17+, iPadOS 17+, macOS 14+)
+- [My NAS Manager](https://phamhungtien.com/zh/MyNASManager/): My NAS Manager 是适用于 iPhone 和 iPad 的群晖 DSM 客户端。可监控 CPU、内存和硬盘健康，浏览 File Station 并管理下载。 (iOS 17+, iPadOS 17+)
+- [LunarV](https://phamhungtien.com/zh/LunarV/): LunarV 是适用于 iPhone、iPad、Mac 和 Apple Vision Pro 的越南农历应用。支持公历与农历转换、查询干支和设置农历纪念日提醒。 (iOS 17+, iPadOS 17+, macOS 14+, visionOS 2+)
+- [Lunar Block](https://phamhungtien.com/zh/LunarBlock/): Lunar Block 是适用于 iPhone、iPad 和 Mac 的 3D 下落方块益智游戏。旋转、暂存和下落水晶方块，在马拉松、冲刺和极限模式中消行。 (iOS 16+, iPadOS 16+, macOS 13+)
+
+### 指南
+
+- [全部指南](https://phamhungtien.com/zh/guides/)
+- [用 Pad Code AI 在 iPad 上设置断点并调试 Python](https://phamhungtien.com/zh/guides/debug-python-on-ipad-pad-code-ai/): 在 iPad 上使用 Pad Code AI 暂停 Python 程序、查看局部变量并单步执行，通过一个折扣计算示例定位错误并验证修正结果。
+- [用 vTTS 翻译 EPUB 电子书并离线收听](https://phamhungtien.com/zh/guides/translate-epub-books-offline-with-vtts/): 在 iPhone、iPad、Mac 或 Android 上用 vTTS 翻译 EPUB，另存译本，检查朗读语言和声音，并在下载语言包后离线收听。
+- [在 Mac 上安装 PHTV 并输入越南语](https://phamhungtien.com/zh/guides/go-tieng-viet-tren-mac-voi-phtv/): 用 Homebrew 或 DMG 在 Mac 上安装 PHTV，授予应用所需的系统权限，设置 Telex 或 VNI，并练习输入第一句越南语。
+- [用 vTTS 离线朗读 EPUB 电子书和文档](https://phamhungtien.com/zh/guides/nghe-sach-epub-giong-doc-tieng-viet-voi-vtts/): 在 iPhone、iPad 或 Mac 上用 vTTS 离线朗读 EPUB、PDF 和 Word 文档，调节语音与速度、设置睡眠定时器，并导出 MP3 或 M4B 有声书。
+- [越南农历怎么算：闰月、干支和二十四节气](https://phamhungtien.com/zh/guides/am-lich-viet-nam-cach-tinh-can-chi-tiet-khi/): 了解越南农历如何确定每月初一和闰月，如何推算六十甲子和查看二十四节气，以及越南与中国的新年为何有时不在同一天。
+- [越南语 Telex 键位表与声调位置](https://phamhungtien.com/zh/guides/bang-go-telex-day-du/): 查阅越南语 Telex 字母键与声调键，了解如何修正声调，并在 Mac 的 PHTV 中练习输入 người、được 和 Nguyễn 等词。
+- [从 TCVN3 或 VNI Windows 转换为越南语 Unicode](https://phamhungtien.com/zh/guides/bang-ma-tieng-viet-unicode-tcvn3-vni/): 如何识别越南语旧文档使用的 TCVN3、VNI Windows 或 CP1258 编码，理解 Unicode 的预组合与分解形式，并用 Mac 上的 PHTV 转换旧文本。
+- [越南语 VNI 键位表：怎样在 VNI 和 Telex 之间选择](https://phamhungtien.com/zh/guides/cach-go-vni-telex-hay-vni/): 学习用数字键输入越南语字母形状和声调，练习常见词，并了解在 Mac 的 PHTV 中何时选择 VNI、何时使用 Telex。
+- [在 vTTS 声音工作室创建个人朗读声音](https://phamhungtien.com/zh/guides/create-personal-voice-with-vtts/): 学习用 vTTS 声音工作室录制或导入已获许可的语音样本，试听新句子，再在设备上保存档案并使用自己的声音听书。
+- [用 vTTS 将 EPUB 导出为带章节的 M4B 有声书](https://phamhungtien.com/zh/guides/export-m4b-audiobook-with-vtts/): 从 vTTS 将 EPUB 导出为带章节的 M4B 有声书。先检查语音、速度和目录，再保存音频，并验证外部播放器能否跳转章节。
+- [用 PHTV 在 Mac 上展开快捷短语和动态文本](https://phamhungtien.com/zh/guides/go-tat-tren-mac-voi-phtv/): 在 Mac 上设置 PHTV 文本展开功能，为常用回复创建快捷短语，并在输入时自动插入日期、剪贴板文字、随机短句或计数。
+- [Lunar Block 玩法：iPhone、iPad 和 Mac 的操作与模式](https://phamhungtien.com/zh/guides/lunar-block-controls-and-modes/): 学习在 iPhone、iPad 和 Mac 上操作 Lunar Block，使用方块暂存和落点影子，并选择马拉松、四十行冲刺或两分钟极限模式。
+- [用 Pad Code AI 在 iPad 上预览 HTML、CSS 和 JavaScript](https://phamhungtien.com/zh/guides/preview-html-css-javascript-on-ipad/): 在 iPad 或 iPhone 上用三个文件制作阅读清单，打开本地网页预览，测试窄屏布局，并用控制台排查 JavaScript 错误。
+- [如何在 iPad 上用 Pad Code AI 审查 AI 代码改动](https://phamhungtien.com/zh/guides/review-ai-code-changes-on-ipad/): 在 Pad Code AI 中规划一项小型 JavaScript 改动，查看智能体的文件差异，在网页预览中测试结果，并在必要时撤销操作。
+- [用 Pad Code AI 在 iPad 上运行第一个 Python 项目](https://phamhungtien.com/zh/guides/run-python-on-ipad-pad-code-ai/): 在 iPad 或 iPhone 的 Pad Code AI 中创建本地 Python 项目，运行标准库示例、修复语法错误，并预览和保存程序生成的文本文件。
+- [在 Pad Notes AI 中用记忆胶带复习 PDF](https://phamhungtien.com/zh/guides/study-pdf-memorization-tape-pad-notes-ai/): 将 PDF 导入 iPad 上的 Pad Notes AI，写批注，用记忆胶带盖住答案来自测，再导出一份便于复习或分享的 PDF。
+- [排查 Mac 越南语输入丢失声调或重复字母的问题](https://phamhungtien.com/zh/guides/sua-loi-go-tieng-viet-tren-mac/): 解决 Mac 上 PHTV 无法输入音标、字母重复和输入冲突的问题，检查系统权限、键盘设置、字符编码及单独应用的输入规则。
+- [如何用 iPhone 和 iPad 安全地远程访问群晖 NAS](https://phamhungtien.com/zh/guides/truy-cap-synology-nas-tu-xa-an-toan/): 对比群晖 NAS 的 QuickConnect、DDNS 和 VPN 远程访问方式，检查安全设置，并用 iPhone 或 iPad 上的 My NAS Manager 连接 DSM。
+
+### 隐私政策
+
+- [网站隐私政策](https://phamhungtien.com/zh/privacy/)
+- [PHTV](https://phamhungtien.com/zh/PHTV/privacy.html)
+- [vTTS](https://phamhungtien.com/zh/vTTS/privacy.html)
+- [Pad Code AI](https://phamhungtien.com/zh/PadCodeAI/privacy.html)
+- [Pad Notes AI](https://phamhungtien.com/zh/PadNotesAI/privacy.html)
+- [My NAS Manager](https://phamhungtien.com/zh/MyNASManager/privacy.html)
+- [LunarV](https://phamhungtien.com/zh/LunarV/privacy.html)
+- [Lunar Block](https://phamhungtien.com/zh/LunarBlock/privacy.html)
+
+## Profiles
+
+- [GitHub](https://github.com/PhamHungTien)
+- [YouTube](https://www.youtube.com/@phamhungtien14)
+- [LinkedIn](https://www.linkedin.com/in/ph%E1%BA%A1m-h%C3%B9ng-ti%E1%BA%BFn-a1b405327/)
+- [TikTok](https://www.tiktok.com/@phamhungtien14)
+- [Facebook](https://www.facebook.com/phamhungtien1404)
