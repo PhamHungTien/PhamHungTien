@@ -196,9 +196,9 @@
   },
   "padcodeai": {
     "category": "iPad・iPhone向けIDE",
-    "title": "iPadとiPhoneでコードを書き、実行、デバッグ",
-    "subtitle": "プロジェクトを開いて端末上で実行し、Gitで変更を管理。必要に応じてターミナル、SSH、SFTP、AIアシスタントを利用できます。",
-    "description": "Pad Code AIはiPadとiPhone向けの統合開発環境です。Python、C、C++、JavaScriptをオフラインで実行し、Webページをプレビューして、Gitでプロジェクトを管理できます。",
+    "title": "iPadとiPhoneでプログラミングできる本物のUbuntu Linux",
+    "subtitle": "Pad Code AIはUbuntu 26.04 LTSを端末上で動かします。サーバーもアカウントも不要。aptが使えるbashターミナル、一度ダウンロードすればオフラインで使える約60のツール、デバッガー、LaTeX、Gitを備えています。",
+    "description": "Pad Code AIは、本物のUbuntu Linuxを端末上で動かすiPad・iPhone向けIDEです。Python、C、C++、JavaScript、Go、Rust、Javaなどを実行でき、aptが使えるターミナルをオフラインで利用できます。",
     "support": "ご意見、不具合報告、言語の追加リクエストは、メールまたはPad Code AIのFacebookページへお寄せください。",
     "facts": [
       {
@@ -206,12 +206,12 @@
         "value": "iPad、iPhone"
       },
       {
-        "label": "端末上で実行",
-        "value": "9言語"
+        "label": "Linux",
+        "value": "Ubuntu 26.04 LTS"
       },
       {
-        "label": "AIエージェント",
-        "value": "無料"
+        "label": "価格",
+        "value": "無料（Proは任意）"
       },
       {
         "label": "表示言語",
@@ -220,32 +220,32 @@
     ],
     "features": [
       {
+        "title": "端末上で動く本物のUbuntu Linux",
+        "description": "arm64版Ubuntu 26.04 LTSがアプリ内で動作し、サーバーは不要です。各ターミナルタブはsudo apt installとUbuntuの全パッケージが使えるbashシェル。プロジェクトは/workspaceにあり、変更はすぐエディターに反映されます。"
+      },
+      {
+        "title": "約60のツールをオフラインで",
+        "description": "Python、Node.js、CとC++（gcc、Clang）、Java、Go、Rust、Ruby、PHP、.NET、Zig、Android SDK、マイコン向けツールチェーン、CMake、GDB、PostgreSQL、Redisなど。一度ダウンロードすればインターネットなしで使え、ファイルに必要なツールをアプリが提案します。pip install numpy pandas matplotlibもターミナル、スクリプト、ノートブックで使えます。"
+      },
+      {
+        "title": "本物のツールによるデバッガーとコード補完",
+        "description": "Python、JavaScript、TypeScriptをデバッグ：条件付きブレークポイント、ログポイント、ステップ実行、変数、コールスタック、ウォッチ式、カーソルまで実行。Jedi、Clang、TypeScriptによる補完、BlackとPrettierによる整形に加え、定義への移動、名前変更、プロジェクト全体の検索と置換に対応します。"
+      },
+      {
+        "title": "WebプレビューとLaTeX",
+        "description": "WebページはLinuxのWebサーバーから表示され、保存すると再読み込みされます。Webプロジェクトは開発サーバーを起動します。LaTeXはTeX Liveで本物のPDFに組版され、文書に必要な言語パッケージも自動でダウンロード。保存、共有、印刷ができます。"
+      },
+      {
         "title": "Vibe Coding",
-        "description": "変更内容を言葉で伝えます。「質問」「計画」「編集」「自動」から任せる範囲を選択し、差分の確認やエージェントの編集の取り消しができます。"
+        "description": "変更内容を言葉で伝えます。「質問」「計画」「編集」「自動」から任せる範囲を選択。「自動」ではアシスタントがLinuxでコマンドやテストを実行します。コマンドライン型のコーディングエージェントも専用のターミナルタブで開き、ご自身のアカウントで利用できます。"
       },
       {
         "title": "AIの動作環境を選ぶ",
         "description": "対応端末・地域で使えるApple Intelligenceや、メモリに余裕があればQwen、Gemmaなどのモデルをダウンロードしてオフラインで使えます。オンラインのプロバイダにはご自身のAPIキーとネット接続が必要です。"
       },
       {
-        "title": "端末上でコードを実行",
-        "description": "C、C++、Python、JavaScript、TypeScript、Ruby、PHP、Lua、SQLiteを入力、引数、プロジェクトファイルとともに実行。Pythonはブレークポイント、matplotlibのグラフ、対応するNumPyやpandasなどを利用できます。"
-      },
-      {
-        "title": "プレビューとLaTeX",
-        "description": "HTML、CSS、JavaScript、Markdown、SVGをプレビュー。LaTeXの数式、表、図を組版し、プレビューから印刷したりPDFに保存したりできます。"
-      },
-      {
-        "title": "SSH、SFTP、ローカルシェル",
-        "description": "vim、htop、tmuxが動くカラーSSHターミナル、サーバー上のファイルを参照・編集するSFTPに対応。ローカルシェルでls、cd、grep、パイプ、python3、node、gcc、npmを使えます。"
-      },
-      {
-        "title": "コードの編集と移動",
-        "description": "構文ハイライト、補完、定義への移動、参照の検索、名前変更、プロジェクト全体の検索と置換、折りたたみ、スニペット、分割エディターを利用できます。"
-      },
-      {
-        "title": "Gitを内蔵",
-        "description": "GitHub、GitLab、BitbucketからHTTPSでクローン。差分の確認、コミット、ブランチ作成、stash、push、pullができ、GitHubにサインインすれば非公開リポジトリも開けます。"
+        "title": "Git、SSH、SFTP",
+        "description": "GitHub、GitLab、BitbucketからHTTPSでクローン。差分の確認、コミット、ブランチ作成、stash、push、pullができ、GitHubにサインインすれば非公開リポジトリも開けます。vim、htop、tmuxが動くフルカラーのSSHターミナルと、サーバー上のファイルを参照・編集するSFTPにも対応。"
       },
       {
         "title": "無料ツールとオプションのPro",
@@ -255,11 +255,11 @@
     "faq": [
       {
         "question": "オフラインでコードを実行できますか？",
-        "answer": "組み込みの実行環境はオフラインで動作します。追加パッケージのダウンロード、SSHサーバーへの接続、リモートGitの取得、オンラインAIの利用には接続が必要です。"
+        "answer": "はい。Linuxと必要なツールを一度ダウンロードすれば、コードの実行、ターミナル、デバッガー、LaTeXは接続なしで使えます。追加パッケージのダウンロード、SSHサーバーへの接続、リモートGitの取得、オンラインAIの利用には接続が必要です。"
       },
       {
-        "question": "Swiftを実行できますか？",
-        "answer": "Swiftのファイルは編集できます。アプリでコンパイルと実行をする場合は、Python、JavaScript、C、C++など実行環境が組み込まれた言語を選んでください。"
+        "question": "Linuxの容量はどれくらいですか？",
+        "answer": "最初のダウンロード（LinuxとPython）は約310 MBです。その他のツールは選んだときだけダウンロードされ、設定 › Run & Terminalからいつでも削除できます。実行環境を内蔵しないため、アプリ本体は軽量です。"
       },
       {
         "question": "GitHubの非公開リポジトリは開けますか？",

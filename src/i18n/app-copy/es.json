@@ -153,44 +153,44 @@
   },
   "padcodeai": {
     "category": "IDE para iPad y iPhone",
-    "title": "Escribe, ejecuta y depura código en iPad y iPhone",
-    "subtitle": "Abre proyectos, ejecuta código en el dispositivo y gestiona cambios con Git. Usa la terminal, SSH, SFTP o el asistente de IA opcional cuando te haga falta.",
-    "description": "Pad Code AI es un IDE para iPad y iPhone. Ejecuta Python, C, C++ y JavaScript sin conexión, previsualiza sitios y gestiona proyectos con Git.",
+    "title": "Ubuntu Linux real para programar en iPad y iPhone",
+    "subtitle": "Pad Code AI ejecuta Ubuntu 26.04 LTS en el dispositivo, sin servidor ni cuenta. Una terminal bash con apt, unas 60 herramientas que descargas una vez y usas sin conexión, un depurador, LaTeX y Git.",
+    "description": "Pad Code AI es un IDE para iPad y iPhone que ejecuta Ubuntu Linux real en el dispositivo: Python, C, C++, JavaScript, Go, Rust, Java y más, una terminal con apt, sin conexión.",
     "support": "Envía sugerencias, errores o solicitudes de idiomas por correo o en la página de Facebook de Pad Code AI.",
     "facts": [
       { "label": "Plataformas", "value": "iPad, iPhone" },
-      { "label": "Ejecución local", "value": "9 lenguajes" },
-      { "label": "Agente de IA", "value": "Gratis" },
+      { "label": "Linux", "value": "Ubuntu 26.04 LTS" },
+      { "label": "Precio", "value": "Gratis, con Pro opcional" },
       { "label": "Interfaz", "value": "20 idiomas" }
     ],
     "features": [
       {
+        "title": "Ubuntu Linux real en el dispositivo",
+        "description": "Ubuntu 26.04 LTS para arm64 se ejecuta dentro de la app, sin servidor. Cada pestaña de terminal es un shell bash con sudo apt install y todo el archivo de Ubuntu; el proyecto está en /workspace y los cambios aparecen enseguida en el editor."
+      },
+      {
+        "title": "Unas 60 herramientas, sin conexión",
+        "description": "Python, Node.js, C y C++ (gcc, Clang), Java, Go, Rust, Ruby, PHP, .NET, Zig, el SDK de Android, cadenas para microcontroladores, CMake, GDB, PostgreSQL, Redis y más. Descárgalas una vez y úsalas sin internet; la app sugiere la herramienta que necesita cada archivo. pip install numpy pandas matplotlib funciona en una terminal, un script o un cuaderno."
+      },
+      {
+        "title": "Depurador e inteligencia de código de las herramientas reales",
+        "description": "Depura Python, JavaScript y TypeScript: puntos de interrupción condicionales, logpoints, ejecución paso a paso, variables, pila de llamadas, expresiones vigiladas y Ejecutar hasta el cursor. Autocompletado de Jedi, Clang y TypeScript, formato con Black y Prettier, además de ir a la definición, renombrar y buscar y reemplazar en todo el proyecto."
+      },
+      {
+        "title": "Vistas previas web y LaTeX",
+        "description": "Las páginas web se sirven desde el servidor web de Linux y se recargan al guardar; los proyectos web inician sus servidores de desarrollo. LaTeX se compone en PDF reales con TeX Live, que descarga los paquetes de idioma que necesita cada documento, listos para guardar, compartir o imprimir."
+      },
+      {
         "title": "Vibe Coding",
-        "description": "Describe el cambio que quieres hacer. Elige Preguntar, Planificar, Editar o Automático para controlar qué puede hacer el asistente. Revisa las diferencias y deshaz sus cambios cuando lo necesites."
+        "description": "Describe el cambio que quieres hacer. Elige Preguntar, Planificar, Editar o Automático para decidir qué puede hacer el asistente; en Automático ejecuta comandos y pruebas en Linux. Los agentes de programación de línea de comandos se abren en su propia pestaña de terminal, con tu propia cuenta."
       },
       {
         "title": "Usa la IA que prefieras",
         "description": "Usa Apple Intelligence en un dispositivo y una región compatibles o descarga un modelo como Qwen o Gemma para trabajar sin conexión si el dispositivo tiene memoria suficiente. Un proveedor en línea requiere tu propia clave de API y conexión a internet."
       },
       {
-        "title": "Ejecución en el dispositivo",
-        "description": "Ejecuta C, C++, Python, JavaScript, TypeScript, Ruby, PHP, Lua y consultas SQLite con argumentos, datos de entrada y archivos del proyecto. Python admite puntos de interrupción, gráficos de matplotlib y paquetes compatibles como NumPy y pandas."
-      },
-      {
-        "title": "Vistas previas y LaTeX",
-        "description": "Previsualiza HTML, CSS, JavaScript, Markdown y SVG. Compón documentos LaTeX con fórmulas, tablas y figuras. Imprime o guarda la vista previa como PDF."
-      },
-      {
-        "title": "SSH, SFTP e intérprete de comandos",
-        "description": "Abre una terminal SSH a color para usar vim, htop o tmux y accede por SFTP a los archivos del servidor. El intérprete local incluye ls, cd, grep y tuberías, además de python3, node, gcc y npm."
-      },
-      {
-        "title": "Edición y navegación de código",
-        "description": "Resaltado de sintaxis, autocompletado, navegación a definiciones, búsqueda de referencias, cambio de nombres, búsqueda y reemplazo en todo el proyecto, plegado, fragmentos y editor dividido."
-      },
-      {
-        "title": "Git integrado",
-        "description": "Clona por HTTPS desde GitHub, GitLab y Bitbucket. Revisa diferencias, registra cambios, crea ramas, usa stash y sincroniza con push o pull. Inicia sesión en GitHub para abrir también repositorios privados."
+        "title": "Git, SSH y SFTP",
+        "description": "Clona por HTTPS desde GitHub, GitLab y Bitbucket; revisa diferencias, haz commit, crea ramas, stash, push y pull, e inicia sesión en GitHub para abrir repositorios privados. Una terminal SSH a todo color ejecuta vim, htop y tmux, con SFTP para explorar y editar archivos del servidor."
       },
       {
         "title": "Herramientas gratuitas y Pro opcional",
@@ -200,11 +200,11 @@
     "faq": [
       {
         "question": "¿Puedo ejecutar código sin conexión?",
-        "answer": "Los entornos incluidos funcionan sin conexión. Necesitas internet para descargar paquetes, conectarte a un servidor SSH, traer cambios de un repositorio remoto o usar IA en línea."
+        "answer": "Sí. Descarga Linux y las herramientas que necesites una vez; después, ejecutar código, la terminal, el depurador y LaTeX funcionan sin conexión. La necesitas para descargar más paquetes, conectarte a un servidor SSH, obtener cambios de un repositorio Git remoto o usar un proveedor de IA en línea."
       },
       {
-        "question": "¿Pad Code AI puede ejecutar Swift?",
-        "answer": "Puedes editar archivos Swift. Para compilar y ejecutar código dentro de la app, elige un lenguaje con entorno incluido, como Python, JavaScript, C o C++."
+        "question": "¿Cuánto espacio ocupa Linux?",
+        "answer": "La primera descarga, Linux con Python, ocupa unos 310 MB. Las demás herramientas se descargan solo cuando las eliges y puedes quitarlas cuando quieras en Ajustes › Run & Terminal. La app en sí es ligera porque no incluye entornos de ejecución."
       },
       {
         "question": "¿Puedo abrir repositorios privados de GitHub?",

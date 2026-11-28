@@ -153,44 +153,44 @@
   },
   "padcodeai": {
     "category": "iPad 和 iPhone 上的 IDE",
-    "title": "在 iPad 和 iPhone 上编写、运行和调试代码",
-    "subtitle": "打开项目、在设备上运行代码，并用 Git 管理改动。按需使用终端、SSH、SFTP 或可选的 AI 助手。",
-    "description": "Pad Code AI 是适用于 iPad 和 iPhone 的 IDE。离线运行 Python、C、C++ 和 JavaScript，预览网页，并用 Git 管理项目。",
+    "title": "在 iPad 和 iPhone 上编程的真正 Ubuntu Linux",
+    "subtitle": "Pad Code AI 在设备上运行 Ubuntu 26.04 LTS，无需服务器，也无需账户。带 apt 的 bash 终端、下载一次即可离线使用的约 60 种工具、调试器、LaTeX 和 Git。",
+    "description": "Pad Code AI 是一款在设备上运行真正 Ubuntu Linux 的 iPad 和 iPhone IDE：Python、C、C++、JavaScript、Go、Rust、Java 等，带 apt 的终端，可离线使用。",
     "support": "如需反馈、报告问题或建议支持新语言，请通过电子邮件或 Pad Code AI 的 Facebook 页面联系我们。",
     "facts": [
       { "label": "平台", "value": "iPad、iPhone" },
-      { "label": "本地运行", "value": "9 种语言" },
-      { "label": "AI 智能体", "value": "免费" },
+      { "label": "Linux", "value": "Ubuntu 26.04 LTS" },
+      { "label": "价格", "value": "免费，可选 Pro" },
       { "label": "界面", "value": "20 种语言" }
     ],
     "features": [
       {
+        "title": "设备上的真正 Ubuntu Linux",
+        "description": "arm64 版 Ubuntu 26.04 LTS 在 App 内运行，无需服务器。每个终端标签页都是一个 bash shell，可使用 sudo apt install 和 Ubuntu 的全部软件包；项目位于 /workspace，改动会立即显示在编辑器中。"
+      },
+      {
+        "title": "约 60 种工具，离线可用",
+        "description": "Python、Node.js、C 和 C++（gcc、Clang）、Java、Go、Rust、Ruby、PHP、.NET、Zig、Android SDK、单片机工具链、CMake、GDB、PostgreSQL、Redis 等。下载一次即可离线使用，App 会推荐文件所需的工具。pip install numpy pandas matplotlib 可在终端、脚本或笔记本中使用。"
+      },
+      {
+        "title": "来自真实工具的调试器和代码智能",
+        "description": "调试 Python、JavaScript 和 TypeScript：条件断点、日志点、单步执行、变量、调用栈、监视表达式和运行到光标处。由 Jedi、Clang 和 TypeScript 提供补全，用 Black 和 Prettier 格式化，并支持转到定义、重命名和全项目查找替换。"
+      },
+      {
+        "title": "网页预览和 LaTeX",
+        "description": "网页由 Linux 的 Web 服务器提供，保存后自动刷新；Web 项目会启动各自的开发服务器。LaTeX 通过 TeX Live 排版为真正的 PDF，并自动下载文档所需的语言包，可保存、分享或打印。"
+      },
+      {
         "title": "Vibe Coding",
-        "description": "描述想实现的改动，选择询问、计划、编辑或自动模式，控制助手的操作范围。查看差异，并按需撤销助手所做的改动。"
+        "description": "描述你想做的修改。选择询问、计划、编辑或自动，控制助手的操作范围；在自动模式下，助手会在 Linux 中运行命令和测试。命令行编程智能体也可在单独的终端标签页中打开，使用你自己的账户。"
       },
       {
         "title": "按需选择 AI",
         "description": "可在受支持的设备和地区使用 Apple 智能，也可在内存足够时下载 Qwen、Gemma 等模型离线使用。在线服务需要你自己的 API 密钥和网络连接。"
       },
       {
-        "title": "在设备上运行代码",
-        "description": "使用输入、参数和项目文件运行 C、C++、Python、JavaScript、TypeScript、Ruby、PHP、Lua 和 SQLite 查询。Python 支持断点、matplotlib 绘图和 NumPy、pandas 等兼容的包。"
-      },
-      {
-        "title": "预览和 LaTeX",
-        "description": "预览 HTML、CSS、JavaScript、Markdown 和 SVG。用 LaTeX 排版公式、表格和图片，并可打印预览或保存为 PDF。"
-      },
-      {
-        "title": "SSH、SFTP 和 Shell",
-        "description": "彩色 SSH 终端可运行 vim、htop 和 tmux。通过 SFTP 浏览和编辑服务器文件。本地 Shell 支持 ls、cd、grep 和管道，也支持 python3、node、gcc 和 npm。"
-      },
-      {
-        "title": "代码编辑和导航",
-        "description": "提供语法高亮、自动补全、跳转到定义、查找引用、重命名、全项目查找替换、代码折叠、代码片段和分栏编辑。"
-      },
-      {
-        "title": "内置 Git",
-        "description": "通过 HTTPS 从 GitHub、GitLab 或 Bitbucket 克隆仓库。查看差异，提交、创建分支、暂存、推送和拉取。登录 GitHub 后也可打开有权限的私有仓库。"
+        "title": "Git、SSH 和 SFTP",
+        "description": "通过 HTTPS 从 GitHub、GitLab 和 Bitbucket 克隆；查看差异、提交、创建分支、stash、push 和 pull，登录 GitHub 即可打开私有仓库。全彩 SSH 终端可运行 vim、htop 和 tmux，并可通过 SFTP 浏览和编辑服务器文件。"
       },
       {
         "title": "免费工具与可选的 Pro",
@@ -203,12 +203,12 @@
     },
     "faq": [
       {
-        "question": "没有网络时能运行代码吗？",
-        "answer": "内置运行环境支持离线使用。下载额外的包、连接 SSH 服务器、从远程 Git 仓库获取代码或使用在线 AI 时，需要网络连接。"
+        "question": "可以离线运行代码吗？",
+        "answer": "可以。下载一次 Linux 和所需工具后，运行代码、终端、调试器和 LaTeX 都无需联网。下载更多软件包、连接 SSH 服务器、从远程 Git 仓库获取代码或使用在线 AI 时需要联网。"
       },
       {
-        "question": "Pad Code AI 可以运行 Swift 吗？",
-        "answer": "可以编辑 Swift 文件。如果要在应用中编译并运行代码，请选择内置运行环境支持的语言，如 Python、JavaScript、C 或 C++。"
+        "question": "Linux 占用多少空间？",
+        "answer": "首次下载（Linux 加 Python）约 310 MB。其他工具只在你选择时下载，并可随时在“设置 › Run & Terminal”中删除。App 本身不内置运行环境，因此体积很小。"
       },
       {
         "question": "可以打开 GitHub 私有仓库吗？",

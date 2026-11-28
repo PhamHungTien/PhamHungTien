@@ -21,16 +21,16 @@ const app: App = {
   },
   category: { vi: 'IDE cho iPad và iPhone', en: 'IDE for iPad and iPhone' },
   title: {
-    vi: 'Viết, chạy và kiểm tra mã trên iPad và iPhone',
-    en: 'Write, run and debug code on iPad and iPhone',
+    vi: 'Ubuntu Linux thật cho việc lập trình trên iPad và iPhone',
+    en: 'Real Ubuntu Linux for coding on iPad and iPhone',
   },
   subtitle: {
-    vi: 'Mở cả dự án, chạy mã ngay trên máy và quản lý thay đổi bằng Git. Dùng terminal, SSH, SFTP hoặc trợ lý AI khi cần.',
-    en: 'Open a project, run code on the device and manage changes with Git. Use the terminal, SSH, SFTP or the optional AI assistant as needed.',
+    vi: 'Pad Code AI chạy Ubuntu 26.04 LTS ngay trên máy, không cần máy chủ hay tài khoản. Terminal bash có apt, khoảng 60 công cụ tải một lần rồi dùng ngoại tuyến, trình gỡ lỗi, LaTeX và Git.',
+    en: 'Pad Code AI runs Ubuntu 26.04 LTS on the device, with no server and no account. A bash terminal with apt, about 60 tools you download once and use offline, a debugger, LaTeX and Git.',
   },
   description: {
-    vi: 'Pad Code AI là IDE cho iPad và iPhone. Chạy Python, C, C++ và JavaScript ngoại tuyến, xem trước web và quản lý dự án bằng Git.',
-    en: 'Pad Code AI is an IDE for iPad and iPhone. Run Python, C, C++ and JavaScript offline, preview websites and manage projects with Git.',
+    vi: 'Pad Code AI là IDE cho iPad và iPhone chạy Ubuntu Linux thật ngay trên máy: Python, C, C++, JavaScript, Go, Rust, Java và nhiều hơn, terminal có apt, dùng ngoại tuyến.',
+    en: 'Pad Code AI is an IDE for iPad and iPhone that runs real Ubuntu Linux on the device: Python, C, C++, JavaScript, Go, Rust, Java and more, a terminal with apt, offline.',
   },
   platforms: ['ios', 'ipados'],
   requirements: 'iOS 17+, iPadOS 17+',
@@ -41,8 +41,8 @@ const app: App = {
       value: { vi: 'iPad, iPhone', en: 'iPad, iPhone' },
     },
     {
-      label: { vi: 'Chạy trên máy', en: 'Runs on device' },
-      value: { vi: '9 ngôn ngữ', en: '9 languages' },
+      label: { vi: 'Linux', en: 'Linux' },
+      value: { vi: 'Ubuntu 26.04 LTS', en: 'Ubuntu 26.04 LTS' },
     },
     {
       label: { vi: 'Giá', en: 'Price' },
@@ -55,10 +55,41 @@ const app: App = {
   ],
   features: [
     {
+      title: { vi: 'Ubuntu Linux thật trên máy', en: 'Real Ubuntu Linux on the device' },
+      description: {
+        vi: 'Ubuntu 26.04 LTS cho arm64 chạy ngay trong ứng dụng, không cần máy chủ. Mỗi thẻ terminal là một shell bash có sudo apt install và cả kho gói của Ubuntu; dự án nằm ở /workspace và thay đổi hiện ngay trong trình soạn thảo.',
+        en: "Ubuntu 26.04 LTS for arm64 runs inside the app, with no server. Every terminal tab is a bash shell with sudo apt install and all of Ubuntu's archive; the project lives at /workspace and changes show up in the editor right away.",
+      },
+    },
+    {
+      title: { vi: 'Khoảng 60 công cụ, dùng ngoại tuyến', en: 'About 60 tools, offline' },
+      description: {
+        vi: 'Python, Node.js, C và C++ (gcc, Clang), Java, Go, Rust, Ruby, PHP, .NET, Zig, Android SDK, trình biên dịch cho vi điều khiển, CMake, GDB, PostgreSQL, Redis… Tải một lần rồi dùng không cần mạng; ứng dụng gợi ý công cụ mà tệp đang cần. pip install numpy pandas matplotlib chạy được trong terminal, script hay notebook.',
+        en: 'Python, Node.js, C and C++ (gcc, Clang), Java, Go, Rust, Ruby, PHP, .NET, Zig, the Android SDK, microcontroller toolchains, CMake, GDB, PostgreSQL, Redis and more. Download once and use them without the internet; the app suggests the tool a file needs. pip install numpy pandas matplotlib works in a terminal, a script or a notebook.',
+      },
+    },
+    {
+      title: {
+        vi: 'Gỡ lỗi và gợi ý mã từ công cụ thật',
+        en: 'A debugger and code intelligence from the real tools',
+      },
+      description: {
+        vi: 'Gỡ lỗi Python, JavaScript và TypeScript: điểm dừng có điều kiện, logpoint, chạy từng bước, xem biến, call stack, biểu thức theo dõi và Chạy tới con trỏ. Gợi ý mã từ Jedi, Clang và TypeScript, định dạng bằng Black và Prettier, cùng đi tới định nghĩa, đổi tên và tìm thay toàn dự án.',
+        en: 'Debug Python, JavaScript and TypeScript: conditional breakpoints, logpoints, stepping, variables, the call stack, watch expressions and Run to Cursor. Completion from Jedi, Clang and TypeScript, formatting with Black and Prettier, plus go to definition, rename and project-wide search and replace.',
+      },
+    },
+    {
+      title: { vi: 'Xem trước web và LaTeX', en: 'Web previews and LaTeX' },
+      description: {
+        vi: 'Trang web được phục vụ từ máy chủ web của Linux và tự tải lại khi lưu; dự án web khởi động dev server của chúng. LaTeX được dàn trang thành PDF thật bằng TeX Live, tự tải gói ngôn ngữ mà tài liệu cần, rồi lưu, chia sẻ hoặc in.',
+        en: "Web pages are served from Linux's web server and reload when you save; web projects start their dev servers. LaTeX is typeset into real PDFs with TeX Live, which downloads the language packages a document needs, ready to save, share or print.",
+      },
+    },
+    {
       title: { vi: 'Vibe Coding', en: 'Vibe Coding' },
       description: {
-        vi: 'Mô tả thay đổi bạn muốn thực hiện. Chọn chế độ Hỏi, Lập kế hoạch, Sửa hoặc Tự động để đặt phạm vi thao tác của AI. Xem bản so sánh và hoàn tác thay đổi của trợ lý khi cần.',
-        en: 'Describe the change you want to make. Choose Ask, Plan, Edit or Auto to control what the assistant can do. Review diffs and undo changes the assistant makes as needed.',
+        vi: 'Mô tả thay đổi bạn muốn thực hiện. Chọn chế độ Hỏi, Lập kế hoạch, Sửa hoặc Tự động để đặt phạm vi thao tác của AI; ở chế độ Tự động, trợ lý chạy lệnh và kiểm thử ngay trong Linux. Coding agent dòng lệnh cũng mở được trong thẻ terminal riêng, đăng nhập bằng tài khoản của bạn.',
+        en: 'Describe the change you want to make. Choose Ask, Plan, Edit or Auto to control what the assistant can do; in Auto it runs commands and tests in Linux. Command-line coding agents open in a terminal tab of their own, signed in with your own account.',
       },
     },
     {
@@ -69,38 +100,10 @@ const app: App = {
       },
     },
     {
-      title: { vi: 'Chạy mã ngay trên thiết bị', en: 'On-device runtimes' },
+      title: { vi: 'Git, SSH và SFTP', en: 'Git, SSH and SFTP' },
       description: {
-        vi: 'Chạy C, C++, Python, JavaScript, TypeScript, Ruby, PHP, Lua và câu lệnh SQLite với dữ liệu nhập, đối số và tệp dự án. Python có điểm dừng, biểu đồ matplotlib và các gói tương thích như NumPy, pandas.',
-        en: 'Run C, C++, Python, JavaScript, TypeScript, Ruby, PHP, Lua and SQLite queries with input, arguments and project files. Python supports breakpoints, matplotlib plots and compatible packages such as NumPy and pandas.',
-      },
-    },
-    {
-      title: { vi: 'Xem trước và LaTeX', en: 'Previews and LaTeX' },
-      description: {
-        vi: 'Xem trước HTML, CSS, JavaScript, Markdown và SVG. Dàn trang LaTeX có công thức, bảng, hình; in hoặc lưu mọi bản xem trước thành PDF.',
-        en: 'Preview HTML, CSS, JavaScript, Markdown and SVG. Typeset LaTeX with math, tables and figures, and print or save any preview as PDF.',
-      },
-    },
-    {
-      title: { vi: 'SSH, SFTP và shell', en: 'SSH, SFTP and a shell' },
-      description: {
-        vi: 'Terminal SSH đầy đủ màu, chạy được vim, htop, tmux; duyệt và sửa tệp máy chủ qua SFTP. Shell cục bộ có ls, cd, grep, pipe cùng python3, node, gcc và npm.',
-        en: 'A full-color SSH terminal that runs vim, htop and tmux, plus SFTP to browse and edit server files. The local shell has ls, cd, grep and pipes, with python3, node, gcc and npm.',
-      },
-    },
-    {
-      title: { vi: 'Soạn thảo và điều hướng mã', en: 'Code editing and navigation' },
-      description: {
-        vi: 'Tô màu cú pháp, gợi ý mã, đi tới định nghĩa, tìm tham chiếu, đổi tên, tìm và thay thế toàn dự án, thu gọn mã, snippet và chia đôi màn hình.',
-        en: 'Syntax highlighting, completion, go to definition, find references, rename, project-wide search and replace, folding, snippets and a split editor.',
-      },
-    },
-    {
-      title: { vi: 'Git tích hợp', en: 'Git built in' },
-      description: {
-        vi: 'Clone qua HTTPS từ GitHub, GitLab, Bitbucket. Xem diff, commit, tạo nhánh, stash, push, pull; đăng nhập GitHub để mở cả kho riêng tư.',
-        en: 'Clone over HTTPS from GitHub, GitLab and Bitbucket. Review diffs, commit, branch, stash, push and pull; sign in to GitHub to open private repositories too.',
+        vi: 'Clone qua HTTPS từ GitHub, GitLab, Bitbucket; xem diff, commit, tạo nhánh, stash, push, pull, đăng nhập GitHub để mở kho riêng tư. Terminal SSH đầy đủ màu chạy được vim, htop, tmux, cùng SFTP để duyệt và sửa tệp trên máy chủ.',
+        en: 'Clone over HTTPS from GitHub, GitLab and Bitbucket; review diffs, commit, branch, stash, push and pull, and sign in to GitHub to open private repositories. A full-color SSH terminal runs vim, htop and tmux, with SFTP to browse and edit server files.',
       },
     },
     {
@@ -119,15 +122,15 @@ const app: App = {
     {
       question: { vi: 'Có thể chạy mã khi không có mạng không?', en: 'Can I run code offline?' },
       answer: {
-        vi: 'Các môi trường chạy tích hợp hoạt động ngoại tuyến. Bạn cần mạng khi tải thêm gói, kết nối máy chủ SSH, lấy mã từ kho Git từ xa hoặc dùng AI trực tuyến.',
-        en: 'The bundled runtimes work offline. You need a connection to download additional packages, connect to an SSH server, fetch from a remote Git repository or use an online AI provider.',
+        vi: 'Có. Tải Linux và các công cụ bạn cần một lần, sau đó chạy mã, terminal, gỡ lỗi và LaTeX đều không cần mạng. Bạn cần mạng khi tải thêm gói, kết nối máy chủ SSH, lấy mã từ kho Git từ xa hoặc dùng AI trực tuyến.',
+        en: 'Yes. Download Linux and the tools you need once; after that, running code, the terminal, the debugger and LaTeX work without a connection. You need one to download more packages, connect to an SSH server, fetch from a remote Git repository or use an online AI provider.',
       },
     },
     {
-      question: { vi: 'Pad Code AI có chạy được Swift không?', en: 'Can Pad Code AI run Swift?' },
+      question: { vi: 'Linux chiếm bao nhiêu dung lượng?', en: 'How much space does Linux take?' },
       answer: {
-        vi: 'Bạn có thể soạn thảo tệp Swift. Để biên dịch và chạy trong ứng dụng, hãy chọn một ngôn ngữ có môi trường chạy tích hợp, chẳng hạn Python, JavaScript, C hoặc C++.',
-        en: 'You can edit Swift files. To compile and run code in the app, choose a language with a bundled runtime, such as Python, JavaScript, C or C++.',
+        vi: 'Lần đầu, Linux kèm Python tải khoảng 310 MB. Công cụ khác chỉ tải khi bạn chọn và có thể xoá bất cứ lúc nào trong Cài đặt › Run & Terminal. Bản thân ứng dụng nhẹ vì không mang sẵn môi trường chạy.',
+        en: 'The first download, Linux with Python, is about 310 MB. Other tools download only when you pick them and can be removed any time in Settings › Run & Terminal. The app itself stays small because it carries no runtimes.',
       },
     },
     {
