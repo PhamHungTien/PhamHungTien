@@ -170,7 +170,7 @@
       },
       {
         "title": "约 60 种工具，离线可用",
-        "description": "Python、Node.js、C 和 C++（gcc、Clang）、Java、Go、Rust、Ruby、PHP、.NET、Zig、Android SDK、单片机工具链、CMake、GDB、PostgreSQL、Redis 等。下载一次即可离线使用，App 会推荐文件所需的工具。pip install numpy pandas matplotlib 可在终端、脚本或笔记本中使用。"
+        "description": "Python、Node.js、C 和 C++（gcc、Clang）、Java、Go、Rust、Ruby、PHP、.NET、Zig、Android SDK、单片机工具链、CMake、GDB、PostgreSQL、Redis 等。下载一次即可离线使用，App 会推荐文件所需的工具。pip install numpy pandas matplotlib 可在终端、脚本或笔记本中使用。Docker 同样可用：在终端中直接使用 docker run、docker build 和端口映射。"
       },
       {
         "title": "来自真实工具的调试器和代码智能",
@@ -178,7 +178,7 @@
       },
       {
         "title": "网页预览和 LaTeX",
-        "description": "网页由 Linux 的 Web 服务器提供，保存后自动刷新；Web 项目会启动各自的开发服务器。LaTeX 通过 TeX Live 排版为真正的 PDF，并自动下载文档所需的语言包，可保存、分享或打印。"
+        "description": "网页由 Linux 的 Web 服务器提供，保存后自动刷新；Web 项目会启动各自的开发服务器。LaTeX 通过 TeX Live 排版为真正的 PDF，并自动下载文档所需的语言包，可保存、分享或打印。在 iPad 上，预览位于编辑器旁边并随输入更新；在 iPhone 上，编辑时预览可停留在半屏高度。"
       },
       {
         "title": "Vibe Coding",

@@ -170,7 +170,7 @@
       },
       {
         "title": "Unas 60 herramientas, sin conexión",
-        "description": "Python, Node.js, C y C++ (gcc, Clang), Java, Go, Rust, Ruby, PHP, .NET, Zig, el SDK de Android, cadenas para microcontroladores, CMake, GDB, PostgreSQL, Redis y más. Descárgalas una vez y úsalas sin internet; la app sugiere la herramienta que necesita cada archivo. pip install numpy pandas matplotlib funciona en una terminal, un script o un cuaderno."
+        "description": "Python, Node.js, C y C++ (gcc, Clang), Java, Go, Rust, Ruby, PHP, .NET, Zig, el SDK de Android, cadenas para microcontroladores, CMake, GDB, PostgreSQL, Redis y más. Descárgalas una vez y úsalas sin internet; la app sugiere la herramienta que necesita cada archivo. pip install numpy pandas matplotlib funciona en una terminal, un script o un cuaderno. Docker también funciona: docker run, docker build y mapeo de puertos, directamente en el terminal."
       },
       {
         "title": "Depurador e inteligencia de código de las herramientas reales",
@@ -178,7 +178,7 @@
       },
       {
         "title": "Vistas previas web y LaTeX",
-        "description": "Las páginas web se sirven desde el servidor web de Linux y se recargan al guardar; los proyectos web inician sus servidores de desarrollo. LaTeX se compone en PDF reales con TeX Live, que descarga los paquetes de idioma que necesita cada documento, listos para guardar, compartir o imprimir."
+        "description": "Las páginas web se sirven desde el servidor web de Linux y se recargan al guardar; los proyectos web inician sus servidores de desarrollo. LaTeX se compone en PDF reales con TeX Live, que descarga los paquetes de idioma que necesita cada documento, listos para guardar, compartir o imprimir. En el iPad, la vista previa se sitúa junto al editor y se actualiza mientras escribes; en el iPhone puede quedarse a media altura mientras editas."
       },
       {
         "title": "Vibe Coding",

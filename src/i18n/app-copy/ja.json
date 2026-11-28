@@ -225,7 +225,7 @@
       },
       {
         "title": "約60のツールをオフラインで",
-        "description": "Python、Node.js、CとC++（gcc、Clang）、Java、Go、Rust、Ruby、PHP、.NET、Zig、Android SDK、マイコン向けツールチェーン、CMake、GDB、PostgreSQL、Redisなど。一度ダウンロードすればインターネットなしで使え、ファイルに必要なツールをアプリが提案します。pip install numpy pandas matplotlibもターミナル、スクリプト、ノートブックで使えます。"
+        "description": "Python、Node.js、CとC++（gcc、Clang）、Java、Go、Rust、Ruby、PHP、.NET、Zig、Android SDK、マイコン向けツールチェーン、CMake、GDB、PostgreSQL、Redisなど。一度ダウンロードすればインターネットなしで使え、ファイルに必要なツールをアプリが提案します。pip install numpy pandas matplotlibもターミナル、スクリプト、ノートブックで使えます。Dockerも動作し、docker run、docker build、ポートの割り当てをターミナルで使えます。"
       },
       {
         "title": "本物のツールによるデバッガーとコード補完",
@@ -233,7 +233,7 @@
       },
       {
         "title": "WebプレビューとLaTeX",
-        "description": "WebページはLinuxのWebサーバーから表示され、保存すると再読み込みされます。Webプロジェクトは開発サーバーを起動します。LaTeXはTeX Liveで本物のPDFに組版され、文書に必要な言語パッケージも自動でダウンロード。保存、共有、印刷ができます。"
+        "description": "WebページはLinuxのWebサーバーから表示され、保存すると再読み込みされます。Webプロジェクトは開発サーバーを起動します。LaTeXはTeX Liveで本物のPDFに組版され、文書に必要な言語パッケージも自動でダウンロード。保存、共有、印刷ができます。iPadではプレビューがエディターの横に並び、入力に合わせて更新されます。iPhoneでは編集中も半分の高さで表示しておけます。"
       },
       {
         "title": "Vibe Coding",

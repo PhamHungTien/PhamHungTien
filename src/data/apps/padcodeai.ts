@@ -64,8 +64,8 @@ const app: App = {
     {
       title: { vi: 'Khoảng 60 công cụ, dùng ngoại tuyến', en: 'About 60 tools, offline' },
       description: {
-        vi: 'Python, Node.js, C và C++ (gcc, Clang), Java, Go, Rust, Ruby, PHP, .NET, Zig, Android SDK, trình biên dịch cho vi điều khiển, CMake, GDB, PostgreSQL, Redis… Tải một lần rồi dùng không cần mạng; ứng dụng gợi ý công cụ mà tệp đang cần. pip install numpy pandas matplotlib chạy được trong terminal, script hay notebook.',
-        en: 'Python, Node.js, C and C++ (gcc, Clang), Java, Go, Rust, Ruby, PHP, .NET, Zig, the Android SDK, microcontroller toolchains, CMake, GDB, PostgreSQL, Redis and more. Download once and use them without the internet; the app suggests the tool a file needs. pip install numpy pandas matplotlib works in a terminal, a script or a notebook.',
+        vi: 'Python, Node.js, C và C++ (gcc, Clang), Java, Go, Rust, Ruby, PHP, .NET, Zig, Android SDK, trình biên dịch cho vi điều khiển, CMake, GDB, PostgreSQL, Redis… Tải một lần rồi dùng không cần mạng; ứng dụng gợi ý công cụ mà tệp đang cần. pip install numpy pandas matplotlib chạy được trong terminal, script hay notebook. Docker cũng chạy được: docker run, docker build và ánh xạ cổng ngay trong terminal.',
+        en: 'Python, Node.js, C and C++ (gcc, Clang), Java, Go, Rust, Ruby, PHP, .NET, Zig, the Android SDK, microcontroller toolchains, CMake, GDB, PostgreSQL, Redis and more. Download once and use them without the internet; the app suggests the tool a file needs. pip install numpy pandas matplotlib works in a terminal, a script or a notebook. Docker runs too: docker run, docker build and port mappings, right in the terminal.',
       },
     },
     {
@@ -81,8 +81,8 @@ const app: App = {
     {
       title: { vi: 'Xem trước web và LaTeX', en: 'Web previews and LaTeX' },
       description: {
-        vi: 'Trang web được phục vụ từ máy chủ web của Linux và tự tải lại khi lưu; dự án web khởi động dev server của chúng. LaTeX được dàn trang thành PDF thật bằng TeX Live, tự tải gói ngôn ngữ mà tài liệu cần, rồi lưu, chia sẻ hoặc in.',
-        en: "Web pages are served from Linux's web server and reload when you save; web projects start their dev servers. LaTeX is typeset into real PDFs with TeX Live, which downloads the language packages a document needs, ready to save, share or print.",
+        vi: 'Trang web được phục vụ từ máy chủ web của Linux và tự tải lại khi lưu; dự án web khởi động dev server của chúng. LaTeX được dàn trang thành PDF thật bằng TeX Live, tự tải gói ngôn ngữ mà tài liệu cần, rồi lưu, chia sẻ hoặc in. Trên iPad, bản xem trước nằm ngay cạnh trình soạn thảo và cập nhật khi bạn gõ; trên iPhone, nó có thể thu về nửa màn hình trong lúc bạn sửa.',
+        en: "Web pages are served from Linux's web server and reload when you save; web projects start their dev servers. LaTeX is typeset into real PDFs with TeX Live, which downloads the language packages a document needs, ready to save, share or print. On iPad the preview sits beside the editor and updates as you type; on iPhone it can stay at half height while you edit.",
       },
     },
     {
